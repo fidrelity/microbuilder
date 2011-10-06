@@ -98,19 +98,6 @@ Paint.prototype.redraw = function() {
 };
 
 // ----------------------------------------
-Paint.prototype.undo = function() {
-    var start = this.undoArray[this.undoArray.length-1][0];
-    var end   = this.undoArray[this.undoArray.length-1][1];
-
-    this.clickX.splice(start, end);
-    this.clickY.splice(start, end);
-
-    this.undoArray.pop();
-
-    this.redraw();
-};
-
-// ----------------------------------------
 Paint.prototype.addClick = function(_x, _y, _dragging) {
     this.clickX.push(_x);
     this.clickY.push(_y);
@@ -149,7 +136,6 @@ Paint.prototype.saveImage = function(_speech, _author) {
 
 // ----------------------------------------
 $(document).ready(function() {
-
     var paint = new Paint('#canvas');
 
     $('#clearCanvasButton').click(function(){
