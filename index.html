@@ -22,16 +22,26 @@
     .activeColor {
         border:2px solid #000000;
     }
+    #sizeSlider {
+        width:180px;
+        margin:0.5em 0 0.5em 0;
+    }
+
     </style>
+    <link href="css/jquery-ui-1.8.16.custom.css" media="screen" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
 </head>
 <body lang="de">
 
 <canvas id="canvas" width="720" height="400"></canvas>
+
 <p>
     <input type="button" id="clearCanvasButton" value="Clear">
     <input type="button" id="saveButton" value="Save">
 </p>
+
+<div id="sizeSlider"></div>
 
 <div style="overflow:hidden">
     <div class="colorBlock" id="#000000" style="background:#000000"></div>
@@ -56,6 +66,7 @@
     <div class="sizeBlock" id="5">5</div>
     <div class="sizeBlock" id="10">10</div>
 </div>
+
 
 <script type="text/javascript" src="js/application.js"></script>
 </body>

@@ -71,6 +71,7 @@ Paint.prototype.setColor = function(_color) {
 
 // ----------------------------------------
 Paint.prototype.setSize = function(_size) {
+    if(!_size) return false;
     this.lineWidth = _size;
 };
 // ----------------------------------------
@@ -188,4 +189,14 @@ $(document).ready(function() {
     $('#undoButton').click(function(){
         paint.undo();
     });
+
+    $("#sizeSlider").slider({
+            value:5,
+            min: 1,
+            max: 20,
+            step: 1,
+            change: function( event, ui ) {
+                paint.setSize(ui.value);
+            }
+        });
 });
