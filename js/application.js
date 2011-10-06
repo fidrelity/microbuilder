@@ -15,11 +15,6 @@ Paint = function(_canvas) {
     this.lineSizes = new Array();
     this.lineWidth;
 
-    this.undoArray = new Array();
-    this.undoArrayIndex = 0;
-    this.undoCounterStart = 0;
-    this.undoCounter = 0;
-
     this.init();
 };
 
@@ -39,12 +34,7 @@ Paint.prototype.init = function() {
 // ----------------------------------------
 Paint.prototype.mouseDown = function(e) {
     this.isPaint = true;
-
     this.addClick(e.pageX - this.canvas.offsetLeft, e.pageY - this.canvas.offsetTop);
-
-    //this.undoCounterStart = this.clickX.length - 1;
-    //this.undoCounterStart++;
-
     this.redraw();
 };
 
@@ -53,14 +43,12 @@ Paint.prototype.mouseMove = function(e) {
     if(this.isPaint){
         this.addClick(e.pageX - this.canvas.offsetLeft, e.pageY - this.canvas.offsetTop, true);
         this.redraw();
-        //this.undoCounter++;
     }
 };
 
 // ----------------------------------------
 Paint.prototype.mouseUp = function(e) {
     this.isPaint = false;
-    //this.undoArray.push(new Array(this.undoCounterStart, this.undoCounter));
 };
 
 // ----------------------------------------
@@ -137,15 +125,15 @@ Paint.prototype.saveImage = function(_speech, _author) {
     if(this.clickX.length < 50) {
         alert("Sorry, but it seems you didn't draw something!"); return false;
     }
-    if(!_speech) {
-        alert("Please enter speech!"); return false;
-    }
     if(!_author) {
         alert("Please enter your name!"); return false;
     }
+    if(!_speech) {
+        $("#speechName").addClass("ui-state-error"); return false;
+    }
 
-    var img = this.canvas.toDataURL("image/png");
-    document.write('<img src="'+img+'"/>');
+    //var img = this.canvas.toDataURL("image/png");
+    //document.write('<img src="'+img+'"/>');
 
     /*
     var imageData = this.context.getImageData();
@@ -182,18 +170,17 @@ $(document).ready(function() {
         $(this).addClass("activeColor");
     });
 
-    $('#saveButton').click(function(){
-        paint.saveImage();
-    });
+    $('#saveButton').click(function() {
 
-    $('#undoButton').click(function(){
-        paint.undo();
+        var speech = $("#speechName").val();
+
+        paint.saveImage(speech);
     });
 
     $("#sizeSlider").slider({
             value:5,
             min: 1,
-            max: 20,
+            max: 40,
             step: 1,
             change: function( event, ui ) {
                 paint.setSize(ui.value);
