@@ -8,15 +8,34 @@
     body {
         background:#CCCCCC;
     }
-    canvas {
-        width:720px;
-        height:400px;
-        background:#FFFFFF;
+
+    #paintWrapper, #introWrapper {
+        margin:auto;
+        width:700px;
     }
 
+    #paintWrapper { display:none; }
+
+    .canvas {
+        width:64px;
+        height:64px;
+        background: url(img/bg_transparent.png);
+        margin-right:0.5em;
+    }
+
+    .canvas-over  { position:absolute; background: rgba(255, 255, 255, 0.9); }
+    .canvas-float { position:relative; }
+
+    .canvas-selected { border:1px solid #4096EE;}
+
+    #canvas-template { display:none; }
+
     .colorBlock, .sizeBlock {
-        width:20px; height:20px; border:1px solid #000000; float:left; margin-right:0.4em;
+        width:20px; height:20px; border:1px solid #000000;
         text-align:center; cursor:pointer;
+    }
+    .colorBlock {
+        float:left; margin-right:0.4em;
     }
 
     .activeColor {
@@ -27,45 +46,115 @@
         margin:0.5em 0 0.5em 0;
     }
 
+    #sizeWrapper {
+        height:40px;
+        overflow:hidden;
+    }
+
+    #paints {
+        width:100%;
+        height:200px;
+        overflow:hidden;
+        position:relative;
+    }
+
+    .active-tool {
+        background:#028132;
+    }
+
+    #sizeSample {
+        width:64px;
+        height:64px;
+        background: url(img/bg_transparent.png);
+        border:1px solid #000000;
+    }
+
+    #canvasSizeSlider { width:200px;}
+
     </style>
     <link href="css/jquery-ui-1.8.16.custom.css" media="screen" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
 </head>
 <body lang="de">
 
-<div>
-<input type="text" id="speechName">
+<div id="introWrapper">
+    Select size:
+    <div id="sizeSample"></div>
+    <div id="canvasSizeSlider"></div>
+    <input type="button" id="goToPaintButton" value=" Start ">
 </div>
 
-<canvas id="canvas" width="720" height="400"></canvas>
+<!-- -------------------------------------------- -->
+<div id="paintWrapper">
 
-<p>
-    <input type="button" id="clearCanvasButton" value="Clear">
-    <input type="button" id="saveButton" value="Save">
-</p>
+    <div id="paints">
+        <canvas id="canvas-template" class="canvas canvas-over" width="64" height="64"></canvas>
+    </div>
 
-<div id="sizeSlider"></div>
+    <p>
+        <input type="button" id="clearCanvasButton" value="Clear">
+        <input type="button" id="undoButton" value="Undo">
+        <input type="button" id="addCanvasButton" value="Add Canvas">
+        <input type="button" id="copyCanvasButton" value="Copy Canvas">
+        <input type="button" id="switchViewButton" value="Switch View">
+        <input type="button" id="zoomInButton" value="Zoom In">
+    </p>
 
-<div style="overflow:hidden">
-    <div class="colorBlock" id="#000000" style="background:#000000"></div>
-    <div class="colorBlock" id="#FFFFFF" style="background:#FFFFFF"></div>
-    <div class="colorBlock" id="#333333" style="background:#333333"></div>
-    <div class="colorBlock" id="#8A662D" style="background:#8A662D"></div>
-    <div class="colorBlock" id="#FFEA05" style="background:#FFEA05"></div>
-    <div class="colorBlock" id="#FF1A00" style="background:#FF1A00"></div>
-    <div class="colorBlock" id="#CC0000" style="background:#CC0000"></div>
-    <div class="colorBlock" id="#FF7400" style="background:#FF7400"></div>
-    <div class="colorBlock" id="#C79810" style="background:#C79810"></div>
-    <div class="colorBlock" id="#73880A" style="background:#73880A"></div>
-    <div class="colorBlock" id="#008C00" style="background:#008C00"></div>
-    <div class="colorBlock" id="#006E2E" style="background:#006E2E"></div>
-    <div class="colorBlock" id="#4096EE" style="background:#4096EE"></div>
-    <div class="colorBlock" id="#356AA0" style="background:#356AA0"></div>
-    <div class="colorBlock" id="#3F4C6B" style="background:#3F4C6B"></div>
-    <div class="colorBlock" id="#FF0084" style="background:#FF0084"></div>
+    <p>
+        <input type="text" id="playDelay" value="100" size="2">
+        <input type="button" id="playButton" value="Play">
+    </p>
+
+    <p>
+        <input type="button" id="selectToolButton" class="tool" value="Selector">
+        <input type="button" id="pencilToolButton" class="tool" value="Pencil">
+    </p>
+
+    <div id="pencilWrapper">
+
+        <div id="sizeWrapper">
+            <div id="sizeSlider" style="float:left;"></div>
+            <div id="pencilSizePreview" class="sizeBlock" style="float:right;"></div>
+        </div>
+
+        <div style="overflow:hidden">
+            <div class="colorBlock" id="#000000" style="background:#000000"></div>
+            <div class="colorBlock" id="#FFFFFF" style="background:#FFFFFF"></div>
+            <div class="colorBlock" id="#333333" style="background:#333333"></div>
+            <div class="colorBlock" id="#8A662D" style="background:#8A662D"></div>
+            <div class="colorBlock" id="#FFEA05" style="background:#FFEA05"></div>
+            <div class="colorBlock" id="#FF1A00" style="background:#FF1A00"></div>
+            <div class="colorBlock" id="#CC0000" style="background:#CC0000"></div>
+            <div class="colorBlock" id="#FF7400" style="background:#FF7400"></div>
+            <div class="colorBlock" id="#C79810" style="background:#C79810"></div>
+            <div class="colorBlock" id="#73880A" style="background:#73880A"></div>
+            <div class="colorBlock" id="#008C00" style="background:#008C00"></div>
+            <div class="colorBlock" id="#006E2E" style="background:#006E2E"></div>
+            <div class="colorBlock" id="#4096EE" style="background:#4096EE"></div>
+            <div class="colorBlock" id="#356AA0" style="background:#356AA0"></div>
+            <div class="colorBlock" id="#3F4C6B" style="background:#3F4C6B"></div>
+            <div class="colorBlock" id="#FF0084" style="background:#FF0084"></div>
+        </div>
+    </div>
+
 </div>
 
+<p></p>
+Todo:
+<ul>
+    <li>Implement cut tool</li>
+    <li>Implement fill tool</li>
+    <li>Implement eraser</li>
+    <li>Implement Rect, Circle and Line Tool</li>
+    <li>STR+R: for undo</li>
+    <li>Fix bug: switch view after play</li>
+    <li>Fix: zoom</li>
+    <li>Save on server</li>
+</ul>
+
+
+<script type="text/javascript" src="js/zoom.js/js/zoom.js"></script>
 <script type="text/javascript" src="js/application.js"></script>
 </body>
 </html>
