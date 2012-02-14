@@ -5,6 +5,12 @@
         }
         return tempClone;
 };
+Array.max = function( array ){
+    return Math.max.apply( Math, array );
+};
+Array.min = function( array ){
+    return Math.min.apply( Math, array );
+};
 
 // ---------------------------------------
 // SPRITEAREA CLASS
@@ -24,50 +30,108 @@ var SpriteArea = function(_id, _index, _sourceCanvas) {
   this.clickDrag  = [];
   this.clickColor = [];
   this.lineSizes  = [];
-  this.lineWidth;
 };
 //
 SpriteArea.prototype.redraw = function() {
-    this.clearCanvas();
-    //this.context.lineJoin = "round";
+  //this.clearCanvas();
+  //this.context.lineJoin = "round";
 
-    for(var i=0; i < this.clickX.length; i++)
-    {
-      /*
-        this.context.beginPath();
-        if(this.clickDrag[i] && i){
-            this.context.moveTo(this.clickX[i-1], this.clickY[i-1]);
-        } else {
-            this.context.moveTo(this.clickX[i]-1, this.clickY[i]);
-        }
-        this.context.lineTo(this.clickX[i], this.clickY[i]);
-        this.context.closePath();
-        this.context.strokeStyle = this.clickColor[i];
-        this.context.lineWidth = this.lineSizes[i];
-        this.context.stroke();
-      */
-
+  for(var i=0; i < this.clickX.length; i++)
+  {
+    /*
       this.context.beginPath();
-      this.context.rect(this.clickX[i], this.clickY[i], this.lineSizes[i], this.lineSizes[i]);
-      this.context.fillStyle = this.clickColor[i]; //"#8ED6FF";
-      this.context.fill();
-      //this.context.lineWidth = 5;
-      //this.context.strokeStyle = "black";
-      //this.context.stroke();
+      if(this.clickDrag[i] && i){
+          this.context.moveTo(this.clickX[i-1], this.clickY[i-1]);
+      } else {
+          this.context.moveTo(this.clickX[i]-1, this.clickY[i]);
+      }
+      this.context.lineTo(this.clickX[i], this.clickY[i]);
+      this.context.closePath();
+      this.context.strokeStyle = this.clickColor[i];
+      this.context.lineWidth = this.lineSizes[i];
+      this.context.stroke();
+    */
 
-
-    }
+    this.context.beginPath();
+    this.context.rect(this.clickX[i], this.clickY[i], this.lineSizes[i], this.lineSizes[i]);
+    this.context.fillStyle = this.clickColor[i]; //"#8ED6FF";
+    this.context.fill();
+  }
 };
 //
 SpriteArea.prototype.clearCanvas = function(_reset) {
     this.canvas.width = this.canvas.width;
     if(_reset) {
-        this.clickX = [];
-        this.clickY = [];
-        this.clickDrag = [];
-        this.clickColor = [];
-        this.lineSizes = [];
-    }
+      this.clickX = [];
+      this.clickY = [];
+      this.clickDrag = [];
+      this.clickColor = [];
+      this.lineSizes = [];
+  }
+};
+
+SpriteArea.prototype.eraseArea = function(x,y) {
+  this.context.clearRect(x, y, 10, 10);
+};
+
+SpriteArea.prototype.getOutlinePoints = function() {
+  var xPoints = [];
+  var yPoints = [];
+  for (var i = this.clickX.length - 1; i >= 0; i--) {
+    xPoints.push(this.clickX[i] + this.lineSizes[i]);
+    yPoints.push(this.clickY[i] + this.lineSizes[i]);
+  };
+
+  var xMin = Math.max(0, Array.min(xPoints));
+  var yMin = Math.max(0, Array.min(yPoints));
+  var xMax = Math.min(this.canvas.width, Array.max(xPoints));
+  var yMax = Math.min(this.canvas.height, Array.max(yPoints));
+  var size = Array.max(this.lineSizes);
+  xMin -= size;
+  yMin -= size;
+  xMax += size;
+  yMax += size;
+  /*
+    a - b
+    |   |
+    d - c
+  */
+  var a = { x: xMin, y: yMin};
+  var b = { x: xMax, y: yMin};
+  var c = { x: xMax, y: yMax};
+  var d = { x: xMin, y: yMax};
+
+  return [a, b, c, d];
+};
+
+SpriteArea.prototype.outlinePoints = function() {
+  var points = this.getOutlinePoints();
+
+  var bWidth = points[1].x - points[0].x;
+  var bHeight = points[2].y - points[1].y;
+  var bLeft = this.canvasObject.position().left + points[0].x;
+  var bTop = this.canvasObject.position().left + points[0].y;
+
+  $('#outlineBox').css({width: bWidth, height: bHeight, left: bLeft , top: bTop}).fadeIn();
+
+  /*
+  this.context.beginPath();
+    this.context.moveTo(points[0].x, a.y);
+    this.context.lineTo(b.x, b.y);
+
+    this.context.moveTo(a.x, a.y);
+    this.context.lineTo(d.x, d.y);
+
+    this.context.moveTo(c.x, c.y);
+    this.context.lineTo(b.x, b.y);
+
+    this.context.moveTo(c.x, c.y);
+    this.context.lineTo(d.x, d.y);
+  this.context.closePath();
+  this.context.strokeStyle = '#023894';
+  this.context.lineWidth = 3;
+  this.context.stroke();
+  */
 };
 
 //
@@ -83,9 +147,24 @@ SpriteArea.prototype.undo = function() {
   this.clickDrag.splice(startIndex, stopIndex);
   this.clickColor.splice(startIndex, stopIndex);
   this.lineSizes.splice(startIndex, stopIndex);
-
+  this.clearCanvas();
   this.redraw();
 };
+
+SpriteArea.prototype.flip = function(_direction) {
+  console.log("d");
+  //var img = this.context.getImageData(0,0,this.canvas.width, this.canvas.height);
+  this.context.save();
+  // Multiply the y value by -1 to flip vertically
+  this.context.scale(-1, 1);
+  //this.redraw();
+  //var imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+  //var data = imageData.data;
+  //this.context.drawImage(this.canvas, 0, 0);
+  // Start at (0, -height), which is now the bottom-left corner
+  //this.context.drawImage(img, 0, -img.height);
+  this.context.restore();
+}
 
 
 // ----------------------------------------
@@ -116,6 +195,8 @@ Paint.prototype.init = function() {
     this.toolButtons = $('.tool');
     this.pencilToolButton = $('#pencilToolButton');
     this.zoomInButton = $('#zoomInButton');
+    this.eraserToolButton = $('#eraserToolButton');
+    this.flivVButton = $('#flipvButton');
     // Events
     this.canvasObjects.live("mousedown",  $.proxy(this.mouseDown, this));
     this.canvasObjects.live("mousemove",  $.proxy(this.mouseMove, this));
@@ -124,8 +205,10 @@ Paint.prototype.init = function() {
     //
     this.toolButtons.live("click", $.proxy(this.highlightTool, this));
     this.pencilToolButton.live("click", $.proxy(this.activatePaintTool, this));
+    this.eraserToolButton.live("click", $.proxy(this.activateEraserTool, this));
     this.zoomInButton.live("click", $.proxy(this.zoomIn, this));
     $('#undoButton').live("click", $.proxy(this.undo, this));
+    this.flivVButton.live("click", $.proxy(this.flipV, this));
     // Key
     $(document).keydown($.proxy(this.keyEvent, this));
     //
@@ -169,6 +252,8 @@ Paint.prototype.setFocus = function() {
 Paint.prototype.deactivateTools = function() {
   this.selectTool = false;
   this.paintTool  = false;
+  this.eraserTool = false;
+  this.closeOutlineBox();
   $('#pencilWrapper').hide();
 };
 
@@ -178,24 +263,41 @@ Paint.prototype.activatePaintTool = function() {
   $('#pencilWrapper').show();
 };
 
+Paint.prototype.activateEraserTool = function() {
+  console.log('erase')
+  this.deactivateTools();
+  this.eraserTool = true;
+};
+
 Paint.prototype.highlightTool = function(e) {
   this.toolButtons.removeClass('active-tool');
   $('#' + e.currentTarget.id).addClass('active-tool');
+};
+
+Paint.prototype.flipV = function() {
+  this.getCurrentCanvasInstanz().flip(-1);
 };
 
 // ----------------------------------------
 Paint.prototype.mouseDown = function(e) {
   this.setCurrentCanvas(e.currentTarget.id);
 
+  var x = this.isZoom ? e.pageX - 20 : e.pageX - this.getCurrentCanvasDom().offset().left;
+  var y = this.isZoom ? e.pageY - 20 : e.pageY - this.getCurrentCanvasDom().offset().top;
+  var currentInstanz = this.getCurrentCanvasInstanz();
+
   if(this.paintTool) {
     this.isPaint = true;
-    var x = this.isZoom ? e.pageX - 20 : e.pageX - this.getCurrentCanvasDom().offset().left;
-    var y = this.isZoom ? e.pageY - 20 : e.pageY - this.getCurrentCanvasDom().offset().top;
     //console.log(x, y, this.getCurrentCanvasDom().offset().left, this.getCurrentCanvasDom().position().left, this.getCurrentCanvasDom().css('right'));
-    this.getCurrentCanvasInstanz().lastPaintIndex = this.getCurrentCanvasInstanz().clickX.length;
+    currentInstanz.lastPaintIndex = currentInstanz.clickX.length;
     this.addClick(x, y);
-    this.getCurrentCanvasInstanz().redraw();
+    currentInstanz.redraw();
   }
+
+  if(this.eraserTool) {
+    currentInstanz.eraseArea(x , y);
+  }
+  this.closeOutlineBox();
 };
 
 // ----------------------------------------
@@ -266,6 +368,8 @@ Paint.prototype.clearCanvas = function(_reset) {
     this.removeCanvas(spriteArea);
   else
     spriteArea.clearCanvas(true);
+
+  this.closeOutlineBox();
 };
 
 Paint.prototype.removeCanvas = function(spriteArea) {
@@ -294,6 +398,10 @@ Paint.prototype.floatSprites = function() {
 
 Paint.prototype.overSprites = function() {
   $('.canvas').removeClass('canvas-float').addClass('canvas-over');
+};
+
+Paint.prototype.closeOutlineBox = function() {
+  $('#outlineBox').hide();
 };
 
 Paint.prototype.zoomIn = function() {
@@ -432,11 +540,13 @@ $(document).ready(function() {
     });
 
     $('#saveButton').click(function() {
-
-        var speech = $("#speechName").val();
-
         paint.saveImage(speech);
     });
+
+    $('#outlineButton').click(function() {
+      paint.getCurrentCanvasInstanz().outlinePoints();
+    });
+
 
     $("#sizeSlider").slider({
       value:5,
@@ -453,7 +563,7 @@ $(document).ready(function() {
       min: 64,
       max: 256,
       step: 16,
-      change: function( event, ui ) {
+      slide: function( event, ui ) {
         $('#sizeSample').css({width : ui.value, height: ui.value});
         $('.canvas').css({width : ui.value, height: ui.value});
         $('canvas').attr('width', ui.value).attr('height', ui.value);

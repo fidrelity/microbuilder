@@ -71,6 +71,8 @@
 
     #canvasSizeSlider { width:200px;}
 
+    #outlineBox { position:absolute; display:none; z-index:999; border:1px solid #000; }
+
     </style>
     <link href="css/jquery-ui-1.8.16.custom.css" media="screen" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -79,9 +81,11 @@
 <body lang="de">
 
 <div id="introWrapper">
-    Select size:
-    <div id="sizeSample"></div>
+    Select size
     <div id="canvasSizeSlider"></div>
+
+    <div id="sizeSample"></div>
+
     <input type="button" id="goToPaintButton" value=" Start ">
 </div>
 
@@ -89,6 +93,7 @@
 <div id="paintWrapper">
 
     <div id="paints">
+        <div id="outlineBox"></div>
         <canvas id="canvas-template" class="canvas canvas-over" width="64" height="64"></canvas>
     </div>
 
@@ -99,6 +104,8 @@
         <input type="button" id="copyCanvasButton" value="Copy Canvas">
         <input type="button" id="switchViewButton" value="Switch View">
         <input type="button" id="zoomInButton" value="Zoom In">
+        <input type="button" id="outlineButton" value="Outline">
+        <input type="button" id="flipvButton" value="FlipV">
     </p>
 
     <p>
@@ -109,6 +116,7 @@
     <p>
         <input type="button" id="selectToolButton" class="tool" value="Selector">
         <input type="button" id="pencilToolButton" class="tool" value="Pencil">
+        <input type="button" id="eraserToolButton" class="tool" value="Eraser">
     </p>
 
     <div id="pencilWrapper">
@@ -147,11 +155,15 @@ Todo:
     <li>Implement fill tool</li>
     <li>Implement eraser</li>
     <li>Implement Rect, Circle and Line Tool</li>
+    <li>Flip, Rotate canvas</li>
     <li>STR+R: for undo</li>
     <li>Fix bug: switch view after play</li>
     <li>Fix: zoom</li>
+    <li>Fix: clear canvas</li>
+    <li>Reset</li>
     <li>Save on server</li>
 </ul>
+
 
 
 <script type="text/javascript" src="js/zoom.js/js/zoom.js"></script>
