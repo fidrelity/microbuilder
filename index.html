@@ -80,6 +80,7 @@
     </style>
     <link href="css/jquery-ui-1.8.16.custom.css" media="screen" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/glMatrix-0.9.5.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
 </head>
 <body lang="de">
@@ -100,7 +101,9 @@
         <div id="outlineBox"></div>
         <canvas id="canvas-template" class="canvas canvas-over" width="64" height="64"></canvas>
     </div>
-
+    <div id="zoomCanvasWrapper">
+         <canvas id="webglCanvas" width="256" height="256"></canvas>
+    </div>  
     <p>
         <input type="button" id="clearCanvasButton" value="Clear">
         <input type="button" id="undoButton" value="Undo">
@@ -110,6 +113,7 @@
         <input type="button" id="zoomInButton" value="Zoom In">
         <input type="button" id="outlineButton" value="Outline">
         <input type="button" id="flipvButton" value="FlipV">
+        <input type="button" id="doubleSizeButton" value="Zoom in 2x">
     </p>
 
     <p>
@@ -168,9 +172,8 @@ Todo:
     <li>Save on server</li>
 </ul>
 
-
-
-<script type="text/javascript" src="js/zoom.js/js/zoom.js"></script>
+  
+<script type="text/javascript" src="js/webglrenderer.js"></script>
 <script type="text/javascript" src="js/application.js"></script>
 </body>
 </html>

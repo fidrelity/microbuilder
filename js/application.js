@@ -177,13 +177,14 @@ Paint = function(_canvas) {
 
     this.shiftKey = false;
     this.init();
+
 };
 
 // ----------------------------------------
 Paint.prototype.init = function() {
   this.color = "#df4b26";
   this.isPaint = false;
-  this.lineWidth = 5;
+  this.lineWidth = 4;
   this.gridSize = 4;
 
   this.isZoom = false;
@@ -221,6 +222,7 @@ Paint.prototype.init = function() {
 // ---------------------------------------
 Paint.prototype.setCurrentCanvas = function(_id) {
   this.currentCanvas = _id;
+  this.webGLRenderer.setTexture(this.getCurrentCanvasInstanz());
   this.setFocus();
 };
 
