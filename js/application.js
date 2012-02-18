@@ -35,7 +35,6 @@ var SpriteArea = function(_id, _index, _sourceCanvas) {
 SpriteArea.prototype.redraw = function() {
   //this.clearCanvas();
   //this.context.lineJoin = "round";
-
   for(var i=0; i < this.clickX.length; i++)
   {
     /*
