@@ -10,8 +10,6 @@ var Paint = {
     Paint.canvasTemplate    = $('#canvas-template');
     Paint.toolButtons       = $('.tool');
     Paint.pencilToolButton  = $('#pencilToolButton');
-    Paint.eraserToolButton  = $('#eraserToolButton');
-    Paint.flivVButton       = $('#flipvButton');
 
     // Init other classes
     ColorPalette.init();
@@ -35,9 +33,31 @@ var Paint = {
     // Tools
     Paint.toolButtons.live("click", $.proxy(Paint.highlightTool, Paint));
     Paint.pencilToolButton.live("click", $.proxy(Paint.activatePaintTool, Paint));
-    Paint.eraserToolButton.live("click", $.proxy(Paint.activateEraserTool, Paint));
+    $('#eraserToolButton').live("click", $.proxy(Paint.activateEraserTool, Paint));
+    $('#flipvButton').live("click", $.proxy(Paint.flipV, Paint));
     $('#undoButton').live("click", $.proxy(Paint.undo, Paint));
-    Paint.flivVButton.live("click", $.proxy(Paint.flipV, Paint));
+    $('#playButton').click(function(){ Paint.play(); });
+    $('#switchViewButton').click(function(){ Paint.switchView(); });
+    $('#addCanvasButton').click(function(){ Paint.addCanvas(); });
+    $('#copyCanvasButton').click(function(){ Paint.addCanvas(true); });
+    $('#clearCanvasButton').click(function(){ Paint.clearCanvas(true);});
+    $('#outlineButton').click(function(){ Paint.getCurrentCanvasInstanz().outlinePoints();});
+    $('#selectToolButton').click(function(){ Paint.deactivateTools(); Paint.selectTool = true;});
+    // Slider
+    $("#sizeSlider").slider({
+      value: Paint.lineWidth, min: 1, max: 40, step: 4,
+      change: function( event, ui ) {
+        Paint.setSize(ui.value);
+      }
+    });
+    $("#canvasSizeSlider").slider({
+      value: 64, min: 64, max: 256, step: 64,
+      slide: function( event, ui ) {
+        $('#sizeSample').css({width : ui.value, height: ui.value});
+        $('.canvas').css({width : ui.value, height: ui.value});
+        $('.canvas').attr('width', ui.value).attr('height', ui.value);
+      }
+    });
     // Key
     $(document).keydown($.proxy(Paint.keyEvent, Paint));
 
@@ -328,61 +348,8 @@ var Paint = {
 $(document).ready(function() {
   Paint.init();
 
-  $('#playButton').click(function(){
-    Paint.play();
-  });
-
-  $('#switchViewButton').click(function(){
-    Paint.switchView();
-  });
-
-  $('#addCanvasButton').click(function(){
-    Paint.addCanvas();
-  });
-
-  $('#copyCanvasButton').click(function(){
-    Paint.addCanvas(true);
-  });
-
-  $('#clearCanvasButton').click(function(){
-    Paint.clearCanvas(true);
-  });
-
-  $('#selectToolButton').click(function(){
-    Paint.deactivateTools();
-    Paint.selectTool = true;
-  });
-
-  $('#outlineButton').click(function() {
-    Paint.getCurrentCanvasInstanz().outlinePoints();
-  });
-
-
-  $("#sizeSlider").slider({
-    value: Paint.lineWidth,
-    min: 1,
-    max: 40,
-    step: 4,
-    change: function( event, ui ) {
-      Paint.setSize(ui.value);
-    }
-  });
-
-  $("#canvasSizeSlider").slider({
-    value:64,
-    min: 64,
-    max: 256,
-    step: 64,
-    slide: function( event, ui ) {
-      $('#sizeSample').css({width : ui.value, height: ui.value});
-      $('.canvas').css({width : ui.value, height: ui.value});
-      $('.canvas').attr('width', ui.value).attr('height', ui.value);
-    }
-  });
-
   $('#goToPaintButton').click(function() {
     $('#introWrapper').hide();
     $('#paintWrapper').show();
   });
-
 });
