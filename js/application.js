@@ -12,8 +12,6 @@ Array.min = function( array ){
     return Math.min.apply( Math, array );
 };
 
-console.log(11 % 4);
-
 // ---------------------------------------
 // SPRITEAREA CLASS
 // ---------------------------------------
@@ -289,7 +287,6 @@ Paint.prototype.mouseDown = function(e) {
 
   if(this.paintTool) {
     this.isPaint = true;
-    //console.log(x, y, this.getCurrentCanvasDom().offset().left, this.getCurrentCanvasDom().position().left, this.getCurrentCanvasDom().css('right'));
     currentInstanz.lastPaintIndex = currentInstanz.clickX.length;
     this.addClick(coordinates.x, coordinates.y);
     currentInstanz.redraw();
@@ -304,16 +301,6 @@ Paint.prototype.mouseDown = function(e) {
 // ----------------------------------------
 Paint.prototype.mouseMove = function(e) {
     if(this.isPaint){
-      /*
-      var x = this.isZoom ? e.pageX - 20 : e.pageX - this.getCurrentCanvasDom().offset().left;
-      var y = this.isZoom ? e.pageY - 20 : e.pageY - this.getCurrentCanvasDom().offset().top;
-
-      gridX = Math.floor(x / this.gridSize);
-      gridY = Math.floor(y / this.gridSize);
-
-      x = gridX * this.gridSize;
-      y = gridY * this.gridSize;
-      */
       var coordinates = this.getCooridnates(e);
       this.addClick(coordinates.x, coordinates.y, true);
       this.getCurrentCanvasInstanz().redraw();
@@ -518,84 +505,83 @@ Paint.prototype.saveImage = function(_speech, _author) {
 
 // ----------------------------------------
 $(document).ready(function() {
-    var paint = new Paint('#canvas1');
+  var paint = new Paint('#canvas1');
+
+  $('#playButton').click(function(){
+      paint.play();
+  });
+
+  $('#switchViewButton').click(function(){
+    paint.switchView();
+  });
+
+  $('#addCanvasButton').click(function(){
+    paint.addCanvas();
+  });
+
+  $('#copyCanvasButton').click(function(){
+    paint.addCanvas(true);
+  });
+
+  $('#clearCanvasButton').click(function(){
+    paint.clearCanvas(true);
+  });
 
 
-    $('#playButton').click(function(){
-        paint.play();
-    });
-
-    $('#switchViewButton').click(function(){
-      paint.switchView();
-    });
-
-    $('#addCanvasButton').click(function(){
-      paint.addCanvas();
-    });
-
-    $('#copyCanvasButton').click(function(){
-      paint.addCanvas(true);
-    });
-
-    $('#clearCanvasButton').click(function(){
-      paint.clearCanvas(true);
-    });
+  $('#selectToolButton').click(function(){
+    paint.deactivateTools();
+    paint.selectTool = true;
+  });
 
 
-    $('#selectToolButton').click(function(){
-      paint.deactivateTools();
-      paint.selectTool = true;
-    });
+  $('.colorBlock').click(function(){
+    paint.setColor($(this).prop("id"));
 
+    $('.colorBlock').removeClass("activeColor");
+    $(this).addClass("activeColor");
+  });
 
-    $('.colorBlock').click(function(){
-      paint.setColor($(this).prop("id"));
+  $('.sizeBlock').click(function(){
+      paint.setSize($(this).prop("id"));
 
-      $('.colorBlock').removeClass("activeColor");
+      $('.sizeBlock').removeClass("activeColor");
       $(this).addClass("activeColor");
-    });
+  });
 
-    $('.sizeBlock').click(function(){
-        paint.setSize($(this).prop("id"));
+  $('#saveButton').click(function() {
+      paint.saveImage(speech);
+  });
 
-        $('.sizeBlock').removeClass("activeColor");
-        $(this).addClass("activeColor");
-    });
-
-    $('#saveButton').click(function() {
-        paint.saveImage(speech);
-    });
-
-    $('#outlineButton').click(function() {
-      paint.getCurrentCanvasInstanz().outlinePoints();
-    });
+  $('#outlineButton').click(function() {
+    paint.getCurrentCanvasInstanz().outlinePoints();
+  });
 
 
-    $("#sizeSlider").slider({
-      value:4,
-      min: 1,
-      max: 40,
-      step: 4,
-      change: function( event, ui ) {
-          paint.setSize(ui.value);
-      }
-    });
+  $("#sizeSlider").slider({
+    value:4,
+    min: 1,
+    max: 40,
+    step: 4,
+    change: function( event, ui ) {
+        paint.setSize(ui.value);
+    }
+  });
 
-    $("#canvasSizeSlider").slider({
-      value:64,
-      min: 64,
-      max: 256,
-      step: 16,
-      slide: function( event, ui ) {
-        $('#sizeSample').css({width : ui.value, height: ui.value});
-        $('.canvas').css({width : ui.value, height: ui.value});
-        $('canvas').attr('width', ui.value).attr('height', ui.value);
-      }
-    });
+  $("#canvasSizeSlider").slider({
+    value:64,
+    min: 64,
+    max: 256,
+    step: 16,
+    slide: function( event, ui ) {
+      $('#sizeSample').css({width : ui.value, height: ui.value});
+      $('.canvas').css({width : ui.value, height: ui.value});
+      $('canvas').attr('width', ui.value).attr('height', ui.value);
+    }
+  });
 
-    $('#goToPaintButton').click(function() {
-      $('#introWrapper').hide();
-      $('#paintWrapper').show();
-    });
+  $('#goToPaintButton').click(function() {
+    $('#introWrapper').hide();
+    $('#paintWrapper').show();
+  });
 
 });
