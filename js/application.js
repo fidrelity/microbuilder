@@ -1,4 +1,4 @@
- Array.prototype.copy = function() {
+Array.prototype.copy = function() {
   var tempClone = [];
   for (var i = 0; i < this.length; i++) {
     tempClone.push(this[i]);
@@ -53,7 +53,7 @@ SpriteArea.prototype.redraw = function() {
 
     this.context.beginPath();
     this.context.rect(this.clickX[i], this.clickY[i], this.lineSizes[i], this.lineSizes[i]);
-    this.context.fillStyle = this.clickColor[i]; //"#8ED6FF";
+    this.context.fillStyle = this.clickColor[i];
     this.context.fill();
   }
 };
@@ -170,16 +170,16 @@ SpriteArea.prototype.flip = function(_direction) {
 // PAINT CLASS
 // ----------------------------------------
 Paint = function() {
-    this.paintObject    = $('#paints');
-    this.canvasObjects  =  $('.canvas');
-    this.canvasTemplate = $('#canvas-template');
-
-    this.shiftKey = false;
     this.init();
 };
 
 // ----------------------------------------
 Paint.prototype.init = function() {
+
+  this.paintObject    = $('#paints');
+  this.canvasObjects  = $('.canvas');
+  this.canvasTemplate = $('#canvas-template');
+
   this.color = "#df4b26";
   this.isPaint = false;
   this.lineWidth = 4;
@@ -298,8 +298,13 @@ Paint.prototype.mouseDown = function(e) {
 
 // ----------------------------------------
 Paint.prototype.mouseMove = function(e) {
-  if(this.isPaint){
-    var coordinates = this.getCooridnates(e);
+  var coordinates = this.getCooridnates(e);
+
+  var boxX = coordinates.x;
+  var boxY = coordinates.y;
+  //this.pencilShape.show().css({ 'position' : 'absolute', 'z-index': '8282', left: boxX, top: boxY});
+
+  if(this.isPaint) {
     this.addClick(coordinates.x, coordinates.y, true);
     this.getCurrentCanvasInstanz().redraw();
   }
@@ -312,8 +317,8 @@ Paint.prototype.mouseUp = function(e) {
 };
 
 Paint.prototype.getCooridnates = function(e) {
-  var x = this.isZoom ? e.pageX - 20 : e.pageX - this.getCurrentCanvasDom().offset().left;
-  var y = this.isZoom ? e.pageY - 20 : e.pageY - this.getCurrentCanvasDom().offset().top;
+  var x = e.pageX - this.getCurrentCanvasDom().offset().left;
+  var y = e.pageY - this.getCurrentCanvasDom().offset().top;
 
   gridX = Math.floor(x / this.gridSize);
   gridY = Math.floor(y / this.gridSize);
@@ -394,18 +399,18 @@ Paint.prototype.removeCanvas = function(spriteArea) {
 Paint.prototype.switchView = function() {
   if(this.spriteAreas.length == 1) return false;
 
-  if($('.canvas').hasClass('canvas-over'))
+  if(this.canvasObjects.hasClass('canvas-over'))
     this.floatSprites();
   else
     this.overSprites();
 };
 
 Paint.prototype.floatSprites = function() {
-  $('.canvas').removeClass('canvas-over').addClass('canvas-float');
+  this.canvasObjects.removeClass('canvas-over').addClass('canvas-float');
 };
 
 Paint.prototype.overSprites = function() {
-  $('.canvas').removeClass('canvas-float').addClass('canvas-over');
+  this.canvasObjects.removeClass('canvas-float').addClass('canvas-over');
 };
 
 Paint.prototype.closeOutlineBox = function() {
@@ -421,12 +426,12 @@ Paint.prototype.play = function() {
 };
 
 Paint.prototype.showFrame = function() {
-  $('.canvas').hide();
-  $('.canvas').eq(this.currentCanvasIndex).show();
+  this.canvasObjects.hide();
+  this.canvasObjects.eq(this.currentCanvasIndex).show();
 
   if($('.canvas:visible').index() == this.spriteAreas.length) {
     clearTimeout(this.playInterval);
-    $('.canvas').not('#canvas-template').show();
+    this.canvasObjects.not('#canvas-template').show();
     return false;
   }
 
@@ -466,12 +471,8 @@ Paint.prototype.keyEvent = function(e) {
 // ----------------------------------------
 Paint.prototype.saveImage = function(_speech, _author) {
   if(this.clickX.length < 50) {
-      alert("Sorry, but it seems you didn't draw something!"); return false;
+      alert("Sorry, but it seems you didn't draw anything!"); return false;
   }
-  if(!_author) {
-      alert("Please enter your name!"); return false;
-  }
-
   //var img = this.canvas.toDataURL("image/png");
   //document.write('<img src="'+img+'"/>');
 
@@ -510,7 +511,6 @@ $(document).ready(function() {
     paint.clearCanvas(true);
   });
 
-
   $('#selectToolButton').click(function(){
     paint.deactivateTools();
     paint.selectTool = true;
@@ -541,7 +541,7 @@ $(document).ready(function() {
 
 
   $("#sizeSlider").slider({
-    value:4,
+    value: paint.lineWidth,
     min: 1,
     max: 40,
     step: 4,
