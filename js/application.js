@@ -1,15 +1,15 @@
  Array.prototype.copy = function() {
-        var tempClone = [];
-        for (var i = 0; i < this.length; i++) {
-          tempClone.push(this[i]);
-        }
-        return tempClone;
+  var tempClone = [];
+  for (var i = 0; i < this.length; i++) {
+    tempClone.push(this[i]);
+  }
+  return tempClone;
 };
 Array.max = function( array ){
-    return Math.max.apply( Math, array );
+  return Math.max.apply( Math, array );
 };
 Array.min = function( array ){
-    return Math.min.apply( Math, array );
+  return Math.min.apply( Math, array );
 };
 
 // ---------------------------------------
@@ -181,41 +181,41 @@ Paint = function(_canvas) {
 
 // ----------------------------------------
 Paint.prototype.init = function() {
-    this.color = "#df4b26";
-    this.isPaint = false;
-    this.lineWidth = 5;
-    this.gridSize = 4;
+  this.color = "#df4b26";
+  this.isPaint = false;
+  this.lineWidth = 5;
+  this.gridSize = 4;
 
-    this.isZoom = false;
-    this.spriteAreas = [];
-    this.addCanvas();
+  this.isZoom = false;
+  this.spriteAreas = [];
+  this.addCanvas();
 
-    this.playInterval = null;
-    this.playDelay = 100;
-    // Dom Ojects
-    this.toolButtons = $('.tool');
-    this.pencilToolButton = $('#pencilToolButton');
-    this.zoomInButton = $('#zoomInButton');
-    this.eraserToolButton = $('#eraserToolButton');
-    this.flivVButton = $('#flipvButton');
-    // Events
-    this.canvasObjects.live("mousedown",  $.proxy(this.mouseDown, this));
-    this.canvasObjects.live("mousemove",  $.proxy(this.mouseMove, this));
-    this.canvasObjects.live("mouseup",    $.proxy(this.mouseUp, this));
-    this.canvasObjects.live("mouseleave", $.proxy(this.mouseUp, this));
-    //
-    this.toolButtons.live("click", $.proxy(this.highlightTool, this));
-    this.pencilToolButton.live("click", $.proxy(this.activatePaintTool, this));
-    this.eraserToolButton.live("click", $.proxy(this.activateEraserTool, this));
-    this.zoomInButton.live("click", $.proxy(this.zoomIn, this));
-    $('#undoButton').live("click", $.proxy(this.undo, this));
-    this.flivVButton.live("click", $.proxy(this.flipV, this));
-    // Key
-    $(document).keydown($.proxy(this.keyEvent, this));
-    //
-    this.deactivateTools();
-    this.activatePaintTool();
-    this.pencilToolButton.addClass('active-tool');
+  this.playInterval = null;
+  this.playDelay = 100;
+  // Dom Ojects
+  this.toolButtons = $('.tool');
+  this.pencilToolButton = $('#pencilToolButton');
+  this.zoomInButton = $('#zoomInButton');
+  this.eraserToolButton = $('#eraserToolButton');
+  this.flivVButton = $('#flipvButton');
+  // Events
+  this.canvasObjects.live("mousedown",  $.proxy(this.mouseDown, this));
+  this.canvasObjects.live("mousemove",  $.proxy(this.mouseMove, this));
+  this.canvasObjects.live("mouseup",    $.proxy(this.mouseUp, this));
+  this.canvasObjects.live("mouseleave", $.proxy(this.mouseUp, this));
+  //
+  this.toolButtons.live("click", $.proxy(this.highlightTool, this));
+  this.pencilToolButton.live("click", $.proxy(this.activatePaintTool, this));
+  this.eraserToolButton.live("click", $.proxy(this.activateEraserTool, this));
+  this.zoomInButton.live("click", $.proxy(this.zoomIn, this));
+  $('#undoButton').live("click", $.proxy(this.undo, this));
+  this.flivVButton.live("click", $.proxy(this.flipV, this));
+  // Key
+  $(document).keydown($.proxy(this.keyEvent, this));
+  //
+  this.deactivateTools();
+  this.activatePaintTool();
+  this.pencilToolButton.addClass('active-tool');
 };
 
 // ---------------------------------------
@@ -300,11 +300,11 @@ Paint.prototype.mouseDown = function(e) {
 
 // ----------------------------------------
 Paint.prototype.mouseMove = function(e) {
-    if(this.isPaint){
-      var coordinates = this.getCooridnates(e);
-      this.addClick(coordinates.x, coordinates.y, true);
-      this.getCurrentCanvasInstanz().redraw();
-    }
+  if(this.isPaint){
+    var coordinates = this.getCooridnates(e);
+    this.addClick(coordinates.x, coordinates.y, true);
+    this.getCurrentCanvasInstanz().redraw();
+  }
 };
 
 // ----------------------------------------
