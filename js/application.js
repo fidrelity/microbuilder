@@ -35,7 +35,7 @@ var SpriteArea = function(_id, _index, _sourceCanvas) {
 SpriteArea.prototype.redraw = function() {
   //this.clearCanvas();
   //this.context.lineJoin = "round";
-
+ 
   for(var i=0; i < this.clickX.length; i++)
   {
     /*
@@ -177,6 +177,7 @@ Paint = function(_canvas) {
 
     this.shiftKey = false;
     this.init();
+       
 };
 
 // ----------------------------------------
@@ -187,8 +188,9 @@ Paint.prototype.init = function() {
 
     this.isZoom = false;
     this.spriteAreas = [];
+    this.webGLRenderer = new WebGLRenderer();
     this.addCanvas();
-
+    
     this.playInterval = null;
     this.playDelay = 100;
     // Dom Ojects
@@ -215,11 +217,13 @@ Paint.prototype.init = function() {
     this.deactivateTools();
     this.activatePaintTool();
     this.pencilToolButton.addClass('active-tool');
+    
 };
 
 // ---------------------------------------
 Paint.prototype.setCurrentCanvas = function(_id) {
   this.currentCanvas = _id;
+  this.webGLRenderer.setTexture(this.getCurrentCanvasInstanz());
   this.setFocus();
 };
 
