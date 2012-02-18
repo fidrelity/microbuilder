@@ -4,7 +4,7 @@
 var ColorPalette = {
   domWrapper  : $('#palette'),
   domColorDiv : $('.colorBlock'),
-  colors      : [ '000000', 'FFFFFF', '333333', '8A662D', 'FFEA05', 'FF1A00', 'CC0000', 'FF7400', 'C79810', '73880A', '008C00', '006E2E', '4096EE', '356AA0', '3F4C6B', 'FF0084]' ],
+  colors      : [ '000000', 'FFFFFF', '333333', '8A662D', 'FFEA05', 'FF1A00', 'CC0000', 'FF7400', 'C79810', '73880A', '008C00', '006E2E', '4096EE', '356AA0', '3F4C6B', 'FF0084' ],
   activeClass : 'activeColor',
   currentColor : null,
 
@@ -28,7 +28,7 @@ var ColorPalette = {
   },
 
   setColor : function(_color) {
-    if(!_color) return false;
+    if(!_color || ColorPalette.colors.indexOf(_color) < 0) return false;
     ColorPalette.currentColor = _color.substr(1) != '#' ? '#' + _color : _color;
 
     ColorPalette.domColorDiv.removeClass(ColorPalette.activeClass);

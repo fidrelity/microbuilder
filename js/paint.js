@@ -329,7 +329,7 @@ $(document).ready(function() {
   Paint.init();
 
   $('#playButton').click(function(){
-      Paint.play();
+    Paint.play();
   });
 
   $('#switchViewButton').click(function(){
@@ -354,7 +354,7 @@ $(document).ready(function() {
   });
 
   $('#outlineButton').click(function() {
-    paint.getCurrentCanvasInstanz().outlinePoints();
+    Paint.getCurrentCanvasInstanz().outlinePoints();
   });
 
 
