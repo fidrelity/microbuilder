@@ -12,6 +12,8 @@ Array.min = function( array ){
     return Math.min.apply( Math, array );
 };
 
+console.log(11 % 4);
+
 // ---------------------------------------
 // SPRITEAREA CLASS
 // ---------------------------------------
@@ -184,6 +186,7 @@ Paint.prototype.init = function() {
     this.color = "#df4b26";
     this.isPaint = false;
     this.lineWidth = 5;
+    this.gridSize = 4;
 
     this.isZoom = false;
     this.spriteAreas = [];
@@ -281,21 +284,19 @@ Paint.prototype.flipV = function() {
 // ----------------------------------------
 Paint.prototype.mouseDown = function(e) {
   this.setCurrentCanvas(e.currentTarget.id);
-
-  var x = this.isZoom ? e.pageX - 20 : e.pageX - this.getCurrentCanvasDom().offset().left;
-  var y = this.isZoom ? e.pageY - 20 : e.pageY - this.getCurrentCanvasDom().offset().top;
+  var coordinates = this.getCooridnates(e);
   var currentInstanz = this.getCurrentCanvasInstanz();
 
   if(this.paintTool) {
     this.isPaint = true;
     //console.log(x, y, this.getCurrentCanvasDom().offset().left, this.getCurrentCanvasDom().position().left, this.getCurrentCanvasDom().css('right'));
     currentInstanz.lastPaintIndex = currentInstanz.clickX.length;
-    this.addClick(x, y);
+    this.addClick(coordinates.x, coordinates.y);
     currentInstanz.redraw();
   }
 
   if(this.eraserTool) {
-    currentInstanz.eraseArea(x , y);
+    currentInstanz.eraseArea(coordinates.x, coordinates.y);
   }
   this.closeOutlineBox();
 };
@@ -303,9 +304,18 @@ Paint.prototype.mouseDown = function(e) {
 // ----------------------------------------
 Paint.prototype.mouseMove = function(e) {
     if(this.isPaint){
+      /*
       var x = this.isZoom ? e.pageX - 20 : e.pageX - this.getCurrentCanvasDom().offset().left;
       var y = this.isZoom ? e.pageY - 20 : e.pageY - this.getCurrentCanvasDom().offset().top;
-      this.addClick(x, y, true);
+
+      gridX = Math.floor(x / this.gridSize);
+      gridY = Math.floor(y / this.gridSize);
+
+      x = gridX * this.gridSize;
+      y = gridY * this.gridSize;
+      */
+      var coordinates = this.getCooridnates(e);
+      this.addClick(coordinates.x, coordinates.y, true);
       this.getCurrentCanvasInstanz().redraw();
     }
 };
@@ -314,6 +324,19 @@ Paint.prototype.mouseMove = function(e) {
 Paint.prototype.mouseUp = function(e) {
   this.isPaint = false;
   this.getCurrentCanvasInstanz().undoArray.push(new Array(this.getCurrentCanvasInstanz().lastPaintIndex, this.getCurrentCanvasInstanz().clickX.length));
+};
+
+Paint.prototype.getCooridnates = function(e) {
+  var x = this.isZoom ? e.pageX - 20 : e.pageX - this.getCurrentCanvasDom().offset().left;
+  var y = this.isZoom ? e.pageY - 20 : e.pageY - this.getCurrentCanvasDom().offset().top;
+
+  gridX = Math.floor(x / this.gridSize);
+  gridY = Math.floor(y / this.gridSize);
+
+  x = gridX * this.gridSize;
+  y = gridY * this.gridSize;
+
+  return {x: x, y: y};
 };
 
 // ----------------------------------------
@@ -549,10 +572,10 @@ $(document).ready(function() {
 
 
     $("#sizeSlider").slider({
-      value:5,
+      value:4,
       min: 1,
       max: 40,
-      step: 1,
+      step: 4,
       change: function( event, ui ) {
           paint.setSize(ui.value);
       }
