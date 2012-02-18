@@ -170,14 +170,13 @@ SpriteArea.prototype.flip = function(_direction) {
 // ----------------------------------------
 // PAINT CLASS
 // ----------------------------------------
-Paint = function(_canvas) {
+Paint = function() {
     this.paintObject    = $('#paints');
     this.canvasObjects  =  $('.canvas');
     this.canvasTemplate = $('#canvas-template');
 
     this.shiftKey = false;
     this.init();
-
 };
 
 // ----------------------------------------
@@ -189,6 +188,7 @@ Paint.prototype.init = function() {
 
   this.isZoom = false;
   this.spriteAreas = [];
+  this.webGLRenderer = new WebGLRenderer();
   this.addCanvas();
 
   this.playInterval = null;
@@ -196,7 +196,6 @@ Paint.prototype.init = function() {
   // Dom Ojects
   this.toolButtons = $('.tool');
   this.pencilToolButton = $('#pencilToolButton');
-  this.zoomInButton = $('#zoomInButton');
   this.eraserToolButton = $('#eraserToolButton');
   this.flivVButton = $('#flipvButton');
   // Events
@@ -208,7 +207,6 @@ Paint.prototype.init = function() {
   this.toolButtons.live("click", $.proxy(this.highlightTool, this));
   this.pencilToolButton.live("click", $.proxy(this.activatePaintTool, this));
   this.eraserToolButton.live("click", $.proxy(this.activateEraserTool, this));
-  this.zoomInButton.live("click", $.proxy(this.zoomIn, this));
   $('#undoButton').live("click", $.proxy(this.undo, this));
   this.flivVButton.live("click", $.proxy(this.flipV, this));
   // Key
@@ -267,7 +265,6 @@ Paint.prototype.activatePaintTool = function() {
 };
 
 Paint.prototype.activateEraserTool = function() {
-  console.log('erase')
   this.deactivateTools();
   this.eraserTool = true;
 };
@@ -402,7 +399,7 @@ Paint.prototype.switchView = function() {
     this.floatSprites();
   else
     this.overSprites();
-}
+};
 
 Paint.prototype.floatSprites = function() {
   $('.canvas').removeClass('canvas-over').addClass('canvas-float');
@@ -414,21 +411,6 @@ Paint.prototype.overSprites = function() {
 
 Paint.prototype.closeOutlineBox = function() {
   $('#outlineBox').hide();
-};
-
-Paint.prototype.zoomIn = function() {
-  this.isZoom = true;
-  this.canvasOffsetLeft = this.getCurrentCanvasDom().offset().left;
-  this.canvasOffsetTop = this.getCurrentCanvasDom().offset().top;
-
-  zoom.in({
-    element: document.querySelector('#' + this.getCurrentCanvasDom().attr('id'))
-  });
-};
-
-Paint.prototype.zoomOut = function() {
-  zoom.out();
-  this.isZoom = false;
 };
 
 //
@@ -453,7 +435,7 @@ Paint.prototype.showFrame = function() {
 
   var that = this;
   this.playInterval = setTimeout(function(){ that.showFrame() }, this.playDelay);
-}
+};
 
 // ----------------------------------------
 Paint.prototype.addClick = function(_x, _y, _dragging) {
@@ -507,7 +489,7 @@ Paint.prototype.saveImage = function(_speech, _author) {
 
 // ----------------------------------------
 $(document).ready(function() {
-  var paint = new Paint('#canvas1');
+  var paint = new Paint();
 
   $('#playButton').click(function(){
       paint.play();
@@ -565,7 +547,7 @@ $(document).ready(function() {
     max: 40,
     step: 4,
     change: function( event, ui ) {
-        paint.setSize(ui.value);
+      paint.setSize(ui.value);
     }
   });
 
@@ -573,11 +555,11 @@ $(document).ready(function() {
     value:64,
     min: 64,
     max: 256,
-    step: 16,
+    step: 64,
     slide: function( event, ui ) {
       $('#sizeSample').css({width : ui.value, height: ui.value});
       $('.canvas').css({width : ui.value, height: ui.value});
-      $('canvas').attr('width', ui.value).attr('height', ui.value);
+      $('.canvas').attr('width', ui.value).attr('height', ui.value);
     }
   });
 
