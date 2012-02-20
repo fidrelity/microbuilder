@@ -14,6 +14,7 @@ var Paint = {
     // Init other classes
     ColorPalette.init();
     Paint.webGLRenderer = new WebGLRenderer();
+    Paint.pixelDrawer = new PixelDrawer();
 
     // Init vars with default value
     Paint.isPaint       = false;
@@ -41,7 +42,7 @@ var Paint = {
     $('#addCanvasButton').click(function(){ Paint.addCanvas(); });
     $('#copyCanvasButton').click(function(){ Paint.addCanvas(true); });
     $('#clearCanvasButton').click(function(){ Paint.clearCanvas(true);});
-    $('#outlineButton').click(function(){ Paint.getCurrentCanvasInstanz().outlinePoints();});
+    $('#outlineButton').click(function(){ Paint.getCurrentSpriteAreaInstance().outlinePoints();});
     $('#selectToolButton').click(function(){ Paint.deactivateTools(); Paint.selectTool = true;});
     // Slider
     $("#sizeSlider").slider({
@@ -100,11 +101,12 @@ var Paint = {
     Paint.setCurrentCanvas(e.currentTarget.id);
     Paint.closeOutlineBox();
 
-    var coordinates = Paint.getCooridnates(e);
-    var currentInstanz = Paint.getCurrentCanvasInstanz();
+    var coordinates = Paint.getCoordinates(e);
+    var currentInstanz = Paint.getCurrentSpriteAreaInstance();
 
     // Draw with pencil
     if(Paint.paintTool) {
+      
       Paint.isPaint = true;
       currentInstanz.lastPaintIndex = currentInstanz.clickX.length;
       Paint.addClick(coordinates.x, coordinates.y);
@@ -120,18 +122,18 @@ var Paint = {
 
   //
   mouseMove : function(e) {
-    var coordinates = Paint.getCooridnates(e);
+    var coordinates = Paint.getCoordinates(e);
 
     if(Paint.isPaint) {
       Paint.addClick(coordinates.x, coordinates.y, true);
-      Paint.getCurrentCanvasInstanz().redraw();
+      Paint.getCurrentSpriteAreaInstance().redraw();
     }
   },
 
   //
   mouseUp : function(e) {
     Paint.isPaint = false;
-    Paint.getCurrentCanvasInstanz().undoArray.push(new Array(Paint.getCurrentCanvasInstanz().lastPaintIndex, Paint.getCurrentCanvasInstanz().clickX.length));
+    Paint.getCurrentSpriteAreaInstance().undoArray.push(new Array(Paint.getCurrentSpriteAreaInstance().lastPaintIndex, Paint.getCurrentSpriteAreaInstance().clickX.length));
   },
 
   // ----------------------------------------
@@ -168,20 +170,20 @@ var Paint = {
   },
 
   addClick : function(_x, _y, _dragging) {
-    var centerize = (Paint.lineWidth / 2);
-    Paint.getCurrentCanvasInstanz().clickX.push(_x - centerize);
-    Paint.getCurrentCanvasInstanz().clickY.push(_y - centerize);
-    Paint.getCurrentCanvasInstanz().clickDrag.push(_dragging);
-    Paint.getCurrentCanvasInstanz().clickColor.push(ColorPalette.currentColor);
-    Paint.getCurrentCanvasInstanz().lineSizes.push(Paint.lineWidth);
+    var centerize = Math.floor(Paint.lineWidth / 2);
+    Paint.getCurrentSpriteAreaInstance().clickX.push(_x - centerize);
+    Paint.getCurrentSpriteAreaInstance().clickY.push(_y - centerize);
+    Paint.getCurrentSpriteAreaInstance().clickDrag.push(_dragging);
+    Paint.getCurrentSpriteAreaInstance().clickColor.push(ColorPalette.currentColor);
+    Paint.getCurrentSpriteAreaInstance().lineSizes.push(Paint.lineWidth);
   },
 
   undo : function() {
-    Paint.getCurrentCanvasInstanz().undo();
+    Paint.getCurrentSpriteAreaInstance().undo();
   },
 
   clearCanvas : function(_reset) {
-    var spriteArea = Paint.getCurrentCanvasInstanz();
+    var spriteArea = Paint.getCurrentSpriteAreaInstance();
 
     if(spriteArea.lineSizes.length == 0)
       Paint.removeCanvas(spriteArea);
@@ -206,7 +208,7 @@ var Paint = {
   // Canvas Operations
 
   flipV : function() {
-    Paint.getCurrentCanvasInstanz().flip(-1);
+    Paint.getCurrentSpriteAreaInstance().flip(-1);
   },
 
   switchView : function() {
@@ -290,7 +292,7 @@ var Paint = {
   // GETTER and SETTER
   // ----------------------------------------
   // Get Mouse Coordinates and return nears grid point
-  getCooridnates : function(e) {
+  getCoordinates : function(e) {
     var x = e.pageX - Paint.getCurrentCanvasDom().offset().left;
     var y = e.pageY - Paint.getCurrentCanvasDom().offset().top;
 
@@ -313,13 +315,14 @@ var Paint = {
   //
   setCurrentCanvas : function(_id) {
     Paint.currentCanvas = _id;
-    Paint.webGLRenderer.setTexture(Paint.getCurrentCanvasInstanz());
+    Paint.pixelDrawer.setCanvasContext(Paint.getCurrentCanvasDom()[0]);
+    Paint.webGLRenderer.setTexture(Paint.getCurrentCanvasDom()[0]);
     Paint.setFocus();
   },
 
   // Returns current canvas as instanz
-  getCurrentCanvasInstanz : function() {
-    return Paint.getCanvasById(Paint.currentCanvas);
+  getCurrentSpriteAreaInstance : function() {
+    return Paint.getSpriteAreaByID(Paint.currentCanvas);
   },
 
   // Returns current canvas as DOM object
@@ -328,7 +331,7 @@ var Paint = {
   },
 
   // Returns SpriteArea instanz - searched by id
-  getCanvasById : function(_id) {
+  getSpriteAreaByID : function(_id) {
     for (var i = Paint.spriteAreas.length - 1; i >= 0; i--) {
       var area = Paint.spriteAreas[i];
       if(area.id == _id)
@@ -341,7 +344,7 @@ var Paint = {
   setFocus : function() {
     $('.canvas').removeClass('canvas-selected');
     Paint.getCurrentCanvasDom().addClass('canvas-selected');
-  },
+  }
 };
 
 // ----------------------------------------

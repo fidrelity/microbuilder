@@ -21,6 +21,8 @@ var SpriteArea = function(_id, _index) {
 SpriteArea.prototype.redraw = function() {
   //this.clearCanvas();
   //this.context.lineJoin = "round";
+  
+  Paint.pixelDrawer.popImageData();
   for(var i=0; i < this.clickX.length; i++)
   {
     /*
@@ -36,12 +38,17 @@ SpriteArea.prototype.redraw = function() {
       this.context.lineWidth = this.lineSizes[i];
       this.context.stroke();
     */
-
-    this.context.beginPath();
-    this.context.rect(this.clickX[i], this.clickY[i], this.lineSizes[i], this.lineSizes[i]);
-    this.context.fillStyle = this.clickColor[i];
-    this.context.fill();
+    
+    
+    //Paint.pixelDrawer.putPixel(coordinates.x,coordinates.y, this.clickColor[i]);
+    Paint.pixelDrawer.fillRect(this.clickX[i], this.clickY[i], this.lineSizes[i], this.lineSizes[i], this.clickColor[i]);
+    
+   // this.context.beginPath();
+   // this.context.rect(this.clickX[i], this.clickY[i], this.lineSizes[i], this.lineSizes[i]);
+   // this.context.fillStyle = this.clickColor[i];
+   // this.context.fill();
   }
+  Paint.pixelDrawer.pushImageData();
 };
 //
 SpriteArea.prototype.clearCanvas = function(_reset) {

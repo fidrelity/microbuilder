@@ -53,10 +53,10 @@ WebGLRenderer.prototype.initTextures = function() {
  // this.texture.image.src = "fhslogo.png";
 };
 
-WebGLRenderer.prototype.setTexture = function(container) {
-  if(container) {
-    this.initTextureParameters(container.canvas);
-  }
+WebGLRenderer.prototype.setTexture = function(_canvas) {
+    if(_canvas.width > 0 && _canvas.height > 0) {
+      this.initTextureParameters(_canvas);
+    }
 };
 
 WebGLRenderer.prototype.initTextureParameters = function(canvas)  {
