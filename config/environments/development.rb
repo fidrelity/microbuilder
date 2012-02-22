@@ -34,4 +34,8 @@ Microbuilder::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  
+  #Facebook Key and Secret
+  FACEBOOK_ID = '392913504057961'
+  FACEBOOK_SECRET = '236e82c66d6b97dd23422df19680db27'
 end
