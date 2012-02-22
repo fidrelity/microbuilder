@@ -1,0 +1,20 @@
+---
+applications:
+  .:
+    name: microbuilder
+    url: ${name}.${target-base}
+    framework:
+      name: rails3
+      info:
+        mem: 256M
+        description: Rails Application
+        exec: 
+    mem: 256M
+    instances: 1
+    services:
+      mongodb-d153f:
+        type: mongodb
+      mysql-61bf3:
+        type: mysql
+      postgresql-32354:
+        type: postgresql
