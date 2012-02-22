@@ -1,0 +1,17 @@
+%section{:class => "gameeditor"}
+	%div{:id => "tabs"}
+		%ul{:class => "tabbednav"}
+			%li
+				=link_to "tab eins", "#tabs-1"
+			%li
+				=link_to "tab zwei", "#tabs-2"
+			%li
+				=link_to "tab drei", "#tabs-3"
+				
+		.clear
+		%div{:id => "tabs-1"}
+			=render :partial => "meta_content"
+		%div{:id => "tabs-2"}
+			=render :partial => "objects_content"
+		%div{:id => "tabs-3"}
+			=render :partial => "test_content"

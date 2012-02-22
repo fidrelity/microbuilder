@@ -1,17 +1,60 @@
 $bg: #fff;
 $font: #000;
 
+html, body {
+	padding: 0px;
+	margin: 0px;
+	text-decoration:none;
+	border:none 0px;
+}
+
 body {
 	background: $bg;
 	color: $font;
 }
 
 img#logo {
-	float:left;
+	float: left;
 }
 
 .clear {
 	clear: both;
+}
+
+section.combs {
+	background: url('cones.png') top left no-repeat;
+}
+
+section.canvas {
+	width:100%;
+}
+
+section.gameeditor {
+	border: 1px solid #000;
+	width: 900px;
+}
+
+section.gameeditor .content {
+	width: 800px;
+	height: 600px;
+	margin: 10px;
+	border: 1px solid #000;
+}
+
+section.editor_content {
+	//display:none;
+}
+
+.meta_content input {
+	margin: 20px;
+}
+
+ul.tabbednav {
+	list-style:none;
+}
+
+ul.tabbednav li {
+	float:left;
 }
 
 ul#nav {
