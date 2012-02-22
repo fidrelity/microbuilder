@@ -40,7 +40,7 @@
             cursor: crosshair;
         }
         .canvas-over  { position:absolute; background: rgba(255, 255, 255, 0.9); }
-        .canvas-float { position:relative; }
+        .canvas-float { position:relative; float:left; }
         .canvas-selected { border:1px solid #4096EE;}
 
         #canvas-template { display:none; }
@@ -72,6 +72,8 @@
             overflow:hidden;
             position:relative;
         }
+
+        #stopButton { display: none;}
 
         .active-tool {
             background:#028132;
@@ -108,7 +110,7 @@
     <div id="paints">
         <div id="outlineBox"></div>
         <canvas id="canvas-template" class="canvas canvas-over" width="64" height="64"></canvas>
-    </div>
+    </div> <!-- canvas -->
     <div id="zoomCanvasWrapper">
          <canvas id="webglCanvas" width="256" height="256"></canvas>
     </div>
@@ -128,6 +130,8 @@
       <p>
           <input type="text" id="playDelay" value="100" size="2">
           <input type="button" id="playButton" value="Play">
+          <input type="button" id="stopButton" value="Stop">
+          <input type="checkbox" value="1" id="replayLoop"> Loop
       </p>
       <p>
           <input type="button" id="selectToolButton" class="tool" value="Selector">

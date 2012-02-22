@@ -36,14 +36,19 @@ var Paint = {
     Paint.pencilToolButton.live("click", $.proxy(Paint.activatePaintTool, Paint));
     $('#eraserToolButton').live("click", $.proxy(Paint.activateEraserTool, Paint));
     $('#flipvButton').live("click", $.proxy(Paint.flipV, Paint));
-    $('#undoButton').live("click", $.proxy(Paint.undo, Paint));
-    $('#playButton').click(function(){ Paint.play(); });
+    $('#undoButton').live("click", $.proxy(Paint.undo, Paint));    
     $('#switchViewButton').click(function(){ Paint.switchView(); });
     $('#addCanvasButton').click(function(){ Paint.addCanvas(); });
     $('#copyCanvasButton').click(function(){ Paint.addCanvas(true); });
     $('#clearCanvasButton').click(function(){ Paint.clearCanvas(true);});
     $('#outlineButton').click(function(){ Paint.getCurrentSpriteAreaInstance().outlinePoints();});
     $('#selectToolButton').click(function(){ Paint.deactivateTools(); Paint.selectTool = true;});
+
+    $('#playButton').click(function(){ Paint.initPlay(); });
+    $('#stopButton').click(function(){ Paint.stopAnimation(); });
+    $("playDelay").change(function(){ Paint.playDelay = parseInt($(this).val());  });
+
+    
     // Slider
     $("#sizeSlider").slider({
       value: Paint.lineWidth, min: 1, max: 40, step: 4,
@@ -165,7 +170,7 @@ var Paint = {
       spriteArea.clickColor = clickColor;
       spriteArea.lineSizes  = lineSizes;
     }
-
+    Paint.canvasObjects = $(".canvas");
     Paint.spriteAreas.push(spriteArea);
   },
 
@@ -196,23 +201,25 @@ var Paint = {
   removeCanvas : function(spriteArea) {
     if(Paint.spriteAreas.length == 1) return false;
 
-    var prev = $('#' + spriteArea.id).prev();
-    Paint.setCurrentCanvas(prev.prop('id'));
-
     var index = spriteArea.index;
     Paint.getCurrentCanvasDom().remove();
     Paint.spriteAreas.splice(index, 1);
+
+    var prev = $('#' + spriteArea.id).prev();
+    Paint.setCurrentCanvas(prev.prop('id'));
   },
 
   // ----------------------------------------
   // Canvas Operations
-
   flipV : function() {
     Paint.getCurrentSpriteAreaInstance().flip(-1);
   },
 
+  // ----------------------------------------
   switchView : function() {
     if(Paint.spriteAreas.length == 1) return false;
+
+    Paint.closeOutlineBox();
 
     if(Paint.canvasObjects.hasClass('canvas-over'))
       Paint.floatSprites();
@@ -232,28 +239,47 @@ var Paint = {
     $('#outlineBox').hide();
   },
 
-  //
-  play : function() {
+  // ----------------------------------------
+  initPlay : function() {
     Paint.overSprites();
-    Paint.currentCanvasIndex = 1;
+    $('#playButton').hide();
+    $('#stopButton').show();
+    Paint.play();
+  },
+
+  play : function() {
+    Paint.currentCanvasIndex = 0;
     Paint.playDelay = parseInt($('#playDelay').val());
     Paint.showFrame();
   },
 
   showFrame : function() {
     Paint.canvasObjects.hide();
-    Paint.canvasObjects.eq(Paint.currentCanvasIndex).show();
 
-    if($('.canvas:visible').index() == Paint.spriteAreas.length) {
-      clearTimeout(Paint.playInterval);
-      Paint.canvasObjects.not('#canvas-template').show();
-      return false;
+    var canvasObjects = $('.canvas').not('#canvas-template');
+    canvasObjects.eq(Paint.currentCanvasIndex).show();
+
+    if(Paint.currentCanvasIndex == Paint.spriteAreas.length) {
+      // Loop
+      if($("#replayLoop").is(":checked")) {
+        Paint.play();
+        return false;
+      // End
+      } else {        
+        Paint.stopAnimation();
+        return false;
+      }
     }
 
     Paint.currentCanvasIndex++;
+    Paint.playInterval = setTimeout(function(){ Paint.showFrame() }, Paint.playDelay);    
+  },
 
-    var that = Paint;
-    Paint.playInterval = setTimeout(function(){ that.showFrame() }, Paint.playDelay);
+  stopAnimation : function() {
+    clearTimeout(Paint.playInterval);
+    Paint.canvasObjects.not('#canvas-template').show();
+    $('#playButton').show();
+    $('#stopButton').hide();
   },
 
   // ----------------------------------------

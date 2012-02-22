@@ -14,7 +14,7 @@ PixelDrawer = function(_canvas) {
 
 PixelDrawer.prototype.setCanvasContext = function(_canvas) {
   this.canvas = _canvas;
-  this.context = _canvas.getContext("2d");    
+  this.context = _canvas.getContext("2d");
 }
 
 PixelDrawer.prototype.putPixel = function (_x, _y, _color) {

@@ -18,12 +18,19 @@ var SpriteArea = function(_id, _index) {
   this.lineSizes  = [];
 };
 //
-SpriteArea.prototype.redraw = function() {
+SpriteArea.prototype.redraw = function(_drawAll) {
   //this.clearCanvas();
   //this.context.lineJoin = "round";
-  
+  var lastIndex = 0;
+  if(!_drawAll) {
+    lastIndex = this.undoArray.length > 0 ? this.undoArray[this.undoArray.length - 1][0] : 0;
+  } else {
+    this.clearCanvas();
+  }
+
+
   Paint.pixelDrawer.popImageData();
-  for(var i=0; i < this.clickX.length; i++)
+  for(var i = lastIndex; i < this.clickX.length; i++)
   {
     /*
       this.context.beginPath();
@@ -59,6 +66,7 @@ SpriteArea.prototype.clearCanvas = function(_reset) {
       this.clickDrag = [];
       this.clickColor = [];
       this.lineSizes = [];
+      this.undoArray = [];
   }
 };
 
@@ -120,21 +128,21 @@ SpriteArea.prototype.undo = function() {
   this.clickDrag.splice(startIndex, stopIndex);
   this.clickColor.splice(startIndex, stopIndex);
   this.lineSizes.splice(startIndex, stopIndex);
-  this.clearCanvas();
-  this.redraw();
+  this.redraw(true);
 };
 
-SpriteArea.prototype.flip = function(_direction) {
-  console.log("d");
+SpriteArea.prototype.flip = function(_direction) {  
+  //this.redraw(true);
+
   //var img = this.context.getImageData(0,0,this.canvas.width, this.canvas.height);
-  this.context.save();
+  //this.context.save();
   // Multiply the y value by -1 to flip vertically
-  this.context.scale(-1, 1);
+  //this.context.scale(-1, 1);
   //this.redraw();
   //var imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
   //var data = imageData.data;
   //this.context.drawImage(this.canvas, 0, 0);
   // Start at (0, -height), which is now the bottom-left corner
   //this.context.drawImage(img, 0, -img.height);
-  this.context.restore();
+  //this.context.restore();
 };
