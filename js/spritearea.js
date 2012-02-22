@@ -19,41 +19,18 @@ var SpriteArea = function(_id, _index) {
 };
 //
 SpriteArea.prototype.redraw = function(_drawAll) {
-  //this.clearCanvas();
-  //this.context.lineJoin = "round";
+  var drawAll = _drawAll || false;
+
   var lastIndex = 0;
-  if(!_drawAll) {
+  if(!drawAll) {
     lastIndex = this.undoArray.length > 0 ? this.undoArray[this.undoArray.length - 1][0] : 0;
   } else {
     this.clearCanvas();
   }
 
-
   Paint.pixelDrawer.popImageData();
-  for(var i = lastIndex; i < this.clickX.length; i++)
-  {
-    /*
-      this.context.beginPath();
-      if(this.clickDrag[i] && i){
-          this.context.moveTo(this.clickX[i-1], this.clickY[i-1]);
-      } else {
-          this.context.moveTo(this.clickX[i]-1, this.clickY[i]);
-      }
-      this.context.lineTo(this.clickX[i], this.clickY[i]);
-      this.context.closePath();
-      this.context.strokeStyle = this.clickColor[i];
-      this.context.lineWidth = this.lineSizes[i];
-      this.context.stroke();
-    */
-    
-    
-    //Paint.pixelDrawer.putPixel(coordinates.x,coordinates.y, this.clickColor[i]);
+  for(var i = lastIndex; i < this.clickX.length; i++)  {
     Paint.pixelDrawer.fillRect(this.clickX[i], this.clickY[i], this.lineSizes[i], this.lineSizes[i], this.clickColor[i]);
-    
-   // this.context.beginPath();
-   // this.context.rect(this.clickX[i], this.clickY[i], this.lineSizes[i], this.lineSizes[i]);
-   // this.context.fillStyle = this.clickColor[i];
-   // this.context.fill();
   }
   Paint.pixelDrawer.pushImageData();
 };

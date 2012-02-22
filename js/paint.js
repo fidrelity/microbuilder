@@ -118,7 +118,7 @@ var Paint = {
       Paint.isPaint = true;
       currentInstanz.lastPaintIndex = currentInstanz.clickX.length;
       Paint.addClick(coordinates.x, coordinates.y);
-      currentInstanz.redraw();
+      currentInstanz.redraw(false);
     }
 
     // Erase tool
@@ -134,7 +134,7 @@ var Paint = {
 
     if(Paint.isPaint) {
       Paint.addClick(coordinates.x, coordinates.y, true);
-      Paint.getCurrentSpriteAreaInstance().redraw();
+      Paint.getCurrentSpriteAreaInstance().redraw(false);
     }
   },
 
