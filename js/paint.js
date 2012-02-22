@@ -49,19 +49,22 @@ var Paint = {
     $("playDelay").change(function(){ Paint.playDelay = parseInt($(this).val());  });
 
     
-    // Slider
+    // Slider for pencil size
     $("#sizeSlider").slider({
       value: Paint.lineWidth, min: 1, max: 40, step: 4,
       change: function( event, ui ) {
         Paint.setSize(ui.value);
       }
     });
+
+    var availableSizes = [32,64,128,256];
     $("#canvasSizeSlider").slider({
-      value: 64, min: 64, max: 256, step: 64,
+      value: 1, min: 0, max: 3, step: 1,
       slide: function( event, ui ) {
-        $('#sizeSample').css({width : ui.value, height: ui.value});
-        $('.canvas').css({width : ui.value, height: ui.value});
-        $('.canvas').attr('width', ui.value).attr('height', ui.value);
+        var size = availableSizes[ui.value];      
+              
+        $('#sizeSample').css({width : size, height: size});
+        $('.canvas').css({width : size, height: size}).attr('width', size).attr('height', size);;
       }
     });
     // Key
