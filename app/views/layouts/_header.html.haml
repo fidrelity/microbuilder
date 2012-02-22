@@ -1,1 +1,10 @@
-%h1 YouPlay
+%header
+	= image_tag("logo.png", :id => "logo")
+
+	%ul{:id => "nav"}
+		%li Gallery
+		%li Tutorial
+		-#= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
+		%li Login
+		
+.clear
