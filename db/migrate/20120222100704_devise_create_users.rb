@@ -37,7 +37,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.string :authentication_token
 
       
-      t.string :fist_name,  :null => false
+      t.string :first_name,  :null => false
       t.string :last_name,  :null => false
       
       
