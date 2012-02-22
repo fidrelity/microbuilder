@@ -19,7 +19,6 @@ test:
   timeout: 5000
 
 production:
-  adapter: mysql2
-  database: mysql
+  adapter: postgresql
   pool: 5
   timeout: 5000
