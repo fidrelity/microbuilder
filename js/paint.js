@@ -64,7 +64,7 @@ var Paint = {
         var size = availableSizes[ui.value];      
               
         $('#sizeSample').css({width : size, height: size});
-        $('.canvas').css({width : size, height: size}).attr('width', size).attr('height', size);;
+        $('.canvas').css({width : size, height: size}).attr('width', size).attr('height', size);
       }
     });
     // Key
@@ -118,7 +118,7 @@ var Paint = {
       Paint.isPaint = true;
       currentInstanz.lastPaintIndex = currentInstanz.clickX.length;
       Paint.addClick(coordinates.x, coordinates.y);
-      currentInstanz.redraw(false);
+      currentInstanz.redraw();
     }
 
     // Erase tool
@@ -134,7 +134,7 @@ var Paint = {
 
     if(Paint.isPaint) {
       Paint.addClick(coordinates.x, coordinates.y, true);
-      Paint.getCurrentSpriteAreaInstance().redraw(false);
+      Paint.getCurrentSpriteAreaInstance().redraw();
     }
   },
 
@@ -384,4 +384,9 @@ $(document).ready(function() {
     $('#introWrapper').hide();
     $('#paintWrapper').show();
   });
+
+  $('#drawBackgroundCheckbox').click(function() {
+    $('.canvas').css({width : 640, height: 480 }).attr('width', 640).attr('height', 480);
+  });
+
 });

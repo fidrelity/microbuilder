@@ -36,14 +36,14 @@ SpriteArea.prototype.redraw = function(_drawAll) {
 };
 //
 SpriteArea.prototype.clearCanvas = function(_reset) {
-    this.canvas.width = this.canvas.width;
-    if(_reset) {
-      this.clickX = [];
-      this.clickY = [];
-      this.clickDrag = [];
-      this.clickColor = [];
-      this.lineSizes = [];
-      this.undoArray = [];
+  this.canvas.width = this.canvas.width;
+  if(_reset) {
+    this.clickX = [];
+    this.clickY = [];
+    this.clickDrag = [];
+    this.clickColor = [];
+    this.lineSizes = [];
+    this.undoArray = [];
   }
 };
 
