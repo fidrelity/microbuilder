@@ -15,6 +15,25 @@
 //= require jquery-ui
 //= require_tree .
 $(document).ready(function() {
-   $( '#tabs' ).tabs();
-	console.log('ready');
+    
+    // Flash Messages
+    $('.flash_message').each(function() {
+        $(this).fadeOut(5000);
+    })
+    
+    // Editor Tabs 
+    $('#tabs').tabs();
+
+    // Background Library Overlay
+    $('#backgroundol').click(function() {
+        $('#background_library').lightbox_me({
+            centered: true, 
+            onLoad: function() { 
+                //$('#sign_up').find('input:first').focus()
+            }
+        });
+        e.preventDefault();
+    });
+    
+    
 });
