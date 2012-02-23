@@ -17,4 +17,13 @@
 $(document).ready(function() {
    $( '#tabs' ).tabs();
 	console.log('ready');
+	$('#backgroundol').click(function() {
+	    $('#background_library').lightbox_me({
+                centered: true, 
+                onLoad: function() { 
+                    //$('#sign_up').find('input:first').focus()
+                    }
+                });
+            e.preventDefault();
+	});
 });

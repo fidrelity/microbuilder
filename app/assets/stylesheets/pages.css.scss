@@ -65,3 +65,16 @@ ul#nav li {
 	float:left;
 	padding: 15px;
 }
+
+/* OVERLAYS */
+div.overlay {
+    background:#FFF;
+    padding:15px;
+    display:none;
+    border-radius: 15px;
+    width:700px;
+}
+
+div#background_library {
+    height:400px;
+}
