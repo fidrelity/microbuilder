@@ -110,8 +110,8 @@ SpriteArea.prototype.undo = function() {
 
 SpriteArea.prototype.flip = function(_direction) {  
   //this.redraw(true);
-
-  //var img = this.context.getImageData(0,0,this.canvas.width, this.canvas.height);
+ 
+ //var img = this.context.getImageData(0,0,this.canvas.width, this.canvas.height);
   //this.context.save();
   // Multiply the y value by -1 to flip vertically
   //this.context.scale(-1, 1);
