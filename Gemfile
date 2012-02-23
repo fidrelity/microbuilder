@@ -6,6 +6,7 @@ gem 'jquery-rails'
 gem 'haml'
 gem 'devise'
 gem 'omniauth-facebook'
+gem 'jasmine'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
