@@ -24,6 +24,7 @@ var Paint = {
     Paint.spriteAreas   = [];
     Paint.playInterval  = null;
     Paint.playDelay     = 100;
+    Paint.areaId        = 0;
 
     // Events
     // Canvas
@@ -41,6 +42,8 @@ var Paint = {
     $('#addCanvasButton').click(function(){ Paint.addCanvas(); });
     $('#copyCanvasButton').click(function(){ Paint.addCanvas(true); });
     $('#clearCanvasButton').click(function(){ Paint.clearCanvas(true);});
+    $('#removeCanvasButton').click(function(){ Paint.removeCanvas();});
+    
     $('#outlineButton').click(function(){ Paint.getCurrentSpriteAreaInstance().outlinePoints();});
     $('#selectToolButton').click(function(){ Paint.deactivateTools(); Paint.selectTool = true;});
 
@@ -148,7 +151,8 @@ var Paint = {
   addCanvas : function(copyCanvas) {
     // Dom Object
     var clone = Paint.canvasTemplate.clone();
-    var id = 'canvas' + $('.canvas').length;
+    Paint.areaId++
+    var id = 'canvas' + Paint.areaId;
     clone.attr('id', id).fadeIn();
     Paint.paintObject.append(clone);
 
@@ -192,7 +196,7 @@ var Paint = {
 
   clearCanvas : function(_reset) {
     var spriteArea = Paint.getCurrentSpriteAreaInstance();
-
+    console.log(spriteArea);
     if(spriteArea.lineSizes.length == 0)
       Paint.removeCanvas(spriteArea);
     else
@@ -201,15 +205,18 @@ var Paint = {
     Paint.closeOutlineBox();
   },
 
-  removeCanvas : function(spriteArea) {
+  removeCanvas : function(_spriteArea) {
     if(Paint.spriteAreas.length == 1) return false;
+    var spriteArea = _spriteArea || Paint.getCurrentSpriteAreaInstance(); 
+    var spriteAreaDom = $('#' + spriteArea.id);
 
-    var index = spriteArea.index;
-    Paint.getCurrentCanvasDom().remove();
-    Paint.spriteAreas.splice(index, 1);
+    // Set prev spriteArea as current area
+    var prevArea = spriteAreaDom.prev();
+    Paint.setCurrentCanvas(prevArea.attr('id'));
 
-    var prev = $('#' + spriteArea.id).prev();
-    Paint.setCurrentCanvas(prev.prop('id'));
+    // Remove dom and spriteArea instance
+    spriteAreaDom.remove();
+    Paint.spriteAreas.splice(spriteArea.index, 1);
   },
 
   // ----------------------------------------
@@ -343,6 +350,8 @@ var Paint = {
 
   //
   setCurrentCanvas : function(_id) {
+    console.log(_id, "setC");
+    if(!_id) return false;
     Paint.currentCanvas = _id;
     Paint.pixelDrawer.setCanvasContext(Paint.getCurrentCanvasDom()[0]);
     Paint.webGLRenderer.setTexture(Paint.getCurrentCanvasDom()[0]);
