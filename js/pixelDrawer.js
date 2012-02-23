@@ -20,7 +20,6 @@ PixelDrawer.prototype.setCanvasContext = function(_canvas) {
 PixelDrawer.prototype.putPixel = function (_x, _y, _color) {
   
   var color = this.parseColor(_color);
-
   this.colorPixel(_x,_y,color);
 }
 

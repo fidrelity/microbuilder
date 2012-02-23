@@ -18,12 +18,14 @@ var Paint = {
 
     // Init vars with default value
     Paint.isPaint       = false;
+    Paint.paintTool     = false;
     Paint.lineWidth     = 4;
     Paint.gridSize      = 4;
     Paint.isZoom        = false;
     Paint.spriteAreas   = [];
     Paint.playInterval  = null;
     Paint.playDelay     = 100;
+    Paint.areaId        = 0;
 
     // Events
     // Canvas
@@ -34,6 +36,7 @@ var Paint = {
     // Tools
     Paint.toolButtons.live("click", $.proxy(Paint.highlightTool, Paint));
     Paint.pencilToolButton.live("click", $.proxy(Paint.activatePaintTool, Paint));
+    $("#lineToolButton").live("click", $.proxy(Paint.activateLineTool, Paint));
     $('#eraserToolButton').live("click", $.proxy(Paint.activateEraserTool, Paint));
     $('#flipvButton').live("click", $.proxy(Paint.flipV, Paint));
     $('#undoButton').live("click", $.proxy(Paint.undo, Paint));    
@@ -41,6 +44,8 @@ var Paint = {
     $('#addCanvasButton').click(function(){ Paint.addCanvas(); });
     $('#copyCanvasButton').click(function(){ Paint.addCanvas(true); });
     $('#clearCanvasButton').click(function(){ Paint.clearCanvas(true);});
+    $('#removeCanvasButton').click(function(){ Paint.removeCanvas();});
+    
     $('#outlineButton').click(function(){ Paint.getCurrentSpriteAreaInstance().outlinePoints();});
     $('#selectToolButton').click(function(){ Paint.deactivateTools(); Paint.selectTool = true;});
 
@@ -88,6 +93,12 @@ var Paint = {
     $('#pencilWrapper').hide();
   },
 
+  activateLineTool : function() {
+    Paint.deactivateTools();
+    Paint.lineTool = true;
+    $('#pencilWrapper').show();
+  },
+
   activatePaintTool : function() {
     Paint.deactivateTools();
     Paint.paintTool = true;
@@ -113,12 +124,23 @@ var Paint = {
     var currentInstanz = Paint.getCurrentSpriteAreaInstance();
 
     // Draw with pencil
-    if(Paint.paintTool) {
-      
+    if(Paint.paintTool) {      
       Paint.isPaint = true;
       currentInstanz.lastPaintIndex = currentInstanz.clickX.length;
       Paint.addClick(coordinates.x, coordinates.y);
       currentInstanz.redraw();
+    }
+
+    // Draw line
+    if(Paint.lineTool) {
+      Paint.isPaint = false;
+      Paint.isLine = true;
+      currentInstanz.lastPaintIndex = currentInstanz.clickX.length;
+      //_x1, _y1, _x2, _y2, _color
+      Paint.coordX = coordinates.x;
+      Paint.coordY = coordinates.y;
+      //Paint.addClick(coordinates.x, coordinates.y);
+      //currentInstanz.redraw();
     }
 
     // Erase tool
@@ -131,31 +153,40 @@ var Paint = {
   //
   mouseMove : function(e) {
     var coordinates = Paint.getCoordinates(e);
+    var currentCanvas = Paint.getCurrentSpriteAreaInstance();
 
     if(Paint.isPaint) {
       Paint.addClick(coordinates.x, coordinates.y, true);
-      Paint.getCurrentSpriteAreaInstance().redraw();
+      currentCanvas.redraw();
+    }
+
+    if(Paint.isLine) {
+      Paint.pixelDrawer.popImageData();
+      Paint.pixelDrawer.drawLine(Paint.coordX, Paint.coordY, coordinates.x, coordinates.y, ColorPalette.currentColor);
+      Paint.pixelDrawer.pushImageData();
     }
   },
 
   //
   mouseUp : function(e) {
     Paint.isPaint = false;
+    Paint.isLine = false;
     Paint.getCurrentSpriteAreaInstance().undoArray.push(new Array(Paint.getCurrentSpriteAreaInstance().lastPaintIndex, Paint.getCurrentSpriteAreaInstance().clickX.length));
   },
 
   // ----------------------------------------
-  addCanvas : function(copyCanvas) {
+  addCanvas : function(_copyCanvas) {
     // Dom Object
     var clone = Paint.canvasTemplate.clone();
-    var id = 'canvas' + $('.canvas').length;
+    Paint.areaId++
+    var id = 'canvas' + Paint.areaId;
     clone.attr('id', id).fadeIn();
     Paint.paintObject.append(clone);
 
     var spriteArea = new SpriteArea(id, Paint.spriteAreas.length);
     Paint.setCurrentCanvas(id);
 
-    if(copyCanvas) {
+    if(_copyCanvas) {
       var canvasToCopy = Paint.spriteAreas.length == 0 ? null : Paint.spriteAreas[Paint.spriteAreas.length - 1];
 
       var imagedata = canvasToCopy.canvas;
@@ -193,6 +224,7 @@ var Paint = {
   clearCanvas : function(_reset) {
     var spriteArea = Paint.getCurrentSpriteAreaInstance();
 
+    // No pixel data -> delete canvas
     if(spriteArea.lineSizes.length == 0)
       Paint.removeCanvas(spriteArea);
     else
@@ -201,15 +233,19 @@ var Paint = {
     Paint.closeOutlineBox();
   },
 
-  removeCanvas : function(spriteArea) {
+  removeCanvas : function(_spriteArea) {
+    console.log(Paint.spriteAreas.length);
     if(Paint.spriteAreas.length == 1) return false;
+    var spriteArea = _spriteArea || Paint.getCurrentSpriteAreaInstance(); 
+    var spriteAreaDom = $('#' + spriteArea.id);
 
-    var index = spriteArea.index;
-    Paint.getCurrentCanvasDom().remove();
-    Paint.spriteAreas.splice(index, 1);
+    // Set prev spriteArea as current area
+    var prevArea = spriteAreaDom.prev();
+    Paint.setCurrentCanvas(prevArea.attr('id'));
 
-    var prev = $('#' + spriteArea.id).prev();
-    Paint.setCurrentCanvas(prev.prop('id'));
+    // Remove dom and spriteArea instance
+    spriteAreaDom.remove();
+    Paint.spriteAreas.splice(spriteArea.index, 1);
   },
 
   // ----------------------------------------
@@ -343,6 +379,7 @@ var Paint = {
 
   //
   setCurrentCanvas : function(_id) {
+    if(!_id) return false;
     Paint.currentCanvas = _id;
     Paint.pixelDrawer.setCanvasContext(Paint.getCurrentCanvasDom()[0]);
     Paint.webGLRenderer.setTexture(Paint.getCurrentCanvasDom()[0]);
