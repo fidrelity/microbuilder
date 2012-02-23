@@ -20,7 +20,6 @@ PixelDrawer.prototype.setCanvasContext = function(_canvas) {
 PixelDrawer.prototype.putPixel = function (_x, _y, _color) {
   
   var color = this.parseColor(_color);
-
   this.colorPixel(_x,_y,color);
 }
 
@@ -32,6 +31,7 @@ PixelDrawer.prototype.fillRect = function(_x,_y, _width, _height, _color) {
     }
   }
 }
+
 PixelDrawer.prototype.colorPixel = function (_x,_y,_color) {
   var colorIndex = ((_y*(this.dataHeight*4)) + (_x*4));
   
