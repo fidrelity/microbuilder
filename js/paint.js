@@ -386,7 +386,7 @@ $(document).ready(function() {
   });
 
   $('#drawBackgroundCheckbox').click(function() {
-    $('.canvas').css({width : 640, height: 480 }).attr('width', 640).attr('height', 480);
+     $('.canvas').css({width : 640, height: 480 }).attr('width', 640).attr('height', 480);
   });
 
 });
