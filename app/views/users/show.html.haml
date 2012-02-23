@@ -1,2 +1,5 @@
-- @user.attributes.each do |attribute|
-  = attribute
+#profile
+  =@user.first_name
+  =@user.last_name
+  %br
+  =@user.email
