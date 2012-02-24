@@ -20,7 +20,6 @@ var Paint = {
     Paint.isPaint       = false;
     Paint.paintTool     = false;
     Paint.lineWidth     = 4;
-    Paint.gridSize      = 4;
     Paint.spriteAreas   = [];
     Paint.playInterval  = null;
     Paint.playDelay     = 100;
@@ -416,8 +415,8 @@ var Paint = {
     var x = e.pageX - zoomCanvas.offset().left;
     var y = e.pageY - zoomCanvas.offset().top;
 
-    x = Math.floor(x / Paint.gridSize);
-    y = Math.floor(y / Paint.gridSize);
+    x = Math.floor(x / Paint.zoomTool.gridSize);
+    y = Math.floor(y / Paint.zoomTool.gridSize);
 
     return {
       x: x, 
