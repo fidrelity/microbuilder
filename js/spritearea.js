@@ -47,8 +47,9 @@ SpriteArea.prototype.clearCanvas = function(_reset) {
   }
 };
 
-SpriteArea.prototype.eraseArea = function(x,y) {
-  this.context.clearRect(x, y, 10, 10);
+SpriteArea.prototype.eraseArea = function(_x, _y) {
+  if(!_x || !_y) return false;
+  this.context.clearRect(_x, _y, Paint.lineWidth, Paint.lineWidth);
 };
 
 SpriteArea.prototype.getOutlinePoints = function() {
@@ -148,4 +149,10 @@ Paint.pixelDrawer.pushImageData();
   this.lineSizes.push(Paint.lineWidth);
   this.redraw();
 */
+};
+
+SpriteArea.prototype.addLine = function(_startX, _startY, _endX, _endY) {
+  Paint.pixelDrawer.popImageData();
+  Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor);
+  Paint.pixelDrawer.pushImageData();
 };

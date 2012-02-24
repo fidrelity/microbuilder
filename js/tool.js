@@ -11,25 +11,9 @@ var ToolBar = {
 
   init : function() {
     ToolBar.toolsDomObjects.live('click', $.proxy(ToolBar.clickTool, this));
-
     ToolBar.tools.push(new PencilTool());
     ToolBar.tools.push(new LineTool());
     ToolBar.setCurrentTool("pencilToolButton");
-
-    /*
-    $("#pencilToolBarButton").click(function(){Paint.activatePaintToolBar();});
-    $("#lineToolBarButton").click(function(){Paint.activateLineToolBar();});
-    $('#eraserToolBarButton').click(function(){Paint.activateEraserToolBar();});
-    $('#flipvButton').click(function(){ Paint.flipV()});
-    $('#undoButton').click(function(){ Paint.undo()});
-    $('#switchViewButton').click(function(){Paint.switchView();});
-    $('#addCanvasButton').click(function(){Paint.addCanvas();});
-    $('#copyCanvasButton').click(function(){Paint.addCanvas(true);});
-    $('#clearCanvasButton').click(function(){Paint.clearCanvas(true);});
-    $('#removeCanvasButton').click(function(){Paint.removeCanvas();});    
-    $('#outlineButton').click(function(){Paint.getCurrentSpriteAreaInstance().outlinePoints();});
-    $('#selectToolBarButton').click(function(){Paint.deactivateToolBars();Paint.selectToolBar = true;});
-    */
   },
 
   clickTool : function(e) {
@@ -90,7 +74,6 @@ var PencilTool = function() {
 };
 //
 PencilTool.prototype.clickEvent = function() {
-  this.isActive = true;
 };
 //
 PencilTool.prototype.mousedown = function(_options) {
@@ -111,22 +94,34 @@ PencilTool.prototype.mouseup = function() {
 var LineTool = function() {
   this.id = "lineToolButton";
   this.domObject = $('#' + this.id);
+  this.isActive = true;
+  this.startX = 0;
+  this.startY = 0;
+  this.endX = 0;
+  this.endY = 0;
 };
 //
 LineTool.prototype.clickEvent = function() {
-  Paint.addCanvas();
 };
 //
 LineTool.prototype.mousedown = function(_options) {
   this.isActive = true;
-  Paint.getCurrentSpriteAreaInstance().addClick(_options.coordinates.x, _options.coordinates.y, false);
+  this.startX = _options.coordinates.x;
+  this.startY = _options.coordinates.y;
 };
 //
 LineTool.prototype.mousemove = function(_options) {
   if(!this.isActive) return false;
-  Paint.getCurrentSpriteAreaInstance().addClick(_options.coordinates.x, _options.coordinates.y, true);
+  this.endX = _options.coordinates.x;
+  this.endY = _options.coordinates.y;
+
+  Paint.pixelDrawer.context.clearRect(0, 0, Paint.pixelDrawer.canvas.width, Paint.pixelDrawer.canvas.height);
+  Paint.pixelDrawer.popImageData();
+  Paint.pixelDrawer.drawLine(this.startX, this.startY, this.endX, this.endY, ColorPalette.currentColor);
+  Paint.pixelDrawer.pushImageData();
 };
 //
 LineTool.prototype.mouseup = function() {
   this.isActive = false;
+  Paint.getCurrentSpriteAreaInstance().addLine(this.startX, this.startY, this.endX, this.endY);
 };

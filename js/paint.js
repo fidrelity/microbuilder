@@ -39,15 +39,7 @@ var Paint = {
     Paint.zoomTool.canvas.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
     Paint.zoomTool.canvas.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
     Paint.zoomTool.canvas.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
-        
-    // Tools
-    /*
-    Paint.toolButtons.live("click", $.proxy(Paint.highlightTool, Paint));
-    Paint.pencilToolButton.live("click", $.proxy(Paint.activatePaintTool, Paint));
-    $("#lineToolButton").live("click", $.proxy(Paint.activateLineTool, Paint));
-    $('#eraserToolButton').live("click", $.proxy(Paint.activateEraserTool, Paint));
-    $('#flipvButton').live("click", $.proxy(Paint.flipV, Paint));
-    $('#undoButton').live("click", $.proxy(Paint.undo, Paint));    
+    //
     $('#switchViewButton').click(function(){
       Paint.switchView();
     });
@@ -63,8 +55,12 @@ var Paint = {
     $('#removeCanvasButton').click(function(){
       Paint.removeCanvas();
     });
-    
-<<<<<<< HEAD
+        
+    // Tools
+  /*  
+    $('#eraserToolButton').live("click", $.proxy(Paint.activateEraserTool, Paint));
+    $('#flipvButton').live("click", $.proxy(Paint.flipV, Paint));
+    $('#undoButton').live("click", $.proxy(Paint.undo, Paint));  
     $('#outlineButton').click(function(){Paint.getCurrentSpriteAreaInstance().outlinePoints();});
     $('#selectToolButton').click(function(){Paint.deactivateTools();Paint.selectTool = true;});
    */
