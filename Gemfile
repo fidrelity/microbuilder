@@ -11,6 +11,7 @@ gem 'cloudfoundry-jquery-rails'
 gem 'haml'
 gem 'cloudfoundry-devise', :require => 'devise'
 gem 'omniauth-facebook'
+gem 'jasmine'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
