@@ -10,13 +10,14 @@ var Paint = {
     Paint.zoomCanvas        = $('#webglCanvas');
     Paint.canvasTemplate    = $('#canvas-template');
     Paint.toolButtons       = $('.tool');
-    Paint.pencilToolButton  = $('#pencilToolButton');
+    //Paint.pencilToolButton  = $('#pencilToolButton');
     Paint.canvasSketch      = $('#canvas-sketch');
 
     // Init other classes
+    ToolBar.init();
     ColorPalette.init();
     Paint.webGLRenderer = new WebGLRenderer();
-    Paint.pixelDrawer = new PixelDrawer();
+    Paint.pixelDrawer   = new PixelDrawer();
 
     // Init vars with default value
     Paint.isPaint       = false;
@@ -42,6 +43,7 @@ var Paint = {
     Paint.zoomCanvas.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
         
     // Tools
+    /*
     Paint.toolButtons.live("click", $.proxy(Paint.highlightTool, Paint));
     Paint.pencilToolButton.live("click", $.proxy(Paint.activatePaintTool, Paint));
     $("#lineToolButton").live("click", $.proxy(Paint.activateLineTool, Paint));
@@ -56,7 +58,7 @@ var Paint = {
     
     $('#outlineButton').click(function(){Paint.getCurrentSpriteAreaInstance().outlinePoints();});
     $('#selectToolButton').click(function(){Paint.deactivateTools();Paint.selectTool = true;});
-
+   */
     $('#playButton').click(function(){Paint.initPlay();});
     $('#stopButton').click(function(){Paint.stopAnimation();});
     $("playDelay").change(function(){Paint.playDelay = parseInt($(this).val());});
@@ -74,7 +76,7 @@ var Paint = {
     $("#canvasSizeSlider").slider({
       value: 1, min: 0, max: 3, step: 1,
       slide: function( event, ui ) {
-        var size = availableSizes[ui.value];      
+        var size = availableSizes[ui.value];
               
         $('#sizeSample').css({width : size, height: size});
         $('.canvas').css({width : size, height: size}).attr('width', size).attr('height', size);
@@ -84,9 +86,10 @@ var Paint = {
     $(document).keydown($.proxy(Paint.keyEvent, Paint));
 
     // Call Methods
-    Paint.deactivateTools();
-    Paint.activatePaintTool();
-    Paint.pencilToolButton.addClass('active-tool');
+    //Paint.deactivateTools();
+    //Paint.activatePaintTool();
+    //Paint.pencilToolButton.addClass('active-tool');
+
     Paint.addCanvas();
   },
 
@@ -120,12 +123,12 @@ var Paint = {
     Paint.deactivateTools();
     Paint.eraserTool = true;
   },
-
+/*
   highlightTool : function(e) {
     Paint.toolButtons.removeClass('active-tool');
     $('#' + e.currentTarget.id).addClass('active-tool');
   },
-
+*/
   // ----------------------------------------
   mouseDown : function(e) {
     Paint.setCurrentCanvas(e.currentTarget.id);
@@ -135,10 +138,14 @@ var Paint = {
   mouseDownZoom : function(e) {
 
     var coordinates = Paint.getCoordinates(e);
-    var currentInstanz = Paint.getCurrentSpriteAreaInstance();
+    //var currentInstanz = Paint.getCurrentSpriteAreaInstance();
+
+    ToolBar.mousedown({ coordinates : coordinates });
+
 
     // Draw with pencil
-    if(Paint.paintTool) {      
+    /*
+    if(Paint.paintTool) {
       Paint.isPaint = true;
       currentInstanz.lastPaintIndex = currentInstanz.clickX.length;
       Paint.addClick(coordinates.x, coordinates.y);
@@ -161,12 +168,17 @@ var Paint = {
     if(Paint.eraserTool) {
       currentInstanz.eraseArea(coordinates.x, coordinates.y);
     }
+    */
   },
 
   //
   mouseMove : function(e) {
     var coordinates = Paint.getCoordinates(e);
-    var currentCanvas = Paint.getCurrentSpriteAreaInstance();
+    //var currentCanvas = Paint.getCurrentSpriteAreaInstance();
+
+    ToolBar.mousemove({coordinates:coordinates});
+
+    /*
 
     if(Paint.isPaint) {
       Paint.addClick(coordinates.x, coordinates.y, true);
@@ -180,12 +192,15 @@ var Paint = {
       Paint.tempEndX = coordinates.x;
       Paint.tempEndY = coordinates.y;
       Paint.pixelDrawer.pushImageData();
-    }
+    } */
   },
 
   //
   mouseUp : function(e) {
+
+    ToolBar.mouseup();
     
+    /*
     if(Paint.isPaint) {
       Paint.isPaint = false;
       //Paint.getCurrentSpriteAreaInstance().undoArray.push(new Array(Paint.getCurrentSpriteAreaInstance().lastPaintIndex, Paint.getCurrentSpriteAreaInstance().clickX.length));
@@ -195,8 +210,9 @@ var Paint = {
       Paint.drawLineToCanvas(Paint.coordX, Paint.coordY, Paint.tempEndX, Paint.tempEndY);      
       Paint.isLine = false;
     }
-
+    
     Paint.getCurrentSpriteAreaInstance().pushUndoStep();
+    */
   },
 
   // ----------------------------------------

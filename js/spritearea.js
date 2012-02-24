@@ -132,3 +132,20 @@ SpriteArea.prototype.flip = function(_direction) {
   //this.context.drawImage(img, 0, -img.height);
   //this.context.restore();
 };
+
+SpriteArea.prototype.addClick = function(_x, _y, _dragging) {
+
+Paint.pixelDrawer.popImageData();
+Paint.pixelDrawer.drawRect(_x, _y, Paint.lineWidth, Paint.lineWidth, ColorPalette.currentColor);
+Paint.pixelDrawer.pushImageData();
+
+/*
+  var centerize = Math.floor(Paint.lineWidth / 2);
+  this.clickX.push(_x - centerize);
+  this.clickY.push(_y - centerize);
+  this.clickDrag.push(_dragging);
+  this.clickColor.push(ColorPalette.currentColor);
+  this.lineSizes.push(Paint.lineWidth);
+  this.redraw();
+*/
+};
