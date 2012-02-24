@@ -139,7 +139,6 @@ var Paint = {
   },
 
   removeCanvas : function(_spriteArea) {
-    console.log(Paint.spriteAreas.length);
     if(Paint.spriteAreas.length == 1) return false;
     var spriteArea = _spriteArea || Paint.getCurrentSpriteAreaInstance(); 
     var spriteAreaDom = $('#' + spriteArea.id);
