@@ -201,6 +201,12 @@ Vector.prototype = {
       Math.sin(angle) * this.x + Math.cos(angle) * this.y
     );
     
+  },
+  
+  log: function() {
+    
+    console.log( '( ' + this.x + ' | ' + this.y + ' )' );
+    
   }
 
 };

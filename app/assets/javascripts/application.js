@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require_tree .
+
 $(document).ready(function() {
     
     // Flash Messages
@@ -35,5 +36,53 @@ $(document).ready(function() {
         e.preventDefault();
     });
     
+    if ( $('#playercanvas').length ) {
+      
+      initPlayer();
+    
+    }
     
 });
+
+function initPlayer( canvas ) {
+  
+  var player,
+      stats,
+      data = {
+        
+        background : '/assets/paper.jpeg',
+        
+        gameObjects : [
+          { x : 320, y : 195, oX : 150,  oY : 0,    image : '/assets/logo.png' },
+          { x : 320, y : 195, oX : -150, oY : 0,    image : '/assets/logo.png' },
+          { x : 320, y : 195, oX : 0,    oY : 150,  image : '/assets/logo.png' },
+          { x : 320, y : 195, oX : 0,    oY : -150, image : '/assets/logo.png' },
+          
+          { x : 320, y : 195, oX : 100,  oY : 100,  image : '/assets/logo.png' },
+          { x : 320, y : 195, oX : 100,  oY : -100, image : '/assets/logo.png' },
+          { x : 320, y : 195, oX : -100, oY : -100, image : '/assets/logo.png' },
+          { x : 320, y : 195, oX : -100, oY : 100,  image : '/assets/logo.png' }
+        ]
+  };
+  
+  player = new Player( $('#playercanvas')[0] );
+  player.parse( data );
+  
+  stats = new Stats();
+  stats.hide();
+  
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.left = '0px';
+  stats.domElement.style.top = '0px';
+  
+  document.body.appendChild( stats.domElement );
+  
+  player.stats = stats;
+  
+  $('#playercanvas').click( function() {
+    
+    player.start();
+    
+  });
+  
+}

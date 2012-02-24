@@ -6,14 +6,14 @@ describe("Vector", function() {
   //   vector = new Vector();
   // });
 
-  it("is 0 after construction", function() {
+  it("empty constructor", function() {
     
     expect(vector.x).toEqual(0);
     expect(vector.y).toEqual(0);
     
   });
 
-  it("is assigned to (1, -1) in constructor", function() {
+  it("constructor assignment", function() {
     
     vector = new Vector(1, -1);
     
@@ -22,17 +22,67 @@ describe("Vector", function() {
     
   });
 
-  it("norm is 5", function() {
+  it("set", function() {
+    
+    vector.set(3, -5);
+    
+    expect(vector.x).toEqual(3);
+    expect(vector.y).toEqual(-5);
+    
+  });
+
+  it("copy", function() {
+    
+    vector.set(3, -5);
+    
+    var vec = new Vector();
+    
+    vec.copy(vector);
+    
+    expect(vec.x).toEqual(vector.x);
+    expect(vec.y).toEqual(vector.y);
+    
+    vec.x = 2;
+    
+    expect(vec.x).not.toEqual(vector.x);
+    
+  });
+
+  it("clone", function() {
+    
+    vector.set(3, -5);
+    
+    var vec = vector.clone();
+    
+    expect(vec.x).toEqual(vector.x);
+    expect(vec.y).toEqual(vector.y);
+    
+    vec.x = 2;
+    
+    expect(vec.x).not.toEqual(vector.x);
+    
+  });
+
+  it("normSquared", function() {
+    
+    vector.set(3, 4);
+    expect(vector.normSquared()).toEqual(25);
+    
+  });
+
+  it("norm", function() {
     
     vector.set(3, 4);
     expect(vector.norm()).toEqual(5);
     
   });
 
-  it("normSquared is 25", function() {
+  it("normalize", function() {
     
-    vector.set(3, 4);
-    expect(vector.normSquared()).toEqual(25);
+    vector.set(-13, 13);
+    vector.normalizeSelf();
+    
+    expect(vector.norm()).toEqual(1);
     
   });
 

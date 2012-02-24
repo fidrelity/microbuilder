@@ -17,10 +17,10 @@ StateMachine.prototype = {
   
     this.name = params.name || 'none';
   
-    this.enter = params.enter || function( fsm ) {};
-    this.update = params.update || function( fsm, dt ) {};
-    this.draw = params.draw || function( fsm, ctx ) {};
-    this.exit = params.exit || function( fsm ) {};
+    this.enter = params.enter || function() {};
+    this.update = params.update || function( dt ) {};
+    this.draw = params.draw || function( ctx ) {};
+    this.exit = params.exit || function() {};
 
   },
 
@@ -31,7 +31,7 @@ StateMachine.prototype = {
     this.name = params.name || 'none';
     this.from = params.from || 'none';
     this.to = params.to || 'none';
-    this.callback = params.callback || function( fsm ) {};
+    this.callback = params.callback || function() {};
   
   },
   
@@ -63,13 +63,13 @@ StateMachine.prototype = {
   
   update : function( dt ) {
     
-    this.currentState.update.call(this.scope, this, dt);
+    this.currentState.update.call(this.scope, dt);
     
   },
   
   draw : function( ctx ) {
     
-    this.currentState.draw.call(this.scope, this, ctx);
+    this.currentState.draw.call(this.scope, ctx);
     
   },
   
@@ -90,7 +90,7 @@ StateMachine.prototype = {
       if ( self.currentState.name !== transition.to &&
         ( self.currentState.name === transition.from || transition.from === '*' ) ) {
         
-        self.changeState( transition.to, transition.callback );
+        self.changeState( transition.to, transition.callback, arguments );
         
         return true;
         
@@ -102,19 +102,19 @@ StateMachine.prototype = {
     
   },
   
-  changeState : function( name, callback ) {
+  changeState : function( name, callback, arguments ) {
     
-    this.currentState.exit.call(this.scope, this);
+    this.currentState.exit.call( this.scope );
     
-    if (callback) {
+    if ( callback ) {
     
-      callback.call(this.scope, this);
+      callback.apply( this.scope, arguments );
       
     }
     
     this.currentState = this.states[name];
     
-    this.currentState.enter.call(this.scope, this);
+    this.currentState.enter.call( this.scope );
     
   },
   
