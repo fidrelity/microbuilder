@@ -97,6 +97,7 @@ var Paint = {
   // On zoomed canvas
   mouseDownZoom : function(e) {
     var coordinates = Paint.getCoordinates(e);
+        console.log(coordinates.x,coordinates.y)
     ToolBar.mousedown({ coordinates : coordinates });
   },
 
@@ -139,13 +140,7 @@ var Paint = {
 
   clearCanvas : function(_reset) {
     var spriteArea = Paint.getCurrentSpriteAreaInstance();
-
-    // No pixel data -> delete canvas
-    if(spriteArea.lineSizes.length == 0)
-      Paint.removeCanvas(spriteArea);
-    else
-      spriteArea.clearCanvas(true);
-
+    spriteArea.clearCanvas();
     Paint.closeOutlineBox();
   },
 
@@ -276,11 +271,11 @@ var Paint = {
     var x = e.pageX - zoomCanvas.offset().left;
     var y = e.pageY - zoomCanvas.offset().top;
 
-    x = Math.floor(x / Paint.zoomTool.gridSize);
-    y = Math.floor(y / Paint.zoomTool.gridSize);
+    x = Math.floor(x / 4);//Paint.zoomTool.gridSize);
+    y = Math.floor(y / 4);//Paint.zoomTool.gridSize);
 
     return {
-      x: x, 
+      x: x,
       y: y
     };
   },

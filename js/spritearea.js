@@ -35,16 +35,8 @@ SpriteArea.prototype.redraw = function(_drawAll) {
   Paint.pixelDrawer.pushImageData();
 };
 //
-SpriteArea.prototype.clearCanvas = function(_reset) {
+SpriteArea.prototype.clearCanvas = function() {
   this.canvas.width = this.canvas.width;
-  if(_reset) {
-    this.clickX = [];
-    this.clickY = [];
-    this.clickDrag = [];
-    this.clickColor = [];
-    this.lineSizes = [];
-    this.undoArray = [];
-  }
 };
 
 SpriteArea.prototype.eraseArea = function(_x, _y) {
