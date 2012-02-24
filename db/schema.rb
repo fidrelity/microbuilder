@@ -11,18 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120223143322) do
+ActiveRecord::Schema.define(:version => 20120224162150) do
 
   create_table "assets", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "title"
-    t.string   "filename"
-    t.integer  "statecount"
     t.boolean  "public"
-    t.boolean  "background"
     t.integer  "sizex"
     t.integer  "sizey"
+    t.integer  "user_id"
+    t.string   "name",       :null => false
   end
 
   create_table "users", :force => true do |t|
