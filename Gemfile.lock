@@ -29,22 +29,19 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     addressable (2.2.7)
-    arel (3.0.0)
+    arel (3.0.2)
     bcrypt-ruby (3.0.1)
     builder (3.0.0)
-    coffee-rails (3.2.2)
-      coffee-script (>= 2.2.0)
-      railties (~> 3.2.0)
-    coffee-script (2.2.0)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.2.0)
-    devise (2.0.0)
+    cloudfoundry-devise (1.5.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
-      railties (~> 3.1)
       warden (~> 1.1)
+    cloudfoundry-jquery-rails (1.0.19.1)
+      railties (~> 3.0)
+      thor (~> 0.14)
+    daemons (1.1.8)
     erubis (2.7.0)
+    eventmachine (0.12.10)
     execjs (1.3.0)
       multi_json (~> 1.0)
     faraday (0.7.6)
@@ -55,18 +52,16 @@ GEM
     hashie (1.2.0)
     hike (1.2.1)
     i18n (0.6.0)
-    journey (1.0.1)
-    jquery-rails (2.0.0)
-      railties (>= 3.2.0.beta, < 5.0)
-      thor (~> 0.14)
+    journey (1.0.3)
     json (1.6.5)
     mail (2.4.1)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.17.2)
-    multi_json (1.0.4)
+    multi_json (1.1.0)
     multipart-post (1.1.5)
+    mysql2 (0.3.11)
     oauth2 (0.5.2)
       faraday (~> 0.7)
       multi_json (~> 1.0)
@@ -115,6 +110,10 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.5)
+    thin (1.3.1)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
     thor (0.14.6)
     tilt (1.3.3)
     treetop (1.4.10)
@@ -124,19 +123,23 @@ GEM
     uglifier (1.2.3)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
-    warden (1.1.0)
+    warden (1.1.1)
       rack (>= 1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  coffee-rails (~> 3.2.1)
-  devise
+  bundler
+  cloudfoundry-devise
+  cloudfoundry-jquery-rails
   haml
-  jquery-rails
+  json
+  mysql2
   omniauth-facebook
   rails (= 3.2.1)
+  rake
   sass-rails (~> 3.2.3)
   sqlite3
+  thin
   uglifier (>= 1.0.3)

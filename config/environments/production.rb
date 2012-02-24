@@ -5,11 +5,11 @@ Microbuilder::Application.configure do
   config.cache_classes = true
 
   # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local       = true
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  config.serve_static_assets = true
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
@@ -66,6 +66,6 @@ Microbuilder::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   
   #Facebook Key and Secret
-  FACEBOOK_ID = '148777278524544'
-  FACEBOOK_SECRET = '1385b5ed4c03504ba2e8c05a9be5d740'
+  FACEBOOK_ID = '246961535387906'
+  FACEBOOK_SECRET = 'bfb7faa5572facf3875fad997da35e18'
 end

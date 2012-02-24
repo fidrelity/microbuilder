@@ -1,9 +1,10 @@
 
 %header
-  = image_tag("logo.png", :id => "logo")
+  = link_to(image_tag("logo.png", :id => "logo"), root_path) 
   
   %ul{:id => "nav"}
     %li Gallery
+    %li= link_to('Editor', pages_editor_path)
     %li Tutorial
     -if user_signed_in?
       %li= link_to('Profile', user_path(current_user.id))
