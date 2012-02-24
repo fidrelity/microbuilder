@@ -66,6 +66,6 @@ Microbuilder::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   
   #Facebook Key and Secret
-  FACEBOOK_ID = '246961535387906'
-  FACEBOOK_SECRET = 'bfb7faa5572facf3875fad997da35e18'
+  FACEBOOK_ID = '148777278524544'
+  FACEBOOK_SECRET = '1385b5ed4c03504ba2e8c05a9be5d740'
 end
