@@ -80,6 +80,7 @@ var Paint = {
           width : size, 
           height: size
         }).attr('width', size).attr('height', size);
+        Paint.zoomTool.resizeCanvas();
       }
     });
     // Key

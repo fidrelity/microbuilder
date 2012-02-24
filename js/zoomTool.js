@@ -13,15 +13,16 @@ ZoomTool.prototype.setTexture = function(canvas) {
 }
 
 ZoomTool.prototype.resizeCanvas = function () {
-  this.webGLRenderer.resizeCanvas(this.gridSize);
   var newWidth = this.webGLRenderer.texture.image.width * this.gridSize;
   var newHeight = this.webGLRenderer.texture.image.height * this.gridSize;
-    
+  
   this.canvas.css({
       width : newWidth, 
       height: newHeight
     }).attr('width', newWidth).attr('height', newHeight);
   this.canvas.height = this.webGLRenderer.canvas.width * this.gridSize;
+  
+  this.webGLRenderer.resizeCanvas(newWidth, newHeight);
 }
 
 ZoomTool.prototype.zoomIn = function() {

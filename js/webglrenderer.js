@@ -11,10 +11,10 @@ WebGLRenderer.prototype.mainLoop = function() {
   requestAnimFrame(this.mainLoop.bind(this));
 };
 
-WebGLRenderer.prototype.resizeCanvas = function(gridSize) {
-  this.gl.viewportWidth = this.canvas.width*gridSize;
-  this.gl.viewportHeight = this.canvas.height*gridSize;
-  this.gl.viewport(0, 0, this.gl.viewportWidth, this.gl.viewportHeight);
+WebGLRenderer.prototype.resizeCanvas = function(width, height) {
+  this.gl.viewportWidth = width;
+  this.gl.viewportHeight = height;
+  this.gl.viewport(0, 0,width ,height);
 };
 
 WebGLRenderer.prototype.init = function(){
