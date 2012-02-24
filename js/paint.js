@@ -206,7 +206,7 @@ var Paint = {
   showFrame : function() {
     Paint.canvasObjects.hide();
 
-    var canvasObjects = $('.canvas').not('#canvas-template');
+    var canvasObjects = $('.canvas').not('#canvas-template, #canvas-sketch');
     canvasObjects.eq(Paint.currentCanvasIndex).show();
 
     if(Paint.currentCanvasIndex == Paint.spriteAreas.length) {
