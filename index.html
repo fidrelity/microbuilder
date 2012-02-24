@@ -44,6 +44,7 @@
         .canvas-selected { border:1px solid #4096EE;}
 
         #canvas-template { display:none; }
+        #canvas-sketch { display:none; z-index:999; position:absolute; background:none;}
 
         .colorBlock, .sizeBlock {
             width:20px; height:20px; border:1px solid #000000;
@@ -118,6 +119,7 @@
     <div id="paints">
         <div id="outlineBox"></div>
         <canvas id="canvas-template" class="canvas canvas-over" width="64" height="64"></canvas>
+        <canvas id="canvas-sketch" class="canvas" width="64" height="64"></canvas>
     </div> <!-- canvas -->
     <div id="zoomCanvasWrapper">
          <canvas id="webglCanvas" width="256" height="256"></canvas>

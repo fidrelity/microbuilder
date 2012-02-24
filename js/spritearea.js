@@ -97,15 +97,24 @@ SpriteArea.prototype.undo = function() {
   if(this.undoArray.length == 0) return false;
 
   var lastPaint = this.undoArray.pop();
-  var startIndex = lastPaint[0];
-  var stopIndex = lastPaint[1] - lastPaint[0];
+  console.log(lastPaint.length);
+  //this.context.putImageData(lastPaint, 0, 0);
+  //var startIndex = lastPaint[0];
+  //var stopIndex = lastPaint[1] - lastPaint[0];
 
+/*
   this.clickX.splice(startIndex, stopIndex);
   this.clickY.splice(startIndex, stopIndex);
   this.clickDrag.splice(startIndex, stopIndex);
   this.clickColor.splice(startIndex, stopIndex);
   this.lineSizes.splice(startIndex, stopIndex);
+*/
   this.redraw(true);
+};
+
+SpriteArea.prototype.pushUndoStep = function() {  
+  this.imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+  this.undoArray.push(this.imageData.data);
 };
 
 SpriteArea.prototype.flip = function(_direction) {  

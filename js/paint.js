@@ -10,6 +10,7 @@ var Paint = {
     Paint.canvasTemplate    = $('#canvas-template');
     Paint.toolButtons       = $('.tool');
     Paint.pencilToolButton  = $('#pencilToolButton');
+    Paint.canvasSketch      = $('#canvas-sketch');
 
     // Init other classes
     ColorPalette.init();
@@ -88,13 +89,16 @@ var Paint = {
   deactivateTools : function() {
     Paint.selectTool = false;
     Paint.paintTool  = false;
+    Paint.lineTool   = false;
     Paint.eraserTool = false;
+    Paint.hideSketchCanvas();
     Paint.closeOutlineBox();
     $('#pencilWrapper').hide();
   },
 
   activateLineTool : function() {
     Paint.deactivateTools();
+    Paint.showSketchCanvas();
     Paint.lineTool = true;
     $('#pencilWrapper').show();
   },
@@ -135,7 +139,7 @@ var Paint = {
     if(Paint.lineTool) {
       Paint.isPaint = false;
       Paint.isLine = true;
-      currentInstanz.lastPaintIndex = currentInstanz.clickX.length;
+      //currentInstanz.lastPaintIndex = currentInstanz.clickX.length;
       //_x1, _y1, _x2, _y2, _color
       Paint.coordX = coordinates.x;
       Paint.coordY = coordinates.y;
@@ -161,17 +165,29 @@ var Paint = {
     }
 
     if(Paint.isLine) {
+      Paint.pixelDrawer.context.clearRect(0, 0, Paint.pixelDrawer.canvas.width, Paint.pixelDrawer.canvas.height);
       Paint.pixelDrawer.popImageData();
       Paint.pixelDrawer.drawLine(Paint.coordX, Paint.coordY, coordinates.x, coordinates.y, ColorPalette.currentColor);
+      Paint.tempEndX = coordinates.x;
+      Paint.tempEndY = coordinates.y;
       Paint.pixelDrawer.pushImageData();
     }
   },
 
   //
   mouseUp : function(e) {
-    Paint.isPaint = false;
-    Paint.isLine = false;
-    Paint.getCurrentSpriteAreaInstance().undoArray.push(new Array(Paint.getCurrentSpriteAreaInstance().lastPaintIndex, Paint.getCurrentSpriteAreaInstance().clickX.length));
+    
+    if(Paint.isPaint) {
+      Paint.isPaint = false;
+      //Paint.getCurrentSpriteAreaInstance().undoArray.push(new Array(Paint.getCurrentSpriteAreaInstance().lastPaintIndex, Paint.getCurrentSpriteAreaInstance().clickX.length));
+    }
+
+    if(Paint.isLine) {
+      Paint.drawLineToCanvas(Paint.coordX, Paint.coordY, Paint.tempEndX, Paint.tempEndY);      
+      Paint.isLine = false;
+    }
+
+    Paint.getCurrentSpriteAreaInstance().pushUndoStep();
   },
 
   // ----------------------------------------
@@ -379,6 +395,7 @@ var Paint = {
 
   //
   setCurrentCanvas : function(_id) {
+    console.log(_id)
     if(!_id) return false;
     Paint.currentCanvas = _id;
     Paint.pixelDrawer.setCanvasContext(Paint.getCurrentCanvasDom()[0]);
@@ -410,7 +427,33 @@ var Paint = {
   setFocus : function() {
     $('.canvas').removeClass('canvas-selected');
     Paint.getCurrentCanvasDom().addClass('canvas-selected');
-  }
+  },
+
+  //
+  showSketchCanvas : function() {
+    var currentCanvasPosition = Paint.getCurrentCanvasDom();
+    Paint.canvasToDraw = currentCanvasPosition;
+
+    Paint.canvasSketch.css({  left: currentCanvasPosition.position().left, 
+                              top: currentCanvasPosition.position().top,
+                              width: currentCanvasPosition.width(),
+                              height: currentCanvasPosition.height()
+                           }).show();
+    Paint.setCurrentCanvas(Paint.canvasSketch.attr("id"));
+  },
+
+  hideSketchCanvas : function() {
+    Paint.canvasSketch.hide();
+  },
+
+  drawLineToCanvas : function(_startX, _startY, _endX, _endY) {
+    Paint.setCurrentCanvas(Paint.canvasToDraw.attr("id"));
+    // Draw to canvas
+    Paint.pixelDrawer.popImageData();
+    Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor);
+    Paint.pixelDrawer.pushImageData();
+  },
+
 };
 
 // ----------------------------------------
