@@ -32,6 +32,13 @@ PixelDrawer.prototype.fillRect = function(_x,_y, _width, _height, _color) {
   }
 }
 
+PixelDrawer.prototype.drawRect = function(_x,_y, _width, _height, _color) {
+    this.drawLine(_x,_y, _x, _y+_height,_color);
+    this.drawLine(_x,_y+_height, _x+_width, _y+_height,_color);
+    this.drawLine(_x+_width,_y+_height, _x+_width, _y,_color);
+    this.drawLine(_x+ _width,_y, _x, _y,_color);
+}
+
 PixelDrawer.prototype.drawCircle = function (_xc, _yc, _a, _b, _color)
 {
     var color = this.parseColor(_color);

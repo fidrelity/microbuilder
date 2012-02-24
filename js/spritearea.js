@@ -30,7 +30,7 @@ SpriteArea.prototype.redraw = function(_drawAll) {
 
   Paint.pixelDrawer.popImageData();
   for(var i = lastIndex; i < this.clickX.length; i++)  {
-    Paint.pixelDrawer.fillRect(this.clickX[i], this.clickY[i], this.lineSizes[i], this.lineSizes[i], this.clickColor[i]);
+    Paint.pixelDrawer.drawRect(this.clickX[i], this.clickY[i], this.lineSizes[i], this.lineSizes[i], this.clickColor[i]);
   }
   Paint.pixelDrawer.pushImageData();
 };
