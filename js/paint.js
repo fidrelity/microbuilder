@@ -7,6 +7,7 @@ var Paint = {
     // Define DOM Objects
     Paint.paintObject       = $('#paints');
     Paint.canvasObjects     = $('.canvas');
+    Paint.zoomCanvas        = $('#webglCanvas');
     Paint.canvasTemplate    = $('#canvas-template');
     Paint.toolButtons       = $('.tool');
     Paint.pencilToolButton  = $('#pencilToolButton');
@@ -31,9 +32,15 @@ var Paint = {
     // Events
     // Canvas
     Paint.canvasObjects.live("mousedown",  $.proxy(Paint.mouseDown, Paint));
-    Paint.canvasObjects.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
-    Paint.canvasObjects.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
-    Paint.canvasObjects.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
+   // Paint.canvasObjects.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
+   // Paint.canvasObjects.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
+   // Paint.canvasObjects.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
+    
+    Paint.zoomCanvas.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
+    Paint.zoomCanvas.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
+    Paint.zoomCanvas.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
+    Paint.zoomCanvas.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
+        
     // Tools
     Paint.toolButtons.live("click", $.proxy(Paint.highlightTool, Paint));
     Paint.pencilToolButton.live("click", $.proxy(Paint.activatePaintTool, Paint));
@@ -41,18 +48,18 @@ var Paint = {
     $('#eraserToolButton').live("click", $.proxy(Paint.activateEraserTool, Paint));
     $('#flipvButton').live("click", $.proxy(Paint.flipV, Paint));
     $('#undoButton').live("click", $.proxy(Paint.undo, Paint));    
-    $('#switchViewButton').click(function(){ Paint.switchView(); });
-    $('#addCanvasButton').click(function(){ Paint.addCanvas(); });
-    $('#copyCanvasButton').click(function(){ Paint.addCanvas(true); });
-    $('#clearCanvasButton').click(function(){ Paint.clearCanvas(true);});
-    $('#removeCanvasButton').click(function(){ Paint.removeCanvas();});
+    $('#switchViewButton').click(function(){Paint.switchView();});
+    $('#addCanvasButton').click(function(){Paint.addCanvas();});
+    $('#copyCanvasButton').click(function(){Paint.addCanvas(true);});
+    $('#clearCanvasButton').click(function(){Paint.clearCanvas(true);});
+    $('#removeCanvasButton').click(function(){Paint.removeCanvas();});
     
-    $('#outlineButton').click(function(){ Paint.getCurrentSpriteAreaInstance().outlinePoints();});
-    $('#selectToolButton').click(function(){ Paint.deactivateTools(); Paint.selectTool = true;});
+    $('#outlineButton').click(function(){Paint.getCurrentSpriteAreaInstance().outlinePoints();});
+    $('#selectToolButton').click(function(){Paint.deactivateTools();Paint.selectTool = true;});
 
-    $('#playButton').click(function(){ Paint.initPlay(); });
-    $('#stopButton').click(function(){ Paint.stopAnimation(); });
-    $("playDelay").change(function(){ Paint.playDelay = parseInt($(this).val());  });
+    $('#playButton').click(function(){Paint.initPlay();});
+    $('#stopButton').click(function(){Paint.stopAnimation();});
+    $("playDelay").change(function(){Paint.playDelay = parseInt($(this).val());});
 
     
     // Slider for pencil size
@@ -123,6 +130,9 @@ var Paint = {
   mouseDown : function(e) {
     Paint.setCurrentCanvas(e.currentTarget.id);
     Paint.closeOutlineBox();
+  },
+
+  mouseDownZoom : function(e) {
 
     var coordinates = Paint.getCoordinates(e);
     var currentInstanz = Paint.getCurrentSpriteAreaInstance();
@@ -151,7 +161,6 @@ var Paint = {
     if(Paint.eraserTool) {
       currentInstanz.eraseArea(coordinates.x, coordinates.y);
     }
-
   },
 
   //
@@ -327,7 +336,7 @@ var Paint = {
     }
 
     Paint.currentCanvasIndex++;
-    Paint.playInterval = setTimeout(function(){ Paint.showFrame() }, Paint.playDelay);    
+    Paint.playInterval = setTimeout(function(){Paint.showFrame()}, Paint.playDelay);    
   },
 
   stopAnimation : function() {
@@ -342,7 +351,7 @@ var Paint = {
     //console.log(e.keyCode);
 
     switch(e.keyCode) {
-      case(16) : Paint.shiftKey = true; break;
+      case(16) :Paint.shiftKey = true;break;
     }
 
     if(e.keyCode == 17 && e.keyCode == 90) {
@@ -353,7 +362,7 @@ var Paint = {
   // ----------------------------------------
   saveImage : function(_speech, _author) {
     if(Paint.clickX.length < 50) {
-        alert("Sorry, but it seems you didn't draw anything!"); return false;
+        alert("Sorry, but it seems you didn't draw anything!");return false;
     }
     //var img = Paint.canvas.toDataURL("image/png");
     //document.write('<img src="'+img+'"/>');
@@ -374,14 +383,20 @@ var Paint = {
   // ----------------------------------------
   // Get Mouse Coordinates and return nears grid point
   getCoordinates : function(e) {
-    var x = e.pageX - Paint.getCurrentCanvasDom().offset().left;
-    var y = e.pageY - Paint.getCurrentCanvasDom().offset().top;
+    
+    var zoomCanvas = $("#webglCanvas");
+    
+    var x = e.pageX - zoomCanvas.offset().left;
+    var y = e.pageY - zoomCanvas.offset().top;
 
     gridX = Math.floor(x / Paint.gridSize);
     gridY = Math.floor(y / Paint.gridSize);
+    
+    x = Math.floor(x / Paint.gridSize);
+    y = Math.floor(y / Paint.gridSize);
 
-    x = gridX * Paint.gridSize;
-    y = gridY * Paint.gridSize;
+    //x = gridX * Paint.gridSize;
+    //y = gridY * Paint.gridSize;
 
     return {x: x, y: y};
   },
@@ -390,7 +405,7 @@ var Paint = {
   setSize : function(_size) {
     if(!_size) return false;
     Paint.lineWidth = _size;
-    $('#pencilSizePreview').css({ width: _size, height: _size});
+    $('#pencilSizePreview').css({width: _size, height: _size});
   },
 
   //
@@ -466,7 +481,7 @@ $(document).ready(function() {
   });
 
   $('#drawBackgroundCheckbox').click(function() {
-     $('.canvas').css({width : 640, height: 480 }).attr('width', 640).attr('height', 480);
+     $('.canvas').css({width : 640, height: 480}).attr('width', 640).attr('height', 480);
   });
 
 });
