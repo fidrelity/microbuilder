@@ -11,7 +11,6 @@ var ToolBar = {
 
   init : function() {
     /*     
-      $('#undoButton').live("click", $.proxy(Paint.undo, Paint));  
       $('#outlineButton').click(function(){Paint.getCurrentSpriteAreaInstance().outlinePoints();});
     */
     ToolBar.toolsDomObjects.live('click', $.proxy(ToolBar.clickTool, this));
@@ -20,6 +19,7 @@ var ToolBar = {
     ToolBar.tools.push(new EraserTool());    
     ToolBar.tools.push(new SelectTool());    
     ToolBar.tools.push(new FlipTool());
+    ToolBar.tools.push(new UndoTool());
 
     ToolBar.setCurrentTool("pencilToolButton");
   },
@@ -75,7 +75,7 @@ var ToolBar = {
 
 
 // ----------------------------------------
-// Tool CLASSes
+// Tool Classes
 // ----------------------------------------
 var PencilTool = function() {
   this.id = "pencilToolButton";
@@ -207,4 +207,26 @@ FlipTool.prototype.mousemove = function(_options) {
 };
 //
 FlipTool.prototype.mouseup = function() {
+};
+
+
+// ----------------------------------------
+var UndoTool = function() {
+  this.id = "undoButton";
+  this.domObject = $('#' + this.id);
+  this.isActive = false;
+  this.isSelectable = false;
+};
+//
+UndoTool.prototype.clickEvent = function() {
+  Paint.getCurrentSpriteAreaInstance().undo();
+};
+//
+UndoTool.prototype.mousedown = function(_options) {
+};
+//
+UndoTool.prototype.mousemove = function(_options) {
+};
+//
+UndoTool.prototype.mouseup = function() {
 };
