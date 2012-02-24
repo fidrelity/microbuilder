@@ -29,45 +29,22 @@ var Paint = {
 
     // Events
     // Canvas
-    Paint.canvasObjects.live("mousedown",  $.proxy(Paint.mouseDown, Paint));
-    // Paint.canvasObjects.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
-    // Paint.canvasObjects.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
-    // Paint.canvasObjects.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
-    
+    Paint.canvasObjects.live("click",  $.proxy(Paint.mouseDown, Paint));    
     Paint.zoomTool.canvas.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
     Paint.zoomTool.canvas.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
     Paint.zoomTool.canvas.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
     Paint.zoomTool.canvas.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
-    //
-    $('#switchViewButton').click(function(){
-      Paint.switchView();
-    });
-    $('#addCanvasButton').click(function(){
-      Paint.addCanvas();
-    });
-    $('#copyCanvasButton').click(function(){
-      Paint.addCanvas(true);
-    });
-    $('#clearCanvasButton').click(function(){
-      Paint.clearCanvas(true);
-    });
-    $('#removeCanvasButton').click(function(){
-      Paint.removeCanvas();
-    });
-        
     // Tools
-  /*  
-    $('#eraserToolButton').live("click", $.proxy(Paint.activateEraserTool, Paint));
-    $('#flipvButton').live("click", $.proxy(Paint.flipV, Paint));
-    $('#undoButton').live("click", $.proxy(Paint.undo, Paint));  
-    $('#outlineButton').click(function(){Paint.getCurrentSpriteAreaInstance().outlinePoints();});
-    $('#selectToolButton').click(function(){Paint.deactivateTools();Paint.selectTool = true;});
-   */
+    $('#switchViewButton').click(function() { Paint.switchView(); });
+    $('#addCanvasButton').click(function(){ Paint.addCanvas(); });
+    $('#copyCanvasButton').click(function(){ Paint.addCanvas(true); });
+    $('#clearCanvasButton').click(function(){Paint.clearCanvas(true);});
+    $('#removeCanvasButton').click(function(){Paint.removeCanvas();});
+    //
     $('#playButton').click(function(){Paint.initPlay();});
     $('#stopButton').click(function(){Paint.stopAnimation();});
     $("playDelay").change(function(){Paint.playDelay = parseInt($(this).val());});
-
-    
+    //
     $('#zoomInButton').click(function(){
       Paint.zoomTool.zoomIn();
     });
@@ -109,10 +86,6 @@ var Paint = {
     $(document).keydown($.proxy(Paint.keyEvent, Paint));
 
     // Call Methods
-    //Paint.deactivateTools();
-    //Paint.activatePaintTool();
-    //Paint.pencilToolButton.addClass('active-tool');
-
     Paint.addCanvas();
   },
 
@@ -146,12 +119,7 @@ var Paint = {
     Paint.deactivateTools();
     Paint.eraserTool = true;
   },
-/*
-  highlightTool : function(e) {
-    Paint.toolButtons.removeClass('active-tool');
-    $('#' + e.currentTarget.id).addClass('active-tool');
-  },
-*/
+
   // ----------------------------------------
   mouseDown : function(e) {
     Paint.setCurrentCanvas(e.currentTarget.id);
@@ -159,83 +127,19 @@ var Paint = {
   },
 
   mouseDownZoom : function(e) {
-
     var coordinates = Paint.getCoordinates(e);
-    //var currentInstanz = Paint.getCurrentSpriteAreaInstance();
-
     ToolBar.mousedown({ coordinates : coordinates });
-
-
-    // Draw with pencil
-    /*
-    if(Paint.paintTool) {
-      Paint.isPaint = true;
-      currentInstanz.lastPaintIndex = currentInstanz.clickX.length;
-      Paint.addClick(coordinates.x, coordinates.y);
-      currentInstanz.redraw();
-    }
-
-    // Draw line
-    if(Paint.lineTool) {
-      Paint.isPaint = false;
-      Paint.isLine = true;
-      //currentInstanz.lastPaintIndex = currentInstanz.clickX.length;
-      //_x1, _y1, _x2, _y2, _color
-      Paint.coordX = coordinates.x;
-      Paint.coordY = coordinates.y;
-    //Paint.addClick(coordinates.x, coordinates.y);
-    //currentInstanz.redraw();
-    }
-
-    // Erase tool
-    if(Paint.eraserTool) {
-      currentInstanz.eraseArea(coordinates.x, coordinates.y);
-    }
-    */
   },
 
   //
   mouseMove : function(e) {
     var coordinates = Paint.getCoordinates(e);
-    //var currentCanvas = Paint.getCurrentSpriteAreaInstance();
-
     ToolBar.mousemove({coordinates:coordinates});
-
-    /*
-
-    if(Paint.isPaint) {
-      Paint.addClick(coordinates.x, coordinates.y, true);
-      currentCanvas.redraw();
-    }
-
-    if(Paint.isLine) {
-      Paint.pixelDrawer.context.clearRect(0, 0, Paint.pixelDrawer.canvas.width, Paint.pixelDrawer.canvas.height);
-      Paint.pixelDrawer.popImageData();
-      Paint.pixelDrawer.drawLine(Paint.coordX, Paint.coordY, coordinates.x, coordinates.y, ColorPalette.currentColor);
-      Paint.tempEndX = coordinates.x;
-      Paint.tempEndY = coordinates.y;
-      Paint.pixelDrawer.pushImageData();
-    } */
   },
 
   //
   mouseUp : function(e) {
-
     ToolBar.mouseup();
-    
-    /*
-    if(Paint.isPaint) {
-      Paint.isPaint = false;
-      //Paint.getCurrentSpriteAreaInstance().undoArray.push(new Array(Paint.getCurrentSpriteAreaInstance().lastPaintIndex, Paint.getCurrentSpriteAreaInstance().clickX.length));
-    }
-
-    if(Paint.isLine) {
-      Paint.drawLineToCanvas(Paint.coordX, Paint.coordY, Paint.tempEndX, Paint.tempEndY);      
-      Paint.isLine = false;
-    }
-    
-    Paint.getCurrentSpriteAreaInstance().pushUndoStep();
-    */
   },
 
   // ----------------------------------------
@@ -272,15 +176,6 @@ var Paint = {
     Paint.spriteAreas.push(spriteArea);
   },
 
-  addClick : function(_x, _y, _dragging) {
-    var centerize = Math.floor(Paint.lineWidth / 2);
-    Paint.getCurrentSpriteAreaInstance().clickX.push(_x - centerize);
-    Paint.getCurrentSpriteAreaInstance().clickY.push(_y - centerize);
-    Paint.getCurrentSpriteAreaInstance().clickDrag.push(_dragging);
-    Paint.getCurrentSpriteAreaInstance().clickColor.push(ColorPalette.currentColor);
-    Paint.getCurrentSpriteAreaInstance().lineSizes.push(Paint.lineWidth);
-  },
-
   undo : function() {
     Paint.getCurrentSpriteAreaInstance().undo();
   },
@@ -310,12 +205,6 @@ var Paint = {
     // Remove dom and spriteArea instance
     spriteAreaDom.remove();
     Paint.spriteAreas.splice(spriteArea.index, 1);
-  },
-
-  // ----------------------------------------
-  // Canvas Operations
-  flipV : function() {
-    Paint.getCurrentSpriteAreaInstance().flip(-1);
   },
 
   // ----------------------------------------

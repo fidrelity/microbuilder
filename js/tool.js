@@ -10,9 +10,16 @@ var ToolBar = {
   currentToolId : '',
 
   init : function() {
+    /*
+      $('#flipvButton').live("click", $.proxy(Paint.flipV, Paint));
+      $('#undoButton').live("click", $.proxy(Paint.undo, Paint));  
+      $('#outlineButton').click(function(){Paint.getCurrentSpriteAreaInstance().outlinePoints();});
+      $('#selectToolButton').click(function(){Paint.deactivateTools();Paint.selectTool = true;});
+    */
     ToolBar.toolsDomObjects.live('click', $.proxy(ToolBar.clickTool, this));
     ToolBar.tools.push(new PencilTool());
     ToolBar.tools.push(new LineTool());
+    ToolBar.tools.push(new EraserTool());    
     ToolBar.setCurrentTool("pencilToolButton");
   },
 
@@ -124,4 +131,30 @@ LineTool.prototype.mousemove = function(_options) {
 LineTool.prototype.mouseup = function() {
   this.isActive = false;
   Paint.getCurrentSpriteAreaInstance().addLine(this.startX, this.startY, this.endX, this.endY);
+};
+
+// ----------------------------------------
+var EraserTool = function() {
+  this.id = "eraserToolButton";
+  this.domObject = $('#' + this.id);
+  this.isActive = true;
+  this.x = 0;
+  this.y = 0;
+};
+//
+EraserTool.prototype.clickEvent = function() {
+};
+//
+EraserTool.prototype.mousedown = function(_options) {
+  this.isActive = true;
+  Paint.getCurrentSpriteAreaInstance().eraseArea(_options.coordinates.x, _options.coordinates.y);
+};
+//
+EraserTool.prototype.mousemove = function(_options) {
+  if(!this.isActive) return false;
+  Paint.getCurrentSpriteAreaInstance().eraseArea(_options.coordinates.x, _options.coordinates.y);
+};
+//
+EraserTool.prototype.mouseup = function() {
+  this.isActive = false;
 };
