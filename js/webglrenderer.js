@@ -11,6 +11,11 @@ WebGLRenderer.prototype.mainLoop = function() {
   requestAnimFrame(this.mainLoop.bind(this));
 };
 
+WebGLRenderer.prototype.resizeCanvas = function(gridSize) {
+  this.gl.viewportWidth = this.canvas.width*gridSize;
+  this.gl.viewportHeight = this.canvas.height*gridSize;
+  this.gl.viewport(0, 0, this.gl.viewportWidth, this.gl.viewportHeight);
+};
 
 WebGLRenderer.prototype.init = function(){
   console.log("StartWebGL");
@@ -25,14 +30,14 @@ WebGLRenderer.prototype.init = function(){
   this.rotationY = false; 
   this.gl = false;
   
-  var canvas = document.getElementById("webglCanvas");
-  this.gl = canvas.getContext("experimental-webgl");
-  this.gl.viewportWidth = canvas.width;
-  this.gl.viewportHeight = canvas.height;
+  this.canvas = document.getElementById("webglCanvas");
+  this.gl = this.canvas.getContext("experimental-webgl");
+  this.gl.viewportWidth = this.canvas.width;
+  this.gl.viewportHeight = this.canvas.height;
 
   if ( this.gl ) {
     this.gl.clearColor(0.1,0.3,0.3,1.0);
-    this.gl.viewport(0, 0, canvas.width, canvas.height);
+    this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
 
     this.gl.enable(this.gl.DEPTH_TEST);
 
@@ -49,26 +54,26 @@ WebGLRenderer.prototype.init = function(){
       
 WebGLRenderer.prototype.initTextures = function() {
   this.texture = this.gl.createTexture();
- // this.texture.image.onload = this.initTextureParameters;
- // this.texture.image.src = "fhslogo.png";
+// this.texture.image.onload = this.initTextureParameters;
+// this.texture.image.src = "fhslogo.png";
 };
 
 WebGLRenderer.prototype.setTexture = function(_canvas) {
-    if(_canvas.width > 0 && _canvas.height > 0) {
-      this.initTextureParameters(_canvas);
-    }
+  if(_canvas.width > 0 && _canvas.height > 0) {
+    this.initTextureParameters(_canvas);
+  }
 };
 
 WebGLRenderer.prototype.initTextureParameters = function(canvas)  {
-    if(canvas){
-      this.texture.image = canvas;
-    } 
-    this.gl.bindTexture(this.gl.TEXTURE_2D, this.texture);
-    this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, true);
-    this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, this.texture.image);
-    this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.NEAREST);
-    this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
-    this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+  if(canvas){
+    this.texture.image = canvas;
+  } 
+  this.gl.bindTexture(this.gl.TEXTURE_2D, this.texture);
+  this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, true);
+  this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, this.texture.image);
+  this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.NEAREST);
+  this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
+  this.gl.bindTexture(this.gl.TEXTURE_2D, null);
 };
 
 WebGLRenderer.prototype.initShaders = function()  {
@@ -138,7 +143,7 @@ WebGLRenderer.prototype.initBuffers = function() {
   this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexPositionBuffer);
 
   vertices = [
-      -1.0,-1.0, 0.0,  1.0,-1.0, 0.0,  1.0, 1.0, 0.0, -1.0, 1.0, 0.0
+  -1.0,-1.0, 0.0,  1.0,-1.0, 0.0,  1.0, 1.0, 0.0, -1.0, 1.0, 0.0
   ];
   this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(vertices), this.gl.STATIC_DRAW);
   this.vertexPositionBuffer.itemSize = 3;
@@ -148,7 +153,7 @@ WebGLRenderer.prototype.initBuffers = function() {
   this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.textureUVBuffer);
   
   var textureUVs = [
-    0.0,0.0, 1.0,0.0, 1.0,1.0, 0.0,1.0
+  0.0,0.0, 1.0,0.0, 1.0,1.0, 0.0,1.0
   ];
   this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(textureUVs), this.gl.STATIC_DRAW);
   this.textureUVBuffer.itemSize = 2;
@@ -157,8 +162,8 @@ WebGLRenderer.prototype.initBuffers = function() {
   this.vertexIndexBuffer = this.gl.createBuffer();
   this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.vertexIndexBuffer);
  
- var vertexIndices = [
-    0,  1,  2,  0,  2,  3
+  var vertexIndices = [
+  0,  1,  2,  0,  2,  3
   ];
   this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(vertexIndices), this.gl.STATIC_DRAW);
   this.vertexIndexBuffer.itemSize = 1;
@@ -176,12 +181,10 @@ WebGLRenderer.prototype.render = function() {
   this.gl.clear(this.gl.DEPTH_BUFFER_BIT);  
 
   var aspect = this.gl.viewportWidth / this.gl.viewportHeight;
-  //mat4.perspective(45, aspect, 0.00001, 1000.0, this.projectionMatrix);
   mat4.ortho(-1,1,-1,1,0.000001,10000,this.projectionMatrix);
   mat4.identity(this.viewMatrix);
 
   mat4.identity(this.modelMatrix);  
-  //mat4.rotate(this.modelMatrix, this.rotationY, [0, 1, 0]);
 
   this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexPositionBuffer);
   this.gl.vertexAttribPointer(this.shaderProgram.vertexPositionAttribute, this.vertexPositionBuffer.itemSize, this.gl.FLOAT, false, 0, 0);
@@ -202,11 +205,11 @@ WebGLRenderer.prototype.render = function() {
 
 window.requestAnimFrame = (function() {
   return window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.oRequestAnimationFrame ||
-    window.msRequestAnimationFrame ||
-    function(/* function FrameRequestCallback */ callback, /* DOMElement Element */ element) {
+  window.webkitRequestAnimationFrame ||
+  window.mozRequestAnimationFrame ||
+  window.oRequestAnimationFrame ||
+  window.msRequestAnimationFrame ||
+  function(/* function FrameRequestCallback */ callback, /* DOMElement Element */ element) {
     window.setTimeout(callback, 1000/60);
   };
 })();
