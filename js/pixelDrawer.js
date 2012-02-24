@@ -41,7 +41,7 @@ PixelDrawer.prototype.drawRect = function(_x,_y, _width, _height, _color) {
 
 PixelDrawer.prototype.drawCircle = function (_xc, _yc, _a, _b, _color)
 {
-    
+
     var color = this.parseColor(_color);
     var x = 0, y = _b;
     var a2 = _a*_a;

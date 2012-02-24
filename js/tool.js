@@ -10,8 +10,7 @@ var ToolBar = {
   currentToolId : '',
 
   init : function() {
-    /*
-      $('#flipvButton').live("click", $.proxy(Paint.flipV, Paint));
+    /*     
       $('#undoButton').live("click", $.proxy(Paint.undo, Paint));  
       $('#outlineButton').click(function(){Paint.getCurrentSpriteAreaInstance().outlinePoints();});
     */
@@ -20,6 +19,8 @@ var ToolBar = {
     ToolBar.tools.push(new LineTool());
     ToolBar.tools.push(new EraserTool());    
     ToolBar.tools.push(new SelectTool());    
+    ToolBar.tools.push(new FlipTool());
+
     ToolBar.setCurrentTool("pencilToolButton");
   },
 
@@ -178,4 +179,25 @@ SelectTool.prototype.mousemove = function(_options) {
 };
 //
 SelectTool.prototype.mouseup = function() {
+};
+
+
+// ----------------------------------------
+var FlipTool = function() {
+  this.id = "flipvButton";
+  this.domObject = $('#' + this.id);
+  this.isActive = false;
+};
+//
+FlipTool.prototype.clickEvent = function() {
+  Paint.getCurrentSpriteAreaInstance().flip();
+};
+//
+FlipTool.prototype.mousedown = function(_options) {
+};
+//
+FlipTool.prototype.mousemove = function(_options) {
+};
+//
+FlipTool.prototype.mouseup = function() {
 };
