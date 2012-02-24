@@ -108,7 +108,8 @@ StateMachine.prototype = {
     
     if ( callback ) {
     
-      callback.apply( this.scope, arguments );
+      // callback.apply( this.scope, arguments );
+      callback.call( this.scope, this );
       
     }
     

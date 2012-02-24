@@ -16,7 +16,7 @@
 //= require_tree .
 
 $(document).ready(function() {
-    
+        
     // Flash Messages
     $('.flash_message').each(function() {
         $(this).fadeOut(5000);
@@ -25,16 +25,19 @@ $(document).ready(function() {
     // Editor Tabs 
     $('#tabs').tabs();
 
-    // Background Library Overlay
-    $('#backgroundol').click(function() {
-        $('#background_library').lightbox_me({
+    /*// Overlay
+    $('.overlay_button').click(function(e) {
+        
+        var overlay = $(this).data('overlay');
+        
+        $('#'+overlay).lightbox_me({
             centered: true, 
             onLoad: function() { 
                 //$('#sign_up').find('input:first').focus()
             }
         });
         e.preventDefault();
-    });
+    }); */
     
     if ( $('#playercanvas').length ) {
       
