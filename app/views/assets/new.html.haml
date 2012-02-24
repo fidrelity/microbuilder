@@ -1,0 +1,4 @@
+= form_for @state, :url => user_assets_path, :html => { :multipart => true } do |f|
+  = f.file_field :image
+  = f.text_field :name
+  = f.submit
