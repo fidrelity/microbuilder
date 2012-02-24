@@ -50,7 +50,7 @@ var Paint = {
     // Slider for pencil size
     $("#sizeSlider").slider({
       value: Paint.lineWidth, 
-      min: 1, 
+      min: 1,
       max: 40, 
       step: 4,
       change: function( event, ui ) {
@@ -58,24 +58,19 @@ var Paint = {
       }
     });
 
-    var availableSizes = [32,64,128,256];
-    // Slider for canvas sample size
-    $("#canvasSizeSlider").slider({
-      value: 1, 
-      min: 0, 
-      max: 3, 
-      step: 1,
-      slide: function( event, ui ) {
-        var size = availableSizes[ui.value];
-              
-        $('#sizeSample').css({
-          width : size, 
-          height: size
-        });
+    // Resize for canvas size
+    $('#sizeSample').resizable({
+      grid: 16,
+      maxHeight:128,
+      maxWidth:128,
+      minHeight:32,
+      minWidth:32,
+      resize: function(event, ui) { 
+        var size = ui.size;
         $('.canvas').css({
-          width : size, 
-          height: size
-        }).attr('width', size).attr('height', size);
+          width : size.width, 
+          height: size.height
+        }).attr('width', size.width).attr('height', size.height);
         Paint.zoomTool.resizeCanvas();
       }
     });
@@ -171,11 +166,11 @@ var Paint = {
   },
 
   floatSprites : function() {
-    Paint.canvasObjects.removeClass('canvas-over').addClass('canvas-float');
+    Paint.canvasObjects.not('#canvas-sketch').removeClass('canvas-over').addClass('canvas-float');
   },
 
   overSprites : function() {
-    Paint.canvasObjects.removeClass('canvas-float').addClass('canvas-over');
+    Paint.canvasObjects.not('#canvas-sketch').removeClass('canvas-float').addClass('canvas-over');
   },
 
   closeOutlineBox : function() {
