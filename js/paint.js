@@ -40,17 +40,13 @@ var Paint = {
     $('#copyCanvasButton').click(function(){ Paint.addCanvas(true); });
     $('#clearCanvasButton').click(function(){Paint.clearCanvas(true);});
     $('#removeCanvasButton').click(function(){Paint.removeCanvas();});
-    //
+    // Animation
     $('#playButton').click(function(){Paint.initPlay();});
     $('#stopButton').click(function(){Paint.stopAnimation();});
     $("playDelay").change(function(){Paint.playDelay = parseInt($(this).val());});
-    //
-    $('#zoomInButton').click(function(){
-      Paint.zoomTool.zoomIn();
-    });
-    $('#zoomOutButton').click(function(){
-      Paint.zoomTool.zoomOut();
-    });
+    // 
+    $('#zoomInButton').click(function(){Paint.zoomTool.zoomIn();});
+    $('#zoomOutButton').click(function(){Paint.zoomTool.zoomOut();});
     
     // Slider for pencil size
     $("#sizeSlider").slider({
@@ -64,6 +60,7 @@ var Paint = {
     });
 
     var availableSizes = [32,64,128,256];
+    // Slider for canvas sample size
     $("#canvasSizeSlider").slider({
       value: 1, 
       min: 0, 
@@ -83,6 +80,7 @@ var Paint = {
         Paint.zoomTool.resizeCanvas();
       }
     });
+
     // Key
     $(document).keydown($.proxy(Paint.keyEvent, Paint));
 
@@ -91,42 +89,12 @@ var Paint = {
   },
 
   // ----------------------------------------
-  // TOOLS
-
-  deactivateTools : function() {
-    Paint.selectTool = false;
-    Paint.paintTool  = false;
-    Paint.lineTool   = false;
-    Paint.eraserTool = false;
-    Paint.hideSketchCanvas();
-    Paint.closeOutlineBox();
-    $('#pencilWrapper').hide();
-  },
-
-  activateLineTool : function() {
-    Paint.deactivateTools();
-    Paint.showSketchCanvas();
-    Paint.lineTool = true;
-    $('#pencilWrapper').show();
-  },
-
-  activatePaintTool : function() {
-    Paint.deactivateTools();
-    Paint.paintTool = true;
-    $('#pencilWrapper').show();
-  },
-
-  activateEraserTool : function() {
-    Paint.deactivateTools();
-    Paint.eraserTool = true;
-  },
-
-  // ----------------------------------------
+  // Canvas Events
   mouseDown : function(e) {
     Paint.setCurrentCanvas(e.currentTarget.id);
     Paint.closeOutlineBox();
   },
-
+  // On zoomed canvas
   mouseDownZoom : function(e) {
     var coordinates = Paint.getCoordinates(e);
     ToolBar.mousedown({ coordinates : coordinates });
@@ -147,7 +115,7 @@ var Paint = {
   addCanvas : function(_copyCanvas) {
     // Dom Object
     var clone = Paint.canvasTemplate.clone();
-    Paint.areaId++
+    Paint.areaId++;
     var id = 'canvas' + Paint.areaId;
     clone.attr('id', id).fadeIn();
     Paint.paintObject.append(clone);
@@ -160,18 +128,6 @@ var Paint = {
 
       var imagedata = canvasToCopy.canvas;
       spriteArea.context.drawImage(imagedata, 0, 0);
-
-      var clickX     = canvasToCopy.clickX.copy();
-      var clickY     = canvasToCopy.clickY.copy();
-      var clickDrag  = canvasToCopy.clickDrag.copy();
-      var clickColor = canvasToCopy.clickColor.copy();
-      var lineSizes  = canvasToCopy.lineSizes.copy();
-
-      spriteArea.clickX     = clickX;
-      spriteArea.clickY     = clickY;
-      spriteArea.clickDrag  = clickDrag;
-      spriteArea.clickColor = clickColor;
-      spriteArea.lineSizes  = lineSizes;
     }
     Paint.canvasObjects = $(".canvas");
     Paint.spriteAreas.push(spriteArea);
@@ -233,6 +189,7 @@ var Paint = {
   },
 
   // ----------------------------------------
+  // Sprite Animation
   initPlay : function() {
     Paint.overSprites();
     $('#playButton').hide();
@@ -293,11 +250,7 @@ var Paint = {
   },
 
   // ----------------------------------------
-  saveImage : function(_speech, _author) {
-    if(Paint.clickX.length < 50) {
-      alert("Sorry, but it seems you didn't draw anything!");
-      return false;
-    }
+  saveImage : function(_speech, _author) {   
   //var img = Paint.canvas.toDataURL("image/png");
   //document.write('<img src="'+img+'"/>');
 
@@ -344,11 +297,11 @@ var Paint = {
 
   //
   setCurrentCanvas : function(_id) {
-    console.log(_id)
     if(!_id) return false;
     Paint.currentCanvas = _id;
     Paint.pixelDrawer.setCanvasContext(Paint.getCurrentCanvasDom()[0]);
     Paint.zoomTool.setTexture(Paint.getCurrentCanvasDom()[0]);
+    Paint.setFocus();
   },
 
   // Returns current canvas as instanz
@@ -394,7 +347,7 @@ var Paint = {
     Paint.canvasSketch.hide();
   },
 
-  drawLineToCanvas : function(_startX, _startY, _endX, _endY) {
+  drawLineToCanvas : function(_startX, _startY, _endX, _endY) {    
     Paint.setCurrentCanvas(Paint.canvasToDraw.attr("id"));
     // Draw to canvas
     Paint.pixelDrawer.popImageData();
@@ -404,8 +357,7 @@ var Paint = {
   
   resizeZoomCanvas : function () {
     Paint.zoomTool.resizeCanvas();
-  }
-
+  },
 };
 
 // ----------------------------------------

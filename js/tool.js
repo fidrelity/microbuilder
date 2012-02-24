@@ -14,12 +14,12 @@ var ToolBar = {
       $('#flipvButton').live("click", $.proxy(Paint.flipV, Paint));
       $('#undoButton').live("click", $.proxy(Paint.undo, Paint));  
       $('#outlineButton').click(function(){Paint.getCurrentSpriteAreaInstance().outlinePoints();});
-      $('#selectToolButton').click(function(){Paint.deactivateTools();Paint.selectTool = true;});
     */
     ToolBar.toolsDomObjects.live('click', $.proxy(ToolBar.clickTool, this));
     ToolBar.tools.push(new PencilTool());
     ToolBar.tools.push(new LineTool());
     ToolBar.tools.push(new EraserTool());    
+    ToolBar.tools.push(new SelectTool());    
     ToolBar.setCurrentTool("pencilToolButton");
   },
 
@@ -112,6 +112,7 @@ LineTool.prototype.clickEvent = function() {
 };
 //
 LineTool.prototype.mousedown = function(_options) {
+  Paint.showSketchCanvas();
   this.isActive = true;
   this.startX = _options.coordinates.x;
   this.startY = _options.coordinates.y;
@@ -130,6 +131,7 @@ LineTool.prototype.mousemove = function(_options) {
 //
 LineTool.prototype.mouseup = function() {
   this.isActive = false;
+  Paint.hideSketchCanvas();
   Paint.getCurrentSpriteAreaInstance().addLine(this.startX, this.startY, this.endX, this.endY);
 };
 
@@ -137,7 +139,7 @@ LineTool.prototype.mouseup = function() {
 var EraserTool = function() {
   this.id = "eraserToolButton";
   this.domObject = $('#' + this.id);
-  this.isActive = true;
+  this.isActive = false;
   this.x = 0;
   this.y = 0;
 };
@@ -157,4 +159,23 @@ EraserTool.prototype.mousemove = function(_options) {
 //
 EraserTool.prototype.mouseup = function() {
   this.isActive = false;
+};
+
+// ----------------------------------------
+var SelectTool = function() {
+  this.id = "selectToolButton";
+  this.domObject = $('#' + this.id);
+  this.isActive = false;
+};
+//
+SelectTool.prototype.clickEvent = function() {
+};
+//
+SelectTool.prototype.mousedown = function(_options) {
+};
+//
+SelectTool.prototype.mousemove = function(_options) {
+};
+//
+SelectTool.prototype.mouseup = function() {
 };
