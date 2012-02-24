@@ -25,14 +25,16 @@ var ToolBar = {
   },
 
   clickTool : function(e) {
-    ToolBar.setCurrentTool(e.currentTarget.id);
-    ToolBar.currentTool.clickEvent();
+    var tool = ToolBar.getToolInstanceById(e.currentTarget.id);
+    if(tool.isSelectable) {
+      ToolBar.setCurrentTool(e.currentTarget.id);
+    }
+    tool.clickEvent();
   },
 
   setCurrentTool : function(_id) {
     ToolBar.currentToolId = _id;
-    ToolBar.currentTool = ToolBar.getToolInstanceById(_id);
-    console.log('currentTOol', ToolBar.currentTool, _id);
+    ToolBar.currentTool = ToolBar.getToolInstanceById(_id);   
     ToolBar.highlightTool(_id);
   },
 
@@ -79,6 +81,7 @@ var PencilTool = function() {
   this.id = "pencilToolButton";
   this.isActive = false;
   this.domObject = $('#' + this.id);
+  this.isSelectable = true;
 };
 //
 PencilTool.prototype.clickEvent = function() {
@@ -103,6 +106,7 @@ var LineTool = function() {
   this.id = "lineToolButton";
   this.domObject = $('#' + this.id);
   this.isActive = true;
+  this.isSelectable = true;
   this.startX = 0;
   this.startY = 0;
   this.endX = 0;
@@ -141,6 +145,7 @@ var EraserTool = function() {
   this.id = "eraserToolButton";
   this.domObject = $('#' + this.id);
   this.isActive = false;
+  this.isSelectable = true;
   this.x = 0;
   this.y = 0;
 };
@@ -167,6 +172,7 @@ var SelectTool = function() {
   this.id = "selectToolButton";
   this.domObject = $('#' + this.id);
   this.isActive = false;
+  this.isSelectable = true;
 };
 //
 SelectTool.prototype.clickEvent = function() {
@@ -187,6 +193,7 @@ var FlipTool = function() {
   this.id = "flipvButton";
   this.domObject = $('#' + this.id);
   this.isActive = false;
+  this.isSelectable = false;
 };
 //
 FlipTool.prototype.clickEvent = function() {

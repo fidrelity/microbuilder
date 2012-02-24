@@ -20,6 +20,7 @@ var ColorPalette = {
       var color = ColorPalette.colors[i];
       ColorPalette.domWrapper.append('<div class="colorBlock" id="'+color+'" style="background:#'+color+'"></div>');
     };
+    ColorPalette.domColorDiv = $('.colorBlock');
   },
 
   clickColor : function(e) {
