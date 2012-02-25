@@ -140,6 +140,8 @@ GameEditor.prototype = {
         
         $('#objects').append("<img src=" + filename + " data-id=" + id + " />");
         
+        this.gameObjects.push({ 'id' : id, 'filename' : filename });
+        
     },
     
     open : function( name, onClose ) {
