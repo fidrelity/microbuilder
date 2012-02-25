@@ -6,8 +6,6 @@ var GameEditor = function() {
 
 GameEditor.prototype = {
     
-    data : {},
-    
     init : function() {
         
         this.gameObjects = [];
@@ -139,8 +137,6 @@ GameEditor.prototype = {
         this.gameObjects.push( gameObject );
         
         $('#objects').append("<img src=" + filename + " data-id=" + id + " />");
-        
-        this.gameObjects.push({ 'id' : id, 'filename' : filename });
         
     },
     
