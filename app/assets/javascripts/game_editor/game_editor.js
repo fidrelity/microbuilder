@@ -4,7 +4,9 @@ var GameEditor = function() {
 
 GameEditor.prototype = {
     
-    init:function() {
+    data : {},
+    
+    init : function() {
         
         this.gameObjects = [];
         this.background = null;
@@ -54,7 +56,7 @@ GameEditor.prototype = {
         
     },
     
-    initClickHandlers:function() {
+    initClickHandlers : function() {
         
         var self = this,
             fsm = this.fsm;
@@ -88,35 +90,40 @@ GameEditor.prototype = {
         
     },
     
-    compile:function() {
+    parse : function( gameData ) {
+      
+      
+    },
+    
+    compile : function() {
+    
         return {};
+    
     },
     
     onSelectBackground : function( fsm ) {
-            
-        $('#background_library').lightbox_me({
-            centered: true,
-            onClose: function() {
-                fsm.no_background();
-            }
+        
+        this.open( 'background_library', function() {
+          
+          fsm.no_background();
+          
         });
         
     },
     
     onSelectObject : function ( fsm ) {
         
-        $('#assets_library').lightbox_me({
-            centered: true,
-            onClose: function() {
-                fsm.no_object();
-            }
+        this.open( 'assets_library', function() {
+          
+          fsm.no_object();
+          
         });
         
     },
     
     onSelectedObject : function(fsm) {
         
-        $('#assets_library').trigger('close');
+        this.close( 'assets_library' );
         
     },
     
@@ -125,6 +132,23 @@ GameEditor.prototype = {
         $('#objects').append("<img src="+filename+" data-id="+id+" />");
         this.gameObjects.push({ 'id' : id, 'filename' : filename });
         
+    },
+    
+    open : function( name, onClose ) {
+      
+      onClose = onClose || function(){};
+      
+      $('#' + name).lightbox_me({
+            centered : true,
+            'onClose' : onClose
+      });
+      
+    },
+    
+    close : function( name ) {
+      
+      $('#' + name).trigger('close');
+      
     }
 
 }

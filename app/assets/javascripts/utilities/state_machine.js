@@ -106,14 +106,14 @@ StateMachine.prototype = {
     
     this.currentState.exit.call( this.scope );
     
+    this.currentState = this.states[name];
+    
     if ( callback ) {
     
       // callback.apply( this.scope, arguments );
       callback.call( this.scope, this );
       
     }
-    
-    this.currentState = this.states[name];
     
     this.currentState.enter.call( this.scope );
     
