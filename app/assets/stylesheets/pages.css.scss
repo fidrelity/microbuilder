@@ -2,117 +2,95 @@ $bg: #fff;
 $font: #000;
 
 html, body {
-    padding: 0px;
     margin: 0px;
+    padding: 0px;
+    border: none;
     text-decoration:none;
-    border:none 0px;
+}
+
+body {
+    background:url('dark.png');
+    height:100%;
+    width:100%;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+ul#nav {
+    list-style:none;
+    z-index: 2;
+}
+
+ul#nav li {
+    position:absolute;
+    overflow:hidden;
+    padding: 10px;
+    width:31px;
+    height:31px;
+    z-index:2;
+}
+
+ul#nav li#nav_top {
+    top:0px;
+    background:#439AAB;
+}
+
+ul#nav li#nav_left {
+    left:0px;
+    background:#00CABD;
+}
+
+ul#nav li#nav_right {
+    right:0px;
+    background:#FF5B00;
+}
+
+ul#nav li#nav_bottom {
+    bottom:0px;
+    background:#A1716C;
+}
+
+#pages {
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:100%;
     height:100%;
     overflow:hidden;
 }
 
-body {
-    background: url('dark.png');
-    color: $font;
-    padding: 0;           /* required to "hide" distance div */
-    margin: 0;
-}
-
-h1 {
-    
-}
-
-.clear {
-    clear: both;
-}
-
-.centered {
-    margin: 0px auto;
+#pages div.page {
+    position:absolute;
+    top:0px;
     width:100%;
-    text-align:center;
+    height:100%;
 }
 
-#playercanvas {
+#pages .home {
+    /* background: #fff; */
 }
 
-section {
-    position:relative;
-    width:100%;
+#pages .profile {
+    background: #FF5B00;
 }
 
-section.combs {
-    background: url('cones.png') top left no-repeat;
+#pages .editor {
+    background: #00CABD;
 }
 
-section.canvas {
+#pages .gallery {
+    background: #A1716C;
 }
 
-section.gameeditor {
+#pages .about {
+    background: #439AAB;
 }
 
-section.gameeditor .content {
-    width: 800px;
-    height: 600px;
-    margin: 10px;
-    border: 1px solid #000;
-}
-
-section.editor_content {
-    //display:none;
-}
-
-#tabs {
-    width:800px;
-    margin: 0px auto;
-    text-align: left;
-}
-
-.objects_content {
-    font-size:60px;
-    margin:15px;
-}
-
-.meta_content input {
-    margin: 20px;
-}
-
-ul#nav {
-    list-style: none;
-    margin:30px 0 0 0;
-    padding:0px;
-    font-size:0px;
-    position:fixed;
-    z-index:10;
-}
-
-ul#nav li:hover {
-    font-size:10px;
-}
-
-ul#nav li {
-    padding: 15px 0 15px 0px;
-    width:60px;
-    height:30px;
-    overflow:hidden;
-}
-
-ul#nav li.nav_gallery {
-    background:#FF5B00;
-}
-
-ul#nav li.nav_editor {
-    background:#439AAB;
-}
-
-ul#nav li.nav_tutorial {
-    background:#A1716C;
-}
-
-ul#nav li.nav_profile {
-    background:#00CABD;
-}
-
-ul#nav li.nav_log {
-    background:#728296;
+#editor {
+    padding:50px;
 }
 
 /* OVERLAYS */
@@ -122,8 +100,24 @@ div.overlay {
     display:none;
     border-radius: 15px;
     width:700px;
+    z-index:100;
+}
+
+#pages #tabs {
+    position:relative;
+    width: 850px;
 }
 
 div#background_library {
     height:400px;
+}
+
+.social_login {
+    position:absolute;
+    bottom:0px;
+    z-index:1;
+}
+
+.social_login a {
+    color:#fff;
 }

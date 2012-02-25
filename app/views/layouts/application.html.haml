@@ -6,7 +6,7 @@
 		=javascript_include_tag "application"
 		=#stylesheet_link_tag "ui-lightness/jquery-ui-1.8.17.custom"
 		=csrf_meta_tags
-	%body
+	%body{:onorientationchange => "orientationChanged()"}
 		=render :partial => "layouts/header"
 		=yield
 		%br

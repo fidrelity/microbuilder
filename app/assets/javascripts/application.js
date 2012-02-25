@@ -22,22 +22,54 @@ $(document).ready(function() {
         $(this).fadeOut(5000);
     })
     
-    // Panel Management in #nav
-    $('#nav > li').each(function() {
-        $(this).click(function(e) {
-            showPanel($(this).data('page'));
-            e.preventDefault();
-        })
-    })
+    // Dirty hack for ipad scroll-disabling
+    $(document).bind('touchmove', false);
+    
+    height = $(window).height();
+    width = $(window).width();
+    
+    placeNav(height, width);
+    placeSections(height, width);
+    
+    $(window).resize(function() {
+        height = $(window).height();
+        width = $(window).width();
+        placeNav(height, width);
+        placeSections(height, width);
+    });
+
+    //$('section#home').css({top: '0px', left: '0px'});
+    
+    $('li#nav_right').click(function() {
+        minimizeSection();
+        $('#pages .profile').stop().animate({left: '0px'}, 250, function() {
+            $(this).attr('active', 1)
+        });
+    });
+    
+    $('li#nav_left').click(function() {
+        minimizeSection();
+        $('#pages .editor').stop().animate({left: '0px'}, 250, function() {
+            $(this).attr('active', 1)
+        });
+    });
+    
+    $('li#nav_bottom').click(function() {
+        minimizeSection();
+        $('#pages .gallery').stop().animate({top: '0px'}, 250, function() {
+            $(this).attr('active', 1)
+        });
+    });
+    
+    $('li#nav_top').click(function() {
+        minimizeSection();
+        $('#pages .about').stop().animate({top: '0px'}, 250, function() {
+            $(this).attr('active', 1)
+        });
+    });
     
     // Editor Tabs 
     $('#tabs').tabs();
-    
-    // Set panels to height wof browser window
-    $(window).resize(function(){
-        	setPanelSize();
-    });
-    setPanelSize();
 
     if ( $('#playercanvas').length ) {
       
@@ -47,19 +79,34 @@ $(document).ready(function() {
     
 });
 
-function setPanelSize(){
-    var windowHeight = $(window).height();
-    var windowWidth = $(window).width();
-    $('section').css({'height':windowHeight+'px'});
-    //reset scrollspy
-    //$('body').scrollSpy('refresh');
+function placeNav(height, width) {
+    $('#nav_top').css({left: width/2-15});
+    $('#nav_bottom').css({left: width/2-15});
+    $('#nav_left').css({top: height/2-5});
+    $('#nav_right').css({top: height/2-5});
 }
 
-function showPanel(panel){
-    $('section').each(function() {
-        $(this).css({top: '-1000px'});
-    })
-    $('section:eq('+panel+')').css({top: '0px', position: 'absolute'});
+function placeSections(height, width) {
+    $('#pages .profile').css({left: width, top: '0px'});
+    $('#pages .editor').css({left: -width, top: '0px'});
+    $('#pages .gallery').css({top: height, left: '0px'});
+    $('#pages .about').css({top: -height, left: '0px'});
+}
+
+function minimizeSection(section) {
+    $('#pages > div').each(function() {
+        console.log($(this));
+        if($(this).attr('active') == 1) {
+            $(this).animate({height: '0px', width: '0px', top: '50%', left: '50%'}, 250, function() {
+                $(this).attr('active', 0);
+                $(this).css({width: width, height: height});
+                placeSections(height, width);
+            });
+        }
+    });
+    //$('#'+section).animate({opacity: 0}, 500);
+    //$('#'+section).animate({height: '0px', width: '0px', top: '50%', left: '50%'});
+    //$('#'+section).css({height: '0px', width: '0px', top: '50%', left: '50%'});
 }
 
 function initPlayer( canvas ) {

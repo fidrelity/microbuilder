@@ -1,34 +1,85 @@
-%section{:class => "canvas combs"}
-  .centered
-    %h1 Play!
-    %canvas{:id => "playercanvas", :width => 640, :height => 390}
-    
 :javascript
   $(document).ready(function() {
     gameEditor = new GameEditor();
     gameEditor.init();
   })
 
-%section{:class => "gameeditor"}
-  .centered
-    %div{:id => "tabs"}
-      %ul{:class => "tabbednav"}
-        %li
-          =link_to "tab eins", "#tabs-1"
-        %li
-          =link_to "tab zwei", "#tabs-2"
-        %li
-          =link_to "tab drei", "#tabs-3"
+#pages
 
-      .clear
-      %div{:id => "tabs-1"}
-        =render :partial => "meta_content"
-      %div{:id => "tabs-2"}
-        =render :partial => "objects_content"
-      %div{:id => "tabs-3"}
-        =render :partial => "test_content"
+  .home.page
+    #home
+      %canvas{:width => 640, :height => 390}
+  
+  .editor.page
+    #editor
+      %div{:id => "tabs"}
+        %ul{:class => "tabbednav"}
+          %li
+            =link_to "tab eins", "#tabs-1"
+          %li
+            =link_to "tab zwei", "#tabs-2"
+          %li
+            =link_to "tab drei", "#tabs-3"
 
-      =render :partial => "background_library"
-      =render :partial => "assets_library"
-      =render :partial => "graphic_editor"
-      =render :partial => "behaviour_editor"
+        .clear
+        %div{:id => "tabs-1"}
+          =render :partial => "meta_content"
+        %div{:id => "tabs-2"}
+          =render :partial => "objects_content"
+        %div{:id => "tabs-3"}
+          =render :partial => "test_content"
+
+        =render :partial => "background_library"
+        =render :partial => "assets_library"
+        =render :partial => "graphic_editor"
+        =render :partial => "behaviour_editor"
+      
+  .profile.page
+    #profile
+      Profile
+      =#render :partial => 
+  
+  .gallery.page
+    #gallery
+      Gallery
+    
+  .about.page
+    #about
+    about
+    
+
+= if false
+  %section{:class => "canvas combs"}
+    .centered
+      %h1 Play!
+      %canvas{:id => "playercanvas", :width => 640, :height => 390}
+    
+  :javascript
+    $(document).ready(function() {
+      gameEditor = new GameEditor();
+      gameEditor.init();
+    })
+
+  %section{:class => "gameeditor"}
+    .centered
+      %div{:id => "tabs"}
+        %ul{:class => "tabbednav"}
+          %li
+            =link_to "tab eins", "#tabs-1"
+          %li
+            =link_to "tab zwei", "#tabs-2"
+          %li
+            =link_to "tab drei", "#tabs-3"
+
+        .clear
+        %div{:id => "tabs-1"}
+          =render :partial => "meta_content"
+        %div{:id => "tabs-2"}
+          =render :partial => "objects_content"
+        %div{:id => "tabs-3"}
+          =render :partial => "test_content"
+
+        =render :partial => "background_library"
+        =render :partial => "assets_library"
+        =render :partial => "graphic_editor"
+        =render :partial => "behaviour_editor"

@@ -1,17 +1,22 @@
 
 %header
   =# link_to(image_tag("logo.png", :id => "logo"), root_path) 
+  .social_login
+    -if user_signed_in?
+      %div= link_to('Profile', user_path(current_user.id))
+      %div= link_to('Logout', destroy_user_session_path, :method => :delete)
+    -else
+      %div= link_to('Login', new_user_session_path)
+      %div= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
+    
   
   %ul{:id => "nav"}
-    %li{:class => 'nav_gallery', :data => {:page => 0}}= link_to('Gallery', root_path)
-    %li{:class => 'nav_editor', :data => {:page => 1}}= link_to('Editor', pages_editor_path)
-    %li{:class => 'nav_tutorial', :data => {:page => 2}} Tutorial
-    -if user_signed_in?
-      %li{:class => 'nav_profile', :data => {:page => 3}}= link_to('Profile', user_path(current_user.id))
-      %li{:class => 'nav_log', :data => {:page => 4}}= link_to('Logout', destroy_user_session_path, :method => :delete)
-    -else
-      %li{:class => 'nav_log', :data => {:page => 4}}= link_to('Login', new_user_session_path)
-      %li{:class => 'nav_facebook', :data => {:page => 5}}= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
+    %li{:id => "nav_top"}= image_tag("home.png")
+    %li{:id => 'nav_left'}= image_tag("editor.png")
+    %li{:id => 'nav_right'}= image_tag("profile.png")
+    %li{:id => 'nav_bottom'}= image_tag("gallery.png")
+    
+    
 
 .clear
 
