@@ -22,23 +22,23 @@ $(document).ready(function() {
         $(this).fadeOut(5000);
     })
     
+    // Panel Management in #nav
+    $('#nav > li').each(function() {
+        $(this).click(function(e) {
+            showPanel($(this).data('page'));
+            e.preventDefault();
+        })
+    })
+    
     // Editor Tabs 
     $('#tabs').tabs();
-
-    /*// Overlay
-    $('.overlay_button').click(function(e) {
-        
-        var overlay = $(this).data('overlay');
-        
-        $('#'+overlay).lightbox_me({
-            centered: true, 
-            onLoad: function() { 
-                //$('#sign_up').find('input:first').focus()
-            }
-        });
-        e.preventDefault();
-    }); */
     
+    // Set panels to height wof browser window
+    $(window).resize(function(){
+        	setPanelSize();
+    });
+    setPanelSize();
+
     if ( $('#playercanvas').length ) {
       
       initPlayer();
@@ -46,6 +46,21 @@ $(document).ready(function() {
     }
     
 });
+
+function setPanelSize(){
+    var windowHeight = $(window).height();
+    var windowWidth = $(window).width();
+    $('section').css({'height':windowHeight+'px'});
+    //reset scrollspy
+    //$('body').scrollSpy('refresh');
+}
+
+function showPanel(panel){
+    $('section').each(function() {
+        $(this).css({top: '-1000px'});
+    })
+    $('section:eq('+panel+')').css({top: '0px', position: 'absolute'});
+}
 
 function initPlayer( canvas ) {
   
