@@ -34,7 +34,7 @@ var Paint = {
     Paint.zoomTool.canvas.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
     Paint.zoomTool.canvas.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
     // Tools
-    $('#switchViewButton').click(function() { Paint.switchView(); });
+    $('.switchViewButton').click(function() { Paint.switchView(); });
     $('#addCanvasButton').click(function(){ Paint.addCanvas(); });
     $('#copyCanvasButton').click(function(){ Paint.addCanvas(true); });
     $('#clearCanvasButton').click(function(){Paint.clearCanvas(true);});
@@ -344,10 +344,11 @@ var Paint = {
 $(document).ready(function() {
   Paint.init();
 
+  /*
   $('#goToPaintButton').click(function() {
-    $('#introWrapper').hide();
-    $('#paintWrapper').show();
-  });
+    //$('#introWrapper').hide();
+    //$('#paintWrapper').show();
+  });*/
 
   $('#drawBackgroundCheckbox').click(function() {
     $('.canvas').css({
