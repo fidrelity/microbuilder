@@ -17,10 +17,10 @@ StateMachine.prototype = {
   
     this.name = params.name || 'none';
   
-    this.enter = params.enter || function() {};
-    this.update = params.update || function( dt ) {};
-    this.draw = params.draw || function( ctx ) {};
-    this.exit = params.exit || function() {};
+    this.enter = params.enter || function( fsm ) {};
+    this.update = params.update || function( dt, fsm ) {};
+    this.draw = params.draw || function( ctx, fsm ) {};
+    this.exit = params.exit || function( fsm ) {};
 
   },
 
@@ -31,7 +31,7 @@ StateMachine.prototype = {
     this.name = params.name || 'none';
     this.from = params.from || 'none';
     this.to = params.to || 'none';
-    this.callback = params.callback || function() {};
+    this.callback = params.callback || function( fsm ) {};
   
   },
   
@@ -63,13 +63,13 @@ StateMachine.prototype = {
   
   update : function( dt ) {
     
-    this.currentState.update.call(this.scope, dt);
+    this.currentState.update.call( this.scope, dt, this ) ;
     
   },
   
   draw : function( ctx ) {
     
-    this.currentState.draw.call(this.scope, ctx);
+    this.currentState.draw.call( this.scope, ctx, this );
     
   },
   
@@ -102,16 +102,22 @@ StateMachine.prototype = {
     
   },
   
-  changeState : function( name, callback, arguments ) {
+  changeState : function( name, callback, args ) {
+    
+    var callbackArgs = [];
     
     this.currentState.exit.call( this.scope );
     
     this.currentState = this.states[name];
     
     if ( callback ) {
-    
-      // callback.apply( this.scope, arguments );
-      callback.call( this.scope, this );
+      
+      args = args || [];
+      
+      callbackArgs.push.apply( callbackArgs, args );
+      callbackArgs.push( this );
+      
+      callback.apply( this.scope, callbackArgs );
       
     }
     
