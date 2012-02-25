@@ -1,13 +1,19 @@
-var GameObject = function( position, offset, image ) {
+var GameObject = function() {
   
-  this.position = position;
-  this.offset = offset;
+  this.setPosition( 0, 0 );
   
-  this.image = image;
+  this.id = null;
+  
+  this.offset = null;
+  
+  this.image = null;
+  this.filename = '';
   
 };
 
 GameObject.prototype = {
+  
+  init : function() {},
   
   update : function( dt ) {
     
@@ -22,6 +28,13 @@ GameObject.prototype = {
     pos.addSelf( this.offset ).addSelf( this.position );
     
     ctx.drawImage( this.image, pos.x, pos.y );
+    
+  },
+  
+  setPosition : function( x, y ) {
+    
+    this.position = new Vector( x, y );
+    this.startPosition = new Vector( x, y );
     
   }
   

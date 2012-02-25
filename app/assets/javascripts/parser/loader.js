@@ -2,13 +2,11 @@ var Loader = function( callback ) {
 
   this.callback = callback;
 
+  this.imageCount = 0;
+
 };
 
 Loader.prototype = {
-  
-  imageCount : 0,
-  
-  callback : null,
   
   loadImage : function( path ) {
     

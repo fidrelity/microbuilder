@@ -1,10 +1,10 @@
 var GameEditor = function() {
     
+    
+    
 }
 
 GameEditor.prototype = {
-    
-    data : {},
     
     init : function() {
         
@@ -17,9 +17,9 @@ GameEditor.prototype = {
         this.fsm = new StateMachine(this);
         
         this.fsm.init({
-
+          
           initial : 'default',
-
+          
           states : [
             { name : 'default' },
             { name : 'test' },
@@ -29,7 +29,7 @@ GameEditor.prototype = {
             { name : 'object_draw' },
             { name : 'placement' }
           ],
-
+          
           transitions : [
           
             { name : 'select_background', from : 'default', to: 'background_select', callback: this.onSelectBackground },
@@ -129,9 +129,14 @@ GameEditor.prototype = {
     
     addGameObject : function(id, filename) {
         
-        $('#objects').append("<img src="+filename+" data-id="+id+" />");
+        var gameObject = new GameObject();
         
-        this.gameObjects.push({ 'id' : id, 'filename' : filename });
+        gameObject.id = id;
+        gameObject.filename = filename;
+        
+        this.gameObjects.push( gameObject );
+        
+        $('#objects').append("<img src=" + filename + " data-id=" + id + " />");
         
     },
     

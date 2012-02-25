@@ -1,12 +1,12 @@
 var Game = function() {
   
+  this.background = null;
+  
+  this.gameObjects = [];
+  
 };
 
 Game.prototype = {
-  
-  background : null,
-  
-  gameObjects : [],
   
   init : function() {},
   

@@ -8,13 +8,15 @@ var Parser = {
     
     for ( var i = 0; i < data.gameObjects.length; i++ ) {
       
-      var obj = data.gameObjects[i];
+      var obj = data.gameObjects[i],
+          gameObj = new GameObject();
       
-      game.gameObjects.push( new GameObject( 
-        new Vector( obj.x, obj.y ), 
-        new Vector( obj.oX, obj.oY ),
-        loader.loadImage( obj.image )
-      ));
+      gameObj.setPosition( obj.x, obj.y );
+      gameObj.offset = new Vector( obj.oX, obj.oY );
+      
+      gameObj.image = loader.loadImage( obj.image );
+      
+      game.gameObjects.push( gameObj );
       
     }
     
