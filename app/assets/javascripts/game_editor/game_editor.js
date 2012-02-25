@@ -6,6 +6,8 @@ var GameEditor = function() {
 
 GameEditor.prototype = {
     
+    data : {},
+    
     init : function() {
         
         this.gameObjects = [];
