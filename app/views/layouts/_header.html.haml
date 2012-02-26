@@ -11,11 +11,18 @@
     
   
   %ul{:id => "nav"}
-    %li{:id => "nav_top"}= image_tag("home.png")
-    %li{:id => 'nav_left'}= image_tag("editor.png")
-    %li{:id => 'nav_right'}= image_tag("profile.png")
-    %li{:id => 'nav_bottom'}= image_tag("gallery.png")
-    
+    %li{:id => "nav_top"}
+      = image_tag("home.png") 
+      %span Microbuilder
+    %li{:id => 'nav_left'}
+      = image_tag("editor.png")
+      %span Editor
+    %li{:id => 'nav_right'}
+      = image_tag("profile.png")
+      %span Profile
+    %li{:id => 'nav_bottom'}
+      = image_tag("gallery.png")
+      %span Gallery
     
 
 .clear

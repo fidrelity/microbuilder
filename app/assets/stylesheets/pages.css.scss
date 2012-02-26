@@ -6,12 +6,15 @@ html, body {
     padding: 0px;
     border: none;
     text-decoration:none;
+    height:100%;
 }
 
 body {
     background:url('dark.png');
     height:100%;
     width:100%;
+    font-family:Verdana, Helvetica, Arial;
+    color:#fff;
 }
 
 * {
@@ -28,9 +31,26 @@ ul#nav li {
     position:absolute;
     overflow:hidden;
     padding: 10px;
-    width:31px;
-    height:31px;
     z-index:2;
+    font-size:20px;
+    width:31px;
+    display:block;
+}
+
+ul#nav li img {
+    float:left;
+}
+
+ul#nav li:hover {
+    width:160px;
+}
+
+ul#nav li span {
+    display:none;
+}
+
+ul#nav li:hover span {
+    display:block;
 }
 
 ul#nav li#nav_top {
@@ -93,6 +113,14 @@ ul#nav li#nav_bottom {
     padding:50px;
 }
 
+#home {
+    width:650px;
+    height:500px;
+    background: #ccc;
+    margin:0px auto;
+    position:relative;
+}
+
 /* OVERLAYS */
 div.overlay {
     background:#FFF;
@@ -105,7 +133,7 @@ div.overlay {
 
 #pages #tabs {
     position:relative;
-    width: 850px;
+    width: 500px;
 }
 
 div#background_library {
