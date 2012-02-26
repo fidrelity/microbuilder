@@ -81,7 +81,6 @@ $(document).ready(function() {
 function spaceCheck(timer){
     height = $(window).height();
     width = $(window).width();
-    console.log('checked');
     
     placeNav(height, width);
     placeSections(height, width);
