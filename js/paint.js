@@ -185,6 +185,7 @@ var Paint = {
     Paint.overSprites();
     $('#playButton').hide();
     $('#stopButton').show();
+    $('.canvas').removeClass('canvas-selected');
     Paint.play();
   },
 
@@ -223,6 +224,7 @@ var Paint = {
     Paint.canvasObjects.not('#canvas-template').show();
     $('#playButton').show();
     $('#stopButton').hide();
+    Paint.setFocus();
   },
 
   // ----------------------------------------
@@ -242,6 +244,9 @@ var Paint = {
 
   // ----------------------------------------
   saveImage : function() {
+
+    Paint.stopAnimation();
+
     var count = Paint.spriteAreas.length;
     var width = Paint.canvasTemplate.width(); 
     var totalWidth = count * width;

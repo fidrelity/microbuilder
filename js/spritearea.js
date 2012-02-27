@@ -108,11 +108,13 @@ SpriteArea.prototype.pushUndoStep = function() {
 };
 
 SpriteArea.prototype.flip = function(_direction) {  
-  console.log('flip', Paint.pixelDrawer.context.scale(4, 1));
+  console.log('flip');
   //Paint.pixelDrawer.popImageData();
   //Paint.pixelDrawer.pushImageData();
-  //Paint.pixelDrawer.context.save();
-  Paint.pixelDrawer.context.scale(-1, 1);
+  Paint.pixelDrawer.context.scale(20, 20);
+  this.context.scale(2,2);
+  //this.context.scale(-1, 1);
+  //this.context.translate(20, 20);
   //Paint.pixelDrawer.context.restore();
 
   //this.redraw(true);
