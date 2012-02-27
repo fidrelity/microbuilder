@@ -20,6 +20,7 @@ var ToolBar = {
     ToolBar.tools.push(new SelectTool());    
     ToolBar.tools.push(new FlipTool());
     ToolBar.tools.push(new UndoTool());
+    ToolBar.tools.push(new SaveTool());
 
     ToolBar.setCurrentTool("pencilToolButton");
   },
@@ -232,22 +233,22 @@ UndoTool.prototype.mouseup = function() {
 
 
 // ----------------------------------------
-var UndoTool = function() {
-  this.id = "undoButton";
+var SaveTool = function() {
+  this.id = "saveButton";
   this.domObject = $('#' + this.id);
   this.isActive = false;
   this.isSelectable = false;
 };
 //
-UndoTool.prototype.clickEvent = function() {
-  Paint.getCurrentSpriteAreaInstance().undo();
+SaveTool.prototype.clickEvent = function() {
+  Paint.saveImage();
 };
 //
-UndoTool.prototype.mousedown = function(_options) {
+SaveTool.prototype.mousedown = function(_options) {
 };
 //
-UndoTool.prototype.mousemove = function(_options) {
+SaveTool.prototype.mousemove = function(_options) {
 };
 //
-UndoTool.prototype.mouseup = function() {
+SaveTool.prototype.mouseup = function() {
 };

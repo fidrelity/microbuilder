@@ -10,6 +10,7 @@ var Paint = {
     Paint.canvasTemplate    = $('#canvas-template');
     Paint.toolButtons       = $('.tool');
     Paint.canvasSketch      = $('#canvas-sketch');
+    Paint.spriteCanvas      = $('#sprite-canvas'); // Canvas to concat the sprites and save
 
     // Init other classes
     ToolBar.init();
@@ -238,19 +239,32 @@ var Paint = {
   },
 
   // ----------------------------------------
-  saveImage : function(_speech, _author) {   
-  //var img = Paint.canvas.toDataURL("image/png");
-  //document.write('<img src="'+img+'"/>');
+  saveImage : function() {
+  var count = Paint.spriteAreas.length;
+  var width = Paint.canvasTemplate.width(); 
+  var totalWidth = count * width;
+  var height = Paint.canvasTemplate.height();
+  
+  Paint.spriteCanvas.attr('width', totalWidth).attr('height', height).show();
+  var canvas = document.getElementById(Paint.spriteCanvas.attr('id'));
+  var context = canvas.getContext('2d');
+
+  for (var i = 0; i < Paint.spriteAreas.length; i++) {;
+    var area = Paint.spriteAreas[i];
+    var xPos = i * width;
+    context.drawImage(area.canvas, xPos, 0);
+  };
 
   /*
-    var imageData = Paint.context.getImageData();
-    $.post('/upload',
-    {
-            author : _author,
-            img : Paint.canvas.toDataURL('image/jpeg')
-    },
-    function(data) {});
-    */
+  // Push to Server
+  var imgData = Paint.canvas.toDataURL("image/png");
+  $.post('/upload', {
+        singleWidth : width,
+        count : count,
+        img_data : imgData
+      },
+  function(data) {});
+  */
   },
 
   // ----------------------------------------

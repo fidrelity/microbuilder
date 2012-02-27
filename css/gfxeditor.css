@@ -30,7 +30,7 @@ body {
 
 #webglCanvas { border:1px solid #000000;}
 #zoomCanvasWrapper {
-  max-height:512px;
+  max-height:612px;
   max-width:512px;
   overflow:auto;
 }
@@ -49,6 +49,10 @@ body {
 
 #canvas-template { display:none; }
 #canvas-sketch { display:none; z-index:999; position:absolute; background:none;}
+
+#sprite-canvas {
+  display: none;
+}
 
 .colorBlock, .sizeBlock {
     width:20px; height:20px; border:1px solid #000000;
