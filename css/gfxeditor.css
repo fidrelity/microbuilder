@@ -1,0 +1,137 @@
+body {
+    background:#F6F6F6;
+    font-family:Arial;
+}
+
+#gfx-editor-wrapper {
+  background:#FFF;
+  border-radius:7px;
+  border:2px solid #CCC;
+}
+
+#paintWrapper, #introWrapper {
+    margin:auto;
+    width:100%;
+    overflow:hidden;
+}
+#paintWrapper { /*display:none;*/}
+
+#paintLeft {
+  width:450px;
+  float:left;
+}
+
+#paintRight {
+  margin-left:30px;
+  width:300px;
+  float:right;
+  background:#F6F6F6;
+}
+
+#webglCanvas { border:1px solid #000000;}
+
+.canvas {
+    width:64px;
+    height:64px;
+    background: url(../img/bg_transparent.png);
+    margin-right:0.5em;
+}
+.canvas:hover, .canvas:active, .canvas:focus {
+    cursor: crosshair;
+}
+.canvas-over  { position:absolute; background: rgba(255, 255, 255, 0.9); }
+.canvas-float { position:relative; float:left; }
+.canvas-selected { border:1px solid #4096EE;}
+
+#canvas-template { display:none; }
+#canvas-sketch { display:none; z-index:999; position:absolute; background:none;}
+
+.colorBlock, .sizeBlock {
+    width:20px; height:20px; border:1px solid #000000;
+    text-align:center; cursor:pointer;
+}
+.colorBlock {
+    float:left; margin-right:0.4em;
+}
+
+.activeColor {
+    border:2px solid #000000;
+}
+#sizeSlider {
+    width:180px;
+    margin:0.5em 0 0.5em 0;
+}
+
+#sizeWrapper {
+    height:40px;
+    overflow:hidden;
+}
+
+#paints {
+    width:100%;
+    height:256px;
+    overflow:hidden;
+    position:relative;
+}
+
+#stopButton { display: none;}
+
+.active-tool {
+    background:#028132;
+}
+
+#sizeSample {
+    width:64px;
+    height:64px;
+    background: url(../img/bg_transparent.png);
+    border:1px solid #000000;
+}
+
+#canvasSizeSlider { width:200px;}
+#outlineBox { position:absolute; display:none; z-index:999; border:1px solid #000; }
+
+
+h2 {
+  color:#111;
+  border-bottom:1px solid #CCC;
+  margin-top:0em;
+  font-weight:normal;
+  font-size:2em;
+  padding:0.2em;
+}
+
+/* --- Slider --- */
+.slide-container {
+  width:900px;
+  margin:auto;
+  overflow:hidden;
+  height:auto;
+}
+
+.slide-wrapper {
+  overflow:hidden;
+  height:auto;
+  position:relative;
+}
+
+.slide {
+  position:relative;
+  float:left;
+  min-height:100px;
+}
+
+.slide-content { padding:1em; }
+.slider-footer { background:#F6F6F6; border-top:1px solid #CCC; padding:0.5em;}
+
+.slide-footer{
+  overflow:hidden;
+  clear: both;
+}
+
+.prevButton {
+}
+
+.nextButton {
+  /*position:absolute;
+  right:0; top:230px;*/
+}
