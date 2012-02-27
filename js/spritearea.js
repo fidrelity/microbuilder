@@ -35,16 +35,8 @@ SpriteArea.prototype.redraw = function(_drawAll) {
   Paint.pixelDrawer.pushImageData();
 };
 //
-SpriteArea.prototype.clearCanvas = function(_reset) {
+SpriteArea.prototype.clearCanvas = function() {
   this.canvas.width = this.canvas.width;
-  if(_reset) {
-    this.clickX = [];
-    this.clickY = [];
-    this.clickDrag = [];
-    this.clickColor = [];
-    this.lineSizes = [];
-    this.undoArray = [];
-  }
 };
 
 SpriteArea.prototype.eraseArea = function(_x, _y) {
@@ -96,19 +88,17 @@ SpriteArea.prototype.outlinePoints = function() {
 //
 SpriteArea.prototype.undo = function() {
   if(this.undoArray.length == 0) return false;
-
   var lastPaint = this.undoArray.pop();
   //this.context.putImageData(lastPaint, 0, 0);
   //var startIndex = lastPaint[0];
   //var stopIndex = lastPaint[1] - lastPaint[0];
-
-/*
+  /*
   this.clickX.splice(startIndex, stopIndex);
   this.clickY.splice(startIndex, stopIndex);
   this.clickDrag.splice(startIndex, stopIndex);
   this.clickColor.splice(startIndex, stopIndex);
   this.lineSizes.splice(startIndex, stopIndex);
-*/
+  */
   this.redraw(true);
 };
 
@@ -122,7 +112,7 @@ SpriteArea.prototype.flip = function(_direction) {
   //Paint.pixelDrawer.popImageData();
   //Paint.pixelDrawer.pushImageData();
   //Paint.pixelDrawer.context.save();
-  Paint.pixelDrawer.context.scale(4, 1);
+  Paint.pixelDrawer.context.scale(-1, 1);
   //Paint.pixelDrawer.context.restore();
 
   //this.redraw(true);

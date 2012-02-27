@@ -8,6 +8,7 @@ var Paint = {
     Paint.paintObject       = $('#paints');
     Paint.canvasObjects     = $('.canvas');
     Paint.canvasTemplate    = $('#canvas-template');
+    Paint.toolButtons       = $('.tool');
     Paint.canvasSketch      = $('#canvas-sketch');
 
     // Init other classes
@@ -33,7 +34,7 @@ var Paint = {
     Paint.zoomTool.canvas.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
     Paint.zoomTool.canvas.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
     // Tools
-    $('#switchViewButton').click(function() { Paint.switchView(); });
+    $('.switchViewButton').click(function() { Paint.switchView(); });
     $('#addCanvasButton').click(function(){ Paint.addCanvas(); });
     $('#copyCanvasButton').click(function(){ Paint.addCanvas(true); });
     $('#clearCanvasButton').click(function(){Paint.clearCanvas(true);});
@@ -49,7 +50,7 @@ var Paint = {
     // Slider for pencil size
     $("#sizeSlider").slider({
       value: Paint.lineWidth, 
-      min: 1, 
+      min: 1,
       max: 40, 
       step: 4,
       change: function( event, ui ) {
@@ -57,24 +58,19 @@ var Paint = {
       }
     });
 
-    var availableSizes = [32,64,128,256];
-    // Slider for canvas sample size
-    $("#canvasSizeSlider").slider({
-      value: 1, 
-      min: 0, 
-      max: 3, 
-      step: 1,
-      slide: function( event, ui ) {
-        var size = availableSizes[ui.value];
-              
-        $('#sizeSample').css({
-          width : size, 
-          height: size
-        });
+    // Resize for canvas size
+    $('#sizeSample').resizable({
+      grid: 16,
+      maxHeight:128,
+      maxWidth:128,
+      minHeight:32,
+      minWidth:32,
+      resize: function(event, ui) { 
+        var size = ui.size;
         $('.canvas').css({
-          width : size, 
-          height: size
-        }).attr('width', size).attr('height', size);
+          width : size.width, 
+          height: size.height
+        }).attr('width', size.width).attr('height', size.height);
         Paint.zoomTool.resizeCanvas();
       }
     });
@@ -95,6 +91,7 @@ var Paint = {
   // On zoomed canvas
   mouseDownZoom : function(e) {
     var coordinates = Paint.getCoordinates(e);
+        console.log(coordinates.x,coordinates.y)
     ToolBar.mousedown({ coordinates : coordinates });
   },
 
@@ -137,18 +134,11 @@ var Paint = {
 
   clearCanvas : function(_reset) {
     var spriteArea = Paint.getCurrentSpriteAreaInstance();
-
-    // No pixel data -> delete canvas
-    if(spriteArea.lineSizes.length == 0)
-      Paint.removeCanvas(spriteArea);
-    else
-      spriteArea.clearCanvas(true);
-
+    spriteArea.clearCanvas();
     Paint.closeOutlineBox();
   },
 
   removeCanvas : function(_spriteArea) {
-    console.log(Paint.spriteAreas.length);
     if(Paint.spriteAreas.length == 1) return false;
     var spriteArea = _spriteArea || Paint.getCurrentSpriteAreaInstance(); 
     var spriteAreaDom = $('#' + spriteArea.id);
@@ -175,11 +165,11 @@ var Paint = {
   },
 
   floatSprites : function() {
-    Paint.canvasObjects.removeClass('canvas-over').addClass('canvas-float');
+    Paint.canvasObjects.not('#canvas-sketch').removeClass('canvas-over').addClass('canvas-float');
   },
 
   overSprites : function() {
-    Paint.canvasObjects.removeClass('canvas-float').addClass('canvas-over');
+    Paint.canvasObjects.not('#canvas-sketch').removeClass('canvas-float').addClass('canvas-over');
   },
 
   closeOutlineBox : function() {
@@ -204,7 +194,7 @@ var Paint = {
   showFrame : function() {
     Paint.canvasObjects.hide();
 
-    var canvasObjects = $('.canvas').not('#canvas-template');
+    var canvasObjects = $('.canvas').not('#canvas-template, #canvas-sketch');
     canvasObjects.eq(Paint.currentCanvasIndex).show();
 
     if(Paint.currentCanvasIndex == Paint.spriteAreas.length) {
@@ -278,7 +268,7 @@ var Paint = {
     y = Math.floor(y / Paint.zoomTool.gridSize);
 
     return {
-      x: x, 
+      x: x,
       y: y
     };
   },
@@ -328,7 +318,7 @@ var Paint = {
     Paint.getCurrentCanvasDom().addClass('canvas-selected');
   },
 
-  //
+  // Puts overlaying canvas on the current canvas to draw lines temporarily
   showSketchCanvas : function() {
     var currentCanvasPosition = Paint.getCurrentCanvasDom();
     Paint.canvasToDraw = currentCanvasPosition;
@@ -345,14 +335,6 @@ var Paint = {
     Paint.canvasSketch.hide();
   },
 
-  drawLineToCanvas : function(_startX, _startY, _endX, _endY) {    
-    Paint.setCurrentCanvas(Paint.canvasToDraw.attr("id"));
-    // Draw to canvas
-    Paint.pixelDrawer.popImageData();
-    Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor);
-    Paint.pixelDrawer.pushImageData();
-  },
-  
   resizeZoomCanvas : function () {
     Paint.zoomTool.resizeCanvas();
   },
@@ -362,10 +344,12 @@ var Paint = {
 $(document).ready(function() {
   Paint.init();
 
+  /*
   $('#goToPaintButton').click(function() {
-    $('#introWrapper').hide();
-    $('#paintWrapper').show();
-  });
+    //$('#introWrapper').hide();
+    //$('#paintWrapper').show();
+  });*/
+  var slider = new SliderDiv();
 
   $('#drawBackgroundCheckbox').click(function() {
     $('.canvas').css({
