@@ -14,9 +14,9 @@ class AssetsController < ApplicationController
   end
   
   def create
-    p '*#' * 20 + "   creating..."
-    p params[:asset][:states].count
-    @asset = Asset.create(params[:asset], :user => current_user)
+    @state = State.create(params[:asset][:states]["0"])
+    
+    #@asset = Asset.create(params[:asset], :user => current_user)
     #@state = @asset.states.create(params[:asset][:state])
   end
 end

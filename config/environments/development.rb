@@ -38,4 +38,6 @@ Microbuilder::Application.configure do
   #Facebook Key and Secret
   FACEBOOK_ID = '392913504057961'
   FACEBOOK_SECRET = '236e82c66d6b97dd23422df19680db27'
+  
+  Paperclip.options[:command_path] = '/usr/bin/identify'
 end
