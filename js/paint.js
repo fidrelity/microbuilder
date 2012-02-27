@@ -221,7 +221,7 @@ var Paint = {
 
   stopAnimation : function() {
     clearTimeout(Paint.playInterval);
-    Paint.canvasObjects.not('#canvas-template').show();
+    Paint.canvasObjects.not('#canvas-template, #canvas-sketch').show();
     $('#playButton').show();
     $('#stopButton').hide();
     Paint.setFocus();
