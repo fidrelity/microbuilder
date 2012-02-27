@@ -229,3 +229,25 @@ UndoTool.prototype.mousemove = function(_options) {
 //
 UndoTool.prototype.mouseup = function() {
 };
+
+
+// ----------------------------------------
+var UndoTool = function() {
+  this.id = "undoButton";
+  this.domObject = $('#' + this.id);
+  this.isActive = false;
+  this.isSelectable = false;
+};
+//
+UndoTool.prototype.clickEvent = function() {
+  Paint.getCurrentSpriteAreaInstance().undo();
+};
+//
+UndoTool.prototype.mousedown = function(_options) {
+};
+//
+UndoTool.prototype.mousemove = function(_options) {
+};
+//
+UndoTool.prototype.mouseup = function() {
+};

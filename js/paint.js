@@ -349,6 +349,7 @@ $(document).ready(function() {
     //$('#introWrapper').hide();
     //$('#paintWrapper').show();
   });*/
+  var slider = new SliderDiv();
 
   $('#drawBackgroundCheckbox').click(function() {
     $('.canvas').css({
