@@ -8,8 +8,6 @@ var Paint = {
     Paint.paintObject       = $('#paints');
     Paint.canvasObjects     = $('.canvas');
     Paint.canvasTemplate    = $('#canvas-template');
-    Paint.toolButtons       = $('.tool');
-    //Paint.pencilToolButton  = $('#pencilToolButton');
     Paint.canvasSketch      = $('#canvas-sketch');
 
     // Init other classes
