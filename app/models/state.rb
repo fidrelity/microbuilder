@@ -9,14 +9,10 @@ class State < ActiveRecord::Base
   protected
     def decode_base64_image
       if image_data && content_type && original_filename
-        decoded_data = Base64.decode64(image_data)
 
-        p '*#' * 20 + "   creating..."
-        p [content_type, original_filename]
-        p ["image data length: ", image_data.length]
-        
-        
-        
+        cropped_data = image_data.split(/data:image\/png;base64,/).last
+        decoded_data = Base64.decode64(cropped_data)
+
         data = StringIO.new(decoded_data)
         data.class_eval do
           attr_accessor :content_type, :original_filename

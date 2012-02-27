@@ -8,6 +8,7 @@
 /.bundle
 vendor/bundle/
 vendor/cache/
+public/system/
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
