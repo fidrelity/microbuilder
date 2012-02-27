@@ -105,7 +105,7 @@ PencilTool.prototype.mouseup = function() {
 var LineTool = function() {
   this.id = "lineToolButton";
   this.domObject = $('#' + this.id);
-  this.isActive = true;
+  this.isActive = false;
   this.isSelectable = true;
   this.startX = 0;
   this.startY = 0;
@@ -114,6 +114,7 @@ var LineTool = function() {
 };
 //
 LineTool.prototype.clickEvent = function() {
+
 };
 //
 LineTool.prototype.mousedown = function(_options) {

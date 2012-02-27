@@ -9,7 +9,10 @@ var Paint = {
     Paint.canvasObjects     = $('.canvas');
     Paint.canvasTemplate    = $('#canvas-template');
     Paint.toolButtons       = $('.tool');
-    Paint.canvasSketch      = $('#canvas-sketch');
+    Paint.canvasSketch      = $('#canvas-sketch'); // temp canvas to draw lines
+    Paint.spriteCanvasEle   = document.getElementById('canvas-sketch');
+    Paint.canvasSketchContext = Paint.spriteCanvasEle.getContext('2d');
+    
     Paint.spriteCanvas      = $('#sprite-canvas'); // Canvas to concat the sprites and save
 
     // Init other classes
@@ -92,7 +95,6 @@ var Paint = {
   // On zoomed canvas
   mouseDownZoom : function(e) {
     var coordinates = Paint.getCoordinates(e);
-        console.log(coordinates.x,coordinates.y)
     ToolBar.mousedown({ coordinates : coordinates });
   },
 
@@ -240,31 +242,32 @@ var Paint = {
 
   // ----------------------------------------
   saveImage : function() {
-  var count = Paint.spriteAreas.length;
-  var width = Paint.canvasTemplate.width(); 
-  var totalWidth = count * width;
-  var height = Paint.canvasTemplate.height();
-  
-  Paint.spriteCanvas.attr('width', totalWidth).attr('height', height).show();
-  var canvas = document.getElementById(Paint.spriteCanvas.attr('id'));
-  var context = canvas.getContext('2d');
+    var count = Paint.spriteAreas.length;
+    var width = Paint.canvasTemplate.width(); 
+    var totalWidth = count * width;
+    var height = Paint.canvasTemplate.height();
+    
+    Paint.spriteCanvas.attr('width', totalWidth).attr('height', height).show();
+    var canvas = document.getElementById(Paint.spriteCanvas.attr('id'));
+    var context = canvas.getContext('2d');
 
-  for (var i = 0; i < Paint.spriteAreas.length; i++) {;
-    var area = Paint.spriteAreas[i];
-    var xPos = i * width;
-    context.drawImage(area.canvas, xPos, 0);
-  };
+    // Merge canvases
+    for (var i = 0; i < Paint.spriteAreas.length; i++) {;
+      var area = Paint.spriteAreas[i];
+      var xPos = i * width;
+      context.drawImage(area.canvas, xPos, 0);
+    };
 
-  /*
-  // Push to Server
-  var imgData = Paint.canvas.toDataURL("image/png");
-  $.post('/upload', {
-        singleWidth : width,
-        count : count,
-        img_data : imgData
-      },
-  function(data) {});
-  */
+    /*
+    // Push to Server
+    var imgData = Paint.canvas.toDataURL("image/png");
+    $.post('/upload', {
+          singleWidth : width,
+          count : count,
+          img_data : imgData
+        },
+    function(data) {});
+    */
   },
 
   // ----------------------------------------
@@ -336,16 +339,20 @@ var Paint = {
   showSketchCanvas : function() {
     var currentCanvasPosition = Paint.getCurrentCanvasDom();
     Paint.canvasToDraw = currentCanvasPosition;
-
     Paint.canvasSketch.css({  left: currentCanvasPosition.position().left, 
                               top: currentCanvasPosition.position().top,
                               width: currentCanvasPosition.width(),
                               height: currentCanvasPosition.height()
-                           }).show();
+                          }).show();
+
+    //var g = document.getElementById(Paint.canvasToDraw.attr('id'));
+    //Paint.canvasSketchContext.drawImage(g, 0, 0);
     Paint.setCurrentCanvas(Paint.canvasSketch.attr("id"));
   },
 
   hideSketchCanvas : function() {
+    //Paint.canvasSketchContext.clearRect(0, 0, Paint.pixelDrawer.canvas.width, Paint.pixelDrawer.canvas.height);
+    Paint.setCurrentCanvas(Paint.canvasToDraw.attr("id"));
     Paint.canvasSketch.hide();
   },
 

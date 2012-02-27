@@ -51,6 +51,7 @@ body {
 #canvas-sketch { display:none; z-index:999; position:absolute; background:none;}
 
 #sprite-canvas {
+  border:1px solid #333;
   display: none;
 }
 
