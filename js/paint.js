@@ -349,7 +349,7 @@ $(document).ready(function() {
     //$('#introWrapper').hide();
     //$('#paintWrapper').show();
   });*/
-  var slider = new SliderDiv();
+  var slider = new SliderDiv({containerSelector: '#gfx-editor-wrapper'});
 
   $('#drawBackgroundCheckbox').click(function() {
     $('.canvas').css({

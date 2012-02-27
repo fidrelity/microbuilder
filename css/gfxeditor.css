@@ -29,7 +29,11 @@ body {
 }
 
 #webglCanvas { border:1px solid #000000;}
-
+#zoomCanvasWrapper {
+  max-height:512px;
+  max-width:512px;
+  overflow:auto;
+}
 .canvas {
     width:64px;
     height:64px;
