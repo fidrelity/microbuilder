@@ -151,13 +151,13 @@ SpriteArea.prototype.addClick = function(_x, _y, _dragging) {
 
 SpriteArea.prototype.addPencil = function(_startX, _startY , _endX, _endY) {
   Paint.pixelDrawer.popImageData();
-  Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor);
+  Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor, Paint.lineWidth);
   Paint.pixelDrawer.pushImageData();
 };
 
 
 SpriteArea.prototype.addLine = function(_startX, _startY, _endX, _endY) {
   Paint.pixelDrawer.popImageData();
-  Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor);
+  Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor, Paint.lineWidth);
   Paint.pixelDrawer.pushImageData();
 };
