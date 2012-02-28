@@ -44,6 +44,9 @@ ZoomTool.prototype.updateTexture = function(){
 }
 
 ZoomTool.prototype.resizeCanvas = function () {
+  this.textureWidth = this.textureCanvas.width;
+  this.textureHeight = this.textureCanvas.height;
+  
   var newWidth = this.textureWidth * this.gridSize;
   var newHeight = this.textureHeight * this.gridSize;
   
