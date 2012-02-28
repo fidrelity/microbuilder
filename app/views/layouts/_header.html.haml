@@ -3,11 +3,16 @@
   =# link_to(image_tag("logo.png", :id => "logo"), root_path) 
   
   %ul{:id => "nav"}
-    %li{:onclick => "javascript:App.fsm.goToState('home')"} Home
-    %li{:onclick => "javascript:App.fsm.goToState('gallery')"} Gallery
-    %li{:onclick => "javascript:App.fsm.goToState('editor');"} Editor
-    %li{:onclick => "javascript:App.fsm.goToState('profile')"} Profile
-    %li{:onclick => "javascript:App.fsm.goToState('about')"} About
+    %li{:class => "home"}
+      =link_to('home', '#')
+    %li{:class => "gallery"}
+      =link_to('gallery', '#gallery')
+    %li{:class => "profile"}
+      =link_to('profile', '#profile')
+    %li{:class => "editor"}
+      =link_to('editor', '#editor')
+    %li{:class => "about"}
+      =link_to('about', '#about')
     -if user_signed_in?
       %li= link_to('Profile', user_path(current_user.id))
       %li= link_to('Logout', destroy_user_session_path, :method => :delete)

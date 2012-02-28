@@ -81,16 +81,16 @@ StateMachine.prototype = {
   
   addTransition : function( transition ) {
     
-    var self = this;
+    var App = this;
     
     this.transitions[transition.name] = transition;
     
     this[transition.name] = function() {
       
-      if ( self.currentState.name !== transition.to &&
-        ( self.currentState.name === transition.from || transition.from === '*' ) ) {
+      if ( App.currentState.name !== transition.to &&
+        ( App.currentState.name === transition.from || transition.from === '*' ) ) {
         
-        self.changeState( transition.to, transition.callback, arguments );
+        App.changeState( transition.to, transition.callback, arguments );
         
         return true;
         

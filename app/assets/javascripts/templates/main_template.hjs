@@ -1,0 +1,4 @@
+<div class="container">
+  MAIN TEMPLATE dynamic:
+  {{dynamicView}}
+</div>

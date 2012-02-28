@@ -14,11 +14,11 @@ Loader.prototype = {
     
     var image = new Image();
     
-    var self = this;
+    var App = this;
     
     image.onload = function () {
     
-      self.imageLoaded();
+      App.imageLoaded();
     
     }
     

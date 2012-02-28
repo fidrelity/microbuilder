@@ -26,7 +26,7 @@
             var
                 opts = $.extend({}, $.fn.lightbox_me.defaults, options),
                 $overlay = $(),
-                $self = $(this),
+                $App = $(this),
                 $iframe = $('<iframe id="foo" style="z-index: ' + (opts.zIndex + 1) + ';border: none; margin: 0; padding: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; filter: mask();"/>'),
                 ie6 = ($.browser.msie && $.browser.version < 7);
 
@@ -48,7 +48,7 @@
                 $iframe.attr('src', src);
                 $('body').append($iframe);
             } // iframe shim for ie6, to hide select elements
-            $('body').append($self.hide()).append($overlay);
+            $('body').append($App.hide()).append($overlay);
 
 
             /*----------------------------------------------------
@@ -71,11 +71,11 @@
             if (opts.showOverlay) {
                 $overlay.fadeIn(opts.overlaySpeed, function() {
                     setSelfPosition();
-                    $self[opts.appearEffect](opts.lightboxSpeed, function() { setOverlayHeight(); setSelfPosition(); opts.onLoad()});
+                    $App[opts.appearEffect](opts.lightboxSpeed, function() { setOverlayHeight(); setSelfPosition(); opts.onLoad()});
                 });
             } else {
                 setSelfPosition();
-                $self[opts.appearEffect](opts.lightboxSpeed, function() { opts.onLoad()});
+                $App[opts.appearEffect](opts.lightboxSpeed, function() { opts.onLoad()});
             }
 
             /*----------------------------------------------------
@@ -99,11 +99,11 @@
             if (opts.closeClick) {
                 $overlay.click(function(e) { closeLightbox(); e.preventDefault; });
             }
-            $self.delegate(opts.closeSelector, "click", function(e) {
+            $App.delegate(opts.closeSelector, "click", function(e) {
                 closeLightbox(); e.preventDefault();
             });
-            $self.bind('close', closeLightbox);
-            $self.bind('reposition', setSelfPosition);
+            $App.bind('close', closeLightbox);
+            $App.bind('reposition', setSelfPosition);
 
             
 
@@ -117,11 +117,11 @@
 
             /* Remove or hide all elements */
             function closeLightbox() {
-                var s = $self[0].style;
+                var s = $App[0].style;
                 if (opts.destroyOnClose) {
-                    $self.add($overlay).remove();
+                    $App.add($overlay).remove();
                 } else {
-                    $self.add($overlay).hide();
+                    $App.add($overlay).hide();
                 }
 
                 //show the hidden parent lightbox
@@ -132,7 +132,7 @@
                 $iframe.remove();
                 
 				// clean up events.
-                $self.undelegate(opts.closeSelector, "click");
+                $App.undelegate(opts.closeSelector, "click");
 
                 $(window).unbind('reposition', setOverlayHeight);
                 $(window).unbind('reposition', setSelfPosition);
@@ -168,32 +168,32 @@
             }
 
 
-            /* Set the position of the modal'd window ($self)
-                    : if $self is taller than the window, then make it absolutely positioned
+            /* Set the position of the modal'd window ($App)
+                    : if $App is taller than the window, then make it absolutely positioned
                     : otherwise fixed
             */
             function setSelfPosition() {
-                var s = $self[0].style;
+                var s = $App[0].style;
 
                 // reset CSS so width is re-calculated for margin-left CSS
-                $self.css({left: '50%', marginLeft: ($self.outerWidth() / 2) * -1,  zIndex: (opts.zIndex + 3) });
+                $App.css({left: '50%', marginLeft: ($App.outerWidth() / 2) * -1,  zIndex: (opts.zIndex + 3) });
 
 
                 /* we have to get a little fancy when dealing with height, because lightbox_me
                     is just so fancy.
                  */
 
-                // if the height of $self is bigger than the window and self isn't already position absolute
-                if (($self.height() + 80  >= $(window).height()) && ($self.css('position') != 'absolute' || ie6)) {
+                // if the height of $App is bigger than the window and App isn't already position absolute
+                if (($App.height() + 80  >= $(window).height()) && ($App.css('position') != 'absolute' || ie6)) {
 
                     // we are going to make it positioned where the user can see it, but they can still scroll
                     // so the top offset is based on the user's scroll position.
                     var topOffset = $(document).scrollTop() + 40;
-                    $self.css({position: 'absolute', top: topOffset + 'px', marginTop: 0})
+                    $App.css({position: 'absolute', top: topOffset + 'px', marginTop: 0})
                     if (ie6) {
                         s.removeExpression('top');
                     }
-                } else if ($self.height()+ 80  < $(window).height()) {
+                } else if ($App.height()+ 80  < $(window).height()) {
                     //if the height is less than the window height, then we're gonna make this thing position: fixed.
                     // in ie6 we're gonna fake it.
                     if (ie6) {
@@ -207,9 +207,9 @@
                         }
                     } else {
                         if (opts.centered) {
-                            $self.css({ position: 'fixed', top: '50%', marginTop: ($self.outerHeight() / 2) * -1})
+                            $App.css({ position: 'fixed', top: '50%', marginTop: ($App.outerHeight() / 2) * -1})
                         } else {
-                            $self.css({ position: 'fixed'}).css(opts.modalCSS);
+                            $App.css({ position: 'fixed'}).css(opts.modalCSS);
                         }
 
                     }
