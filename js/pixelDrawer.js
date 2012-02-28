@@ -165,12 +165,15 @@ PixelDrawer.prototype.drawLine = function (_x1, _y1, _x2, _y2, _color) {
 }
 
 PixelDrawer.prototype.colorPixel = function (_x,_y,_color) {
-  var colorIndex = ((_y*(this.dataWidth*4)) + (_x*4));
-  
-  this.data[colorIndex] = _color.r;
-  this.data[colorIndex+1] = _color.g;
-  this.data[colorIndex+2] = _color.b;
-  this.data[colorIndex+3] = _color.a;
+  if(_x >= 0 && _x < this.dataWidth && _y > 0 && _y < this.dataHeight)
+  {
+    var colorIndex = ((_y*(this.dataWidth*4)) + (_x*4));
+
+    this.data[colorIndex] = _color.r;
+    this.data[colorIndex+1] = _color.g;
+    this.data[colorIndex+2] = _color.b;
+    this.data[colorIndex+3] = _color.a;
+  }
 }
 
 PixelDrawer.prototype.parseColor = function(_color) {
