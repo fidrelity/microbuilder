@@ -140,10 +140,19 @@ LineTool.prototype.mousemove = function(_options) {
   if(!this.isActive) return false;
   this.endX = _options.coordinates.x;
   this.endY = _options.coordinates.y;
+  
+  var sourceCanvas = Paint.canvasToDraw[0];
+  var sourceContext = sourceCanvas.getContext("2d");
+  var drawCanvas = Paint.getCurrentCanvasDom()[0];
+  var drawContext = drawCanvas.getContext("2d");
+  
+  drawContext.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+    
+  var imageData = sourceContext.getImageData(0, 0, sourceCanvas.width, sourceCanvas.height);
+  drawContext.putImageData(imageData, 0, 0);
 
-  Paint.pixelDrawer.context.clearRect(0, 0, Paint.pixelDrawer.canvas.width, Paint.pixelDrawer.canvas.height);
   Paint.pixelDrawer.popImageData();
-  Paint.pixelDrawer.drawLine(this.startX, this.startY, this.endX, this.endY, ColorPalette.currentColor);
+  Paint.pixelDrawer.drawLine(this.startX, this.startY, this.endX, this.endY, ColorPalette.currentColor, Paint.lineWidth);
   Paint.pixelDrawer.pushImageData();
 };
 //
