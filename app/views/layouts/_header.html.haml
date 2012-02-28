@@ -3,11 +3,11 @@
   =# link_to(image_tag("logo.png", :id => "logo"), root_path) 
   
   %ul{:id => "nav"}
-    %li Home
-    %li Gallery
-    %li Editor
-    %li Profile
-    %li About
+    %li{:onclick => "javascript:App.fsm.goToState('home')"} Home
+    %li{:onclick => "javascript:App.fsm.goToState('gallery')"} Gallery
+    %li{:onclick => "javascript:App.fsm.goToState('editor');"} Editor
+    %li{:onclick => "javascript:App.fsm.goToState('profile')"} Profile
+    %li{:onclick => "javascript:App.fsm.goToState('about')"} About
     -if user_signed_in?
       %li= link_to('Profile', user_path(current_user.id))
       %li= link_to('Logout', destroy_user_session_path, :method => :delete)
@@ -15,8 +15,8 @@
       %li= link_to('Login', new_user_session_path)
       %li= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
 
-
-.flash_message
-  =flash[:notice]
-  =flash[:alert]
-  =flash[:error]
+=if false
+  .flash_message
+    =flash[:notice]
+    =flash[:alert]
+    =flash[:error]
