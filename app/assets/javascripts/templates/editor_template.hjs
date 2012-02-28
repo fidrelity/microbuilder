@@ -1,0 +1,2 @@
+<h1>Editor</h1>
+{{view App.editorController.view}}
