@@ -10,9 +10,7 @@ var ToolBar = {
   currentToolId : '',
 
   init : function() {
-    /*
-      $('#flipvButton').live("click", $.proxy(Paint.flipV, Paint));
-      $('#undoButton').live("click", $.proxy(Paint.undo, Paint));  
+    /*     
       $('#outlineButton').click(function(){Paint.getCurrentSpriteAreaInstance().outlinePoints();});
     */
     ToolBar.toolsDomObjects.live('click', $.proxy(ToolBar.clickTool, this));
@@ -20,19 +18,30 @@ var ToolBar = {
     ToolBar.tools.push(new LineTool());
     ToolBar.tools.push(new EraserTool());    
     ToolBar.tools.push(new SelectTool());    
+    ToolBar.tools.push(new FlipTool());
+    ToolBar.tools.push(new UndoTool());
+    ToolBar.tools.push(new SaveTool());
+
     ToolBar.setCurrentTool("pencilToolButton");
   },
 
   clickTool : function(e) {
-    ToolBar.setCurrentTool(e.currentTarget.id);
-    ToolBar.currentTool.clickEvent();
+    var tool = ToolBar.getToolInstanceById(e.currentTarget.id);
+    if(tool.isSelectable) {
+      ToolBar.setCurrentTool(e.currentTarget.id);
+      ToolBar.reset();
+    }
+    tool.clickEvent();
   },
 
   setCurrentTool : function(_id) {
     ToolBar.currentToolId = _id;
-    ToolBar.currentTool = ToolBar.getToolInstanceById(_id);
-    console.log('currentTOol', ToolBar.currentTool, _id);
+    ToolBar.currentTool = ToolBar.getToolInstanceById(_id);   
     ToolBar.highlightTool(_id);
+  },
+
+  reset : function() {
+    Paint.hideCursorRect();
   },
 
   highlightTool : function(id) {
@@ -70,17 +79,18 @@ var ToolBar = {
 
 };
 
-
 // ----------------------------------------
-// Tool CLASSes
+// Tool Classes
 // ----------------------------------------
 var PencilTool = function() {
   this.id = "pencilToolButton";
   this.isActive = false;
   this.domObject = $('#' + this.id);
+  this.isSelectable = true;
 };
 //
 PencilTool.prototype.clickEvent = function() {
+  Paint.showCursorRect();
 };
 //
 PencilTool.prototype.mousedown = function(_options) {
@@ -101,7 +111,8 @@ PencilTool.prototype.mouseup = function() {
 var LineTool = function() {
   this.id = "lineToolButton";
   this.domObject = $('#' + this.id);
-  this.isActive = true;
+  this.isActive = false;
+  this.isSelectable = true;
   this.startX = 0;
   this.startY = 0;
   this.endX = 0;
@@ -109,6 +120,7 @@ var LineTool = function() {
 };
 //
 LineTool.prototype.clickEvent = function() {
+
 };
 //
 LineTool.prototype.mousedown = function(_options) {
@@ -140,11 +152,13 @@ var EraserTool = function() {
   this.id = "eraserToolButton";
   this.domObject = $('#' + this.id);
   this.isActive = false;
+  this.isSelectable = true;
   this.x = 0;
   this.y = 0;
 };
 //
 EraserTool.prototype.clickEvent = function() {
+  Paint.showCursorRect();
 };
 //
 EraserTool.prototype.mousedown = function(_options) {
@@ -166,6 +180,7 @@ var SelectTool = function() {
   this.id = "selectToolButton";
   this.domObject = $('#' + this.id);
   this.isActive = false;
+  this.isSelectable = true;
 };
 //
 SelectTool.prototype.clickEvent = function() {
@@ -178,4 +193,70 @@ SelectTool.prototype.mousemove = function(_options) {
 };
 //
 SelectTool.prototype.mouseup = function() {
+};
+
+
+// ----------------------------------------
+var FlipTool = function() {
+  this.id = "flipvButton";
+  this.domObject = $('#' + this.id);
+  this.isActive = false;
+  this.isSelectable = false;
+};
+//
+FlipTool.prototype.clickEvent = function() {
+  Paint.getCurrentSpriteAreaInstance().flip();
+};
+//
+FlipTool.prototype.mousedown = function(_options) {
+};
+//
+FlipTool.prototype.mousemove = function(_options) {
+};
+//
+FlipTool.prototype.mouseup = function() {
+};
+
+
+// ----------------------------------------
+var UndoTool = function() {
+  this.id = "undoButton";
+  this.domObject = $('#' + this.id);
+  this.isActive = false;
+  this.isSelectable = false;
+};
+//
+UndoTool.prototype.clickEvent = function() {
+  Paint.getCurrentSpriteAreaInstance().undo();
+};
+//
+UndoTool.prototype.mousedown = function(_options) {
+};
+//
+UndoTool.prototype.mousemove = function(_options) {
+};
+//
+UndoTool.prototype.mouseup = function() {
+};
+
+
+// ----------------------------------------
+var SaveTool = function() {
+  this.id = "saveButton";
+  this.domObject = $('#' + this.id);
+  this.isActive = false;
+  this.isSelectable = false;
+};
+//
+SaveTool.prototype.clickEvent = function() {
+  Paint.saveImage();
+};
+//
+SaveTool.prototype.mousedown = function(_options) {
+};
+//
+SaveTool.prototype.mousemove = function(_options) {
+};
+//
+SaveTool.prototype.mouseup = function() {
 };

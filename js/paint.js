@@ -9,8 +9,12 @@ var Paint = {
     Paint.canvasObjects     = $('.canvas');
     Paint.canvasTemplate    = $('#canvas-template');
     Paint.toolButtons       = $('.tool');
-    //Paint.pencilToolButton  = $('#pencilToolButton');
-    Paint.canvasSketch      = $('#canvas-sketch');
+    Paint.canvasSketch      = $('#canvas-sketch'); // temp canvas to draw lines
+    Paint.spriteCanvasEle   = document.getElementById('canvas-sketch');
+    Paint.canvasSketchContext = Paint.spriteCanvasEle.getContext('2d');
+    
+    Paint.spriteCanvas      = $('#sprite-canvas'); // Canvas to concat the sprites and save
+    Paint.cursorRect        = $('#cursorRect');
 
     // Init other classes
     ToolBar.init();
@@ -26,16 +30,20 @@ var Paint = {
     Paint.playInterval  = null;
     Paint.playDelay     = 100;
     Paint.areaId        = 0;
+    Paint.isCursorRect = false;
 
     // Events
     // Canvas
-    Paint.canvasObjects.live("click",  $.proxy(Paint.mouseDown, Paint));    
+    Paint.canvasObjects.live("click",  $.proxy(Paint.mouseDown, Paint));
     Paint.zoomTool.zoomCanvas.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
     Paint.zoomTool.zoomCanvas.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
     Paint.zoomTool.zoomCanvas.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
     Paint.zoomTool.zoomCanvas.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
+    Paint.cursorRect.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
+    Paint.cursorRect.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
+    Paint.cursorRect.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
     // Tools
-    $('#switchViewButton').click(function() { Paint.switchView(); });
+    $('.switchViewButton').click(function() { Paint.switchView(); });
     $('#addCanvasButton').click(function(){ Paint.addCanvas(); });
     $('#copyCanvasButton').click(function(){ Paint.addCanvas(true); });
     $('#clearCanvasButton').click(function(){Paint.clearCanvas(true);});
@@ -51,7 +59,7 @@ var Paint = {
     // Slider for pencil size
     $("#sizeSlider").slider({
       value: Paint.lineWidth, 
-      min: 1, 
+      min: 1,
       max: 40, 
       step: 4,
       change: function( event, ui ) {
@@ -59,24 +67,19 @@ var Paint = {
       }
     });
 
-    var availableSizes = [32,64,128,256];
-    // Slider for canvas sample size
-    $("#canvasSizeSlider").slider({
-      value: 1, 
-      min: 0, 
-      max: 3, 
-      step: 1,
-      slide: function( event, ui ) {
-        var size = availableSizes[ui.value];
-              
-        $('#sizeSample').css({
-          width : size, 
-          height: size
-        });
+    // Resize for canvas size
+    $('#sizeSample').resizable({
+      grid: 16,
+      maxHeight:128,
+      maxWidth:128,
+      minHeight:32,
+      minWidth:32,
+      resize: function(event, ui) { 
+        var size = ui.size;
         $('.canvas').css({
-          width : size, 
-          height: size
-        }).attr('width', size).attr('height', size);
+          width : size.width, 
+          height: size.height
+        }).attr('width', size.width).attr('height', size.height);
         this.resizeZoomCanvas();
       }
     });
@@ -106,6 +109,13 @@ var Paint = {
     var coordinates = Paint.getCoordinates(e);
     ToolBar.mousemove({coordinates:coordinates});
     this.zoomTool.updateTexture();
+
+    if(Paint.isCursorRect) {
+      var posX = coordinates.x * Paint.zoomTool.gridSize;
+      var posY = coordinates.y * Paint.zoomTool.gridSize;
+      //console.log(posX, posY, ZoomTool.gridSize, coordinates.x)
+      Paint.cursorRect.css({left: posX, top: posY});
+    }
   },
 
   //
@@ -141,18 +151,11 @@ var Paint = {
 
   clearCanvas : function(_reset) {
     var spriteArea = Paint.getCurrentSpriteAreaInstance();
-
-    // No pixel data -> delete canvas
-    if(spriteArea.lineSizes.length == 0)
-      Paint.removeCanvas(spriteArea);
-    else
-      spriteArea.clearCanvas(true);
-
+    spriteArea.clearCanvas();
     Paint.closeOutlineBox();
   },
 
   removeCanvas : function(_spriteArea) {
-    console.log(Paint.spriteAreas.length);
     if(Paint.spriteAreas.length == 1) return false;
     var spriteArea = _spriteArea || Paint.getCurrentSpriteAreaInstance(); 
     var spriteAreaDom = $('#' + spriteArea.id);
@@ -179,11 +182,11 @@ var Paint = {
   },
 
   floatSprites : function() {
-    Paint.canvasObjects.removeClass('canvas-over').addClass('canvas-float');
+    Paint.canvasObjects.not('#canvas-sketch').removeClass('canvas-over').addClass('canvas-float');
   },
 
   overSprites : function() {
-    Paint.canvasObjects.removeClass('canvas-float').addClass('canvas-over');
+    Paint.canvasObjects.not('#canvas-sketch').removeClass('canvas-float').addClass('canvas-over');
   },
 
   closeOutlineBox : function() {
@@ -196,6 +199,7 @@ var Paint = {
     Paint.overSprites();
     $('#playButton').hide();
     $('#stopButton').show();
+    $('.canvas').removeClass('canvas-selected');
     Paint.play();
   },
 
@@ -208,7 +212,7 @@ var Paint = {
   showFrame : function() {
     Paint.canvasObjects.hide();
 
-    var canvasObjects = $('.canvas').not('#canvas-template');
+    var canvasObjects = $('.canvas').not('#canvas-template, #canvas-sketch');
     canvasObjects.eq(Paint.currentCanvasIndex).show();
 
     if(Paint.currentCanvasIndex == Paint.spriteAreas.length) {
@@ -231,9 +235,10 @@ var Paint = {
 
   stopAnimation : function() {
     clearTimeout(Paint.playInterval);
-    Paint.canvasObjects.not('#canvas-template').show();
+    Paint.canvasObjects.not('#canvas-template, #canvas-sketch').show();
     $('#playButton').show();
     $('#stopButton').hide();
+    Paint.setFocus();
   },
 
   // ----------------------------------------
@@ -252,17 +257,34 @@ var Paint = {
   },
 
   // ----------------------------------------
-  saveImage : function(_speech, _author) {   
-  //var img = Paint.canvas.toDataURL("image/png");
-  //document.write('<img src="'+img+'"/>');
+  saveImage : function() {
 
-  /*
-    var imageData = Paint.context.getImageData();
-    $.post('/upload',
-    {
-            author : _author,
-            img : Paint.canvas.toDataURL('image/jpeg')
-    },
+    Paint.stopAnimation();
+
+    var count = Paint.spriteAreas.length;
+    var width = Paint.canvasTemplate.width(); 
+    var totalWidth = count * width;
+    var height = Paint.canvasTemplate.height();
+    
+    Paint.spriteCanvas.attr('width', totalWidth).attr('height', height).show();
+    var canvas = document.getElementById(Paint.spriteCanvas.attr('id'));
+    var context = canvas.getContext('2d');
+
+    // Merge canvases
+    for (var i = 0; i < Paint.spriteAreas.length; i++) {;
+      var area = Paint.spriteAreas[i];
+      var xPos = i * width;
+      context.drawImage(area.canvas, xPos, 0);
+    };
+
+    /*
+    // Push to Server
+    var imgData = Paint.canvas.toDataURL("image/png");
+    $.post('/upload', {
+          singleWidth : width,
+          count : count,
+          img_data : imgData
+        },
     function(data) {});
     */
   },
@@ -282,7 +304,7 @@ var Paint = {
     y = Math.floor(y / Paint.zoomTool.gridSize);
 
     return {
-      x: x, 
+      x: x,
       y: y
     };
   },
@@ -291,10 +313,8 @@ var Paint = {
   setSize : function(_size) {
     if(!_size) return false;
     Paint.lineWidth = _size;
-    $('#pencilSizePreview').css({
-      width: _size, 
-      height: _size
-    });
+    Paint.cursorRect.css({ width: _size*4, height: _size*4 });
+    $('#pencilSizePreview').css({width: _size, height: _size});
   },
 
   //
@@ -332,31 +352,38 @@ var Paint = {
     Paint.getCurrentCanvasDom().addClass('canvas-selected');
   },
 
-  //
+  // Puts overlaying canvas on the current canvas to draw lines temporarily
   showSketchCanvas : function() {
     var currentCanvasPosition = Paint.getCurrentCanvasDom();
     Paint.canvasToDraw = currentCanvasPosition;
-
     Paint.canvasSketch.css({  left: currentCanvasPosition.position().left, 
                               top: currentCanvasPosition.position().top,
                               width: currentCanvasPosition.width(),
                               height: currentCanvasPosition.height()
-                           }).show();
+                          }).show();
+
+    //var g = document.getElementById(Paint.canvasToDraw.attr('id'));
+    //Paint.canvasSketchContext.drawImage(g, 0, 0);
     Paint.setCurrentCanvas(Paint.canvasSketch.attr("id"));
   },
 
   hideSketchCanvas : function() {
+    //Paint.canvasSketchContext.clearRect(0, 0, Paint.pixelDrawer.canvas.width, Paint.pixelDrawer.canvas.height);
+    Paint.setCurrentCanvas(Paint.canvasToDraw.attr("id"));
     Paint.canvasSketch.hide();
   },
 
-  drawLineToCanvas : function(_startX, _startY, _endX, _endY) {    
-    Paint.setCurrentCanvas(Paint.canvasToDraw.attr("id"));
-    // Draw to canvas
-    Paint.pixelDrawer.popImageData();
-    Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor);
-    Paint.pixelDrawer.pushImageData();
+  showCursorRect : function() {
+    Paint.isCursorRect = true;
+    console.log(Paint.isCursorRect, 'show');
+    Paint.cursorRect.show();
   },
-  
+
+  hideCursorRect : function() {
+    Paint.cursorRect.hide();
+    Paint.isCursorRect = false;
+  },
+
   resizeZoomCanvas : function () {
     Paint.zoomTool.resizeCanvas();
   }
@@ -366,10 +393,12 @@ var Paint = {
 $(document).ready(function() {
   Paint.init();
 
+  /*
   $('#goToPaintButton').click(function() {
-    $('#introWrapper').hide();
-    $('#paintWrapper').show();
-  });
+    //$('#introWrapper').hide();
+    //$('#paintWrapper').show();
+  });*/
+  var slider = new SliderDiv({containerSelector: '#gfx-editor-wrapper'});
 
   $('#drawBackgroundCheckbox').click(function() {
     $('.canvas').css({
