@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  has_many :assets
+  has_many :graphics
   
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -26,5 +26,7 @@ class User < ActiveRecord::Base
     end 
   end
   
-  
+  def display_name
+    self.first_name
+  end
 end

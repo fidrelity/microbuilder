@@ -1,23 +1,21 @@
 var toServer = function() {
   var dataUrl = document.getElementById('canvas').toDataURL("image/png");
-
-  
-  $.post("users/1/assets/", 
-    { asset: {
-        name: "dummy",
-        states: {
-          0: {
-           image_data: dataUrl,
-            content_type: "image/png",
-            original_filename: "dummy.png"
-          }     
-        }
-      }
-    },
-    
-     function(data) {
+ 
+  $.ajax({
+    url: "graphics/",
+    type: "post",
+    success: function(data) {
        console.log("Data Loaded: " + data);
-    });
+    },
+    data: { asset: {
+        name: "dummy",
+        image_data: dataUrl,
+        frame_count: 0,
+        frame_width: 120,
+        frame_height: 120
+      },
+    }
+  });
 };
 
 function draw(){  
