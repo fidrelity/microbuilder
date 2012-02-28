@@ -28,8 +28,9 @@ body {
   background:#F6F6F6;
 }
 
-#webglCanvas { border:1px solid #000000;}
+#webglCanvas { border:1px solid #000000; cursor:none;}
 #zoomCanvasWrapper {
+  position:relative;
   max-height:612px;
   max-width:512px;
   overflow:auto;
@@ -98,7 +99,9 @@ body {
 
 #canvasSizeSlider { width:200px;}
 #outlineBox { position:absolute; display:none; z-index:999; border:1px solid #000; }
-
+#cursorRect {
+  display: none; height:10px; width:10px; border:2px solid #111; position:absolute; z-index:100000;cursor:none;pointer-events:none;
+}
 
 h2 {
   color:#111;

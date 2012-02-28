@@ -14,6 +14,7 @@ var Paint = {
     Paint.canvasSketchContext = Paint.spriteCanvasEle.getContext('2d');
     
     Paint.spriteCanvas      = $('#sprite-canvas'); // Canvas to concat the sprites and save
+    Paint.cursorRect        = $('#cursorRect');
 
     // Init other classes
     ToolBar.init();
@@ -29,14 +30,18 @@ var Paint = {
     Paint.playInterval  = null;
     Paint.playDelay     = 100;
     Paint.areaId        = 0;
+    Paint.isCursorRect = false;
 
     // Events
     // Canvas
-    Paint.canvasObjects.live("click",  $.proxy(Paint.mouseDown, Paint));    
+    Paint.canvasObjects.live("click",  $.proxy(Paint.mouseDown, Paint));
     Paint.zoomTool.canvas.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
     Paint.zoomTool.canvas.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
     Paint.zoomTool.canvas.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
     Paint.zoomTool.canvas.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
+    Paint.cursorRect.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
+    Paint.cursorRect.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
+    Paint.cursorRect.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
     // Tools
     $('.switchViewButton').click(function() { Paint.switchView(); });
     $('#addCanvasButton').click(function(){ Paint.addCanvas(); });
@@ -102,6 +107,13 @@ var Paint = {
   mouseMove : function(e) {
     var coordinates = Paint.getCoordinates(e);
     ToolBar.mousemove({coordinates:coordinates});
+
+    if(Paint.isCursorRect) {
+      var posX = coordinates.x * Paint.zoomTool.gridSize;
+      var posY = coordinates.y * Paint.zoomTool.gridSize;
+      //console.log(posX, posY, ZoomTool.gridSize, coordinates.x)
+      Paint.cursorRect.css({left: posX, top: posY});
+    }
   },
 
   //
@@ -299,10 +311,8 @@ var Paint = {
   setSize : function(_size) {
     if(!_size) return false;
     Paint.lineWidth = _size;
-    $('#pencilSizePreview').css({
-      width: _size, 
-      height: _size
-    });
+    Paint.cursorRect.css({ width: _size*4, height: _size*4 });
+    $('#pencilSizePreview').css({width: _size, height: _size});
   },
 
   //
@@ -359,6 +369,17 @@ var Paint = {
     //Paint.canvasSketchContext.clearRect(0, 0, Paint.pixelDrawer.canvas.width, Paint.pixelDrawer.canvas.height);
     Paint.setCurrentCanvas(Paint.canvasToDraw.attr("id"));
     Paint.canvasSketch.hide();
+  },
+
+  showCursorRect : function() {
+    Paint.isCursorRect = true;
+    console.log(Paint.isCursorRect, 'show');
+    Paint.cursorRect.show();
+  },
+
+  hideCursorRect : function() {
+    Paint.cursorRect.hide();
+    Paint.isCursorRect = false;
   },
 
   resizeZoomCanvas : function () {

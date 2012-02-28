@@ -29,6 +29,7 @@ var ToolBar = {
     var tool = ToolBar.getToolInstanceById(e.currentTarget.id);
     if(tool.isSelectable) {
       ToolBar.setCurrentTool(e.currentTarget.id);
+      ToolBar.reset();
     }
     tool.clickEvent();
   },
@@ -37,6 +38,10 @@ var ToolBar = {
     ToolBar.currentToolId = _id;
     ToolBar.currentTool = ToolBar.getToolInstanceById(_id);   
     ToolBar.highlightTool(_id);
+  },
+
+  reset : function() {
+    Paint.hideCursorRect();
   },
 
   highlightTool : function(id) {
@@ -85,6 +90,7 @@ var PencilTool = function() {
 };
 //
 PencilTool.prototype.clickEvent = function() {
+  Paint.showCursorRect();
 };
 //
 PencilTool.prototype.mousedown = function(_options) {
@@ -152,6 +158,7 @@ var EraserTool = function() {
 };
 //
 EraserTool.prototype.clickEvent = function() {
+  Paint.showCursorRect();
 };
 //
 EraserTool.prototype.mousedown = function(_options) {
