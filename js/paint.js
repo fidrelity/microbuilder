@@ -39,7 +39,7 @@ var Paint = {
     Paint.zoomTool.zoomCanvas.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
     Paint.zoomTool.zoomCanvas.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
     Paint.zoomTool.zoomCanvas.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
-    Paint.zoomTool.zoomCanvas.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
+    //Paint.zoomTool.zoomCanvas.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
     //Paint.cursorRect.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
     //Paint.cursorRect.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
     //Paint.cursorRect.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
@@ -281,11 +281,15 @@ var Paint = {
 
     /*
     // Push to Server
-    var imgData = Paint.canvas.toDataURL("image/png");
-    $.post('/upload', {
-          singleWidth : width,
-          count : count,
-          img_data : imgData
+    var imgData = Paint.spriteCanvas.toDataURL("image/png");
+    $.post('/assets, {
+          asset: {
+            name : "dummy",
+            frame_width : width,
+            frame_height : height, 
+            frame_count : count,
+            image_data : imgData
+          }
         },
     function(data) {});
     */
