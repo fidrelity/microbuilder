@@ -35,13 +35,15 @@ var Paint = {
     // Events
     // Canvas
     Paint.canvasObjects.live("click",  $.proxy(Paint.mouseDown, Paint));
-    Paint.zoomTool.canvas.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
-    Paint.zoomTool.canvas.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
-    Paint.zoomTool.canvas.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
-    Paint.zoomTool.canvas.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
+
+    Paint.zoomTool.zoomCanvas.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
+    Paint.zoomTool.zoomCanvas.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
+    Paint.zoomTool.zoomCanvas.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
+    Paint.zoomTool.zoomCanvas.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
     //Paint.cursorRect.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
     //Paint.cursorRect.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
     //Paint.cursorRect.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
+
     // Tools
     $('.switchViewButton').click(function() { Paint.switchView(); });
     $('#addCanvasButton').click(function(){ Paint.addCanvas(); });
@@ -80,7 +82,7 @@ var Paint = {
           width : size.width, 
           height: size.height
         }).attr('width', size.width).attr('height', size.height);
-        Paint.zoomTool.resizeCanvas();
+        this.resizeZoomCanvas();
       }
     });
 
@@ -89,6 +91,7 @@ var Paint = {
 
     // Call Methods
     Paint.addCanvas();
+    this.resizeZoomCanvas();
   },
 
   // ----------------------------------------
@@ -107,6 +110,7 @@ var Paint = {
   mouseMove : function(e) {
     var coordinates = Paint.getCoordinates(e);
     ToolBar.mousemove({coordinates:coordinates});
+    this.zoomTool.updateTexture();
 
     if(Paint.isCursorRect) {
       var posX = coordinates.x * Paint.zoomTool.gridSize;
@@ -293,7 +297,7 @@ var Paint = {
   // Get Mouse Coordinates and return nears grid point
   getCoordinates : function(e) {
     
-    var zoomCanvas = Paint.zoomTool.canvas;
+    var zoomCanvas = Paint.zoomTool.zoomCanvas;
     
     var x = e.pageX - zoomCanvas.offset().left;
     var y = e.pageY - zoomCanvas.offset().top;
@@ -384,7 +388,7 @@ var Paint = {
 
   resizeZoomCanvas : function () {
     Paint.zoomTool.resizeCanvas();
-  },
+  }
 };
 
 // ----------------------------------------

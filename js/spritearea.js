@@ -134,7 +134,7 @@ SpriteArea.prototype.flip = function(_direction) {
 
 SpriteArea.prototype.addClick = function(_x, _y, _dragging) {
   Paint.pixelDrawer.popImageData();
-  Paint.pixelDrawer.drawRect(_x, _y, Paint.lineWidth, Paint.lineWidth, ColorPalette.currentColor);
+  Paint.pixelDrawer.fillRect(_x, _y, Paint.lineWidth, Paint.lineWidth, ColorPalette.currentColor);
   Paint.pixelDrawer.pushImageData();
   /*
     var centerize = Math.floor(Paint.lineWidth / 2);

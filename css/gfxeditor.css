@@ -28,7 +28,16 @@ body {
   background:#F6F6F6;
 }
 
-#webglCanvas { border:1px solid #000000; cursor:none;}
+#zoomCanvas {
+ border:1px solid #000000; 
+ cursor:none;
+ image-rendering: optimizeSpeed;             // Older versions of FF
+ image-rendering: -moz-crisp-edges;          // FF 6.0+
+ image-rendering: -webkit-optimize-contrast; // Webkit
+                                                //  (Safari now, Chrome soon)
+ image-rendering: optimize-contrast;         // Possible future browsers.
+ -ms-interpolation-mode: nearest-neighbor;   // IE
+}
 #zoomCanvasWrapper {
   position:relative;
   max-height:612px;

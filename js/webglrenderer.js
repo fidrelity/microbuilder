@@ -30,7 +30,7 @@ WebGLRenderer.prototype.init = function(){
   this.rotationY = false; 
   this.gl = false;
   
-  this.canvas = document.getElementById("webglCanvas");
+  this.canvas = document.getElementById("zoomCanvas");
   this.gl = this.canvas.getContext("experimental-webgl");
   this.gl.viewportWidth = this.canvas.width;
   this.gl.viewportHeight = this.canvas.height;
@@ -171,10 +171,14 @@ WebGLRenderer.prototype.initBuffers = function() {
 };
 
 WebGLRenderer.prototype.update = function() {
+ 
+};
+
+WebGLRenderer.prototype.updateTexture = function() {
   if(this.texture.image) {
     this.initTextureParameters();
   }
-};
+}
 
 WebGLRenderer.prototype.render = function() {     
   this.gl.clear(this.gl.COLOR_BUFFER_BIT);  
