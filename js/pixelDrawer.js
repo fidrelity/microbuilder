@@ -165,7 +165,7 @@ PixelDrawer.prototype.drawLine = function (_x1, _y1, _x2, _y2, _color) {
 }
 
 PixelDrawer.prototype.colorPixel = function (_x,_y,_color) {
-  if(_x >= 0 && _x < this.dataWidth && _y > 0 && _y < this.dataHeight)
+  if(_x >= 0 && _x < this.dataWidth && _y >= 0 && _y < this.dataHeight)
   {
     var colorIndex = ((_y*(this.dataWidth*4)) + (_x*4));
 
