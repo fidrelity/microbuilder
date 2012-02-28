@@ -6,6 +6,7 @@ gem 'haml'
 gem 'devise'
 gem 'omniauth-facebook'
 gem 'jasmine'
+gem 'emberjs-rails'
 
 group :development do 
   gem 'sqlite3'
