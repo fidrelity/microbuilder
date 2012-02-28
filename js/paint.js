@@ -104,6 +104,7 @@ var Paint = {
   mouseDownZoom : function(e) {
     var coordinates = Paint.getCoordinates(e);
     ToolBar.mousedown({ coordinates : coordinates });
+    this.zoomTool.updateTexture();
   },
 
   //
