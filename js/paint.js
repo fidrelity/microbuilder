@@ -39,9 +39,9 @@ var Paint = {
     Paint.zoomTool.canvas.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
     Paint.zoomTool.canvas.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
     Paint.zoomTool.canvas.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
-    Paint.cursorRect.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
-    Paint.cursorRect.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
-    Paint.cursorRect.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
+    //Paint.cursorRect.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
+    //Paint.cursorRect.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
+    //Paint.cursorRect.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
     // Tools
     $('.switchViewButton').click(function() { Paint.switchView(); });
     $('#addCanvasButton').click(function(){ Paint.addCanvas(); });
