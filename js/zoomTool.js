@@ -44,6 +44,9 @@ ZoomTool.prototype.updateTexture = function(){
 }
 
 ZoomTool.prototype.resizeCanvas = function () {
+  this.textureWidth = this.textureCanvas.width;
+  this.textureHeight = this.textureCanvas.height;
+  
   var newWidth = this.textureWidth * this.gridSize;
   var newHeight = this.textureHeight * this.gridSize;
   
@@ -67,11 +70,18 @@ ZoomTool.prototype.resizeCanvas = function () {
 }
 
 ZoomTool.prototype.zoomIn = function() {
-  this.gridSize += 2;
-  this.resizeCanvas();
+  if(this.gridSize <= 10) {
+    this.gridSize += 2;
+    this.resizeCanvas();
+  }
 };
   
 ZoomTool.prototype.zoomOut = function() {
-  this.gridSize -= 2;
+  if(this.gridSize <= 2) {
+    this.gridSize = 1;
+  }
+  else{
+    this.gridSize -= 2;
+  }
   this.resizeCanvas();
 };
