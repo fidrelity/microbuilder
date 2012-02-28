@@ -4,7 +4,7 @@
 var ToolBar = {
   domWrapper : $('#ToolBars'),
   tools : new Array(),
-  toolsDomObjects : $('.tool'),  
+  toolsDomObjects : $('.tool'), 
   activeClass : 'active-tool',
   currentTool : null,
   currentToolId : '',
