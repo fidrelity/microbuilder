@@ -18,13 +18,17 @@ PixelDrawer.prototype.setCanvasContext = function(_canvas) {
 }
 
 PixelDrawer.prototype.putPixel = function (_x, _y, _color) {
-  
   var color = this.parseColor(_color);
   this.colorPixel(_x,_y,color);
 }
 
-PixelDrawer.prototype.fillRect = function(_x,_y, _width, _height, _color) {
-  var color = this.parseColor(_color);
+PixelDrawer.prototype.fillRect = function(_x,_y, _width, _height, _color) {  
+  var color = null;
+  if(_color.r == undefined) 
+    color = this.parseColor(_color);
+  else
+    color = _color;
+
   for(var i = 0; i < _width; i++) {
     for(var j = 0; j < _height; j++) {
       this.colorPixel(_x+i,_y+j, color);
@@ -33,16 +37,26 @@ PixelDrawer.prototype.fillRect = function(_x,_y, _width, _height, _color) {
 }
 
 PixelDrawer.prototype.drawRect = function(_x,_y, _width, _height, _color) {
-    this.drawLine(_x,_y, _x, _y+_height,_color);
-    this.drawLine(_x,_y+_height, _x+_width, _y+_height,_color);
-    this.drawLine(_x+_width,_y+_height, _x+_width, _y,_color);
-    this.drawLine(_x+ _width,_y, _x, _y,_color);
+    var color = null;
+    if(_color.r == undefined) 
+      color = this.parseColor(_color);
+    else
+      color = _color;
+
+    this.drawLine(_x,_y, _x, _y+_height,color);
+    this.drawLine(_x,_y+_height, _x+_width, _y+_height,color);
+    this.drawLine(_x+_width,_y+_height, _x+_width, _y,color);
+    this.drawLine(_x+ _width,_y, _x, _y,color);
 }
 
 PixelDrawer.prototype.drawCircle = function (_xc, _yc, _a, _b, _color)
 {
-
-    var color = this.parseColor(_color);
+    var color = null;
+    if(_color.r == undefined) 
+      color = this.parseColor(_color);
+    else
+      color = _color;
+    
     var x = 0, y = _b;
     var a2 = _a*_a;
     var b2 = _b*_b;
@@ -83,6 +97,12 @@ PixelDrawer.prototype.drawCircle = function (_xc, _yc, _a, _b, _color)
 }
 
 PixelDrawer.prototype.fillCircle = function ( _xc,  _yc,  _a,  _b, _color) {
+      var color = null;
+    if(_color.r == undefined) 
+      color = this.parseColor(_color);
+    else
+      color = _color;
+  
     var x = 0, y = _b;
     var width = 1;
     var a2 = _a*_a;
@@ -103,17 +123,17 @@ PixelDrawer.prototype.fillCircle = function ( _xc,  _yc,  _a,  _b, _color) {
             width += 2;
         }
         else if (t - a2*y > crit2) { 
-            this.drawLine(_xc-x, _yc-y,_xc-x+ width,_yc-y,_color);
+            this.drawLine(_xc-x, _yc-y,_xc-x+ width,_yc-y, color);
             if (y!=0)
-                this.drawLine(_xc-x, _yc+y,_xc-x+ width,_yc+y,_color);
+                this.drawLine(_xc-x, _yc+y,_xc-x+ width,_yc+y, color);
             y--;
             dyt += d2yt; 
             t += dyt;
         }
         else {
-            this.drawLine(_xc-x, _yc-y,_xc-x+ width,_yc-y,_color);
+            this.drawLine(_xc-x, _yc-y,_xc-x+ width,_yc-y, color);
             if (y!=0)
-                this.drawLine(_xc-x, _yc+y,_xc-x+ width,_yc+y,_color);
+                this.drawLine(_xc-x, _yc+y,_xc-x+ width,_yc+y, color);
             x++;
             dxt += d2xt;
             t += dxt;
@@ -128,10 +148,15 @@ PixelDrawer.prototype.fillCircle = function ( _xc,  _yc,  _a,  _b, _color) {
     if (_b == 0)
         this.drawLine(_xc-_a, _yc,_xc-_a+ 2*_a+1, _yc );
 }
-
-PixelDrawer.prototype.drawLine = function (_x1, _y1, _x2, _y2, _color) {
-   var color = this.parseColor(_color);
-    
+ 
+PixelDrawer.prototype.drawLine = function (_x1, _y1, _x2, _y2, _color, _width) {
+    _width = _width || 1;
+    var color = null;
+    if(_color.r == undefined) 
+      color = this.parseColor(_color);
+    else
+      color = _color;
+   
    var dx = Math.abs(_x2-_x1);
    var dy = Math.abs(_y2-_y1);
    var sx = 0;
@@ -149,7 +174,12 @@ PixelDrawer.prototype.drawLine = function (_x1, _y1, _x2, _y2, _color) {
    var err = dx-dy
  
    while(1) {
-     this.colorPixel(_x1,_y1,color)
+     if(_width == 1) {
+        this.colorPixel(_x1,_y1,color);
+     }
+     else {
+        this.fillRect(_x1-Math.floor(_width/2), _y1-Math.floor(_width/2), _width, _width, color);
+     }
      if(_x1 == _x2 && _y1 ==_y2)
          break;
      var e2 = 2*err
@@ -177,7 +207,7 @@ PixelDrawer.prototype.colorPixel = function (_x,_y,_color) {
 }
 
 PixelDrawer.prototype.parseColor = function(_color) {
-  return new function () {
+  return new function color() {
     
     if(_color.charAt(0)=="#") 
       _color = _color.substring(1);
