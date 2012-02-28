@@ -87,6 +87,8 @@ var PencilTool = function() {
   this.isActive = false;
   this.domObject = $('#' + this.id);
   this.isSelectable = true;
+  this.oldX = null;
+  this.oldY = null;
 };
 //
 PencilTool.prototype.clickEvent = function() {
@@ -95,12 +97,16 @@ PencilTool.prototype.clickEvent = function() {
 //
 PencilTool.prototype.mousedown = function(_options) {
   this.isActive = true;
-  Paint.getCurrentSpriteAreaInstance().addClick(_options.coordinates.x, _options.coordinates.y, false);
+  Paint.getCurrentSpriteAreaInstance().addPencil(_options.coordinates.x, _options.coordinates.y,_options.coordinates.x, _options.coordinates.y);
+  this.oldX = _options.coordinates.x;
+  this.oldY = _options.coordinates.y;
 };
 //
 PencilTool.prototype.mousemove = function(_options) {
   if(!this.isActive) return false;
-  Paint.getCurrentSpriteAreaInstance().addClick(_options.coordinates.x, _options.coordinates.y, true);
+  Paint.getCurrentSpriteAreaInstance().addPencil(this.oldX, this.oldY,_options.coordinates.x, _options.coordinates.y);
+  this.oldX = _options.coordinates.x;
+  this.oldY = _options.coordinates.y;
 };
 //
 PencilTool.prototype.mouseup = function() {

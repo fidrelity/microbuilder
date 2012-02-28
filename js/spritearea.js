@@ -7,6 +7,8 @@ var SpriteArea = function(_id, _index) {
   this.canvas = document.getElementById(this.id);
   this.context = this.canvas.getContext('2d');
   this.canvasObject = $('#' + this.id);
+  this.oldX = null;
+  this.oldY = null;
 
   this.lastPaintIndex = 0;
   this.undoArray = [];
@@ -146,6 +148,13 @@ SpriteArea.prototype.addClick = function(_x, _y, _dragging) {
     this.redraw();
   */
 };
+
+SpriteArea.prototype.addPencil = function(_startX, _startY , _endX, _endY) {
+  Paint.pixelDrawer.popImageData();
+  Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor);
+  Paint.pixelDrawer.pushImageData();
+};
+
 
 SpriteArea.prototype.addLine = function(_startX, _startY, _endX, _endY) {
   Paint.pixelDrawer.popImageData();
