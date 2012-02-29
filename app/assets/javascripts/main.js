@@ -2,66 +2,69 @@ $(document).ready(function() {
    
    window.App = Ember.Application.create();
     
-    // Small LayoutState extension to toggle the navigation css
-    App.NavState = Em.LayoutState.extend({
-        navSelector: 'ul',
-          enter: function(stateManager, transition) {
-            this._super(stateManager, transition);
-          }
-    });
-    
-    App.SubNavState = App.NavState.extend({
-        
-    });
-    
     // The top level layout
-    App.main = Em.View.create({
+    App.main = Ember.View.create({
       templateName: 'templates_main_template'
     });
     
-    App.routeManager = Em.RouteManager.create({
-        
+    App.routeManager = Ember.RouteManager.create({
+      
       rootView: App.main,
       
-      home: App.NavState.create({
-         selector: '.home',
-         viewClass: Em.View.extend({
-         templateName: 'templates_home_template'
-         })
+      home: Ember.LayoutState.create({
+         viewClass: HomeView
       }),
       
-      gallery: App.NavState.create({
-          selector: '.gallery',
+      gallery: Ember.LayoutState.create({
           route: 'gallery',
-          viewClass: Em.View.extend({
-            templateName: 'templates_gallery_template'
-          })
+          viewClass: GalleryView
       }),
       
-      profile: App.NavState.create({
-          selector: '.profile',
+      profile: Ember.LayoutState.create({
           route: 'profile',
-          viewClass: Em.View.extend({
-              templateName: 'templates_profile_template'
-          })
+          viewClass: ProfileView
       }),
       
-      about: App.NavState.create({
-          selector: '.about',
+      about: Ember.LayoutState.create({
           route: 'about',
-          viewClass: Em.View.extend({
-              templateName: 'templates_about_template'
-          })
+          viewClass: AboutView
       }),
       
-      editor: App.NavState.create({
-          selector: '.editor',
+      editor: Ember.LayoutState.create({
           route: 'editor',
-          viewClass: Em.View.extend({
-              templateName: 'templates_editor_template'
+          viewClass: EditorView,
+
+          general: Ember.LayoutState.create({
+              route: 'general',
+              viewClass: GeneralView
+          }),
+
+          paint: Ember.LayoutState.create({
+              route: 'paint',
+              viewClass: PaintView
+          }),
+
+          placement: Ember.LayoutState.create({
+              route: 'placement',
+              viewClass: PlacementView
+          }),
+
+          behaviour: Ember.LayoutState.create({
+              route: 'behaviour',
+              viewClass: BehaviourView
+          }),
+
+          library: Ember.LayoutState.create({
+              route: 'library',
+              viewClass: LibraryView
           })
+        
       })
+      
    });
 
-   App.main.appendTo('body');
+   App.main.appendTo('#content');
+
+   //App.editorController = EditorController.create();
+
 });

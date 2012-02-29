@@ -1,1 +1,9 @@
 <h1>Editor</h1>
+
+<a href="#editor/general">general</a>
+<a href="#editor/library">library</a>
+<a href="#editor/paint">paint</a>
+<a href="#editor/behaviour">behaviour</a>
+<a href="#editor/placement">placement</a>
+
+{{dynamicView}}
