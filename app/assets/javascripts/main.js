@@ -11,54 +11,28 @@ $(document).ready(function() {
       
       rootView: App.main,
       
-      home: Ember.LayoutState.create({
-         viewClass: HomeView
+      general: Ember.LayoutState.create({
+        viewClass: GeneralView
       }),
-      
-      gallery: Ember.LayoutState.create({
-          route: 'gallery',
-          viewClass: GalleryView
+
+      paint: Ember.LayoutState.create({
+        route: 'paint',
+        viewClass: PaintView
       }),
-      
-      profile: Ember.LayoutState.create({
-          route: 'profile',
-          viewClass: ProfileView
+
+      placement: Ember.LayoutState.create({
+        route: 'placement',
+        viewClass: PlacementView
       }),
-      
-      about: Ember.LayoutState.create({
-          route: 'about',
-          viewClass: AboutView
+
+      behaviour: Ember.LayoutState.create({
+        route: 'behaviour',
+        viewClass: BehaviourView
       }),
-      
-      editor: Ember.LayoutState.create({
-          route: 'editor',
-          viewClass: EditorView,
 
-          general: Ember.LayoutState.create({
-              route: 'general',
-              viewClass: GeneralView
-          }),
-
-          paint: Ember.LayoutState.create({
-              route: 'paint',
-              viewClass: PaintView
-          }),
-
-          placement: Ember.LayoutState.create({
-              route: 'placement',
-              viewClass: PlacementView
-          }),
-
-          behaviour: Ember.LayoutState.create({
-              route: 'behaviour',
-              viewClass: BehaviourView
-          }),
-
-          library: Ember.LayoutState.create({
-              route: 'library',
-              viewClass: LibraryView
-          })
-        
+      library: Ember.LayoutState.create({
+        route: 'library',
+        viewClass: LibraryView
       })
       
    });

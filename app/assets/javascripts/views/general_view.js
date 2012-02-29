@@ -1,4 +1,4 @@
 GeneralView = Ember.View.extend({
     elementId: 'general',
-    templateName: 'templates_editor_general_template'
+    templateName: 'templates_general_template'
 });
