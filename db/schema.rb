@@ -11,16 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120228171900) do
+ActiveRecord::Schema.define(:version => 20120302114132) do
 
   create_table "graphics", :force => true do |t|
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
-    t.boolean  "public"
+    t.boolean  "public",             :default => false
     t.integer  "frame_width"
     t.integer  "frame_height"
     t.integer  "user_id"
-    t.string   "name",                                  :null => false
     t.integer  "frame_count"
     t.boolean  "background",         :default => false
     t.string   "image_file_name"

@@ -5,9 +5,7 @@ class GraphicsController < ApplicationController
   end
 
   def create
-    p '**' * 10
-    p current_user
-    @graphic = current_user.graphics.create(params[:asset])
+    @graphic = current_user.graphics.create(params[:graphic])
     
     render :nothing => true, :status => 200
   end

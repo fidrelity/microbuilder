@@ -7,8 +7,7 @@ var toServer = function() {
     success: function(data) {
        console.log("Data Loaded: " + data);
     },
-    data: { asset: {
-        name: "dummy",
+    data: { graphic: {
         image_data: dataUrl,
         frame_count: 0,
         frame_width: 120,
