@@ -2,8 +2,8 @@ $bg: #fff;
 $font: #000;
 
 html, body {
-    margin: 0px;
-    padding: 0px;
+/*    margin: 0px;*/
+/*    padding: 0px;*/
     border: none;
     text-decoration:none;
     height:100%;
@@ -18,10 +18,10 @@ body {
 h1 {
 }
 
-* {
+/** {
    margin: 0px;
    padding: 0px;
-}
+}*/
 
 .clear {
    clear:both;

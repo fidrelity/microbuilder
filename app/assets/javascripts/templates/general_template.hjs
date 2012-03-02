@@ -1,1 +1,32 @@
 <h2>General editor Template</h2>
+
+
+<h3>Meta</h3>
+
+<label>game title: </label>
+<input type="text" placeholder="name" />
+<br />
+
+<label>instructions: </label>
+<input type="text" placeholder="(140 chars max)" />
+<br />
+
+<button>select background</button>
+<br/>
+
+<label>length</label>
+<input type="range" min="0" max="100" />
+
+
+<h3>Objects</h3>
+
+<button>+</button>
+
+
+<h3>Preview</h3>
+
+<!-- <canvas id="playercanvas" width="640" height="390" style="background:#029ebf; align:center"></canvas> -->
+
+<div id="previewCanvas" style="background:url('/assets/preview.png'); width:640px; height:390px">
+  <img src="/assets/mario.png" style="height:100px; width:100px" class="draggable" />
+</div>
