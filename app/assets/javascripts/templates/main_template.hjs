@@ -7,15 +7,4 @@
   
   {{dynamicView}}
   
-  <ul>
-    {{#each App.editorController}}
-      {{#view GameObjectView personBinding="this"}}
-        {{person.name}} : ( {{person.pos.x}} | {{person.pos.y}} )
-        <button {{action "removeItem"}}>delete</button>
-      {{/view}}
-    {{/each}}
-  </ul>
-  
-  <button {{action "addObject" target="App.editorController"}}>add</button>
-  
 </div>

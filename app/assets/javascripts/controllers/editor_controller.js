@@ -1,66 +1,34 @@
-var EditorController = Ember.ArrayController.extend({
+/*
+  EditorController
+  
+  - manages the different states
+  - owns the game
+*/
 
-  content : [],
+var EditorController = Ember.Object.extend({
 
-  addObject : function( name, pos ) {
+  game : null,
+
+  init : function() {
     
-    console.log( name );
-    
-    this.pushObject( GameObjectModel.create({ 'name' : name, 'pos' : pos }) );
+    this.game = GameModel.create();
     
   },
   
-  removeObject : function( item ) {
+  searchGraphic : function() {
     
-    console.log( item );
+    App.libraryController.assetController = App.graphicsController;
     
-    return this._super( item );
+    App.routeManager.goToLocation( 'library' );
+    
+  },
+  
+  selectGraphic : function( graphic ) {
+    
+    this.game.addGameObject( graphic );
+    
+    App.routeManager.goToLocation( '' );
     
   }
-
-    // fsm: null,
-    // 
-    // rootView: Ember.View.create({
-    //   templateName : 'templates_main_template'
-    // }),
-    // 
-    // behaviourController: null,
-    // libraryController: null,
-    // paintController: null,
-    // 
-    // init: function() {
-    //     
-    //     console.log('initEditorContr');
-    //     
-    //     var self = this;
-    //     
-    //     this.fsm = Ember.StateManager.create({
-    //       
-    //         rootView : this.rootView,
-    //         
-    //         initialState : 'general',
-    //         
-    //         general: Ember.LayoutState.create({
-    //             viewClass: GeneralView
-    //         }),
-    //         
-    //         library: Ember.LayoutState.create({
-    //             viewClass: LibraryView
-    //         }),
-    //         
-    //         placement: Ember.LayoutState.create({
-    //             viewClass: PlacementView
-    //         }),
-    //         
-    //         behaviour: Ember.LayoutState.create({
-    //             viewClass: BehaviourView
-    //         }),
-    //         
-    //         paint: Ember.LayoutState.create({
-    //             viewClass: PaintView
-    //         })
-    //         
-    //     });
-    // 
-    // }
-})
+  
+});

@@ -1,14 +1,14 @@
-<h2>General editor Template</h2>
+<h2>Game Editor</h2>
 
 
 <h3>Meta</h3>
 
 <label>game title: </label>
-<input type="text" placeholder="name" />
+{{view TextInputView textBinding="App.editorController.game.title" placeholder="insert name"}}
 <br />
 
 <label>instructions: </label>
-<input type="text" placeholder="(140 chars max)" />
+{{view TextInputView textBinding="App.editorController.game.instructions" placeholder="(140 chars max)"}}
 <br />
 
 <button>select background</button>
@@ -20,13 +20,27 @@
 
 <h3>Objects</h3>
 
-<button>+</button>
+<ul class="graphics">
+  {{#each App.gameObjectsController.content}}
+    {{#view GraphicsView graphicBinding="graphic"}}
+      <li>
+        <img {{bindAttr src="graphic.imagePath"}} alt="graphic"></img>
+        <p>{{graphic.name}}</p>
+      </li>
+    {{/view}}
+  {{/each}}
+</ul>
+
+<div class="clear"></div>
+
+<button {{action "searchGraphic" target="App.editorController"}}>add object</button>
 
 
 <h3>Preview</h3>
 
+<p>title: {{App.editorController.game.title}}</p>
+<p>instructions: {{App.editorController.game.instructions}}</p>
+
 <!-- <canvas id="playercanvas" width="640" height="390" style="background:#029ebf; align:center"></canvas> -->
 
-<div id="previewCanvas" style="background:url('/assets/preview.png'); width:640px; height:390px">
-  <img src="/assets/mario.png" style="height:100px; width:100px" class="draggable" />
-</div>
+<div id="previewCanvas" style="background:url('/assets/preview.png'); width:640px; height:390px"></div>

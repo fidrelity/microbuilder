@@ -2,23 +2,21 @@ var Loader = function( callback ) {
 
   this.callback = callback;
 
+  this.imageCount = 0;
+
 };
 
 Loader.prototype = {
-  
-  imageCount : 0,
-  
-  callback : null,
   
   loadImage : function( path ) {
     
     var image = new Image();
     
-    var App = this;
+    var self = this;
     
     image.onload = function () {
     
-      App.imageLoaded();
+      self.imageLoaded();
     
     }
     

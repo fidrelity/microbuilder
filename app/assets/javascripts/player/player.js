@@ -58,13 +58,13 @@ Player.prototype = {
   
   parse : function( _data ) {
     
-    var App = this;
+    var self = this;
     
     if ( this.fsm.hasState( 'init') ) {
     
       Parser.parseData( _data, this.game, function() {
         
-        App.fsm.show();
+        self.fsm.show();
         
       } );
       
@@ -84,16 +84,16 @@ Player.prototype = {
   
   enterPlay : function() {
     
-    var App = this;
+    var self = this;
     
     function animate() {
       
-      if ( App.fsm.hasState( 'play' ) ) {
+      if ( self.fsm.hasState( 'play' ) ) {
       
         requestAnimationFrame( animate );
       
-        App.update();
-        App.draw();
+        self.update();
+        self.draw();
       
       }
       

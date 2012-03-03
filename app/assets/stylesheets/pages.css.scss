@@ -38,6 +38,21 @@ ul#nav {
 }
 
 ul#nav li {
-   float:left;
-   margin: 0 0 0 10px;
+    float:left;
+    margin: 0 0 0 10px;
+}
+
+
+ul.graphics {
+    list-style:none;
+}
+
+ul.graphics li {
+    float:left;
+    padding: 2px;
+}
+
+ul.graphics li:hover {
+    border: 2px solid black;
+    padding: 0px;
 }

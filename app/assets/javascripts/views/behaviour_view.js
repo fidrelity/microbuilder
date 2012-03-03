@@ -1,4 +1,7 @@
-BehaviourView = Ember.View.extend({
-    elementId: 'behaviour',
-    templateName: 'templates_behaviour_template'
+var BehaviourView = Ember.View.extend({
+  
+  templateName : 'templates_behaviour_template',
+  
+  gameObject : null
+  
 });

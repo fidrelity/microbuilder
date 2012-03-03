@@ -1,1 +1,14 @@
-<h2>Library editor Template</h2>
+<h2>Library</h2>
+
+<ul class="graphics">
+  {{#each App.libraryController.assetController}}
+    {{#view GraphicsView graphicBinding="this"}}
+      <li {{action "select"}}>
+        <img {{bindAttr src="graphic.imagePath"}} alt="graphic"></img>
+        <p>{{graphic.name}}</p>
+      </li>
+    {{/view}}
+  {{/each}}
+</ul>
+
+<div class="clear"></div>
