@@ -1,5 +1,9 @@
 <h2>Placement</h2>
 
-<div id="previewCanvas" style="background:url('/assets/preview.png'); width:640px; height:390px">
-  <img src="/assets/mario.png" style="height:100px; width:100px" class="draggable" />
+<div id="placementCanvas" style="background:url('/assets/preview.png'); width:640px; height:390px">
+  
+  <img id="placementGraphic" {{bindAttr src="graphic.imagePath"}} />
+  
 </div>
+
+<button {{action "placeGraphic"}}>place</button>

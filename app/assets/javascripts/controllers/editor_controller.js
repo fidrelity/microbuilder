@@ -25,7 +25,15 @@ var EditorController = Ember.Object.extend({
   
   selectGraphic : function( graphic ) {
     
-    this.game.addGameObject( graphic );
+    App.placementController.set( 'graphic', graphic );
+    
+    App.routeManager.goToLocation( 'placement' );
+    
+  },
+  
+  placeGraphic : function( graphic, position ) {
+    
+    this.game.addGameObject( graphic, position );
     
     App.routeManager.goToLocation( '' );
     

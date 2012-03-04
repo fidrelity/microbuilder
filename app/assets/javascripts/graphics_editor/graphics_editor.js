@@ -28,10 +28,10 @@ function draw(){
   }  
 }  
 
-$(document).ready(function(){
-  draw();
-  
-  $("#save_button").click(function(){
-    toServer();
-  });
-});
+// $(document).ready(function(){
+//   draw();
+//   
+//   $("#save_button").click(function(){
+//     toServer();
+//   });
+// });

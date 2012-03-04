@@ -13,7 +13,7 @@ function editor_main() {
   App.libraryController = LibraryController.create();
 
   App.gameObjectsController = GameObjectsController.create();
-
+  App.placementController = PlacementController.create();
 
   App.routeManager = Ember.RouteManager.create({
   

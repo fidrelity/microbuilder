@@ -1,11 +1,37 @@
 var PlacementView = Ember.View.extend({
 
-  templateName: 'templates_placement_template',
+  templateName : 'templates_placement_template',
   
-  didInsertElement: function(){
+  graphicBinding : 'App.placementController.graphic',
+  
+  position : new Vector(),
+  
+  didInsertElement : function() {
     
-    this.$('.draggable').draggable({ containment: '#previewCanvas', scroll: false });
+    var self = this;
     
+    if ( this.get( 'graphic' ) ) {
+    
+      $('#placementGraphic').draggable({
+        containment: '#placementCanvas', 
+        scroll: false,
+        
+        stop: function(e, ui) {
+          
+          self.position.set( ui.position.left, ui.position.top );
+          
+        }
+        
+      });
+    
+    }
+    
+  },
+  
+  placeGraphic : function() {
+  
+    App.editorController.placeGraphic( this.get( 'graphic' ), this.position );
+  
   }
 
 });
