@@ -2,7 +2,16 @@ var GeneralView = Ember.View.extend({
   
   templateName : 'templates_general_template',
   
-  game : null
+  gameBinding : 'App.editorController.game',
+  
+  player : null,
+  
+  didInsertElement : function() {
+    
+    this.player = new Player( $( '#playerCanvas' )[0] );
+    this.player.parse( this.get( 'game' ) );
+  
+  }
   
 });
 

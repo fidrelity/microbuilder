@@ -4,17 +4,20 @@ var Parser = {
     
     var loader = new Loader( callback );
     
-    game.background = loader.loadImage( data.background );
+    if ( data.background ) {
+    
+      game.background = loader.loadImage( data.background );
+    
+    }
     
     for ( var i = 0; i < data.gameObjects.length; i++ ) {
       
       var obj = data.gameObjects[i],
           gameObj = new GameObject();
       
-      gameObj.setPosition( obj.x, obj.y );
-      gameObj.offset = new Vector( obj.oX, obj.oY );
+      gameObj.setPosition( obj.position.x, obj.position.y );
       
-      gameObj.image = loader.loadImage( obj.image );
+      gameObj.image = loader.loadImage( obj.graphic.imagePath );
       
       game.gameObjects.push( gameObj );
       

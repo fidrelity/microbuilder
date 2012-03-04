@@ -24,7 +24,11 @@ Game.prototype = {
   
   draw : function( ctx ) {
     
-    ctx.drawImage( this.background, 0, 0 );
+    if ( this.background ) {
+    
+      ctx.drawImage( this.background, 0, 0 );
+    
+    }
     
     for ( var i = 0; i < this.gameObjects.length; i++ ) {
       

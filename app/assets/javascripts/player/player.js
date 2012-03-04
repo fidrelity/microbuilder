@@ -1,9 +1,9 @@
-var Player = function( _canvas ) {
+var Player = function( canvas ) {
   
-  this.context = _canvas.getContext( '2d' );
+  this.context = canvas.getContext( '2d' );
   
   this.context.fillStyle = '#FFFFFF';
-  this.context.fillRect( 0, 0, _canvas.width, _canvas.height );
+  this.context.fillRect( 0, 0, canvas.width, canvas.height );
   
   this.init();
   
@@ -31,7 +31,7 @@ Player.prototype = {
       ],
       
       transitions : [
-        { name : 'parse', from : 'init', to: 'load' },
+        { name : 'parse', from : '*', to: 'load' },
         { name : 'show', from : 'load', to: 'ready' },
         { name : 'start', from : 'ready', to: 'play' },
         { name : 'win', from : 'play', to: 'end', callback : this.onWin },
@@ -56,21 +56,17 @@ Player.prototype = {
     
   },
   
-  parse : function( _data ) {
+  parse : function( data ) {
     
     var self = this;
     
-    if ( this.fsm.hasState( 'init') ) {
+    this.fsm.parse();
     
-      Parser.parseData( _data, this.game, function() {
-        
-        self.fsm.show();
-        
-      } );
+    Parser.parseData( data, this.game, function() {
       
-      this.fsm.parse();
-    
-    }
+      self.fsm.show();
+      
+    } );
     
   },
   

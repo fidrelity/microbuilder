@@ -4,11 +4,11 @@
 <h3>Meta</h3>
 
 <label>game title: </label>
-{{view TextInputView textBinding="App.editorController.game.title" placeholder="insert name"}}
+{{view TextInputView textBinding="game.title" placeholder="insert name"}}
 <br />
 
 <label>instructions: </label>
-{{view TextInputView textBinding="App.editorController.game.instructions" placeholder="(140 chars max)"}}
+{{view TextInputView textBinding="game.instructions" placeholder="(140 chars max)"}}
 <br />
 
 <button>select background</button>
@@ -21,7 +21,7 @@
 <h3>Objects</h3>
 
 <ul class="graphics">
-  {{#each App.gameObjectsController.content}}
+  {{#each game.gameObjects}}
     {{#view GraphicsView graphicBinding="graphic"}}
       <li>
         <img {{bindAttr src="graphic.imagePath"}} alt="graphic"></img>
@@ -38,9 +38,9 @@
 
 <h3>Preview</h3>
 
-<p>title: {{App.editorController.game.title}}</p>
-<p>instructions: {{App.editorController.game.instructions}}</p>
+<p>title: {{game.title}}</p>
+<p>instructions: {{game.instructions}}</p>
 
-<!-- <canvas id="playercanvas" width="640" height="390" style="background:#029ebf; align:center"></canvas> -->
-
-<div id="previewCanvas" style="background:url('/assets/preview.png'); width:640px; height:390px"></div>
+<div id="previewCanvas" style="border: 2px solid black; width: 640px; height: 390px">
+  <canvas id="playerCanvas" width="640" height="390" style="background:#000"></canvas>
+</div>

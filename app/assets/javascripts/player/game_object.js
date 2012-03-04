@@ -4,8 +4,6 @@ var GameObject = function() {
   
   this.id = null;
   
-  this.offset = null;
-  
   this.image = null;
   this.filename = '';
   
@@ -17,17 +15,11 @@ GameObject.prototype = {
   
   update : function( dt ) {
     
-    this.offset.rotateSelf( 0.04 );
-    
   },
   
   draw : function( ctx ) {
     
-    var pos = new Vector( this.image.width, this.image.height ).mulSelf( -0.5 );
-    
-    pos.addSelf( this.offset ).addSelf( this.position );
-    
-    ctx.drawImage( this.image, pos.x, pos.y );
+    ctx.drawImage( this.image, this.position.x, this.position.y );
     
   },
   
