@@ -15,7 +15,7 @@ class Graphic < ActiveRecord::Base
   end
   
   before_save :decode_base64_image
-  after_create :transliterate_file_name
+  #after_create :transliterate_file_name
 
   attr_accessor :image_data
 
@@ -37,9 +37,5 @@ class Graphic < ActiveRecord::Base
 
         self.image = data
       end
-    end
-    
-    def transliterate_file_name
-      self.image_file_name = "/system/images/#{self.id}/original/#{self.user.display_name}_#{Time.now.to_i.to_s}.png"
     end
 end
