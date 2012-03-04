@@ -1,3 +1,6 @@
 -# THIS VIEW IS FOR TESTING USE ONLY
 %canvas{:id => 'canvas', :width => 640, :height => 390}
 %input{:id => 'save_button', :type => 'button', :value => 'send to server'}
+
+:javascript
+  $(document).ready( graphics_editor_main() );
