@@ -1,9 +1,4 @@
-var Player = function( canvas ) {
-  
-  this.context = canvas.getContext( '2d' );
-  
-  this.context.fillStyle = '#FFFFFF';
-  this.context.fillRect( 0, 0, canvas.width, canvas.height );
+var Player = function() {
   
   this.init();
   
@@ -12,6 +7,8 @@ var Player = function( canvas ) {
 Player.prototype = {
   
   init : function() {
+    
+    this.context = null;
     
     this.loader = new Loader();
     this.game = new Game();
@@ -43,6 +40,15 @@ Player.prototype = {
     
   },
   
+  setCanvas : function( canvas ) {
+    
+    this.context = canvas.getContext( '2d' );
+    
+    this.context.fillStyle = '#FFFFFF';
+    this.context.fillRect( 0, 0, canvas.width, canvas.height );
+    
+  },
+  
   update : function() {
     
     this.game.update();
@@ -52,7 +58,11 @@ Player.prototype = {
   
   draw : function() {
     
-    this.game.draw( this.context );
+    if ( this.context ) {
+    
+      this.game.draw( this.context );
+    
+    }
     
   },
   
@@ -61,6 +71,8 @@ Player.prototype = {
     var self = this;
     
     this.fsm.parse();
+    
+    this.game = new Game();
     
     Parser.parseData( data, this.game, function() {
       
@@ -73,6 +85,9 @@ Player.prototype = {
   enterShow : function() {
     
     // this.context.drawImage( this.game.background, 0, 0 );
+    
+    this.context.fillStyle = '#FFFFFF';
+    this.context.fillRect( 0, 0, 640, 390 );
     
     this.draw();
     

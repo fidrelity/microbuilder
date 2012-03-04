@@ -1,9 +1,12 @@
 <h2>Placement</h2>
 
-<div id="placementCanvas" style="background:url('/assets/preview.png'); width:640px; height:390px">
+<p>Drag your object to the right position</p>
+
+<div id="placementCanvas" style="border: 2px solid black; width:640px; height:390px">
   
-  <img id="placementGraphic" {{bindAttr src="graphic.imagePath"}} />
+  <img id="placementGraphic" {{bindAttr src="graphic.imagePath"}} style="border: 2px solid black" />
   
 </div>
 
+<button {{action "cancel" target="App.editorController"}}>cancel</button>
 <button {{action "placeGraphic"}}>place</button>

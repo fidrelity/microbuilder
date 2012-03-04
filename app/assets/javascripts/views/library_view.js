@@ -4,7 +4,7 @@ var LibraryView = Ember.View.extend({
   
 });
 
-var GraphicsView = Ember.View.extend({
+var GraphicView = Ember.View.extend({
   
   graphic : null,
   
@@ -13,6 +13,20 @@ var GraphicsView = Ember.View.extend({
     var graphic = this.get('graphic');
     
     App.editorController.selectGraphic( graphic );
+    
+  }
+  
+});
+
+var BackgroundView = Ember.View.extend({
+  
+  graphic : null,
+  
+  select : function() {
+    
+    var graphic = this.get('graphic');
+    
+    App.editorController.selectBackground( graphic );
     
   }
   

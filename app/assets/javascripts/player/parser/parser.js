@@ -6,7 +6,7 @@ var Parser = {
     
     if ( data.background ) {
     
-      game.background = loader.loadImage( data.background );
+      game.background = loader.loadImage( data.background.imagePath );
     
     }
     

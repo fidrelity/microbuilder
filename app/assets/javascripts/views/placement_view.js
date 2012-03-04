@@ -4,11 +4,13 @@ var PlacementView = Ember.View.extend({
   
   graphicBinding : 'App.placementController.graphic',
   
-  position : new Vector(),
+  position : null,
   
   didInsertElement : function() {
     
     var self = this;
+    
+    this.position = new Vector();
     
     if ( this.get( 'graphic' ) ) {
     

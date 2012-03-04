@@ -11,7 +11,7 @@
 {{view TextInputView textBinding="game.instructions" placeholder="(140 chars max)"}}
 <br />
 
-<button>select background</button>
+<button {{action "searchBackground" target="App.editorController"}}>select background</button>
 <br/>
 
 <label>length</label>
@@ -22,10 +22,12 @@
 
 <ul class="graphics">
   {{#each game.gameObjects}}
-    {{#view GraphicsView graphicBinding="graphic"}}
+    {{#view GameObjectView gameObjectBinding="this"}}
       <li>
-        <img {{bindAttr src="graphic.imagePath"}} alt="graphic"></img>
-        <p>{{graphic.name}}</p>
+        <img {{bindAttr src="gameObject.graphic.imagePath"}} {{bindAttr alt="gameObject.graphic.name"}} />
+        <p>{{gameObject.graphic.name}}</p>
+        <button {{action "remove"}}>delete</button>
+        <button {{action "editBehaviour"}}>behaviour</button>
       </li>
     {{/view}}
   {{/each}}

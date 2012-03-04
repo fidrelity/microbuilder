@@ -6,6 +6,6 @@
 
 var PlacementController = Ember.Object.extend({
 
-  graphic : null,
+  graphic : null
 
 });

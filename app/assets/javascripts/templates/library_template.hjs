@@ -1,8 +1,10 @@
 <h2>Library</h2>
 
+<p>Select and item or create a new one</p>
+
 <ul class="graphics">
   {{#each App.libraryController.assetController}}
-    {{#view GraphicsView graphicBinding="this"}}
+    {{#view App.libraryController.assetController.viewClass graphicBinding="this"}}
       <li {{action "select"}}>
         <img {{bindAttr src="graphic.imagePath"}} alt="graphic"></img>
         <p>{{graphic.name}}</p>
@@ -12,3 +14,6 @@
 </ul>
 
 <div class="clear"></div>
+
+<button {{action "cancel" target="App.editorController"}}>cancel</button>
+<button {{action "drawGraphic" target="App.editorController"}}>new</button>

@@ -10,10 +10,14 @@ function editor_main() {
   App.editorController = EditorController.create();
 
   App.graphicsController = GraphicsController.create();
+  App.backgroundsController = BackgroundsController.create();
+
   App.libraryController = LibraryController.create();
 
   App.gameObjectsController = GameObjectsController.create();
   App.placementController = PlacementController.create();
+
+  App.behaviourController = BehaviourController.create();
 
   App.routeManager = Ember.RouteManager.create({
   

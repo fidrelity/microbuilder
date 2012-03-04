@@ -1,3 +1,6 @@
 <h2>Behaviour Editor</h2>
 
-<h3>behaviors of object "insert title":</h3>
+<h3>define behaviors of object {{gameObject.name}}</h3>
+
+<button {{action "cancel" target="App.editorController"}}>cancel</button>
+<button {{action "cancel" target="App.editorController"}}>ok</button>

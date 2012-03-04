@@ -17,6 +17,12 @@ var GameModel = Ember.Object.extend({
       
     }) );
     
+  },
+  
+  setBackground : function( graphic ) {
+    
+    this.background = graphic;
+    
   }
   
 });
