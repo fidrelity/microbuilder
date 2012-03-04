@@ -15,7 +15,6 @@ class Graphic < ActiveRecord::Base
   end
   
   before_save :decode_base64_image
-  #after_create :transliterate_file_name
 
   attr_accessor :image_data
 
