@@ -57,3 +57,14 @@ function editor_main() {
   App.main.appendTo('#content');
 
 };
+
+function player_main() {
+  
+  var player = new Player(),
+      data = JSON.parse( window.localStorage.game );
+  
+  player.setCanvas( $( '#playerCanvas' )[0] );
+  
+  player.parse( data );
+  
+}
