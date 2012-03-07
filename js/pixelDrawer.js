@@ -18,17 +18,12 @@ PixelDrawer.prototype.setCanvasContext = function(_canvas) {
 }
 
 PixelDrawer.prototype.putPixel = function (_x, _y, _color) {
-  var color = this.parseColor(_color);
+  var color = this.checkIfParsedColor(_color);
   this.colorPixel(_x,_y,color);
 }
 
 PixelDrawer.prototype.fillRect = function(_x,_y, _width, _height, _color) {  
-  var color = null;
-  if(_color.r == undefined) 
-    color = this.parseColor(_color);
-  else
-    color = _color;
-
+  var color = this.checkIfParsedColor(_color);
   for(var i = 0; i < _width; i++) {
     for(var j = 0; j < _height; j++) {
       this.colorPixel(_x+i,_y+j, color);
@@ -37,12 +32,8 @@ PixelDrawer.prototype.fillRect = function(_x,_y, _width, _height, _color) {
 }
 
 PixelDrawer.prototype.drawRect = function(_x,_y, _width, _height, _color) {
-    var color = null;
-    if(_color.r == undefined) 
-      color = this.parseColor(_color);
-    else
-      color = _color;
-
+    var color = this.parseColor(_color);
+    
     this.drawLine(_x,_y, _x, _y+_height,color);
     this.drawLine(_x,_y+_height, _x+_width, _y+_height,color);
     this.drawLine(_x+_width,_y+_height, _x+_width, _y,color);
@@ -51,11 +42,7 @@ PixelDrawer.prototype.drawRect = function(_x,_y, _width, _height, _color) {
 
 PixelDrawer.prototype.drawCircle = function (_xc, _yc, _a, _b, _color)
 {
-    var color = null;
-    if(_color.r == undefined) 
-      color = this.parseColor(_color);
-    else
-      color = _color;
+    var color = this.checkIfParsedColor(_color);
     
     var x = 0, y = _b;
     var a2 = _a*_a;
@@ -97,11 +84,7 @@ PixelDrawer.prototype.drawCircle = function (_xc, _yc, _a, _b, _color)
 }
 
 PixelDrawer.prototype.fillCircle = function ( _xc,  _yc,  _a,  _b, _color) {
-      var color = null;
-    if(_color.r == undefined) 
-      color = this.parseColor(_color);
-    else
-      color = _color;
+    var color = this.checkIfParsedColor(_color);
   
     var x = 0, y = _b;
     var width = 1;
@@ -150,12 +133,8 @@ PixelDrawer.prototype.fillCircle = function ( _xc,  _yc,  _a,  _b, _color) {
 }
  
 PixelDrawer.prototype.drawLine = function (_x1, _y1, _x2, _y2, _color, _width) {
-    _width = _width || 1;
-    var color = null;
-    if(_color.r == undefined) 
-      color = this.parseColor(_color);
-    else
-      color = _color;
+   _width = _width || 1;
+   var color = this.checkIfParsedColor(_color);
    
    var dx = Math.abs(_x2-_x1);
    var dy = Math.abs(_y2-_y1);
@@ -199,14 +178,14 @@ PixelDrawer.prototype.colorPixel = function (_x,_y,_color) {
   {
     var colorIndex = ((_y*(this.dataWidth*4)) + (_x*4));
 
-    this.data[colorIndex] = _color.r;
-    this.data[colorIndex+1] = _color.g;
-    this.data[colorIndex+2] = _color.b;
-    this.data[colorIndex+3] = _color.a;
+    this.data[colorIndex] = _color[0];
+    this.data[colorIndex+1] = _color[1];
+    this.data[colorIndex+2] = _color[2];
+    this.data[colorIndex+3] = _color[3];
   }
 }
 
-PixelDrawer.prototype.parseColor = function(_color) {
+/*PixelDrawer.prototype.parseColor = function(_color) {
   return new function color() {
     
     if(_color.charAt(0)=="#") 
@@ -221,6 +200,22 @@ PixelDrawer.prototype.parseColor = function(_color) {
       this.a = 255;
     }
   };
+}*/
+
+PixelDrawer.prototype.parseColor = function(_color) {
+    
+    if(_color.charAt(0)=="#") 
+      _color = _color.substring(1);
+    
+    var colorArray = [parseInt(_color.substr(0,2), 16),
+                 parseInt(_color.substr(2,2), 16),
+                 parseInt(_color.substr(4,2), 16),
+                 parseInt(_color.substr(6,2), 16)];
+    
+    if(!colorArray[3]) {
+      colorArray[3] = 255;
+    }
+    return colorArray;
 }
 
 PixelDrawer.prototype.popImageData = function() {
@@ -238,4 +233,11 @@ PixelDrawer.prototype.popImageData = function() {
 PixelDrawer.prototype.pushImageData = function() {
   this.imageData.data = this.data;
   this.context.putImageData(this.imageData, 0, 0);
+}
+
+PixelDrawer.prototype.checkIfParsedColor = function(_color) {
+    if(!(_color instanceof Array)) 
+      return( this.parseColor(_color));
+    else
+      return _color;
 }
