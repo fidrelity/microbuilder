@@ -14,3 +14,14 @@ Array.max = function( array ){
 Array.min = function( array ){
   return Math.min.apply( Math, array );
 };
+
+function inherit(sub,super){
+  var thinF = function(){};
+  thinF.prototype = super.prototype;
+  sub.prototype = new thinF();
+  sub.prototype.constructor = sub;
+  sub.super = super.prototype;
+  if( super.prototype.constructor == Object.prototype.constructor ){
+  super.prototype.constructor = super;
+  }
+}
