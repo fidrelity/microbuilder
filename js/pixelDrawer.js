@@ -59,6 +59,9 @@ PixelDrawer.prototype.drawCircle = function (_xc, _yc, _a, _b, _color)
 {
     var color = this.checkIfParsedColor(_color);
     
+    _a = Math.abs(_a-_xc);
+    _b = Math.abs(_b-_yc);
+      
     var x = 0, y = _b;
     var a2 = _a*_a;
     var b2 = _b*_b;
@@ -101,6 +104,9 @@ PixelDrawer.prototype.drawCircle = function (_xc, _yc, _a, _b, _color)
 PixelDrawer.prototype.fillCircle = function ( _xc,  _yc,  _a,  _b, _color) {
     var color = this.checkIfParsedColor(_color);
   
+    _a = Math.abs(_a-_xc);
+    _b = Math.abs(_b-_yc);
+    
     var x = 0, y = _b;
     var width = 1;
     var a2 = _a*_a;
