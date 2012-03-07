@@ -34,9 +34,7 @@ var GameController = Ember.Object.extend({
   
   updatePlayer : function() {
     
-    this.player.parse( this.game );
-    
-    console.log('updateplayer');
+    this.player.parse( this.game.getData() );
     
   },
   
@@ -91,6 +89,31 @@ var GameController = Ember.Object.extend({
     App.behaviourController.set( 'gameObject', gameObject );
     
     App.routeManager.goToLocation( 'behaviour' );
+    
+  },
+  
+  publishGame : function() {
+    
+    // $.ajax({
+    //   url : 'games/',
+    //   type : 'POST',
+    //   data : JSON.stringify( this.game.getData() ),
+    //   
+    //   success: function( data ) {
+    //     
+    //     console.log( data );
+    //     
+    //   }
+    //   
+    // });
+    
+    window.localStorage.setItem( 'game', JSON.stringify( this.game.getData() ) );
+  
+  },
+  
+  loadGame : function() {
+    
+    
     
   }
   

@@ -6,21 +6,25 @@ var Parser = {
     
     if ( data.background ) {
     
-      game.background = loader.loadImage( data.background.imagePath );
+      game.background = loader.loadImage( data.background );
     
     }
     
-    for ( var i = 0; i < data.gameObjects.length; i++ ) {
+    if ( data.gameObjects ) {
+    
+      for ( var i = 0; i < data.gameObjects.length; i++ ) {
       
-      var obj = data.gameObjects[i],
-          gameObj = new GameObject();
+        var obj = data.gameObjects[i],
+            gameObj = new GameObject();
       
-      gameObj.setPosition( obj.position.x, obj.position.y );
+        gameObj.setPosition( obj.position.x, obj.position.y );
       
-      gameObj.image = loader.loadImage( obj.graphic.imagePath );
+        gameObj.image = loader.loadImage( obj.imagePath );
       
-      game.gameObjects.push( gameObj );
+        game.gameObjects.push( gameObj );
       
+      }
+    
     }
     
     loader.checkRemaining();
