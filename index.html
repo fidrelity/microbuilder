@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
+    <meta http-equiv="author" content="">
+    <title>HTML5 Paint</title>
+    <link href="css/jquery-ui-1.8.16.custom.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="css/gfxeditor.css" media="screen" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="js/libs/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="js/glMatrix-0.9.5.min.js"></script>
+    <script type="text/javascript" src="js/libs/jquery-ui-1.8.16.custom.min.js"></script>
+</head>
+<body lang="de">
+
+<div id="gfx-editor-wrapper" class="slide-container">
+
+  <div class="slide-wrapper">
+
+    <!-- Select Size -->
+    <div id="introWrapper" class="slide">
+      <div class="slide-content">
+        <h2>Select canvas size:</h2>
+        Draw Background
+        <input type="radio" name="type" value="1" id="drawBackgroundCheckbox">
+
+        <p></p>
+
+        <input type="radio" name="type" value="2" id="drawObjectCheckbox"><br />
+
+        <div id="canvasSizeSlider"></div>
+        <div id="sizeSample"></div>        
+      </div>
+
+    </div>
+
+    <!-- Paint -->
+    <div id="paintWrapper" class="slide">
+      <canvas id="sprite-canvas"></canvas>
+      <div class="slide-content">
+
+        <div id="paintLeft">
+          View: <input type="image" src="img/application_tile_vertical.png" class="switchViewButton"> <input type="image" src="img/application_cascade.png" id="switchViewButton" class="switchViewButton">
+          <div id="paints">
+              <div id="outlineBox"></div>
+              <canvas id="canvas-template" class="canvas canvas-over" width="64" height="64"></canvas>
+              <canvas id="canvas-sketch" class="canvas" width="64" height="64"></canvas>
+          </div> <!-- canvas -->
+          <div id="zoomCanvasWrapper">
+               <canvas id="zoomCanvas" width="256" height="256"></canvas>
+               <div id="cursorRect"></div>
+          </div>
+          <input type="image" src="img/magnifier_zoom_in.png" id="zoomInButton" value="+">
+          <input  type="image" src="img/magifier_zoom_out.png"id="zoomOutButton" value="-">
+        </div>
+
+        <div id="paintRight">
+          <div id="tools" style="padding:10px">
+            <p>
+                <input type="image" src="img/cursor.png" id="selectToolButton" class="tool" value="Selector">
+                <input type="image" src="img/pencil.png" id="pencilToolButton" class="tool" value="Pencil">
+                <input type="button" id="lineToolButton" class="tool" value="Line">
+                <input type="button" id="rectToolButton" class="tool" value="Rectangle">
+                <input type="button" id="fillRectToolButton" class="tool" value="Filled Rect">
+                <input type="button" id="fillCircleToolButton" class="tool" value="Filled Circle">
+                <input type="button" id="circleToolButton" class="tool" value="Circle">
+                <input type="button" id="eraserToolButton" class="tool" value="Eraser">
+                <input type="button" id="saveButton" class="tool" value="Save">                
+            </p>
+
+            <p>
+                <input type="image" src="img/picture_add.png" id="addImageButton" title="Load image">
+                <input type="image" src="img/shading.png" id="clearCanvasButton" value="Clear" title="Clear canvas">
+                <input type="image" src="img/arrow_undo.png" class="tool" id="undoButton" value="Undo" title="Undo">
+                <input type="image" src="img/shape_square_add.png" id="addCanvasButton" value="Add Canvas" title="Add canvas">
+                <input type="image" src="img/shape_ungroup.png" id="copyCanvasButton" value="Copy Canvas" title="copy canvas">
+                <input type="image" src="img/shape_square_delete.png" id="removeCanvasButton" value="Remove Canvas" title="Remove canvas">
+                <input type="image" src="img/shape_handles.png" class="tool" id="outlineButton" value="Outline">
+                <input type="image" src="img/shape_flip_horizontal.png" class="tool" id="flipvButton" value="FlipV">
+                <input type="image" src="img/shape_flip_vertical.png" class="tool" id="fliphButton" value="FlipH">
+            </p>
+            <p>
+                <input type="text" id="playDelay" value="100" size="2">
+                <input type="image" src="img/resultset_next.png" id="playButton" value="Play">
+                <input type="image" src="img/stop.png" id="stopButton" value="Stop">
+                <input type="checkbox" value="1" id="replayLoop"> Loop
+            </p>
+
+
+            <div id="pencilWrapper">
+                <div id="sizeWrapper">
+                    <div id="sizeSlider" style="float:left;"></div>
+                    <div id="pencilSizePreview" class="sizeBlock" style="float:right;"></div>
+                </div>
+                <div id="palette" style="overflow:hidden"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- slider-wrapper END -->
+
+  <div class="slider-footer">
+    <input type="button" class="prevButton" value="Prev" >
+    <input type="button" id="goToPaintButton" value=" Next " class="nextButton">
+  </div>
+  
+</div><!-- gfx-editor-end -->
+
+<script type="text/javascript" src="js/libs/sliderdiv.js"></script>
+<script type="text/javascript" src="js/webglrenderer.js"></script>
+<script type="text/javascript" src="js/zoomTool.js"></script>
+<script type="text/javascript" src="js/helper.js"></script>
+<script type="text/javascript" src="js/colorpalette.js"></script>
+<script type="text/javascript" src="js/tool.js"></script>
+<script type="text/javascript" src="js/spritearea.js"></script>
+<script type="text/javascript" src="js/pixelDrawer.js"></script>
+<script type="text/javascript" src="js/paint.js"></script>
+</body>
+</html>
