@@ -32,6 +32,12 @@ Loader.prototype = {
     
     this.imageCount--;
     
+    this.checkRemaining();
+    
+  },
+  
+  checkRemaining : function() {
+    
     if ( this.imageCount <= 0 ) {
       
       this.callback();

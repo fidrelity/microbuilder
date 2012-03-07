@@ -36,6 +36,8 @@ var GameController = Ember.Object.extend({
     
     this.player.parse( this.game );
     
+    console.log('updateplayer');
+    
   },
   
   searchGraphic : function() {

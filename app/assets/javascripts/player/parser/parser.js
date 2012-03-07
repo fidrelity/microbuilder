@@ -23,6 +23,8 @@ var Parser = {
       
     }
     
+    loader.checkRemaining();
+    
   }
   
 };
