@@ -1,6 +1,7 @@
 class Graphic < ActiveRecord::Base
   belongs_to :user
-
+  has_and_belongs_to_many :games
+  
   if Rails.env.production?
     has_attached_file :image, 
       :url => "/:class/:id/:basename" + ".png",
@@ -15,12 +16,13 @@ class Graphic < ActiveRecord::Base
   end
   
   before_save :decode_base64_image
-
+  before_destroy :referenced?
+  
   attr_accessor :image_data
 
   # override paperclip method to fit custom url
   def image
-    "graphics/#{id}/#{image_file_name}"
+    "/graphics/#{id}/#{image_file_name}"
   end
   
   protected
@@ -36,5 +38,12 @@ class Graphic < ActiveRecord::Base
 
         self.image = data
       end
+    end
+    
+  private
+    def referenced?
+      errors.add(:base, "Graphic still referenced") if games.any?
+  
+      errors.blank? #return false, to not destroy the element, otherwise, it will delete.
     end
 end

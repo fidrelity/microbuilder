@@ -9,4 +9,9 @@ class GraphicsController < ApplicationController
     
     render :nothing => true, :status => 200
   end
+  
+  def destroy
+    @graphic = Graphic.find(params[:id])
+    @graphic.destroy if @graphic.user = current_user
+  end
 end
