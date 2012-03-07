@@ -5,11 +5,10 @@ Microbuilder::Application.routes.draw do
   
   resources :users, :only => [:show]
   resources :graphics, :only => [:create]
-  resources :games, :only => [:index, :show, :new, :create], :paths => {
-    :index => 'gallery',
-    :show => 'play',
-    :new => 'build'
-  }
+  resources :games, :only => [:create]
   
+  get '/gallery', :to => 'games#index'
+  get '/play/:id', :to => 'games#show'
+  get '/build', :to => 'games#new'
   get '/editor', :to => 'pages#editor', :as => 'pages_editor' #route for testing only
 end
