@@ -142,6 +142,11 @@ var DragableTool = function( _drawFunction,_id) {
   this.startY = 0;
   this.endX = 0;
   this.endY = 0;
+  //
+  this.sourceCanvas  = null;
+  this.sourceContext = null;
+  this.drawCanvas    =  null;
+  this.drawContext   = null;
 };
 //
 DragableTool.prototype.clickEvent = function() {
@@ -153,6 +158,11 @@ DragableTool.prototype.mousedown = function(_options) {
   this.isActive = true;
   this.startX = _options.coordinates.x;
   this.startY = _options.coordinates.y;
+
+  this.sourceCanvas = Paint.canvasToDraw[0];
+  this.sourceContext = this.sourceCanvas.getContext("2d");
+  this.drawCanvas = Paint.getCurrentCanvasDom()[0];
+  this.drawContext = this.drawCanvas.getContext("2d");
 };
 //
 DragableTool.prototype.mousemove = function(_options) {
@@ -160,15 +170,10 @@ DragableTool.prototype.mousemove = function(_options) {
   this.endX = _options.coordinates.x;
   this.endY = _options.coordinates.y;
   
-  var sourceCanvas = Paint.canvasToDraw[0];
-  var sourceContext = sourceCanvas.getContext("2d");
-  var drawCanvas = Paint.getCurrentCanvasDom()[0];
-  var drawContext = drawCanvas.getContext("2d");
-  
-  drawContext.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+  this.drawContext.clearRect(0, 0, this.drawCanvas.width, this.drawCanvas.height);
     
-  var imageData = sourceContext.getImageData(0, 0, sourceCanvas.width, sourceCanvas.height);
-  drawContext.putImageData(imageData, 0, 0);
+  var imageData = this.sourceContext.getImageData(0, 0, this.sourceCanvas.width, this.sourceCanvas.height);
+  this.drawContext.putImageData(imageData, 0, 0);
 
   Paint.pixelDrawer.popImageData();
   this.drawFunction(this.startX, this.startY, this.endX, this.endY, ColorPalette.currentColor, Paint.lineWidth);
