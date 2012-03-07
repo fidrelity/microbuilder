@@ -133,30 +133,3 @@ SpriteArea.prototype.flip = function(_direction) {
   //this.context.drawImage(img, 0, -img.height);
   //this.context.restore();
 };
-
-SpriteArea.prototype.addClick = function(_x, _y, _dragging) {
-  Paint.pixelDrawer.popImageData();
-  Paint.pixelDrawer.fillRect(_x, _y, Paint.lineWidth, Paint.lineWidth, ColorPalette.currentColor);
-  Paint.pixelDrawer.pushImageData();
-  /*
-    var centerize = Math.floor(Paint.lineWidth / 2);
-    this.clickX.push(_x - centerize);
-    this.clickY.push(_y - centerize);
-    this.clickDrag.push(_dragging);
-    this.clickColor.push(ColorPalette.currentColor);
-    this.lineSizes.push(Paint.lineWidth);
-    this.redraw();
-  */
-};
-
-SpriteArea.prototype.addPencil = function(_startX, _startY , _endX, _endY) {
-  Paint.pixelDrawer.popImageData();
-  Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor, Paint.lineWidth);
-  Paint.pixelDrawer.pushImageData();
-};
-
-SpriteArea.prototype.addLine = function(_startX, _startY, _endX, _endY) {
-  Paint.pixelDrawer.popImageData();
-  Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor, Paint.lineWidth);
-  Paint.pixelDrawer.pushImageData();
-};

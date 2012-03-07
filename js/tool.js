@@ -103,7 +103,11 @@ PencilTool.prototype.clickEvent = function() {
 PencilTool.prototype.mousedown = function(_options) {
   this.isActive = true;
   this.currentSpriteAreaInstance = Paint.getCurrentSpriteAreaInstance();
-  this.currentSpriteAreaInstance.addPencil(_options.coordinates.x, _options.coordinates.y,_options.coordinates.x, _options.coordinates.y);
+  
+  Paint.pixelDrawer.popImageData();
+  Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor, Paint.lineWidth);
+  Paint.pixelDrawer.pushImageData();
+
   this.oldX = _options.coordinates.x;
   this.oldY = _options.coordinates.y;
 };
