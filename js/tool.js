@@ -120,6 +120,7 @@ PencilTool.prototype.mouseup = function() {
   this.isActive = false;
 };
 
+// ----------------------------------------
 var DragableTool = function( _drawFunction,_id) {
   this.id = _id;
   this.drawFunction = _drawFunction;
