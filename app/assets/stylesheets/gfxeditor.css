@@ -47,7 +47,7 @@ body {
 .canvas {
     width:64px;
     height:64px;
-    background: url(../img/bg_transparent.png);
+    background: url(paint/bg_transparent.png);
     margin-right:0.5em;
 }
 .canvas:hover, .canvas:active, .canvas:focus {
@@ -102,7 +102,7 @@ body {
 #sizeSample {
     width:64px;
     height:64px;
-    background: url(../img/bg_transparent.png);
+    background: url(paint/bg_transparent.png);
     border:1px solid #000000;
 }
 

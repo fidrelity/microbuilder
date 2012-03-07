@@ -394,7 +394,7 @@ var Paint = {
 };
 
 // ----------------------------------------
-$(document).ready(function() {
+function paint_main() {
   Paint.init();
 
   /*
@@ -411,4 +411,4 @@ $(document).ready(function() {
     }).attr('width', 640).attr('height', 480);
   });
 
-});
+};
