@@ -105,8 +105,8 @@ SpriteArea.prototype.undo = function() {
 };
 
 SpriteArea.prototype.pushUndoStep = function() {  
-  this.imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
-  this.undoArray.push(this.imageData.data);
+//  this.imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+ // this.undoArray.push(this.imageData.data);
 };
 
 SpriteArea.prototype.flip = function(_direction) {  
@@ -132,32 +132,4 @@ SpriteArea.prototype.flip = function(_direction) {
   // Start at (0, -height), which is now the bottom-left corner
   //this.context.drawImage(img, 0, -img.height);
   //this.context.restore();
-};
-
-SpriteArea.prototype.addClick = function(_x, _y, _dragging) {
-  Paint.pixelDrawer.popImageData();
-  Paint.pixelDrawer.fillRect(_x, _y, _x+Paint.lineWidth, _y+Paint.lineWidth, ColorPalette.currentColor);
-  Paint.pixelDrawer.pushImageData();
-  /*
-    var centerize = Math.floor(Paint.lineWidth / 2);
-    this.clickX.push(_x - centerize);
-    this.clickY.push(_y - centerize);
-    this.clickDrag.push(_dragging);
-    this.clickColor.push(ColorPalette.currentColor);
-    this.lineSizes.push(Paint.lineWidth);
-    this.redraw();
-  */
-};
-
-SpriteArea.prototype.addPencil = function(_startX, _startY , _endX, _endY) {
-  Paint.pixelDrawer.popImageData();
-  Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor, Paint.lineWidth);
-  Paint.pixelDrawer.pushImageData();
-};
-
-
-SpriteArea.prototype.addLine = function(_startX, _startY, _endX, _endY) {
-  Paint.pixelDrawer.popImageData();
-  Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor, Paint.lineWidth);
-  Paint.pixelDrawer.pushImageData();
 };

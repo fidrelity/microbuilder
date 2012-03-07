@@ -279,17 +279,19 @@ var Paint = {
 
     /*
     // Push to Server
-    var imgData = Paint.spriteCanvas.toDataURL("image/png");
-    $.post('/assets, {
-          asset: {
-            name : "dummy",
-            frame_width : width,
-            frame_height : height, 
-            frame_count : count,
-            image_data : imgData
-          }
+    var imgData = Paint.spriteCanvas.toDataURL("image/png");   
+    $.ajax({
+      url: "graphics/",
+      type: "post",
+      data: { 
+        graphic: {
+          image_data: imgData,
+          frame_count: count,
+          frame_width: width,
+          frame_height: height,
         },
-    function(data) {});
+      }
+    });
     */
   },
 
@@ -298,9 +300,7 @@ var Paint = {
   // ----------------------------------------
   // Get Mouse Coordinates and return nears grid point
   getCoordinates : function(e) {
-    
     var zoomCanvas = Paint.zoomTool.zoomCanvas;
-    
     var x = e.pageX - zoomCanvas.offset().left;
     var y = e.pageY - zoomCanvas.offset().top;
 
@@ -358,12 +358,12 @@ var Paint = {
 
   // Puts overlaying canvas on the current canvas to draw lines temporarily
   showSketchCanvas : function() {
-    var currentCanvasPosition = Paint.getCurrentCanvasDom();
-    Paint.canvasToDraw = currentCanvasPosition;
-    Paint.canvasSketch.css({  left: currentCanvasPosition.position().left, 
-                              top: currentCanvasPosition.position().top,
-                              width: currentCanvasPosition.width(),
-                              height: currentCanvasPosition.height()
+    Paint.canvasToDraw = Paint.getCurrentCanvasDom();
+    // Set position of canvasSketch
+    Paint.canvasSketch.css({  left: Paint.canvasToDraw.position().left, 
+                              top: Paint.canvasToDraw.position().top,
+                              width: Paint.canvasToDraw.width(),
+                              height: Paint.canvasToDraw.height()
                           }).show();
 
     //var g = document.getElementById(Paint.canvasToDraw.attr('id'));

@@ -10,7 +10,7 @@ var ToolBar = {
   currentToolId : '',
 
   init : function() {
-    /*     
+    /*
       $('#outlineButton').click(function(){Paint.getCurrentSpriteAreaInstance().outlinePoints();});
     */
     ToolBar.toolsDomObjects.live('click', $.proxy(ToolBar.clickTool, this));
@@ -40,7 +40,7 @@ var ToolBar = {
 
   setCurrentTool : function(_id) {
     ToolBar.currentToolId = _id;
-    ToolBar.currentTool = ToolBar.getToolInstanceById(_id);   
+    ToolBar.currentTool = ToolBar.getToolInstanceById(_id);
     ToolBar.highlightTool(_id);
   },
 
@@ -93,6 +93,7 @@ var PencilTool = function() {
   this.isSelectable = true;
   this.oldX = null;
   this.oldY = null;
+  this.currentSpriteAreaInstance = null;
 };
 //
 PencilTool.prototype.clickEvent = function() {
@@ -101,14 +102,20 @@ PencilTool.prototype.clickEvent = function() {
 //
 PencilTool.prototype.mousedown = function(_options) {
   this.isActive = true;
-  Paint.getCurrentSpriteAreaInstance().addPencil(_options.coordinates.x, _options.coordinates.y,_options.coordinates.x, _options.coordinates.y);
+  this.currentSpriteAreaInstance = Paint.getCurrentSpriteAreaInstance();
+  // Draw Line
+  this.draw(_options.coordinates.x, _options.coordinates.y,_options.coordinates.x, _options.coordinates.y);
+  //
   this.oldX = _options.coordinates.x;
   this.oldY = _options.coordinates.y;
 };
 //
 PencilTool.prototype.mousemove = function(_options) {
+  if(this.oldX == _options.coordinates.x && this.oldY == _options.coordinates.y) return false;
   if(!this.isActive) return false;
-  Paint.getCurrentSpriteAreaInstance().addPencil(this.oldX, this.oldY,_options.coordinates.x, _options.coordinates.y);
+
+  this.draw(this.oldX, this.oldY ,_options.coordinates.x, _options.coordinates.y);
+
   this.oldX = _options.coordinates.x;
   this.oldY = _options.coordinates.y;
 };
@@ -116,7 +123,15 @@ PencilTool.prototype.mousemove = function(_options) {
 PencilTool.prototype.mouseup = function() {
   this.isActive = false;
 };
+//
+PencilTool.prototype.draw = function(_x, _y, _endX, _endY) {
+  Paint.pixelDrawer.popImageData();
+  Paint.pixelDrawer.drawLine(_x, _y, _endX, _endY, ColorPalette.currentColor, Paint.lineWidth);
+  Paint.pixelDrawer.pushImageData();
+};
 
+
+// ----------------------------------------
 var DragableTool = function( _drawFunction,_id) {
   this.id = _id;
   this.drawFunction = _drawFunction;
@@ -127,6 +142,11 @@ var DragableTool = function( _drawFunction,_id) {
   this.startY = 0;
   this.endX = 0;
   this.endY = 0;
+  //
+  this.sourceCanvas  = null;
+  this.sourceContext = null;
+  this.drawCanvas    =  null;
+  this.drawContext   = null;
 };
 //
 DragableTool.prototype.clickEvent = function() {
@@ -138,6 +158,11 @@ DragableTool.prototype.mousedown = function(_options) {
   this.isActive = true;
   this.startX = _options.coordinates.x;
   this.startY = _options.coordinates.y;
+
+  this.sourceCanvas = Paint.canvasToDraw[0];
+  this.sourceContext = this.sourceCanvas.getContext("2d");
+  this.drawCanvas = Paint.getCurrentCanvasDom()[0];
+  this.drawContext = this.drawCanvas.getContext("2d");
 };
 //
 DragableTool.prototype.mousemove = function(_options) {
@@ -145,15 +170,10 @@ DragableTool.prototype.mousemove = function(_options) {
   this.endX = _options.coordinates.x;
   this.endY = _options.coordinates.y;
   
-  var sourceCanvas = Paint.canvasToDraw[0];
-  var sourceContext = sourceCanvas.getContext("2d");
-  var drawCanvas = Paint.getCurrentCanvasDom()[0];
-  var drawContext = drawCanvas.getContext("2d");
-  
-  drawContext.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+  this.drawContext.clearRect(0, 0, this.drawCanvas.width, this.drawCanvas.height);
     
-  var imageData = sourceContext.getImageData(0, 0, sourceCanvas.width, sourceCanvas.height);
-  drawContext.putImageData(imageData, 0, 0);
+  var imageData = this.sourceContext.getImageData(0, 0, this.sourceCanvas.width, this.sourceCanvas.height);
+  this.drawContext.putImageData(imageData, 0, 0);
 
   Paint.pixelDrawer.popImageData();
   this.drawFunction(this.startX, this.startY, this.endX, this.endY, ColorPalette.currentColor, Paint.lineWidth);
