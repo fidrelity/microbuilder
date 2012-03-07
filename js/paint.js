@@ -282,17 +282,19 @@ var Paint = {
 
     /*
     // Push to Server
-    var imgData = Paint.spriteCanvas.toDataURL("image/png");
-    $.post('/assets, {
-          asset: {
-            name : "dummy",
-            frame_width : width,
-            frame_height : height, 
-            frame_count : count,
-            image_data : imgData
-          }
+    var imgData = Paint.spriteCanvas.toDataURL("image/png");   
+    $.ajax({
+      url: "graphics/",
+      type: "post",
+      data: { 
+        graphic: {
+          image_data: imgData,
+          frame_count: count,
+          frame_width: width,
+          frame_height: height,
         },
-    function(data) {});
+      }
+    });
     */
   },
 
