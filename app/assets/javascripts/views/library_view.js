@@ -12,21 +12,15 @@ var GraphicView = Ember.View.extend({
     
     var graphic = this.get('graphic');
     
-    App.gameController.selectGraphic( graphic );
+    if ( graphic.isBackground ) {
+      
+      App.gameController.selectBackground( graphic );
+      
+    } else {
     
-  }
-  
-});
-
-var BackgroundView = Ember.View.extend({
-  
-  graphic : null,
-  
-  select : function() {
+      App.gameController.selectGraphic( graphic );
     
-    var graphic = this.get('graphic');
-    
-    App.gameController.selectBackground( graphic );
+    }
     
   }
   

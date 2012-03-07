@@ -3,8 +3,8 @@
 <p>Select and item or create a new one</p>
 
 <ul class="graphics">
-  {{#each App.libraryController.assetController}}
-    {{#view App.libraryController.assetController.viewClass graphicBinding="this"}}
+  {{#each App.libraryController.display}}
+    {{#view GraphicView graphicBinding="this"}}
       <li {{action "select"}}>
         <img {{bindAttr src="graphic.imagePath"}} alt="graphic"></img>
         <p>{{graphic.name}}</p>

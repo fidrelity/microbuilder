@@ -9,9 +9,6 @@ function editor_main() {
 
   App.gameController = GameController.create();
 
-  App.graphicsController = GraphicsController.create();
-  App.backgroundsController = BackgroundsController.create();
-
   App.libraryController = LibraryController.create();
 
   App.gameObjectsController = GameObjectsController.create();
