@@ -2,5 +2,5 @@
 
 <h3>define behaviors of object {{gameObject.name}}</h3>
 
-<button {{action "cancel" target="App.editorController"}}>cancel</button>
-<button {{action "cancel" target="App.editorController"}}>ok</button>
+<button {{action "cancel" target="App.gameController"}}>cancel</button>
+<button {{action "cancel" target="App.gameController"}}>ok</button>

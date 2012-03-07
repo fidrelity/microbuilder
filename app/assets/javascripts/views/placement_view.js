@@ -32,7 +32,7 @@ var PlacementView = Ember.View.extend({
   
   placeGraphic : function() {
   
-    App.editorController.placeGraphic( this.get( 'graphic' ), this.position );
+    App.gameController.placeGraphic( this.get( 'graphic' ), this.position );
   
   }
 

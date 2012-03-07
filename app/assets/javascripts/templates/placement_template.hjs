@@ -8,5 +8,5 @@
   
 </div>
 
-<button {{action "cancel" target="App.editorController"}}>cancel</button>
+<button {{action "cancel" target="App.gameController"}}>cancel</button>
 <button {{action "placeGraphic"}}>place</button>

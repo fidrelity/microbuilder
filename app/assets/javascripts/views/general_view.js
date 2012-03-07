@@ -2,11 +2,11 @@ var GeneralView = Ember.View.extend({
   
   templateName : 'templates_general_template',
   
-  gameBinding : 'App.editorController.game',
+  gameBinding : 'App.gameController.game',
   
   didInsertElement : function() {
     
-    App.editorController.setPlayerCanvas( $( '#playerCanvas' )[0] );
+    App.gameController.setPlayerCanvas( $( '#playerCanvas' )[0] );
   
   }
   
@@ -40,7 +40,7 @@ var GameObjectView = Ember.View.extend({
     var gameObject = this.get( 'gameObject' );
     
     App.gameObjectsController.removeObject( gameObject );
-    App.editorController.updatePlayer();
+    App.gameController.updatePlayer();
     
   },
   
@@ -48,7 +48,7 @@ var GameObjectView = Ember.View.extend({
     
     var gameObject = this.get( 'gameObject' );
     
-    App.editorController.editBehaviour( gameObject );
+    App.gameController.editBehaviour( gameObject );
     
   }
   

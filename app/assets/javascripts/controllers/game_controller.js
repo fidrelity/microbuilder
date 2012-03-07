@@ -1,15 +1,13 @@
 /*
-  EditorController
+  GameController
   
   - manages the different states
   - owns the game
 */
 
-var EditorController = Ember.Object.extend({
+var GameController = Ember.Object.extend({
 
   game : null,
-
-  player : null,
 
   player : null,
 

@@ -12,7 +12,7 @@ var GraphicView = Ember.View.extend({
     
     var graphic = this.get('graphic');
     
-    App.editorController.selectGraphic( graphic );
+    App.gameController.selectGraphic( graphic );
     
   }
   
@@ -26,7 +26,7 @@ var BackgroundView = Ember.View.extend({
     
     var graphic = this.get('graphic');
     
-    App.editorController.selectBackground( graphic );
+    App.gameController.selectBackground( graphic );
     
   }
   

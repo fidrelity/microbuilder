@@ -6,6 +6,6 @@
 
 var GameObjectsController = Ember.ArrayController.extend({
 
-  contentBinding : "App.editorController.game.gameObjects"
+  contentBinding : "App.gameController.game.gameObjects"
   
 });

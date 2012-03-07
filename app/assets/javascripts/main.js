@@ -7,7 +7,7 @@ function editor_main() {
   });
 
 
-  App.editorController = EditorController.create();
+  App.gameController = GameController.create();
 
   App.graphicsController = GraphicsController.create();
   App.backgroundsController = BackgroundsController.create();
@@ -18,6 +18,7 @@ function editor_main() {
   App.placementController = PlacementController.create();
 
   App.behaviourController = BehaviourController.create();
+
 
   App.routeManager = Ember.RouteManager.create({
   

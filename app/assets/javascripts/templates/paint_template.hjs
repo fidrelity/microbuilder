@@ -4,4 +4,4 @@
 
 <p>Todo: include paint</p>
 
-<button {{action "cancel" target="App.editorController"}}>cancel</button>
+<button {{action "cancel" target="App.gameController"}}>cancel</button>

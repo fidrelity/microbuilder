@@ -11,7 +11,7 @@
 {{view TextInputView textBinding="game.instructions" placeholder="(140 chars max)"}}
 <br />
 
-<button {{action "searchBackground" target="App.editorController"}}>select background</button>
+<button {{action "searchBackground" target="App.gameController"}}>select background</button>
 <br/>
 
 <label>length</label>
@@ -35,7 +35,7 @@
 
 <div class="clear"></div>
 
-<button {{action "searchGraphic" target="App.editorController"}}>add object</button>
+<button {{action "searchGraphic" target="App.gameController"}}>add object</button>
 
 
 <h3>Preview</h3>
