@@ -24,9 +24,24 @@ PixelDrawer.prototype.putPixel = function (_x, _y, _color) {
 
 PixelDrawer.prototype.fillRect = function(_x1,_y1, _x2, _y2, _color) {  
   var color = this.checkIfParsedColor(_color);
-  for(var i = 0; i < Math.abs(_x2)-Math.abs(_x1); i++) {
-    for(var j = 0; j < Math.abs(_y2)-Math.abs(_y1); j++) {
-      this.colorPixel(_x1+i,_y1+j, color);
+  
+  var width = _x2-_x1;
+  var height = _y2-_y1;
+  
+  for(var i = 0; i < Math.abs(width); i++) {
+    for(var j = 0; j < Math.abs(height); j++) {
+      if(width > 0){
+        if(height > 0)
+          this.colorPixel(_x1+i,_y1+j, color);
+        else
+          this.colorPixel(_x1+i,_y1-j, color);
+      }
+      else{
+        if(height > 0)
+          this.colorPixel(_x1-i,_y1+j, color);
+        else
+          this.colorPixel(_x1-i,_y1-j, color);
+      }
     }
   }
 }

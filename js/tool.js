@@ -17,7 +17,9 @@ var ToolBar = {
     ToolBar.tools.push(new PencilTool());
     ToolBar.tools.push(new DragableTool(Paint.pixelDrawer.drawLine.bind(Paint.pixelDrawer),"lineToolButton"));
     ToolBar.tools.push(new DragableTool(Paint.pixelDrawer.drawCircle.bind(Paint.pixelDrawer),"circleToolButton"));
+    ToolBar.tools.push(new DragableTool(Paint.pixelDrawer.fillCircle.bind(Paint.pixelDrawer),"fillCircleToolButton"));
     ToolBar.tools.push(new DragableTool(Paint.pixelDrawer.drawRect.bind(Paint.pixelDrawer),"rectToolButton"));
+    ToolBar.tools.push(new DragableTool(Paint.pixelDrawer.fillRect.bind(Paint.pixelDrawer),"fillRectToolButton"));
     
     
     ToolBar.tools.push(new EraserTool());    
