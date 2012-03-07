@@ -103,11 +103,9 @@ PencilTool.prototype.clickEvent = function() {
 PencilTool.prototype.mousedown = function(_options) {
   this.isActive = true;
   this.currentSpriteAreaInstance = Paint.getCurrentSpriteAreaInstance();
-  
-  Paint.pixelDrawer.popImageData();
-  Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor, Paint.lineWidth);
-  Paint.pixelDrawer.pushImageData();
-
+  // Draw Line
+  this.draw(_options.coordinates.x, _options.coordinates.y,_options.coordinates.x, _options.coordinates.y);
+  //
   this.oldX = _options.coordinates.x;
   this.oldY = _options.coordinates.y;
 };
@@ -115,7 +113,9 @@ PencilTool.prototype.mousedown = function(_options) {
 PencilTool.prototype.mousemove = function(_options) {
   if(this.oldX == _options.coordinates.x && this.oldY == _options.coordinates.y) return false;
   if(!this.isActive) return false;
-  this.currentSpriteAreaInstance.addPencil(this.oldX, this.oldY,_options.coordinates.x, _options.coordinates.y);
+
+  this.draw(this.oldX, this.oldY ,_options.coordinates.x, _options.coordinates.y);
+
   this.oldX = _options.coordinates.x;
   this.oldY = _options.coordinates.y;
 };
@@ -123,6 +123,13 @@ PencilTool.prototype.mousemove = function(_options) {
 PencilTool.prototype.mouseup = function() {
   this.isActive = false;
 };
+//
+PencilTool.prototype.draw = function(_x, _y, _endX, _endY) {
+  Paint.pixelDrawer.popImageData();
+  Paint.pixelDrawer.drawLine(_x, _y, _endX, _endY, ColorPalette.currentColor, Paint.lineWidth);
+  Paint.pixelDrawer.pushImageData();
+};
+
 
 // ----------------------------------------
 var DragableTool = function( _drawFunction,_id) {
