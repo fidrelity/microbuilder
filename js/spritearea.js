@@ -105,8 +105,8 @@ SpriteArea.prototype.undo = function() {
 };
 
 SpriteArea.prototype.pushUndoStep = function() {  
-  this.imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
-  this.undoArray.push(this.imageData.data);
+//  this.imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+ // this.undoArray.push(this.imageData.data);
 };
 
 SpriteArea.prototype.flip = function(_direction) {  
@@ -154,7 +154,6 @@ SpriteArea.prototype.addPencil = function(_startX, _startY , _endX, _endY) {
   Paint.pixelDrawer.drawLine(_startX, _startY, _endX, _endY, ColorPalette.currentColor, Paint.lineWidth);
   Paint.pixelDrawer.pushImageData();
 };
-
 
 SpriteArea.prototype.addLine = function(_startX, _startY, _endX, _endY) {
   Paint.pixelDrawer.popImageData();

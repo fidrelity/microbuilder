@@ -10,7 +10,7 @@ var ToolBar = {
   currentToolId : '',
 
   init : function() {
-    /*     
+    /*
       $('#outlineButton').click(function(){Paint.getCurrentSpriteAreaInstance().outlinePoints();});
     */
     ToolBar.toolsDomObjects.live('click', $.proxy(ToolBar.clickTool, this));
@@ -36,7 +36,7 @@ var ToolBar = {
 
   setCurrentTool : function(_id) {
     ToolBar.currentToolId = _id;
-    ToolBar.currentTool = ToolBar.getToolInstanceById(_id);   
+    ToolBar.currentTool = ToolBar.getToolInstanceById(_id);
     ToolBar.highlightTool(_id);
   },
 
@@ -89,6 +89,7 @@ var PencilTool = function() {
   this.isSelectable = true;
   this.oldX = null;
   this.oldY = null;
+  this.currentSpriteAreaInstance = null;
 };
 //
 PencilTool.prototype.clickEvent = function() {
@@ -97,14 +98,16 @@ PencilTool.prototype.clickEvent = function() {
 //
 PencilTool.prototype.mousedown = function(_options) {
   this.isActive = true;
-  Paint.getCurrentSpriteAreaInstance().addPencil(_options.coordinates.x, _options.coordinates.y,_options.coordinates.x, _options.coordinates.y);
+  this.currentSpriteAreaInstance = Paint.getCurrentSpriteAreaInstance();
+  this.currentSpriteAreaInstance.addPencil(_options.coordinates.x, _options.coordinates.y,_options.coordinates.x, _options.coordinates.y);
   this.oldX = _options.coordinates.x;
   this.oldY = _options.coordinates.y;
 };
 //
 PencilTool.prototype.mousemove = function(_options) {
+  if(this.oldX == _options.coordinates.x && this.oldY == _options.coordinates.y) return false;
   if(!this.isActive) return false;
-  Paint.getCurrentSpriteAreaInstance().addPencil(this.oldX, this.oldY,_options.coordinates.x, _options.coordinates.y);
+  this.currentSpriteAreaInstance.addPencil(this.oldX, this.oldY,_options.coordinates.x, _options.coordinates.y);
   this.oldX = _options.coordinates.x;
   this.oldY = _options.coordinates.y;
 };
