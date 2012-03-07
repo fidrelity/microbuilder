@@ -21,7 +21,7 @@ var GameModel = Ember.Object.extend({
   
   setBackground : function( graphic ) {
     
-    this.background = graphic;
+    this.set( 'background', graphic );
     
   }
   

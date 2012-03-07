@@ -3,7 +3,8 @@
 <p>Drag your object to the right position</p>
 
 <div id="placementCanvas" style="border: 2px solid black; width:640px; height:390px">
-  
+
+  <img {{bindAttr src="background.imagePath"}} style="position:absolute" />
   <img id="placementGraphic" {{bindAttr src="graphic.imagePath"}} style="border: 2px solid black" />
   
 </div>

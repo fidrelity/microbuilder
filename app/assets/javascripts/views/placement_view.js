@@ -3,6 +3,7 @@ var PlacementView = Ember.View.extend({
   templateName : 'templates_placement_template',
   
   graphicBinding : 'App.placementController.graphic',
+  backgroundBinding : 'App.gameController.game.background',
   
   position : null,
   

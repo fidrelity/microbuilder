@@ -1,7 +1,7 @@
 /*
   LibraryController
   
-  - attribute assetController tells whether backgrounds or graphics can be selected
+  - manages all graphics
 */
 
 var LibraryController = Ember.ArrayController.extend({
