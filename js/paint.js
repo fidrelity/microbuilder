@@ -362,6 +362,7 @@ var Paint = {
   // Puts overlaying canvas on the current canvas to draw lines temporarily
   showSketchCanvas : function() {
     Paint.canvasToDraw = Paint.getCurrentCanvasDom();
+    // Set position of canvasSketch
     Paint.canvasSketch.css({  left: Paint.canvasToDraw.position().left, 
                               top: Paint.canvasToDraw.position().top,
                               width: Paint.canvasToDraw.width(),
