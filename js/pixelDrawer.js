@@ -22,22 +22,22 @@ PixelDrawer.prototype.putPixel = function (_x, _y, _color) {
   this.colorPixel(_x,_y,color);
 }
 
-PixelDrawer.prototype.fillRect = function(_x,_y, _width, _height, _color) {  
+PixelDrawer.prototype.fillRect = function(_x1,_y1, _x2, _y2, _color) {  
   var color = this.checkIfParsedColor(_color);
-  for(var i = 0; i < _width; i++) {
-    for(var j = 0; j < _height; j++) {
-      this.colorPixel(_x+i,_y+j, color);
+  for(var i = 0; i < Math.abs(_x2)-Math.abs(_x1); i++) {
+    for(var j = 0; j < Math.abs(_y2)-Math.abs(_y1); j++) {
+      this.colorPixel(_x1+i,_y1+j, color);
     }
   }
 }
 
-PixelDrawer.prototype.drawRect = function(_x,_y, _width, _height, _color) {
-    var color = this.parseColor(_color);
+PixelDrawer.prototype.drawRect = function(_x1,_y1, _x2, _y2, _color) {
+    var color = this.checkIfParsedColor(_color);
     
-    this.drawLine(_x,_y, _x, _y+_height,color);
-    this.drawLine(_x,_y+_height, _x+_width, _y+_height,color);
-    this.drawLine(_x+_width,_y+_height, _x+_width, _y,color);
-    this.drawLine(_x+ _width,_y, _x, _y,color);
+    this.drawLine(_x1,_y1, _x1, _y2,color);
+    this.drawLine(_x1,_y2, _x2, _y2,color);
+    this.drawLine(_x2,_y2, _x2, _y1,color);
+    this.drawLine(_x2,_y1, _x1, _y1,color);
 }
 
 PixelDrawer.prototype.drawCircle = function (_xc, _yc, _a, _b, _color)
@@ -157,7 +157,8 @@ PixelDrawer.prototype.drawLine = function (_x1, _y1, _x2, _y2, _color, _width) {
         this.colorPixel(_x1,_y1,color);
      }
      else {
-        this.fillRect(_x1-Math.floor(_width/2), _y1-Math.floor(_width/2), _width, _width, color);
+        var halfWidth = Math.floor(_width/2);
+        this.fillRect(_x1-halfWidth, _y1-halfWidth, _x1+halfWidth, _y1+halfWidth, color);
      }
      if(_x1 == _x2 && _y1 ==_y2)
          break;
