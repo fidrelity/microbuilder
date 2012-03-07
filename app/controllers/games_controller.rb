@@ -1,10 +1,12 @@
 class GamesController < ApplicationController
-
+  respond_to :js, :only => :create
+  
   def new
-    
-  end
+  end  
   
   def create
-    @graphics = User.find(params[:user_id]).assets
+    @game = current_user.games.create(params[:game]) if current_user
+
+    render :text => play_url(@game)
   end
 end

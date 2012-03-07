@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
 
+  has_many :games
   has_many :graphics
   
   devise :database_authenticatable, :registerable, :omniauthable,
