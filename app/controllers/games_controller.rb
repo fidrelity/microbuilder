@@ -1,6 +1,10 @@
 class GamesController < ApplicationController
   respond_to :js, :only => :create
   
+  def show
+    @game = Game.find(params[:id])
+  end
+  
   def new
   end  
   
