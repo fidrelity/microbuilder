@@ -17,11 +17,11 @@ var Paint = {
     Paint.cursorRect        = $('#cursorRect');
 
     // Init other classes
+    Paint.pixelDrawer = new PixelDrawer();
     ToolBar.init();
     ColorPalette.init();
     Paint.zoomTool = new ZoomTool();
-    Paint.pixelDrawer = new PixelDrawer();
-
+    
     // Init vars with default value
     Paint.isPaint       = false;
     Paint.paintTool     = false;
@@ -39,10 +39,7 @@ var Paint = {
     Paint.zoomTool.zoomCanvas.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
     Paint.zoomTool.zoomCanvas.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
     Paint.zoomTool.zoomCanvas.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
-    //Paint.zoomTool.zoomCanvas.live("mouseleave", $.proxy(Paint.mouseUp, Paint));
-    //Paint.cursorRect.live("mousedown",  $.proxy(Paint.mouseDownZoom, Paint));
-    //Paint.cursorRect.live("mousemove",  $.proxy(Paint.mouseMove, Paint));
-    //Paint.cursorRect.live("mouseup",    $.proxy(Paint.mouseUp, Paint));
+ 
 
     // Tools
     $('.switchViewButton').click(function() { Paint.switchView(); });

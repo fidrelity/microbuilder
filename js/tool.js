@@ -15,7 +15,11 @@ var ToolBar = {
     */
     ToolBar.toolsDomObjects.live('click', $.proxy(ToolBar.clickTool, this));
     ToolBar.tools.push(new PencilTool());
-    ToolBar.tools.push(new LineTool());
+    ToolBar.tools.push(new DragableTool(Paint.pixelDrawer.drawLine.bind(Paint.pixelDrawer),"lineToolButton"));
+    ToolBar.tools.push(new DragableTool(Paint.pixelDrawer.drawCircle.bind(Paint.pixelDrawer),"circleToolButton"));
+    ToolBar.tools.push(new DragableTool(Paint.pixelDrawer.drawRect.bind(Paint.pixelDrawer),"rectToolButton"));
+    
+    
     ToolBar.tools.push(new EraserTool());    
     ToolBar.tools.push(new SelectTool());    
     ToolBar.tools.push(new FlipTool());
@@ -113,9 +117,9 @@ PencilTool.prototype.mouseup = function() {
   this.isActive = false;
 };
 
-// ----------------------------------------
-var LineTool = function() {
-  this.id = "lineToolButton";
+var DragableTool = function( _drawFunction,_id) {
+  this.id = _id;
+  this.drawFunction = _drawFunction;
   this.domObject = $('#' + this.id);
   this.isActive = false;
   this.isSelectable = true;
@@ -125,18 +129,18 @@ var LineTool = function() {
   this.endY = 0;
 };
 //
-LineTool.prototype.clickEvent = function() {
+DragableTool.prototype.clickEvent = function() {
 
 };
 //
-LineTool.prototype.mousedown = function(_options) {
+DragableTool.prototype.mousedown = function(_options) {
   Paint.showSketchCanvas();
   this.isActive = true;
   this.startX = _options.coordinates.x;
   this.startY = _options.coordinates.y;
 };
 //
-LineTool.prototype.mousemove = function(_options) {
+DragableTool.prototype.mousemove = function(_options) {
   if(!this.isActive) return false;
   this.endX = _options.coordinates.x;
   this.endY = _options.coordinates.y;
@@ -152,15 +156,20 @@ LineTool.prototype.mousemove = function(_options) {
   drawContext.putImageData(imageData, 0, 0);
 
   Paint.pixelDrawer.popImageData();
-  Paint.pixelDrawer.drawLine(this.startX, this.startY, this.endX, this.endY, ColorPalette.currentColor, Paint.lineWidth);
+  this.drawFunction(this.startX, this.startY, this.endX, this.endY, ColorPalette.currentColor, Paint.lineWidth);
   Paint.pixelDrawer.pushImageData();
 };
 //
-LineTool.prototype.mouseup = function() {
+DragableTool.prototype.mouseup = function() {
   this.isActive = false;
   Paint.hideSketchCanvas();
-  Paint.getCurrentSpriteAreaInstance().addLine(this.startX, this.startY, this.endX, this.endY);
+  //Paint.getCurrentSpriteAreaInstance().addLine(this.startX, this.startY, this.endX, this.endY);
+  Paint.pixelDrawer.popImageData();
+  this.drawFunction(this.startX, this.startY, this.endX, this.endY, ColorPalette.currentColor, Paint.lineWidth);
+  Paint.pixelDrawer.pushImageData();
+  
 };
+
 
 // ----------------------------------------
 var EraserTool = function() {
