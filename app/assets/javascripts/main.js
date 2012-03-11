@@ -58,10 +58,11 @@ function editor_main() {
 
 };
 
-function player_main() {
+function player_main( data ) {
   
-  var player = new Player(),
-      data = JSON.parse( window.localStorage.game );
+  var player = new Player();
+  
+  console.log(data);
   
   player.setCanvas( $( '#playerCanvas' )[0] );
   

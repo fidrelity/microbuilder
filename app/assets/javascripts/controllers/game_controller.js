@@ -97,13 +97,20 @@ var GameController = Ember.Object.extend({
     $.ajax({
       url : 'games/',
       type : 'POST',
-      data : "" //JSON.stringify( this.game.getData() ),
+      data : {
+        
+         game: {
+            title : this.game.title,
+            instruction: this.game.instructions,
+            data : JSON.stringify( this.game.getData() )
+         }
+      },
       
-      // success: function( data ) {
-      //   
-      //   console.log( data );
-      //   
-      // }
+      success: function( data ) {
+        
+        window.location = data;
+        
+      }
       
     });
     
