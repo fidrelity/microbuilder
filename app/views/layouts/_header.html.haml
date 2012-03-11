@@ -4,15 +4,13 @@
   
   %ul{:id => "nav"}
     %li{:class => "home"}
-      =link_to('home', '#')
+      =link_to('home', '')
     %li{:class => "gallery"}
-      =link_to('gallery', '#gallery')
-    %li{:class => "profile"}
-      =link_to('profile', '#profile')
+      =link_to('gallery', '/gallery')
     %li{:class => "editor"}
-      =link_to('editor', '#')
+      =link_to('editor', '/editor')
     %li{:class => "about"}
-      =link_to('about', '#about')
+      =link_to('about', '/about')
     -if user_signed_in?
       %li= link_to('Profile', user_path(current_user.id))
       %li= link_to('Logout', destroy_user_session_path, :method => :delete)
