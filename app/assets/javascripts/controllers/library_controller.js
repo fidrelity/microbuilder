@@ -28,6 +28,16 @@ var LibraryController = Ember.ArrayController.extend({
     
     this.set( 'display', this.content.filterProperty( key, value ) );
     
+  },
+  
+  graphicSaved : function( data ) {
+    
+    this.content.push(
+      GraphicModel.create({ name : 'saved', imagePath : '/assets/mario.png' /*data.imagePath*/ })
+    );
+    
+    App.gameController.searchGraphic();
+    
   }
 
 });
