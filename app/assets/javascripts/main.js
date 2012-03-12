@@ -14,6 +14,8 @@ function editor_main() {
   App.gameObjectsController = GameObjectsController.create();
   App.placementController = PlacementController.create();
 
+  App.paintController = PaintController.create();
+
   App.behaviourController = BehaviourController.create();
 
 

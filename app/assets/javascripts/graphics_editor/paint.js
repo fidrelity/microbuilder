@@ -277,9 +277,9 @@ var Paint = {
       context.drawImage(area.canvas, xPos, 0);
     };
 
-    /*
+    
     // Push to Server
-    var imgData = Paint.spriteCanvas.toDataURL("image/png");   
+    var imgData = Paint.spriteCanvas[0].toDataURL("image/png");   
     $.ajax({
       url: "graphics/",
       type: "post",
@@ -290,9 +290,16 @@ var Paint = {
           frame_width: width,
           frame_height: height,
         },
+      },
+      
+      success : function( data ) {
+        
+        App.libraryController.graphicSaved( data );
+        
       }
+      
     });
-    */
+    
   },
 
   // ----------------------------------------
