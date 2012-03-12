@@ -1,7 +1,11 @@
 -# play
 
 %canvas{:id => "playerCanvas", :width => 640, :height => 390}
-=@game.data
+%br
+
+%textarea{:cols =>"50", :rows =>"2"}
+  <iframe width="640" height="390" src="#{root_url}play/#{@game.id}/embed" frameborder="0"></iframe>
+
 :javascript
   $(document).ready( function() {
     player_main( #{@game.data} ); 
