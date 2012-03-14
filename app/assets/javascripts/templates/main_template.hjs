@@ -1,7 +1,8 @@
 <div class="container">
   <a href="#">General</a>
   <a href="#paint">Paint</a>
-  <a href="#behaviour">Behaviour</a>
+  <a href="#action">Action</a>
+  <a href="#trigger">Trigger</a>
   <a href="#library">Library</a>
   <a href="#placement">Placement</a>
   

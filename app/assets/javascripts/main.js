@@ -37,9 +37,14 @@ function editor_main() {
       viewClass: PlacementView
     }),
 
-    behaviour: Ember.LayoutState.create({
-      route: 'behaviour',
-      viewClass: BehaviourView
+    action: Ember.LayoutState.create({
+      route: 'action',
+      viewClass: ActionView
+    }),
+
+    triggerState: Ember.LayoutState.create({
+      route: 'trigger',
+      viewClass: TriggerView
     }),
 
     library: Ember.LayoutState.create({
