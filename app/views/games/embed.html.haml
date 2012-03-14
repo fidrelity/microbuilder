@@ -1,0 +1,12 @@
+!!! 5
+%html
+  %head
+    %title Microbuilder
+    =javascript_include_tag "application"
+    %style * { margin:0px; padding:0px; }
+  %body
+    %canvas{:id => "playerCanvas", :width => 640, :height => 390}
+:javascript
+  $(document).ready( function() {
+    player_main( #{@game.data} ); 
+  });

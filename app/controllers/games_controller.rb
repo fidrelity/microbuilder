@@ -6,7 +6,12 @@ class GamesController < ApplicationController
   end
   
   def new
-  end  
+  end
+  
+  def embed
+    @game = Game.find(params[:id])
+    render :file => "app/views/games/embed", :layout => false
+  end
   
   def create
     @game = current_user.games.create(params[:game]) if current_user
