@@ -17,6 +17,7 @@ var LibraryController = Ember.ArrayController.extend({
       GraphicModel.create({ name : 'Mario', imagePath : '/assets/mario.png' }),
       GraphicModel.create({ name : 'Luigi', imagePath : '/assets/luigi.png' }),
       GraphicModel.create({ name : 'Plant', imagePath : '/assets/plant.png' }),
+      GraphicModel.create({ name : 'Raidel', imagePath : 'https://s3.amazonaws.com/mbgfx/app/public/graphics/7/4_1331553640.png' }),
       
       GraphicModel.create({ name : 'Preview', imagePath : '/assets/preview.png', isBackground : true }),
       GraphicModel.create({ name : 'Paper', imagePath : '/assets/paper.png', isBackground : true })
