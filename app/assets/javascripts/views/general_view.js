@@ -42,13 +42,20 @@ var GameObjectView = Ember.View.extend({
     App.gameObjectsController.removeObject( gameObject );
     App.gameController.updatePlayer();
     
-  },
+  }
   
-  editBehaviour : function() {
+});
+
+var BehaviourView = Ember.View.extend({
+  
+  behaviour : null,
+  
+  remove : function() {
     
-    var gameObject = this.get( 'gameObject' );
+    var behaviour = this.get( 'behaviour' );
     
-    App.gameController.editBehaviour( gameObject );
+    App.behaviourController.removeObject( behaviour );
+    App.gameController.updatePlayer();
     
   }
   

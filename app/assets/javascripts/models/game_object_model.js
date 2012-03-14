@@ -7,8 +7,6 @@ var GameObjectModel = Ember.Object.extend({
   
   graphic : null,
   
-  behaviors : [],
-  
   getData : function() {
   
     var data = {};

@@ -1,11 +1,11 @@
 /*
   BehaviourController
   
-  - manages the behaviour of a set gameObject
+  - manages the behaviours of the game
 */
 
-var BehaviourController = Ember.Object.extend({
+var BehaviourController = Ember.ArrayController.extend({
 
-  gameObject : null
+  contentBinding : "App.gameController.game.behaviours"
 
 });

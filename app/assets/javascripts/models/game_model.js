@@ -7,17 +7,7 @@ var GameModel = Ember.Object.extend({
   
   gameObjects : [],
   
-  addGameObject : function( graphic, position ) {
-    
-    this.gameObjects.push( GameObjectModel.create({
-      
-      'name' : graphic.name,
-      'graphic' : graphic,
-      'position' : position.clone()
-      
-    }) );
-    
-  },
+  behaviours : [],
   
   setBackground : function( graphic ) {
     

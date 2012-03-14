@@ -1,4 +1,4 @@
-var BehaviorModel = Ember.Object.extend({
+var BehaviourModel = Ember.Object.extend({
   
   triggers : [],
   actions : []

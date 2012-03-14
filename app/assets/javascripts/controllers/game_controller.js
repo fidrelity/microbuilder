@@ -62,7 +62,13 @@ var GameController = Ember.Object.extend({
   
   placeGraphic : function( graphic, position ) {
     
-    this.game.addGameObject( graphic, position );
+    App.gameObjectsController.addObject( GameObjectModel.create({
+      
+      'name' : graphic.name,
+      'graphic' : graphic,
+      'position' : position.clone()
+      
+    }) );
     
     App.routeManager.goToLocation( '' );
     
@@ -84,11 +90,13 @@ var GameController = Ember.Object.extend({
     
   },
   
-  editBehaviour : function( gameObject ) {
+  addBehaviour : function() {
     
-    App.behaviourController.set( 'gameObject', gameObject );
+    App.behaviourController.addObject( BehaviourModel.create({
+      
+    }));
     
-    App.routeManager.goToLocation( 'behaviour' );
+    // App.routeManager.goToLocation( '' );
     
   },
   
@@ -99,11 +107,12 @@ var GameController = Ember.Object.extend({
       type : 'POST',
       data : {
         
-         game: {
-            title : this.game.title,
-            instruction: this.game.instructions,
-            data : JSON.stringify( this.game.getData() )
-         }
+        game: {
+          title : this.game.title,
+          instruction: this.game.instructions,
+          data : JSON.stringify( this.game.getData() )
+        }
+        
       },
       
       success: function( data ) {
@@ -114,7 +123,7 @@ var GameController = Ember.Object.extend({
       
     });
     
-    window.localStorage.setItem( 'game', JSON.stringify( this.game.getData() ) );
+    // window.localStorage.setItem( 'game', JSON.stringify( this.game.getData() ) );
   
   },
   

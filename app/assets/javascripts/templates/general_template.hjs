@@ -27,7 +27,6 @@
         <img {{bindAttr src="gameObject.graphic.imagePath"}} {{bindAttr alt="gameObject.graphic.name"}} />
         <p>{{gameObject.graphic.name}}</p>
         <button {{action "remove"}}>delete</button>
-        <button {{action "editBehaviour"}}>behaviour</button>
       </li>
     {{/view}}
   {{/each}}
@@ -36,6 +35,22 @@
 <div class="clear"></div>
 
 <button {{action "searchGraphic" target="App.gameController"}}>add object</button>
+
+
+<h3>Behaviours</h3>
+
+<ul class="behaviour">
+  {{#each game.behaviours}}
+    {{#view BehaviourView behaviourBinding="this"}}
+      <li>
+        <p>if ... then ...</p>
+        <button {{action "remove"}}>delete</button>
+      </li>
+    {{/view}}
+  {{/each}}
+</ul>
+
+<button {{action "addBehaviour" target="App.gameController"}}>add behaviour</button>
 
 
 <h3>Preview</h3>
