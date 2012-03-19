@@ -1,7 +1,9 @@
 class Graphic < ActiveRecord::Base
+  attr_accessor :image_data
+  
   belongs_to :user
   has_and_belongs_to_many :games
-  
+
   if Rails.env.production?
     has_attached_file :image, 
       :url => "/:class/:id/:basename" + ".png",
@@ -19,7 +21,7 @@ class Graphic < ActiveRecord::Base
   before_save :decode_base64_image
   before_destroy :referenced?
   
-  attr_accessor :image_data
+  scope :all_public, where(:public => true)
   
   # override paperclip method to fit custom url
   def image
