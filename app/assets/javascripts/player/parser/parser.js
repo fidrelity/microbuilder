@@ -12,6 +12,10 @@ var Parser = {
     
       game.background = this.loader.loadImage( data.background );
     
+    } else {
+      
+      console.error( 'game has no background' );
+      
     }
     
     if ( data.gameObjects ) {
@@ -24,7 +28,12 @@ var Parser = {
       
       }
     
+    } else {
+      
+      console.error( 'game has no gameObjects' );
+      
     }
+    
     
     if ( data.behaviours ) {
       
@@ -39,6 +48,10 @@ var Parser = {
         }
       
       }
+      
+    } else {
+      
+      console.error( 'game has no behaviours' );
       
     }
     
@@ -62,28 +75,45 @@ var Parser = {
     
     var behaviour = new Behaviour();
 
-    for ( var i = 0; i < behaviourData.actions.length; i++ ) {
+    if ( behaviourData.actions ) {
+
+      for ( var i = 0; i < behaviourData.actions.length; i++ ) {
       
-      var action = this.parseAction( behaviourData.actions[i] );
+        var action = this.parseAction( behaviourData.actions[i] );
       
-      behaviour.actions.push( action );
+        behaviour.actions.push( action );
+      
+      }
+    
+    } else {
+      
+      console.error( 'behaviour has no actions' );
       
     }
     
-    for ( var i = 0; i < behaviourData.triggers.length; i++ ) {
+    
+    if ( behaviourData.triggers ) {
+    
+      for ( var i = 0; i < behaviourData.triggers.length; i++ ) {
       
-      var trigger = this.parseTrigger( behaviourData.triggers[i] );
+        var trigger = this.parseTrigger( behaviourData.triggers[i] );
       
-      if ( trigger ) {
+        if ( trigger ) {
       
-        behaviour.triggers.push( trigger );
+          behaviour.triggers.push( trigger );
       
-      } else {
+        } else {
         
-        this.game.startActions = behaviour.actions;
-        return null;
+          this.game.startActions = behaviour.actions;
+          return null;
         
+        }
+      
       }
+    
+    } else {
+      
+      console.error( 'behaviour has no triggers' );
       
     }
     
@@ -100,6 +130,8 @@ var Parser = {
       case 'moveIn' : return this.parseActionMoveIn( actionData );
       
       // case 'changeArt' : return this.parseActionChangeArt( actionData );
+      
+      default : console.error( 'action type ' + actionData.type + ' not found' ); return null;
       
     }
     
@@ -209,6 +241,10 @@ var Parser = {
       case 'onStart' : return null;
       
       case 'onClick' : return this.parseTriggerClick( triggerData );
+      case 'onContact' : return this.parseTriggerContact( triggerData, true );
+      case 'onOverlap' : return this.parseTriggerContact( triggerData, false );
+      
+      default : console.error( 'trigger type ' + triggerData.type + ' not found' ); return null;
       
     }
     
@@ -230,6 +266,32 @@ var Parser = {
     
     return trigger;
     
+  },
+
+
+/**
+  {
+    type: "onContact",
+    object1ID: 1,
+    object2ID: 0
   }
-  
+
+  {
+    type: "onOverlap",
+    object1ID: 1,
+    object2ID: 0
+  }
+*/
+
+  parseTriggerContact : function( triggerData, onContact ) {
+    
+    var trigger = onContact ? new ContactTrigger() : new OverlapTrigger();
+    
+    trigger.gameObject1 = this.game.getGameObjectWithID( triggerData.object1ID );
+    trigger.gameObject2 = this.game.getGameObjectWithID( triggerData.object2ID );
+    
+    return trigger;
+    
+  }
+
 };

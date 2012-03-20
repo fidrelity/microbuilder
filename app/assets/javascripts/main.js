@@ -113,14 +113,31 @@ function player_main( data ) {
             targetID: 0
           }
         ]
+      },
+      {
+        triggers:[
+          {
+            type: "onContact",
+            object1ID: 1,
+            object2ID: 0
+          }
+        ],
+        actions:[
+          {
+            type: "moveIn",
+            objectID: 0,
+            angle: 0
+          },
+          {
+            type: "jumpTo",
+            objectID: 1,
+            target: {
+              x : 100,
+              y : 100
+            }
+          }
+        ]
       }
-      // ,{
-      //   triggers:[],
-      //   actions:[]
-      // },{
-      //   triggers:[],
-      //   actions:[]
-      // }
     ]
   }
   

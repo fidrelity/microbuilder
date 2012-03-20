@@ -17,6 +17,8 @@ Behaviour.prototype = {
         
         triggers = false;
         
+        break;
+        
       }
       
     }

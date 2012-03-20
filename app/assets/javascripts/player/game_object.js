@@ -9,6 +9,8 @@ var GameObject = function( ID ) {
   this.image = null;
   this.startImage = null;
   
+  this.area = new Area();
+  
 };
 
 GameObject.prototype = {
@@ -77,6 +79,7 @@ GameObject.prototype = {
   setPosition : function( pos ) {
     
     this.position.copy( pos );
+    this.target = null;
     
   },
 
@@ -86,15 +89,14 @@ GameObject.prototype = {
     
   },
   
-  checkClick : function( mouse ) {
+  getArea : function() {
     
-    var pos = this.position,
-      img = this.image;
-    
-    return (
-      mouse.x >= pos.x && mouse.x <= pos.x + img.width &&
-      mouse.y >= pos.y && mouse.y <= pos.y + img.height
-    );
+    return this.area.set(
+      this.position.x,
+      this.position.y,
+      this.image.width,
+      this.image.height
+    )
     
   },
   
