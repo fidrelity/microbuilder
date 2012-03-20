@@ -22,3 +22,21 @@ MoveAction.prototype = {
   }
   
 };
+
+
+var ArtAction = function() {
+  
+  this.gameObject = null;
+  this.image = null;
+  
+};
+
+ArtAction.prototype = {
+  
+  execute : function() {
+    
+    this.gameObject.setImage( this.image );
+    
+  }
+  
+};

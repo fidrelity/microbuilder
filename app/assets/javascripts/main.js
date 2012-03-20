@@ -135,6 +135,11 @@ function player_main( data ) {
               x : 100,
               y : 100
             }
+          },
+          {
+            type: "changeArt",
+            objectID: 1,
+            imagePath: "/assets/mario.png"
           }
         ]
       }

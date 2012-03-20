@@ -89,6 +89,12 @@ GameObject.prototype = {
     
   },
   
+  setImage : function( image ) {
+    
+    this.image = image;
+    
+  },
+  
   getArea : function() {
     
     return this.area.set(

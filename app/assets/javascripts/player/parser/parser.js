@@ -129,7 +129,7 @@ var Parser = {
       case 'moveTo' : return this.parseActionMoveTo( actionData );
       case 'moveIn' : return this.parseActionMoveIn( actionData );
       
-      // case 'changeArt' : return this.parseActionChangeArt( actionData );
+      case 'changeArt' : return this.parseActionChangeArt( actionData );
       
       default : console.error( 'action type ' + actionData.type + ' not found' ); return null;
       
@@ -235,6 +235,27 @@ var Parser = {
     action.gameObject = this.game.getGameObjectWithID( actionData.objectID );
     
     action.target = new Vector( 1e10, 0 ).rotateSelf( actionData.angle );
+    
+    return action;
+    
+  },
+  
+  
+/**
+  {
+    type: "changeArt",
+    gameObjectID: 0,
+    imagePath: '/image.png'
+  }
+*/
+  
+  parseActionChangeArt : function( actionData ) {
+    
+    var action = new ArtAction();
+    
+    action.gameObject = this.game.getGameObjectWithID( actionData.objectID );
+    
+    action.image = this.loader.loadImage( actionData.imagePath );
     
     return action;
     

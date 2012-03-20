@@ -10,8 +10,6 @@ ClickTrigger.prototype = {
     
     if ( game.mouse ) {
       
-      game.mouse.log();
-      
       return this.gameObject.getArea().contains( game.mouse );
       
     } else {
