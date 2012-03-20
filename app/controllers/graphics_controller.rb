@@ -1,21 +1,15 @@
 class GraphicsController < ApplicationController
   respond_to :js, :only => [:create, :public]
+  before_filter :authenticate_user!, :only => [:create, :destroy]
+  
   def index
     @graphics = Graphic.all
   end
 
   def create
-    if current_user
-      @graphic = current_user.graphics.new(params[:graphic])
+    @graphic = current_user.graphics.new(params[:graphic])
 
-      if @graphic.save
-        response, status = @graphic.to_response_json, 200
-      else
-        response, status = @graphic.errors.to_json, 400
-      end
-    else
-      response, status = "No User supplied", 400
-    end
+    response, status = @graphic.save ? [@graphic.to_response_json, 200] : [@graphic.errors.to_json, 400]
     
     render :json => response, :status => status
   end
