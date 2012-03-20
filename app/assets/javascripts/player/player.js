@@ -2,6 +2,8 @@ var Player = function() {
   
   this.init();
   
+  this.playTime = 5;
+  
 };
 
 Player.prototype = {
@@ -22,7 +24,7 @@ Player.prototype = {
       states : [
         { name : 'init' },
         { name : 'load' },
-        { name : 'ready', enter : this.enterShow },
+        { name : 'ready', enter : this.enterReady },
         { name : 'play', enter : this.enterPlay },
         { name : 'end'}
       ],
@@ -33,7 +35,7 @@ Player.prototype = {
         { name : 'start', from : 'ready', to: 'play' },
         { name : 'win', from : 'play', to: 'end', callback : this.onWin },
         { name : 'lose', from : 'play', to: 'end', callback : this.onLose },
-        { name : 'restart', from : 'end', to: 'start' },
+        { name : 'restart', from : 'end', to: 'ready' },
       ]
       
     });
@@ -42,16 +44,46 @@ Player.prototype = {
   
   setCanvas : function( canvas ) {
     
+    var self = this;
+    
     this.context = canvas.getContext( '2d' );
     
-    this.context.fillStyle = '#FFFFFF';
-    this.context.fillRect( 0, 0, canvas.width, canvas.height );
+    canvas.addEventListener( 'click', function( e ) {
+      
+      var mouse = new Vector();
+      
+      if ( e.pageX || e.pageY ) {
+        
+        mouse.set( e.pageX, e.pageY );
+        
+      } else {
+        
+        mouse.set( 
+          e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft,
+          e.clientY + document.body.scrollTop + document.documentElement.scrollTop
+        );
+      
+      }
+      
+      mouse.x -= canvas.offsetLeft;
+      mouse.y -= canvas.offsetTop;
+      
+      self.click( mouse );
+      
+    }, false );
     
   },
   
   update : function() {
     
-    this.game.update( 25 );
+    this.game.update();
+    
+    if ( this.game.timePlayed > this.playTime * 1000 ) {
+      
+      this.fsm.lose();
+      this.fsm.restart();
+      
+    }
     
   },
   
@@ -81,18 +113,13 @@ Player.prototype = {
     
   },
   
-  enterShow : function() {
+  enterReady : function() {
     
-    // this.context.drawImage( this.game.background, 0, 0 );
+    this.game.reset();
     
-    this.context.fillStyle = '#FFFFFF';
-    this.context.fillRect( 0, 0, 640, 390 );
+    this.draw();
     
-    // this.game.reset();
-    // 
-    // this.draw();
-    
-    this.fsm.start();
+    // this.fsm.start();
     
   },
   
@@ -119,13 +146,13 @@ Player.prototype = {
     
   },
   
-  start : function() {
+  click : function( mouse ) {
     
     if ( this.fsm.hasState( 'play' ) ) {
       
-      this.fsm.changeState( 'ready' );
+      this.game.mouse = mouse;
       
-    } else {
+    } else if ( this.fsm.hasState( 'ready' ) ) {
       
       this.fsm.start();
       

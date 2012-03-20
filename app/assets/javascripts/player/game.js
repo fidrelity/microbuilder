@@ -7,6 +7,11 @@ var Game = function() {
   
   this.startActions = [];
   
+  this.time = 0;
+  this.timePlayed = 0;
+  
+  this.mouse = null;
+  
   this.debug = true;
   
 };
@@ -29,15 +34,38 @@ Game.prototype = {
       
     }
     
+    this.time = 0;
+    this.timePlayed = 0;
+    
+    this.mouse = null;
+    
   },
   
-  update : function( dt ) {
+  update : function() {
+    
+    var dt;
+      t = new Date().getTime();
+        
+    dt = t - this.time;
+    dt = dt > 30 ? 30 : dt;
+    
+    this.time = t;
+    
+    for ( var i = 0; i < this.behaviours.length; i++ ) {
+      
+      this.behaviours[i].check( this );
+      
+    }
     
     for ( var i = 0; i < this.gameObjects.length; i++ ) {
       
       this.gameObjects[i].update( dt );
       
     }
+    
+    this.timePlayed += dt;
+    
+    this.mouse = null;
     
   },
   
@@ -49,6 +77,11 @@ Game.prototype = {
     
       ctx.drawImage( this.background, 0, 0 );
     
+    } else {
+      
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect( 0, 0, 640, 390 );
+      
     }
     
     for ( var i = 0; i < this.gameObjects.length; i++ ) {

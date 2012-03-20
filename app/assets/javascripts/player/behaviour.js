@@ -7,6 +7,30 @@ var Behaviour = function() {
 
 Behaviour.prototype = {
   
-  
+  check : function( game ) {
+    
+    var triggers = true;
+    
+    for ( var i = 0; i < this.triggers.length; i++ ) {
+      
+      if ( !this.triggers[i].check( game ) ) {
+        
+        triggers = false;
+        
+      }
+      
+    }
+    
+    if ( triggers ) {
+      
+      for ( var i = 0; i < this.actions.length; i++ ) {
+      
+        this.actions[i].execute();
+      
+      }
+      
+    }
+    
+  }
   
 };
