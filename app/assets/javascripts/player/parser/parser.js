@@ -157,7 +157,9 @@ var Parser = {
 
   parseActionJumpTo : function( actionData ) {
     
-    var action = new JumpToAction();
+    var action = new MoveAction();
+    
+    action.execute = action.executeJumpTo;
     
     action.gameObject = this.game.getGameObjectWithID( actionData.objectID );
     
@@ -195,7 +197,9 @@ var Parser = {
 
   parseActionMoveTo : function( actionData ) {
     
-    var action = new MoveToAction();
+    var action = new MoveAction();
+    
+    action.execute = action.executeMoveTo;
     
     action.gameObject = this.game.getGameObjectWithID( actionData.objectID );
     
@@ -224,7 +228,9 @@ var Parser = {
 
   parseActionMoveIn : function( actionData ) {
     
-    var action = new MoveToAction();
+    var action = new MoveAction();
+    
+    action.execute = action.executeMoveTo;
     
     action.gameObject = this.game.getGameObjectWithID( actionData.objectID );
     
@@ -233,6 +239,7 @@ var Parser = {
     return action;
     
   },
+  
   
   parseTrigger : function( triggerData ) {
     
@@ -285,7 +292,9 @@ var Parser = {
 
   parseTriggerContact : function( triggerData, onContact ) {
     
-    var trigger = onContact ? new ContactTrigger() : new OverlapTrigger();
+    var trigger = new ContactTrigger();
+    
+    trigger.check = onContact ? trigger.checkContact : trigger.checkOverlap;
     
     trigger.gameObject1 = this.game.getGameObjectWithID( triggerData.object1ID );
     trigger.gameObject2 = this.game.getGameObjectWithID( triggerData.object2ID );

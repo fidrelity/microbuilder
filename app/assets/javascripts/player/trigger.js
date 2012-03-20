@@ -1,15 +1,3 @@
-var Trigger = function() {
-  
-  
-  
-};
-
-Trigger.prototype = {
-  
-  
-  
-};
-
 var ClickTrigger = function() {
   
   this.gameObject = null;
@@ -48,9 +36,11 @@ var ContactTrigger = function() {
 
 ContactTrigger.prototype = {
   
-  check : function( game ) {
+  check : null,
+  
+  checkContact : function( game ) {
     
-    var overlaps = this.gameObject1.getArea().overlaps( this.gameObject2.getArea() );
+    var overlaps = this.checkOverlap();
     
     if ( this.triggered && !overlaps ) {
       
@@ -66,21 +56,9 @@ ContactTrigger.prototype = {
     
     return false;
     
-  }
+  },
   
-};
-
-
-var OverlapTrigger = function() {
-  
-  this.gameObject1 = null;
-  this.gameObject2 = null;
-  
-};
-
-OverlapTrigger.prototype = {
-  
-  check : function( game ) {
+  checkOverlap : function( game ) {
     
     return this.gameObject1.getArea().overlaps( this.gameObject2.getArea() );
     
