@@ -7,6 +7,8 @@ var Game = function() {
   
   this.startActions = [];
   
+  this.debug = true;
+  
 };
 
 Game.prototype = {
@@ -41,6 +43,8 @@ Game.prototype = {
   
   draw : function( ctx ) {
     
+    ctx.debug = this.debug;
+    
     if ( this.background ) {
     
       ctx.drawImage( this.background, 0, 0 );
@@ -70,6 +74,12 @@ Game.prototype = {
     console.error( "no gameObject with ID " + gameObjectID );
     
     return null;
+    
+  },
+  
+  drawDebug : function() {
+    
+    this.debug = !this.debug;
     
   }
   

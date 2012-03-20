@@ -53,6 +53,23 @@ GameObject.prototype = {
     
     ctx.drawImage( this.image, this.position.x, this.position.y );
     
+    if ( ctx.debug ) {
+      
+      ctx.strokeRect( this.position.x, this.position.y, this.image.width, this.image.height );
+      
+      if ( this.target ) {
+        
+        ctx.beginPath();
+        ctx.moveTo( this.position.x, this.position.y );
+        ctx.lineTo( this.target.x, this.target.y );
+        ctx.closePath();
+        
+        ctx.stroke();
+        
+      }
+      
+    }
+    
   },
   
   setPosition : function( pos ) {
