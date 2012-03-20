@@ -9,7 +9,7 @@ class GraphicsController < ApplicationController
       @graphic = current_user.graphics.new(params[:graphic])
 
       if @graphic.save
-        response, status = create_response(@graphic), 200
+        response, status = @graphic.to_response_json, 200
       else
         response, status = @graphic.errors.to_json, 400
       end
@@ -28,10 +28,4 @@ class GraphicsController < ApplicationController
   def public
     render :json => Graphic.all_public.to_json
   end
-  
-  private
-    def create_response(graphic)
-      user_name = graphic.user.display_name if graphic.user
-      {:id => graphic.id, :name => graphic.image_file_name, :url => graphic.image, :user_name => user_name}
-    end
 end

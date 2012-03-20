@@ -27,6 +27,11 @@ class Graphic < ActiveRecord::Base
   def image
     "/graphics/#{id}/#{image_file_name}"
   end
+
+  def to_response_json
+    user_name = user.display_name if user
+    {:id => id, :name => image_file_name, :url => image, :user_name => user_name}
+  end
   
   protected  
     def decode_base64_image
