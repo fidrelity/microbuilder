@@ -9,7 +9,7 @@ class GraphicsController < ApplicationController
   def create
     @graphic = current_user.graphics.new(params[:graphic])
 
-    response, status = @graphic.save ? [@graphic.to_response_json, 200] : [@graphic.errors.to_json, 400]
+    response, status = @graphic.save ? [@graphic.to_response_hash, 200] : [@graphic.errors.to_json, 400]
     
     render :json => response, :status => status
   end

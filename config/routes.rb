@@ -3,7 +3,13 @@ Microbuilder::Application.routes.draw do
   
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   
-  resources :users, :only => [:show]
+  resources :users, :only => [:show] do
+    collection do
+      get '/current/graphics', :to => 'users#graphics'
+      get '/current/graphics/:select', :to => 'users#graphics'
+    end
+  end
+  
   resources :graphics, :only => [:create, :destroy] do
     collection do
       get 'public', :to => 'graphics#public'
