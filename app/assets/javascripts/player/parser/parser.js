@@ -97,30 +97,37 @@ var Parser = {
       
       case 'jumpTo' : return this.parseActionJumpTo( actionData );
       case 'moveTo' : return this.parseActionMoveTo( actionData );
+      case 'moveIn' : return this.parseActionMoveIn( actionData );
       
       // case 'changeArt' : return this.parseActionChangeArt( actionData );
       
     }
     
   },
-  
+
+
+/**
+  {
+    type: "jumpTo",
+    objectID: 0,
+    target:{
+      x:0,
+      y:0
+    }
+  }
+
+  {
+    type: "jumpTo",
+    objectID: 0,
+    targetID: 1
+  }
+*/
+
   parseActionJumpTo : function( actionData ) {
     
     var action = new JumpToAction();
     
-    action.gameObject = this.game.getGameObjectWithID( actionData.gameObjectID );
-    
-    action.target = new Vector( actionData.target.x, actionData.target.y );
-    
-    return action;
-    
-  },
-  
-  parseActionMoveTo : function( actionData ) {
-    
-    var action = new MoveToAction();
-    
-    action.gameObject = this.game.getGameObjectWithID( actionData.gameObjectID );
+    action.gameObject = this.game.getGameObjectWithID( actionData.objectID );
     
     if ( typeof actionData.targetID !== "undefined" ) {
     
@@ -131,6 +138,65 @@ var Parser = {
       action.target = new Vector( actionData.target.x, actionData.target.y );
     
     }
+    
+    return action;
+    
+  },
+
+
+/**
+  {
+    type: "moveTo",
+    objectID: 0,
+    target:{
+      x:0,
+      y:0
+    }
+  }
+
+  {
+    type: "moveTo",
+    objectID: 0,
+    targetID: 1
+  }
+*/
+
+  parseActionMoveTo : function( actionData ) {
+    
+    var action = new MoveToAction();
+    
+    action.gameObject = this.game.getGameObjectWithID( actionData.objectID );
+    
+    if ( typeof actionData.targetID !== "undefined" ) {
+    
+      action.target = this.game.getGameObjectWithID( actionData.targetID ).position;
+    
+    } else {
+    
+      action.target = new Vector( actionData.target.x, actionData.target.y );
+    
+    }
+    
+    return action;
+    
+  },
+
+
+/**
+  {
+    type: "moveIn",
+    gameObjectID: 0,
+    angle: 0
+  }
+*/
+
+  parseActionMoveIn : function( actionData ) {
+    
+    var action = new MoveToAction();
+    
+    action.gameObject = this.game.getGameObjectWithID( actionData.objectID );
+    
+    action.target = new Vector( 1e10, 0 ).rotateSelf( actionData.angle );
     
     return action;
     

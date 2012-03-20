@@ -102,21 +102,14 @@ function player_main( data ) {
         ],
         actions:[
           {
+            type: "moveIn",
+            objectID: 0,
+            angle: Math.PI / -4 * 3
+          },
+          {
             type: "moveTo",
-            gameObjectID: 0,
-            // targetID: 1
-            target:{
-              x:0,
-              y:0
-            }
-          },{
-            type: "moveTo",
-            gameObjectID: 1,
+            objectID: 1,
             targetID: 0
-            // target:{
-            //   x:333,
-            //   y:128
-            // }
           }
         ]
       }
