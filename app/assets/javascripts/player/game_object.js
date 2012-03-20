@@ -1,17 +1,24 @@
-var GameObject = function() {
+var GameObject = function( ID ) {
   
-  this.setPosition( 0, 0 );
-  
-  this.id = null;
+  this.ID = ID;
+  this.position = new Vector();
+  this.startPosition = new Vector();
   
   this.image = null;
-  this.filename = '';
+  this.startImage = null;
   
 };
 
 GameObject.prototype = {
   
   init : function() {},
+  
+  reset : function() {
+    
+    this.position.copy( this.startPosition );
+    this.image = this.startImage;
+    
+  },
   
   update : function( dt ) {
     
@@ -23,10 +30,9 @@ GameObject.prototype = {
     
   },
   
-  setPosition : function( x, y ) {
+  setPosition : function( pos ) {
     
-    this.position = new Vector( x, y );
-    this.startPosition = new Vector( x, y );
+    this.position.copy( pos );
     
   }
   

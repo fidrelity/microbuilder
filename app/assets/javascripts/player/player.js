@@ -89,6 +89,8 @@ Player.prototype = {
     this.context.fillStyle = '#FFFFFF';
     this.context.fillRect( 0, 0, 640, 390 );
     
+    this.game.reset();
+    
     this.draw();
     
   },

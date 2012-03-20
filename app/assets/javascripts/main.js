@@ -69,7 +69,63 @@ function player_main( data ) {
   
   var player = new Player();
   
-  console.log(data);
+  data = {
+    background:"/assets/preview.png",
+    gameObjects:[
+      {
+        ID: 0,
+        name:"Luigi",
+        imagePath:"/assets/luigi.png",
+        position: {
+          x:533,
+          y:228
+        }
+      },{
+        ID: 1,
+        name:"Raidel",
+        imagePath:"https://s3.amazonaws.com/mbgfx/app/public/graphics/7/4_1331553640.png",
+        position: {
+          x:133,
+          y:128
+        }
+      }
+    ],
+    behaviours:[
+      {
+        triggers:[
+          {
+            type: "onStart"
+          }
+        ],
+        actions:[
+          {
+            type: "jumpTo",
+            gameObjectID: 0,
+            position:{
+              x:0,
+              y:0
+            }
+          },{
+            type: "jumpTo",
+            gameObjectID: 1,
+            position:{
+              x:333,
+              y:128
+            }
+          }
+        ]
+      }
+      // ,{
+      //   triggers:[],
+      //   actions:[]
+      // },{
+      //   triggers:[],
+      //   actions:[]
+      // }
+    ]
+  }
+  
+  console.log( JSON.stringify( data ) );
   
   player.setCanvas( $( '#playerCanvas' )[0] );
   

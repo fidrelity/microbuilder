@@ -1,11 +1,16 @@
-var Action = function() {
+var JumpToAction = function() {
   
-  
+  this.gameObject = null;
+  this.position = null;
   
 };
 
-Action.prototype = {
+JumpToAction.prototype = {
   
-  
+  execute : function() {
+    
+    this.gameObject.setPosition( this.position );
+    
+  }
   
 };

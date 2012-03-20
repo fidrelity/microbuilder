@@ -102,6 +102,8 @@ var GameController = Ember.Object.extend({
   
   publishGame : function() {
     
+    console.log(JSON.stringify( this.game.getData() ), this.game.getData());
+    
     $.ajax({
       url : 'games/',
       type : 'POST',

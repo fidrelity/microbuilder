@@ -1,11 +1,11 @@
-var Behavior = function() {
+var Behaviour = function() {
   
   this.triggers = [];
   this.actions = [];
   
 };
 
-Behavior.prototype = {
+Behaviour.prototype = {
   
   
   
