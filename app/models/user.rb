@@ -6,7 +6,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :facebook_id
+  attr_accessible :email, :password, :password_confirmation, 
+                  :remember_me, :first_name, :last_name, :facebook_id
   
   validates_length_of :first_name, :minimum => 2
   validates_length_of :last_name, :minimum => 2
