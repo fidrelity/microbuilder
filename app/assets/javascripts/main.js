@@ -65,9 +65,12 @@ function editor_main() {
 
 };
 
+
+var player;
+
 function player_main( data ) {
   
-  var player = new Player();
+  player = new Player();
   
   data = {
     background:"/assets/preview.png",
@@ -85,8 +88,8 @@ function player_main( data ) {
         name:"Raidel",
         imagePath:"https://s3.amazonaws.com/mbgfx/app/public/graphics/7/4_1331553640.png",
         position: {
-          x:133,
-          y:128
+          x:20,
+          y:328
         }
       }
     ],
@@ -99,19 +102,21 @@ function player_main( data ) {
         ],
         actions:[
           {
-            type: "jumpTo",
+            type: "moveTo",
             gameObjectID: 0,
-            position:{
+            // targetID: 1
+            target:{
               x:0,
               y:0
             }
           },{
-            type: "jumpTo",
+            type: "moveTo",
             gameObjectID: 1,
-            position:{
-              x:333,
-              y:128
-            }
+            targetID: 0
+            // target:{
+            //   x:333,
+            //   y:128
+            // }
           }
         ]
       }

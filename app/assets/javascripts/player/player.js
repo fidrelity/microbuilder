@@ -51,8 +51,7 @@ Player.prototype = {
   
   update : function() {
     
-    this.game.update();
-    this.stats.update();
+    this.game.update( 25 );
     
   },
   
@@ -89,15 +88,19 @@ Player.prototype = {
     this.context.fillStyle = '#FFFFFF';
     this.context.fillRect( 0, 0, 640, 390 );
     
-    this.game.reset();
+    // this.game.reset();
+    // 
+    // this.draw();
     
-    this.draw();
+    this.fsm.start();
     
   },
   
   enterPlay : function() {
     
     var self = this;
+    
+    this.game.reset();
     
     function animate() {
       
@@ -121,12 +124,10 @@ Player.prototype = {
     if ( this.fsm.hasState( 'play' ) ) {
       
       this.fsm.changeState( 'ready' );
-      this.stats.hide();
       
     } else {
       
       this.fsm.start();
-      this.stats.show();
       
     }
     

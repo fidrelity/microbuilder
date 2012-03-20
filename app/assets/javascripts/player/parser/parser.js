@@ -96,6 +96,9 @@ var Parser = {
     switch ( actionData.type ) {
       
       case 'jumpTo' : return this.parseActionJumpTo( actionData );
+      case 'moveTo' : return this.parseActionMoveTo( actionData );
+      
+      // case 'changeArt' : return this.parseActionChangeArt( actionData );
       
     }
     
@@ -107,7 +110,27 @@ var Parser = {
     
     action.gameObject = this.game.getGameObjectWithID( actionData.gameObjectID );
     
-    action.position = new Vector( actionData.position.x, actionData.position.y );
+    action.target = new Vector( actionData.target.x, actionData.target.y );
+    
+    return action;
+    
+  },
+  
+  parseActionMoveTo : function( actionData ) {
+    
+    var action = new MoveToAction();
+    
+    action.gameObject = this.game.getGameObjectWithID( actionData.gameObjectID );
+    
+    if ( typeof actionData.targetID !== "undefined" ) {
+    
+      action.target = this.game.getGameObjectWithID( actionData.targetID ).position;
+    
+    } else {
+    
+      action.target = new Vector( actionData.target.x, actionData.target.y );
+    
+    }
     
     return action;
     

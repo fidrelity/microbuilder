@@ -4,6 +4,8 @@ var GameObject = function( ID ) {
   this.position = new Vector();
   this.startPosition = new Vector();
   
+  this.target = null;
+  
   this.image = null;
   this.startImage = null;
   
@@ -22,6 +24,29 @@ GameObject.prototype = {
   
   update : function( dt ) {
     
+    if ( this.target ) {
+      
+      var vector = this.vector,
+        distance = dt * 0.1;
+      
+      vector.copy( this.target ).subSelf( this.position );
+      
+      if ( vector.norm() < distance ) {
+      
+        this.position.copy( this.target );
+        
+        this.target = null;
+      
+      } else {
+      
+        vector.normalizeSelf().mulSelf( distance );
+      
+        this.position.addSelf( vector );
+      
+      }
+      
+    }
+    
   },
   
   draw : function( ctx ) {
@@ -34,6 +59,14 @@ GameObject.prototype = {
     
     this.position.copy( pos );
     
-  }
+  },
+
+  setTarget : function( pos ) {
+    
+    this.target = pos;
+    
+  },
+  
+  vector : new Vector
   
 };
