@@ -32,7 +32,12 @@ class Graphic < ActiveRecord::Base
 
   def to_response_hash
     user_name = user.display_name if user
-    {:id => id, :name => image_file_name, :url => image, :background => background, :user_name => user_name}
+    {
+      :id => id, :name => image_file_name, :url => image, 
+      :background => background, :user_name => user_name,
+      :frame_count => frame_count, :frame_width => frame_width,
+      :frame_height => frame_height
+    }
   end
   
   protected  

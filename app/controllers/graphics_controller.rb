@@ -20,6 +20,10 @@ class GraphicsController < ApplicationController
   end
   
   def public
-    render :json => Graphic.all_public.to_json
+    response = Graphic.all_public.collect do |graphic|
+      graphic.to_response_hash
+    end
+    
+    render :json => response, :status => 200
   end
 end
