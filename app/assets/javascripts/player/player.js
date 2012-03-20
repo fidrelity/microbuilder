@@ -12,8 +12,8 @@ Player.prototype = {
     
     this.context = null;
     
-    this.loader = new Loader();
-    this.game = new Game();
+    this.loader = null;
+    this.game = null;
     
     this.fsm = new StateMachine( this );
     
@@ -81,7 +81,6 @@ Player.prototype = {
     if ( this.game.timePlayed > this.playTime * 1000 ) {
       
       this.fsm.lose();
-      this.fsm.restart();
       
     }
     
@@ -103,7 +102,7 @@ Player.prototype = {
     
     this.fsm.parse();
     
-    this.game = new Game();
+    this.game = new Game( this.fsm );
     
     Parser.parseData( data, this.game, function() {
       
@@ -118,9 +117,9 @@ Player.prototype = {
     this.game.reset();
     
     this.draw();
-    this.context.fillRect( 200, 100, 240, 190 );
     
-    // this.fsm.start();
+    this.context.fillStyle = '#FFFFCC';
+    this.context.fillRect( 200, 100, 240, 190 );
     
   },
   
@@ -148,6 +147,20 @@ Player.prototype = {
     
   },
   
+  onWin : function() {
+    
+    this.context.fillStyle = '#CCFFCC';
+    this.context.fillRect( 200, 100, 240, 190 );
+    
+  },
+  
+  onLose : function() {
+    
+    this.context.fillStyle = '#FFCCCC';
+    this.context.fillRect( 200, 100, 240, 190 );
+    
+  },
+  
   click : function( mouse ) {
     
     if ( this.fsm.hasState( 'play' ) ) {
@@ -157,6 +170,10 @@ Player.prototype = {
     } else if ( this.fsm.hasState( 'ready' ) ) {
       
       this.fsm.start();
+      
+    } else if ( this.fsm.hasState( 'end' ) ) {
+      
+      this.fsm.restart();
       
     }
     

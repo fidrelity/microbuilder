@@ -1,4 +1,6 @@
-var Game = function() {
+var Game = function( fsm ) {
+  
+  this.fsm = fsm;
   
   this.background = null;
   
@@ -107,6 +109,18 @@ Game.prototype = {
     console.error( "no gameObject with ID " + gameObjectID );
     
     return null;
+    
+  },
+  
+  win : function() {
+    
+    this.fsm.win();
+    
+  },
+  
+  lose : function() {
+    
+    this.fsm.lose();
     
   },
   

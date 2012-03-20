@@ -5,6 +5,9 @@ var Parser = {
   
   parseData : function( data, game, callback ) {
     
+    var gameObjects = data.gameObjects,
+      behaviours = data.behaviours;
+    
     this.game = game;
     this.loader = new Loader( callback );
     
@@ -18,11 +21,11 @@ var Parser = {
       
     }
     
-    if ( data.gameObjects ) {
+    if ( gameObjects && gameObjects.length > 0 ) {
     
-      for ( var i = 0; i < data.gameObjects.length; i++ ) {
+      for ( var i = 0; i < gameObjects.length; i++ ) {
       
-        var gameObject = this.parseGameObject( data.gameObjects[i] );
+        var gameObject = this.parseGameObject( gameObjects[i] );
       
         game.gameObjects.push( gameObject );
       
@@ -35,11 +38,11 @@ var Parser = {
     }
     
     
-    if ( data.behaviours ) {
+    if ( behaviours && behaviours.length > 0 ) {
       
-      for ( var i = 0; i < data.behaviours.length; i++ ) {
+      for ( var i = 0; i < behaviours.length; i++ ) {
       
-        var behaviour = this.parseBehaviour( data.behaviours[i] );
+        var behaviour = this.parseBehaviour( behaviours[i] );
       
         if ( behaviour ) {
       
@@ -68,18 +71,20 @@ var Parser = {
     gameObject.startImage = this.loader.loadImage( gameObjectData.imagePath );
   
     return gameObject;
-    
+  
   },
   
   parseBehaviour : function( behaviourData ) {
     
-    var behaviour = new Behaviour();
+    var behaviour = new Behaviour(),
+      actions = behaviourData.actions,
+      triggers = behaviourData.triggers;
 
-    if ( behaviourData.actions ) {
+    if ( actions && actions.length > 0 ) {
 
-      for ( var i = 0; i < behaviourData.actions.length; i++ ) {
+      for ( var i = 0; i < actions.length; i++ ) {
       
-        var action = this.parseAction( behaviourData.actions[i] );
+        var action = this.parseAction( actions[i] );
       
         behaviour.actions.push( action );
       
@@ -92,11 +97,11 @@ var Parser = {
     }
     
     
-    if ( behaviourData.triggers ) {
+    if ( triggers && triggers.length > 0 ) {
     
-      for ( var i = 0; i < behaviourData.triggers.length; i++ ) {
+      for ( var i = 0; i < triggers.length; i++ ) {
       
-        var trigger = this.parseTrigger( behaviourData.triggers[i] );
+        var trigger = this.parseTrigger( triggers[i] );
       
         if ( trigger ) {
       
@@ -130,6 +135,9 @@ var Parser = {
       case 'moveIn' : return this.parseActionMoveIn( actionData );
       
       case 'changeArt' : return this.parseActionChangeArt( actionData );
+      
+      case 'win' : return WinAction;
+      case 'lose' : return LoseAction;
       
       default : console.error( 'action type ' + actionData.type + ' not found' ); return null;
       
@@ -221,7 +229,7 @@ var Parser = {
 /**
   {
     type: "moveIn",
-    gameObjectID: 0,
+    objectID: 0,
     angle: 0
   }
 */
@@ -244,7 +252,7 @@ var Parser = {
 /**
   {
     type: "changeArt",
-    gameObjectID: 0,
+    objectID: 0,
     imagePath: '/image.png'
   }
 */

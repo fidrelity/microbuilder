@@ -40,3 +40,23 @@ ArtAction.prototype = {
   }
   
 };
+
+var WinAction = {
+  
+  execute : function( game ) {
+    
+    game.win();
+    
+  }
+  
+};
+
+var LoseAction = {
+  
+  execute : function( game ) {
+    
+    game.lose();
+    
+  }
+  
+};

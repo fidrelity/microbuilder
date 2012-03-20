@@ -27,7 +27,7 @@ Behaviour.prototype = {
       
       for ( var i = 0; i < this.actions.length; i++ ) {
       
-        this.actions[i].execute();
+        this.actions[i].execute( game );
       
       }
       
