@@ -20,6 +20,8 @@ GameObject.prototype = {
     this.position.copy( this.startPosition );
     this.image = this.startImage;
     
+    this.target = null;
+    
   },
   
   update : function( dt ) {
@@ -81,6 +83,18 @@ GameObject.prototype = {
   setTarget : function( pos ) {
     
     this.target = pos;
+    
+  },
+  
+  checkClick : function( mouse ) {
+    
+    var pos = this.position,
+      img = this.image;
+    
+    return (
+      mouse.x >= pos.x && mouse.x <= pos.x + img.width &&
+      mouse.y >= pos.y && mouse.y <= pos.y + img.height
+    );
     
   },
   

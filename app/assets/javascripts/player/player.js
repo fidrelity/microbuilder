@@ -118,6 +118,7 @@ Player.prototype = {
     this.game.reset();
     
     this.draw();
+    this.context.fillRect( 200, 100, 240, 190 );
     
     // this.fsm.start();
     
@@ -131,11 +132,12 @@ Player.prototype = {
     
     function animate() {
       
+      self.update();
+      
       if ( self.fsm.hasState( 'play' ) ) {
       
         requestAnimationFrame( animate );
-      
-        self.update();
+        
         self.draw();
       
       }

@@ -72,7 +72,7 @@ function player_main( data ) {
   
   player = new Player();
   
-  data = {
+  data = data || {
     background:"/assets/preview.png",
     gameObjects:[
       {
@@ -88,8 +88,8 @@ function player_main( data ) {
         name:"Raidel",
         imagePath:"https://s3.amazonaws.com/mbgfx/app/public/graphics/7/4_1331553640.png",
         position: {
-          x:20,
-          y:328
+          x:220,
+          y:228
         }
       }
     ],
@@ -97,7 +97,8 @@ function player_main( data ) {
       {
         triggers:[
           {
-            type: "onStart"
+            type: "onClick",
+            objectID: 1
           }
         ],
         actions:[

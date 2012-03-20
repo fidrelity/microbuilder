@@ -204,13 +204,29 @@ var Parser = {
   
   parseTrigger : function( triggerData ) {
     
-    var trigger = new Trigger();
-    
     switch ( triggerData.type ) {
       
       case 'onStart' : return null;
       
+      case 'onClick' : return this.parseTriggerClick( triggerData );
+      
     }
+    
+  },
+  
+  
+/**
+  {
+    type: "onClick",
+    objectID: 0
+  }
+*/
+
+  parseTriggerClick : function( triggerData ) {
+    
+    var trigger = new ClickTrigger();
+    
+    trigger.gameObject = this.game.getGameObjectWithID( triggerData.objectID );
     
     return trigger;
     
