@@ -73,6 +73,10 @@ function player_main( data ) {
   
   player.setCanvas( $( '#playerCanvas' )[0] );
   
-  player.parse( data );
+  if ( data ) {
+  
+    player.parse( data );
+  
+  }
   
 }
