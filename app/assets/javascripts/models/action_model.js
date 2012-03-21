@@ -26,8 +26,13 @@ var MoveActionModel = ActionModel.extend({
   
   gameObject : null,
   
-  position : new Vector(),
+  position : null,
   
+  init : function() {
+    
+    this.set( 'position', new Vector() );
+    
+  },
   
   isMoveTo : function() {
     
