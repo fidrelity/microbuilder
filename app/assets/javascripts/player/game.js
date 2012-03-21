@@ -32,7 +32,7 @@ Game.prototype = {
     
     for ( var i = 0; i < this.startActions.length; i++ ) {
       
-      this.startActions[i].execute();
+      this.startActions[i].execute( this );
       
     }
     

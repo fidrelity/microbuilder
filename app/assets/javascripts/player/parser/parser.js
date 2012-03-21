@@ -105,7 +105,7 @@ var Parser = {
     
     } else {
       
-      console.error( 'behaviour has no actions' );
+      // console.error( 'behaviour has no actions' );
       return null;
       
     }
@@ -132,7 +132,7 @@ var Parser = {
     
     } else {
       
-      console.error( 'behaviour has no triggers' );
+      // console.error( 'behaviour has no triggers' );
       return null;
       
     }

@@ -43,6 +43,38 @@
 <h3>Behaviours</h3>
 
 <ul class="behaviour">
+  {{#view BehaviourView 
+    contentBinding = "game.startBehaviour"
+    controllerBinding = "App.behaviourController"
+  }}
+    <li>
+      <div>onStart</div>
+      <ul class="actions">
+    
+        {{#each content.actions}}
+    
+          {{#view SelectView 
+            contentBinding = "this"
+            controllerBinding = "parent.actions"
+          }}
+      
+            <li>
+              {{content.string}} 
+              <button {{action "remove"}}> delete </button>
+            </li>
+        
+          {{/view}}
+      
+        {{/each}}
+    
+        <li>
+          <button {{action "addAction"}}>add Action</button>
+        </li>
+    
+      </ul>
+    </li>
+  {{/view}}
+  
   {{#each game.behaviours}}
     {{#view BehaviourView 
       contentBinding = "this"

@@ -1,4 +1,22 @@
-var ClickTriggerModel = Ember.Object.extend({
+var TriggerModel = Ember.Object.extend({
+
+  type : null,
+  
+  string : function() {
+    
+    return this.type
+    
+  }.property(),
+  
+  getData : function() {
+  
+    return { type: this.type }
+  
+  }
+
+});
+
+var ClickTriggerModel = TriggerModel.extend({
   
   type : 'click',
   
@@ -15,7 +33,7 @@ var ClickTriggerModel = Ember.Object.extend({
   getData : function() {
     
     return {
-      type: "onClick",
+      type: 'onClick',
       objectID: this.gameObject.ID
     };
     
@@ -23,7 +41,7 @@ var ClickTriggerModel = Ember.Object.extend({
   
 });
 
-var ContactTriggerModel = Ember.Object.extend({
+var ContactTriggerModel = TriggerModel.extend({
   
   type : 'contact',
   
@@ -41,11 +59,17 @@ var ContactTriggerModel = Ember.Object.extend({
   getData : function() {
     
     return {
-      type: "onContact",
+      type: 'onContact',
       object1ID: this.gameObject.ID,
       object2ID: this.gameObject2.ID
     };
     
   }
+  
+});
+
+var StartTriggerModel = TriggerModel.extend({
+  
+  type : 'onStart'
   
 });

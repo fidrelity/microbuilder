@@ -9,6 +9,14 @@ var GameModel = Ember.Object.extend({
   gameObjectCounter : 0,
   
   behaviours : [],
+  startBehaviour : null,
+  
+  init : function() {
+    
+    this.startBehaviour = BehaviourModel.create();
+    this.startBehaviour.addTrigger( StartTriggerModel.create() );
+    
+  },
   
   setBackground : function( graphic ) {
     
@@ -39,16 +47,12 @@ var GameModel = Ember.Object.extend({
     
     }
     
-    if ( this.behaviours.length ) {
-      
-      data.behaviours = [];
-    
-      for ( i = 0; i < this.behaviours.length; i++ ) {
-    
-        data.behaviours.push( this.behaviours[i].getData() );
-    
-      }
-    
+    data.behaviours = [this.startBehaviour.getData()];
+  
+    for ( i = 0; i < this.behaviours.length; i++ ) {
+  
+      data.behaviours.push( this.behaviours[i].getData() );
+  
     }
     
     return data;
