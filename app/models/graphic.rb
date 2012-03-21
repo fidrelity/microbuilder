@@ -22,15 +22,22 @@ class Graphic < ActiveRecord::Base
   before_destroy :referenced?
   
   scope :all_public, where(:public => true)
+  scope :backgrounds, where(:background => true)
+  scope :without_backgrounds, where(:background => false)
   
   # override paperclip method to fit custom url
   def image
     "/graphics/#{id}/#{image_file_name}"
   end
 
-  def to_response_json
+  def to_response_hash
     user_name = user.display_name if user
-    {:id => id, :name => image_file_name, :url => image, :user_name => user_name}
+    {
+      :id => id, :name => image_file_name, :url => image, 
+      :background => background, :user_name => user_name,
+      :frame_count => frame_count, :frame_width => frame_width,
+      :frame_height => frame_height
+    }
   end
   
   protected  
