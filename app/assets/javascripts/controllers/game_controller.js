@@ -92,11 +92,29 @@ var GameController = Ember.Object.extend({
   
   addBehaviour : function() {
     
-    App.behaviourController.addObject( BehaviourModel.create({
-      
-    }));
+    App.behaviourController.set( 'currentBehaviour', BehaviourModel.create() );
     
-    // App.routeManager.goToLocation( '' );
+    this.createTrigger();
+    
+  },
+  
+  createTrigger : function() {
+    
+    App.routeManager.goToLocation( 'trigger' );
+    
+  },
+  
+  createAction : function() {
+    
+    App.routeManager.goToLocation( 'action' );
+    
+  },
+  
+  saveBehaviour : function() {
+    
+    App.behaviourController.saveCurrentBehaviour();
+    
+    App.routeManager.goToLocation( '' );
     
   },
   

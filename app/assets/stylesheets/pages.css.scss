@@ -1,6 +1,10 @@
 $bg: #fff;
 $font: #000;
 
+.clear {
+    clear : both;
+}
+
 html, body {
 /*    margin: 0px;*/
 /*    padding: 0px;*/
@@ -47,12 +51,26 @@ ul.graphics {
     list-style:none;
 }
 
-ul.graphics li {
+ul.graphics li, {
     float:left;
     padding: 2px;
 }
 
-ul.graphics li:hover {
+ul.graphics li:hover, ul.graphics li.selected {
     border: 2px solid black;
     padding: 0px;
+}
+
+ul.graphics li.disabled {
+    opacity: 0.5;
+    background-color: #CCC;
+}
+
+ul.graphics li.disabled:hover {
+    border : none;
+    padding: 2px;
+}
+
+.button {
+  background-color: #8888FF;
 }

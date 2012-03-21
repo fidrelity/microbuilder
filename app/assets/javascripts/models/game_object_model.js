@@ -7,19 +7,24 @@ var GameObjectModel = Ember.Object.extend({
   
   graphic : null,
   
+  ID : null,
+  
+  counter : 0,
+  
+  init : function() {
+    
+    this.ID = App.gameController.game.gameObjectCounter++;
+    
+  },
+  
   getData : function() {
   
-    var data = {};
-  
-    data.name = this.name;
-    data.imagePath = this.graphic.imagePath;
-  
-    data.position = {
-      x : this.position.x,
-      y : this.position.y
+    return {
+      ID : this.ID,
+      name : this.name,
+      imagePath : this.graphic.imagePath,
+      position : this.position.getData()
     };
-  
-    return data;
   
   }
   

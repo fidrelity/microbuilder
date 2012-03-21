@@ -34,6 +34,11 @@ var TextInputView = Ember.TextField.extend({
 var GameObjectView = Ember.View.extend({
   
   gameObject : null,
+  controller : null,
+  selectFunction : null,
+  
+  isSelected : false,
+  selectedObject : false,
   
   remove : function() {
     
@@ -42,7 +47,31 @@ var GameObjectView = Ember.View.extend({
     App.gameObjectsController.removeObject( gameObject );
     App.gameController.updatePlayer();
     
-  }
+  },
+  
+  select : function() {
+    
+    if ( this.get( 'wasSelected' ) ) {
+      
+      return;
+      
+    }
+    
+    var selectFunction = this.get( 'selectFunction' ),
+      controller = this.get( 'controller' ),
+      gameObject = this.get( 'gameObject' );
+    
+    selectFunction.call( controller, gameObject );
+    
+    this.set( 'isSelected', true );
+    
+  },
+  
+  wasSelected : function() {
+    
+    return this.get( 'gameObject' ) === this.get( 'selectedObject' );
+    
+  }.property( 'selectedObject' )
   
 });
 

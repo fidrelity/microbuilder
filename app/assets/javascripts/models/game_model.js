@@ -6,6 +6,7 @@ var GameModel = Ember.Object.extend({
   background : null,
   
   gameObjects : [],
+  gameObjectCounter : 0,
   
   behaviours : [],
   
@@ -33,6 +34,18 @@ var GameModel = Ember.Object.extend({
       for ( i = 0; i < this.gameObjects.length; i++ ) {
     
         data.gameObjects.push( this.gameObjects[i].getData() );
+    
+      }
+    
+    }
+    
+    if ( this.behaviours.length ) {
+      
+      data.behaviours = [];
+    
+      for ( i = 0; i < this.behaviours.length; i++ ) {
+    
+        data.behaviours.push( this.behaviours[i].getData() );
     
       }
     

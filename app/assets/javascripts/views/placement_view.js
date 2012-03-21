@@ -5,13 +5,13 @@ var PlacementView = Ember.View.extend({
   graphicBinding : 'App.placementController.graphic',
   backgroundBinding : 'App.gameController.game.background',
   
-  position : null,
+  position : new Vector(),
+  
+  displayAll : true,
   
   didInsertElement : function() {
     
     var self = this;
-    
-    this.position = new Vector();
     
     if ( this.get( 'graphic' ) ) {
     

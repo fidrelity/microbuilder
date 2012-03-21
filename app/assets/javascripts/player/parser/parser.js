@@ -17,7 +17,7 @@ var Parser = {
     
     } else {
       
-      console.error( 'game has no background' );
+      // console.error( 'game has no background' );
       
     }
     
@@ -33,7 +33,7 @@ var Parser = {
     
     } else {
       
-      console.error( 'game has no gameObjects' );
+      // console.error( 'game has no gameObjects' );
       
     }
     
@@ -54,7 +54,7 @@ var Parser = {
       
     } else {
       
-      console.error( 'game has no behaviours' );
+      // console.error( 'game has no behaviours' );
       
     }
     
@@ -62,6 +62,19 @@ var Parser = {
     
   },
   
+
+/**
+  {
+    ID: 1,
+    name:"Raidel",
+    imagePath:"https://s3.amazonaws.com/mbgfx/app/public/graphics/7/4_1331553640.png",
+    position: {
+      x:220,
+      y:228
+    }
+  }
+*/
+
   parseGameObject : function( gameObjectData ) {
     
     var gameObject = new GameObject( gameObjectData.ID );

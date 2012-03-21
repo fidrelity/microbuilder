@@ -207,6 +207,12 @@ Vector.prototype = {
     
     console.log( '( ' + this.x + ' | ' + this.y + ' )' );
     
+  },
+  
+  getData : function() {
+    
+    return { x : this.x, y : this.y };
+    
   }
 
 };

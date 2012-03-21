@@ -17,6 +17,9 @@ function editor_main() {
   App.paintController = PaintController.create();
 
   App.behaviourController = BehaviourController.create();
+  
+  App.triggerController = TriggerController.create();
+  App.actionController = ActionController.create();
 
 
   App.routeManager = Ember.RouteManager.create({
@@ -62,6 +65,14 @@ function editor_main() {
 
 
   App.main.appendTo('#content');
+
+  // App.gameController.game.gameObjects.push( GameObjectModel.create({
+  //   
+  //   'name' : 'Mario',
+  //   'graphic' : GraphicModel.create({ name : 'Mario', imagePath : '/assets/mario.png' }),
+  //   'position' : new Vector()
+  //   
+  // }) );
 
 };
 

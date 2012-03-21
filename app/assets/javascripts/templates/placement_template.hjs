@@ -1,6 +1,10 @@
-<h2>Placement</h2>
+{{#if displayAll}}
 
-<p>Drag your object to the right position</p>
+  <h2>Placement</h2>
+
+  <p>Drag your object to the right position</p>
+
+{{/if}}
 
 <div id="placementCanvas" style="border: 2px solid black; width:640px; height:390px">
 
@@ -9,5 +13,9 @@
   
 </div>
 
-<button {{action "cancel" target="App.gameController"}}>cancel</button>
-<button {{action "placeGraphic"}}>place</button>
+{{#if displayAll}}
+
+  <button {{action "cancel" target="App.gameController"}}>cancel</button>
+  <button {{action "placeGraphic"}}>place</button>
+
+{{/if}}

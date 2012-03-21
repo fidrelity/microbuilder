@@ -1,1 +1,93 @@
 <h2>Action Editor</h2>
+
+<button {{action "move" target="App.actionController"}}>move</button>
+<button {{action "art" target="App.actionController"}}>art</button>
+<button {{action "win" target="App.actionController"}}>win</button>
+<button {{action "lose" target="App.actionController"}}>lose</button>
+
+{{#if action.isMove}}
+
+  <h3>Move Action</h3>
+
+  <ul class="graphics">
+    
+    {{#each App.gameObjectsController}}
+    
+      {{#view GameObjectView 
+        gameObjectBinding="this"
+        controllerBinding="App.actionController" 
+        selectFunctionBinding="App.actionController.selectMoveObject" }}
+        
+        <li {{action "select"}} {{bindAttr class="isSelected:selected"}}>
+          <img {{bindAttr src="gameObject.graphic.imagePath"}} {{bindAttr alt="gameObject.graphic.name"}} />
+          <p>{{gameObject.graphic.name}}</p>
+        </li>
+        
+      {{/view}}
+      
+    {{/each}}
+    
+  </ul>
+  
+  {{#if action.gameObject}}
+  
+    <p class="clear">
+  
+      <button {{action "jumpTo" target="App.actionController"}}>jump to</button>
+      <button {{action "moveTo" target="App.actionController"}}>move to</button>
+      <button {{action "moveIn" target="App.actionController"}}>in direction</button>
+  
+    </p>
+  
+    {{#if action.isMoveTo}}
+    
+      {{view PlacementView 
+        displayAllBinding="false" 
+        positionBinding="action.position"
+        graphicBinding="action.gameObject.graphic"
+      }}
+      
+      <button {{action "save" target="App.actionController"}}>save</button>
+    
+    {{/if}}
+    
+    {{#if action.isJumpTo}}
+    
+      {{view PlacementView 
+        displayAllBinding="false" 
+        positionBinding="action.position"
+        graphicBinding="action.gameObject.graphic"
+      }}
+      
+      <button {{action "save" target="App.actionController"}}>save</button>
+    
+    {{/if}}
+    
+    {{#if action.isMoveIn}}
+    
+    
+    
+    {{/if}}
+  
+  {{/if}}
+
+{{/if}}
+
+
+{{#if action.isArt}}
+  <h3>Art Action</h3>
+{{/if}}
+
+
+{{#if action.isWin}}
+  <h3>Win Action</h3>
+  
+  <button {{action "save" target="App.actionController"}}>save</button>
+{{/if}}
+
+
+{{#if action.isLose}}
+  <h3>Lose Action</h3>
+  
+  <button {{action "save" target="App.actionController"}}>save</button>
+{{/if}}
