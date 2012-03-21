@@ -12,6 +12,7 @@ var GeneralView = Ember.View.extend({
   
 });
 
+
 var TextInputView = Ember.TextField.extend({
   
   text : null,
@@ -22,7 +23,6 @@ var TextInputView = Ember.TextField.extend({
     
     if ( value ) {
       
-      // this.set('value', '');
       this.set('text', value);
       
     }
@@ -36,35 +36,31 @@ var SelectView = Ember.View.extend({
   content : null,
   compareContent : null,
   
-  selector : null,
+  controller : null,
   selectFunction : null,
   
   isSelected : false,
   
   remove : function() {
     
-    var content = this.get( 'content' );
-    
-    App.gameObjectsController.removeObject( content );
+    this.get( 'controller' ).removeObject( this.get( 'content' ) );
     App.gameController.updatePlayer();
     
   },
   
   select : function() {
     
-    if ( this.get( 'compares' ) ) {
+    if ( !this.get( 'compares' ) ) {
       
-      return;
+      var selectFunction = this.get( 'selectFunction' ),
+        controller = this.get( 'controller' ),
+        content = this.get( 'content' );
+      
+      selectFunction.call( controller, content );
+      
+      this.set( 'isSelected', true );
       
     }
-    
-    var selectFunction = this.get( 'selectFunction' ),
-      selector = this.get( 'selector' ),
-      content = this.get( 'content' );
-    
-    selectFunction.call( selector, content );
-    
-    this.set( 'isSelected', true );
     
   },
   

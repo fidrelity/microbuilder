@@ -22,7 +22,10 @@
 
 <ul class="graphics">
   {{#each game.gameObjects}}
-    {{#view SelectView contentBinding="this"}}
+    {{#view SelectView 
+      contentBinding = "this"
+      controllerBinding = "App.gameObjectsController"
+    }}
       <li>
         <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
         <p>{{content.name}}</p>

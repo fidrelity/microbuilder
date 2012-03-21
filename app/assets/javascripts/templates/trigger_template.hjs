@@ -11,7 +11,7 @@
   
       {{#view SelectView 
         contentBinding="this" 
-        selectorBinding="App.triggerController" 
+        controllerBinding="App.triggerController" 
         selectFunctionBinding="App.triggerController.selectObject" }}
       
         <li {{action "select"}} {{bindAttr class="isSelected:selected"}}>
@@ -42,7 +42,7 @@
           {{#view SelectView 
             contentBinding="this"
             compareContentBinding="App.triggerController.trigger.gameObject"
-            selectorBinding="App.triggerController" 
+            controllerBinding="App.triggerController" 
             selectFunctionBinding="App.triggerController.selectObject2" }}
       
             <li {{action "select"}} {{bindAttr class="isSelected:selected compares:disabled"}}>

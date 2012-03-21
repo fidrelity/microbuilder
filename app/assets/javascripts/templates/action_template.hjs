@@ -14,9 +14,9 @@
     {{#each App.gameObjectsController}}
     
       {{#view SelectView 
-        contentBinding="this"
-        selectorBinding="App.actionController" 
-        selectFunctionBinding="App.actionController.selectMoveObject" }}
+        contentBinding = "this"
+        controllerBinding = "App.actionController" 
+        selectFunctionBinding = "App.actionController.selectMoveObject" }}
         
         <li {{action "select"}} {{bindAttr class="isSelected:selected"}}>
           <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
@@ -26,6 +26,8 @@
       {{/view}}
       
     {{/each}}
+    
+    <div class="clear"></div>
     
   </ul>
   
@@ -42,24 +44,24 @@
     {{#if action.isMoveTo}}
     
       {{view PlacementView 
-        displayAllBinding="false" 
-        positionBinding="action.position"
-        graphicBinding="action.gameObject.graphic"
+        displayAllBinding = "false" 
+        positionBinding = "action.position"
+        graphicBinding = "action.gameObject.graphic"
       }}
       
-      <button {{action "save" target="App.actionController"}}>save</button>
+      <button {{action "save" target="App.actionController"}}> save </button>
     
     {{/if}}
     
     {{#if action.isJumpTo}}
     
       {{view PlacementView 
-        displayAllBinding="false" 
-        positionBinding="action.position"
-        graphicBinding="action.gameObject.graphic"
+        displayAllBinding = "false" 
+        positionBinding = "action.position"
+        graphicBinding = "action.gameObject.graphic"
       }}
       
-      <button {{action "save" target="App.actionController"}}>save</button>
+      <button {{action "save" target="App.actionController"}}> save </button>
     
     {{/if}}
     
@@ -82,12 +84,12 @@
 {{#if action.isWin}}
   <h3>Win Action</h3>
   
-  <button {{action "save" target="App.actionController"}}>save</button>
+  <button {{action "save" target="App.actionController"}}> save </button>
 {{/if}}
 
 
 {{#if action.isLose}}
   <h3>Lose Action</h3>
   
-  <button {{action "save" target="App.actionController"}}>save</button>
+  <button {{action "save" target="App.actionController"}}> save </button>
 {{/if}}
