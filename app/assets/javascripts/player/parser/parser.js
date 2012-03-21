@@ -106,6 +106,7 @@ var Parser = {
     } else {
       
       console.error( 'behaviour has no actions' );
+      return null;
       
     }
     
@@ -116,14 +117,14 @@ var Parser = {
       
         var trigger = this.parseTrigger( triggers[i] );
       
-        if ( trigger ) {
+        if ( trigger === 'onStart' ) {
       
-          behaviour.triggers.push( trigger );
-      
-        } else {
-        
           this.game.startActions = behaviour.actions;
           return null;
+      
+        } else if ( trigger ) {
+        
+          behaviour.triggers.push( trigger );
         
         }
       
@@ -132,6 +133,7 @@ var Parser = {
     } else {
       
       console.error( 'behaviour has no triggers' );
+      return null;
       
     }
     
@@ -287,7 +289,7 @@ var Parser = {
     
     switch ( triggerData.type ) {
       
-      case 'onStart' : return null;
+      case 'onStart' : return 'onStart';
       
       case 'onClick' : return this.parseTriggerClick( triggerData );
       case 'onContact' : return this.parseTriggerContact( triggerData, true );

@@ -98,12 +98,14 @@ var GameController = Ember.Object.extend({
   
   addTrigger : function() {
     
+    App.triggerController.reset();
     App.routeManager.goToLocation( 'trigger' );
     
   },
   
   addAction : function() {
     
+    App.actionController.reset();
     App.routeManager.goToLocation( 'action' );
     
   },

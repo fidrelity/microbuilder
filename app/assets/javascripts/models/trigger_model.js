@@ -6,6 +6,12 @@ var ClickTriggerModel = Ember.Object.extend({
   
   gameObject : null,
   
+  string : function() {
+    
+    return 'click on ' + this.get( 'gameObject' ).name;
+    
+  }.property( 'gameObject' ),
+  
   getData : function() {
     
     return {
@@ -13,7 +19,7 @@ var ClickTriggerModel = Ember.Object.extend({
       objectID: this.gameObject.ID
     };
     
-  }
+  },
   
 });
 
@@ -25,6 +31,12 @@ var ContactTriggerModel = Ember.Object.extend({
   
   gameObject : null,
   gameObject2 : null,
+  
+  string : function() {
+    
+    return 'contact between ' + this.get( 'gameObject' ).name + ' and ' + this.get( 'gameObject2' ).name;
+    
+  }.property( 'gameObject', 'gameObject2' ),
   
   getData : function() {
     

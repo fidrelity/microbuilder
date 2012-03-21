@@ -61,7 +61,7 @@
             }}
             
               <li>
-                {{content.type}} 
+                {{content.string}} 
                 <button {{action "remove"}}> delete </button>
               </li>
               
@@ -87,7 +87,7 @@
             }}
             
               <li>
-                {{content.type}} 
+                {{content.string}} 
                 <button {{action "remove"}}> delete </button>
               </li>
               

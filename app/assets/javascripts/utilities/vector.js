@@ -203,9 +203,15 @@ Vector.prototype = {
     
   },
   
+  string: function() {
+    
+    return '( ' + this.x + ' | ' + this.y + ' )';
+    
+  },
+  
   log: function() {
     
-    console.log( '( ' + this.x + ' | ' + this.y + ' )' );
+    console.log( this.string() );
     
   },
   

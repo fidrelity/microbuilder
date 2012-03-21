@@ -25,6 +25,8 @@
   
   </ul>
   
+  <div class='clear'><div>
+  
   {{#if trigger.gameObject}}
   
     {{#if trigger.isClick}}
@@ -55,6 +57,8 @@
         {{/each}}
   
       </ul>
+      
+      <div class='clear'><div>
     
       {{#if trigger.gameObject2}}
     
@@ -67,3 +71,7 @@
   {{/if}}
 
 {{/if}}
+
+<div class='clear'>
+  <button {{action "cancel" target="App.gameController"}}>cancel</button>
+</div>

@@ -27,13 +27,13 @@
       
     {{/each}}
     
-    <div class="clear"></div>
-    
   </ul>
+  
+  <div class='clear'><div>
   
   {{#if action.gameObject}}
   
-    <p class="clear">
+    <p>
   
       <button {{action "jumpTo" target="App.actionController"}}>jump to</button>
       <button {{action "moveTo" target="App.actionController"}}>move to</button>
@@ -93,3 +93,7 @@
   
   <button {{action "save" target="App.actionController"}}> save </button>
 {{/if}}
+
+<div>
+  <button {{action "cancel" target="App.gameController"}}>cancel</button>
+</div>

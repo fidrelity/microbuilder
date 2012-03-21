@@ -10,6 +10,12 @@ var TriggerController = Ember.Object.extend({
   
   behaviourBinding : 'App.behaviourController.currentBehaviour',
   
+  reset : function() {
+  
+    this.set( 'trigger', null );
+  
+  },
+  
   click : function() {
     
     this.set( 'trigger', ClickTriggerModel.create() );
@@ -42,7 +48,7 @@ var TriggerController = Ember.Object.extend({
     
     App.gameController.saveBehaviour();
     
-    this.set( 'trigger', null );
+    this.reset();
     
   }
 

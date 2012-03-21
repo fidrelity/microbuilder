@@ -10,6 +10,12 @@ var ActionController = Ember.Object.extend({
   
   behaviourBinding : 'App.behaviourController.currentBehaviour',
   
+  reset : function() {
+    
+    this.set( 'action', null );
+    
+  },
+  
   selectMoveObject : function( gameObject ) {
     
     this.get( 'action' ).set( 'gameObject', gameObject );
@@ -71,7 +77,7 @@ var ActionController = Ember.Object.extend({
     
     App.gameController.saveBehaviour();
     
-    this.set( 'action', null );
+    this.reset();
     
   }
 

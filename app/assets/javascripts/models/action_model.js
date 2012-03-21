@@ -1,6 +1,24 @@
 //= require utilities/vector
 
-var MoveActionModel = Ember.Object.extend({
+var ActionModel = Ember.Object.extend({
+  
+  type : null,
+  
+  string : function() {
+    
+    return this.type
+    
+  }.property(),
+  
+  getData : function() {
+  
+    return { type: this.type }
+  
+  }
+  
+});
+
+var MoveActionModel = ActionModel.extend({
   
   type : 'move',
   
@@ -38,11 +56,33 @@ var MoveActionModel = Ember.Object.extend({
       target: this.position.getData()
     }
   
-  }
+  },
+  
+  string : function() {
+    
+    var type = this.get( 'type' ),
+      name = this.get( 'gameObject' ).name,
+      pos = this.get( 'position' ).string();
+    
+    if ( type === 'moveTo' ) {
+      
+      return name + ' moves to ' + pos;
+      
+    } else if ( type === 'jumpTo' ) {
+      
+      return name + ' jumps to ' + pos;
+      
+    } else if ( type === 'moveIn' ) {
+      
+      return name + ' moves in direction *';
+      
+    }
+    
+  }.property( 'type', 'gameObject', 'position' )
   
 });
 
-var ArtActionModel = Ember.Object.extend({
+var ArtActionModel = ActionModel.extend({
   
   type : 'art',
   
@@ -52,34 +92,18 @@ var ArtActionModel = Ember.Object.extend({
   
 });
 
-var WinActionModel = Ember.Object.extend({
+var WinActionModel = ActionModel.extend({
   
   type : 'win',
   
-  isWin : true,
-  
-  getData : function() {
-  
-    return {
-      type: 'win'
-    }
-  
-  }
+  isWin : true
   
 });
 
-var LoseActionModel = Ember.Object.extend({
+var LoseActionModel = ActionModel.extend({
   
   type : 'lose',
   
-  isLose : true,
-  
-  getData : function() {
-  
-    return {
-      type: 'lose'
-    }
-  
-  }
+  isLose : true
   
 });
