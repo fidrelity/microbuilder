@@ -54,6 +54,8 @@ var ArtActionModel = Ember.Object.extend({
 
 var WinActionModel = Ember.Object.extend({
   
+  type : 'win',
+  
   isWin : true,
   
   getData : function() {
@@ -67,6 +69,8 @@ var WinActionModel = Ember.Object.extend({
 });
 
 var LoseActionModel = Ember.Object.extend({
+  
+  type : 'lose',
   
   isLose : true,
   

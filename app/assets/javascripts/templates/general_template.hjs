@@ -44,9 +44,63 @@
 
 <ul class="behaviour">
   {{#each game.behaviours}}
-    {{#view BehaviourView behaviourBinding="this"}}
+    {{#view BehaviourView 
+      contentBinding = "this"
+      controllerBinding = "App.behaviourController"
+    }}
       <li>
-        <p>if ... then ...</p>
+        
+        <div>if</div>
+        <ul class="triggers">
+          
+          {{#each content.triggers}}
+          
+            {{#view SelectView 
+              contentBinding = "this"
+              controllerBinding = "parent.triggers"
+            }}
+            
+              <li>
+                {{content.type}} 
+                <button {{action "remove"}}> delete </button>
+              </li>
+              
+            {{/view}}
+            
+          {{/each}}
+          
+          <li>
+            <button {{action "addTrigger"}}>add Trigger</button>
+          </li>
+          
+        </ul>
+        
+        
+        <div>then</div>
+        <ul class="actions">
+          
+          {{#each content.actions}}
+          
+            {{#view SelectView 
+              contentBinding = "this"
+              controllerBinding = "parent.actions"
+            }}
+            
+              <li>
+                {{content.type}} 
+                <button {{action "remove"}}> delete </button>
+              </li>
+              
+            {{/view}}
+            
+          {{/each}}
+          
+          <li>
+            <button {{action "addAction"}}>add Action</button>
+          </li>
+          
+        </ul>
+        
         <button {{action "remove"}}>delete</button>
       </li>
     {{/view}}

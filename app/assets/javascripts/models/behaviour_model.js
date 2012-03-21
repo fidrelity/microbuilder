@@ -12,11 +12,15 @@ var BehaviourModel = Ember.Object.extend({
   
   addAction : function( action ) {
     
+    action.parent = this;
+    
     this.actions.push( action );
     
   },
   
   addTrigger : function( trigger ) {
+    
+    trigger.parent = this;
     
     this.triggers.push( trigger );
     

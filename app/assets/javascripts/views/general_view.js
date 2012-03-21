@@ -72,16 +72,19 @@ var SelectView = Ember.View.extend({
   
 });
 
-var BehaviourView = Ember.View.extend({
+var BehaviourView = SelectView.extend({
   
-  behaviour : null,
+  addTrigger : function() {
+    
+    App.behaviourController.set( 'currentBehaviour', this.get( 'content' ) );
+    App.gameController.addTrigger();
+    
+  },
   
-  remove : function() {
+  addAction : function() {
     
-    var behaviour = this.get( 'behaviour' );
-    
-    App.behaviourController.removeObject( behaviour );
-    App.gameController.updatePlayer();
+    App.behaviourController.set( 'currentBehaviour', this.get( 'content' ) );
+    App.gameController.addAction();
     
   }
   

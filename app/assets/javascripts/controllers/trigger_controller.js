@@ -38,7 +38,9 @@ var TriggerController = Ember.Object.extend({
     
     this.get( 'behaviour' ).addTrigger( this.get( 'trigger' ) );
     
-    App.gameController.createAction();
+    // App.gameController.createAction();
+    
+    App.gameController.saveBehaviour();
     
     this.set( 'trigger', null );
     
