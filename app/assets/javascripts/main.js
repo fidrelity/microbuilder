@@ -66,13 +66,13 @@ function editor_main() {
 
   App.main.appendTo('#content');
 
-  // App.gameController.game.gameObjects.push( GameObjectModel.create({
-  //   
-  //   'name' : 'Mario',
-  //   'graphic' : GraphicModel.create({ name : 'Mario', imagePath : '/assets/mario.png' }),
-  //   'position' : new Vector()
-  //   
-  // }) );
+  App.gameController.game.gameObjects.push( GameObjectModel.create({
+    
+    'name' : 'Mario',
+    'graphic' : GraphicModel.create({ name : 'Mario', imagePath : '/assets/mario.png' }),
+    'position' : new Vector()
+    
+  }) );
 
 };
 

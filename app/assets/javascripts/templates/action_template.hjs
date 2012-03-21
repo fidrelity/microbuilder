@@ -13,14 +13,14 @@
     
     {{#each App.gameObjectsController}}
     
-      {{#view GameObjectView 
-        gameObjectBinding="this"
-        controllerBinding="App.actionController" 
+      {{#view SelectView 
+        contentBinding="this"
+        selectorBinding="App.actionController" 
         selectFunctionBinding="App.actionController.selectMoveObject" }}
         
         <li {{action "select"}} {{bindAttr class="isSelected:selected"}}>
-          <img {{bindAttr src="gameObject.graphic.imagePath"}} {{bindAttr alt="gameObject.graphic.name"}} />
-          <p>{{gameObject.graphic.name}}</p>
+          <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
+          <p>{{content.graphic.name}}</p>
         </li>
         
       {{/view}}

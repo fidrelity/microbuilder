@@ -9,14 +9,14 @@
   
     {{#each App.gameObjectsController}}
   
-      {{#view GameObjectView 
-        gameObjectBinding="this" 
-        controllerBinding="App.triggerController" 
+      {{#view SelectView 
+        contentBinding="this" 
+        selectorBinding="App.triggerController" 
         selectFunctionBinding="App.triggerController.selectObject" }}
       
         <li {{action "select"}} {{bindAttr class="isSelected:selected"}}>
-          <img {{bindAttr src="gameObject.graphic.imagePath"}} {{bindAttr alt="gameObject.graphic.name"}} />
-          <p>{{gameObject.graphic.name}}</p>
+          <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
+          <p>{{content.name}}</p>
         </li>
       
       {{/view}}
@@ -39,15 +39,15 @@
   
         {{#each App.gameObjectsController}}
   
-          {{#view GameObjectView 
-            gameObjectBinding="this"
-            selectedObjectBinding="App.triggerController.trigger.gameObject"
-            controllerBinding="App.triggerController" 
+          {{#view SelectView 
+            contentBinding="this"
+            compareContentBinding="App.triggerController.trigger.gameObject"
+            selectorBinding="App.triggerController" 
             selectFunctionBinding="App.triggerController.selectObject2" }}
       
-            <li {{action "select"}} {{bindAttr class="isSelected:selected wasSelected:disabled"}}>
-              <img {{bindAttr src="gameObject.graphic.imagePath"}} {{bindAttr alt="gameObject.graphic.name"}} />
-              <p>{{gameObject.graphic.name}}</p>
+            <li {{action "select"}} {{bindAttr class="isSelected:selected compares:disabled"}}>
+              <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
+              <p>{{content.name}}</p>
             </li>
       
           {{/view}}

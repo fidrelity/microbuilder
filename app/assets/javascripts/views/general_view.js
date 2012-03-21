@@ -31,47 +31,48 @@ var TextInputView = Ember.TextField.extend({
   
 });
 
-var GameObjectView = Ember.View.extend({
+var SelectView = Ember.View.extend({
   
-  gameObject : null,
-  controller : null,
+  content : null,
+  compareContent : null,
+  
+  selector : null,
   selectFunction : null,
   
   isSelected : false,
-  selectedObject : false,
   
   remove : function() {
     
-    var gameObject = this.get( 'gameObject' );
+    var content = this.get( 'content' );
     
-    App.gameObjectsController.removeObject( gameObject );
+    App.gameObjectsController.removeObject( content );
     App.gameController.updatePlayer();
     
   },
   
   select : function() {
     
-    if ( this.get( 'wasSelected' ) ) {
+    if ( this.get( 'compares' ) ) {
       
       return;
       
     }
     
     var selectFunction = this.get( 'selectFunction' ),
-      controller = this.get( 'controller' ),
-      gameObject = this.get( 'gameObject' );
+      selector = this.get( 'selector' ),
+      content = this.get( 'content' );
     
-    selectFunction.call( controller, gameObject );
+    selectFunction.call( selector, content );
     
     this.set( 'isSelected', true );
     
   },
   
-  wasSelected : function() {
+  compares : function() {
     
-    return this.get( 'gameObject' ) === this.get( 'selectedObject' );
+    return this.get( 'content' ) === this.get( 'compareContent' );
     
-  }.property( 'selectedObject' )
+  }.property( 'compareContent' )
   
 });
 

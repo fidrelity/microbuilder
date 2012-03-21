@@ -22,10 +22,10 @@
 
 <ul class="graphics">
   {{#each game.gameObjects}}
-    {{#view GameObjectView gameObjectBinding="this"}}
+    {{#view SelectView contentBinding="this"}}
       <li>
-        <img {{bindAttr src="gameObject.graphic.imagePath"}} {{bindAttr alt="gameObject.graphic.name"}} />
-        <p>{{gameObject.graphic.name}}</p>
+        <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
+        <p>{{content.name}}</p>
         <button {{action "remove"}}>delete</button>
       </li>
     {{/view}}
