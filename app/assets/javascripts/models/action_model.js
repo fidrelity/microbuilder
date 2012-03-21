@@ -93,7 +93,24 @@ var ArtActionModel = ActionModel.extend({
   
   isArt : true,
   
-  gameObject : null
+  gameObject : null,
+  graphic : null,
+  
+  getData : function() {
+  
+    return {
+      type: 'changeArt',
+      objectID: this.gameObject.ID,
+      imagePath: this.graphic.imagePath
+    }
+  
+  },
+  
+  string : function() {
+    
+    return this.get( 'gameObject' ).name + ' changes art to ' + this.get( 'graphic' ).name;
+    
+  }.property( 'gameObject', 'graphic' )
   
 });
 

@@ -16,7 +16,7 @@
       {{#view SelectView 
         contentBinding = "this"
         controllerBinding = "App.actionController" 
-        selectFunctionBinding = "App.actionController.selectMoveObject" }}
+        selectFunctionBinding = "App.actionController.selectObject" }}
         
         <li {{action "select"}} {{bindAttr class="isSelected:selected"}}>
           <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
@@ -78,6 +78,56 @@
 
 {{#if action.isArt}}
   <h3>Art Action</h3>
+  
+  <ul class="graphics">
+    
+    {{#each App.gameObjectsController}}
+    
+      {{#view SelectView 
+        contentBinding = "this"
+        controllerBinding = "App.actionController" 
+        selectFunctionBinding = "App.actionController.selectObject" }}
+        
+        <li {{action "select"}} {{bindAttr class="isSelected:selected"}}>
+          <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
+          <p>{{content.graphic.name}}</p>
+        </li>
+        
+      {{/view}}
+      
+    {{/each}}
+    
+  </ul>
+  
+  <div class='clear'><div>
+  
+  {{#if action.gameObject}}
+  
+  <ul class="graphics">
+    {{#each App.libraryController.display}}
+      {{#view SelectView 
+        contentBinding = "this"
+        controllerBinding = "App.actionController"
+        selectFunctionBinding = "App.actionController.selectGraphic"
+      }}
+        <li {{action "select"}}>
+          <img {{bindAttr src="content.imagePath"}} alt="content.name"></img>
+          <p>{{content.name}}</p>
+        </li>
+      {{/view}}
+    {{/each}}
+  </ul>
+  
+  <div class='clear'><div>
+  
+    {{#if action.graphic}}
+    
+      <button {{action "save" target="App.actionController"}}> save </button>
+    
+    {{/if}}
+  
+  {{/if}}
+  
 {{/if}}
 
 

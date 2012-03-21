@@ -16,9 +16,15 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  selectMoveObject : function( gameObject ) {
+  selectObject : function( gameObject ) {
     
     this.get( 'action' ).set( 'gameObject', gameObject );
+    
+  },
+  
+  selectGraphic : function( graphic ) {
+    
+    this.get( 'action' ).set( 'graphic', graphic );
     
   },
   
@@ -54,6 +60,8 @@ var ActionController = Ember.Object.extend({
   
   
   art : function() {
+    
+    App.libraryController.filter( 'isBackground', false );
     
     this.set( 'action', ArtActionModel.create() );
     
