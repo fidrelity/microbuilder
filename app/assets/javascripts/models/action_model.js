@@ -34,6 +34,14 @@ var MoveActionModel = ActionModel.extend({
     
   },
   
+  
+  angle : function() {
+    
+    return this.get( 'position' ).sub(new Vector( 320, 195 ) ).angle().toFixed( 2 );
+    
+  }.property( 'position' ),
+  
+  
   isMoveTo : function() {
     
     return this.get( 'type' ) === 'moveTo';
@@ -58,7 +66,8 @@ var MoveActionModel = ActionModel.extend({
     return {
       type: this.type,
       objectID: this.gameObject.ID,
-      target: this.position.getData()
+      target: this.position.getData(),
+      angle: this.get( 'angle' )
     }
   
   },
@@ -79,7 +88,7 @@ var MoveActionModel = ActionModel.extend({
       
     } else if ( type === 'moveIn' ) {
       
-      return name + ' moves in direction *';
+      return name + ' moves in direction ' + this.get( 'angle' );
       
     }
     

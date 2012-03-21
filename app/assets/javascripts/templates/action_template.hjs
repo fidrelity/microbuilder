@@ -67,7 +67,13 @@
     
     {{#if action.isMoveIn}}
     
-    
+      {{view PlacementView 
+        displayAllBinding = "false" 
+        positionBinding = "action.position"
+        graphicBinding = "action.gameObject.graphic"
+      }}
+      
+      <button {{action "save" target="App.actionController"}}> save </button>
     
     {{/if}}
   
