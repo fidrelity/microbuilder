@@ -43,7 +43,7 @@ var ClickTriggerModel = TriggerModel.extend({
 
 var ContactTriggerModel = TriggerModel.extend({
   
-  type : 'contact',
+  type : 'onContact',
   
   isContact : true,
   
@@ -52,14 +52,25 @@ var ContactTriggerModel = TriggerModel.extend({
   
   string : function() {
     
-    return 'contact between ' + this.get( 'gameObject' ).name + ' and ' + this.get( 'gameObject2' ).name;
+    var name = this.get( 'gameObject' ).name,
+      name2 = this.get( 'gameObject2' ).name;
+    
+    if ( this.isContact ) {
+    
+      return 'contact between ' + name + ' and ' + name2;
+      
+    } else {
+      
+      return name + ' and ' + name2 + ' overlap';
+      
+    }
     
   }.property( 'gameObject', 'gameObject2' ),
   
   getData : function() {
     
     return {
-      type: 'onContact',
+      type: this.type,
       object1ID: this.gameObject.ID,
       object2ID: this.gameObject2.ID
     };

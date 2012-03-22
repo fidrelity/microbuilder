@@ -1,5 +1,7 @@
 <h2>Action Editor</h2>
 
+<p>select an action type</p>
+
 <button {{action "move" target="App.actionController"}}>move</button>
 <button {{action "art" target="App.actionController"}}>art</button>
 <button {{action "win" target="App.actionController"}}>win</button>
@@ -8,6 +10,8 @@
 {{#if action.isMove}}
 
   <h3>Move Action</h3>
+
+  <p>Which object shall be moved?</p>
 
   <ul class="graphics">
     
@@ -33,6 +37,8 @@
   
   {{#if action.gameObject}}
   
+    <p>how should {{action.gameObject.name}} be moved?</p>
+  
     <p>
   
       <button {{action "jumpTo" target="App.actionController"}}>jump to</button>
@@ -43,6 +49,8 @@
   
     {{#if action.isMoveTo}}
     
+      <p>to what location should {{action.gameObject.name}} move?</p>
+    
       {{view PlacementView 
         displayAllBinding = "false" 
         positionBinding = "action.position"
@@ -52,20 +60,24 @@
       <button {{action "save" target="App.actionController"}}> save </button>
     
     {{/if}}
+
+    {{#if action.isMoveIn}}
     
+      <p>in what direction, relative to the middle, should {{action.gameObject.name}} move?</p>
+    
+      {{view PlacementView 
+        displayAllBinding = "false" 
+        positionBinding = "action.position"
+        graphicBinding = "action.gameObject.graphic"
+      }}
+      
+      <button {{action "save" target="App.actionController"}}> save </button>
+    
+    {{/if}}
+
     {{#if action.isJumpTo}}
     
-      {{view PlacementView 
-        displayAllBinding = "false" 
-        positionBinding = "action.position"
-        graphicBinding = "action.gameObject.graphic"
-      }}
-      
-      <button {{action "save" target="App.actionController"}}> save </button>
-    
-    {{/if}}
-    
-    {{#if action.isMoveIn}}
+      <p>to what location should {{action.gameObject.name}} jump?</p>
     
       {{view PlacementView 
         displayAllBinding = "false" 
@@ -85,6 +97,8 @@
 {{#if action.isArt}}
   <h3>Art Action</h3>
   
+  <p>Which object should change its art?</p>
+  
   <ul class="graphics">
     
     {{#each App.gameObjectsController}}
@@ -109,22 +123,24 @@
   
   {{#if action.gameObject}}
   
-  <ul class="graphics">
-    {{#each App.libraryController.display}}
-      {{#view SelectView 
-        contentBinding = "this"
-        controllerBinding = "App.actionController"
-        selectFunctionBinding = "App.actionController.selectGraphic"
-      }}
-        <li {{action "select"}}>
-          <img {{bindAttr src="content.imagePath"}} alt="content.name"></img>
-          <p>{{content.name}}</p>
-        </li>
-      {{/view}}
-    {{/each}}
-  </ul>
+    <p>What graphic should {{action.gameObject.name}} display?</p>
   
-  <div class='clear'><div>
+    <ul class="graphics">
+      {{#each App.libraryController.display}}
+        {{#view SelectView 
+          contentBinding = "this"
+          controllerBinding = "App.actionController"
+          selectFunctionBinding = "App.actionController.selectGraphic"
+        }}
+          <li {{action "select"}}>
+            <img {{bindAttr src="content.imagePath"}} alt="content.name"></img>
+            <p>{{content.name}}</p>
+          </li>
+        {{/view}}
+      {{/each}}
+    </ul>
+  
+    <div class='clear'><div>
   
     {{#if action.graphic}}
     

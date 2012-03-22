@@ -28,6 +28,19 @@ var TriggerController = Ember.Object.extend({
     
   },
   
+  overlap : function() {
+    
+    this.set( 'trigger', ContactTriggerModel.create({
+      
+      isContact : false,
+      isOverlap : true,
+      
+      type : 'onOverlap'
+      
+    }) );
+    
+  },
+  
   selectObject : function( gameObject ) {
     
     this.get( 'trigger' ).set( 'gameObject', gameObject );

@@ -1,9 +1,30 @@
 <h2>Trigger Editor</h2>
 
+<p>select a trigger type</p>
+
 <button {{action "click" target="App.triggerController"}}>click</button>
 <button {{action "contact" target="App.triggerController"}}>contact</button>
+<button {{action "overlap" target="App.triggerController"}}>overlap</button>
 
 {{#if trigger}}
+  
+  {{#if trigger.isClick}}
+    
+    <p>Which object should trigger a click?</p>
+    
+  {{/if}}
+
+  {{#if trigger.isContact}}
+
+    <p>Which object should trigger a contact?</p>
+
+  {{/if}}
+
+  {{#if trigger.isOverlap}}
+
+    <p>Which object should trigger an overlap?</p>
+
+  {{/if}}
   
   <ul class="graphics">
   
@@ -33,9 +54,17 @@
     
       <button {{action "save" target="App.triggerController"}}>save</button>
     
-    {{/if}}
-
-    {{#if trigger.isContact}}
+    {{else}}
+    
+      {{#if trigger.isContact}}
+    
+        <p>With what object should {{trigger.gameObject.name}} trigger a contact?</p>
+    
+      {{else}}
+      
+        <p>With what object should {{trigger.gameObject.name}} trigger when they overlap?</p>
+      
+      {{/if}}
     
       <ul class="graphics">
   
