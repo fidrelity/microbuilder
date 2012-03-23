@@ -17,8 +17,8 @@ class Graphic < ActiveRecord::Base
     has_attached_file :image, :url => "/:class/:id/:basename" + ".png"
   end
   
-  before_save :generate_file_name
-  before_save :decode_base64_image
+  before_create :generate_file_name
+  before_create :decode_base64_image
   before_destroy :referenced?
   
   scope :all_public, where(:public => true)
@@ -59,8 +59,9 @@ class Graphic < ActiveRecord::Base
     end
     
     def referenced?
-      errors.add(:base, "Graphic still referenced") if games.any?
-  
-      errors.blank? #return false, to not destroy the element, otherwise, it will delete.
+      if games.any?
+        self.update_attribute(:user, nil)
+        false
+      end
     end
 end
