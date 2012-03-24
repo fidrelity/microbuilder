@@ -34,4 +34,7 @@ Microbuilder::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+  
+  FACEBOOK_ID = '123456'
+  FACEBOOK_SECRET = '123456'
 end
