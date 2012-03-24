@@ -15,7 +15,7 @@ Microbuilder::Application.routes.draw do
       get 'public', :to => 'graphics#public'
     end
   end
-  resources :games, :only => [:create]
+  resources :games, :only => [:create, :destroy]
   
   get '/gallery', :to => 'games#index'
   get '/play/:id', :to => 'games#show', :as => 'play'

@@ -15,7 +15,18 @@ class GamesController < ApplicationController
   
   def create
     @game = current_user.games.create(params[:game]) if current_user
-
     render :text => play_url(@game)
+  end
+  
+  def destroy
+    @game = Game.find(params[:id])
+    if @game.author == current_user
+      @game.destroy 
+      flash[:notice] = "Successfully deleted game"
+    else
+      flash[:error] = "Not allowed to delete game"
+    end
+    
+    redirect_to user_path(@game.author)
   end
 end

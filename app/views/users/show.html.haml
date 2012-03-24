@@ -5,3 +5,13 @@
   =@user.last_name
   %br
   =@user.email
+  
+  %h2="Games"
+  -@user.games.each do |game|
+    %p
+      =link_to(game.title, play_path(game))
+      =link_to("[x]", game_path(game), :method => :delete, :confirm => "Permanently delete this game?")
+
+  %h2="Graphics"
+  -@user.graphics.each do |graphic|
+    %img{:src => graphic.image}
