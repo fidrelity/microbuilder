@@ -17,7 +17,7 @@ var TextInputView = Ember.TextField.extend({
   
   text : null,
   
-  insertNewline: function() {
+  change: function() {
     
     var value = this.get('value');
     
