@@ -34,7 +34,16 @@ var LibraryController = Ember.ArrayController.extend({
   graphicSaved : function( data ) {
     
     this.content.push(
-      GraphicModel.create({ name : 'saved', imagePath : '/assets/mario.png' /*data.imagePath*/ })
+      GraphicModel.create({
+        ID : data.id,
+        name : data.name,
+        userName : data.user_name,
+        imagePath : data.url,
+        isBackground : data.background,
+        frameCount : data.frame_count,
+        frameWidth : data.frame_width,
+        frameHeight : data.frame_height
+      })
     );
     
     App.gameController.searchGraphic();
