@@ -28,7 +28,11 @@ class Graphic < ActiveRecord::Base
   
   # override paperclip method to fit custom url
   def image
-    "/graphics/#{id}/#{image_file_name}"
+    if Rails.env.production?
+      "https://s3.amazonaws.com/mbgfx/app/public/graphics/#{id}/#{image_file_name}"
+    else
+      "/graphics/#{id}/#{image_file_name}"
+    end
   end
 
   def to_response_hash
