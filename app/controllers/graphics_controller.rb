@@ -15,7 +15,16 @@ class GraphicsController < ApplicationController
   
   def destroy
     @graphic = Graphic.find(params[:id])
-    @graphic.destroy if @graphic.user = current_user
+    user = @graphic.user
+    
+    if current_user = @graphic.user
+      @graphic.games.any? ? @graphic.update_attribute(:user, nil) : @graphic.destroy
+      flash[:notice] = "Successfully deleted graphic"
+    else
+      flash[:error] = "Not allowed to delete graphic"
+    end
+
+    redirect_to user_path(user)
   end
   
   def public

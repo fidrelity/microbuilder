@@ -4,6 +4,8 @@ class Graphic < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :games
 
+  before_destroy :referenced?
+  
   if Rails.env.production?
     has_attached_file :image, 
       :url => "/:class/:id/:basename" + ".png",
@@ -19,7 +21,6 @@ class Graphic < ActiveRecord::Base
   
   before_create :generate_file_name
   before_create :decode_base64_image
-  before_destroy :referenced?
   
   scope :all_public, where(:public => true)
   scope :backgrounds, where(:background => true)
@@ -59,9 +60,6 @@ class Graphic < ActiveRecord::Base
     end
     
     def referenced?
-      if games.any?
-        self.update_attribute(:user, nil)
-        false
-      end
+      self.games.none?
     end
 end
