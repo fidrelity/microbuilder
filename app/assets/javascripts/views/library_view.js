@@ -4,28 +4,6 @@ var LibraryView = Ember.View.extend({
   
 });
 
-var GraphicOldView = Ember.View.extend({
-  
-  graphic : null,
-  
-  select : function() {
-    
-    var graphic = this.get('graphic');
-    
-    if ( graphic.isBackground ) {
-      
-      App.gameController.selectBackground( graphic );
-      
-    } else {
-    
-      App.gameController.selectGraphic( graphic );
-    
-    }
-    
-  }
-  
-});
-
 var GraphicView = Ember.View.extend({
 
   name : '',

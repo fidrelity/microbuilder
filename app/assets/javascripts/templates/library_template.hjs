@@ -8,16 +8,24 @@
 <ul class="graphics">
   {{#each App.libraryController.display}}
   
-    {{#view GraphicOldView graphicBinding="this"}}
+    {{#view SelectView 
+      contentBinding = "this"
+      controllerBinding = "App.libraryController" 
+      selectFunctionBinding = "App.libraryController.selectGraphic" }}
+      
       <li {{action "select"}}>
+        
         {{view GraphicView 
-            nameBinding="graphic.name"
-            imagePathBinding="graphic.imagePath"
-            widthBinding="graphic.frameWidth"
-            heightBinding="graphic.frameHeight"
+            nameBinding="content.name"
+            imagePathBinding="content.imagePath"
+            widthBinding="content.frameWidth"
+            heightBinding="content.frameHeight"
         }}
+        
       </li>
+      
     {{/view}}
+  
   {{/each}}
 </ul>
 

@@ -164,6 +164,20 @@ var LibraryController = Ember.ArrayController.extend({
     
     this.set( 'tabState', 'public' );
     
+  },
+  
+  selectGraphic : function( graphic ) {
+    
+    if ( graphic.isBackground ) {
+      
+      App.gameController.selectBackground( graphic );
+      
+    } else {
+    
+      App.gameController.selectGraphic( graphic );
+    
+    }
+    
   }
 
 });
