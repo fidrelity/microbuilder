@@ -105,12 +105,18 @@ var ArtActionModel = ActionModel.extend({
   gameObject : null,
   graphic : null,
   
-  getData : function() {
+  getData : function( graphics ) {
+  
+    if ( graphics.indexOf( this.graphic ) < 0 ) {
+      
+      graphics.push( this.graphic.getData() );
+      
+    }
   
     return {
       type: 'changeArt',
       objectID: this.gameObject.ID,
-      imagePath: this.graphic.imagePath
+      graphicID: this.graphic.ID
     }
   
   },

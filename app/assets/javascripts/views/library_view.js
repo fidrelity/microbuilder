@@ -4,7 +4,7 @@ var LibraryView = Ember.View.extend({
   
 });
 
-var GraphicView = Ember.View.extend({
+var GraphicOldView = Ember.View.extend({
   
   graphic : null,
   
@@ -24,4 +24,22 @@ var GraphicView = Ember.View.extend({
     
   }
   
+});
+
+var GraphicView = Ember.View.extend({
+
+  name : '',
+  imagePath : '',
+
+  width : 0,
+  height : 0,
+
+  templateName : 'templates_graphic_template',
+  
+  imageStyle : function() {
+    
+    return "background-image: url(" + this.get( 'imagePath' ) + "); width:" + this.get( 'width' ) + "px;height:" + this.get( 'height' ) + "px";
+    
+  }.property( 'imagePath', 'width', 'height' )
+
 });

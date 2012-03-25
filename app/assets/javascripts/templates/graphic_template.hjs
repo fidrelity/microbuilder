@@ -1,0 +1,5 @@
+<div class="graphic" {{bindAttr style="imageStyle"}}></div>
+
+{{#if name}}
+    <p>{{name}}</p>
+{{/if}}

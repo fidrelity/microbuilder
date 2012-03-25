@@ -24,8 +24,18 @@ var GraphicModel = Ember.Object.extend({
   isBackground : false,
   isPublic : false,
   
-  frameCount : null,
+  frameCount : 1,
   frameWidth : null,
-  frameHeight : null
+  frameHeight : null,
+  
+  getData : function() {
+    
+    return {
+      ID : this.ID,
+      frameCount : this.frameCount,
+      imagePath : this.imagePath
+    }
+    
+  }
   
 });

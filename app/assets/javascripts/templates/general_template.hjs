@@ -27,8 +27,12 @@
       controllerBinding = "App.gameObjectsController"
     }}
       <li>
-        <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
-        <p>{{content.name}}</p>
+        {{view GraphicView 
+            nameBinding="content.name"
+            imagePathBinding="content.graphic.imagePath"
+            widthBinding="content.graphic.frameWidth"
+            heightBinding="content.graphic.frameHeight"
+        }}
         <button {{action "remove"}}>delete</button>
       </li>
     {{/view}}

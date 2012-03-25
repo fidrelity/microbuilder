@@ -17,12 +17,18 @@ var GameObjectModel = Ember.Object.extend({
     
   },
   
-  getData : function() {
+  getData : function( graphics ) {
   
+    if ( graphics.indexOf( this.graphic ) < 0 ) {
+      
+      graphics.push( this.graphic.getData() );
+      
+    }
+    
     return {
       ID : this.ID,
       name : this.name,
-      imagePath : this.graphic.imagePath,
+      graphicID : this.graphic.ID,
       position : this.position.getData()
     };
   

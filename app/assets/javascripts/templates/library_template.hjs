@@ -7,10 +7,15 @@
 
 <ul class="graphics">
   {{#each App.libraryController.display}}
-    {{#view GraphicView graphicBinding="this"}}
+  
+    {{#view GraphicOldView graphicBinding="this"}}
       <li {{action "select"}}>
-        <img {{bindAttr src="graphic.imagePath"}} alt="graphic"></img>
-        <p>{{graphic.name}}</p>
+        {{view GraphicView 
+            nameBinding="graphic.name"
+            imagePathBinding="graphic.imagePath"
+            widthBinding="graphic.frameWidth"
+            heightBinding="graphic.frameHeight"
+        }}
       </li>
     {{/view}}
   {{/each}}

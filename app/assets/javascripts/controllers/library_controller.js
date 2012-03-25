@@ -17,13 +17,13 @@ var LibraryController = Ember.ArrayController.extend({
 
     // load dummy graphics
     this.content.push(
-      GraphicModel.create({ name : 'Mario', imagePath : '/assets/mario.png', isPublic : true }),
-      GraphicModel.create({ name : 'Luigi', imagePath : '/assets/luigi.png', isPublic : true }),
-      GraphicModel.create({ name : 'Plant', imagePath : '/assets/plant.png', isPublic : true }),
-      GraphicModel.create({ name : 'Raidel', imagePath : 'https://s3.amazonaws.com/mbgfx/app/public/graphics/7/4_1331553640.png', isPublic : true }),
+      GraphicModel.create({ ID : -1, name : 'Mario', imagePath : '/assets/mario.png', isPublic : true, frameWidth: 130, frameHeight: 130 }),
+      GraphicModel.create({ ID : -2, name : 'Luigi', imagePath : '/assets/luigi.png', isPublic : true, frameWidth: 103, frameHeight: 130 }),
+      GraphicModel.create({ ID : -3, name : 'Plant', imagePath : '/assets/plant.png', isPublic : true, frameWidth: 103, frameHeight: 130 }),
+      GraphicModel.create({ ID : -4, name : 'Raidel', imagePath : 'https://s3.amazonaws.com/mbgfx/app/public/graphics/7/4_1331553640.png', isPublic : true, frameWidth: 103, frameHeight: 130 }),
       
-      GraphicModel.create({ name : 'Preview', imagePath : '/assets/preview.png', isBackground : true, isPublic : true }),
-      GraphicModel.create({ name : 'Paper', imagePath : '/assets/paper.png', isBackground : true, isPublic : true })
+      GraphicModel.create({ ID : -5, name : 'Preview', imagePath : '/assets/preview.png', isBackground : true, isPublic : true, frameWidth: 640, frameHeight: 390 }),
+      GraphicModel.create({ ID : -6, name : 'Paper', imagePath : '/assets/paper.png', isBackground : true, isPublic : true, frameWidth: 640, frameHeight: 390 })
     );
     
     var self = this;
@@ -100,7 +100,7 @@ var LibraryController = Ember.ArrayController.extend({
   
   graphicSaved : function( data ) {
     
-    this.apppendGraphics( [data] );
+    this.appendGraphics( [data] );
     
     App.gameController.searchGraphic();
     

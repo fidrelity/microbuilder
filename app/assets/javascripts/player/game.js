@@ -4,6 +4,7 @@ var Game = function( fsm ) {
   
   this.background = null;
   
+  this.graphics = [];
   this.gameObjects = [];
   this.behaviours = [];
   
@@ -107,6 +108,24 @@ Game.prototype = {
     }
     
     console.error( "no gameObject with ID " + gameObjectID );
+    
+    return null;
+    
+  },
+  
+  getGraphicWithID : function( graphicID ) {
+    
+    for ( var i = 0; i < this.graphics.length; i++ ) {
+      
+      if ( this.graphics[i].ID === graphicID ) {
+        
+        return this.graphics[i];
+        
+      }
+      
+    }
+    
+    console.error( "no gameObject with ID " + graphicID );
     
     return null;
     

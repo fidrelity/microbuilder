@@ -63,3 +63,12 @@ ul.graphics li.disabled:hover {
     border : none;
     padding: 2px;
 }
+
+.graphic {
+  background-repeat: no-repeat;
+}
+
+#placementGraphic {
+  float : left;
+  border : 2px solid #000;
+}

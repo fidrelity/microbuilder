@@ -27,6 +27,7 @@ var GameModel = Ember.Object.extend({
   getData : function() {
     
     var data = {},
+        graphics = [],
         i;
     
     if ( this.background ) {
@@ -41,7 +42,7 @@ var GameModel = Ember.Object.extend({
     
       for ( i = 0; i < this.gameObjects.length; i++ ) {
     
-        data.gameObjects.push( this.gameObjects[i].getData() );
+        data.gameObjects.push( this.gameObjects[i].getData( graphics ) );
     
       }
     
@@ -51,12 +52,14 @@ var GameModel = Ember.Object.extend({
   
     for ( i = 0; i < this.behaviours.length; i++ ) {
   
-      data.behaviours.push( this.behaviours[i].getData() );
+      data.behaviours.push( this.behaviours[i].getData( graphics ) );
   
     }
     
+    data.graphics = graphics;
+    
     return data;
     
-  },
+  }
   
 });

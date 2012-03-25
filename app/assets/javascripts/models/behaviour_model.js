@@ -26,7 +26,7 @@ var BehaviourModel = Ember.Object.extend({
     
   },
   
-  getData : function() {
+  getData : function( graphics ) {
     
     var data = {};
     
@@ -48,7 +48,7 @@ var BehaviourModel = Ember.Object.extend({
       
       for ( var i = 0; i < this.actions.length; i++ ) {
         
-        data.actions.push( this.actions[i].getData() );
+        data.actions.push( this.actions[i].getData( graphics ) );
         
       }
       

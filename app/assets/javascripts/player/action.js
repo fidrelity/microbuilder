@@ -27,7 +27,7 @@ MoveAction.prototype = {
 var ArtAction = function() {
   
   this.gameObject = null;
-  this.image = null;
+  this.graphic = null;
   
 };
 
@@ -35,7 +35,7 @@ ArtAction.prototype = {
   
   execute : function() {
     
-    this.gameObject.setImage( this.image );
+    this.gameObject.setGraphic( this.graphic );
     
   }
   

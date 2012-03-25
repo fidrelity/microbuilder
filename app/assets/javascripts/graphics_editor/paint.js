@@ -397,6 +397,13 @@ var Paint = {
 
   resizeZoomCanvas : function () {
     Paint.zoomTool.resizeCanvas();
+  },
+  
+  setCanvasSize : function( width, height ) {
+    $('.canvas').css({
+      width : width, 
+      height: height
+    }).attr('width', width).attr('height', height);
   }
 };
 

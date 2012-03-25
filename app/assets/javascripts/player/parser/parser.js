@@ -5,7 +5,8 @@ var Parser = {
   
   parseData : function( data, game, callback ) {
     
-    var gameObjects = data.gameObjects,
+    var graphics = data.graphics,
+      gameObjects = data.gameObjects,
       behaviours = data.behaviours;
     
     this.game = game;
@@ -18,6 +19,22 @@ var Parser = {
     } else {
       
       // console.error( 'game has no background' );
+      
+    }
+    
+    if ( graphics && graphics.length > 0 ) {
+    
+      for ( var i = 0; i < graphics.length; i++ ) {
+      
+        var graphic = this.parseGraphic( graphics[i] );
+      
+        game.graphics.push( graphic );
+      
+      }
+    
+    } else {
+      
+      // console.error( 'game has no graphics' );
       
     }
     
@@ -61,13 +78,33 @@ var Parser = {
     this.loader.checkRemaining();
     
   },
+
+
+/**
+  {
+    ID : 1,
+    frameCount : 3,
+    imagePath : '/image.png'
+  }
+*/
+
+  parseGraphic : function( graphicData ) {
+    
+    var graphic = new Graphic( graphicData.ID );
   
+    graphic.frameCount = graphicData.frameCount;
+  
+    graphic.image = this.loader.loadImage( graphicData.imagePath );
+  
+    return graphic;
+  
+  },
 
 /**
   {
     ID: 1,
     name:"Raidel",
-    imagePath:"https://s3.amazonaws.com/mbgfx/app/public/graphics/7/4_1331553640.png",
+    graphicID: 1,
     position: {
       x:220,
       y:228
@@ -81,7 +118,7 @@ var Parser = {
   
     gameObject.startPosition.set( gameObjectData.position.x, gameObjectData.position.y );
   
-    gameObject.startImage = this.loader.loadImage( gameObjectData.imagePath );
+    gameObject.startGraphic = this.game.getGraphicWithID( gameObjectData.graphicID );
   
     return gameObject;
   
@@ -268,7 +305,7 @@ var Parser = {
   {
     type: "changeArt",
     objectID: 0,
-    imagePath: '/image.png'
+    graphicID: 1
   }
 */
   
@@ -278,7 +315,7 @@ var Parser = {
     
     action.gameObject = this.game.getGameObjectWithID( actionData.objectID );
     
-    action.image = this.loader.loadImage( actionData.imagePath );
+    action.graphic = this.game.getGraphicWithID( actionData.graphicID );
     
     return action;
     

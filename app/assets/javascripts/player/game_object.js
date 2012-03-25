@@ -6,8 +6,10 @@ var GameObject = function( ID ) {
   
   this.target = null;
   
-  this.image = null;
-  this.startImage = null;
+  this.graphic = null;
+  this.startGraphic = null;
+  
+  this.animationFrame = 0;
   
   this.area = new Area();
   
@@ -20,7 +22,7 @@ GameObject.prototype = {
   reset : function() {
     
     this.position.copy( this.startPosition );
-    this.image = this.startImage;
+    this.graphic = this.startGraphic;
     
     this.target = null;
     
@@ -55,22 +57,22 @@ GameObject.prototype = {
   
   draw : function( ctx ) {
     
-    ctx.drawImage( this.image, this.position.x, this.position.y );
+    ctx.save();
     
-    if ( ctx.debug ) {
+    ctx.translate( this.position.x, this.position.y )
+    
+    this.graphic.draw( ctx, this.animationFrame );
+    
+    ctx.restore();
+    
+    if ( ctx.debug && this.target ) {
       
-      ctx.strokeRect( this.position.x, this.position.y, this.image.width, this.image.height );
+      ctx.beginPath();
+      ctx.moveTo( this.position.x, this.position.y );
+      ctx.lineTo( this.target.x, this.target.y );
+      ctx.closePath();
       
-      if ( this.target ) {
-        
-        ctx.beginPath();
-        ctx.moveTo( this.position.x, this.position.y );
-        ctx.lineTo( this.target.x, this.target.y );
-        ctx.closePath();
-        
-        ctx.stroke();
-        
-      }
+      ctx.stroke();
       
     }
     
@@ -89,9 +91,9 @@ GameObject.prototype = {
     
   },
   
-  setImage : function( image ) {
+  setGraphic : function( graphic ) {
     
-    this.image = image;
+    this.graphic = graphic;
     
   },
   
@@ -100,8 +102,8 @@ GameObject.prototype = {
     return this.area.set(
       this.position.x,
       this.position.y,
-      this.image.width,
-      this.image.height
+      this.graphic.image.width,
+      this.graphic.image.height
     )
     
   },

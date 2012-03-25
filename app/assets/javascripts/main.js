@@ -85,11 +85,26 @@ function player_main( data ) {
   
   data = data || {
     background:"/assets/preview.png",
+    graphics:[
+      {
+        ID:0,
+        frameCount:1,
+        imagePath:"/assets/luigi.png"
+      },{
+        ID:1,
+        frameCount:1,
+        imagePath:"https://s3.amazonaws.com/mbgfx/app/public/graphics/7/4_1331553640.png"
+      },{
+        ID:2,
+        frameCount:1,
+        imagePath:"/assets/mario.png"
+      }
+    ],
     gameObjects:[
       {
         ID: 0,
         name:"Luigi",
-        imagePath:"/assets/luigi.png",
+        graphicID:0,
         position: {
           x:533,
           y:228
@@ -97,7 +112,7 @@ function player_main( data ) {
       },{
         ID: 1,
         name:"Raidel",
-        imagePath:"https://s3.amazonaws.com/mbgfx/app/public/graphics/7/4_1331553640.png",
+        graphicID:1,
         position: {
           x:220,
           y:228
@@ -162,8 +177,8 @@ function player_main( data ) {
           },
           {
             type: "changeArt",
-            objectID: 1,
-            imagePath: "/assets/mario.png"
+            objectID:1,
+            graphicID:2,
           }
         ]
       }

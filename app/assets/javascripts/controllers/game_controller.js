@@ -126,26 +126,26 @@ var GameController = Ember.Object.extend({
       data : JSON.stringify( this.game.getData() )
     });
     
-    $.ajax({
-      url : 'games/',
-      type : 'POST',
-      data : {
-        
-        game: {
-          title : this.game.title,
-          instruction: this.game.instructions,
-          data : JSON.stringify( this.game.getData() )
-        }
-        
-      },
-      
-      success: function( data ) {
-        
-        window.location = data;
-        
-      }
-      
-    });
+    // $.ajax({
+    //   url : 'games/',
+    //   type : 'POST',
+    //   data : {
+    //     
+    //     game: {
+    //       title : this.game.title,
+    //       instruction: this.game.instructions,
+    //       data : JSON.stringify( this.game.getData() )
+    //     }
+    //     
+    //   },
+    //   
+    //   success: function( data ) {
+    //     
+    //     window.location = data;
+    //     
+    //   }
+    //   
+    // });
     
     // window.localStorage.setItem( 'game', JSON.stringify( this.game.getData() ) );
   
