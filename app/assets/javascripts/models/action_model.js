@@ -14,7 +14,13 @@ var ActionModel = Ember.Object.extend({
   
     return { type: this.type }
   
-  }
+  },
+  
+  isComplete : function() {
+    
+    return true;
+    
+  }.property()
   
 });
 
@@ -92,6 +98,12 @@ var MoveActionModel = ActionModel.extend({
       
     }
     
+  }.property( 'type', 'gameObject', 'position' ),
+  
+  isComplete : function() {
+    
+    return ( this.get( 'type' ) !== 'move' && this.get( 'gameObject' ) && this.get( 'position' ) );
+    
   }.property( 'type', 'gameObject', 'position' )
   
 });
@@ -124,6 +136,12 @@ var ArtActionModel = ActionModel.extend({
   string : function() {
     
     return this.get( 'gameObject' ).name + ' changes art to ' + this.get( 'graphic' ).name;
+    
+  }.property( 'gameObject', 'graphic' ),
+  
+  isComplete : function() {
+    
+    return ( this.get( 'gameObject' ) && this.get( 'graphic' ) );
     
   }.property( 'gameObject', 'graphic' )
   

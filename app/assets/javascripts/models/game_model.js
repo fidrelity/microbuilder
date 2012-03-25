@@ -48,7 +48,7 @@ var GameModel = Ember.Object.extend({
     
     }
     
-    data.behaviours = [this.startBehaviour.getData()];
+    data.behaviours = [this.startBehaviour.getData( graphics )];
   
     for ( i = 0; i < this.behaviours.length; i++ ) {
   

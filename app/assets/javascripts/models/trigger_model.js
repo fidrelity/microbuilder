@@ -12,7 +12,13 @@ var TriggerModel = Ember.Object.extend({
   
     return { type: this.type }
   
-  }
+  },
+  
+  isComplete : function() {
+    
+    return true;
+    
+  }.property()
 
 });
 
@@ -38,6 +44,12 @@ var ClickTriggerModel = TriggerModel.extend({
     };
     
   },
+  
+  isComplete : function() {
+    
+    return this.get( 'gameObject' );
+    
+  }.property( 'gameObject' )
   
 });
 
@@ -75,7 +87,13 @@ var ContactTriggerModel = TriggerModel.extend({
       object2ID: this.gameObject2.ID
     };
     
-  }
+  },
+  
+  isComplete : function() {
+    
+    return this.get( 'gameObject' ) && this.get( 'gameObject2' );
+    
+  }.property( 'gameObject', 'gameObject2' )
   
 });
 

@@ -18,7 +18,7 @@ var Parser = {
     
     } else {
       
-      // console.error( 'game has no background' );
+      // console.error( 'parser: game has no background' );
       
     }
     
@@ -34,7 +34,7 @@ var Parser = {
     
     } else {
       
-      // console.error( 'game has no graphics' );
+      // console.error( 'parser: game has no graphics' );
       
     }
     
@@ -50,7 +50,7 @@ var Parser = {
     
     } else {
       
-      // console.error( 'game has no gameObjects' );
+      // console.error( 'parser: game has no gameObjects' );
       
     }
     
@@ -71,7 +71,7 @@ var Parser = {
       
     } else {
       
-      // console.error( 'game has no behaviours' );
+      // console.error( 'parser: game has no behaviours' );
       
     }
     
@@ -142,7 +142,7 @@ var Parser = {
     
     } else {
       
-      // console.error( 'behaviour has no actions' );
+      // console.error( 'parser: behaviour has no actions' );
       return null;
       
     }
@@ -169,7 +169,7 @@ var Parser = {
     
     } else {
       
-      // console.error( 'behaviour has no triggers' );
+      // console.error( 'parser: behaviour has no triggers' );
       return null;
       
     }
@@ -191,7 +191,7 @@ var Parser = {
       case 'win' : return WinAction;
       case 'lose' : return LoseAction;
       
-      default : console.error( 'action type ' + actionData.type + ' not found' ); return null;
+      default : console.error( 'parser: action type ' + actionData.type + ' not found' ); return null;
       
     }
     
@@ -332,7 +332,7 @@ var Parser = {
       case 'onContact' : return this.parseTriggerContact( triggerData, true );
       case 'onOverlap' : return this.parseTriggerContact( triggerData, false );
       
-      default : console.error( 'trigger type ' + triggerData.type + ' not found' ); return null;
+      default : console.error( 'parser: trigger type ' + triggerData.type + ' not found' ); return null;
       
     }
     
@@ -376,6 +376,14 @@ var Parser = {
     var trigger = new ContactTrigger();
     
     trigger.check = onContact ? trigger.checkContact : trigger.checkOverlap;
+    
+    if ( triggerData.object1ID === triggerData.object2ID ) {
+      
+      console.error( 'parser: object triggers contact with itself' );
+      
+      return null;
+      
+    }
     
     trigger.gameObject1 = this.game.getGameObjectWithID( triggerData.object1ID );
     trigger.gameObject2 = this.game.getGameObjectWithID( triggerData.object2ID );

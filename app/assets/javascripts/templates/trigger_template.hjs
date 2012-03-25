@@ -50,11 +50,7 @@
   
   {{#if trigger.gameObject}}
   
-    {{#if trigger.isClick}}
-    
-      <button {{action "save" target="App.triggerController"}}>save</button>
-    
-    {{else}}
+    {{#unless trigger.isClick}}
     
       {{#if trigger.isContact}}
     
@@ -89,16 +85,14 @@
       
       <div class='clear'><div>
     
-      {{#if trigger.gameObject2}}
-    
-        <button {{action "save" target="App.triggerController"}}>save</button>
-    
-      {{/if}}
-    
-    {{/if}}
+    {{/unless}}
   
   {{/if}}
 
+{{/if}}
+
+{{#if trigger.isComplete}}
+  <button {{action "save" target="App.triggerController"}}>save</button>
 {{/if}}
 
 <div class='clear'>

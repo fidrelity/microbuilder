@@ -55,13 +55,17 @@ var TriggerController = Ember.Object.extend({
   
   save : function() {
     
-    this.get( 'behaviour' ).addTrigger( this.get( 'trigger' ) );
+    var trigger = this.get( 'trigger' );
     
-    // App.gameController.createAction();
+    if ( trigger.get( 'isComplete' ) ) {
     
-    App.gameController.saveBehaviour();
+      this.get( 'behaviour' ).addTrigger( trigger );
     
-    this.reset();
+      App.gameController.saveBehaviour();
+    
+      this.reset();
+    
+    }
     
   }
 

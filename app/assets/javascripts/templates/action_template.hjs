@@ -56,8 +56,6 @@
         positionBinding = "action.position"
         graphicBinding = "action.gameObject.graphic"
       }}
-      
-      <button {{action "save" target="App.actionController"}}> save </button>
     
     {{/if}}
 
@@ -70,8 +68,6 @@
         positionBinding = "action.position"
         graphicBinding = "action.gameObject.graphic"
       }}
-      
-      <button {{action "save" target="App.actionController"}}> save </button>
     
     {{/if}}
 
@@ -84,8 +80,6 @@
         positionBinding = "action.position"
         graphicBinding = "action.gameObject.graphic"
       }}
-      
-      <button {{action "save" target="App.actionController"}}> save </button>
     
     {{/if}}
   
@@ -142,12 +136,6 @@
   
     <div class='clear'><div>
   
-    {{#if action.graphic}}
-    
-      <button {{action "save" target="App.actionController"}}> save </button>
-    
-    {{/if}}
-  
   {{/if}}
   
 {{/if}}
@@ -155,14 +143,14 @@
 
 {{#if action.isWin}}
   <h3>Win Action</h3>
-  
-  <button {{action "save" target="App.actionController"}}> save </button>
 {{/if}}
 
 
 {{#if action.isLose}}
   <h3>Lose Action</h3>
-  
+{{/if}}
+
+{{#if action.isComplete}}
   <button {{action "save" target="App.actionController"}}> save </button>
 {{/if}}
 

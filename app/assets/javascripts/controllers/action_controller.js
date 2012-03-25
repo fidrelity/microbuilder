@@ -81,11 +81,17 @@ var ActionController = Ember.Object.extend({
   
   save : function() {
     
-    this.get( 'behaviour' ).addAction( this.get( 'action' ) );
+    var action = this.get( 'action' );
     
-    App.gameController.saveBehaviour();
+    if ( action.get( 'isComplete' ) ) {
     
-    this.reset();
+      this.get( 'behaviour' ).addAction( action );
+    
+      App.gameController.saveBehaviour();
+    
+      this.reset();
+    
+    }
     
   }
 
