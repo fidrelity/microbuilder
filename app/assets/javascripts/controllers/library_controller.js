@@ -6,7 +6,8 @@
 
 var LibraryController = Ember.ArrayController.extend({
 
-  mode : 'graphic',
+  mode : null, // [ 'graphic', 'background' ]
+  tabState : 'own', // [ 'own', 'public' ]
 
   content : [],
 
@@ -16,14 +17,28 @@ var LibraryController = Ember.ArrayController.extend({
 
     // load dummy graphics
     this.content.push(
-      GraphicModel.create({ name : 'Mario', imagePath : '/assets/mario.png' }),
-      GraphicModel.create({ name : 'Luigi', imagePath : '/assets/luigi.png' }),
-      GraphicModel.create({ name : 'Plant', imagePath : '/assets/plant.png' }),
-      GraphicModel.create({ name : 'Raidel', imagePath : 'https://s3.amazonaws.com/mbgfx/app/public/graphics/7/4_1331553640.png' }),
+      GraphicModel.create({ name : 'Mario', imagePath : '/assets/mario.png', isPublic : true }),
+      GraphicModel.create({ name : 'Luigi', imagePath : '/assets/luigi.png', isPublic : true }),
+      GraphicModel.create({ name : 'Plant', imagePath : '/assets/plant.png', isPublic : true }),
+      GraphicModel.create({ name : 'Raidel', imagePath : 'https://s3.amazonaws.com/mbgfx/app/public/graphics/7/4_1331553640.png', isPublic : true }),
       
-      GraphicModel.create({ name : 'Preview', imagePath : '/assets/preview.png', isBackground : true }),
-      GraphicModel.create({ name : 'Paper', imagePath : '/assets/paper.png', isBackground : true })
+      GraphicModel.create({ name : 'Preview', imagePath : '/assets/preview.png', isBackground : true, isPublic : true }),
+      GraphicModel.create({ name : 'Paper', imagePath : '/assets/paper.png', isBackground : true, isPublic : true })
     );
+    
+    var self = this;
+    
+    this.addObserver( 'mode', function() {
+      
+      self.updateDisplay( true );
+      
+    });
+    
+    this.addObserver( 'tabState', function() {
+      
+      self.updateDisplay( true );
+      
+    });
     
   },
   
@@ -31,20 +46,47 @@ var LibraryController = Ember.ArrayController.extend({
     
     this.set( 'mode', mode );
     
-    this.loadGraphics( mode === 'background' );
-    this.updateDisplay();
-    
   },
   
-  updateDisplay : function() {
+  updateDisplay : function( load ) {
     
-    if ( this.get( 'mode' ) === 'graphic' ) {
+    var display = this.content,
+      mode = this.get( 'mode' ),
+      tabState = this.get( 'tabState' ),
+      path = '';
     
-      this.filter( 'isBackground', false );
+    if ( mode === 'graphic' ) {
     
-    } else {
+      display = display.filterProperty( 'isBackground', false );
+    
+      path = 'users/current/graphics';
+    
+    } else if ( mode === 'background' ) {
       
-      this.filter( 'isBackground', true );
+      display = display.filterProperty( 'isBackground', true );
+      
+      path = 'users/current/graphics/backgrounds';
+      
+    }
+    
+    if ( tabState === 'own' ) {
+      
+      display = display.filterProperty( 'isPublic', false );
+      
+    } else if ( tabState === 'public' ) {
+      
+      display = display.filterProperty( 'isPublic', true );
+      
+      path = 'graphics/public';
+      
+    }
+    
+    this.set( 'display', display );
+    
+    
+    if ( load ) {
+      
+      this.loadGraphics( path );
       
     }
     
@@ -64,10 +106,9 @@ var LibraryController = Ember.ArrayController.extend({
     
   },
   
-  loadGraphics : function( isBackground ) {
+  loadGraphics : function( path ) {
     
-    var self = this,
-      path = isBackground ? 'users/current/graphics/backgrounds' : 'users/current/graphics';
+    var self = this
     
     $.ajax({
       url : path,
@@ -109,7 +150,19 @@ var LibraryController = Ember.ArrayController.extend({
       
     }
     
-    this.updateDisplay();
+    this.updateDisplay( false );
+    
+  },
+  
+  showOwn : function() {
+    
+    this.set( 'tabState', 'own' );
+    
+  },
+  
+  showPublic : function() {
+    
+    this.set( 'tabState', 'public' );
     
   }
 

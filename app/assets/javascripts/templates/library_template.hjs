@@ -2,6 +2,9 @@
 
 <p>Select an item or create a new one</p>
 
+<button {{action "showOwn" target="App.libraryController"}}>own</button>
+<button {{action "showPublic" target="App.libraryController"}}>public</button>
+
 <ul class="graphics">
   {{#each App.libraryController.display}}
     {{#view GraphicView graphicBinding="this"}}

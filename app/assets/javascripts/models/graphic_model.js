@@ -22,6 +22,7 @@ var GraphicModel = Ember.Object.extend({
   imagePath : null,
   
   isBackground : false,
+  isPublic : false,
   
   frameCount : null,
   frameWidth : null,
