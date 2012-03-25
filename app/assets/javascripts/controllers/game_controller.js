@@ -40,7 +40,7 @@ var GameController = Ember.Object.extend({
   
   searchGraphic : function() {
     
-    App.libraryController.filter( 'isBackground', false );
+    App.libraryController.setMode( 'graphic' );
     
     App.routeManager.goToLocation( 'library' );
     
@@ -76,7 +76,7 @@ var GameController = Ember.Object.extend({
   
   searchBackground : function() {
     
-    App.libraryController.filter( 'isBackground', true );
+    App.libraryController.setMode( 'background' );
     
     App.routeManager.goToLocation( 'library' );
     

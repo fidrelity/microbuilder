@@ -1,6 +1,6 @@
 <h2>Library</h2>
 
-<p>Select and item or create a new one</p>
+<p>Select an item or create a new one</p>
 
 <ul class="graphics">
   {{#each App.libraryController.display}}

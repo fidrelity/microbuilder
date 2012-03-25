@@ -6,6 +6,8 @@
 
 var LibraryController = Ember.ArrayController.extend({
 
+  mode : 'graphic',
+
   content : [],
 
   display : [],
@@ -25,6 +27,29 @@ var LibraryController = Ember.ArrayController.extend({
     
   },
   
+  setMode : function( mode ) {
+    
+    this.set( 'mode', mode );
+    
+    this.loadGraphics( mode === 'background' );
+    this.updateDisplay();
+    
+  },
+  
+  updateDisplay : function() {
+    
+    if ( this.get( 'mode' ) === 'graphic' ) {
+    
+      this.filter( 'isBackground', false );
+    
+    } else {
+      
+      this.filter( 'isBackground', true );
+      
+    }
+    
+  },
+  
   filter : function( key, value ) {
     
     this.set( 'display', this.content.filterProperty( key, value ) );
@@ -33,20 +58,58 @@ var LibraryController = Ember.ArrayController.extend({
   
   graphicSaved : function( data ) {
     
-    this.content.push(
-      GraphicModel.create({
-        ID : data.id,
-        name : data.name,
-        userName : data.user_name,
-        imagePath : data.url,
-        isBackground : data.background,
-        frameCount : data.frame_count,
-        frameWidth : data.frame_width,
-        frameHeight : data.frame_height
-      })
-    );
+    this.apppendGraphics( [data] );
     
     App.gameController.searchGraphic();
+    
+  },
+  
+  loadGraphics : function( isBackground ) {
+    
+    var self = this,
+      path = isBackground ? 'users/current/graphics/backgrounds' : 'users/current/graphics';
+    
+    $.ajax({
+      url : path,
+      type : 'GET',
+      
+      success: function( data ) {
+        
+        self.appendGraphics( data );
+        
+      }
+      
+    });
+    
+  },
+  
+  appendGraphics : function( data ) {
+    
+    for ( var i = 0; i < data.length; i++ ) {
+      
+      var d = data[i],
+          filterID = this.content.filterProperty( 'ID', d.id );
+      
+      if ( !filterID.length ) {
+      
+        this.addObject(
+          GraphicModel.create({
+            ID : d.id,
+            name : d.name,
+            userName : d.user_name,
+            imagePath : d.url,
+            isBackground : d.background,
+            frameCount : d.frame_count,
+            frameWidth : d.frame_width,
+            frameHeight : d.frame_height
+          })
+        );
+      
+      }
+      
+    }
+    
+    this.updateDisplay();
     
   }
 
