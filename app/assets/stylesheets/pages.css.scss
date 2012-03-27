@@ -1,44 +1,103 @@
 $bg: #fff;
 $font: #000;
 
-.clear {
-    clear : both;
-}
-
 html, body {
-/*    margin: 0px;*/
-/*    padding: 0px;*/
+    margin: 0px;
+    padding: 0px;
     border: none;
     text-decoration:none;
-    height:100%;
 }
 
 body {
-    color: $font;
-    padding: 0;           /* required to "hide" distance div */
-    margin: 20px 50px;
+    /*background:url('../img/dark.png'); */
+    height:100%;
+    width:100%;
 }
 
-.clear {
-   clear:both;
+* {
+    margin: 0px;
+    padding: 0px;
 }
-
 
 ul#nav {
+    position:absolute;
+    width:100%;
+    height:100%;
     list-style:none;
     z-index: 2;
 }
 
-ul#nav {
-    position:relative;
-    z-index:10;
-}
-
 ul#nav li {
-    float:left;
-    margin: 0 0 0 10px;
+    overflow:hidden;
+    padding: 10px;
+    width:31px;
+    height:31px;
 }
 
+ul#nav li img {
+    
+}
+
+ul#nav li#nav_top {
+    position:absolute;
+    top:0px;
+    background:#439AAB;
+}
+
+ul#nav li#nav_left {
+    position:absolute;
+    left:0px;
+    background:#00CABD;
+}
+
+ul#nav li#nav_right {
+    position:absolute;
+    right:0px;
+    background:#FF5B00;
+}
+
+ul#nav li#nav_bottom {
+    position:absolute;
+    bottom:0px;
+    background:#A1716C;
+}
+
+#pages {
+    position:relative;
+    top:0px;
+    left:0px;
+    background:#000;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+#pages div {
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+
+#pages .home {
+    background: #fff;
+}
+
+#pages .profile {
+    background: #FF5B00;
+}
+
+#pages .editor {
+    background: #A1716C;
+}
+
+#pages .gallery {
+    background:#00CABD;
+    
+}
+
+#pages .about {
+    background: #439AAB;
+}
 
 ul.graphics {
     list-style:none;

@@ -1,6 +1,19 @@
-=current_user
+#pages
+  .home
+    home
+    %canvas{:id => "playerCanvas", :width => 640, :height => 390}
+  
+  .editor
+    editor
 
-%canvas{:id => "playerCanvas", :width => 640, :height => 390}
+  .profile
+    #profile
+
+  .gallery
+    #gallery
+  
+  .about
+    about
 
 :javascript
   $(document).ready( player_main() );

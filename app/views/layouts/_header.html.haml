@@ -1,26 +1,21 @@
-
-%header
-  =# link_to(image_tag("logo.png", :id => "logo"), root_path) 
-  
-  %ul{:id => "nav"}
-    %li{:class => "home"}
-      =link_to('home', '')
-    %li{:class => "gallery"}
-      =link_to('gallery', '/gallery')
-    %li{:class => "editor"}
-      =link_to('editor', '/editor')
-    %li{:class => "about"}
-      =link_to('about', '/about')
+%ul{:id => "nav"}
+  %li{:class => "home", :id =>"nav_top"}
+    =link_to('home', root_path, :remote => true)
+  %li{:class => "gallery", :id =>"nav_left"}
+    =link_to('gallery', '/gallery', :remote => true)
+  %li{:class => "profile", :id =>"nav_right"}
+    =link_to('profile', user_path(current_user.id), :remote => true)
+  %li{:class => "editor", :id =>"nav_bottom"}
+    =link_to('editor', '#')
+  -if false
     -if user_signed_in?
       %li= link_to('Profile', user_path(current_user.id))
       %li= link_to('Logout', destroy_user_session_path, :method => :delete)
     -else
       %li= link_to('Login', new_user_session_path)
       %li= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
-      
-.clear
 
-=if true
+=if false
   .flash_message
     =flash[:notice]
     =flash[:alert]
