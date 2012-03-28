@@ -1,10 +1,10 @@
 #pages
   .home
-    home
-    %canvas{:id => "playerCanvas", :width => 640, :height => 390}
+    =render :partial => "home"
   
   .editor
-    editor
+    #editor
+      #content
 
   .profile
     #profile
@@ -17,3 +17,4 @@
 
 :javascript
   $(document).ready( player_main() );
+  $(document).ready( function() { editor_main(); } );

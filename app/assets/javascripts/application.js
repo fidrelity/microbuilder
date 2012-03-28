@@ -26,14 +26,15 @@ $(document).ready(function() {
     height = $(window).height();
     width = $(window).width();
     
+    spaceCheck(false);
+    
+    centerContent(height);
+    
     placeNav(height, width);
     placeSections(height, width);
     
     $(window).resize(function() {
-        height = $(window).height();
-        width = $(window).width();
-        placeNav(height, width);
-        placeSections(height, width);
+        spaceCheck(true);
     });
     
     //$('section#home').css({top: '0px', left: '0px'});
@@ -60,10 +61,11 @@ $(document).ready(function() {
     });
     
     $('li#nav_top').click(function() {
-        minimizeSection();
+        /* minimizeSection();
         $('#pages .about').stop().animate({top: '0px'}, 250, function() {
             $(this).attr('active', 1)
-        });
+        }); */
+        minimizeSection();
     });
 });
 
@@ -75,15 +77,33 @@ function placeNav(height, width) {
 }
 
 function placeSections(height, width) {
-    $('#pages .profile').css({left: width, top: '0px'});
-    $('#pages .editor').css({top: height, left: '0px'});
-    $('#pages .gallery').css({left: -width, top: '0px'});
-    $('#pages .about').css({top: -height, left: '0px'});
+    if($('#pages .profile').attr('active') != 1) $('#pages .profile').css({left: width, top: '0px'});
+    if($('#pages .editor').attr('active') != 1) $('#pages .editor').css({top: height, left: '0px'});
+    if($('#pages .gallery').attr('active') != 1) $('#pages .gallery').css({left: -width, top: '0px'});
+    if($('#pages .about').attr('active') != 1) $('#pages .about').css({top: -height, left: '0px'});
+    $('#pages > div').css({width: width, height: height});
+}
+
+function centerContent(height) {
+    $('.centered_content').each(function() {
+        contentHeight = $(this).height();
+        newHeight = height/2-contentHeight/2;
+        $(this).css({top: newHeight});
+    });
+}
+
+function spaceCheck(timer){
+    height = $(window).height();
+    width = $(window).width();
+    console.log('check');
+    placeNav(height, width);
+    placeSections(height, width);
+    centerContent(height);
+    if(!timer) setTimeout("spaceCheck(true)", 3000);
 }
 
 function minimizeSection(section) {
     $('#pages > div').each(function() {
-        console.log($(this));
         if($(this).attr('active') == 1) {
             $(this).animate({height: '0px', width: '0px', top: '50%', left: '50%'}, 250, function() {
                 $(this).attr('active', 0);
