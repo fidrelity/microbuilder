@@ -69,10 +69,11 @@ ul#nav li#nav_bottom {
     position:absolute;
     top:0px;
     left:0px;
-    background:#000;
     width:100%;
     height:100%;
     overflow:hidden;
+    background: #f1f1f1;
+    background:url('/assets/back.png') top left no-repeat;
 }
 
 #pages div {
@@ -87,25 +88,29 @@ ul#nav li#nav_bottom {
     height:auto;
 }
 
+#pages .centered_content {
+   width:1034px;
+   height:605px;
+   margin: 0 auto;
+   background:#FF0000;
+}
+
 #pages .home {
-    background: #fff;
+    
 }
 
 #pages .profile {
-    background: #FF5B00;
+    
 }
 
 #pages .editor {
-    background: #A1716C;
 }
 
 #pages .gallery {
-    background:#00CABD;
     
 }
 
 #pages .about {
-    background: #439AAB;
 }
 
 ul.graphics {

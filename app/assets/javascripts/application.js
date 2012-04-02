@@ -99,7 +99,7 @@ function spaceCheck(timer){
     placeNav(height, width);
     placeSections(height, width);
     centerContent(height);
-    if(!timer) setTimeout("spaceCheck(true)", 3000);
+    if(!timer) setTimeout("spaceCheck(false)", 3000);
 }
 
 function minimizeSection(section) {
