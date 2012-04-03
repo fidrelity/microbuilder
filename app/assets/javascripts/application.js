@@ -40,11 +40,17 @@ $(document).ready(function() {
     //$('section#home').css({top: '0px', left: '0px'});
     
     $('li#nav_right').click(function() {
-        minimizeSection();
-        $('#pages .profile').css({display:'block'}).stop().animate({left: '0px'}, 250, function() {
-            $(this).attr('active', 1);
-            centerContent(height);
-        });
+        if($('.popout').length) {
+          $('.popout').animate({'right': '0px'}, 250);
+          console.log('found');
+        }
+        else {
+          minimizeSection();
+          $('#pages .profile').css({display:'block'}).stop().animate({left: '0px'}, 250, function() {
+              $(this).attr('active', 1);
+              centerContent(height);
+          });
+        }
     });
     
     $('li#nav_left').click(function() {
@@ -75,6 +81,7 @@ function placeNav(height, width) {
     $('#nav_bottom').css({left: width/2-90});
     $('#nav_left').css({top: height/2-60});
     $('#nav_right').css({top: height/2-60});
+    $('.popout').css({top: height/2-100});
 }
 
 function placeSections(height, width) {
