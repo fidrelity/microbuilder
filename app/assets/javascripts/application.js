@@ -41,21 +41,22 @@ $(document).ready(function() {
     
     $('li#nav_right').click(function() {
         minimizeSection();
-        $('#pages .profile').stop().animate({left: '0px'}, 250, function() {
-            $(this).attr('active', 1)
+        $('#pages .profile').css({display:'block'}).stop().animate({left: '0px'}, 250, function() {
+            $(this).attr('active', 1);
+            centerContent(height);
         });
     });
     
     $('li#nav_left').click(function() {
         minimizeSection();
-        $('#pages .gallery').stop().animate({left: '0px'}, 250, function() {
+        $('#pages .gallery').css({display:'block'}).stop().animate({left: '0px'}, 250, function() {
             $(this).attr('active', 1)
         });
     });
     
     $('li#nav_bottom').click(function() {
         minimizeSection();
-        $('#pages .editor').stop().animate({top: '0px'}, 250, function() {
+        $('#pages .editor').css({display:'block'}).stop().animate({top: '0px'}, 250, function() {
             $(this).attr('active', 1)
         });
     });
@@ -70,10 +71,10 @@ $(document).ready(function() {
 });
 
 function placeNav(height, width) {
-    $('#nav_top').css({left: width/2-15});
-    $('#nav_bottom').css({left: width/2-15});
-    $('#nav_left').css({top: height/2-5});
-    $('#nav_right').css({top: height/2-5});
+    $('#nav_top').css({left: width/2-90});
+    $('#nav_bottom').css({left: width/2-90});
+    $('#nav_left').css({top: height/2-60});
+    $('#nav_right').css({top: height/2-60});
 }
 
 function placeSections(height, width) {
@@ -111,6 +112,7 @@ function minimizeSection(section) {
                 placeSections(height, width);
             });
         }
+        $(this).css({display:'none'});
     });
     //$('#'+section).animate({opacity: 0}, 500);
     //$('#'+section).animate({height: '0px', width: '0px', top: '50%', left: '50%'});

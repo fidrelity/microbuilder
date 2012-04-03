@@ -2,11 +2,12 @@
   %li{:class => "home", :id =>"nav_top"}
     =link_to('home', root_path, :remote => true)
   %li{:class => "gallery", :id =>"nav_left"}
-    =link_to('gallery', '/gallery', :remote => true)
+    =link_to image_tag("nav_gallery.png", :border=>0), '#', :remote => true
   %li{:class => "profile", :id =>"nav_right"}
-    =link_to('profile', user_path(current_user.id), :remote => true)
+    =link_to image_tag("nav_profile.png", :border=>0), user_path(current_user.id), :remote => true
+    =#link_to('profile', user_path(current_user.id), :remote => true)
   %li{:class => "editor", :id =>"nav_bottom"}
-    =link_to('editor', '#')
+    =link_to image_tag("nav_editor.png", :border=>0), '#'
   -if false
     -if user_signed_in?
       %li= link_to('Profile', user_path(current_user.id))

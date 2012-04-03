@@ -22,6 +22,16 @@ body {
    clear:both;
 }
 
+h1 {
+   
+}
+
+h2 {
+   font-size:16px;
+   text-decoration:none;
+   padding: 17px 0 17px 17px;
+}
+
 ul#nav {
     list-style:none;
     z-index: 2;
@@ -30,9 +40,6 @@ ul#nav {
 ul#nav li {
     position:absolute;
     overflow:hidden;
-    padding: 10px;
-    width:31px;
-    height:31px;
     z-index:2;
     display:block;
 }
@@ -50,18 +57,23 @@ ul#nav li#nav_top {
 ul#nav li#nav_left {
     position:absolute;
     left:0px;
+    height:90px;
+    width:60px;
     background:#00CABD;
 }
 
 ul#nav li#nav_right {
+    width:71px;
+    height:108px;
     position:absolute;
     right:0px;
-    background:#FF5B00;
 }
 
 ul#nav li#nav_bottom {
     position:absolute;
     bottom:0px;
+    width:90px;
+    height:60px;
     background:#A1716C;
 }
 
@@ -84,15 +96,12 @@ ul#nav li#nav_bottom {
 
 #pages div div {
     position:relative;
-    width:auto;
-    height:auto;
 }
 
 #pages .centered_content {
    width:1034px;
    height:605px;
    margin: 0 auto;
-   background:#FF0000;
 }
 
 #pages .home {
@@ -101,6 +110,53 @@ ul#nav li#nav_bottom {
 
 #pages .profile {
     
+}
+
+#pages .profile #profileimage {
+   width:225px;
+   height:225px;
+}
+
+#pages .profile #info {
+   float:left;
+   height:605px;
+   width:225px;
+   background:#fff;
+}
+
+#pages .profile #info .info {
+   padding:20px 0 0 13px;
+   font-size: 18px;
+}
+
+#pages .profile #collection {
+   position:absolute;
+   left: 239px;
+   width:797px;
+   height:492px;
+}
+
+#pages .profile #collection .container {
+   width:795px;
+   height:260px;
+   background:#fff;
+   overflow:hidden;
+   margin: 0 0 22px 0;
+}
+
+#pages .game {
+   width:167px;
+   height:167px;
+   float:left;
+   padding:14px;
+}
+
+#pages .game .info {
+   position:absolute;
+   bottom: 0px;
+   background:#ededed;
+   height:30px;
+   width:167px;
 }
 
 #pages .editor {
