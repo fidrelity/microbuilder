@@ -1,152 +1,155 @@
 <h2>Game Editor</h2>
 
+<div class="meta">
+  Meta
 
-<h3>Meta</h3>
+  <label>game title: </label>
+  {{view TextInputView textBinding="game.title" placeholder="insert name"}}
+  <br />
 
-<label>game title: </label>
-{{view TextInputView textBinding="game.title" placeholder="insert name"}}
-<br />
-
-<label>instructions: </label>
-{{view TextInputView textBinding="game.instructions" placeholder="(140 chars max)"}}
-<br />
-
-<button {{action "searchBackground" target="App.gameController"}}>select background</button>
-<br/>
-
-<label>length</label>
-<input type="range" min="0" max="100" />
-
-
-<h3>Objects</h3>
-
-<ul class="graphics">
-  {{#each game.gameObjects}}
-    {{#view SelectView 
-      contentBinding = "this"
-      controllerBinding = "App.gameObjectsController"
-    }}
-      <li>
-        {{view GraphicView 
-            nameBinding="content.name"
-            imagePathBinding="content.graphic.imagePath"
-            widthBinding="content.graphic.frameWidth"
-            heightBinding="content.graphic.frameHeight"
-        }}
-        <button {{action "remove"}}>delete</button>
-      </li>
-    {{/view}}
-  {{/each}}
-</ul>
-
-<div class="clear"></div>
-
-<button {{action "searchGraphic" target="App.gameController"}}>add object</button>
-
-
-<h3>Behaviours</h3>
-
-<ul class="behaviour">
-  {{#view BehaviourView 
-    contentBinding = "game.startBehaviour"
-    controllerBinding = "App.behaviourController"
-  }}
-    <li>
-      <div>onStart</div>
-      <ul class="actions">
-    
-        {{#each content.actions}}
-    
-          {{#view SelectView 
-            contentBinding = "this"
-            controllerBinding = "parent.actions"
-          }}
-      
-            <li>
-              {{content.string}} 
-              <button {{action "remove"}}> delete </button>
-            </li>
-        
-          {{/view}}
-      
-        {{/each}}
-    
-        <li>
-          <button {{action "addAction"}}>add Action</button>
-        </li>
-    
-      </ul>
-    </li>
-  {{/view}}
+  <label>instructions: </label>
+  {{view TextInputView textBinding="game.instructions" placeholder="(140 chars max)"}}
+  <br />
   
-  {{#each game.behaviours}}
+  <button {{action "searchBackground" target="App.gameController"}}>select background</button>
+  <br/>
+
+  <label>length</label>
+  <input type="range" min="0" max="100" />
+</div>
+
+<div class="meta">
+  Objects
+
+  <ul class="graphics_overview">
+    {{#each game.gameObjects}}
+      {{#view SelectView 
+        contentBinding = "this"
+        controllerBinding = "App.gameObjectsController"
+      }}
+        <li>
+          {{view GraphicView 
+              nameBinding="content.name"
+              imagePathBinding="content.graphic.imagePath"
+              widthBinding="content.graphic.frameWidth"
+              heightBinding="content.graphic.frameHeight"
+          }}
+          <button {{action "remove"}}>delete</button>
+        </li>
+        <div class="clear"></div>
+      {{/view}}
+    {{/each}}
+  </ul>
+
+  <button {{action "searchGraphic" target="App.gameController"}}>add object</button>
+</div>
+
+<div class="meta">
+  Behaviours
+
+  <ul class="behaviour">
     {{#view BehaviourView 
-      contentBinding = "this"
+      contentBinding = "game.startBehaviour"
       controllerBinding = "App.behaviourController"
     }}
       <li>
-        
-        <div>if</div>
-        <ul class="triggers">
-          
-          {{#each content.triggers}}
-          
-            {{#view SelectView 
-              contentBinding = "this"
-              controllerBinding = "parent.triggers"
-            }}
-            
-              <li>
-                {{content.string}} 
-                <button {{action "remove"}}> delete </button>
-              </li>
-              
-            {{/view}}
-            
-          {{/each}}
-          
-          <li>
-            <button {{action "addTrigger"}}>add Trigger</button>
-          </li>
-          
-        </ul>
-        
-        
-        <div>then</div>
+        <div>onStart</div>
         <ul class="actions">
-          
+    
           {{#each content.actions}}
-          
+    
             {{#view SelectView 
               contentBinding = "this"
               controllerBinding = "parent.actions"
             }}
-            
+      
               <li>
                 {{content.string}} 
                 <button {{action "remove"}}> delete </button>
               </li>
-              
+        
             {{/view}}
-            
+      
           {{/each}}
-          
+    
           <li>
             <button {{action "addAction"}}>add Action</button>
           </li>
-          
+    
         </ul>
-        
-        <button {{action "remove"}}>delete</button>
       </li>
     {{/view}}
-  {{/each}}
-</ul>
+  
+    {{#each game.behaviours}}
+      {{#view BehaviourView 
+        contentBinding = "this"
+        controllerBinding = "App.behaviourController"
+      }}
+        <li>
+        
+          <div>if</div>
+          <ul class="triggers">
+          
+            {{#each content.triggers}}
+          
+              {{#view SelectView 
+                contentBinding = "this"
+                controllerBinding = "parent.triggers"
+              }}
+            
+                <li>
+                  {{content.string}} 
+                  <button {{action "remove"}}> delete </button>
+                </li>
+              
+              {{/view}}
+            
+            {{/each}}
+          
+            <li>
+              <button {{action "addTrigger"}}>add Trigger</button>
+            </li>
+          
+          </ul>
+        
+        
+          <div>then</div>
+          <ul class="actions">
+          
+            {{#each content.actions}}
+          
+              {{#view SelectView 
+                contentBinding = "this"
+                controllerBinding = "parent.actions"
+              }}
+            
+                <li>
+                  {{content.string}} 
+                  <button {{action "remove"}}> delete </button>
+                </li>
+              
+              {{/view}}
+            
+            {{/each}}
+          
+            <li>
+              <button {{action "addAction"}}>add Action</button>
+            </li>
+          
+          </ul>
+        
+          <button {{action "remove"}}>delete</button>
+        </li>
+      {{/view}}
+    {{/each}}
+  </ul>
 
-<button {{action "addBehaviour" target="App.gameController"}}>add behaviour</button>
+  <button {{action "addBehaviour" target="App.gameController"}}>add behaviour</button>
+</div>
 
+<div class="clear">
 
-<h3>Preview</h3>
+Preview
 
 <p>title: {{game.title}}</p>
 <p>instructions: {{game.instructions}}</p>
