@@ -16,6 +16,7 @@ var Game = function( fsm ) {
   this.mouse = null;
   
   this.debug = true;
+  this.debugMouse = new Vector();
   
 };
 
@@ -68,7 +69,12 @@ Game.prototype = {
     
     this.timePlayed += dt;
     
-    this.mouse = null;
+    if ( this.mouse ) {
+    
+        this.debugMouse.copy( this.mouse );
+        this.mouse = null;
+    
+    }
     
   },
   
@@ -91,6 +97,13 @@ Game.prototype = {
       
       this.gameObjects[i].draw( ctx );
       
+    }
+    
+    if ( this.debug && this.debugMouse ) {
+        
+        ctx.fillStyle = '#000';
+        ctx.fillRect( this.debugMouse.x - 5, this.debugMouse.y -5 , 10, 10 );
+        
     }
     
   },

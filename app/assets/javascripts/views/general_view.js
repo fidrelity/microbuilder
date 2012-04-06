@@ -6,7 +6,7 @@ var GeneralView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    App.gameController.setPlayerCanvas( $( '#playerCanvas' )[0] );
+    App.gameController.setPlayerCanvas( $( '#testCanvas' )[0] );
   
   }
   

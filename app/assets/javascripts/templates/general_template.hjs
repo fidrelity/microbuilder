@@ -157,7 +157,7 @@ Preview
 <p>instructions: {{game.instructions}}</p>
 
 <div id="previewCanvas" style="border: 2px solid black; width: 640px; height: 390px">
-  <canvas id="playerCanvas" width="640" height="390" style="background:#000"></canvas>
+  <canvas id="testCanvas" width="640" height="390" style="background:#000"></canvas>
 </div>
 
 <button {{action "publishGame" target="App.gameController"}}>publish</button>
