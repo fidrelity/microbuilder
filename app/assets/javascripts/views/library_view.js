@@ -16,7 +16,8 @@ var GraphicView = Ember.View.extend({
   
   imageStyle : function() {
     
-    return "background-image: url(" + this.get( 'imagePath' ) + "); width:" + this.get( 'width' ) + "px;height:" + this.get( 'height' ) + "px";
+    return this.get( 'imagePath' );
+    //return "background-image: url(" + this.get( 'imagePath' ) + "); width:" + this.get( 'width' ) + "px;height:" + this.get( 'height' ) + "px";
     
   }.property( 'imagePath', 'width', 'height' )
 

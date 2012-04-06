@@ -1,7 +1,9 @@
-<h2>Game Editor</h2>
+<b>Game Editor</b>
+<br>
 
 <div class="meta">
-  Meta
+  <b>Meta</b>
+  <br>
 
   <label>game title: </label>
   {{view TextInputView textBinding="game.title" placeholder="insert name"}}
@@ -19,7 +21,7 @@
 </div>
 
 <div class="meta">
-  Objects
+  <b>Objects</b>
 
   <ul class="graphics_overview">
     {{#each game.gameObjects}}
@@ -45,7 +47,7 @@
 </div>
 
 <div class="meta">
-  Behaviours
+  <b>Behaviours</b>
 
   <ul class="behaviour">
     {{#view BehaviourView 

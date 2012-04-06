@@ -47,31 +47,42 @@ ul#nav li {
     overflow:hidden;
     z-index:2;
     display:block;
+    width:45px;
+    height:80px;
+    -webkit-box-shadow: 1px 1px 8px 2px rgba(00, 00, 00, 0.5);
+    -moz-box-shadow: 1px 1px 8px 2px rgba(00, 00, 00, 0.5);
+    box-shadow: 1px 1px 8px 2px rgba(00, 00, 00, 0.5);
 }
 
 ul#nav li img {
     
 }
 
-ul#nav li#nav_top {
-    position:absolute;
-    top:0px;
-    background:#439AAB;
-}
-
 ul#nav li#nav_left {
     position:absolute;
     left:0px;
-    height:90px;
-    width:60px;
     background:#00CABD;
 }
 
 ul#nav li#nav_right {
-    width:71px;
-    height:108px;
     position:absolute;
     right:0px;
+}
+
+ul#nav li#nav_top {
+    position:absolute;
+    top:0px;
+    width:80px;
+    height:45px;
+    background:#439AAB;
+}
+
+ul#nav li#nav_bottom {
+    position:absolute;
+    bottom:0px;
+    width:80px;
+    height:45px;
+    background:#A1716C;
 }
 
 ul#nav .popout {
@@ -82,14 +93,6 @@ ul#nav .popout {
   height:200px;
 }
 
-ul#nav li#nav_bottom {
-    position:absolute;
-    bottom:0px;
-    width:90px;
-    height:60px;
-    background:#A1716C;
-}
-
 #pages {
     position:absolute;
     top:0px;
@@ -98,7 +101,11 @@ ul#nav li#nav_bottom {
     height:100%;
     overflow:hidden;
     background: #f1f1f1;
-    background:url('/assets/back.png') top left no-repeat;
+    background:url('/assets/bg2.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 #pages div {
@@ -113,6 +120,7 @@ ul#nav li#nav_bottom {
    width:1034px;
    height:605px;
    margin: 0 auto;
+   background: #ccc;
 }
 
 #pages .home {
@@ -233,10 +241,15 @@ ul#nav li#nav_bottom {
 
 #editor .meta {
   position:relative;
-  width:200px;
+  width:256px;
   height:150px;
   float:left;
   margin:0 20px 0 0;
+}
+
+#editor button {
+  padding:5px;
+  font-size:11px;
 }
 
 #editor ul.graphics {
@@ -248,11 +261,16 @@ ul#nav li#nav_bottom {
   list-style:none;
 }
 
-#editor ul.graphics_overview li {
-  height:50px;
-  width:50px;
+#editor ul.graphics_overview div {
+  height:70px;
+  width:70px;
   overflow:hidden;
   float:left;
+}
+
+#editor ul.graphics_overview li img {
+  height:50px;
+  width:50px;
 }
 
 #editor ul.graphics li {

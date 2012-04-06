@@ -46,24 +46,23 @@ $(document).ready(function() {
         }
         else {
           minimizeSection();
-          $('#pages .profile').css({display:'block'}).stop().animate({left: '0px'}, 250, function() {
-              $(this).attr('active', 1);
-              centerContent(height);
+          $('#pages .profile').attr('active', 1).css({display:'block'}).stop().animate({left: '0px'}, 500, function() {
+
           });
         }
     });
     
     $('li#nav_left').click(function() {
         minimizeSection();
-        $('#pages .gallery').css({display:'block'}).stop().animate({left: '0px'}, 250, function() {
-            $(this).attr('active', 1)
+        $('#pages .gallery').attr('active', 1).css({display:'block'}).stop().animate({left: '0px'}, 500, function() {
+
         });
     });
     
     $('li#nav_bottom').click(function() {
         minimizeSection();
-        $('#pages .editor').css({display:'block'}).stop().animate({top: '0px'}, 250, function() {
-            $(this).attr('active', 1)
+        $('#pages .editor').attr('active', 1).css({display:'block'}).stop().animate({top: '0px'}, 500, function() {
+
         });
     });
     
