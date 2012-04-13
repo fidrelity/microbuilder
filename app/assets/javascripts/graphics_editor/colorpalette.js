@@ -9,6 +9,7 @@ var ColorPalette = {
   currentColor : null,
 
   init : function() {
+    console.log("init", ColorPalette.domWrapper);
     ColorPalette.create();
     ColorPalette.domColorDiv.live('click', $.proxy(ColorPalette.clickColor, this));
     ColorPalette.setColor(ColorPalette.colors[0]);
@@ -21,6 +22,7 @@ var ColorPalette = {
       ColorPalette.domWrapper.append('<div class="colorBlock" id="'+color+'" style="background:#'+color+'"></div>');
     };
     ColorPalette.domColorDiv = $('.colorBlock');
+    console.log(ColorPalette.domWrapper);
   },
 
   clickColor : function(e) {
