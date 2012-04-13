@@ -7,9 +7,13 @@ class GraphicsController < ApplicationController
   end
 
   def create
-    @graphic = current_user.graphics.new(params[:graphic])
-    response, status = @graphic.save ? [@graphic.to_response_hash, 200] : [@graphic.errors.to_json, 400]
-    
+    if current_user
+      @graphic = current_user.graphics.new(params[:graphic])
+      response, status = @graphic.save ? [@graphic.to_response_hash, 200] : [@graphic.errors.to_json, 400]
+    else
+      response, status = ["You are not signed in - Please sign in to create Graphics", 400]
+    end
+      
     render :json => response, :status => status
   end
   

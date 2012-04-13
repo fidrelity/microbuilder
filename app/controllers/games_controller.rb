@@ -18,8 +18,12 @@ class GamesController < ApplicationController
   end
   
   def create
-    @game = current_user.games.create(params[:game]) if current_user
-    render :text => play_url(@game)
+    if current_user
+      @game = current_user.games.create(params[:game])
+      response, status = [play_url(@game), 200]
+    else
+
+    render :json => response
   end
   
   def destroy
