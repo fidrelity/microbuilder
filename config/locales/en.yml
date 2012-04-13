@@ -2,4 +2,14 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  graphics:
+    create:
+      error: You are currently not signed in - Please sign in to create Graphics.
+    destroy:
+      success: Successfully deleted graphic.
+      error: Not allowed to delete graphic.
+      
+  games:
+    create:
+      error: The Game was not valid and thus could not be created.
+  

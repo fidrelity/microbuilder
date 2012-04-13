@@ -1,5 +1,5 @@
 class GraphicsController < ApplicationController
-  respond_to :js, :only => [:create, :public]
+  respond_to :js, :only => [:create, :public, :delete]
   before_filter :authenticate_user!, :only => [:create, :destroy]
   
   def index
@@ -7,12 +7,8 @@ class GraphicsController < ApplicationController
   end
 
   def create
-    if current_user
-      @graphic = current_user.graphics.new(params[:graphic])
-      response, status = @graphic.save ? [@graphic.to_response_hash, 200] : [@graphic.errors.to_json, 400]
-    else
-      response, status = ["You are not signed in - Please sign in to create Graphics", 400]
-    end
+    @graphic = current_user.graphics.new(params[:graphic])
+    response, status = @graphic.save ? [@graphic.to_response_hash, 200] : [@graphic.errors.to_json, 400]
       
     render :json => response, :status => status
   end
@@ -21,14 +17,14 @@ class GraphicsController < ApplicationController
     @graphic = Graphic.find(params[:id])
     user = @graphic.user
     
-    if current_user = @graphic.user
+    if current_user == @graphic.user
       @graphic.games.any? ? @graphic.update_attribute(:user, nil) : @graphic.destroy
-      flash[:notice] = "Successfully deleted graphic"
+      flash.now[:notice] = I18n.t('.success')
     else
-      flash[:error] = "Not allowed to delete graphic"
+      flash.now[:error] = I18n.t('.error')
     end
 
-    redirect_to user_path(user)
+    redirect_to root_path
   end
   
   def public

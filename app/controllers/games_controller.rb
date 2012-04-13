@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   respond_to :js, :only => [:create, :index]
+  before_filter :authenticate_user!, :only => [:create, :destroy]
   
   def index
     @games = Game.all
@@ -18,10 +19,12 @@ class GamesController < ApplicationController
   end
   
   def create
-    if current_user
-      @game = current_user.games.create(params[:game])
+      @game = current_user.games.new(params[:game])
+    if @game.save
       response, status = [play_url(@game), 200]
     else
+      response, status = [I18n.t(".error"), 400]
+    end
 
     render :json => response
   end
