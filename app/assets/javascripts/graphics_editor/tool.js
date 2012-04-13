@@ -21,7 +21,6 @@ var ToolBar = {
     ToolBar.tools.push(new DragableTool(Paint.pixelDrawer.drawRect.bind(Paint.pixelDrawer),"rectToolButton"));
     ToolBar.tools.push(new DragableTool(Paint.pixelDrawer.fillRect.bind(Paint.pixelDrawer),"fillRectToolButton"));
     
-    
     ToolBar.tools.push(new EraserTool());    
     ToolBar.tools.push(new SelectTool());    
     ToolBar.tools.push(new FlipTool());
@@ -32,6 +31,7 @@ var ToolBar = {
   },
 
   clickTool : function(e) {
+    console.log("omg");
     var tool = ToolBar.getToolInstanceById(e.currentTarget.id);
     if(tool.isSelectable) {
       ToolBar.setCurrentTool(e.currentTarget.id);
