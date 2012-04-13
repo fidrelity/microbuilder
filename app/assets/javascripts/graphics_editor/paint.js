@@ -260,6 +260,8 @@ var Paint = {
   saveImage : function() {
 
     Paint.stopAnimation();
+    var imageTitle = $("#imageName").val();
+    var makePublic = $("#makePublic").is(":checked") ? 1 : 0;
 
     var count = Paint.spriteAreas.length;
     var width = Paint.canvasTemplate.width(); 
@@ -269,6 +271,8 @@ var Paint = {
     Paint.spriteCanvas.attr('width', totalWidth).attr('height', height).show();
     var canvas = document.getElementById(Paint.spriteCanvas.attr('id'));
     var context = canvas.getContext('2d');
+
+    if(!imageTitle || !count) { alert("No Name!");return false;}
 
     // Merge canvases
     for (var i = 0; i < Paint.spriteAreas.length; i++) {;
@@ -285,10 +289,13 @@ var Paint = {
       type: "post",
       data: { 
         graphic: {
+          name : imageTitle,
           image_data: imgData,
           frame_count: count,
           frame_width: width,
           frame_height: height,
+          public : makePublic,
+          background : 0,
         },
       },
       

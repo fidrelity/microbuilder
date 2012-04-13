@@ -2,11 +2,8 @@
 
 <p>paint a new object</p>
 
-<div id="gfx-editor-wrapper" class="slide-container">
 
-  <div class="slide-wrapper">
-
-    <!-- Select Size -->
+    <!-- Select Size
     <div id="introWrapper" class="slide">
       <div class="slide-content">
         <h2>Select canvas size:</h2>
@@ -22,6 +19,7 @@
       </div>
 
     </div>
+     -->
 
     <!-- Paint -->
     <div id="paintWrapper" class="slide">
@@ -53,8 +51,7 @@
                 <input type="button" id="fillRectToolButton" class="tool" value="Filled Rect">
                 <input type="button" id="fillCircleToolButton" class="tool" value="Filled Circle">
                 <input type="button" id="circleToolButton" class="tool" value="Circle">
-                <input type="button" id="eraserToolButton" class="tool" value="Eraser">
-                <input type="button" id="saveButton" class="tool" value="Save">                
+                <input type="button" id="eraserToolButton" class="tool" value="Eraser">            
             </p>
 
             <p>
@@ -74,6 +71,10 @@
                 <input type="image" src="assets/paint/stop.png" id="stopButton" value="Stop">
                 <input type="checkbox" value="1" id="replayLoop"> Loop
             </p>
+            <p>
+            Name: <input type="text" size="25" id="imageName"> <input type="button" id="saveButton" class="tool" value="Save">
+            isPublic <input type="checkbox" id="makePublic">
+            </p>
 
 
             <div id="pencilWrapper">
@@ -88,13 +89,6 @@
 
       </div>
     </div>
-
-  </div><!-- slider-wrapper END -->
-
-  <div class="slider-footer">
-    <input type="button" class="prevButton" value="Prev" >
-    <input type="button" id="goToPaintButton" value=" Next " class="nextButton">
-  </div>
   
 </div><!-- gfx-editor-end -->
 
