@@ -19,6 +19,18 @@ class GameTest < ActiveSupport::TestCase
     @game.destroy
     assert_equal [@graphic_with_user], Graphic.all
   end
+  
+  should "create game and graphics association correctly" do
+    @valid_game = Factory.build(:game)
+    @invalid_game = Factory.build(:game)
+    @graphic1 = Factory(:graphic, :user => @valid_game.author)
+    
+    @valid_game.graphics << @graphic1
+    @invalid_game.graphics << @graphic1
+
+    assert_equal true, @valid_game.save
+    assert_equal false, @invalid_game.save
+  end
 end
 
 

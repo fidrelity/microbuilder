@@ -19,9 +19,9 @@ class GraphicsController < ApplicationController
     
     if current_user == @graphic.user
       @graphic.games.any? ? @graphic.update_attribute(:user, nil) : @graphic.destroy
-      flash.now[:notice] = I18n.t('.success')
+      flash.now[:notice] = I18n.t('.graphics.destroy.success')
     else
-      flash.now[:error] = I18n.t('.error')
+      flash.now[:error] = I18n.t('.graphics.destroy.error')
     end
 
     redirect_to root_path
