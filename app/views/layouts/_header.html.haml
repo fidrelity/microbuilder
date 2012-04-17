@@ -2,7 +2,7 @@
   %li{:class => "home", :id =>"nav_top"}
     =link_to('home', root_path, :remote => true)
   %li{:class => "gallery", :id =>"nav_left"}
-    =link_to image_tag("nav_gallery.png", :border=>0), '#', :remote => true
+    =link_to image_tag("nav_gallery.png", :border=>0), gallery_path, :remote => true
     
   -if user_signed_in?
     %li{:class => "profile", :id =>"nav_right"}
