@@ -34,7 +34,7 @@ var ClickTriggerModel = TriggerModel.extend({
     
     return 'click on ' + this.get( 'gameObject' ).name;
     
-  }.property( 'gameObject' ),
+  }.property( 'gameObject.name' ),
   
   getData : function() {
     
@@ -77,7 +77,7 @@ var ContactTriggerModel = TriggerModel.extend({
       
     }
     
-  }.property( 'gameObject', 'gameObject2' ),
+  }.property( 'gameObject.name', 'gameObject2.name' ),
   
   getData : function() {
     

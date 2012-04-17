@@ -104,7 +104,7 @@
         
         <li {{action "select"}} {{bindAttr class="isSelected:selected"}}>
           <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
-          <p>{{content.graphic.name}}</p>
+          <p>{{content.name}}</p>
         </li>
         
       {{/view}}

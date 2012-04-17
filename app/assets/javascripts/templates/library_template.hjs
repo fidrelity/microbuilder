@@ -13,14 +13,10 @@
       controllerBinding = "App.libraryController" 
       selectFunctionBinding = "App.libraryController.selectGraphic" }}
       
-      <li {{action "select"}}>
+      <li {{action "select"}} class="graphic">
         
-        {{view GraphicView 
-            nameBinding="content.name"
-            imagePathBinding="content.imagePath"
-            widthBinding="content.frameWidth"
-            heightBinding="content.frameHeight"
-        }}
+        <img {{bindAttr src="content.imagePath"}} />
+        <div> {{content.name}} </div>
         
       </li>
       

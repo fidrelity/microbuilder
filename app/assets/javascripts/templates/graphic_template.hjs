@@ -1,5 +1,0 @@
-<div class="graphic"><img {{bindAttr src="imageStyle"}} /></div>
-
-{{#if name}}
-    <p>{{name}}</p>
-{{/if}}

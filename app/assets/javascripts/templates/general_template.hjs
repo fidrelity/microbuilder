@@ -29,13 +29,9 @@
         contentBinding = "this"
         controllerBinding = "App.gameObjectsController"
       }}
-        <li>
-          {{view GraphicView 
-              nameBinding="content.name"
-              imagePathBinding="content.graphic.imagePath"
-              widthBinding="content.graphic.frameWidth"
-              heightBinding="content.graphic.frameHeight"
-          }}
+        <li class="graphic">
+          <img {{bindAttr src="content.graphic.imagePath"}} />
+          {{view Ember.TextField valueBinding="content.name" maxlength="32"}}
           <button {{action "remove"}}>delete</button>
         </li>
         <div class="clear"></div>

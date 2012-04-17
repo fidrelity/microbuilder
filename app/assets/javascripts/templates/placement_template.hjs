@@ -10,12 +10,8 @@
 
   <img {{bindAttr src="background.imagePath"}} style="position:absolute" />
   
-  <div id="placementGraphic">
-    {{view GraphicView 
-        imagePathBinding="graphic.imagePath"
-        widthBinding="graphic.frameWidth"
-        heightBinding="graphic.frameHeight"
-    }}
+  <div id="placementGraphic" class="graphic">
+    <img {{bindAttr src="graphic.imagePath"}} />
   </div>
   
 </div>
