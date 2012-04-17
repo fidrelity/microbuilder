@@ -6,18 +6,7 @@ class Graphic < ActiveRecord::Base
 
   before_destroy :referenced?
   
-  if Rails.env.production?
-    has_attached_file :image, 
-      :url => "/:class/:id/:basename" + ".png",
-      :storage => :s3,
-      :bucket => 'mbgfx',
-      :s3_credentials => {
-      :access_key_id => ENV['S3_KEY'],
-      :secret_access_key => ENV['S3_SECRET']
-    }
-  else
-    has_attached_file :image, :url => "/:class/:id/:basename" + ".png"
-  end
+  has_attached_file :image, PAPERCLIP_OPTIONS
   
   before_create :generate_file_name
   before_create :decode_base64_image

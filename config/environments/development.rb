@@ -41,3 +41,9 @@ Microbuilder::Application.configure do
   
   Paperclip.options[:command_path] = '/usr/bin/identify'
 end
+
+PAPERCLIP_OPTIONS = {
+  :url => "/:class/:id/:basename" + ".png",
+  :path => Rails.root.to_s + "/public/:class/:id/:basename" + ".png",
+}
+
