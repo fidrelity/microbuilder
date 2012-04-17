@@ -14,12 +14,12 @@ class AlterTitleAndInstuction < ActiveRecord::Migration
   def up
     change_column :games, :title, :string, :null => false
     change_column :games, :instruction, :string, :null => false
-    change_column :games, :data, :string, :null => false
+    change_column :games, :data, :text, :null => false
   end
 
   def down
     change_column :games, :title, :string
     change_column :games, :instruction, :string
-    change_column :games, :data, :string
+    change_column :games, :data, :text
   end
 end
