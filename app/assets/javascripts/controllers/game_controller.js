@@ -123,10 +123,10 @@ var GameController = Ember.Object.extend({
     var data = this.game.getData();
     
     console.log(
-      title : this.game.title,
-      instruction: this.game.instructions,
-      data : JSON.stringify( data.game ),
-      graphic_ids: JSON.stringify( data.graphicIDs )
+      this.game.title,
+      this.game.instructions,
+      JSON.stringify( data.game ),
+      JSON.stringify( data.graphicIDs )
     );
     
     $.ajax({
