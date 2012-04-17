@@ -11,5 +11,5 @@ en:
       
   games:
     create:
-      error: The Game was not valid and thus could not be created.
+      error: Server says No.
   
