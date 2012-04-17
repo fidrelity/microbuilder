@@ -31,6 +31,15 @@ class GameTest < ActiveSupport::TestCase
     assert_equal true, @valid_game.save
     assert_equal false, @invalid_game.save
   end
+  
+  should "prohibit invalid game" do
+    @untitled_game = Factory.build(:game, :title => "")
+    @no_win_game = Factory.build(:game, :data => '')
+    
+    
+    assert_equal false, @untitled_game.save
+    assert_equal false, @no_win_game.save
+  end
 end
 
 
