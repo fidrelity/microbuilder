@@ -29,7 +29,8 @@ var GameModel = Ember.Object.extend({
     var game = {},
         graphics = [],
         graphicIDs = [],
-        i;
+        win = false,
+        b, i;
     
     if ( this.background ) {
       
@@ -54,8 +55,24 @@ var GameModel = Ember.Object.extend({
   
     for ( i = 0; i < this.behaviours.length; i++ ) {
   
-      game.behaviours.push( this.behaviours[i].getData( graphics ) );
+      b = this.behaviours[i].getData( graphics );
   
+      if ( b.actions ) {
+
+        for ( i = 0; i < b.actions.length; i++ ) {
+        
+          if ( b.actions[i].type === 'win' ) {
+            
+              win = true;
+            
+          }
+        
+        }
+      
+      }
+      
+      game.behaviours.push( b );
+      
     }
     
     for ( i = 0; i < graphics.length; i++ ) {
@@ -68,7 +85,8 @@ var GameModel = Ember.Object.extend({
     
     return {
         game: game,
-        graphicIDs: graphicIDs
+        graphicIDs: graphicIDs,
+        win: win
     };
     
   }
