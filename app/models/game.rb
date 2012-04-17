@@ -3,9 +3,9 @@ class Game < ActiveRecord::Base
   has_and_belongs_to_many :graphics
   
   before_destroy :destroy_unreferenced_graphics
-  before_create :check_win_condition
   before_create :check_graphics
   
+  validate :win_condition_in_data
   validates_presence_of :title, :instruction, :data
   
   def create_graphics_association(graphic_ids)
@@ -26,9 +26,11 @@ class Game < ActiveRecord::Base
       end
     end
     
-    def check_win_condition
-      win_regex = /\"type\":\"win\"/
-      data.match(win_regex)
+    def win_condition_in_data
+      win_regex = /\\"type\\":\\"win\\"/
+      unless data.match(win_regex)
+        errors[:data] << "Missing Win-Condition"  
+      end
     end
     
     def check_graphics

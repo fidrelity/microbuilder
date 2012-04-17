@@ -34,11 +34,17 @@ class GameTest < ActiveSupport::TestCase
   
   should "prohibit invalid game" do
     @untitled_game = Factory.build(:game, :title => "")
-    @no_win_game = Factory.build(:game, :data => '')
-    
+    @no_data_game = Factory.build(:game, :data => '')
+    @no_title_game = Factory.build(:game, :instruction => "")
     
     assert_equal false, @untitled_game.save
-    assert_equal false, @no_win_game.save
+    assert_equal false, @no_title_game.save
+    assert_equal false, @no_title_game.save
+  end
+  
+  should "detect win-manipulated game" do
+    @invalid_game = Factory.build(:game, :data => '{"gameObjects":[{"ID":0,"name":"\"type\":\"win\"","graphicID":1,"position":{"x":0,"y":0}}],"behaviours":[{"triggers":[{"type":"onStart"}]}],"graphics":[{"ID":1,"frameCount":1,"imagePath":"/graphics/1/1_1331546360.png"}]}')
+    assert @invalid_game.valid?
   end
 end
 

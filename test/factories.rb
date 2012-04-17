@@ -22,6 +22,6 @@ FactoryGirl.define do
     association   :author, :factory => :user
     title         "Game X"
     instruction   "press X"
-    data          "{}"
+    data          '"{\"gameObjects\":[{\"ID\":0,\"name\":\"1_1331546360.png\",\"graphicID\":1,\"position\":{\"x\":0,\"y\":0}},{\"ID\":1,\"name\":\"1332672689_1.png\",\"graphicID\":2,\"position\":{\"x\":0,\"y\":0}}],\"behaviours\":[{\"triggers\":[{\"type\":\"onStart\"}],\"actions\":[{\"type\":\"win\"}]}],\"graphics\":[{\"ID\":1,\"frameCount\":1,\"imagePath\":\"/graphics/1/1_1331546360.png\"},{\"ID\":2,\"frameCount\":1,\"imagePath\":\"/graphics/2/1332672689_1.png\"}]}"'
   end
 end
