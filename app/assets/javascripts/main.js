@@ -17,6 +17,10 @@ function editor_main() {
   App.actionController = ActionController.create();
 
 
+  //
+  App.pencilTool = PencilToolModel.create();
+
+
   App.mainView = MainView.create();
   App.mainView.appendTo('#content');
 

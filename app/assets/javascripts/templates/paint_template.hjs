@@ -45,8 +45,12 @@
 
           </div> <!-- canvas -->
           <div id="zoomCanvasWrapper">
-               <canvas id="zoomCanvas" width="256" height="256"></canvas>
-               <div id="cursorRect"></div>
+                  {{#view PaintView 
+                    canvasBinding = "this"
+                  }} 
+                    <canvas id="zoomCanvas" width="256" height="256" {{action "setCurrentSpriteModel"}}></canvas>
+                  {{/view}}
+                              
           </div>
           <input type="image" src="assets/paint/magnifier_zoom_in.png" id="zoomInButton" value="+">
           <input  type="image" src="assets/paint/magifier_zoom_out.png"id="zoomOutButton" value="-">

@@ -17,12 +17,18 @@ var ToolBoxController = Ember.Object.extend({
     this.set('currentTool', toolModel);
   },
 
-  setCurrentTool : function(tool) {
-    this.set('currentTool', tool);
+  setCurrentTool : function(_tool) {
+    console.log(_tool);
+    if(!_tool) return false;
+    this.set('currentTool', _tool);
   },
 
   getCurrentTool : function() {
     return this.get('currentTool');
+  },
+
+  highLightTool : function(_tool) {
+
   },
 
 });
