@@ -120,32 +120,37 @@ var GameController = Ember.Object.extend({
   
   publishGame : function() {
     
-    console.log( {
-      title : this.game.title,
-      instruction: this.game.instructions,
-      data : JSON.stringify( this.game.getData() )
-    });
+    var data = this.game.getData();
     
-    // $.ajax({
-    //   url : 'games/',
-    //   type : 'POST',
-    //   data : {
-    //     
-    //     game: {
-    //       title : this.game.title,
-    //       instruction: this.game.instructions,
-    //       data : JSON.stringify( this.game.getData() )
-    //     }
-    //     
-    //   },
-    //   
-    //   success: function( data ) {
-    //     
-    //     window.location = data;
-    //     
-    //   }
-    //   
-    // });
+    console.log(
+      this.game.title,
+      this.game.instructions,
+      JSON.stringify( data.game ),
+      JSON.stringify( data.graphicIDs )
+    );
+    
+    $.ajax({
+      url : 'games/',
+      type : 'POST',
+      data : {
+        
+        game: {
+          title : this.game.title,
+          instruction: this.game.instructions,
+          data : JSON.stringify( data.game )
+        },
+        
+        graphic_ids: data.graphicIDs
+        
+      },
+      
+      success: function( data ) {
+        
+        window.location = data;
+        
+      }
+      
+    });
     
     // window.localStorage.setItem( 'game', JSON.stringify( this.game.getData() ) );
   
