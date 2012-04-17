@@ -9,13 +9,17 @@ function editor_main() {
   App.paintController = PaintController.create();
   
   App.gameObjectsController = GameObjectsController.create();
+  App.toolBoxController = ToolBoxController.create();
+
   App.behaviourController = BehaviourController.create();
   
   App.triggerController = TriggerController.create();
   App.actionController = ActionController.create();
 
+
   App.mainView = MainView.create();
   App.mainView.appendTo('#content');
+
   
   setTimeout( function() {
   

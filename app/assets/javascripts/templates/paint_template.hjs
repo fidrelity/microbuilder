@@ -32,6 +32,17 @@
               <div id="outlineBox"></div>
               <canvas id="canvas-template" class="canvas canvas-over" width="64" height="64"></canvas>
               <canvas id="canvas-sketch" class="canvas" width="64" height="64"></canvas>
+
+               {{#each App.paintController}}
+  
+                  {{#view SpriteView 
+                    spriteBinding = "this"
+                  }}
+                    <canvas {{action "setCurrentSpriteModel"}} class="canvas canvas-over" width="64" height="64"></canvas>                    
+                  {{/view}}
+                  
+                {{/each}}
+
           </div> <!-- canvas -->
           <div id="zoomCanvasWrapper">
                <canvas id="zoomCanvas" width="256" height="256"></canvas>
@@ -44,6 +55,19 @@
         <div id="paintRight">
           <div id="tools" style="padding:10px">
             <p>
+
+                  {{#view ToolView
+                    toolBinding = "App.pencilTool"
+                  }}
+                   <button {{action "setCurrentTool"}}>PencilTool</button>                
+                  {{/view}}
+                
+                  {{#view ToolView
+                    toolBinding = "this"
+                  }}
+                   <button {{action "addSprite"}}>Add</button>                
+                  {{/view}}
+
                 <input type="image" src="assets/paint/cursor.png" id="selectToolButton" class="tool" value="Selector">
                 <input type="image" src="assets/paint/pencil.png" id="pencilToolButton" class="tool" value="Pencil">
                 <input type="button" id="lineToolButton" class="tool" value="Line">
