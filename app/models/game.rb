@@ -5,6 +5,8 @@ class Game < ActiveRecord::Base
   before_destroy :destroy_unreferenced_graphics
   before_create :check_graphics
   
+  validates_presence_of :title, :instruction, :data
+  
   def create_graphics_association(graphic_ids)
     return unless graphic_ids
     
