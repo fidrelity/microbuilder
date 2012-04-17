@@ -126,8 +126,16 @@ var GameController = Ember.Object.extend({
       this.game.title,
       this.game.instructions,
       JSON.stringify( data.game ),
-      JSON.stringify( data.graphicIDs )
+      JSON.stringify( data.graphicIDs ),
+      data.win
     );
+    
+    // if ( !data.win ) {
+    //     
+    //     alert( 'game has no win action' );
+    //     return;
+    //     
+    // }
     
     $.ajax({
       url : 'games/',
@@ -144,9 +152,33 @@ var GameController = Ember.Object.extend({
         
       },
       
-      success: function( data ) {
+      statusCode: {
         
-        window.location = data;
+        200: function( data ) {
+        
+          console.log(data);
+        
+          alert( 'sucess: ' + data.responseText );
+          
+          // window.location = data.responseText;
+        
+        },
+        
+        401: function( data ) {
+          
+          console.log(data);
+          
+          alert( 'not logged in: ' + data.responseText );
+          
+        },
+        
+        500: function( data ) {
+          
+          console.log(data);
+          
+          alert( 'internal server error: ' + data.responseText );
+          
+        }
         
       }
       

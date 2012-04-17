@@ -44,7 +44,7 @@ ul#nav {
 
 ul#nav li {
     position:absolute;
-    overflow:hidden;
+/*    overflow:hidden;*/
     z-index:2;
     display:block;
     width:45px;
@@ -99,7 +99,7 @@ ul#nav .popout {
     left:0px;
     width:100%;
     height:100%;
-    overflow:hidden;
+/*    overflow:hidden;*/
     background: #f1f1f1;
     background:url('/assets/bg2.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
@@ -163,7 +163,7 @@ ul#nav .popout {
    width:795px;
    height:236px;
    background:#fff;
-   overflow:hidden;
+/*   overflow:hidden;*/
    margin: 0 0 22px 0;
 }
 
@@ -264,7 +264,7 @@ ul#nav .popout {
 #editor ul.graphics_overview div {
   height:70px;
   width:70px;
-  overflow:hidden;
+/*  overflow:hidden;*/
   float:left;
 }
 
