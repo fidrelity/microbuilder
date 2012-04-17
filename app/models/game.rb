@@ -3,6 +3,7 @@ class Game < ActiveRecord::Base
   has_and_belongs_to_many :graphics
   
   before_destroy :destroy_unreferenced_graphics
+  before_create :check_win_condition
   before_create :check_graphics
   
   validates_presence_of :title, :instruction, :data
@@ -23,6 +24,11 @@ class Game < ActiveRecord::Base
           graphic.destroy
         end
       end
+    end
+    
+    def check_win_condition
+      win_regex = /\"type\":\"win\"/
+      data.match(win_regex)
     end
     
     def check_graphics
