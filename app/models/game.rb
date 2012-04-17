@@ -6,6 +6,8 @@ class Game < ActiveRecord::Base
   before_create :check_graphics
   
   def create_graphics_association(graphic_ids)
+    return unless graphic_ids
+    
     graphic_ids.each do |id|
       graphics << Graphic.find(id)
     end
