@@ -27,7 +27,7 @@ class Game < ActiveRecord::Base
     end
     
     def win_condition_in_data
-      win_regex = /\\"type\\":\\"win\\"/
+      win_regex = /\"type\":\"win\"/
       unless data.match(win_regex)
         errors[:data] << "Missing Win-Condition"  
       end
