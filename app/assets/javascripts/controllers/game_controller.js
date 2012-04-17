@@ -143,8 +143,8 @@ var GameController = Ember.Object.extend({
       data : {
         
         game: {
-          title : this.game.title,
-          instruction: this.game.instructions,
+          title : this.game.title || '',
+          instruction: this.game.instructions || '',
           data : JSON.stringify( data.game )
         },
         
@@ -164,6 +164,14 @@ var GameController = Ember.Object.extend({
         
         },
         
+        400: function( data ) {
+          
+          console.log(data);
+          
+          alert( data.responseText );
+          
+        },
+
         401: function( data ) {
           
           console.log(data);
