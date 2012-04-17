@@ -26,39 +26,50 @@ var GameModel = Ember.Object.extend({
   
   getData : function() {
     
-    var data = {},
+    var game = {},
         graphics = [],
+        graphicIDs = [],
         i;
     
     if ( this.background ) {
       
-      data.background = this.background.imagePath;
+      game.background = this.background.imagePath;
+      graphicIDs.push( this.background.ID );
       
     }
     
     if ( this.gameObjects.length ) {
       
-      data.gameObjects = [];
+      game.gameObjects = [];
     
       for ( i = 0; i < this.gameObjects.length; i++ ) {
     
-        data.gameObjects.push( this.gameObjects[i].getData( graphics ) );
+        game.gameObjects.push( this.gameObjects[i].getData( graphics ) );
     
       }
     
     }
     
-    data.behaviours = [this.startBehaviour.getData( graphics )];
+    game.behaviours = [this.startBehaviour.getData( graphics )];
   
     for ( i = 0; i < this.behaviours.length; i++ ) {
   
-      data.behaviours.push( this.behaviours[i].getData( graphics ) );
+      game.behaviours.push( this.behaviours[i].getData( graphics ) );
   
     }
     
-    data.graphics = graphics;
+    for ( i = 0; i < graphics.length; i++ ) {
+  
+      graphicIDs.push( graphics[i].ID );
+  
+    }
     
-    return data;
+    game.graphics = graphics;
+    
+    return {
+        game: game,
+        graphicIDs: graphicIDs
+    };
     
   }
   
