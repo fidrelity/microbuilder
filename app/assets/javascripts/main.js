@@ -66,14 +66,6 @@ function editor_main() {
 
   App.main.appendTo('#content');
 
-  // App.gameController.game.gameObjects.push( GameObjectModel.create({
-  //   
-  //   'name' : 'Mario',
-  //   'graphic' : GraphicModel.create({ name : 'Mario', imagePath : '/assets/mario.png' }),
-  //   'position' : new Vector()
-  //   
-  // }) );
-
 };
 
 
@@ -185,7 +177,7 @@ function player_main( data ) {
     ]
   }
   
-  console.log( JSON.stringify( data ) );
+  // console.log( JSON.stringify( data ) );
   
   player.setCanvas( $( '#playerCanvas' )[0] );
   

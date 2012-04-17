@@ -6,11 +6,11 @@
   <br>
 
   <label>game title: </label>
-  {{view TextInputView textBinding="game.title" placeholder="insert name"}}
+  {{view Ember.TextField valueBinding="game.title" size="32" placeholder="insert name" maxlength="32"}}
   <br />
 
   <label>instructions: </label>
-  {{view TextInputView textBinding="game.instructions" placeholder="(140 chars max)"}}
+  {{view Ember.TextField valueBinding="game.instructions" placeholder="(140 chars max)" maxlength="140"}}
   <br />
   
   <button {{action "searchBackground" target="App.gameController"}}>select background</button>

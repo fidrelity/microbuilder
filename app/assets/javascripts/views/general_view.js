@@ -13,24 +13,6 @@ var GeneralView = Ember.View.extend({
 });
 
 
-var TextInputView = Ember.TextField.extend({
-  
-  text : null,
-  
-  change: function() {
-    
-    var value = this.get('value');
-    
-    if ( value ) {
-      
-      this.set('text', value);
-      
-    }
-    
-  }
-  
-});
-
 var SelectView = Ember.View.extend({
   
   content : null,
