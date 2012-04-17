@@ -48,29 +48,15 @@ Player.prototype = {
     
     this.context = canvas.getContext( '2d' );
     
-    canvas.addEventListener( 'click', function( e ) {
-      
-      var mouse = new Vector();
-      
-      if ( e.pageX || e.pageY ) {
+    $( canvas ).click( function( e ) {
         
-        mouse.set( e.pageX, e.pageY );
+        var offset = $(this).offset();
         
-      } else {
+        e.stopPropagation();
         
-        mouse.set( 
-          e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft,
-          e.clientY + document.body.scrollTop + document.documentElement.scrollTop
-        );
-      
-      }
-      
-      mouse.x -= canvas.offsetLeft;
-      mouse.y -= canvas.offsetTop;
-      
-      self.click( mouse );
-      
-    }, false );
+        self.click( new Vector( e.pageX - offset.left, e.pageY - offset.top ) );
+        
+    });
     
   },
   
