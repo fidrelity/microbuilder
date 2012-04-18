@@ -51,27 +51,40 @@ var GameModel = Ember.Object.extend({
     
     }
     
-    game.behaviours = [this.startBehaviour.getData( graphics )];
+    
+    game.behaviours = [];
+    
+    b = this.startBehaviour.getData( graphics );
+    
+    if ( b ) {
+
+      game.behaviours.push( b );
+
+    }
   
     for ( i = 0; i < this.behaviours.length; i++ ) {
   
       b = this.behaviours[i].getData( graphics );
   
-      if ( b.actions ) {
+      if ( b ) {
+        
+        game.behaviours.push( b );
+  
+        if ( b.actions ) {
 
-        for ( i = 0; i < b.actions.length; i++ ) {
+          for ( i = 0; i < b.actions.length; i++ ) {
         
-          if ( b.actions[i].type === 'win' ) {
+            if ( b.actions[i].type === 'win' ) {
             
-              win = true;
+                win = true;
             
+            }
+        
           }
-        
+      
         }
       
       }
-      
-      game.behaviours.push( b );
       
     }
     

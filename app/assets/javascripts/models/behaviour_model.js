@@ -28,30 +28,24 @@ var BehaviourModel = Ember.Object.extend({
   
   getData : function( graphics ) {
     
-    var data = {}, i;
+    var data, i;
     
-    if ( this.triggers.length ) {
-      
-      data.triggers = [];
-      
+    if ( this.triggers.length && this.actions.length ) {
+    
+      data = { triggers: [], actions: [] };
+    
       for ( i = 0; i < this.triggers.length; i++ ) {
-        
+      
         data.triggers.push( this.triggers[i].getData() );
-        
-      }
       
-    }
+      }
     
-    if ( this.actions.length ) {
-      
-      data.actions = [];
-      
       for ( i = 0; i < this.actions.length; i++ ) {
-        
-        data.actions.push( this.actions[i].getData( graphics ) );
-        
-      }
       
+        data.actions.push( this.actions[i].getData( graphics ) );
+      
+      }
+    
     }
     
     return data;
