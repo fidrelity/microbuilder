@@ -1,6 +1,7 @@
-var Game = function( fsm ) {
+var Game = function( player, mouse ) {
   
-  this.fsm = fsm;
+  this.player = player;
+  this.mouse = player.mouse;
   
   this.background = null;
   
@@ -12,11 +13,6 @@ var Game = function( fsm ) {
   
   this.time = 0;
   this.timePlayed = 0;
-  
-  this.mouse = null;
-  
-  this.debug = true;
-  this.debugMouse = new Vector();
   
 };
 
@@ -40,8 +36,6 @@ Game.prototype = {
     
     this.time = 0;
     this.timePlayed = 0;
-    
-    this.mouse = null;
     
   },
   
@@ -69,18 +63,9 @@ Game.prototype = {
     
     this.timePlayed += dt;
     
-    if ( this.mouse ) {
-    
-        this.debugMouse.copy( this.mouse );
-        this.mouse = null;
-    
-    }
-    
   },
   
   draw : function( ctx ) {
-    
-    ctx.debug = this.debug;
     
     if ( this.background ) {
     
@@ -99,10 +84,10 @@ Game.prototype = {
       
     }
     
-    if ( this.debug && this.debugMouse ) {
+    if ( ctx.debug ) {
         
         ctx.fillStyle = '#000';
-        ctx.fillRect( this.debugMouse.x - 5, this.debugMouse.y -5 , 10, 10 );
+        ctx.fillRect( this.mouse.pos.x - 5, this.mouse.pos.y - 5 , 10, 10 );
         
     }
     
@@ -146,19 +131,13 @@ Game.prototype = {
   
   win : function() {
     
-    this.fsm.win();
+    this.player.fsm.win();
     
   },
   
   lose : function() {
     
-    this.fsm.lose();
-    
-  },
-  
-  drawDebug : function() {
-    
-    this.debug = !this.debug;
+    this.player.fsm.lose();
     
   }
   

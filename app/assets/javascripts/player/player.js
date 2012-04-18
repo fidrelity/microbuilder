@@ -4,13 +4,15 @@ var Player = function() {
   
   this.playTime = 5;
   
+  this.debug = true;
+  
 };
 
 Player.prototype = {
   
   init : function() {
     
-    this.context = null;
+    this.ctx = null;
     
     this.loader = null;
     this.game = null;
@@ -32,7 +34,7 @@ Player.prototype = {
       
       transitions : [
         { name : 'parse', from : '*', to: 'load' },
-        { name : 'show', from : 'load', to: 'ready' },
+        { name : 'run', from : 'load', to: 'ready' },
         { name : 'start', from : 'ready', to: 'play' },
         { name : 'win', from : 'play', to: 'end', callback : this.onWin },
         { name : 'lose', from : 'play', to: 'end', callback : this.onLose },
@@ -47,19 +49,66 @@ Player.prototype = {
   
   setCanvas : function( canvas ) {
     
+    var self = this,
+      ctx = canvas.getContext( '2d' );
+    
+    ctx.canvas = canvas;
+    ctx.debug = this.debug;
+    
+    this.ctx = ctx;
+    
+    this.mouse = new Mouse( canvas );
+    this.mouse.handleClick();
+    
+  },
+
+  parse : function( data ) {
+    
     var self = this;
     
-    this.context = canvas.getContext( '2d' );
-    this.context.canvas = canvas;
+    this.fsm.parse();
     
-    $( canvas ).click( function( e ) {
-        
-        var offset = $(this).offset();
-        
-        e.stopPropagation();
-        
-        self.click( new Vector( e.pageX - offset.left, e.pageY - offset.top ) );
-        
+    this.game = new Game( this, this.mouse );
+    
+    Parser.parseData( data, this.game, function() {
+      
+      self.fsm.run();
+      self.run();
+      
+    } );
+    
+  },
+  
+  run : function() {
+    
+    var self = this,
+      stateName = this.fsm.currentState.name;
+    
+    if ( stateName === 'init' || stateName === 'load' ) {
+    
+      return;
+    
+    }
+    
+    if ( this.mouse.clicked ) {
+      
+      this.click();
+      
+    }
+    
+    if ( stateName === 'play' ) {
+    
+      this.draw();
+      this.update();
+    
+    }
+    
+    this.mouse.clicked = false;
+    
+    requestAnimationFrame( function() {
+      
+      self.run();
+      
     });
     
   },
@@ -67,80 +116,56 @@ Player.prototype = {
   update : function() {
     
     this.game.update();
-    
+
     if ( this.game.timePlayed > this.playTime * 1000 ) {
-      
+  
       this.fsm.lose();
-      
+  
     }
     
   },
   
   draw : function() {
     
-    if ( this.context ) {
-    
-      this.game.draw( this.context );
-    
-    }
+    this.game.draw( this.ctx );
     
   },
-  
-  parse : function( data ) {
+
+  click : function( mouse ) {
     
-    var self = this;
-    
-    this.fsm.parse();
-    
-    this.game = new Game( this.fsm );
-    
-    Parser.parseData( data, this.game, function() {
+    if ( this.fsm.hasState( 'ready' ) ) {
       
-      self.fsm.show();
+      this.fsm.start();
       
-    } );
+    } else if ( this.fsm.hasState( 'end' ) ) {
+      
+      this.fsm.restart();
+    
+    }
     
   },
   
   enterReady : function() {
     
     this.game.reset();
-    
     this.draw();
     
-    this.context.fillStyle = '#FFFFCC';
-    this.context.fillRect( 200, 100, 240, 190 );
+    this.ctx.fillStyle = '#FFFFCC';
+    this.ctx.fillRect( 200, 100, 240, 190 );
     
   },
   
   enterPlay : function() {
     
-    var self = this;
-    
     this.game.reset();
-    
-    function animate() {
-      
-      self.update();
-      
-      if ( self.fsm.hasState( 'play' ) ) {
-      
-        requestAnimationFrame( animate );
-        
-        self.draw();
-      
-      }
-      
-    }
-    
-    animate();
+    this.draw();
     
   },
 
   enterEdit : function() {
     
     var self = this,
-      ctx = this.context,
+      ctx = this.ctx,
       canvas = ctx.canvas;
     
     if ( canvas.width === 640 ) {
@@ -152,7 +177,6 @@ Player.prototype = {
       ctx.translate( 128, 128 );
     
       this.game.reset();
-    
       this.draw();
     
     }
@@ -162,7 +186,7 @@ Player.prototype = {
   exitEdit : function() {
     
     var self = this,
-      ctx = this.context,
+      ctx = this.ctx,
       canvas = ctx.canvas;
     
     if ( canvas.width !== 640 ) {
@@ -173,7 +197,6 @@ Player.prototype = {
       ctx.restore();
     
       this.game.reset();
-    
       this.draw();
     
     }
@@ -182,38 +205,15 @@ Player.prototype = {
   
   onWin : function() {
     
-    this.context.fillStyle = '#CCFFCC';
-    this.context.fillRect( 200, 100, 240, 190 );
+    this.ctx.fillStyle = '#CCFFCC';
+    this.ctx.fillRect( 200, 100, 240, 190 );
     
   },
   
   onLose : function() {
     
-    this.context.fillStyle = '#FFCCCC';
-    this.context.fillRect( 200, 100, 240, 190 );
-    
-  },
-  
-  click : function( mouse ) {
-    
-    if ( this.fsm.hasState( 'play' ) ) {
-      
-      this.game.mouse = mouse;
-      
-    } else if ( this.fsm.hasState( 'ready' ) ) {
-      
-      this.fsm.start();
-      
-    } else if ( this.fsm.hasState( 'end' ) ) {
-      
-      this.fsm.restart();
-    
-    } else if ( this.fsm.hasState( 'edit' ) ) {
-      
-      mouse.x -= 128;
-      mouse.y -= 128;
-      
-    }
+    this.ctx.fillStyle = '#FFCCCC';
+    this.ctx.fillRect( 200, 100, 240, 190 );
     
   }
   

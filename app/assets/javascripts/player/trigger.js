@@ -8,9 +8,9 @@ ClickTrigger.prototype = {
   
   check : function( game ) {
     
-    if ( game.mouse ) {
+    if ( game.mouse.clicked ) {
       
-      return this.gameObject.getArea().contains( game.mouse );
+      return this.gameObject.getArea().contains( game.mouse.pos );
       
     } else {
     
@@ -36,7 +36,7 @@ ContactTrigger.prototype = {
   
   check : null,
   
-  checkContact : function( game ) {
+  checkContact : function() {
     
     var overlaps = this.checkOverlap();
     
@@ -56,7 +56,7 @@ ContactTrigger.prototype = {
     
   },
   
-  checkOverlap : function( game ) {
+  checkOverlap : function() {
     
     return this.gameObject1.getArea().overlaps( this.gameObject2.getArea() );
     
