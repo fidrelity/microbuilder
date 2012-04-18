@@ -240,11 +240,11 @@ ul#nav .popout {
 }
 
 #editor .meta {
-  position:relative;
+/*  position:relative;
   width:256px;
   height:150px;
-  float:left;
-  margin:0 20px 0 0;
+  float:left;*/
+  margin:10px;
 }
 
 #editor button {
@@ -252,44 +252,57 @@ ul#nav .popout {
   font-size:11px;
 }
 
+#editor ul.gameobjects {
+  list-style:none;
+}
+
+#editor ul.gameobjects li {
+  float:left;
+  margin: 0 10px 10px 0;
+}
+
+#editor ul.gameobjects li img {
+  height:50px;
+  width:50px;
+}
+
 #editor ul.graphics {
   list-style:none;
   width: 700px;
 }
 
-#editor ul.graphics_overview {
-  list-style:none;
-}
-
-#editor ul.graphics_overview div {
-  height:70px;
-  width:70px;
-/*  overflow:hidden;*/
-  float:left;
-}
-
-#editor ul.graphics_overview li img {
-  height:50px;
-  width:50px;
-}
-
 #editor ul.graphics li {
   float:left;
-  opacity: 0.8;
   background:#ccc;
-  width:128px;
-  margin:0 5px 0 0;
+  margin: 0 10px 10px 0;
+  opacity:0.8;
+}
+
+#editor ul.graphics li img {
+  height:50px;
+  width:50px;
 }
 
 #editor ul.graphics li:hover {
   opacity:1.0;
 }
 
-.graphic {
-  background-repeat: no-repeat;
+#editor ul.behaviours {
+  list-style:none;
+}
+
+#editor ul.behaviours li {
+  float:left;
+  margin: 0 10px 10px 0;
 }
 
 #placementGraphic {
   float : left;
   border : 2px solid #000;
+}
+
+.player {
+  border: 2px solid black; 
+  width: 640px;
+  height: 390px
 }

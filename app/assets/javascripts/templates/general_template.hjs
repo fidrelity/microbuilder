@@ -23,21 +23,21 @@
 <div class="meta">
   <b>Objects</b>
 
-  <ul class="graphics_overview">
+  <ul class="gameobjects">
     {{#each game.gameObjects}}
       {{#view SelectView 
         contentBinding = "this"
         controllerBinding = "App.gameObjectsController"
       }}
-        <li class="graphic">
-          <img {{bindAttr src="content.graphic.imagePath"}} />
-          {{view Ember.TextField valueBinding="content.name" maxlength="32"}}
+        <li>
+          <img {{bindAttr src="content.graphic.imagePath"}} /> <br />
+          {{view Ember.TextField valueBinding="content.name" maxlength="32" size="10"}} <br />
           <button {{action "remove"}}>delete</button>
         </li>
-        <div class="clear"></div>
       {{/view}}
     {{/each}}
   </ul>
+  <div class="clear"></div>
 
   <button {{action "searchGraphic" target="App.gameController"}}>add object</button>
 </div>
@@ -45,7 +45,7 @@
 <div class="meta">
   <b>Behaviours</b>
 
-  <ul class="behaviour">
+  <ul class="behaviours">
     {{#view BehaviourView 
       contentBinding = "game.startBehaviour"
       controllerBinding = "App.behaviourController"
@@ -70,11 +70,9 @@
       
           {{/each}}
     
-          <li>
-            <button {{action "addAction"}}>add Action</button>
-          </li>
-    
         </ul>
+        
+        <button {{action "addAction"}}>add Action</button>
       </li>
     {{/view}}
   
@@ -104,12 +102,10 @@
             
             {{/each}}
           
-            <li>
-              <button {{action "addTrigger"}}>add Trigger</button>
-            </li>
-          
           </ul>
-        
+          
+          <br />
+          <button {{action "addTrigger"}}>add Trigger</button>
         
           <div>then</div>
           <ul class="actions">
@@ -130,30 +126,35 @@
             
             {{/each}}
           
-            <li>
-              <button {{action "addAction"}}>add Action</button>
-            </li>
-          
           </ul>
         
-          <button {{action "remove"}}>delete</button>
+          <button class="clear" {{action "addAction"}}>add Action</button>
+          <br />
+          <button {{action "remove"}}>delete behaviour</button>
         </li>
       {{/view}}
     {{/each}}
   </ul>
+  
+  <div class="clear"></div>
 
   <button {{action "addBehaviour" target="App.gameController"}}>add behaviour</button>
 </div>
 
-<div class="clear">
+<div class="meta">
+  <b>Preview</b>
 
-Preview
+  <p>title: {{game.title}}</p>
+  <p>instructions: {{game.instructions}}</p>
 
-<p>title: {{game.title}}</p>
-<p>instructions: {{game.instructions}}</p>
+  <div class="player">
+    <canvas id="previewCanvas" width="640" height="390" style="background:#000"></canvas>
+  </div>
 
-<div id="previewCanvas" style="border: 2px solid black; width: 640px; height: 390px">
-  <canvas id="testCanvas" width="640" height="390" style="background:#000"></canvas>
+  <button {{action "publishGame" target="App.gameController"}}>publish</button>
 </div>
 
-<button {{action "publishGame" target="App.gameController"}}>publish</button>
+<div class="clear"></div>
+
+
+

@@ -179,12 +179,16 @@ function player_main( data ) {
   
   // console.log( JSON.stringify( data ) );
   
-  player.setCanvas( $( '#playerCanvas' )[0] );
+  if ( $( '#playerCanvas' ) && $( '#playerCanvas' )[0] ) {
   
-  if ( data ) {
+    player.setCanvas( $( '#playerCanvas' )[0] );
   
-    player.parse( data );
+    if ( data ) {
   
+      player.parse( data );
+  
+    }
+    
   }
   
 }
