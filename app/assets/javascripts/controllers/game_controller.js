@@ -34,7 +34,7 @@ var GameController = Ember.Object.extend({
   
   updatePlayer : function() {
     
-    this.player.parse( this.game.getData() );
+    this.player.parse( this.game.getData().game );
     
   },
   
