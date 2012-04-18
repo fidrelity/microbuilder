@@ -38,7 +38,7 @@ var PlacementView = Ember.View.extend({
     
     
     player.setCanvas( $('#placementCanvas')[0] );
-    player.parse( App.gameController.getGameData(), bind( this, callback ) );
+    player.parse( App.gameController.getGameObjectsData(), bind( this, callback ) );
     
   },
   

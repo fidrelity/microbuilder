@@ -35,6 +35,12 @@ var GameController = Ember.Object.extend({
     
   },
   
+  getGameObjectsData : function() {
+    
+    return this.game.getGameObjectsData();
+    
+  },
+  
   cancel : function() {
     
     App.routeManager.goToLocation( '' );

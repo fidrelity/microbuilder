@@ -380,7 +380,7 @@ Player.prototype = {
     
       graphic.image = image;
       gameObject.startGraphic = graphic;
-      gameObject.startPosition.set( 150, 100 );
+      gameObject.startPosition.set( Math.floor( Math.random() * 540 ), Math.floor( Math.random() * 290 ) );
       gameObject.stable = true;
     
       self.game.gameObjects.push( gameObject );

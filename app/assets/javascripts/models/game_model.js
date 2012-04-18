@@ -104,6 +104,30 @@ var GameModel = Ember.Object.extend({
     
   },
   
+  getGameObjectsData : function() {
+  
+    var game = { graphics : [], gameObjects : [] }, i;
+    
+    if ( this.background ) {
+      
+      game.background = this.background.imagePath;
+      
+    }
+    
+    if ( this.gameObjects.length ) {
+    
+      for ( i = 0; i < this.gameObjects.length; i++ ) {
+    
+        game.gameObjects.push( this.gameObjects[i].getData( game.graphics ) );
+    
+      }
+    
+    }
+    
+    return game;
+  
+  },
+  
   gameObjectPositionChanged : function( gameObjectID, pos ) {
     
     var gameObjects = this.gameObjects.filterProperty( 'ID', gameObjectID );
