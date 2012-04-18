@@ -5,6 +5,7 @@ var Player = function() {
   this.playTime = 5;
   
   this.debug = true;
+  this.large = false;
   
 };
 
@@ -94,6 +95,10 @@ Player.prototype = {
       
       this.click();
       
+    } else if ( this.mouse.dragging ) {
+      
+      this.draw();
+      
     }
     
     if ( stateName === 'play' ) {
@@ -126,6 +131,12 @@ Player.prototype = {
   },
   
   draw : function() {
+    
+    if ( this.large ) {
+      
+      this.ctx.clearRect(-128, -128, 896, 646);
+      
+    }
     
     this.game.draw( this.ctx );
     
@@ -164,42 +175,13 @@ Player.prototype = {
 
   enterEdit : function() {
     
-    var self = this,
-      ctx = this.ctx,
-      canvas = ctx.canvas;
-    
-    if ( canvas.width === 640 ) {
-    
-      canvas.width = 256 + 640;
-      canvas.height = 256 + 390;
-    
-      ctx.save();
-      ctx.translate( 128, 128 );
-    
-      this.game.reset();
-      this.draw();
-    
-    }
+    this.enlarge();
     
   },
 
   exitEdit : function() {
     
-    var self = this,
-      ctx = this.ctx,
-      canvas = ctx.canvas;
-    
-    if ( canvas.width !== 640 ) {
-    
-      canvas.width = 640;
-      canvas.height = 390;
-    
-      ctx.restore();
-    
-      this.game.reset();
-      this.draw();
-    
-    }
+    this.reduce();
     
   },
   
@@ -214,6 +196,53 @@ Player.prototype = {
     
     this.ctx.fillStyle = '#FFCCCC';
     this.ctx.fillRect( 200, 100, 240, 190 );
+    
+  },
+  
+  enlarge : function() {
+    
+    var ctx = this.ctx,
+      canvas = ctx.canvas;
+    
+    if ( !this.large ) {
+    
+      canvas.width = 256 + 640;
+      canvas.height = 256 + 390;
+    
+      ctx.save();
+      ctx.translate( 128, 128 );
+      
+      this.game.reset();
+      this.draw();
+      
+      this.mouse.handleDrag();
+      
+      this.large = true;
+    
+    }
+    
+  },
+  
+  reduce : function() {
+    
+    var ctx = this.ctx,
+      canvas = ctx.canvas;
+    
+    if ( this.large ) {
+    
+      canvas.width = 640;
+      canvas.height = 390;
+    
+      ctx.restore();
+      
+      this.game.reset();
+      this.draw();
+      
+      this.mouse.handleClick();
+      
+      this.large = false;
+    
+    }
     
   }
   
