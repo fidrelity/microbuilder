@@ -6,7 +6,11 @@
 
 {{/if}}
 
-<div id="placementCanvas" style="border: 2px solid black; width:640px; height:390px">
+<div class="player">
+  <canvas id="placementCanvas" width="640" height="390" style="background: #EEE;border:2px solid black;"></canvas>
+</div>
+
+<!-- <div id="placementCanvas" style="border: 2px solid black; width:640px; height:390px">
 
   <img {{bindAttr src="background.imagePath"}} style="position:absolute" />
   
@@ -14,7 +18,7 @@
     <img {{bindAttr src="graphic.imagePath"}} />
   </div>
   
-</div>
+</div> -->
 
 {{#if displayAll}}
 

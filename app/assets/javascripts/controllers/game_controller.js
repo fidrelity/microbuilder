@@ -15,9 +15,21 @@ var GameController = Ember.Object.extend({
     
     this.game = GameModel.create();
     
-    this.player = new Player();
-    this.player.edit = true;
-    this.player.debug = true;
+    var player = new Player();
+    
+    // player.edit = true;
+    
+    // player.debug = true;
+    // player.moveObjects = true;
+    // player.selectArea = true;
+    
+    this.player = player;
+    
+  },
+  
+  getGameData : function() {
+    
+    return this.game.getData().game;
     
   },
   
@@ -29,13 +41,9 @@ var GameController = Ember.Object.extend({
   
   setPlayerCanvas : function( canvas ) {
     
-    console.log( this.player.edit );
-    
     this.player.setCanvas( canvas );
     
     this.updatePlayer();
-    
-    console.log( this.player.edit );
     
   },
   

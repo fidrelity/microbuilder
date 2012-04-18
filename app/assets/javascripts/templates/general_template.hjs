@@ -148,7 +148,7 @@
   <p>instructions: {{game.instructions}}</p>
 
   <div class="player">
-    <canvas id="previewCanvas" width="640" height="390" style="background: #EEE;border:2px solid black; position:relative"></canvas>
+    <canvas id="previewCanvas" width="640" height="390" style="background: #EEE;border:2px solid black;"></canvas>
   </div>
 
   <button {{action "publishGame" target="App.gameController"}}>publish</button>

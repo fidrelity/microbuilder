@@ -8,8 +8,8 @@ var Player = function() {
   this.large = false;
   
   this.edit = false;
-  this.moveObjects = true;
-  this.selectArea = true;
+  this.moveObjects = false;
+  this.selectArea = false;
   
   this.dragObject = null;
   this.dragArea = null;
@@ -155,9 +155,17 @@ Player.prototype = {
     
     this.game.draw( ctx );
     
-    if ( this.edit && this.dragArea ) {
+    if ( this.edit ) {
+      
+      if ( this.dragArea ) {
     
-      this.dragArea.draw( ctx );
+        this.dragArea.draw( ctx );
+      
+      } else if ( this.dragObject ) {
+        
+        this.dragObject.getArea().draw( ctx );
+        
+      }
     
     }
     
@@ -179,7 +187,15 @@ Player.prototype = {
 
   mousedown : function( mouse ) {
     
-    if ( this.moveObjects ) {
+    if ( this.dragObject && this.dragObject.stable ) {
+      
+      if ( !this.dragObject.getArea().contains( mouse.pos ) ) {
+        
+        mouse.dragging = false;
+        
+      }
+      
+    } else if ( this.moveObjects ) {
     
       this.dragObject = this.game.getGameObjectAt( mouse.pos );
     
@@ -226,6 +242,12 @@ Player.prototype = {
       this.dragArea.adjust();
       this.dragArea.done = true;
       
+    }
+    
+    if ( this.dragObject && !this.dragObject.stable ) {
+    
+      this.dragObject = null;
+    
     }
     
   },
@@ -320,6 +342,32 @@ Player.prototype = {
       this.large = false;
     
     }
+    
+  },
+  
+  setDragObject : function( imagePath ) {
+    
+    var image = new Image(),
+      graphic = new Graphic( -1 ),
+      gameObject = new GameObject( -1 ),
+      self = this;
+    
+    image.src = imagePath;
+    
+    image.onload = function() {
+    
+      graphic.image = image;
+      gameObject.startGraphic = graphic;
+      gameObject.startPosition.set( 150, 100 );
+      gameObject.stable = true;
+    
+      self.game.gameObjects.push( gameObject );
+      self.dragObject = gameObject;
+    
+      self.game.reset();
+      self.draw();
+    
+    };
     
   }
   

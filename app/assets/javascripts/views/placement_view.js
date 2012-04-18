@@ -2,30 +2,29 @@ var PlacementView = Ember.View.extend({
 
   templateName : 'templates_placement_template',
   
-  graphicBinding : 'App.placementController.graphic',
-  backgroundBinding : 'App.gameController.game.background',
-  
-  position : new Vector(),
-  
   displayAll : true,
+  
+  player : null,
+  type : 'graphic',
   
   didInsertElement : function() {
     
-    var self = this;
+    var self = this,
+      player;
     
-    if ( this.get( 'graphic' ) ) {
+    if ( this.type === 'graphic' ) {
     
-      $('#placementGraphic').draggable({
-        containment: '#placementCanvas', 
-        scroll: false,
-        
-        stop: function(e, ui) {
-          
-          self.position.set( ui.position.left, ui.position.top );
-          
-        }
-        
-      });
+      player = new Player();
+      
+      player.edit = true;
+      // player.debug = true;
+      
+      player.setCanvas( $('#placementCanvas')[0] );
+      player.parse( App.gameController.getGameData() );
+      
+      player.setDragObject( App.placementController.graphic.imagePath );
+      
+      this.set( 'player', player );
     
     }
     
@@ -33,7 +32,7 @@ var PlacementView = Ember.View.extend({
   
   placeGraphic : function() {
   
-    App.gameController.placeGraphic( this.get( 'graphic' ), this.position );
+    App.placementController.placeGraphic( this.get( 'player' ).dragObject.position );
   
   }
 
