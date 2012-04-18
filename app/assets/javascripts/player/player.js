@@ -26,7 +26,8 @@ Player.prototype = {
         { name : 'load' },
         { name : 'ready', enter : this.enterReady },
         { name : 'play', enter : this.enterPlay },
-        { name : 'end'}
+        { name : 'end'},
+        { name : 'edit', enter : this.enterEdit, exit : this.exitEdit }
       ],
       
       transitions : [
@@ -36,6 +37,8 @@ Player.prototype = {
         { name : 'win', from : 'play', to: 'end', callback : this.onWin },
         { name : 'lose', from : 'play', to: 'end', callback : this.onLose },
         { name : 'restart', from : 'end', to: 'ready' },
+        { name : 'edit', from : '*', to: 'edit' },
+        { name : 'done', from : 'edit', to: 'ready' }
       ]
       
     });
@@ -47,6 +50,7 @@ Player.prototype = {
     var self = this;
     
     this.context = canvas.getContext( '2d' );
+    this.context.canvas = canvas;
     
     $( canvas ).click( function( e ) {
         
@@ -132,6 +136,49 @@ Player.prototype = {
     animate();
     
   },
+
+  enterEdit : function() {
+    
+    var self = this,
+      ctx = this.context,
+      canvas = ctx.canvas;
+    
+    if ( canvas.width === 640 ) {
+    
+      canvas.width = 256 + 640;
+      canvas.height = 256 + 390;
+    
+      ctx.save();
+      ctx.translate( 128, 128 );
+    
+      this.game.reset();
+    
+      this.draw();
+    
+    }
+    
+  },
+
+  exitEdit : function() {
+    
+    var self = this,
+      ctx = this.context,
+      canvas = ctx.canvas;
+    
+    if ( canvas.width !== 640 ) {
+    
+      canvas.width = 640;
+      canvas.height = 390;
+    
+      ctx.restore();
+    
+      this.game.reset();
+    
+      this.draw();
+    
+    }
+    
+  },
   
   onWin : function() {
     
@@ -160,6 +207,11 @@ Player.prototype = {
     } else if ( this.fsm.hasState( 'end' ) ) {
       
       this.fsm.restart();
+    
+    } else if ( this.fsm.hasState( 'edit' ) ) {
+      
+      mouse.x -= 128;
+      mouse.y -= 128;
       
     }
     
