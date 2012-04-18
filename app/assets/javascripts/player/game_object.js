@@ -89,7 +89,7 @@ GameObject.prototype = {
     this.position.copy( this.startPosition.addSelf( vec ) );
     
   },
-
+  
   setTarget : function( pos ) {
     
     this.target = pos;

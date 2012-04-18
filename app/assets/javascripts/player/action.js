@@ -45,7 +45,7 @@ var WinAction = {
   
   execute : function( game ) {
     
-    game.win();
+    game.player.fsm.win();
     
   }
   
@@ -55,7 +55,7 @@ var LoseAction = {
   
   execute : function( game ) {
     
-    game.lose();
+    game.player.fsm.lose();
     
   }
   

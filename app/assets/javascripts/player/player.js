@@ -386,8 +386,7 @@ Player.prototype = {
       self.game.gameObjects.push( gameObject );
       self.dragObject = gameObject;
     
-      self.game.reset();
-      self.draw();
+      self.reset();
     
     };
     
@@ -395,13 +394,13 @@ Player.prototype = {
   
   setDragObjectID : function( gameObjectID ) {
     
-    this.dragObject = this.game.getGameObjectWithID( gameObjectID );
-    this.dragObject.stable = true;
+    var dragObject = this.game.getGameObjectWithID( gameObjectID );
+    dragObject.stable = true;
     
-    this.dragArea = this.dragObject.getArea().clone();
+    this.dragArea = dragObject.getArea().clone();
+    this.dragObject = dragObject;
     
-    this.game.reset();
-    this.draw();
+    this.reset();
     
   }
   

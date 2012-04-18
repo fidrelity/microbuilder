@@ -43,7 +43,7 @@ var MoveActionModel = ActionModel.extend({
   
   angle : function() {
     
-    return this.get( 'position' ).sub(new Vector( 320, 195 ) ).angle().toFixed( 2 );
+    return this.get( 'position' ).angle().toFixed( 2 );
     
   }.property( 'position' ),
   

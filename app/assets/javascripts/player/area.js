@@ -24,6 +24,12 @@ Area.prototype = {
     
   },
   
+  center : function() {
+    
+    return new Vector( this.x + this.width / 2, this.y + this.height / 2 );
+    
+  },
+  
   contains : function( point ) {
     
     return (

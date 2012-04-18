@@ -62,12 +62,13 @@
 
     {{#if action.isMoveIn}}
     
-      <p>in what direction, relative to the middle, should {{action.gameObject.name}} move?</p>
+      <p>in what direction, relative it's position, should {{action.gameObject.name}} move?</p>
     
       {{view PlacementView 
+        type = "moveIn"
         displayAllBinding = "false" 
         positionBinding = "action.position"
-        graphicBinding = "action.gameObject.graphic"
+        gameObjectBinding = "action.gameObject"
       }}
     
     {{/if}}

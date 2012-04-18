@@ -29,6 +29,10 @@ var PlacementView = Ember.View.extend({
     } else if ( type === 'moveTo' || type === 'jumpTo' ) {
       
       callback = this.moveToCallback;
+    
+    } else if ( type === 'moveIn' ) {
+      
+      callback = this.moveInCallback;
       
     }
     
@@ -46,15 +50,13 @@ var PlacementView = Ember.View.extend({
   
   graphicCallback : function() {
     
-    var self = this,
-      player = this.player;
+    this.player.setDragObject( App.placementController.graphic.imagePath );
     
-    player.setDragObject( App.placementController.graphic.imagePath );
-    player.positionChangeCallback = function( gameObjectId, pos ) {
+    this.player.positionChangeCallback = bind( this, function( ID, pos ) {
       
-      self.get( 'position' ).copy( pos );
+      this.get( 'position' ).copy( pos );
       
-    }
+    });
     
     this.set( 'position', new Vector() );
     
@@ -62,15 +64,25 @@ var PlacementView = Ember.View.extend({
   
   moveToCallback : function() {
     
-    var self = this,
-      player = this.player;
+    this.player.setDragObjectID( this.get( 'gameObject' ).ID );
     
-    player.setDragObjectID( this.get( 'gameObject' ).ID );
-    player.positionChangeCallback = function( gameObjectId, pos ) {
-        
-      self.get( 'position' ).copy( pos );
+    this.player.positionChangeCallback = bind( this, function( ID, pos ) {
+      
+      this.get( 'position' ).copy( pos );
+      
+    });
+  
+  },
+
+  moveInCallback : function() {
     
-    }
+    this.player.setDragObjectID( this.get( 'gameObject' ).ID );
+    
+    this.player.positionChangeCallback = bind( this, function( ID, pos ) {
+      
+      this.get( 'position' ).copy( pos.sub( this.get( 'gameObject' ).position ) );
+      
+    });
   
   }
 

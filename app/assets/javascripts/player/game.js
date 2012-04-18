@@ -144,18 +144,6 @@ Game.prototype = {
     
     return null;
     
-  },
-  
-  win : function() {
-    
-    this.player.fsm.win();
-    
-  },
-  
-  lose : function() {
-    
-    this.player.fsm.lose();
-    
   }
   
 };
