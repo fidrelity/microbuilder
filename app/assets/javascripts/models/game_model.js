@@ -30,7 +30,7 @@ var GameModel = Ember.Object.extend({
         graphics = [],
         graphicIDs = [],
         win = false,
-        b, i;
+        b, i, j;
     
     if ( this.background ) {
       
@@ -72,9 +72,9 @@ var GameModel = Ember.Object.extend({
   
         if ( b.actions ) {
 
-          for ( i = 0; i < b.actions.length; i++ ) {
+          for ( j = 0; j < b.actions.length; j++ ) {
         
-            if ( b.actions[i].type === 'win' ) {
+            if ( b.actions[j].type === 'win' ) {
             
                 win = true;
             
