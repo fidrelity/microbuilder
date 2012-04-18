@@ -12,7 +12,7 @@ var PlacementView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    var player, callback;
+    var player, callback, type = this.type;
     
     player = new Player();
     player.edit = true;
@@ -22,11 +22,11 @@ var PlacementView = Ember.View.extend({
     this.set( 'player', player );
     
     
-    if ( this.type === 'graphic' ) {
+    if ( type === 'graphic' ) {
       
       callback = this.graphicCallback;
     
-    } else if ( this.type === 'moveTo' ) {
+    } else if ( type === 'moveTo' || type === 'jumpTo' ) {
       
       callback = this.moveToCallback;
       

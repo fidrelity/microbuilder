@@ -77,9 +77,10 @@
       <p>to what location should {{action.gameObject.name}} jump?</p>
     
       {{view PlacementView 
+        type = "jumpTo"
         displayAllBinding = "false" 
         positionBinding = "action.position"
-        graphicBinding = "action.gameObject.graphic"
+        gameObjectBinding = "action.gameObject"
       }}
     
     {{/if}}

@@ -180,6 +180,13 @@ Player.prototype = {
     }
     
   },
+  
+  reset : function() {
+    
+    this.game.reset();
+    this.draw();
+    
+  },
 
   click : function() {
     
@@ -274,8 +281,7 @@ Player.prototype = {
   
   enterReady : function() {
     
-    this.game.reset();
-    this.draw();
+    this.reset();
     
     this.ctx.fillStyle = '#FFFFCC';
     this.ctx.fillRect( 200, 100, 240, 190 );
@@ -284,8 +290,7 @@ Player.prototype = {
   
   enterPlay : function() {
     
-    this.game.reset();
-    this.draw();
+    this.reset();
     
   },
 
@@ -326,17 +331,15 @@ Player.prototype = {
     
       canvas.width = 256 + 640;
       canvas.height = 256 + 390;
-
     
       ctx.save();
       ctx.translate( 128, 128 );
-
-      this.game.reset();
-      this.draw();
       
       this.mouse.handleDrag();
       
       this.large = true;
+      
+      this.reset();
     
     }
     
@@ -354,12 +357,11 @@ Player.prototype = {
     
       ctx.restore();
       
-      this.game.reset();
-      this.draw();
-      
       this.mouse.handleClick();
       
       this.large = false;
+      
+      this.reset();
     
     }
     
