@@ -102,6 +102,18 @@ var GameModel = Ember.Object.extend({
         win: win
     };
     
+  },
+  
+  gameObjectPositionChanged : function( gameObjectID, pos ) {
+    
+    var gameObjects = this.gameObjects.filterProperty( 'ID', gameObjectID );
+    
+    if ( gameObjects.length ) {
+      
+      gameObjects[0].position.copy( pos );
+      
+    }
+    
   }
   
 });

@@ -14,6 +14,8 @@ var Player = function() {
   this.dragObject = null;
   this.dragArea = null;
   
+  this.positionChangeCallback = null;
+  
 };
 
 Player.prototype = {
@@ -244,9 +246,19 @@ Player.prototype = {
       
     }
     
-    if ( this.dragObject && !this.dragObject.stable ) {
+    if ( this.dragObject ) {
+      
+      if ( this.positionChangeCallback ) {
+        
+        this.positionChangeCallback( this.dragObject.ID, this.dragObject.position );
+        
+      }
+      
+      if ( !this.dragObject.stable ) {
     
-      this.dragObject = null;
+        this.dragObject = null;
+      
+      }
     
     }
     

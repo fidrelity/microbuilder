@@ -147,6 +147,11 @@
   <p>title: {{game.title}}</p>
   <p>instructions: {{game.instructions}}</p>
 
+  <p>
+    <button {{action "testGame" target="App.gameController"}}>test</button>
+    <button {{action "editGame" target="App.gameController"}}>edit</button>
+  </p>
+
   <div class="player">
     <canvas id="previewCanvas" width="640" height="390" style="background: #EEE;border:2px solid black;"></canvas>
   </div>

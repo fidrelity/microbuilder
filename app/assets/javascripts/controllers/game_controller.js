@@ -13,17 +13,19 @@ var GameController = Ember.Object.extend({
 
   init : function() {
     
-    this.game = GameModel.create();
-    
-    var player = new Player();
+    var player = new Player(),
+      game = GameModel.create();
     
     // player.edit = true;
     
     // player.debug = true;
-    // player.moveObjects = true;
+    player.moveObjects = true;
     // player.selectArea = true;
     
+    player.positionChangeCallback = bind( game, game.gameObjectPositionChanged );
+    
     this.player = player;
+    this.game = game;
     
   },
   
@@ -225,6 +227,18 @@ var GameController = Ember.Object.extend({
   loadGame : function() {
     
     
+    
+  },
+  
+  testGame : function() {
+    
+    this.player.fsm.done();
+    
+  },
+  
+  editGame : function() {
+    
+    this.player.fsm.edit();
     
   }
   
