@@ -1,12 +1,14 @@
-var Mouse = function( canvas ) {
+var Mouse = function( player ) {
   
-  this.canvas = canvas;
+  this.canvas = player.canvas;
+  this.player = player;
   
   this.clicked = false;
   this.dragging = false;
   
-  this.start = new Vector();
+  this._pos = new Vector();
   this.pos = new Vector();
+  this.move = new Vector();
   
 }
 
@@ -40,14 +42,18 @@ Mouse.prototype = {
     
     e.stopPropagation();
     
+    this.player.click( this );
+    
   },
   
   mousedown : function( e ) {
     
     this.setMouse( e, this.pos );
-    this.start.copy( this.pos );
+    this._pos.copy( this.pos );
     
     this.dragging = true;
+    
+    this.player.mousedown( this );
     
     e.stopPropagation();
     
@@ -57,7 +63,11 @@ Mouse.prototype = {
     
     if ( this.dragging ) {
     
+      this._pos.copy( this.pos );
       this.setMouse( e, this.pos );
+      this.move.copy( this.pos ).subSelf( this._pos );
+      
+      this.player.mousemove( this );
     
     }
     
@@ -70,6 +80,8 @@ Mouse.prototype = {
     this.setMouse( e, this.pos );
     
     this.dragging = false;
+    
+    this.player.mouseup( this );
     
     e.stopPropagation();
     

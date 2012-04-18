@@ -58,7 +58,6 @@ GameObject.prototype = {
   draw : function( ctx ) {
     
     ctx.save();
-    
     ctx.translate( this.position.x, this.position.y )
     
     this.graphic.draw( ctx, this.animationFrame );
@@ -82,6 +81,12 @@ GameObject.prototype = {
     
     this.position.copy( pos );
     this.target = null;
+    
+  },
+  
+  movePosition : function( vec ) {
+    
+    this.position.copy( this.startPosition.addSelf( vec ) );
     
   },
 

@@ -4,8 +4,15 @@ var Player = function() {
   
   this.playTime = 5;
   
-  this.debug = true;
+  this.debug = false;
   this.large = false;
+  
+  this.edit = false;
+  this.moveObjects = true;
+  this.selectArea = true;
+  
+  this.dragObject = null;
+  this.dragArea = null;
   
 };
 
@@ -14,6 +21,7 @@ Player.prototype = {
   init : function() {
     
     this.ctx = null;
+    this.canvas = null;
     
     this.loader = null;
     this.game = null;
@@ -35,7 +43,7 @@ Player.prototype = {
       
       transitions : [
         { name : 'parse', from : '*', to: 'load' },
-        { name : 'run', from : 'load', to: 'ready' },
+        { name : 'run', from : 'load', to: 'ready', callback : this.onRun },
         { name : 'start', from : 'ready', to: 'play' },
         { name : 'win', from : 'play', to: 'end', callback : this.onWin },
         { name : 'lose', from : 'play', to: 'end', callback : this.onLose },
@@ -53,12 +61,12 @@ Player.prototype = {
     var self = this,
       ctx = canvas.getContext( '2d' );
     
-    ctx.canvas = canvas;
     ctx.debug = this.debug;
     
     this.ctx = ctx;
+    this.canvas = canvas;
     
-    this.mouse = new Mouse( canvas );
+    this.mouse = new Mouse( this );
     this.mouse.handleClick();
     
   },
@@ -74,7 +82,6 @@ Player.prototype = {
     Parser.parseData( data, this.game, function() {
       
       self.fsm.run();
-      self.run();
       
     } );
     
@@ -91,11 +98,7 @@ Player.prototype = {
     
     }
     
-    if ( this.mouse.clicked ) {
-      
-      this.click();
-      
-    } else if ( this.mouse.dragging ) {
+    if ( this.mouse.dragging ) {
       
       this.draw();
       
@@ -132,17 +135,27 @@ Player.prototype = {
   
   draw : function() {
     
+    var ctx = this.ctx;
+    
     if ( this.large ) {
-      
-      this.ctx.clearRect(-128, -128, 896, 646);
-      
+    
+      ctx.clearRect( -128, -128, 896, 646 );
+    
     }
     
-    this.game.draw( this.ctx );
+    ctx.lineWidth = 2;
+    
+    this.game.draw( ctx );
+    
+    if ( this.edit && this.dragArea ) {
+    
+      this.dragArea.draw( ctx );
+    
+    }
     
   },
 
-  click : function( mouse ) {
+  click : function() {
     
     if ( this.fsm.hasState( 'ready' ) ) {
       
@@ -152,6 +165,59 @@ Player.prototype = {
       
       this.fsm.restart();
     
+    }
+    
+  },
+
+  mousedown : function( mouse ) {
+    
+    if ( this.moveObjects ) {
+    
+      this.dragObject = this.game.getGameObjectAt( mouse.pos );
+    
+    }
+    
+    if ( !this.dragObject && this.selectArea ) {
+      
+      if ( !this.dragArea || !this.dragArea.contains( mouse.pos ) ) {
+        
+        this.dragArea = new Area( mouse.pos.x, mouse.pos.y, 0, 0 );
+        
+      }
+      
+    }
+    
+  },
+  
+  mousemove : function( mouse ) {
+    
+    if ( this.dragObject ) {
+      
+      this.dragObject.movePosition( mouse.move );
+      
+    } else if ( this.dragArea ) {
+      
+      if ( this.dragArea.done ) {
+        
+        this.dragArea.move( mouse.move );
+        
+      } else {
+        
+        this.dragArea.resize( mouse.move );
+        
+      }
+      
+    }
+    
+  },
+  
+  mouseup : function() {
+    
+    if ( this.dragArea ) {
+      
+      this.dragArea.adjust();
+      this.dragArea.done = true;
+      
     }
     
   },
@@ -176,12 +242,26 @@ Player.prototype = {
   enterEdit : function() {
     
     this.enlarge();
+    this.edit = true;
     
   },
 
   exitEdit : function() {
     
     this.reduce();
+    this.edit = false;
+    
+  },
+  
+  onRun : function() {
+    
+    this.run();
+    
+    if ( this.edit ) {
+      
+      this.fsm.edit();
+      
+    }
     
   },
   
@@ -202,16 +282,17 @@ Player.prototype = {
   enlarge : function() {
     
     var ctx = this.ctx,
-      canvas = ctx.canvas;
+      canvas = this.canvas;
     
     if ( !this.large ) {
     
       canvas.width = 256 + 640;
       canvas.height = 256 + 390;
+
     
       ctx.save();
       ctx.translate( 128, 128 );
-      
+
       this.game.reset();
       this.draw();
       
@@ -226,7 +307,7 @@ Player.prototype = {
   reduce : function() {
     
     var ctx = this.ctx,
-      canvas = ctx.canvas;
+      canvas = this.canvas;
     
     if ( this.large ) {
     

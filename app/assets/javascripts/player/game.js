@@ -78,6 +78,8 @@ Game.prototype = {
       
     }
     
+    ctx.fillStyle = '#000';
+    
     for ( var i = 0; i < this.gameObjects.length; i++ ) {
       
       this.gameObjects[i].draw( ctx );
@@ -86,7 +88,6 @@ Game.prototype = {
     
     if ( ctx.debug ) {
         
-        ctx.fillStyle = '#000';
         ctx.fillRect( this.mouse.pos.x - 5, this.mouse.pos.y - 5 , 10, 10 );
         
     }
@@ -124,6 +125,22 @@ Game.prototype = {
     }
     
     console.error( "no gameObject with ID " + graphicID );
+    
+    return null;
+    
+  },
+  
+  getGameObjectAt : function( pos ) {
+    
+    for ( var i = 0; i < this.gameObjects.length; i++ ) {
+      
+      if ( this.gameObjects[i].getArea().contains( pos ) ) {
+        
+        return this.gameObjects[i];
+        
+      }
+      
+    }
     
     return null;
     

@@ -34,6 +34,43 @@ Area.prototype = {
     
     return ( x[0].x + x[0].width > x[1].x && y[0].y + y[0].height > y[1].y );
     
+  },
+  
+  draw : function( ctx ) {
+    
+    ctx.fillStyle = '#F00';
+    ctx.strokeRect( this.x, this.y, this.width, this.height );
+    
+  },
+  
+  move : function( vec ) {
+    
+    this.x += vec.x;
+    this.y += vec.y;
+    
+  },
+  
+  resize : function( vec ) {
+    
+    this.width += vec.x;
+    this.height += vec.y;
+    
+  },
+  
+  adjust : function() {
+    
+    if ( this.width < 0 ) {
+      
+      this.x -= ( this.width *= -1 );
+      
+    }
+    
+    if ( this.height < 0 ) {
+      
+      this.y -= ( this.height *= -1 );
+      
+    }
+    
   }
   
 };
