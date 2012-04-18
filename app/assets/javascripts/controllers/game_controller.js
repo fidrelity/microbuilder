@@ -29,9 +29,13 @@ var GameController = Ember.Object.extend({
   
   setPlayerCanvas : function( canvas ) {
     
+    console.log( this.player.edit );
+    
     this.player.setCanvas( canvas );
     
     this.updatePlayer();
+    
+    console.log( this.player.edit );
     
   },
   

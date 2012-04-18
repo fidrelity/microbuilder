@@ -37,19 +37,19 @@ Player.prototype = {
         { name : 'load' },
         { name : 'ready', enter : this.enterReady },
         { name : 'play', enter : this.enterPlay },
-        { name : 'end'},
-        { name : 'edit', enter : this.enterEdit, exit : this.exitEdit }
+        { name : 'end' },
+        { name : 'edit' }
       ],
       
       transitions : [
         { name : 'parse', from : '*', to: 'load' },
-        { name : 'run', from : 'load', to: 'ready', callback : this.onRun },
+        { name : 'run', from : 'load', to: 'ready', callback : this.run },
         { name : 'start', from : 'ready', to: 'play' },
         { name : 'win', from : 'play', to: 'end', callback : this.onWin },
         { name : 'lose', from : 'play', to: 'end', callback : this.onLose },
         { name : 'restart', from : 'end', to: 'ready' },
-        { name : 'edit', from : '*', to: 'edit' },
-        { name : 'done', from : 'edit', to: 'ready' }
+        { name : 'edit', from : '*', to: 'edit', callback : this.onEdit },
+        { name : 'done', from : 'edit', to: 'ready', callback : this.onDone }
       ]
       
     });
@@ -65,6 +65,8 @@ Player.prototype = {
     
     this.ctx = ctx;
     this.canvas = canvas;
+    
+    this.large = false;
     
     this.mouse = new Mouse( this );
     this.mouse.handleClick();
@@ -82,6 +84,12 @@ Player.prototype = {
     Parser.parseData( data, this.game, function() {
       
       self.fsm.run();
+      
+      if ( self.edit ) {
+      
+        self.fsm.edit();
+      
+      }
       
     } );
     
@@ -239,29 +247,17 @@ Player.prototype = {
     
   },
 
-  enterEdit : function() {
+  onEdit : function() {
     
     this.enlarge();
     this.edit = true;
     
   },
 
-  exitEdit : function() {
+  onDone : function() {
     
     this.reduce();
     this.edit = false;
-    
-  },
-  
-  onRun : function() {
-    
-    this.run();
-    
-    if ( this.edit ) {
-      
-      this.fsm.edit();
-      
-    }
     
   },
   
