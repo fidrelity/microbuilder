@@ -10,16 +10,6 @@
   <canvas id="placementCanvas" width="640" height="390" style="background: #EEE;border:2px solid black;"></canvas>
 </div>
 
-<!-- <div id="placementCanvas" style="border: 2px solid black; width:640px; height:390px">
-
-  <img {{bindAttr src="background.imagePath"}} style="position:absolute" />
-  
-  <div id="placementGraphic" class="graphic">
-    <img {{bindAttr src="graphic.imagePath"}} />
-  </div>
-  
-</div> -->
-
 {{#if displayAll}}
 
   <button {{action "cancel" target="App.gameController"}}>cancel</button>

@@ -75,7 +75,7 @@ Player.prototype = {
     
   },
 
-  parse : function( data ) {
+  parse : function( data, callback ) {
     
     var self = this;
     
@@ -91,6 +91,12 @@ Player.prototype = {
       
         self.fsm.edit();
       
+      }
+      
+      if ( callback ) {
+        
+        callback();
+        
       }
       
     } );
@@ -163,7 +169,9 @@ Player.prototype = {
     
         this.dragArea.draw( ctx );
       
-      } else if ( this.dragObject ) {
+      }
+      
+      if ( this.dragObject ) {
         
         this.dragObject.getArea().draw( ctx );
         
@@ -380,6 +388,18 @@ Player.prototype = {
       self.draw();
     
     };
+    
+  },
+  
+  setDragObjectID : function( gameObjectID ) {
+    
+    this.dragObject = this.game.getGameObjectWithID( gameObjectID );
+    this.dragObject.stable = true;
+    
+    this.dragArea = this.dragObject.getArea().clone();
+    
+    this.game.reset();
+    this.draw();
     
   }
   

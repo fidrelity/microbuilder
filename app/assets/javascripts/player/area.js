@@ -18,6 +18,12 @@ Area.prototype = {
     
   },
   
+  clone : function() {
+    
+    return new Area( this.x, this.y, this.width, this.height );
+    
+  },
+  
   contains : function( point ) {
     
     return (

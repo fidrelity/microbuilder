@@ -52,9 +52,10 @@
       <p>to what location should {{action.gameObject.name}} move?</p>
     
       {{view PlacementView 
-        displayAllBinding = "false" 
+        type = "moveTo"
+        displayAllBinding = "false"
         positionBinding = "action.position"
-        graphicBinding = "action.gameObject.graphic"
+        gameObjectBinding = "action.gameObject"
       }}
     
     {{/if}}

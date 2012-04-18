@@ -2,37 +2,75 @@ var PlacementView = Ember.View.extend({
 
   templateName : 'templates_placement_template',
   
-  displayAll : true,
-  
   player : null,
   type : 'graphic',
   
+  position : null,
+  gameObject : null,
+  
+  displayAll : true,
+  
   didInsertElement : function() {
     
-    var self = this,
-      player;
+    var player, callback;
+    
+    player = new Player();
+    player.edit = true;
+    
+    // player.debug = true;
+    
+    this.set( 'player', player );
+    
     
     if ( this.type === 'graphic' ) {
+      
+      callback = this.graphicCallback;
     
-      player = new Player();
+    } else if ( this.type === 'moveTo' ) {
       
-      player.edit = true;
-      // player.debug = true;
+      callback = this.moveToCallback;
       
-      player.setCanvas( $('#placementCanvas')[0] );
-      player.parse( App.gameController.getGameData() );
-      
-      player.setDragObject( App.placementController.graphic.imagePath );
-      
-      this.set( 'player', player );
-    
     }
+    
+    
+    player.setCanvas( $('#placementCanvas')[0] );
+    player.parse( App.gameController.getGameData(), bind( this, callback ) );
     
   },
   
   placeGraphic : function() {
   
-    App.placementController.placeGraphic( this.get( 'player' ).dragObject.position );
+    App.placementController.placeGraphic( this.get( 'position' ) );
+  
+  },
+  
+  graphicCallback : function() {
+    
+    var self = this,
+      player = this.player;
+    
+    player.setDragObject( App.placementController.graphic.imagePath );
+    player.positionChangeCallback = function( gameObjectId, pos ) {
+      
+      self.get( 'position' ).copy( pos );
+      
+    }
+    
+    this.set( 'position', new Vector() );
+    
+  },
+  
+  moveToCallback : function() {
+    
+    var self = this,
+      player = this.player;
+    
+    player.setDragObjectID( this.get( 'gameObject' ).ID );
+    player.positionChangeCallback = function( gameObjectId, pos ) {
+        
+      self.get( 'position' ).copy( pos );
+    
+    }
   
   }
 
