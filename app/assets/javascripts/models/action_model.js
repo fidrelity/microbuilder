@@ -28,8 +28,6 @@ var MoveActionModel = ActionModel.extend({
   
   type : 'move',
   
-  isMove : true,
-  
   gameObject : null,
   
   position : null,
@@ -111,8 +109,6 @@ var MoveActionModel = ActionModel.extend({
 var ArtActionModel = ActionModel.extend({
   
   type : 'art',
-  
-  isArt : true,
   
   gameObject : null,
   graphic : null,

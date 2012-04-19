@@ -2,8 +2,6 @@ var TriggerView = Ember.View.extend({
   
   templateName : 'templates_trigger_main_template',
   
-  behaviour : null,
-  
   triggerBinding : 'App.triggerController.trigger',
   
   // workaround: contentViewBinding : 'App.triggerController.contentView', throws Maximum Stack Size error

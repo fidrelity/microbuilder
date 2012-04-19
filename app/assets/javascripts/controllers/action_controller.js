@@ -10,6 +10,8 @@ var ActionController = Ember.Object.extend({
   
   behaviourBinding : 'App.behaviourController.currentBehaviour',
   
+  contentView : null,
+  
   reset : function() {
     
     this.set( 'action', null );
@@ -30,6 +32,7 @@ var ActionController = Ember.Object.extend({
   
   move : function() {
   
+    this.set( 'contentView', ActionTypeView.create({ templateName : 'templates_action_move_template' }));
     this.set( 'action', MoveActionModel.create() );
   
   },
@@ -63,6 +66,7 @@ var ActionController = Ember.Object.extend({
     
     App.libraryController.filter( 'isBackground', false );
     
+    this.set( 'contentView', ActionTypeView.create({ templateName : 'templates_action_art_template' }));
     this.set( 'action', ArtActionModel.create() );
     
   },

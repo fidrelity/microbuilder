@@ -1,0 +1,25 @@
+<h2>Action Editor</h2>
+
+<p>select an action type</p>
+
+<button {{action "move" target="App.actionController"}}>move</button>
+<button {{action "art" target="App.actionController"}}>art</button>
+<button {{action "win" target="App.actionController"}}>win</button>
+<button {{action "lose" target="App.actionController"}}>lose</button>
+
+{{dynamicView contentView}}
+
+{{#if action.isWin}}
+  <h3>Win Action</h3>
+{{/if}}
+
+{{#if action.isLose}}
+  <h3>Lose Action</h3>
+{{/if}}
+
+{{#if action.isComplete}}
+  <button {{action "save" target="App.actionController"}}> save </button>
+  <br />
+{{/if}}
+
+<button {{action "cancel" target="App.gameController"}}>cancel</button>
