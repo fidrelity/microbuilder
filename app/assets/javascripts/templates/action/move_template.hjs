@@ -1,0 +1,78 @@
+<h3>Move Action</h3>
+
+<p>Which object shall be moved?</p>
+
+<ul class="graphics">
+  
+  {{#each App.gameObjectsController}}
+  
+    {{#view SelectView 
+      contentBinding = "this"
+      controllerBinding = "App.actionController" 
+      selectFunctionBinding = "App.actionController.selectObject" }}
+      
+      <li {{action "select"}} {{bindAttr class="isSelected:selected"}}>
+        <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
+        <p>{{content.graphic.name}}</p>
+      </li>
+      
+    {{/view}}
+    
+  {{/each}}
+  
+</ul>
+
+<div class='clear'><div>
+
+{{#if action.gameObject}}
+
+  <p>how should {{action.gameObject.name}} be moved?</p>
+
+  <p>
+
+    <button {{action "jumpTo" target="App.actionController"}}>jump to</button>
+    <button {{action "moveTo" target="App.actionController"}}>move to</button>
+    <button {{action "moveIn" target="App.actionController"}}>in direction</button>
+
+  </p>
+
+  {{#if action.isMoveTo}}
+  
+    <p>to what location should {{action.gameObject.name}} move?</p>
+  
+    {{view PlacementView 
+      type = "moveTo"
+      displayAllBinding = "false"
+      positionBinding = "action.position"
+      gameObjectBinding = "action.gameObject"
+    }}
+  
+  {{/if}}
+
+  {{#if action.isMoveIn}}
+  
+    <p>in what direction, relative it's position, should {{action.gameObject.name}} move?</p>
+  
+    {{view PlacementView 
+      type = "moveIn"
+      displayAllBinding = "false" 
+      positionBinding = "action.position"
+      gameObjectBinding = "action.gameObject"
+    }}
+  
+  {{/if}}
+
+  {{#if action.isJumpTo}}
+  
+    <p>to what location should {{action.gameObject.name}} jump?</p>
+  
+    {{view PlacementView 
+      type = "jumpTo"
+      displayAllBinding = "false" 
+      positionBinding = "action.position"
+      gameObjectBinding = "action.gameObject"
+    }}
+  
+  {{/if}}
+
+{{/if}}
