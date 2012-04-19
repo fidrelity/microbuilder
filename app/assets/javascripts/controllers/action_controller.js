@@ -32,41 +32,16 @@ var ActionController = Ember.Object.extend({
   
   move : function() {
   
-    this.set( 'contentView', ActionTypeView.create({ templateName : 'templates_action_move_template' }));
+    this.set( 'contentView', MoveActionView.create() );
     this.set( 'action', MoveActionModel.create() );
   
   },
-  
-  jumpTo : function() {
-  
-    var action = this.get( 'action' );
-  
-    action.set( 'type', 'jumpTo' );
-  
-  },
-  
-  moveTo : function() {
-  
-    var action = this.get( 'action' );
-  
-    action.set( 'type', 'moveTo' );
-  
-  },
-  
-  moveIn : function() {
-  
-    var action = this.get( 'action' );
-  
-    action.set( 'type', 'moveIn' );
-  
-  },
-  
   
   art : function() {
     
     App.libraryController.filter( 'isBackground', false );
     
-    this.set( 'contentView', ActionTypeView.create({ templateName : 'templates_action_art_template' }));
+    this.set( 'contentView', ArtActionView.create() );
     this.set( 'action', ArtActionModel.create() );
     
   },

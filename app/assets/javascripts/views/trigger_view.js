@@ -2,21 +2,18 @@ var TriggerView = Ember.View.extend({
   
   templateName : 'templates_trigger_main_template',
   
-  triggerBinding : 'App.triggerController.trigger',
-  
-  // workaround: contentViewBinding : 'App.triggerController.contentView', throws Maximum Stack Size error
-  triggerViewBinding : 'App.triggerController.contentView',
-  
-  contentView : function() {
-    
-    return this.get( 'triggerView' );
-    
-  }.property( 'triggerView' )
+  triggerBinding : 'App.triggerController.trigger'
   
 });
 
-var TriggerTypeView = Ember.View.extend({
+var ClickTriggerView = TriggerView.extend({
+  
+  templateName : 'templates_trigger_click_template'
+  
+});
 
-  triggerBinding : 'App.triggerController.trigger'
-
+var ContactTriggerView = TriggerView.extend({
+  
+  templateName : 'templates_trigger_contact_template'
+  
 });

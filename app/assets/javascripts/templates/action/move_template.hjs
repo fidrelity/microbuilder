@@ -30,44 +30,18 @@
 
   <p>
 
-    <button {{action "jumpTo" target="App.actionController"}}>jump to</button>
-    <button {{action "moveTo" target="App.actionController"}}>move to</button>
-    <button {{action "moveIn" target="App.actionController"}}>in direction</button>
+    <button {{action "jumpTo" target="action"}}>jump to</button>
+    <button {{action "moveTo" target="action"}}>move to</button>
+    <button {{action "moveIn" target="action"}}>in direction</button>
 
   </p>
 
-  {{#if action.isMoveTo}}
+  <p> {{action.question}} </p>
   
-    <p>to what location should {{action.gameObject.name}} move?</p>
-  
-    {{view PlacementView 
-      type = "moveTo"
-      displayAllBinding = "false"
-      positionBinding = "action.position"
-      gameObjectBinding = "action.gameObject"
-    }}
-  
-  {{/if}}
-
-  {{#if action.isMoveIn}}
-  
-    <p>in what direction, relative it's position, should {{action.gameObject.name}} move?</p>
+  {{#if action.isComplete}}
   
     {{view PlacementView 
-      type = "moveIn"
-      displayAllBinding = "false" 
-      positionBinding = "action.position"
-      gameObjectBinding = "action.gameObject"
-    }}
-  
-  {{/if}}
-
-  {{#if action.isJumpTo}}
-  
-    <p>to what location should {{action.gameObject.name}} jump?</p>
-  
-    {{view PlacementView 
-      type = "jumpTo"
+      typeBinding = "action.type"
       displayAllBinding = "false" 
       positionBinding = "action.position"
       gameObjectBinding = "action.gameObject"

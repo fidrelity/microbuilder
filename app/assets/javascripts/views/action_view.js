@@ -2,21 +2,18 @@ var ActionView = Ember.View.extend({
   
   templateName : 'templates_action_main_template',
   
-  actionBinding : 'App.actionController.action',
-  
-  // workaround: contentViewBinding : 'App.actionController.contentView', throws Maximum Stack Size error
-  actionViewBinding : 'App.actionController.contentView',
-  
-  contentView : function() {
-    
-    return this.get( 'actionView' );
-    
-  }.property( 'actionView' )
+  actionBinding : 'App.actionController.action'
   
 });
 
-var ActionTypeView = Ember.View.extend({
+var MoveActionView = ActionView.extend({
+  
+  templateName : 'templates_action_move_template'
+  
+});
 
-  actionBinding : 'App.actionController.action'
-
+var ArtActionView = ActionView.extend({
+  
+  templateName : 'templates_action_art_template'
+  
 });

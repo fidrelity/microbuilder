@@ -6,7 +6,7 @@
 <button {{action "contact" target="App.triggerController"}}>contact</button>
 <button {{action "overlap" target="App.triggerController"}}>overlap</button>
 
-{{dynamicView contentView}}
+{{dynamicView App.triggerController.contentView}}
 
 {{#if trigger.isComplete}}
   <button {{action "save" target="App.triggerController"}}>save</button>

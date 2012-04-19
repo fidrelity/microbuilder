@@ -7,7 +7,7 @@
 <button {{action "win" target="App.actionController"}}>win</button>
 <button {{action "lose" target="App.actionController"}}>lose</button>
 
-{{dynamicView contentView}}
+{{dynamicView App.actionController.contentView}}
 
 {{#if action.isWin}}
   <h3>Win Action</h3>

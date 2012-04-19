@@ -20,21 +20,21 @@ var TriggerController = Ember.Object.extend({
   
   click : function() {
     
-    this.set( 'contentView', TriggerTypeView.create({ templateName : 'templates_trigger_click_template' }));
+    this.set( 'contentView', ClickTriggerView.create() );
     this.set( 'trigger', ClickTriggerModel.create() );
     
   },
   
   contact : function() {
     
-    this.set( 'contentView', TriggerTypeView.create({ templateName : 'templates_trigger_contact_template' }));
+    this.set( 'contentView', ContactTriggerView.create() );
     this.set( 'trigger', ContactTriggerModel.create() );
     
   },
   
   overlap : function() {
     
-    this.set( 'contentView', TriggerTypeView.create({ templateName : 'templates_trigger_contact_template' }));
+    this.set( 'contentView', ContactTriggerView.create() );
     this.set( 'trigger', ContactTriggerModel.create({
       
       isContact : false,

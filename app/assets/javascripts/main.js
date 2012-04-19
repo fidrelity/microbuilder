@@ -1,5 +1,5 @@
 function editor_main() {
-    
+
   window.App = Ember.Application.create();
 
   App.main = Ember.View.create({
@@ -70,6 +70,8 @@ function editor_main() {
   
     App.gameController.placeGraphic( App.libraryController.get( 'content' )[0], new Vector( 100, 100 ) );
     App.gameController.placeGraphic( App.libraryController.get( 'content' )[1], new Vector( 400, 100 ) );
+    
+    App.gameController.updatePlayer();
   
   }, 100 );
 

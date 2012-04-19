@@ -32,38 +32,40 @@ var MoveActionModel = ActionModel.extend({
   
   position : null,
   
+  question : '',
+  
   init : function() {
     
     this.set( 'position', new Vector() );
     
   },
   
+  jumpTo : function() {
+  
+    this.set( 'type', 'jumpTo' );
+    this.set( 'question', 'to what location should ' + this.gameObject.name + ' jump?' );
+  
+  },
+  
+  moveTo : function() {
+  
+    this.set( 'type', 'moveTo' );
+    this.set( 'question', 'to what location should ' + this.gameObject.name + ' move?' );
+  
+  },
+  
+  moveIn : function() {
+  
+    this.set( 'type', 'moveIn' );
+    this.set( 'question', 'in what direction, relative to it\'s position, should ' + this.gameObject.name + ' move?' );
+  
+  },
   
   angle : function() {
     
-    return this.get( 'position' ).angle().toFixed( 2 );
+    return this.position.angle().toFixed( 2 );
     
-  }.property( 'position' ),
-  
-  
-  isMoveTo : function() {
-    
-    return this.get( 'type' ) === 'moveTo';
-    
-  }.property( 'type' ),
-  
-  isMoveIn : function() {
-    
-    return this.get( 'type' ) === 'moveIn';
-    
-  }.property( 'type' ),
-  
-  isJumpTo : function() {
-    
-    return this.get( 'type' ) === 'jumpTo';
-    
-  }.property( 'type' ),
-  
+  },
   
   getData : function() {
   
@@ -71,7 +73,7 @@ var MoveActionModel = ActionModel.extend({
       type: this.type,
       objectID: this.gameObject.ID,
       target: this.position.getData(),
-      angle: this.get( 'angle' )
+      angle: this.angle()
     }
   
   },
@@ -92,7 +94,7 @@ var MoveActionModel = ActionModel.extend({
       
     } else if ( type === 'moveIn' ) {
       
-      return name + ' moves in direction ' + this.get( 'angle' );
+      return name + ' moves in direction ' + this.angle();
       
     }
     
