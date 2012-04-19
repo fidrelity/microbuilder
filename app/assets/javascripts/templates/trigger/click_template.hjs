@@ -6,6 +6,12 @@
 {{#if trigger.atArea}}
   
   <p>Select the area that should trigger the click!</p>
+
+  {{view PlacementView 
+    type = "area"
+    displayAllBinding = "false" 
+    areaBinding = "trigger.area"
+  }}
   
 {{/if}}
 

@@ -6,6 +6,7 @@ var PlacementView = Ember.View.extend({
   type : 'graphic',
   
   position : null,
+  area : null,
   gameObject : null,
   
   displayAll : true,
@@ -33,6 +34,12 @@ var PlacementView = Ember.View.extend({
     } else if ( type === 'moveIn' ) {
       
       callback = this.moveInCallback;
+      
+    } else if ( type === 'area' ) {
+      
+      callback = this.areaCallback;
+      
+      player.selectArea = true;
       
     }
     
@@ -77,6 +84,16 @@ var PlacementView = Ember.View.extend({
       this.get( 'position' ).copy( pos.sub( this.get( 'gameObject' ).position ) );
       
     }));
+  
+  },
+  
+  areaCallback : function() {
+    
+    this.player.areaChangeCallback = bind( this, function( area ) {
+      
+      this.set( 'area', AreaModel.create( area ) );
+      
+    });
   
   }
 

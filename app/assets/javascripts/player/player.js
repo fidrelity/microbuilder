@@ -15,6 +15,7 @@ var Player = function() {
   this.dragArea = null;
   
   this.positionChangeCallback = null;
+  this.areaChangeCallback = null;
   
 };
 
@@ -260,6 +261,12 @@ Player.prototype = {
       
       this.dragArea.adjust();
       this.dragArea.done = true;
+      
+      if ( this.areaChangeCallback ) {
+        
+        this.areaChangeCallback( this.dragArea );
+        
+      }
       
     }
     

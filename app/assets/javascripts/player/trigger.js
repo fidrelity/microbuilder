@@ -1,6 +1,7 @@
 var ClickTrigger = function() {
   
   this.gameObject = null;
+  this.area = null;
   
 };
 
@@ -10,13 +11,19 @@ ClickTrigger.prototype = {
     
     if ( game.mouse.clicked ) {
       
-      return this.gameObject.getArea().contains( game.mouse.pos );
+      if ( this.gameObject ) {
       
-    } else {
-    
-      return false;
-    
+        return this.gameObject.getArea().contains( game.mouse.pos );
+      
+      } else {
+        
+        return this.area.contains( game.mouse.pos );
+        
+      }
+      
     }
+    
+    return false;
     
   }
   

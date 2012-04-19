@@ -18,6 +18,12 @@ Area.prototype = {
     
   },
   
+  copy : function( area ) {
+    
+    return this.set( area.x, area.y, area.width, area.height );
+    
+  },
+  
   clone : function() {
     
     return new Area( this.x, this.y, this.width, this.height );

@@ -344,13 +344,30 @@ var Parser = {
     type: "onClick",
     objectID: 0
   }
+  {
+    type: "onClick",
+    area: {
+      x: 48,
+      y:6,
+      width:331,
+      height:123
+    }
+  }
 */
 
   parseTriggerClick : function( triggerData ) {
     
     var trigger = new ClickTrigger();
     
-    trigger.gameObject = this.game.getGameObjectWithID( triggerData.objectID );
+    if ( triggerData.objectID ) {
+    
+      trigger.gameObject = this.game.getGameObjectWithID( triggerData.objectID );
+    
+    } else {
+      
+      trigger.area = new Area().copy( triggerData.area );
+      
+    }
     
     return trigger;
     
