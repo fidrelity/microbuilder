@@ -183,6 +183,8 @@ Player.prototype = {
   
   reset : function() {
     
+    this.mouse.clicked = false;
+    
     this.game.reset();
     this.draw();
     
@@ -192,13 +194,9 @@ Player.prototype = {
     
     if ( this.fsm.hasState( 'ready' ) ) {
       
-      this.mouse.clicked = false;
-      
       this.fsm.start();
       
     } else if ( this.fsm.hasState( 'end' ) ) {
-      
-      this.mouse.clicked = false;
       
       this.fsm.restart();
     
