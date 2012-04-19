@@ -338,10 +338,10 @@ Player.prototype = {
       this.mouse.handleDrag();
       
       this.large = true;
-      
-      this.reset();
     
     }
+    
+    this.reset();
     
   },
   
@@ -360,10 +360,10 @@ Player.prototype = {
       this.mouse.handleClick();
       
       this.large = false;
-      
-      this.reset();
     
     }
+    
+    this.reset();
     
   },
   
