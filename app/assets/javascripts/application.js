@@ -18,7 +18,7 @@
 //= require_tree .
 
 
-$(document).ready(function() {
+function application_main() {
     
     // Dirty hack for ipad scroll-disabling
     $(document).bind('touchmove', false);
@@ -73,7 +73,7 @@ $(document).ready(function() {
         }); */
         minimizeSection();
     });
-});
+};
 
 function placeNav(height, width) {
     $('#nav_top').css({left: width/2-90});

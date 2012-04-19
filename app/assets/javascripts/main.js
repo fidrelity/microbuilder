@@ -65,6 +65,13 @@ function editor_main() {
 
 
   App.main.appendTo('#content');
+  
+  setTimeout( function() {
+  
+    App.gameController.placeGraphic( App.libraryController.get( 'content' )[0], new Vector( 100, 100 ) );
+    App.gameController.placeGraphic( App.libraryController.get( 'content' )[1], new Vector( 400, 100 ) );
+  
+  }, 100 );
 
 };
 
