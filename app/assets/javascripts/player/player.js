@@ -192,9 +192,13 @@ Player.prototype = {
     
     if ( this.fsm.hasState( 'ready' ) ) {
       
+      this.mouse.clicked = false;
+      
       this.fsm.start();
       
     } else if ( this.fsm.hasState( 'end' ) ) {
+      
+      this.mouse.clicked = false;
       
       this.fsm.restart();
     
@@ -367,7 +371,7 @@ Player.prototype = {
     
   },
   
-  setDragObject : function( imagePath ) {
+  setDragObject : function( imagePath, callback ) {
     
     var image = new Image(),
       graphic = new Graphic( -1 ),
@@ -387,18 +391,32 @@ Player.prototype = {
       self.dragObject = gameObject;
     
       self.reset();
+      
+      if ( callback ) {
+        
+        self.positionChangeCallback = callback;
+        callback( -1, gameObject.startPosition );
+        
+      }
     
     };
     
   },
   
-  setDragObjectID : function( gameObjectID ) {
+  setDragObjectID : function( gameObjectID, callback ) {
     
     var dragObject = this.game.getGameObjectWithID( gameObjectID );
     dragObject.stable = true;
     
     this.dragArea = dragObject.getArea().clone();
     this.dragObject = dragObject;
+
+    if ( callback ) {
+      
+      this.positionChangeCallback = callback;
+      callback( dragObject.ID, dragObject.position );
+      
+    }
     
     this.reset();
     

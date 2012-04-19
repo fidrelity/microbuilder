@@ -93,7 +93,7 @@ var GameController = Ember.Object.extend({
       
     }) );
     
-    App.routeManager.goToLocation( '' );
+    this.cancel();
     
   },
   
@@ -109,7 +109,7 @@ var GameController = Ember.Object.extend({
     
     this.game.setBackground( graphic );
     
-    App.routeManager.goToLocation( '' );
+    this.cancel();
     
   },
   
@@ -130,14 +130,6 @@ var GameController = Ember.Object.extend({
     
     App.actionController.reset();
     App.routeManager.goToLocation( 'action' );
-    
-  },
-  
-  saveBehaviour : function() {
-    
-    // App.behaviourController.saveCurrentBehaviour();
-    
-    App.routeManager.goToLocation( '' );
     
   },
   

@@ -87,9 +87,7 @@ var ActionController = Ember.Object.extend({
     
       this.get( 'behaviour' ).addAction( action );
     
-      App.gameController.saveBehaviour();
-    
-      this.reset();
+      App.gameController.cancel();
     
     }
     

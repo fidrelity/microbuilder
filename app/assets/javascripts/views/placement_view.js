@@ -50,13 +50,11 @@ var PlacementView = Ember.View.extend({
   
   graphicCallback : function() {
     
-    this.player.setDragObject( App.placementController.graphic.imagePath );
-    
-    this.player.positionChangeCallback = bind( this, function( ID, pos ) {
+    this.player.setDragObject( App.placementController.graphic.imagePath, bind( this, function( ID, pos ) {
       
       this.get( 'position' ).copy( pos );
       
-    });
+    }));
     
     this.set( 'position', new Vector() );
     
@@ -64,25 +62,21 @@ var PlacementView = Ember.View.extend({
   
   moveToCallback : function() {
     
-    this.player.setDragObjectID( this.get( 'gameObject' ).ID );
-    
-    this.player.positionChangeCallback = bind( this, function( ID, pos ) {
+    this.player.setDragObjectID( this.get( 'gameObject' ).ID, bind( this, function( ID, pos ) {
       
       this.get( 'position' ).copy( pos );
       
-    });
+    }));
   
   },
 
   moveInCallback : function() {
     
-    this.player.setDragObjectID( this.get( 'gameObject' ).ID );
-    
-    this.player.positionChangeCallback = bind( this, function( ID, pos ) {
+    this.player.setDragObjectID( this.get( 'gameObject' ).ID, bind( this, function( ID, pos ) {
       
       this.get( 'position' ).copy( pos.sub( this.get( 'gameObject' ).position ) );
       
-    });
+    }));
   
   }
 
