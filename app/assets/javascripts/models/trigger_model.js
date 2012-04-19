@@ -6,7 +6,7 @@ var TriggerModel = Ember.Object.extend({
     
     return this.type
     
-  }.property(),
+  }.property( 'type' ),
   
   getData : function() {
   
@@ -14,27 +14,20 @@ var TriggerModel = Ember.Object.extend({
   
   },
   
-  isComplete : function() {
-    
-    return true;
-    
-  }.property()
+  isComplete : true
 
 });
 
-var ClickTriggerModel = TriggerModel.extend({
-  
-  type : 'click',
-  
-  isClick : true,
-  
-  atArea : false,
-  atObject : false,
-  
+
+var ObjectAreaTriggerModel = TriggerModel.extend({
+
   gameObject : null,
   area : null,
   
-  clickObject : function() {
+  atArea : false,
+  atObject : false,
+
+  onObject : function() {
     
     this.set( 'atObject', true );
     this.set( 'atArea', false );
@@ -43,7 +36,7 @@ var ClickTriggerModel = TriggerModel.extend({
     
   },
   
-  clickArea : function() {
+  onArea : function() {
     
     this.set( 'atArea', true );
     this.set( 'atObject', false );
@@ -51,6 +44,19 @@ var ClickTriggerModel = TriggerModel.extend({
     this.set( 'gameObject', null );
     
   },
+  
+  selectObject : function( gameObject ) {
+    
+    this.set( 'gameObject', gameObject );
+    
+  }
+
+});
+
+
+var ClickTriggerModel = ObjectAreaTriggerModel.extend({
+  
+  type : 'click',
   
   string : function() {
     
@@ -72,7 +78,7 @@ var ClickTriggerModel = TriggerModel.extend({
     
       return {
         type: 'onClick',
-        area: this.get( 'area' ).getData()
+        area: this.area.getData()
       };
     
     } else {
@@ -94,47 +100,70 @@ var ClickTriggerModel = TriggerModel.extend({
   
 });
 
-var ContactTriggerModel = TriggerModel.extend({
+var ContactTriggerModel = ObjectAreaTriggerModel.extend({
   
   type : 'onContact',
   
   isContact : true,
-  
-  gameObject : null,
   gameObject2 : null,
+  
+  selectObject2 : function( gameObject ) {
+    
+    this.set( 'gameObject2', gameObject );
+    
+  },
+  
+  word : function() {
+    
+    return this.get( 'isContact' ) ? 'contact' : 'overlap';
+    
+  }.property( 'isContact' ),
   
   string : function() {
     
-    var name = this.get( 'gameObject' ).name,
-      name2 = this.get( 'gameObject2' ).name;
+    var name2 = this.get( 'gameObject2' ).name, str;
     
-    if ( this.isContact ) {
-    
-      return 'contact between ' + name + ' and ' + name2;
+    if ( this.atArea ) {
+      
+      str = name2 + ' and area ' + this.get( 'area' ).string();
       
     } else {
-      
-      return name + ' and ' + name2 + ' overlap';
-      
+    
+      str = name2 + ' and ' + this.get( 'gameObject' ).name;
+    
     }
+    
+    return str + ( this.isContact ? ' have contact' : ' overlap' );
     
   }.property( 'gameObject.name', 'gameObject2.name' ),
   
   getData : function() {
     
-    return {
-      type: this.type,
-      object1ID: this.gameObject.ID,
-      object2ID: this.gameObject2.ID
-    };
+    if ( this.atArea ) {
+      
+      return {
+        type: this.type,
+        objectID: this.gameObject2.ID,
+        area: this.area.getData()
+      };
+    
+    } else {
+    
+      return {
+        type: this.type,
+        objectID: this.gameObject.ID,
+        object2ID: this.gameObject2.ID
+      };
+    
+    }
     
   },
   
   isComplete : function() {
     
-    return this.get( 'gameObject' ) && this.get( 'gameObject2' );
+    return ( this.get( 'gameObject' ) || this.get( 'area' ) ) && this.get( 'gameObject2' );
     
-  }.property( 'gameObject', 'gameObject2' )
+  }.property( 'gameObject', 'gameObject2', 'area' )
   
 });
 

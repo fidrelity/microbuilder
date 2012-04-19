@@ -61,6 +61,8 @@ var PlacementView = Ember.View.extend({
       
       this.get( 'position' ).copy( pos );
       
+      // this.placeGraphic();
+      
     }));
     
     this.set( 'position', new Vector() );

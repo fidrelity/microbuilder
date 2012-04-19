@@ -149,7 +149,7 @@ function player_main( data ) {
         triggers:[
           {
             type: "onContact",
-            object1ID: 1,
+            objectID: 1,
             object2ID: 0
           }
         ],

@@ -278,6 +278,10 @@ ul#nav .popout {
   opacity:0.8;
 }
 
+#editor ul.graphics li.selected {
+  border:solid 2px black;
+} 
+
 #editor ul.graphics li img {
   height:50px;
   width:50px;

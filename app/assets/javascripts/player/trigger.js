@@ -32,8 +32,10 @@ ClickTrigger.prototype = {
 
 var ContactTrigger = function() {
   
-  this.gameObject1 = null;
+  this.gameObject = null;
   this.gameObject2 = null;
+  
+  this.area = null;
   
   triggered = false;
   
@@ -65,7 +67,15 @@ ContactTrigger.prototype = {
   
   checkOverlap : function() {
     
-    return this.gameObject1.getArea().overlaps( this.gameObject2.getArea() );
+    if ( this.area ) {
+      
+      return this.gameObject.getArea().overlaps( this.area );
+      
+    } else {
+      
+      return this.gameObject.getArea().overlaps( this.gameObject2.getArea() );
+      
+    }
     
   }
   

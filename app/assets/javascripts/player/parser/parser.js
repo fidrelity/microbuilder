@@ -344,6 +344,7 @@ var Parser = {
     type: "onClick",
     objectID: 0
   }
+  
   {
     type: "onClick",
     area: {
@@ -359,13 +360,13 @@ var Parser = {
     
     var trigger = new ClickTrigger();
     
-    if ( triggerData.objectID ) {
+    if ( triggerData.area ) {
     
-      trigger.gameObject = this.game.getGameObjectWithID( triggerData.objectID );
+      trigger.area = new Area().copy( triggerData.area );
     
     } else {
       
-      trigger.area = new Area().copy( triggerData.area );
+      trigger.gameObject = this.game.getGameObjectWithID( triggerData.objectID );
       
     }
     
@@ -377,14 +378,36 @@ var Parser = {
 /**
   {
     type: "onContact",
-    object1ID: 1,
+    objectID: 1,
     object2ID: 0
+  }
+  
+  {
+    type: "onContact",
+    objectID: 0,
+    area: {
+      x: -44,
+      y: -33,
+      width: 160,
+      height: 395
+    }
   }
 
   {
     type: "onOverlap",
-    object1ID: 1,
+    objectID: 1,
     object2ID: 0
+  }
+  
+  {
+    type: "onOverlap",
+    objectID: 1,
+    area: {
+      x: 93, 
+      y: 165,
+      width: 475,
+      height: 133
+    }
   }
 */
 
@@ -394,16 +417,17 @@ var Parser = {
     
     trigger.check = onContact ? trigger.checkContact : trigger.checkOverlap;
     
-    if ( triggerData.object1ID === triggerData.object2ID ) {
+    if ( triggerData.area ) {
+    
+      trigger.area = new Area().copy( triggerData.area );
+    
+    } else {
       
-      console.error( 'parser: object triggers contact with itself' );
-      
-      return null;
+      trigger.gameObject2 = this.game.getGameObjectWithID( triggerData.object2ID );
       
     }
     
-    trigger.gameObject1 = this.game.getGameObjectWithID( triggerData.object1ID );
-    trigger.gameObject2 = this.game.getGameObjectWithID( triggerData.object2ID );
+    trigger.gameObject = this.game.getGameObjectWithID( triggerData.objectID );
     
     return trigger;
     

@@ -1,7 +1,7 @@
 <p>Click on object or area?</p>
 
-<button {{action "clickObject" target="trigger"}}>object</button>
-<button {{action "clickArea" target="trigger"}}>area</button>
+<button {{action "onObject" target="trigger"}}>object</button>
+<button {{action "onArea" target="trigger"}}>area</button>
 
 {{#if trigger.atArea}}
   
@@ -25,8 +25,8 @@
 
       {{#view SelectView 
         contentBinding="this" 
-        controllerBinding="App.triggerController" 
-        selectFunctionBinding="App.triggerController.selectObject" }}
+        controllerBinding="App.triggerController.trigger" 
+        selectFunctionBinding="App.triggerController.trigger.selectObject" }}
     
         <li {{action "select"}} {{bindAttr class="isSelected:selected"}}>
           <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
