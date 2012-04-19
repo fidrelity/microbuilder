@@ -27,12 +27,14 @@ var TriggerController = Ember.Object.extend({
   
   contact : function() {
     
+    this.set( 'contentView', TriggerTypeView.create({ templateName : 'templates_trigger_contact_template' }));
     this.set( 'trigger', ContactTriggerModel.create() );
     
   },
   
   overlap : function() {
     
+    this.set( 'contentView', TriggerTypeView.create({ templateName : 'templates_trigger_contact_template' }));
     this.set( 'trigger', ContactTriggerModel.create({
       
       isContact : false,
@@ -64,9 +66,9 @@ var TriggerController = Ember.Object.extend({
     
       this.get( 'behaviour' ).addTrigger( trigger );
     
-      App.gameController.saveBehaviour();
+      // this.reset();
     
-      this.reset();
+      App.gameController.saveBehaviour();
     
     }
     
