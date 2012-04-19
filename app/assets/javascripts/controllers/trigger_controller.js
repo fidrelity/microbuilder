@@ -10,6 +10,8 @@ var TriggerController = Ember.Object.extend({
   
   behaviourBinding : 'App.behaviourController.currentBehaviour',
   
+  contentView : null,
+  
   reset : function() {
   
     this.set( 'trigger', null );
@@ -18,6 +20,7 @@ var TriggerController = Ember.Object.extend({
   
   click : function() {
     
+    this.set( 'contentView', TriggerTypeView.create({ templateName : 'templates_trigger_click_template' }));
     this.set( 'trigger', ClickTriggerModel.create() );
     
   },

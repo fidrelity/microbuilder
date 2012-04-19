@@ -1,0 +1,105 @@
+<h2>Trigger Editor</h2>
+
+<p>select a trigger type</p>
+
+<button {{action "click" target="App.triggerController"}}>click</button>
+<button {{action "contact" target="App.triggerController"}}>contact</button>
+<button {{action "overlap" target="App.triggerController"}}>overlap</button>
+
+{{#if trigger}}
+  
+  {{#if trigger.isClick}}
+    
+    <!-- <p>Which object should trigger a click?</p> -->
+    
+    <p>Click on object or area?</p>
+    
+    <button {{action "clickObject" target="App.triggerController"}}>object</button>
+    <button {{action "clickArea" target="App.triggerController"}}>area</button>
+    
+  {{/if}}
+
+  {{#if trigger.isContact}}
+
+    <p>Which object should trigger a contact?</p>
+
+  {{/if}}
+
+  {{#if trigger.isOverlap}}
+
+    <p>Which object should trigger an overlap?</p>
+
+  {{/if}}
+  
+  <ul class="graphics">
+  
+    {{#each App.gameObjectsController}}
+  
+      {{#view SelectView 
+        contentBinding="this" 
+        controllerBinding="App.triggerController" 
+        selectFunctionBinding="App.triggerController.selectObject" }}
+      
+        <li {{action "select"}} {{bindAttr class="isSelected:selected"}}>
+          <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
+          <p>{{content.name}}</p>
+        </li>
+      
+      {{/view}}
+    
+    {{/each}}
+  
+  </ul>
+  
+  <div class='clear'><div>
+  
+  {{#if trigger.gameObject}}
+  
+    {{#unless trigger.isClick}}
+    
+      {{#if trigger.isContact}}
+    
+        <p>With what object should {{trigger.gameObject.name}} trigger a contact?</p>
+    
+      {{else}}
+      
+        <p>With what object should {{trigger.gameObject.name}} trigger when they overlap?</p>
+      
+      {{/if}}
+    
+      <ul class="graphics">
+  
+        {{#each App.gameObjectsController}}
+  
+          {{#view SelectView 
+            contentBinding="this"
+            compareContentBinding="App.triggerController.trigger.gameObject"
+            controllerBinding="App.triggerController" 
+            selectFunctionBinding="App.triggerController.selectObject2" }}
+      
+            <li {{action "select"}} {{bindAttr class="isSelected:selected compares:disabled"}}>
+              <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
+              <p>{{content.name}}</p>
+            </li>
+      
+          {{/view}}
+    
+        {{/each}}
+  
+      </ul>
+      
+      <div class='clear'><div>
+    
+    {{/unless}}
+  
+  {{/if}}
+
+{{/if}}
+
+{{#if trigger.isComplete}}
+  <button {{action "save" target="App.triggerController"}}>save</button>
+{{/if}}
+
+<div class='clear'>
+  <button {{action "cancel" target="App.gameController"}}>cancel</button>
+</div>

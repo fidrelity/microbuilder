@@ -28,28 +28,69 @@ var ClickTriggerModel = TriggerModel.extend({
   
   isClick : true,
   
+  atArea : false,
+  atObject : false,
+  
   gameObject : null,
+  area : null,
+  
+  clickObject : function() {
+    
+    this.set( 'atObject', true );
+    this.set( 'atArea', false );
+    
+    this.set( 'area', null );
+    
+  },
+  
+  clickArea : function() {
+    
+    this.set( 'atArea', true );
+    this.set( 'atObject', false );
+    
+    this.set( 'gameObject', null );
+    
+  },
   
   string : function() {
     
-    return 'click on ' + this.get( 'gameObject' ).name;
+    if ( this.atArea ) {
+      
+      return 'click in area ' + this.get( 'area' ).string();
+      
+    } else {
     
-  }.property( 'gameObject.name' ),
+      return 'click on ' + this.get( 'gameObject' ).name;
+    
+    }
+    
+  }.property( 'gameObject.name', 'area.x' ),
   
   getData : function() {
     
-    return {
-      type: 'onClick',
-      objectID: this.gameObject.ID
-    };
+    if ( this.atArea ) {
+    
+      return {
+        type: 'onClick',
+        area: this.get( 'area' ).getData()
+      };
+    
+    } else {
+    
+      return {
+        type: 'onClick',
+        objectID: this.gameObject.ID
+      };
+    
+    }
     
   },
   
   isComplete : function() {
     
-    return this.get( 'gameObject' );
+    return this.get( 'gameObject' ) || this.get( 'area' );
     
-  }.property( 'gameObject' )
+  }.property( 'gameObject', 'area' )
   
 });
 
