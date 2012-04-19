@@ -109,6 +109,12 @@ var ContactTriggerModel = ObjectAreaTriggerModel.extend({
   
   selectObject2 : function( gameObject ) {
     
+    this.set( 'area', null );
+    this.set( 'gameObject', null );
+    
+    this.set( 'atObject', false );
+    this.set( 'atArea', false );
+    
     this.set( 'gameObject2', gameObject );
     
   },

@@ -6,14 +6,11 @@
 <button {{action "contact" target="App.triggerController"}}>contact</button>
 <button {{action "overlap" target="App.triggerController"}}>overlap</button>
 
-{{#if trigger}}
-  {{dynamicView contentView}}
-  
-  {{#if trigger.isComplete}}
-    <button {{action "save" target="App.triggerController"}}>save</button>
-  {{/if}}
+{{dynamicView contentView}}
 
-  <div class='clear'>
-    <button {{action "cancel" target="App.gameController"}}>cancel</button>
-  </div>
+{{#if trigger.isComplete}}
+  <button {{action "save" target="App.triggerController"}}>save</button>
+  <br />
 {{/if}}
+
+<button {{action "cancel" target="App.gameController"}}>cancel</button>
