@@ -17,7 +17,7 @@ var MainView = Ember.View.extend({
     this.libraryView = LibraryView.create();
     this.paintView = PaintView.create();
     
-    this.behaviourView = BehaviourView.create();
+    this.behaviourView = BehavioursView.create();
     this.actionView = ActionView.create();
     this.triggerView = TriggerView.create();
     
@@ -38,7 +38,8 @@ var MainView = Ember.View.extend({
         
         if ( ui.options.active === 2 ) {
           
-          player.parse( App.gameController.game.getData().game );
+          player.parse( App.game.getData().game );
+          App.mainView.stageView.player.parse( App.game.getData().game );
           
         }
         
@@ -47,7 +48,8 @@ var MainView = Ember.View.extend({
     });
     
     this.show( 'stageContent', 'stageView' );
-  
+    this.show( 'behaviourContent', 'behaviourView' );
+    
   },
   
   show : function( locationName, viewName ) {
@@ -99,6 +101,12 @@ var StageView = Ember.View.extend({
   
 });
 
+var BehavioursView = Ember.View.extend({
+  
+  templateName : 'templates_behaviour_template'
+  
+});
+
 
 var SelectView = Ember.View.extend({
   
@@ -113,7 +121,6 @@ var SelectView = Ember.View.extend({
   remove : function() {
     
     this.get( 'controller' ).removeObject( this.get( 'content' ) );
-    App.gameController.updatePlayer();
     
   },
   

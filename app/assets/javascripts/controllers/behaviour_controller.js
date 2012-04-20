@@ -10,14 +10,6 @@ var BehaviourController = Ember.ArrayController.extend({
   
   currentBehaviour : null,
   
-  saveCurrentBehaviour : function() {
-    
-    this.addObject( this.get( 'currentBehaviour' ) );
-    
-    this.set( 'currentBehaviour', null );
-    
-  },
-  
   createBehaviour : function() {
     
     var behaviour = BehaviourModel.create();

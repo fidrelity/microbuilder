@@ -2,6 +2,7 @@ function editor_main() {
 
   window.App = Ember.Application.create();
 
+  App.game = GameModel.create();
   App.gameController = GameController.create();
 
   App.libraryController = LibraryController.create();
@@ -25,8 +26,7 @@ function editor_main() {
     App.gameController.selectGraphic( App.libraryController.get( 'content' )[0] );
     App.gameController.selectGraphic( App.libraryController.get( 'content' )[1] );
     
-    // App.gameController.updatePlayer();
-    App.mainView.stageContent.player.parse( App.gameController.game.getData().game );
+    App.mainView.stageView.player.parse( App.gameController.game.getData().game );
   
   }, 100 );
 

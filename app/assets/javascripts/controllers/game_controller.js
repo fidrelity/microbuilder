@@ -7,13 +7,7 @@
 
 var GameController = Ember.Object.extend({
 
-  game : null,
-
-  init : function() {
-    
-    this.game = GameModel.create();;
-    
-  },
+  gameBinding : 'App.game',
   
   getGameData : function() {
     
@@ -75,12 +69,6 @@ var GameController = Ember.Object.extend({
     this.game.setBackground( graphic );
     
     this.cancel();
-    
-  },
-  
-  addBehaviour : function() {
-    
-    App.behaviourController.createBehaviour();
     
   },
   
