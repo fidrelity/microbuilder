@@ -1,0 +1,3 @@
+<div class="player">
+  <canvas {{bindAttr id="canvasID"}} width="640" height="390" style="background: #EEE;border:2px solid black;"></canvas>
+</div>

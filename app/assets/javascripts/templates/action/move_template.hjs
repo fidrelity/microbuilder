@@ -40,9 +40,8 @@
   
     <p> {{action.question}} </p>
     
-    {{view PlacementView 
+    {{view PlayerView 
       typeBinding = "action.type"
-      displayAllBinding = "false" 
       positionBinding = "action.position"
       gameObjectBinding = "action.gameObject"
     }}

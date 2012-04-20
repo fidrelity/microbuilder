@@ -1,27 +1,37 @@
 <p>
-  <button {{action "play"}}>play</button>
-  <button {{action "stop"}}>stop</button>
+  <button {{action "searchBackground" target="App.gameController"}}>select background</button>
+  <button {{action "searchGraphic" target="App.gameController"}}>add object</button>
 </p>
 
 <div class="player">
   <canvas id="stageCanvas" width="640" height="390" style="background: #EEE;border:2px solid black;"></canvas>
 </div>
 
-<p>
-  <button {{action "searchBackground" target="App.gameController"}}>select background</button>
-  <button {{action "searchGraphic" target="App.gameController"}}>add object</button>
-</p>
+<div style="float: left">
+
+  <button {{action "play"}}> play </button>
+  <button {{action "stop"}}> stop </button>
+
+</div>
 
 {{#if gameObject}}
 
-  {{#view GameObjectView contentBinding = "gameObject"}}
-    <p>
-      <img {{bindAttr src="content.graphic.imagePath"}} /> <br />
-      {{view Ember.TextField valueBinding="content.name" maxlength="32" size="10"}} <br />
-      <button {{action "remove"}}>delete</button>
-      <button {{action "changeArt"}}>change art</button>
-      <button {{action "toTop"}}>to top</button>
-    </p>
-  {{/view}}
+  <div style="border: 1px solid gray; margin: 5px; float: left">
+
+    {{#view GameObjectView contentBinding = "gameObject"}}
+
+        <img {{bindAttr src="content.graphic.imagePath"}} style="width:40px;height:40px;display:inline" />
+
+        {{view Ember.TextField valueBinding="content.name" maxlength="32" size="10"}}
+
+        <button {{action "changeArt"}}> change art </button>
+        <button {{action "toTop"}}> to top </button>
+        <button {{action "remove"}}> delete </button>
+
+    {{/view}}
+
+  </div>
 
 {{/if}}
+
+<div class="clear"></div>

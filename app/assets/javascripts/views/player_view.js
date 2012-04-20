@@ -1,15 +1,15 @@
-var PlacementView = Ember.View.extend({
+var PlayerView = Ember.View.extend({
 
-  templateName : 'templates_placement_template',
+  templateName : 'templates_player_template',
+  
+  canvasID : 'playerCanvas',
   
   player : null,
-  type : 'graphic',
+  type : 'move',
   
   position : null,
   area : null,
   gameObject : null,
-  
-  displayAll : true,
   
   didInsertElement : function() {
     
@@ -23,11 +23,7 @@ var PlacementView = Ember.View.extend({
     this.set( 'player', player );
     
     
-    if ( type === 'graphic' ) {
-      
-      callback = this.graphicCallback;
-    
-    } else if ( type === 'moveTo' || type === 'jumpTo' ) {
+    if ( type === 'moveTo' || type === 'jumpTo' ) {
       
       callback = this.moveToCallback;
     
@@ -44,28 +40,8 @@ var PlacementView = Ember.View.extend({
     }
     
     
-    player.setCanvas( $('#placementCanvas')[0] );
+    player.setCanvas( $('#playerCanvas')[0] );
     player.parse( App.gameController.getGameObjectsData(), bind( this, callback ) );
-    
-  },
-  
-  placeGraphic : function() {
-  
-    App.placementController.placeGraphic( this.get( 'position' ) );
-  
-  },
-  
-  graphicCallback : function() {
-    
-    this.player.setSelectObject( App.placementController.graphic.imagePath, bind( this, function( ID, pos ) {
-      
-      this.get( 'position' ).copy( pos );
-      
-      // this.placeGraphic();
-      
-    }));
-    
-    this.set( 'position', new Vector() );
     
   },
   
@@ -96,6 +72,9 @@ var PlacementView = Ember.View.extend({
       this.set( 'area', AreaModel.create( area ) );
       
     });
+    
+    this.player.selectObject = null;
+    this.player.draw();
   
   }
 

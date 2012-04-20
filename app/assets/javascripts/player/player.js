@@ -320,6 +320,15 @@ Player.prototype = {
     this.enlarge();
     this.edit = true;
     
+    if ( this.game.gameObjects.length ) {
+      
+      this.selectObject = this.game.gameObjects[this.game.gameObjects.length - 1];
+      this.selectedObjectCallback( this.selectObject.ID );
+      
+      this.draw();
+      
+    }
+    
   },
 
   onDone : function() {
@@ -386,38 +395,6 @@ Player.prototype = {
     }
     
     this.reset();
-    
-  },
-  
-  setSelectObject : function( imagePath, callback ) {
-    
-    var image = new Image(),
-      graphic = new Graphic( -1 ),
-      gameObject = new GameObject( -1 ),
-      self = this;
-    
-    image.src = imagePath;
-    
-    image.onload = function() {
-    
-      graphic.image = image;
-      gameObject.startGraphic = graphic;
-      gameObject.startPosition.set( Math.floor( Math.random() * 540 ), Math.floor( Math.random() * 290 ) );
-      gameObject.stable = true;
-    
-      self.game.gameObjects.push( gameObject );
-      self.selectObject = gameObject;
-    
-      self.reset();
-      
-      if ( callback ) {
-        
-        self.selectedObjectDragCallback = callback;
-        callback( -1, gameObject.startPosition );
-        
-      }
-    
-    };
     
   },
   
