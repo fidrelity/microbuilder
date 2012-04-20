@@ -5,7 +5,7 @@ var PlayerView = Ember.View.extend({
   canvasID : 'playerCanvas',
   
   player : null,
-  type : 'move',
+  type : 'stage',
   
   position : null,
   area : null,
@@ -22,8 +22,15 @@ var PlayerView = Ember.View.extend({
     
     this.set( 'player', player );
     
-    
-    if ( type === 'moveTo' || type === 'jumpTo' ) {
+    if ( type === 'stage' ) {
+      
+      player.objectsMoveable = true;
+      player.areaSelectable = true;
+      
+      player.selectedObjectCallback = bind( App.mainView.stageView, App.mainView.stageView.selectedObjectCallback );
+      player.selectedObjectDragCallback = bind( App.game, App.game.gameObjectPositionChanged );
+      
+    } else if ( type === 'moveTo' || type === 'jumpTo' ) {
       
       callback = this.moveToCallback;
     
@@ -40,7 +47,7 @@ var PlayerView = Ember.View.extend({
     }
     
     
-    player.setCanvas( $('#playerCanvas')[0] );
+    player.setCanvas( $('#' + this.canvasID)[0] );
     player.parse( App.gameController.getGameObjectsData(), bind( this, callback ) );
     
   },

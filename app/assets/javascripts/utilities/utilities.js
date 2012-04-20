@@ -1,10 +1,14 @@
 function bind(scope, fn) {
   
-  return function() {
+  if ( fn ) {
+  
+    return function() {
     
-    fn.apply(scope, arguments);
+      fn.apply(scope, arguments);
     
-  };
+    };
+  
+  }
   
 };
 

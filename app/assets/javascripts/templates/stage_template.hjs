@@ -3,9 +3,10 @@
   <button {{action "searchGraphic" target="App.gameController"}}>add object</button>
 </p>
 
-<div class="player">
-  <canvas id="stageCanvas" width="640" height="390" style="background: #EEE;border:2px solid black;"></canvas>
-</div>
+{{view PlayerView 
+  canvasID="stageCanvas2"
+  playerBinding="player"
+}}
 
 <div style="float: left">
 
