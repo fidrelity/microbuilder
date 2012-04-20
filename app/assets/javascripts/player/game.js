@@ -80,7 +80,7 @@ Game.prototype = {
     
     ctx.fillStyle = '#000';
     
-    for ( var i = 0; i < this.gameObjects.length; i++ ) {
+    for ( var i = this.gameObjects.length - 1; i >= 0 ; i-- ) {
       
       this.gameObjects[i].draw( ctx );
       

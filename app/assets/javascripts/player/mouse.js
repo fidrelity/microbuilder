@@ -89,17 +89,10 @@ Mouse.prototype = {
   
   setMouse : function( e, mouse ) {
     
-    var offset = $( this.canvas ).offset();
+    var offset = $( this.canvas ).offset(),
+      i = this.player.large ? this.player.increment : 0;
     
-    if ( this.canvas.width === 640 ) {
-      
-      mouse.set( e.pageX - offset.left, e.pageY - offset.top );
-      
-    } else {
-      
-      mouse.set( e.pageX - offset.left - 128, e.pageY - offset.top - 128 );
-      
-    }
+    mouse.set( e.pageX - offset.left - i, e.pageY - offset.top - i );
     
   }
   

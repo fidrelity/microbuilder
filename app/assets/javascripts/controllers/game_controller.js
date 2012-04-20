@@ -20,7 +20,7 @@ var GameController = Ember.Object.extend({
     
     // player.debug = true;
     player.moveObjects = true;
-    // player.selectArea = true;
+    player.selectArea = true;
     
     player.positionChangeCallback = bind( game, game.gameObjectPositionChanged );
     

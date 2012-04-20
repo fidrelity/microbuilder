@@ -6,6 +6,7 @@ var Player = function() {
   
   this.debug = false;
   this.large = false;
+  this.increment = 96;
   
   this.edit = false;
   this.moveObjects = false;
@@ -156,7 +157,9 @@ Player.prototype = {
     
     if ( this.large ) {
     
-      ctx.clearRect( -128, -128, 896, 646 );
+      var i = this.increment;
+    
+      ctx.clearRect( -i, -i, 640 + 2 * i, 390 + 2 * i );
     
     }
     
@@ -174,6 +177,7 @@ Player.prototype = {
       
       if ( this.dragObject ) {
         
+        this.dragObject.draw( ctx );
         this.dragObject.getArea().draw( ctx );
         
       }
@@ -281,6 +285,7 @@ Player.prototype = {
       if ( !this.dragObject.stable ) {
     
         this.dragObject = null;
+        this.reset();
       
       }
     
@@ -292,8 +297,8 @@ Player.prototype = {
     
     this.reset();
     
-    this.ctx.fillStyle = '#FFFFCC';
-    this.ctx.fillRect( 200, 100, 240, 190 );
+    this.ctx.fillStyle = 'rgba(255,255,0,0.5)';
+    this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
     
   },
   
@@ -319,30 +324,31 @@ Player.prototype = {
   
   onWin : function() {
     
-    this.ctx.fillStyle = '#CCFFCC';
-    this.ctx.fillRect( 200, 100, 240, 190 );
+    this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
+    this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
     
   },
   
   onLose : function() {
     
-    this.ctx.fillStyle = '#FFCCCC';
-    this.ctx.fillRect( 200, 100, 240, 190 );
+    this.ctx.fillStyle = 'rgba(255,0,0,0.5)';
+    this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
     
   },
   
   enlarge : function() {
     
     var ctx = this.ctx,
-      canvas = this.canvas;
+      canvas = this.canvas,
+      i = this.increment;
     
     if ( !this.large ) {
     
-      canvas.width = 256 + 640;
-      canvas.height = 256 + 390;
+      canvas.width = 640 + 2 * i;
+      canvas.height = 390 + 2 * i;
     
       ctx.save();
-      ctx.translate( 128, 128 );
+      ctx.translate( i, i );
       
       this.mouse.handleDrag();
       
