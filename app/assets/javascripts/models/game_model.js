@@ -138,7 +138,6 @@ var GameModel = Ember.Object.extend({
       
     }
     
-    console.error( 'No gameObject with ID ' + gameObjectID );
     return null;
     
   },

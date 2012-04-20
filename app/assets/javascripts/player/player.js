@@ -17,9 +17,9 @@ var Player = function() {
   this.selectObject = null;
   this.selectArea = null;
   
-  this.selectedObjectCallback = null;
-  this.selectedObjectDragCallback = null;
-  this.selectedAreaCallback = null;
+  this.selectedObjectCallback = function() {};
+  this.selectedObjectDragCallback = function() {};
+  this.selectedAreaCallback = function() {};
   
 };
 
@@ -221,7 +221,10 @@ Player.prototype = {
 
   mousedown : function( mouse ) {
     
-    if ( this.selectObject && this.selectObject.stable && !this.selectObject.getArea().contains( mouse.pos ) ) {
+    var object = this.selectObject,
+      area = this.selectArea;
+    
+    if ( object && object.stable && !object.getArea().contains( mouse.pos ) ) {
       
       mouse.dragging = false;
       return;
@@ -230,19 +233,13 @@ Player.prototype = {
     
     if ( this.objectsMoveable ) {
     
-      this.selectObject = this.game.getGameObjectAt( mouse.pos );
-      
-      if ( this.selectObject && this.selectedObjectCallback ) {
-        
-        this.selectedObjectCallback( this.selectObject.ID );
-        
-      }
+      object = this.game.getGameObjectAt( mouse.pos );
     
     }
     
-    if ( !this.selectObject && this.areaSelectable ) {
+    if ( !object && this.areaSelectable ) {
       
-      if ( !this.selectArea || !this.selectArea.contains( mouse.pos ) ) {
+      if ( !area || !area.contains( mouse.pos ) ) {
         
         this.selectArea = new Area( mouse.pos.x, mouse.pos.y, 0, 0 );
         
@@ -250,23 +247,30 @@ Player.prototype = {
       
     }
     
+    this.selectedObjectCallback( object ? object.ID : -1 );
+    
+    this.selectObject = object;
+    
   },
   
   mousemove : function( mouse ) {
     
-    if ( this.selectObject ) {
+    var object = this.selectObject,
+      area = this.selectArea;
+    
+    if ( object ) {
       
-      this.selectObject.movePosition( mouse.move );
+      object.movePosition( mouse.move );
       
-    } else if ( this.selectArea ) {
+    } else if ( area ) {
       
-      if ( this.selectArea.done ) {
+      if ( area.done ) {
         
-        this.selectArea.move( mouse.move );
+        area.move( mouse.move );
         
       } else {
         
-        this.selectArea.resize( mouse.move );
+        area.resize( mouse.move );
         
       }
       
@@ -276,22 +280,21 @@ Player.prototype = {
   
   mouseup : function() {
     
-    if ( this.selectArea ) {
+    var object = this.selectObject,
+      area = this.selectArea;
+    
+    if ( area ) {
       
-      this.selectArea.adjust();
-      this.selectArea.done = true;
+      area.adjust();
+      area.done = true;
       
-      if ( this.selectedAreaCallback ) {
-        
-        this.selectedAreaCallback( this.selectArea );
-        
-      }
+      this.selectedAreaCallback( area );
       
     }
     
-    if ( this.selectObject && this.selectedObjectDragCallback ) {
+    if ( object ) {
       
-      this.selectedObjectDragCallback( this.selectObject.ID, this.selectObject.position );
+      this.selectedObjectDragCallback( object.ID, object.position );
     
     }
     
