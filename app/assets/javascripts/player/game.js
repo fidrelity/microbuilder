@@ -80,7 +80,7 @@ Game.prototype = {
     
     ctx.fillStyle = '#000';
     
-    for ( var i = this.gameObjects.length - 1; i >= 0 ; i-- ) {
+    for ( var i = 0; i < this.gameObjects.length; i++ ) {
       
       this.gameObjects[i].draw( ctx );
       
@@ -132,7 +132,7 @@ Game.prototype = {
   
   getGameObjectAt : function( pos ) {
     
-    for ( var i = 0; i < this.gameObjects.length; i++ ) {
+    for ( var i = this.gameObjects.length - 1; i >= 0 ; i-- ) {
       
       if ( this.gameObjects[i].getArea().contains( pos ) ) {
         

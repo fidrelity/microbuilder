@@ -1,11 +1,134 @@
 <div class="editor_content">
-  <a href="#">General</a>
-  <a href="#paint">Paint</a>
-  <a href="#action">Action</a>
-  <a href="#trigger">Trigger</a>
-  <a href="#library">Library</a>
-  <a href="#placement">Placement</a>
+
+  <h2>Game Editor</h2>
+
+  <div id="accordion">
+
+    <h3><a href="#">Stage</a></h3>
+    <div>
+
+      {{dynamicView stageContent}}
+
+    </div>
+
+    <h3><a href="#">Behaviours</a></h3>
+    <div>
+
+      <ul class="behaviours">
+        {{#view BehaviourView 
+          contentBinding = "game.startBehaviour"
+          controllerBinding = "App.behaviourController"
+        }}
+          <li>
+            <div>onStart</div>
+            <ul class="actions">
+    
+              {{#each content.actions}}
+    
+                {{#view SelectView 
+                  contentBinding = "this"
+                  controllerBinding = "parent.actions"
+                }}
+      
+                  <li>
+                    {{content.string}} 
+                    <button {{action "remove"}}> delete </button>
+                  </li>
+        
+                {{/view}}
+      
+              {{/each}}
+    
+            </ul>
+        
+            <button {{action "addAction"}}>add Action</button>
+          </li>
+        {{/view}}
   
-  {{dynamicView}}
+        {{#each game.behaviours}}
+          {{#view BehaviourView 
+            contentBinding = "this"
+            controllerBinding = "App.behaviourController"
+          }}
+            <li>
+        
+              <div>if</div>
+              <ul class="triggers">
+          
+                {{#each content.triggers}}
+          
+                  {{#view SelectView 
+                    contentBinding = "this"
+                    controllerBinding = "parent.triggers"
+                  }}
+            
+                    <li>
+                      {{content.string}} 
+                      <button {{action "remove"}}> delete </button>
+                    </li>
+              
+                  {{/view}}
+            
+                {{/each}}
+          
+              </ul>
+          
+              <br />
+              <button {{action "addTrigger"}}>add Trigger</button>
+        
+              <div>then</div>
+              <ul class="actions">
+          
+                {{#each content.actions}}
+          
+                  {{#view SelectView 
+                    contentBinding = "this"
+                    controllerBinding = "parent.actions"
+                  }}
+            
+                    <li>
+                      {{content.string}} 
+                      <button {{action "remove"}}> delete </button>
+                    </li>
+              
+                  {{/view}}
+            
+                {{/each}}
+          
+              </ul>
+        
+              <button class="clear" {{action "addAction"}}>add Action</button>
+              <br />
+              <button {{action "remove"}}>delete behaviour</button>
+            </li>
+          {{/view}}
+        {{/each}}
+      </ul>
   
+      <div class="clear"></div>
+
+      <button {{action "addBehaviour" target="App.gameController"}}>add behaviour</button>
+    </div>
+
+    <h3><a href="#">Publish</a></h3>
+    <div>
+
+      <label>game title: </label>
+      {{view Ember.TextField valueBinding="game.title" size="32" placeholder="insert name" maxlength="32"}}
+      <br />
+
+      <label>instructions: </label>
+      {{view Ember.TextField valueBinding="game.instructions" placeholder="(140 chars max)" maxlength="140"}}
+      <br />
+
+      <div class="player">
+        <canvas id="testCanvas" width="640" height="390" style="background: #EEE;border:2px solid black;"></canvas>
+      </div>
+
+      <button {{action "publishGame" target="App.gameController"}}>publish</button>
+    
+    </div>
+  
+  </div>
+
 </div>

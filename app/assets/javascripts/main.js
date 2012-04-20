@@ -2,11 +2,6 @@ function editor_main() {
 
   window.App = Ember.Application.create();
 
-  App.main = Ember.View.create({
-    templateName: 'templates_main_template'
-  });
-
-
   App.gameController = GameController.create();
 
   App.libraryController = LibraryController.create();
@@ -22,56 +17,16 @@ function editor_main() {
   App.actionController = ActionController.create();
 
 
-  App.routeManager = Ember.RouteManager.create({
-  
-    rootView: App.main,
-  
-    general: Ember.LayoutState.create({
-      viewClass: GeneralView
-    }),
-
-    paint: Ember.LayoutState.create({
-      route: 'paint',
-      viewClass: PaintView
-    }),
-
-    placement: Ember.LayoutState.create({
-      route: 'placement',
-      viewClass: PlacementView
-    }),
-
-    action: Ember.LayoutState.create({
-      route: 'action',
-      viewClass: ActionView
-    }),
-
-    triggerState: Ember.LayoutState.create({
-      route: 'trigger',
-      viewClass: TriggerView
-    }),
-
-    library: Ember.LayoutState.create({
-      route: 'library',
-      viewClass: LibraryView
-    }),
-    
-    goToLocation: function( routeName ) {
-      
-      window.location.hash = routeName;
-      
-    }
-  
-  });
-
-
-  App.main.appendTo('#content');
+  App.mainView = MainView.create();
+  App.mainView.appendTo('#content');
   
   setTimeout( function() {
   
-    App.gameController.placeGraphic( App.libraryController.get( 'content' )[0], new Vector( 100, 100 ) );
-    App.gameController.placeGraphic( App.libraryController.get( 'content' )[1], new Vector( 400, 100 ) );
+    App.gameController.selectGraphic( App.libraryController.get( 'content' )[0] );
+    App.gameController.selectGraphic( App.libraryController.get( 'content' )[1] );
     
-    App.gameController.updatePlayer();
+    // App.gameController.updatePlayer();
+    App.mainView.stageContent.player.parse( App.gameController.game.getData().game );
   
   }, 100 );
 

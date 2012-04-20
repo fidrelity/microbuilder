@@ -1,0 +1,8 @@
+<div class="player">
+  <canvas id="stageCanvas" width="640" height="390" style="background: #EEE;border:2px solid black;"></canvas>
+</div>
+
+<p>
+  <button {{action "searchBackground" target="App.gameController"}}>select background</button>
+  <button {{action "searchGraphic" target="App.gameController"}}>add object</button>
+</p>
