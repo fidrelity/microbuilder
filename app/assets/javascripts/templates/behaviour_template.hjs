@@ -1,31 +1,40 @@
-<ul class="behaviours">
+<ul id="behaviours">
   {{#view BehaviourView 
     contentBinding = "App.game.startBehaviour"
     controllerBinding = "App.behaviourController"
   }}
-    <li>
-      <div>onStart</div>
-      <ul class="actions">
+    <li class="top">
+      
+      <div class="left title"> onStart </div>
+      
+      <div class="left">
+      
+        <ul>
 
-        {{#each content.actions}}
+          {{#each content.actions}}
 
-          {{#view RemoveView 
-            contentBinding = "this"
-            controllerBinding = "parent.actions"
-          }}
+            {{#view RemoveView 
+              contentBinding = "this"
+              controllerBinding = "parent.actions"
+            }}
 
-            <li>
-              {{content.string}} 
-              <button {{action "remove"}}> delete </button>
-            </li>
+              <li>
+                {{content.string}} 
+                <button {{action "remove"}}> X </button>
+              </li>
   
-          {{/view}}
+            {{/view}}
 
-        {{/each}}
+          {{/each}}
 
-      </ul>
-  
-      <button {{action "addAction"}}>add Action</button>
+        </ul>
+      
+        <button {{action "addAction"}}> + action </button>
+        
+      </div>
+      
+      <div class="clear"></div>
+        
     </li>
   {{/view}}
 
@@ -34,56 +43,69 @@
       contentBinding = "this"
       controllerBinding = "App.behaviourController"
     }}
-      <li>
-  
-        <div>if</div>
-        <ul class="triggers">
-    
-          {{#each content.triggers}}
-    
-            {{#view RemoveView 
-              contentBinding = "this"
-              controllerBinding = "parent.triggers"
-            }}
-      
-              <li>
-                {{content.string}} 
-                <button {{action "remove"}}> delete </button>
-              </li>
+      <li class="top">
         
-            {{/view}}
-      
-          {{/each}}
-    
-        </ul>
-    
-        <br />
-        <button {{action "addTrigger"}}>add Trigger</button>
-  
-        <div>then</div>
-        <ul class="actions">
-    
-          {{#each content.actions}}
-    
-            {{#view RemoveView 
-              contentBinding = "this"
-              controllerBinding = "parent.actions"
-            }}
-      
-              <li>
-                {{content.string}} 
-                <button {{action "remove"}}> delete </button>
-              </li>
+        <div class="left title"> if </div>
         
-            {{/view}}
-      
-          {{/each}}
+        <div class="left">
+          <ul>
     
-        </ul>
+            {{#each content.triggers}}
+    
+              {{#view RemoveView 
+                contentBinding = "this"
+                controllerBinding = "parent.triggers"
+              }}
+      
+                <li>
+                  {{content.string}} 
+                  <button {{action "remove"}}> X </button>
+                </li>
+        
+              {{/view}}
+      
+            {{/each}}
+    
+          </ul>
+    
+          <button {{action "addTrigger"}}> + trigger </button>
+        
+        </div>
   
-        <button class="clear" {{action "addAction"}}>add Action</button>
-        <br />
-        <button {{action "remove"}}>delete behaviour</button>
+        <div class="left title"> | then </div>
+  
+        <div class="left">
+        
+          <ul>
+    
+            {{#each content.actions}}
+    
+              {{#view RemoveView 
+                contentBinding = "this"
+                controllerBinding = "parent.actions"
+              }}
+      
+                <li>
+                  {{content.string}} 
+                  <button {{action "remove"}}> X </button>
+                </li>
+        
+              {{/view}}
+      
+            {{/each}}
+    
+          </ul>
+
+          <button {{action "addAction"}}> + action </button>
+        
+        </div>
+        
+        <div class="right">
+          <button {{action "remove"}}> X </button>
+        </div>
+        
+        <div class="clear"></div>
+        
       </li>
     {{/view}}
   {{/each}}
@@ -92,3 +114,5 @@
 <div class="clear"></div>
 
 <button {{action "createBehaviour" target="App.behaviourController"}}>add behaviour</button>
+
+<div>

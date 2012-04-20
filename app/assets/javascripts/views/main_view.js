@@ -69,7 +69,14 @@ var MainView = Ember.View.extend({
 
 var BehavioursView = Ember.View.extend({
   
-  templateName : 'templates_behaviour_template'
+  templateName : 'templates_behaviour_template',
+  
+  didInsertElement : function() {
+    
+    this.$( "#behaviours" ).sortable();
+    this.$( "#behaviours" ).disableSelection();
+    
+  },
   
 });
 
