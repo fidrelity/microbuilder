@@ -9,7 +9,7 @@
 
         {{#each content.actions}}
 
-          {{#view SelectView 
+          {{#view RemoveView 
             contentBinding = "this"
             controllerBinding = "parent.actions"
           }}
@@ -41,7 +41,7 @@
     
           {{#each content.triggers}}
     
-            {{#view SelectView 
+            {{#view RemoveView 
               contentBinding = "this"
               controllerBinding = "parent.triggers"
             }}
@@ -65,7 +65,7 @@
     
           {{#each content.actions}}
     
-            {{#view SelectView 
+            {{#view RemoveView 
               contentBinding = "this"
               controllerBinding = "parent.actions"
             }}

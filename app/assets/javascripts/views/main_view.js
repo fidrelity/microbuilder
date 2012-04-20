@@ -67,40 +67,6 @@ var MainView = Ember.View.extend({
   
 });
 
-var StageView = Ember.View.extend({
-  
-  templateName: 'templates_stage_template',
-  
-  player: null,
-  
-  didInsertElement : function() {
-    
-    var player, game, canvas = this.$( '#stageCanvas' )[0];
-    
-    if ( canvas ) {
-    
-      player = new Player(),
-      game = App.gameController.game;
-    
-      player.edit = true;
-    
-      // player.debug = true;
-      player.moveObjects = true;
-      player.selectArea = true;
-    
-      player.positionChangeCallback = bind( game, game.gameObjectPositionChanged );
-    
-      player.setCanvas( canvas );
-      player.parse( game.getData().game );
-    
-      this.player = player;
-    
-    }
-  
-  }
-  
-});
-
 var BehavioursView = Ember.View.extend({
   
   templateName : 'templates_behaviour_template'
@@ -108,21 +74,26 @@ var BehavioursView = Ember.View.extend({
 });
 
 
-var SelectView = Ember.View.extend({
-  
+var RemoveView = Ember.View.extend({
+
   content : null,
-  compareContent : null,
-  
   controller : null,
-  selectFunction : null,
-  
-  isSelected : false,
   
   remove : function() {
     
     this.get( 'controller' ).removeObject( this.get( 'content' ) );
     
   },
+
+});
+
+var SelectView = RemoveView.extend({
+  
+  compareContent : null,
+  
+  selectFunction : null,
+  
+  isSelected : false,
   
   select : function() {
     

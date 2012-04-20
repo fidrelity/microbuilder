@@ -128,15 +128,24 @@ var GameModel = Ember.Object.extend({
   
   },
   
-  gameObjectPositionChanged : function( gameObjectID, pos ) {
+  getGameObjectWithID : function( gameObjectID ) {
     
     var gameObjects = this.gameObjects.filterProperty( 'ID', gameObjectID );
     
     if ( gameObjects.length ) {
       
-      gameObjects[0].position.copy( pos );
+      return gameObjects[0];
       
     }
+    
+    console.error( 'No gameObject with ID ' + gameObjectID );
+    return null;
+    
+  },
+  
+  gameObjectPositionChanged : function( gameObjectID, pos ) {
+    
+    this.getGameObjectWithID( gameObjectID ).position.copy( pos );
     
   }
   

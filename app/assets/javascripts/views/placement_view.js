@@ -39,7 +39,7 @@ var PlacementView = Ember.View.extend({
       
       callback = this.areaCallback;
       
-      player.selectArea = true;
+      player.areaSelectable = true;
       
     }
     
@@ -57,7 +57,7 @@ var PlacementView = Ember.View.extend({
   
   graphicCallback : function() {
     
-    this.player.setDragObject( App.placementController.graphic.imagePath, bind( this, function( ID, pos ) {
+    this.player.setSelectObject( App.placementController.graphic.imagePath, bind( this, function( ID, pos ) {
       
       this.get( 'position' ).copy( pos );
       
@@ -71,7 +71,7 @@ var PlacementView = Ember.View.extend({
   
   moveToCallback : function() {
     
-    this.player.setDragObjectID( this.get( 'gameObject' ).ID, bind( this, function( ID, pos ) {
+    this.player.setSelectObjectID( this.get( 'gameObject' ).ID, bind( this, function( ID, pos ) {
       
       this.get( 'position' ).copy( pos );
       
@@ -81,7 +81,7 @@ var PlacementView = Ember.View.extend({
 
   moveInCallback : function() {
     
-    this.player.setDragObjectID( this.get( 'gameObject' ).ID, bind( this, function( ID, pos ) {
+    this.player.setSelectObjectID( this.get( 'gameObject' ).ID, bind( this, function( ID, pos ) {
       
       this.get( 'position' ).copy( pos.sub( this.get( 'gameObject' ).position ) );
       
@@ -91,7 +91,7 @@ var PlacementView = Ember.View.extend({
   
   areaCallback : function() {
     
-    this.player.areaChangeCallback = bind( this, function( area ) {
+    this.player.selectedAreaCallback = bind( this, function( area ) {
       
       this.set( 'area', AreaModel.create( area ) );
       

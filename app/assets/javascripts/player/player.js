@@ -8,15 +8,18 @@ var Player = function() {
   this.large = false;
   this.increment = 96;
   
+  
   this.edit = false;
-  this.moveObjects = false;
-  this.selectArea = false;
   
-  this.dragObject = null;
-  this.dragArea = null;
+  this.objectsMoveable = false;
+  this.areaSelectable = false;
   
-  this.positionChangeCallback = null;
-  this.areaChangeCallback = null;
+  this.selectObject = null;
+  this.selectArea = null;
+  
+  this.selectedObjectCallback = null;
+  this.selectedObjectDragCallback = null;
+  this.selectedAreaCallback = null;
   
 };
 
@@ -169,16 +172,16 @@ Player.prototype = {
     
     if ( this.edit ) {
       
-      if ( this.dragArea ) {
-    
-        this.dragArea.draw( ctx );
+      if ( this.selectArea ) {
+      
+        this.selectArea.draw( ctx );
       
       }
       
-      if ( this.dragObject ) {
+      if ( this.selectObject ) {
         
-        this.dragObject.draw( ctx );
-        this.dragObject.getArea().draw( ctx );
+        this.selectObject.draw( ctx );
+        this.selectObject.getArea().draw( ctx );
         
       }
     
@@ -189,6 +192,13 @@ Player.prototype = {
   reset : function() {
     
     this.mouse.clicked = false;
+    
+    if ( ( this.selectObject && !this.selectObject.stable ) || !this.selectObject ) {
+    
+      this.selectObject = null;
+      this.selectArea = null;
+    
+    }
     
     this.game.reset();
     this.draw();
@@ -211,25 +221,30 @@ Player.prototype = {
 
   mousedown : function( mouse ) {
     
-    if ( this.dragObject && this.dragObject.stable ) {
+    if ( this.selectObject && this.selectObject.stable && !this.selectObject.getArea().contains( mouse.pos ) ) {
       
-      if ( !this.dragObject.getArea().contains( mouse.pos ) ) {
+      mouse.dragging = false;
+      return;
+      
+    } 
+    
+    if ( this.objectsMoveable ) {
+    
+      this.selectObject = this.game.getGameObjectAt( mouse.pos );
+      
+      if ( this.selectObject && this.selectedObjectCallback ) {
         
-        mouse.dragging = false;
+        this.selectedObjectCallback( this.selectObject.ID );
         
       }
-      
-    } else if ( this.moveObjects ) {
-    
-      this.dragObject = this.game.getGameObjectAt( mouse.pos );
     
     }
     
-    if ( !this.dragObject && this.selectArea ) {
+    if ( !this.selectObject && this.areaSelectable ) {
       
-      if ( !this.dragArea || !this.dragArea.contains( mouse.pos ) ) {
+      if ( !this.selectArea || !this.selectArea.contains( mouse.pos ) ) {
         
-        this.dragArea = new Area( mouse.pos.x, mouse.pos.y, 0, 0 );
+        this.selectArea = new Area( mouse.pos.x, mouse.pos.y, 0, 0 );
         
       }
       
@@ -239,19 +254,19 @@ Player.prototype = {
   
   mousemove : function( mouse ) {
     
-    if ( this.dragObject ) {
+    if ( this.selectObject ) {
       
-      this.dragObject.movePosition( mouse.move );
+      this.selectObject.movePosition( mouse.move );
       
-    } else if ( this.dragArea ) {
+    } else if ( this.selectArea ) {
       
-      if ( this.dragArea.done ) {
+      if ( this.selectArea.done ) {
         
-        this.dragArea.move( mouse.move );
+        this.selectArea.move( mouse.move );
         
       } else {
         
-        this.dragArea.resize( mouse.move );
+        this.selectArea.resize( mouse.move );
         
       }
       
@@ -261,33 +276,22 @@ Player.prototype = {
   
   mouseup : function() {
     
-    if ( this.dragArea ) {
+    if ( this.selectArea ) {
       
-      this.dragArea.adjust();
-      this.dragArea.done = true;
+      this.selectArea.adjust();
+      this.selectArea.done = true;
       
-      if ( this.areaChangeCallback ) {
+      if ( this.selectedAreaCallback ) {
         
-        this.areaChangeCallback( this.dragArea );
+        this.selectedAreaCallback( this.selectArea );
         
       }
       
     }
     
-    if ( this.dragObject ) {
+    if ( this.selectObject && this.selectedObjectDragCallback ) {
       
-      if ( this.positionChangeCallback ) {
-        
-        this.positionChangeCallback( this.dragObject.ID, this.dragObject.position );
-        
-      }
-      
-      if ( !this.dragObject.stable ) {
-    
-        this.dragObject = null;
-        this.reset();
-      
-      }
+      this.selectedObjectDragCallback( this.selectObject.ID, this.selectObject.position );
     
     }
     
@@ -382,7 +386,7 @@ Player.prototype = {
     
   },
   
-  setDragObject : function( imagePath, callback ) {
+  setSelectObject : function( imagePath, callback ) {
     
     var image = new Image(),
       graphic = new Graphic( -1 ),
@@ -399,13 +403,13 @@ Player.prototype = {
       gameObject.stable = true;
     
       self.game.gameObjects.push( gameObject );
-      self.dragObject = gameObject;
+      self.selectObject = gameObject;
     
       self.reset();
       
       if ( callback ) {
         
-        self.positionChangeCallback = callback;
+        self.selectedObjectDragCallback = callback;
         callback( -1, gameObject.startPosition );
         
       }
@@ -414,18 +418,18 @@ Player.prototype = {
     
   },
   
-  setDragObjectID : function( gameObjectID, callback ) {
+  setSelectObjectID : function( gameObjectID, callback ) {
     
-    var dragObject = this.game.getGameObjectWithID( gameObjectID );
-    dragObject.stable = true;
+    var selectObject = this.game.getGameObjectWithID( gameObjectID );
+    selectObject.stable = true;
     
-    this.dragArea = dragObject.getArea().clone();
-    this.dragObject = dragObject;
-
+    this.selectArea = selectObject.getArea().clone();
+    this.selectObject = selectObject;
+    
     if ( callback ) {
       
-      this.positionChangeCallback = callback;
-      callback( dragObject.ID, dragObject.position );
+      this.selectedObjectDragCallback = callback;
+      callback( selectObject.ID, selectObject.position );
       
     }
     
