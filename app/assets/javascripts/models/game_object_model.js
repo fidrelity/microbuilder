@@ -1,19 +1,14 @@
-//= require ./../utilities/vector
-
 var GameObjectModel = Ember.Object.extend({
   
   name : null,
-  position : new Vector(),
-  
-  graphic : null,
-  
   ID : null,
   
-  counter : 0,
+  position : null,
+  graphic : null,
   
   init : function() {
     
-    this.ID = App.gameController.game.gameObjectCounter++;
+    this.ID = App.game.gameObjectCounter++;
     
   },
   

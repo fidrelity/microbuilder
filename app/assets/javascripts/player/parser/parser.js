@@ -142,7 +142,7 @@ var Parser = {
     
     } else {
       
-      // console.error( 'parser: behaviour has no actions' );
+      console.error( 'parser: behaviour has no actions' );
       return null;
       
     }
@@ -169,7 +169,7 @@ var Parser = {
     
     } else {
       
-      // console.error( 'parser: behaviour has no triggers' );
+      console.error( 'parser: behaviour has no triggers' );
       return null;
       
     }

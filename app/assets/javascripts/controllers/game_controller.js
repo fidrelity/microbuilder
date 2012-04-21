@@ -9,18 +9,6 @@ var GameController = Ember.Object.extend({
 
   gameBinding : 'App.game',
   
-  getGameData : function() {
-    
-    return this.game.getData().game;
-    
-  },
-  
-  getGameObjectsData : function() {
-    
-    return this.game.getGameObjectsData();
-    
-  },
-  
   cancel : function() {
     
     App.mainView.show( 'stageContent', 'stageView' );

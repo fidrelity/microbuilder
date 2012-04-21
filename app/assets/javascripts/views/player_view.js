@@ -52,7 +52,7 @@ var PlayerView = Ember.View.extend({
     
     
     player.setCanvas( $('#' + this.canvasID)[0] );
-    player.parse( App.gameController.getGameObjectsData(), bind( this, callback ) );
+    player.parse( App.game.getGameObjectsData(), bind( this, callback ) );
     
   },
   

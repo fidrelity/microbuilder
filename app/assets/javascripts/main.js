@@ -22,18 +22,15 @@ function editor_main() {
     App.gameController.selectGraphic( App.libraryController.get( 'content' )[0] );
     App.gameController.selectGraphic( App.libraryController.get( 'content' )[1] );
     
-    App.mainView.stageView.player.parse( App.gameController.game.getData().game );
+    App.mainView.stageView.player.parse( App.game.getData().game );
   
   }, 100 );
 
 };
 
-
-var player;
-
 function player_main( data ) {
   
-  player = new Player();
+  window.player = new Player();
   
   data = data || {
     background:"/assets/preview.png",
