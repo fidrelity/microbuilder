@@ -2,7 +2,7 @@ var MainView = Ember.View.extend({
   
   templateName : 'templates_main_template',
   
-  gameBinding : 'App.gameController.game',
+  gameBinding : 'App.game',
   
   stageContent : null,
   behaviourContent : null,
@@ -25,21 +25,19 @@ var MainView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    var player = new Player();
-    
-    player.setCanvas( this.$( '#testCanvas' )[0] );
-    this.player = player;
-    
     this.$( "#accordion" ).accordion({
       
       autoHeight: false,
       
-      change: function(event, ui) {
+      change: function( event, ui ) {
         
-        if ( ui.options.active === 2 ) {
+        if ( ui.options.active === 0 ) {
           
-          player.parse( App.game.getData().game );
           App.mainView.stageView.player.parse( App.game.getData().game );
+          
+        } else if ( ui.options.active === 2 ) {
+          
+          App.mainView.player.parse( App.game.getData().game );
           
         }
         

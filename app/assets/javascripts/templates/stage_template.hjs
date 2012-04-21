@@ -4,7 +4,8 @@
 </p>
 
 {{view PlayerView 
-  canvasID="stageCanvas2"
+  type="stage"
+  canvasID="stageCanvas"
   playerBinding="player"
 }}
 

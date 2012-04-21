@@ -44,6 +44,10 @@ var PlayerView = Ember.View.extend({
       
       player.areaSelectable = true;
       
+    } else {
+      
+      player.edit = false;
+      
     }
     
     

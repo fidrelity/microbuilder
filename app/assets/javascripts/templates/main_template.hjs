@@ -29,9 +29,11 @@
       {{view Ember.TextField valueBinding="game.instructions" placeholder="(140 chars max)" maxlength="140"}}
       <br />
 
-      <div class="player">
-        <canvas id="testCanvas" width="640" height="390" style="background: #EEE;border:2px solid black;"></canvas>
-      </div>
+      {{view PlayerView 
+        type="test"
+        canvasID="testCanvas"
+        playerBinding="player"
+      }}
 
       <button {{action "publishGame" target="App.gameController"}}>publish</button>
     
