@@ -90,7 +90,7 @@ StateMachine.prototype = {
       if ( self.currentState.name !== transition.to &&
         ( self.currentState.name === transition.from || transition.from === '*' ) ) {
         
-        self.changeState( transition.to, transition.callback, arguments );
+        self.changeState( transition.to, transition.callback );
         
         return true;
         
@@ -102,7 +102,7 @@ StateMachine.prototype = {
     
   },
   
-  changeState : function( name, callback, args ) {
+  changeState : function( name, callback ) {
     
     var callbackArgs = [];
     
@@ -112,16 +112,11 @@ StateMachine.prototype = {
     
     if ( callback ) {
       
-      args = args || [];
-      
-      callbackArgs.push.apply( callbackArgs, args );
-      callbackArgs.push( this );
-      
-      callback.apply( this.scope, callbackArgs );
+      callback.call( this.scope );
       
     }
     
-    this.currentState.enter.call( this.scope );
+    this.currentState.enter.call( this.scope, this );
     
   },
   

@@ -1,6 +1,6 @@
-var Mouse = function( player ) {
+var Mouse = function( player, canvas ) {
   
-  this.canvas = player.canvas;
+  this.canvas = canvas;
   this.player = player;
   
   this.clicked = false;
@@ -90,7 +90,7 @@ Mouse.prototype = {
   setMouse : function( e, mouse ) {
     
     var offset = $( this.canvas ).offset(),
-      i = this.player.large ? this.player.increment : 0;
+      i = this.player.edit ? this.player.increment : 0;
     
     mouse.set( e.pageX - offset.left - i, e.pageY - offset.top - i );
     
