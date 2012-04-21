@@ -11,9 +11,6 @@ var Game = function( player, mouse ) {
   
   this.startActions = [];
   
-  this.time = 0;
-  this.timePlayed = 0;
-  
 };
 
 Game.prototype = {
@@ -34,20 +31,9 @@ Game.prototype = {
       
     }
     
-    this.time = 0;
-    this.timePlayed = 0;
-    
   },
   
-  update : function() {
-    
-    var dt;
-      t = new Date().getTime();
-        
-    dt = t - this.time;
-    dt = dt > 30 ? 30 : dt;
-    
-    this.time = t;
+  update : function( dt ) {
     
     for ( var i = 0; i < this.behaviours.length; i++ ) {
       
@@ -60,8 +46,6 @@ Game.prototype = {
       this.gameObjects[i].update( dt );
       
     }
-    
-    this.timePlayed += dt;
     
   },
   

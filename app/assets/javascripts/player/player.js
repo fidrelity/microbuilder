@@ -2,12 +2,13 @@ var Player = function() {
   
   this.init();
   
-  this.playTime = 5;
-  
   this.debug = false;
   this.large = false;
   this.increment = 96;
   
+  this.time = 0;
+  this.timePlayed = 0;
+  this.playTime = 5000;
   
   this.edit = false;
   
@@ -144,12 +145,21 @@ Player.prototype = {
   
   update : function() {
     
-    this.game.update();
-
-    if ( this.game.timePlayed > this.playTime * 1000 ) {
-  
+    var dt;
+      t = Date.now();
+    
+    dt = t - this.time;
+    dt = dt > 30 ? 30 : dt;
+    
+    this.time = t;
+    this.timePlayed += dt;
+    
+    this.game.update( dt );
+    
+    if ( this.timePlayed > this.playTime ) {
+    
       this.fsm.lose();
-  
+    
     }
     
   },
@@ -169,6 +179,14 @@ Player.prototype = {
     ctx.lineWidth = 2;
     
     this.game.draw( ctx );
+    
+    if ( this.timePlayed ) {
+      
+      this.ctx.fillStyle = 'rgba(255,255,0,0.5)';
+      this.ctx.fillRect( 0, 386, 640 * this.timePlayed / this.playTime, 4 );
+      
+    }
+    
     
     if ( this.edit ) {
       
@@ -190,6 +208,9 @@ Player.prototype = {
   },
   
   reset : function() {
+    
+    this.time = 0;
+    this.timePlayed = 0;
     
     this.mouse.clicked = false;
     
