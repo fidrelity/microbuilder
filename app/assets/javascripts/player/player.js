@@ -54,6 +54,8 @@ var Player = function() {
   this.objectsMoveable = false;
   this.areaSelectable = false;
   
+  this.showTimeline = false;
+  
   this.selectObject = null;
   this.selectArea = null;
   
@@ -104,6 +106,7 @@ Player.prototype = {
       
       if ( self.terminate ) {
         
+        // console.log( 'terminated player ' + this.ID );
         return;
         
       }
@@ -218,12 +221,16 @@ Player.prototype = {
       
       }
       
-      this.ctx.fillStyle = 'rgba(125,125,125,0.5)';
-      
-      this.ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
-      this.ctx.fillRect( - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
-      
-      this.redraw = false;
+      if ( this.showTimeline ) {
+        
+        ctx.fillStyle = 'rgba(125,125,125,0.5)';
+        
+        ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
+        ctx.fillRect( - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
+        
+        this.redraw = false;
+        
+      }
     
     }
     
@@ -239,10 +246,14 @@ Player.prototype = {
     
     this.game.draw( ctx );
     
-    this.ctx.fillStyle = 'rgba(255,0,0,0.5)';
-    
-    this.ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
-    this.ctx.fillRect( ( 640 + i ) * this.timePlayed / this.playTime - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
+    if ( this.showTimeline ) {
+      
+      ctx.fillStyle = 'rgba(255,0,0,0.5)';
+      
+      ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
+      ctx.fillRect( ( 640 + i ) * this.timePlayed / this.playTime - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
+      
+    }
     
   },
   

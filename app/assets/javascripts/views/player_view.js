@@ -27,6 +27,8 @@ var PlayerView = Ember.View.extend({
       player.objectsMoveable = true;
       player.areaSelectable = true;
       
+      player.showTimeline = true;
+      
       player.selectedObjectCallback = bind( App.mainView.stageView, App.mainView.stageView.selectedObjectCallback );
       player.selectedObjectDragCallback = bind( App.game, App.game.gameObjectPositionChanged );
       
@@ -92,7 +94,6 @@ var PlayerView = Ember.View.extend({
   destroy : function() {
     
     this.player.terminate = true;
-    console.log( 'terminated player ' + this.player.ID );
     
     this._super();
     
