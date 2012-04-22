@@ -315,3 +315,8 @@ ul#nav .popout {
 #editor ul#behaviours li.top li {
   margin-bottom: 5px;
 }
+
+#editor #stageContent, 
+#editor #behaviourContent {
+  position: relative;
+}

@@ -6,16 +6,16 @@
 
     <h3><a href="#">Stage</a></h3>
     <div>
-
-      {{dynamicView stageContent}}
-
+      <div id="stageContent">
+        {{dynamicView stageContent}}
+      </div>
     </div>
 
     <h3><a href="#">Behaviours</a></h3>
     <div>
-
-      {{dynamicView behaviourContent}}
-
+      <div id="behaviourContent">
+        {{dynamicView behaviourContent}}
+      </div>
     </div>
 
     <h3><a href="#">Publish</a></h3>

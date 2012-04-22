@@ -59,7 +59,12 @@ var MainView = Ember.View.extend({
       
     }
     
-    this.set( locationName, this.get( viewName ) );
+    if ( this.get( viewName ) !== this.get( locationName ) ) {
+    
+      // this.$('#' + locationName).css( 'left', 1000 ).animate({ left: 0 }, 1000);
+      this.set( locationName, this.get( viewName ) );
+    
+    }
     
   }
   
