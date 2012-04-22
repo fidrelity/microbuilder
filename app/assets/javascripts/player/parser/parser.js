@@ -12,6 +12,8 @@ var Parser = {
     this.game = game;
     this.loader = new Loader( callback );
     
+    game.duration = ( data.duration || 5 ) * 1000;
+    
     if ( data.background ) {
     
       game.background = this.loader.loadImage( data.background );

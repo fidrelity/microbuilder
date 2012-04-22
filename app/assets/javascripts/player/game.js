@@ -4,6 +4,7 @@ var Game = function( player, mouse ) {
   this.mouse = player.mouse;
   
   this.background = null;
+  this.duration = 5000;
   
   this.graphics = [];
   this.gameObjects = [];

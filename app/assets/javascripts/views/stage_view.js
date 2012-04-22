@@ -6,6 +6,28 @@ var StageView = Ember.View.extend({
   
   gameObject: null,
   
+  didInsertElement : function() {
+    
+    var self = this;
+    
+    this.$( '#slider' ).slider({
+      
+      slide: function( event, ui ) {
+        
+        App.game.setDuration( ui.value );
+        
+      },
+      
+      change: function( event, ui ) {
+        
+        self.updatePlayer();
+        
+      }
+      
+    });
+    
+  },
+  
   updatePlayer : function() {
     
     this.player.parse( App.game.getData().game );

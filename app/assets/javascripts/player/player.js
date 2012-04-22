@@ -49,7 +49,6 @@ var Player = function() {
   
   this.time = 0;
   this.timePlayed = 0;
-  this.playTime = 5000;
   
   this.objectsMoveable = false;
   this.areaSelectable = false;
@@ -173,7 +172,7 @@ Player.prototype = {
     
     this.game.update( dt );
     
-    if ( this.timePlayed > this.playTime ) {
+    if ( this.timePlayed > this.game.duration ) {
     
       this.fsm.lose();
       this.fsm.stop();
@@ -189,7 +188,7 @@ Player.prototype = {
     if ( this.timePlayed ) {
       
       this.ctx.fillStyle = 'rgba(255,255,0,0.5)';
-      this.ctx.fillRect( 0, 386, 640 * this.timePlayed / this.playTime, 4 );
+      this.ctx.fillRect( 0, 386, 640 * this.timePlayed / this.game.duration, 4 );
       
     }
     
@@ -253,7 +252,7 @@ Player.prototype = {
       ctx.fillStyle = 'rgba(255,0,0,0.5)';
       
       ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
-      ctx.fillRect( ( 640 + i ) * this.timePlayed / this.playTime - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
+      ctx.fillRect( ( 640 + i ) * this.timePlayed / this.game.duration - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
       
     }
     
