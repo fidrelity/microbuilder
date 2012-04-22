@@ -14,13 +14,15 @@ var StageView = Ember.View.extend({
   
   play : function() {
     
-    alert( 'TODO' );
+    // alert( 'TODO' );
+    this.player.fsm.try();
     
   },
   
   stop : function() {
     
-    alert( 'TODO' );
+    // alert( 'TODO' );
+    this.player.fsm.stop();
     
   },
   

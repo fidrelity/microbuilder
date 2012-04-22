@@ -15,21 +15,28 @@ var Player = function() {
     states : [
       { name : 'init' },
       { name : 'load' },
+      
       { name : 'ready', enter : this.enterReady },
       { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update },
       { name : 'end' },
-      { name : 'edit', draw : this.drawEdit, update : this.drawUpdate }
+      
+      { name : 'edit', draw : this.drawEdit },
+      { name : 'trial', draw : this.drawTrial, update : this.update }
     ],
     
     transitions : [
       { name : 'parse', from : '*', to: 'load' },
       { name : 'loaded', from : 'load', to: 'ready' },
       { name : 'edit', from : 'load', to: 'edit', callback : this.onEdit },
+      
       { name : 'start', from : 'ready', to: 'play' },
       { name : 'win', from : 'play', to: 'end', callback : this.onWin },
       { name : 'lose', from : 'play', to: 'end', callback : this.onLose },
       { name : 'restart', from : 'end', to: 'ready' },
-      { name : 'done', from : 'edit', to: 'ready', callback : this.onDone }
+      
+      { name : 'try', from : 'edit', to: 'trial', callback : this.onTrial },
+      { name : 'stop', from : 'trial', to: 'edit', callback : this.onStop }
+      
     ]
     
   });
@@ -148,18 +155,13 @@ Player.prototype = {
     if ( this.timePlayed > this.playTime ) {
     
       this.fsm.lose();
+      this.fsm.stop();
     
     }
     
   },
   
-  updateEdit : function( dt ) {
-    
-  },
-  
   draw : function( ctx ) {
-    
-    console.log( 'draw' );
     
     this.game.draw( ctx );
     
@@ -184,13 +186,6 @@ Player.prototype = {
     
       this.game.draw( ctx );
     
-      // if ( this.timePlayed ) {
-      
-        // this.ctx.fillStyle = 'rgba(255,255,0,0.5)';
-        // this.ctx.fillRect( 0, 386, 640 * this.timePlayed / this.playTime, 4 );
-      
-      // }
-    
       if ( this.selectArea ) {
       
         this.selectArea.draw( ctx );
@@ -204,9 +199,31 @@ Player.prototype = {
       
       }
       
+      this.ctx.fillStyle = 'rgba(125,125,125,0.5)';
+      
+      this.ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
+      this.ctx.fillRect( - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
+      
       this.redraw = false;
     
     }
+    
+  },
+  
+  drawTrial : function( ctx ) {
+    
+    var i = this.increment;
+    
+    ctx.clearRect( -i, -i, 640 + 2 * i, 390 + 2 * i );
+    
+    ctx.lineWidth = 2;
+    
+    this.game.draw( ctx );
+    
+    this.ctx.fillStyle = 'rgba(255,0,0,0.5)';
+    
+    this.ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
+    this.ctx.fillRect( ( 640 + i ) * this.timePlayed / this.playTime - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
     
   },
   
@@ -365,6 +382,20 @@ Player.prototype = {
     
     this.ctx.fillStyle = 'rgba(255,0,0,0.5)';
     this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
+    
+  },
+  
+  onTrial : function() {
+    
+    this.mouse.handleClick();
+    this.reset();
+    
+  },
+  
+  onStop : function() {
+    
+    this.mouse.handleDrag();
+    this.reset();
     
   },
   
