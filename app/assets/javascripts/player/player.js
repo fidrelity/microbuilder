@@ -19,7 +19,7 @@ var Player = function() {
       { name : 'load' },
       
       { name : 'ready', enter : this.enterReady },
-      { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update },
+      { name : 'play', draw : this.draw, update : this.update },
       { name : 'end' },
       
       { name : 'edit', draw : this.drawEdit },
@@ -31,14 +31,13 @@ var Player = function() {
       { name : 'loaded', from : 'load', to: 'ready' },
       { name : 'edit', from : 'load', to: 'edit', callback : this.onEdit },
       
-      { name : 'start', from : 'ready', to: 'play' },
+      { name : 'start', from : 'ready', to: 'play', callback : this.onPlay },
       { name : 'win', from : 'play', to: 'end', callback : this.onWin },
       { name : 'lose', from : 'play', to: 'end', callback : this.onLose },
       { name : 'restart', from : 'end', to: 'ready' },
       
       { name : 'try', from : 'edit', to: 'trial', callback : this.onTrial },
       { name : 'stop', from : 'trial', to: 'edit', callback : this.onStop }
-      
     ]
     
   });
@@ -381,15 +380,19 @@ Player.prototype = {
   enterReady : function() {
     
     this.reset();
+    this.game.start();
+    
+    this.draw( this.ctx );
     
     this.ctx.fillStyle = 'rgba(255,255,0,0.5)';
     this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
     
   },
   
-  enterPlay : function() {
+  onPlay : function() {
     
     this.reset();
+    this.game.start();
     
   },
   
@@ -423,7 +426,9 @@ Player.prototype = {
   onTrial : function() {
     
     this.mouse.handleClick();
+    
     this.reset();
+    this.game.start();
     
   },
   
