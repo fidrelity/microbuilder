@@ -75,7 +75,8 @@ var GameObjectView = Ember.View.extend({
   
   changeArt: function() {
     
-    alert( 'TODO' );
+    App.mainView.stageView.set( 'gameObject', this.content );
+    App.gameController.searchChangeGraphic();
     
   },
   

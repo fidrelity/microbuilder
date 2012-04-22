@@ -56,6 +56,23 @@ var GameController = Ember.Object.extend({
     
   },
   
+  searchChangeGraphic : function() {
+    
+    App.libraryController.setMode( 'graphic' );
+    App.libraryController.set( 'selectFunction', this.selectChangeGraphic );
+    
+    App.mainView.show( 'stageContent', 'libraryView' );
+    
+  },
+  
+  selectChangeGraphic : function( graphic ) {
+    
+    App.mainView.stageView.gameObject.set( 'graphic', graphic );
+    
+    this.cancel();
+    
+  },
+  
   searchArtGraphic : function() {
     
     App.libraryController.setMode( 'graphic' );
