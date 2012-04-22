@@ -50,6 +50,28 @@ var BehaviourModel = Ember.Object.extend({
     
     return data;
     
+  },
+  
+  removeGameObject : function( gameObject ) {
+    
+    var actions = this.actions.filterProperty( 'gameObject', gameObject ),
+        triggers = this.triggers.filterProperty( 'gameObject', gameObject ),
+        i;
+    
+    triggers = triggers.concat( this.triggers.filterProperty( 'gameObject2', gameObject ) );
+    
+    for ( i = 0; i < actions.length; i++ ) {
+      
+      this.actions.removeObject( actions[i] );
+      
+    }
+    
+    for ( i = 0; i < triggers.length; i++ ) {
+      
+      this.triggers.removeObject( triggers[i] );
+      
+    }
+    
   }
   
 });

@@ -44,8 +44,7 @@ var GameObjectView = Ember.View.extend({
   
   remove: function() {
     
-    App.gameObjectsController.removeObject( this.content );
-    
+    App.game.removeGameObject( this.content );
     App.mainView.stageView.updatePlayer();
     
     this.set( 'content', null );

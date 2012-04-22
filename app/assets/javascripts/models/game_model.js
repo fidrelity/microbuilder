@@ -146,6 +146,20 @@ var GameModel = Ember.Object.extend({
     
     this.getGameObjectWithID( gameObjectID ).position.copy( pos );
     
+  },
+  
+  removeGameObject : function( gameObject ) {
+    
+    this.startBehaviour.removeGameObject( gameObject );
+    
+    for ( i = 0; i < this.behaviours.length; i++ ) {
+      
+      this.behaviours[i].removeGameObject( gameObject );
+      
+    }
+    
+    this.gameObjects.removeObject( gameObject );
+    
   }
   
 });
