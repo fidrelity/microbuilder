@@ -22,8 +22,8 @@ var Player = function() {
       { name : 'play', draw : this.draw, update : this.update },
       { name : 'end' },
       
-      { name : 'edit', draw : this.drawEdit },
-      { name : 'trial', draw : this.drawTrial, update : this.update }
+      { name : 'edit', enter: this.enterEdit, draw : this.drawEdit },
+      { name : 'trial', enter: this.enterTrial, draw : this.drawTrial, update : this.update }
     ],
     
     transitions : [
@@ -36,8 +36,10 @@ var Player = function() {
       { name : 'lose', from : 'play', to: 'end', callback : this.onLose },
       { name : 'restart', from : 'end', to: 'ready' },
       
-      { name : 'try', from : 'edit', to: 'trial', callback : this.onTrial },
-      { name : 'stop', from : 'trial', to: 'edit', callback : this.onStop }
+      { name : 'try', from : 'edit', to: 'trial' },
+      { name : 'winTrial', from : 'trial', to: 'edit', callback : this.onWin },
+      { name : 'loseTrial', from : 'trial', to: 'edit', callback : this.onLose },
+      { name : 'stop', from : 'trial', to: 'edit', callback: this.onStop }
     ]
     
   });
@@ -273,9 +275,6 @@ Player.prototype = {
     
     this.game.reset();
     
-    this.draw( this.ctx );
-    this.redraw = true;
-    
   },
 
   click : function() {
@@ -403,6 +402,8 @@ Player.prototype = {
       
     }
     
+    this.redraw = true;
+    
   },
   
   onWin : function() {
@@ -419,7 +420,7 @@ Player.prototype = {
     
   },
   
-  onTrial : function() {
+  enterTrial : function() {
     
     this.mouse.handleClick();
     
@@ -428,10 +429,16 @@ Player.prototype = {
     
   },
   
-  onStop : function() {
+  enterEdit : function() {
     
     this.mouse.handleDrag();
     this.reset();
+    
+  },
+  
+  onStop : function() {
+    
+    this.redraw = true;
     
   },
   
@@ -451,6 +458,7 @@ Player.prototype = {
     }
     
     this.reset();
+    this.redraw = true;
     
   },
   

@@ -29,6 +29,8 @@ var MainView = Ember.View.extend({
       
       autoHeight: false,
       
+      collapsible: true,
+      
       change: function( event, ui ) {
         
         if ( ui.options.active === 0 ) {

@@ -114,5 +114,3 @@
 <div class="clear"></div>
 
 <button {{action "createBehaviour" target="App.behaviourController"}}>add behaviour</button>
-
-<div>
