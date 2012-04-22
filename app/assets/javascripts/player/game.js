@@ -19,21 +19,13 @@ Game.prototype = {
   
   reset : function() {
     
-    for ( var i = 0; i < this.gameObjects.length; i++ ) {
-      
-      this.gameObjects[i].reset();
-      
-    }
+    this.gameObjects.forEachApply( 'reset' );
     
   },
   
   start : function() {
     
-    for ( var i = 0; i < this.startActions.length; i++ ) {
-      
-      this.startActions[i].execute( this );
-      
-    }
+    this.startActions.forEachApply( 'execute', this );
     
   },
   

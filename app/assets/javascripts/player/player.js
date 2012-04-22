@@ -90,12 +90,8 @@ Player.prototype = {
     canvas.width = 640 + 2 * i;
     canvas.height = 390 + 2 * i;
     
-    extend( ctx, CanvasUtilities );
-    
-    
     ctx.save();
     ctx.translate( i, i );
-    
     
     this.ctx = ctx;
     this.canvas = canvas;

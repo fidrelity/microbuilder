@@ -83,7 +83,7 @@ function randBool() {
   
 };
 
-var CanvasUtilities = {
+extend( CanvasRenderingContext2D.prototype, {
   
   line : function( x, y, x2, y2 ) {
     
@@ -159,22 +159,14 @@ var CanvasUtilities = {
     
   }
   
-};
+});
 
-Array.prototype.shuffle = function() { 
-  var i = this.length; 
+Array.prototype.forEachApply = function( fn, a ) {
   
-  if (i < 2) {
-    return false;
-  }
-      
-  do { 
-    var zi = Math.floor(Math.random() * i); 
-    var t = this[zi];
-     
-    this[zi] = this[--i];
-    this[i] = t;
-  } while (i);
+  this.forEach( function( e ) {
+    
+    e[fn].call( e, a );
+    
+  });
   
-  return true;
 };
