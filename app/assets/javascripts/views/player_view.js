@@ -85,8 +85,17 @@ var PlayerView = Ember.View.extend({
     });
     
     this.player.selectObject = null;
-    this.player.draw();
+    this.player.reset();
   
+  },
+  
+  destroy : function() {
+    
+    this.player.terminate = true;
+    console.log( 'terminated player ' + this.player.ID );
+    
+    this._super();
+    
   }
 
 });

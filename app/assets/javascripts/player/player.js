@@ -1,5 +1,7 @@
 var Player = function() {
   
+  this.ID = Player.count++;
+  
   this.ctx = null;
   this.canvas = null;
   
@@ -59,6 +61,8 @@ var Player = function() {
   this.selectedObjectDragCallback = function() {};
   this.selectedAreaCallback = function() {};
   
+  this.terminate = false;
+  
 };
 
 Player.prototype = {
@@ -67,7 +71,8 @@ Player.prototype = {
     
     var ctx = canvas.getContext( '2d' ),
       mouse = new Mouse( this, canvas ),
-      i = this.increment;
+      i = this.increment,
+      self = this;
     
     if ( this.edit ) {
       
@@ -95,7 +100,21 @@ Player.prototype = {
     
     ctx.debug = this.debug;
     
-    this.run( bind( this, this.run ) );
+    function run() {
+      
+      if ( self.terminate ) {
+        
+        return;
+        
+      }
+      
+      self.run();
+      
+      requestAnimationFrame( run );
+    
+    };
+    
+    run();
     
   },
   
@@ -144,7 +163,7 @@ Player.prototype = {
     
     this.mouse.clicked = false;
     
-    requestAnimationFrame( bind( this, this.run ) );
+    Player.updates[this.ID] = this.time;
     
   },
   
@@ -419,3 +438,6 @@ Player.prototype = {
   }
   
 };
+
+Player.count = 0;
+Player.updates = [];
