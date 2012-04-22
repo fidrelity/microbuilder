@@ -51,29 +51,43 @@ Game.prototype = {
   
   draw : function( ctx ) {
     
+    var i;
+    
     if ( this.background ) {
     
       ctx.drawImage( this.background, 0, 0 );
     
     } else {
       
-      ctx.fillStyle = '#FFFFFF';
+      ctx.fillStyle = '#FFF';
       ctx.fillRect( 0, 0, 640, 390 );
       
     }
     
-    ctx.fillStyle = '#000';
     
-    for ( var i = 0; i < this.gameObjects.length; i++ ) {
+    if ( ctx.debug ) {
+    
+      for ( i = 0; i < this.behaviours.length; i++ ) {
+      
+        this.behaviours[i].draw( ctx );
+      
+      }
+    
+    }
+    
+    ctx.fillStyle = '#AAA';
+    ctx.strokeStyle = '#AAA';
+    
+    for ( i = 0; i < this.gameObjects.length; i++ ) {
       
       this.gameObjects[i].draw( ctx );
       
     }
     
     if ( ctx.debug ) {
-        
-        ctx.fillRect( this.mouse.pos.x - 5, this.mouse.pos.y - 5 , 10, 10 );
-        
+      
+      ctx.fillCircle( this.mouse.pos.x, this.mouse.pos.y, 3 );
+      
     }
     
   },

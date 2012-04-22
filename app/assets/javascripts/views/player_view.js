@@ -18,8 +18,6 @@ var PlayerView = Ember.View.extend({
     player = new Player();
     player.edit = true;
     
-    // player.debug = true;
-    
     this.set( 'player', player );
     
     if ( type === 'stage' ) {

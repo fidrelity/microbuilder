@@ -13,6 +13,7 @@
 
   <button {{action "play"}}> play </button>
   <button {{action "stop"}}> stop </button>
+  <button {{action "debug"}}> debug on/off </button>
 
 </div>
 

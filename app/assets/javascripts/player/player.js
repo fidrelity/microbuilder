@@ -44,7 +44,6 @@ var Player = function() {
   });
   
   this.edit = false;
-  this.debug = false;
   this.increment = 96;
   
   this.time = 0;
@@ -92,6 +91,9 @@ Player.prototype = {
     canvas.width = 640 + 2 * i;
     canvas.height = 390 + 2 * i;
     
+    extend( ctx, CanvasUtilities );
+    
+    
     ctx.save();
     ctx.translate( i, i );
     
@@ -100,7 +102,7 @@ Player.prototype = {
     this.canvas = canvas;
     this.mouse = mouse;
     
-    ctx.debug = this.debug;
+    ctx.debug = false;
     
     function run() {
       
@@ -210,6 +212,7 @@ Player.prototype = {
     
       if ( this.selectArea ) {
       
+        ctx.strokeStyle = '#000';
         this.selectArea.draw( ctx );
       
       }
@@ -217,6 +220,8 @@ Player.prototype = {
       if ( this.selectObject ) {
       
         this.selectObject.draw( ctx );
+        
+        ctx.strokeStyle = '#000';
         this.selectObject.getArea().draw( ctx );
       
       }
@@ -445,6 +450,13 @@ Player.prototype = {
     }
     
     this.reset();
+    
+  },
+  
+  debug : function() {
+    
+    this.ctx.debug = !this.ctx.debug;
+    this.redraw = true;
     
   }
   

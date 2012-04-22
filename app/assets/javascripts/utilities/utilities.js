@@ -82,3 +82,32 @@ function randBool() {
   return Math.random() > 0.5;
   
 };
+
+var CanvasUtilities = {
+  
+  line : function( x, y, x2, y2 ) {
+    
+    this.beginPath();
+    this.moveTo( x, y );
+    this.lineTo( x2, y2 );
+    this.stroke();
+    
+  },
+  
+  fillCircle : function( x, y, r ) {
+    
+    this.beginPath();
+    this.arc( x, y, r, 0, Math.PI * 2, true );
+    this.fill();
+    
+  },
+  
+  strokeCircle : function( x, y, r ) {
+    
+    this.beginPath();
+    this.arc( x, y, r, 0, Math.PI * 2, true );
+    this.stroke();
+    
+  }
+  
+};

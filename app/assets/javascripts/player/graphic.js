@@ -20,7 +20,6 @@ Graphic.prototype = {
     
     if ( ctx.debug ) {
       
-      ctx.fillStyle = '#000';
       ctx.strokeRect( 0, 0, width, height );
       
     }

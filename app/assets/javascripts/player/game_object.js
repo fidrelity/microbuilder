@@ -57,8 +57,10 @@ GameObject.prototype = {
   
   draw : function( ctx ) {
     
+    var pos = this.position;
+    
     ctx.save();
-    ctx.translate( this.position.x, this.position.y )
+    ctx.translate( pos.x, pos.y );
     
     this.graphic.draw( ctx, this.animationFrame );
     
@@ -66,12 +68,12 @@ GameObject.prototype = {
     
     if ( ctx.debug && this.target ) {
       
-      ctx.beginPath();
-      ctx.moveTo( this.position.x, this.position.y );
-      ctx.lineTo( this.target.x, this.target.y );
-      ctx.closePath();
+      ctx.save();
+      ctx.translate( this.graphic.image.width / 2, this.graphic.image.height / 2 );
       
-      ctx.stroke();
+      ctx.line( pos.x, pos.y, this.target.x, this.target.y );
+      
+      ctx.restore();
       
     }
     
@@ -110,6 +112,8 @@ GameObject.prototype = {
       this.graphic.image.width,
       this.graphic.image.height
     )
+    
+    return this.area;
     
   },
   
