@@ -28,7 +28,18 @@
 
   <p>What graphic should {{action.gameObject.name}} display?</p>
 
-  <ul class="graphics">
+  <button {{action "searchArtGraphic" target="App.gameController"}}>select graphic</button>
+
+  {{#if action.graphic}}
+
+    <div>
+      <img {{bindAttr src="action.graphic.imagePath"}} {{bindAttr alt="action.graphic.name"}} />
+      <p>{{action.graphic.name}}</p>
+    </div>
+
+  {{/if}}
+
+  <!-- <ul class="graphics">
     {{#each App.libraryController.display}}
       {{#view SelectView 
         contentBinding = "this"
@@ -43,6 +54,6 @@
     {{/each}}
   </ul>
 
-  <div class='clear'><div>
+  <div class='clear'><div> -->
 
 {{/if}}

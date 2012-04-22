@@ -10,8 +10,8 @@
   
     {{#view SelectView 
       contentBinding = "this"
-      controllerBinding = "App.libraryController" 
-      selectFunctionBinding = "App.libraryController.selectGraphic" }}
+      controllerBinding = "App.gameController" 
+      selectFunctionBinding = "App.libraryController.selectFunction" }}
       
       <li {{action "select"}}>
         

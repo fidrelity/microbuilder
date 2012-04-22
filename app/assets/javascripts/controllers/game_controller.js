@@ -19,14 +19,9 @@ var GameController = Ember.Object.extend({
   searchGraphic : function() {
     
     App.libraryController.setMode( 'graphic' );
+    App.libraryController.set( 'selectFunction', this.selectGraphic );
     
     App.mainView.show( 'stageContent', 'libraryView' );
-    
-  },
-  
-  drawGraphic : function() {
-    
-    App.mainView.show( 'stageContent', 'paintView' );
     
   },
   
@@ -47,6 +42,7 @@ var GameController = Ember.Object.extend({
   searchBackground : function() {
     
     App.libraryController.setMode( 'background' );
+    App.libraryController.set( 'selectFunction', this.selectBackground );
     
     App.mainView.show( 'stageContent', 'libraryView' );
     
@@ -57,6 +53,29 @@ var GameController = Ember.Object.extend({
     this.game.setBackground( graphic );
     
     this.cancel();
+    
+  },
+  
+  searchArtGraphic : function() {
+    
+    App.libraryController.setMode( 'graphic' );
+    App.libraryController.set( 'selectFunction', this.selectArtGraphic );
+    
+    App.mainView.show( 'behaviourContent', 'libraryView' );
+    
+  },
+  
+  selectArtGraphic : function( graphic ) {
+    
+    App.actionController.selectGraphic( graphic );
+    
+    App.mainView.show( 'behaviourContent', 'actionView' );
+    
+  },
+  
+  drawGraphic : function() {
+    
+    App.mainView.show( 'stageContent', 'paintView' );
     
   },
   
