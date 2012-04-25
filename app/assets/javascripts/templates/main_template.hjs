@@ -22,7 +22,7 @@
     <div>
 
       <label>game title: </label>
-      {{view Ember.TextField valueBinding="game.title" size="32" placeholder="insert name" maxlength="32"}}
+      {{view Ember.TextField valueBinding="game.title" size="32" placeholder="insert name" maxlength="3"}}
       <br />
 
       <label>instructions: </label>
