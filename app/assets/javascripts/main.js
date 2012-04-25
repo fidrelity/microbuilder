@@ -4,13 +4,13 @@ function editor_main() {
 
   App.game = GameModel.create();
   App.gameController = GameController.create();
-
+  
   App.libraryController = LibraryController.create();
   App.paintController = PaintController.create();
-
+  
   App.gameObjectsController = GameObjectsController.create();
   App.behaviourController = BehaviourController.create();
-
+  
   App.triggerController = TriggerController.create();
   App.actionController = ActionController.create();
 

@@ -1,6 +1,6 @@
 var ActionView = Ember.View.extend({
   
-  templateName : 'templates_action_main_template',
+  templateName : 'templates/action/main_template',
   
   actionBinding : 'App.actionController.action'
   
@@ -8,12 +8,12 @@ var ActionView = Ember.View.extend({
 
 var MoveActionView = ActionView.extend({
   
-  templateName : 'templates_action_move_template'
+  templateName : 'templates/action/move_template'
   
 });
 
 var ArtActionView = ActionView.extend({
   
-  templateName : 'templates_action_art_template'
+  templateName : 'templates/action/art_template'
   
 });
