@@ -34,4 +34,12 @@ class GraphicsController < ApplicationController
     
     render :json => response, :status => 200
   end
+  
+  def backgrounds
+    response = Graphic.all_public.backgrounds.collect do |graphic|
+      graphic.to_response_hash
+    end
+    
+    render :json => response, :status => 200
+  end
 end
