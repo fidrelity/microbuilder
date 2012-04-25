@@ -44,6 +44,6 @@ end
 
 PAPERCLIP_OPTIONS = {
   :url => "/:class/:id/:basename" + ".png",
-  :path => Rails.root.to_s + "/public/:class/:id/:basename" + ".png",
+  :path => Rails.root.to_s + "public/:class/:id/:basename" + ".png",
 }
 
