@@ -6,10 +6,21 @@ function editor_main() {
   App.gameController = GameController.create();
   
   App.libraryController = LibraryController.create();
+
+
+  App.gameObjectsController = GameObjectsController.create();
+  App.placementController = PlacementController.create();
+
+  // -------------------
+  // Paint
+  App.pencilTool = PencilToolModel.create();
+  //
+
   App.paintController = PaintController.create();
   
   App.gameObjectsController = GameObjectsController.create();
   App.toolBoxController = ToolBoxController.create();
+  // -------------------
 
   App.behaviourController = BehaviourController.create();
   
@@ -17,9 +28,9 @@ function editor_main() {
   App.actionController = ActionController.create();
 
 
+
   //
   App.pencilTool = PencilToolModel.create();
-
 
   App.mainView = MainView.create();
   App.mainView.appendTo('#content');
