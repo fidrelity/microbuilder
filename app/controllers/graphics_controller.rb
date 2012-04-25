@@ -28,18 +28,11 @@ class GraphicsController < ApplicationController
   end
   
   def public
-    response = Graphic.all_public.collect do |graphic|
-      graphic.to_response_hash
-    end
-    
-    render :json => response, :status => 200
-  end
-  
-  def backgrounds
-    response = Graphic.all_public.backgrounds.collect do |graphic|
-      graphic.to_response_hash
-    end
-    
-    render :json => response, :status => 200
+    response, status = Graphic.filter(
+      !!params[:backgrounds],
+      params[:min_size].to_i,
+      params[:max_size].to_i
+    )
+    render :json => response, :status => status
   end
 end
