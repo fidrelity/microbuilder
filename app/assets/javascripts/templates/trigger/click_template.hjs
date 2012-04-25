@@ -1,0 +1,43 @@
+<p>Click on object or area?</p>
+
+<button {{action "onObject" target="trigger"}}>object</button>
+<button {{action "onArea" target="trigger"}}>area</button>
+
+{{#if trigger.atArea}}
+  
+  <p>Select the area that should trigger the click!</p>
+
+  {{view PlayerView 
+    type = "area"
+    areaBinding = "trigger.area"
+  }}
+  
+{{/if}}
+
+{{#if trigger.atObject}}
+  
+  <p>Which object should trigger a click?</p>
+  
+  <ul class="graphics">
+
+    {{#each App.gameObjectsController}}
+
+      {{#view SelectView 
+        contentBinding="this" 
+        controllerBinding="App.triggerController.trigger" 
+        selectFunctionBinding="App.triggerController.trigger.selectObject" }}
+    
+        <li {{action "select"}} {{bindAttr class="isSelected:selected"}}>
+          <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
+          <p>{{content.name}}</p>
+        </li>
+    
+      {{/view}}
+  
+    {{/each}}
+
+  </ul>
+
+  <div class='clear'><div>
+
+{{/if}}

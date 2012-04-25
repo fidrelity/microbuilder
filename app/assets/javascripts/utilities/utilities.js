@@ -1,10 +1,14 @@
 function bind(scope, fn) {
   
-  return function() {
+  if ( fn ) {
+  
+    return function() {
     
-    fn.apply(scope, arguments);
+      fn.apply(scope, arguments);
     
-  };
+    };
+  
+  }
   
 };
 
@@ -76,5 +80,93 @@ function randSign() {
 function randBool() {
   
   return Math.random() > 0.5;
+  
+};
+
+extend( CanvasRenderingContext2D.prototype, {
+  
+  line : function( x, y, x2, y2 ) {
+    
+    this.beginPath();
+    this.moveTo( x, y );
+    this.lineTo( x2, y2 );
+    this.stroke();
+    
+  },
+  
+  fillCircle : function( x, y, r ) {
+    
+    this.beginPath();
+    this.arc( x, y, r, 0, Math.PI * 2, true );
+    this.fill();
+    
+  },
+  
+  strokeCircle : function( x, y, r ) {
+    
+    this.beginPath();
+    this.arc( x, y, r, 0, Math.PI * 2, true );
+    this.stroke();
+    
+  },
+  
+  dashedTo : function( x, y, x2, y2, l ) {
+
+    var A = x2 - x,
+        B = y2 - y,
+        C = Math.sqrt( A * A + B * B ),
+        a = ( l * A ) / C,
+        b = ( l * B ) / C,
+        xD = a,
+        yD = b,
+        d = true;
+
+    this.moveTo( x, y );
+
+    while ( Math.abs( A ) > Math.abs( xD ) || Math.abs( B ) > Math.abs( yD ) ) {
+    
+      d ? this.lineTo( x + xD, y + yD ) : this.moveTo( x + xD, y + yD );
+
+      d = !d;
+
+      xD += a;
+      yD += b;
+    
+    }
+    
+    this.lineTo( x2, y2 );
+  
+  },
+  
+  dashedLine : function( x, y, x2, y2, l ) {
+    
+    this.beginPath();
+    this.dashedTo( x, y, x2, y2, l );
+    this.stroke();
+    
+  },
+  
+  dashedRect : function( x, y, w, h, l ) {
+    
+    this.beginPath();
+    
+    this.dashedTo( x, y, x + w, y, l );
+    this.dashedTo( x + w, y, x + w, y + h, l );
+    this.dashedTo( x + w, y + h, x, y + h, l );
+    this.dashedTo( x, y + h, x, y, l );
+    
+    this.stroke();
+    
+  }
+  
+});
+
+Array.prototype.forEachApply = function( fn, a ) {
+  
+  this.forEach( function( e ) {
+    
+    e[fn].call( e, a );
+    
+  });
   
 };

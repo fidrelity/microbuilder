@@ -6,7 +6,7 @@ var TriggerModel = Ember.Object.extend({
     
     return this.type
     
-  }.property(),
+  }.property( 'type' ),
   
   getData : function() {
   
@@ -14,86 +14,162 @@ var TriggerModel = Ember.Object.extend({
   
   },
   
-  isComplete : function() {
-    
-    return true;
-    
-  }.property()
+  isComplete : true
 
 });
 
-var ClickTriggerModel = TriggerModel.extend({
+
+var ObjectAreaTriggerModel = TriggerModel.extend({
+
+  gameObject : null,
+  area : null,
+  
+  atArea : false,
+  atObject : false,
+
+  onObject : function() {
+    
+    this.set( 'atObject', true );
+    this.set( 'atArea', false );
+    
+    this.set( 'area', null );
+    
+  },
+  
+  onArea : function() {
+    
+    this.set( 'atArea', true );
+    this.set( 'atObject', false );
+    
+    this.set( 'gameObject', null );
+    
+  },
+  
+  selectObject : function( gameObject ) {
+    
+    this.set( 'gameObject', gameObject );
+    
+  }
+
+});
+
+
+var ClickTriggerModel = ObjectAreaTriggerModel.extend({
   
   type : 'click',
   
-  isClick : true,
-  
-  gameObject : null,
-  
   string : function() {
     
-    return 'click on ' + this.get( 'gameObject' ).name;
+    if ( this.atArea ) {
+      
+      return 'click in area ' + this.get( 'area' ).string();
+      
+    } else {
     
-  }.property( 'gameObject' ),
+      return 'click on ' + this.get( 'gameObject' ).name;
+    
+    }
+    
+  }.property( 'gameObject.name', 'area.x' ),
   
   getData : function() {
     
-    return {
-      type: 'onClick',
-      objectID: this.gameObject.ID
-    };
+    if ( this.atArea ) {
+    
+      return {
+        type: 'onClick',
+        area: this.area.getData()
+      };
+    
+    } else {
+    
+      return {
+        type: 'onClick',
+        objectID: this.gameObject.ID
+      };
+    
+    }
     
   },
   
   isComplete : function() {
     
-    return this.get( 'gameObject' );
+    return this.get( 'gameObject' ) || this.get( 'area' );
     
-  }.property( 'gameObject' )
+  }.property( 'gameObject', 'area' )
   
 });
 
-var ContactTriggerModel = TriggerModel.extend({
+var ContactTriggerModel = ObjectAreaTriggerModel.extend({
   
   type : 'onContact',
   
   isContact : true,
-  
-  gameObject : null,
   gameObject2 : null,
+  
+  selectObject2 : function( gameObject ) {
+    
+    this.set( 'area', null );
+    this.set( 'gameObject', null );
+    
+    this.set( 'atObject', false );
+    this.set( 'atArea', false );
+    
+    this.set( 'gameObject2', gameObject );
+    
+  },
+  
+  word : function() {
+    
+    return this.get( 'isContact' ) ? 'contact' : 'overlap';
+    
+  }.property( 'isContact' ),
   
   string : function() {
     
-    var name = this.get( 'gameObject' ).name,
-      name2 = this.get( 'gameObject2' ).name;
+    var name2 = this.get( 'gameObject2' ).name, str;
     
-    if ( this.isContact ) {
-    
-      return 'contact between ' + name + ' and ' + name2;
+    if ( this.atArea ) {
+      
+      str = name2 + ' and area ' + this.get( 'area' ).string();
       
     } else {
-      
-      return name + ' and ' + name2 + ' overlap';
-      
+    
+      str = name2 + ' and ' + this.get( 'gameObject' ).name;
+    
     }
     
-  }.property( 'gameObject', 'gameObject2' ),
+    return str + ( this.isContact ? ' have contact' : ' overlap' );
+    
+  }.property( 'gameObject.name', 'gameObject2.name' ),
   
   getData : function() {
     
-    return {
-      type: this.type,
-      object1ID: this.gameObject.ID,
-      object2ID: this.gameObject2.ID
-    };
+    if ( this.atArea ) {
+      
+      return {
+        type: this.type,
+        objectID: this.gameObject2.ID,
+        area: this.area.getData()
+      };
+    
+    } else {
+    
+      return {
+        type: this.type,
+        objectID: this.gameObject.ID,
+        object2ID: this.gameObject2.ID
+      };
+    
+    }
     
   },
   
   isComplete : function() {
     
-    return this.get( 'gameObject' ) && this.get( 'gameObject2' );
+    return ( this.get( 'gameObject' ) || this.get( 'area' ) ) && this.get( 'gameObject2' );
     
-  }.property( 'gameObject', 'gameObject2' )
+  }.property( 'gameObject', 'gameObject2', 'area' )
   
 });
 

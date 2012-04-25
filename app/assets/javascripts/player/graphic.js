@@ -20,7 +20,7 @@ Graphic.prototype = {
     
     if ( ctx.debug ) {
       
-      ctx.strokeRect( 0, 0, width, height );
+      ctx.dashedRect( 0, 0, width, height, 7 );
       
     }
     

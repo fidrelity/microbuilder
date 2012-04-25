@@ -10,6 +10,8 @@ var ActionController = Ember.Object.extend({
   
   behaviourBinding : 'App.behaviourController.currentBehaviour',
   
+  contentView : null,
+  
   reset : function() {
     
     this.set( 'action', null );
@@ -24,45 +26,21 @@ var ActionController = Ember.Object.extend({
   
   selectGraphic : function( graphic ) {
     
+    this.set( 'contentView', ArtActionView.create() );
     this.get( 'action' ).set( 'graphic', graphic );
     
   },
   
   move : function() {
   
+    this.set( 'contentView', MoveActionView.create() );
     this.set( 'action', MoveActionModel.create() );
   
   },
   
-  jumpTo : function() {
-  
-    var action = this.get( 'action' );
-  
-    action.set( 'type', 'jumpTo' );
-  
-  },
-  
-  moveTo : function() {
-  
-    var action = this.get( 'action' );
-  
-    action.set( 'type', 'moveTo' );
-  
-  },
-  
-  moveIn : function() {
-  
-    var action = this.get( 'action' );
-  
-    action.set( 'type', 'moveIn' );
-  
-  },
-  
-  
   art : function() {
     
-    App.libraryController.filter( 'isBackground', false );
-    
+    this.set( 'contentView', ArtActionView.create() );
     this.set( 'action', ArtActionModel.create() );
     
   },
@@ -87,9 +65,7 @@ var ActionController = Ember.Object.extend({
     
       this.get( 'behaviour' ).addAction( action );
     
-      App.gameController.saveBehaviour();
-    
-      this.reset();
+      App.gameController.cancel();
     
     }
     

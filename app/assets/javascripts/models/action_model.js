@@ -28,11 +28,11 @@ var MoveActionModel = ActionModel.extend({
   
   type : 'move',
   
-  isMove : true,
-  
   gameObject : null,
   
   position : null,
+  
+  question : '',
   
   init : function() {
     
@@ -40,32 +40,32 @@ var MoveActionModel = ActionModel.extend({
     
   },
   
+  jumpTo : function() {
+  
+    this.set( 'type', 'jumpTo' );
+    this.set( 'question', 'to what location should ' + this.gameObject.name + ' jump?' );
+  
+  },
+  
+  moveTo : function() {
+  
+    this.set( 'type', 'moveTo' );
+    this.set( 'question', 'to what location should ' + this.gameObject.name + ' move?' );
+  
+  },
+  
+  moveIn : function() {
+  
+    this.set( 'type', 'moveIn' );
+    this.set( 'question', 'in what direction, relative to it\'s position, should ' + this.gameObject.name + ' move?' );
+  
+  },
   
   angle : function() {
     
-    return this.get( 'position' ).sub(new Vector( 320, 195 ) ).angle().toFixed( 2 );
+    return this.position.angle().toFixed( 2 );
     
-  }.property( 'position' ),
-  
-  
-  isMoveTo : function() {
-    
-    return this.get( 'type' ) === 'moveTo';
-    
-  }.property( 'type' ),
-  
-  isMoveIn : function() {
-    
-    return this.get( 'type' ) === 'moveIn';
-    
-  }.property( 'type' ),
-  
-  isJumpTo : function() {
-    
-    return this.get( 'type' ) === 'jumpTo';
-    
-  }.property( 'type' ),
-  
+  },
   
   getData : function() {
   
@@ -73,7 +73,7 @@ var MoveActionModel = ActionModel.extend({
       type: this.type,
       objectID: this.gameObject.ID,
       target: this.position.getData(),
-      angle: this.get( 'angle' )
+      angle: this.angle()
     }
   
   },
@@ -94,7 +94,7 @@ var MoveActionModel = ActionModel.extend({
       
     } else if ( type === 'moveIn' ) {
       
-      return name + ' moves in direction ' + this.get( 'angle' );
+      return name + ' moves in direction ' + this.angle();
       
     }
     
@@ -111,8 +111,6 @@ var MoveActionModel = ActionModel.extend({
 var ArtActionModel = ActionModel.extend({
   
   type : 'art',
-  
-  isArt : true,
   
   gameObject : null,
   graphic : null,

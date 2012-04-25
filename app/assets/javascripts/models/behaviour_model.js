@@ -28,33 +28,49 @@ var BehaviourModel = Ember.Object.extend({
   
   getData : function( graphics ) {
     
-    var data = {}, i;
+    var data, i;
     
-    if ( this.triggers.length ) {
-      
-      data.triggers = [];
-      
+    if ( this.triggers.length && this.actions.length ) {
+    
+      data = { triggers: [], actions: [] };
+    
       for ( i = 0; i < this.triggers.length; i++ ) {
-        
+      
         data.triggers.push( this.triggers[i].getData() );
-        
-      }
       
-    }
+      }
     
-    if ( this.actions.length ) {
-      
-      data.actions = [];
-      
       for ( i = 0; i < this.actions.length; i++ ) {
-        
-        data.actions.push( this.actions[i].getData( graphics ) );
-        
-      }
       
+        data.actions.push( this.actions[i].getData( graphics ) );
+      
+      }
+    
     }
     
     return data;
+    
+  },
+  
+  removeGameObject : function( gameObject ) {
+    
+    var actions = this.actions.filterProperty( 'gameObject', gameObject ),
+        triggers = this.triggers.filterProperty( 'gameObject', gameObject ),
+        i;
+    
+    triggers = triggers.concat( this.triggers.filterProperty( 'gameObject2', gameObject ) );
+    
+    for ( i = 0; i < actions.length; i++ ) {
+      
+      this.actions.removeObject( actions[i] );
+      
+    }
+    
+    for ( i = 0; i < triggers.length; i++ ) {
+      
+      this.triggers.removeObject( triggers[i] );
+      
+    }
     
   }
   

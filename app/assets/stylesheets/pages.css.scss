@@ -32,9 +32,9 @@ h1 {
 }
 
 h2 {
-   font-size:16px;
+   font-size:20px;
    text-decoration:none;
-   padding: 17px 0 17px 45px;
+   padding: 17px 0;
 }
 
 ul#nav {
@@ -239,17 +239,23 @@ ul#nav .popout {
    z-index:3;
 }
 
-#editor .meta {
-  position:relative;
-  width:256px;
-  height:150px;
-  float:left;
-  margin:0 20px 0 0;
-}
-
 #editor button {
   padding:5px;
   font-size:11px;
+}
+
+#editor ul.gameobjects {
+  list-style:none;
+}
+
+#editor ul.gameobjects li {
+  float:left;
+  margin: 0 10px 10px 0;
+}
+
+#editor ul.gameobjects li img {
+  height:50px;
+  width:50px;
 }
 
 #editor ul.graphics {
@@ -257,39 +263,69 @@ ul#nav .popout {
   width: 700px;
 }
 
-#editor ul.graphics_overview {
-  list-style:none;
-}
-
-#editor ul.graphics_overview div {
-  height:70px;
-  width:70px;
-/*  overflow:hidden;*/
-  float:left;
-}
-
-#editor ul.graphics_overview li img {
-  height:50px;
-  width:50px;
-}
-
 #editor ul.graphics li {
   float:left;
-  opacity: 0.8;
   background:#ccc;
-  width:128px;
-  margin:0 5px 0 0;
+  margin: 0 10px 10px 0;
+  opacity:0.8;
+}
+
+#editor ul.graphics li.selected {
+  border:solid 2px black;
+} 
+
+#editor ul.graphics li img {
+  height:50px;
+  width:50px;
 }
 
 #editor ul.graphics li:hover {
   opacity:1.0;
 }
 
-.graphic {
-  background-repeat: no-repeat;
+#editor ul#behaviours, #editor ul#behaviours ul {
+  list-style:none;
 }
 
-#placementGraphic {
-  float : left;
-  border : 2px solid #000;
+#editor ul#behaviours li.top {
+  border: solid gray 1px;
+  margin-bottom: 10px;
+}
+
+#editor ul#behaviours li.top div.left {
+  float: left;
+  margin: 5px;
+}
+
+#editor ul#behaviours li.top div.right {
+  float: right;
+  margin: 5px;
+}
+
+#editor ul#behaviours li.top div.title {
+/*  background: #FFF;*/
+  text-align: right;
+  width: 70px;
+}
+
+#editor ul#behaviours li.top div.clear {
+  float: none;
+}
+
+#editor ul#behaviours li.top li {
+  margin-bottom: 5px;
+}
+
+#editor #stageContent, 
+#editor #behaviourContent {
+  position: relative;
+}
+
+#editor #stageControls > * {
+  margin: 0 20px 10px 0;
+  float: left;
+}
+
+#editor #stageControls #slider {
+  width: 300px;
 }

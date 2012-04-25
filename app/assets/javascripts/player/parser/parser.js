@@ -12,6 +12,8 @@ var Parser = {
     this.game = game;
     this.loader = new Loader( callback );
     
+    game.duration = ( data.duration || 5 ) * 1000;
+    
     if ( data.background ) {
     
       game.background = this.loader.loadImage( data.background );
@@ -142,7 +144,7 @@ var Parser = {
     
     } else {
       
-      // console.error( 'parser: behaviour has no actions' );
+      console.error( 'parser: behaviour has no actions' );
       return null;
       
     }
@@ -169,7 +171,7 @@ var Parser = {
     
     } else {
       
-      // console.error( 'parser: behaviour has no triggers' );
+      console.error( 'parser: behaviour has no triggers' );
       return null;
       
     }
@@ -344,13 +346,31 @@ var Parser = {
     type: "onClick",
     objectID: 0
   }
+  
+  {
+    type: "onClick",
+    area: {
+      x: 48,
+      y:6,
+      width:331,
+      height:123
+    }
+  }
 */
 
   parseTriggerClick : function( triggerData ) {
     
     var trigger = new ClickTrigger();
     
-    trigger.gameObject = this.game.getGameObjectWithID( triggerData.objectID );
+    if ( triggerData.area ) {
+    
+      trigger.area = new Area().copy( triggerData.area );
+    
+    } else {
+      
+      trigger.gameObject = this.game.getGameObjectWithID( triggerData.objectID );
+      
+    }
     
     return trigger;
     
@@ -360,14 +380,36 @@ var Parser = {
 /**
   {
     type: "onContact",
-    object1ID: 1,
+    objectID: 1,
     object2ID: 0
+  }
+  
+  {
+    type: "onContact",
+    objectID: 0,
+    area: {
+      x: -44,
+      y: -33,
+      width: 160,
+      height: 395
+    }
   }
 
   {
     type: "onOverlap",
-    object1ID: 1,
+    objectID: 1,
     object2ID: 0
+  }
+  
+  {
+    type: "onOverlap",
+    objectID: 1,
+    area: {
+      x: 93, 
+      y: 165,
+      width: 475,
+      height: 133
+    }
   }
 */
 
@@ -377,16 +419,17 @@ var Parser = {
     
     trigger.check = onContact ? trigger.checkContact : trigger.checkOverlap;
     
-    if ( triggerData.object1ID === triggerData.object2ID ) {
+    if ( triggerData.area ) {
+    
+      trigger.area = new Area().copy( triggerData.area );
+    
+    } else {
       
-      console.error( 'parser: object triggers contact with itself' );
-      
-      return null;
+      trigger.gameObject2 = this.game.getGameObjectWithID( triggerData.object2ID );
       
     }
     
-    trigger.gameObject1 = this.game.getGameObjectWithID( triggerData.object1ID );
-    trigger.gameObject2 = this.game.getGameObjectWithID( triggerData.object2ID );
+    trigger.gameObject = this.game.getGameObjectWithID( triggerData.objectID );
     
     return trigger;
     

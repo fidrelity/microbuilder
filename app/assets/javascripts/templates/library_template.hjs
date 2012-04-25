@@ -10,17 +10,13 @@
   
     {{#view SelectView 
       contentBinding = "this"
-      controllerBinding = "App.libraryController" 
-      selectFunctionBinding = "App.libraryController.selectGraphic" }}
+      controllerBinding = "App.gameController" 
+      selectFunctionBinding = "App.libraryController.selectFunction" }}
       
       <li {{action "select"}}>
         
-        {{view GraphicView 
-            nameBinding="content.name"
-            imagePathBinding="content.imagePath"
-            widthBinding="content.frameWidth"
-            heightBinding="content.frameHeight"
-        }}
+        <img {{bindAttr src="content.imagePath"}} />
+        <div> {{content.name}} </div>
         
       </li>
       

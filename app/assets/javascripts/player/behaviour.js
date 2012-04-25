@@ -33,6 +33,16 @@ Behaviour.prototype = {
       
     }
     
+  },
+  
+  draw : function( ctx ) {
+    
+    for ( var i = 0; i < this.triggers.length; i++ ) {
+      
+      this.triggers[i].draw( ctx );
+      
+    }
+    
   }
   
 };

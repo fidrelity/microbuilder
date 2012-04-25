@@ -10,6 +10,8 @@ var TriggerController = Ember.Object.extend({
   
   behaviourBinding : 'App.behaviourController.currentBehaviour',
   
+  contentView : null,
+  
   reset : function() {
   
     this.set( 'trigger', null );
@@ -18,18 +20,21 @@ var TriggerController = Ember.Object.extend({
   
   click : function() {
     
+    this.set( 'contentView', ClickTriggerView.create() );
     this.set( 'trigger', ClickTriggerModel.create() );
     
   },
   
   contact : function() {
     
+    this.set( 'contentView', ContactTriggerView.create() );
     this.set( 'trigger', ContactTriggerModel.create() );
     
   },
   
   overlap : function() {
     
+    this.set( 'contentView', ContactTriggerView.create() );
     this.set( 'trigger', ContactTriggerModel.create({
       
       isContact : false,
@@ -41,18 +46,6 @@ var TriggerController = Ember.Object.extend({
     
   },
   
-  selectObject : function( gameObject ) {
-    
-    this.get( 'trigger' ).set( 'gameObject', gameObject );
-    
-  },
-  
-  selectObject2 : function( gameObject2 ) {
-    
-    this.get( 'trigger' ).set( 'gameObject2', gameObject2 );
-    
-  },
-  
   save : function() {
     
     var trigger = this.get( 'trigger' );
@@ -61,9 +54,7 @@ var TriggerController = Ember.Object.extend({
     
       this.get( 'behaviour' ).addTrigger( trigger );
     
-      App.gameController.saveBehaviour();
-    
-      this.reset();
+      App.gameController.cancel();
     
     }
     

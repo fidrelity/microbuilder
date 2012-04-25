@@ -1,6 +1,7 @@
 var ClickTrigger = function() {
   
   this.gameObject = null;
+  this.area = null;
   
 };
 
@@ -8,14 +9,31 @@ ClickTrigger.prototype = {
   
   check : function( game ) {
     
-    if ( game.mouse ) {
+    if ( game.mouse.clicked ) {
       
-      return this.gameObject.getArea().contains( game.mouse );
+      if ( this.gameObject ) {
       
-    } else {
+        return this.gameObject.getArea().contains( game.mouse.pos );
+      
+      } else {
+        
+        return this.area.contains( game.mouse.pos );
+        
+      }
+      
+    }
     
-      return false;
+    return false;
     
+  },
+  
+  draw : function( ctx ) {
+    
+    if ( this.area ) {
+      
+      ctx.strokeStyle = '#F77';
+      this.area.draw( ctx );
+      
     }
     
   }
@@ -25,8 +43,10 @@ ClickTrigger.prototype = {
 
 var ContactTrigger = function() {
   
-  this.gameObject1 = null;
+  this.gameObject = null;
   this.gameObject2 = null;
+  
+  this.area = null;
   
   triggered = false;
   
@@ -36,7 +56,7 @@ ContactTrigger.prototype = {
   
   check : null,
   
-  checkContact : function( game ) {
+  checkContact : function() {
     
     var overlaps = this.checkOverlap();
     
@@ -56,9 +76,28 @@ ContactTrigger.prototype = {
     
   },
   
-  checkOverlap : function( game ) {
+  checkOverlap : function() {
     
-    return this.gameObject1.getArea().overlaps( this.gameObject2.getArea() );
+    if ( this.area ) {
+      
+      return this.gameObject.getArea().overlaps( this.area );
+      
+    } else {
+      
+      return this.gameObject.getArea().overlaps( this.gameObject2.getArea() );
+      
+    }
+    
+  },
+  
+  draw : function( ctx ) {
+    
+    if ( this.area ) {
+      
+      ctx.strokeStyle = '#F84';
+      this.area.draw( ctx );
+      
+    }
     
   }
   

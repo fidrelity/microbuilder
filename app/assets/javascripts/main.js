@@ -1,87 +1,36 @@
 function editor_main() {
-    
+
   window.App = Ember.Application.create();
 
-  App.main = Ember.View.create({
-    templateName: 'templates_main_template'
-  });
-
-
+  App.game = GameModel.create();
   App.gameController = GameController.create();
 
   App.libraryController = LibraryController.create();
-
-  App.gameObjectsController = GameObjectsController.create();
-  App.placementController = PlacementController.create();
-
   App.paintController = PaintController.create();
 
+  App.gameObjectsController = GameObjectsController.create();
   App.behaviourController = BehaviourController.create();
-  
+
   App.triggerController = TriggerController.create();
   App.actionController = ActionController.create();
 
-
-  App.routeManager = Ember.RouteManager.create({
+  App.mainView = MainView.create();
+  App.mainView.appendTo('#content');
   
-    rootView: App.main,
+  setTimeout( function() {
   
-    general: Ember.LayoutState.create({
-      viewClass: GeneralView
-    }),
-
-    paint: Ember.LayoutState.create({
-      route: 'paint',
-      viewClass: PaintView
-    }),
-
-    placement: Ember.LayoutState.create({
-      route: 'placement',
-      viewClass: PlacementView
-    }),
-
-    action: Ember.LayoutState.create({
-      route: 'action',
-      viewClass: ActionView
-    }),
-
-    triggerState: Ember.LayoutState.create({
-      route: 'trigger',
-      viewClass: TriggerView
-    }),
-
-    library: Ember.LayoutState.create({
-      route: 'library',
-      viewClass: LibraryView
-    }),
+    App.gameController.selectGraphic( App.libraryController.get( 'content' )[0] );
+    App.gameController.selectGraphic( App.libraryController.get( 'content' )[1] );
     
-    goToLocation: function( routeName ) {
-      
-      window.location.hash = routeName;
-      
-    }
+    App.mainView.stageView.player.parse( App.game.getData().game );
   
-  });
-
-
-  App.main.appendTo('#content');
-
-  // App.gameController.game.gameObjects.push( GameObjectModel.create({
-  //   
-  //   'name' : 'Mario',
-  //   'graphic' : GraphicModel.create({ name : 'Mario', imagePath : '/assets/mario.png' }),
-  //   'position' : new Vector()
-  //   
-  // }) );
+  }, 100 );
 
 };
 
-
-var player;
-
 function player_main( data ) {
   
-  player = new Player();
+  window.player = new Player();
   
   data = data || {
     background:"/assets/preview.png",
@@ -157,7 +106,7 @@ function player_main( data ) {
         triggers:[
           {
             type: "onContact",
-            object1ID: 1,
+            objectID: 1,
             object2ID: 0
           }
         ],
@@ -185,14 +134,19 @@ function player_main( data ) {
     ]
   }
   
-  console.log( JSON.stringify( data ) );
+  // console.log( JSON.stringify( data ) );
   
-  player.setCanvas( $( '#playerCanvas' )[0] );
+  if ( $( '#playerCanvas' ) && $( '#playerCanvas' )[0] ) {
   
-  if ( data ) {
+    player.setCanvas( $( '#playerCanvas' )[0] );
+    player.debug();
   
-    player.parse( data );
+    if ( data ) {
   
+      player.parse( data );
+  
+    }
+    
   }
   
 }
