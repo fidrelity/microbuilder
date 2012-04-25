@@ -14,15 +14,6 @@ class Graphic < ActiveRecord::Base
   scope :all_public, where(:public => true)
   scope :backgrounds, where(:background => true)
   scope :without_backgrounds, where(:background => false)
-  
-  # override paperclip method to fit custom url
-  def image
-    if Rails.env.production?
-      "https://s3.amazonaws.com/mbgfx/app/public/graphics/#{id}/#{image_file_name}"
-    else
-      "/graphics/#{id}/#{image_file_name}"
-    end
-  end
 
   def to_response_hash
     user_name = user.display_name if user
