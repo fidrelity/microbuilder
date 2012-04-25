@@ -1,6 +1,6 @@
 var MainView = Ember.View.extend({
   
-  templateName : 'templates_main_template',
+  templateName : 'templates/main_template',
   
   gameBinding : 'App.game',
   
@@ -74,7 +74,7 @@ var MainView = Ember.View.extend({
 
 var BehavioursView = Ember.View.extend({
   
-  templateName : 'templates_behaviour_template',
+  templateName : 'templates/behaviour_template',
   
   didInsertElement : function() {
     
