@@ -18,7 +18,7 @@ var GameController = Ember.Object.extend({
   
   searchGraphic : function() {
     
-    App.libraryController.setMode( 'graphic' );
+    App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectGraphic );
     
     App.mainView.show( 'stageContent', 'libraryView' );
@@ -41,7 +41,7 @@ var GameController = Ember.Object.extend({
   
   searchBackground : function() {
     
-    App.libraryController.setMode( 'background' );
+    App.libraryController.set( 'showBackground', true );
     App.libraryController.set( 'selectFunction', this.selectBackground );
     
     App.mainView.show( 'stageContent', 'libraryView' );
@@ -58,7 +58,7 @@ var GameController = Ember.Object.extend({
   
   searchChangeGraphic : function() {
     
-    App.libraryController.setMode( 'graphic' );
+    App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectChangeGraphic );
     
     App.mainView.show( 'stageContent', 'libraryView' );
@@ -75,7 +75,7 @@ var GameController = Ember.Object.extend({
   
   searchArtGraphic : function() {
     
-    App.libraryController.setMode( 'graphic' );
+    App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectArtGraphic );
     
     App.mainView.show( 'behaviourContent', 'libraryView' );

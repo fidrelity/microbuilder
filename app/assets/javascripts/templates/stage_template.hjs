@@ -6,6 +6,8 @@
   <div>{{App.game.duration}} seconds</div>
 </div>
 
+<div class="clear"></div>
+
 {{view PlayerView 
   type="stage"
   canvasID="stageCanvas"
@@ -26,7 +28,7 @@
 
     {{#view GameObjectView contentBinding = "gameObject"}}
 
-        <img {{bindAttr src="content.graphic.imagePath"}} style="width:40px;height:40px;display:inline" />
+        <img {{bindAttr src="content.graphic.imagePath"}} style="width:64px;height:64px;display:inline" />
 
         {{view Ember.TextField valueBinding="content.name" maxlength="32" size="10"}}
 
