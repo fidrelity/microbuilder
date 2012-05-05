@@ -304,3 +304,26 @@ ul#nav .popout {
   float : left;
   border : 2px solid #000;
 }
+
+#gallery .label {
+  background:#FF0000;
+  position:relative;
+  top:0px;
+  left:0px;
+  font-size:16px;
+  width:45px;
+  height:30px;
+}
+
+#gallery ul.gamelist {
+  list-style-type:none;
+}
+
+#gallery .game {
+  width:150px;
+  height:150px;
+  background:url('/assets/game.png');
+  float:left;
+  display:block;
+  margin:10px;
+}
