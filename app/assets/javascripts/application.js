@@ -73,6 +73,7 @@ function application_main() {
         }); */
         minimizeSection();
     });
+    
 };
 
 function placeNav(height, width) {

@@ -117,10 +117,10 @@ ul#nav .popout {
 }
 
 #pages .centered_content {
-   width:1034px;
-   height:605px;
+   width:1050px;
+   height:500px;
    margin: 0 auto;
-   background: #ccc;
+   background: #FFF;
 }
 
 #pages .home {
@@ -316,8 +316,7 @@ ul#nav .popout {
   margin-bottom: 5px;
 }
 
-#editor #stageContent, 
-#editor #behaviourContent {
+#editor #stageContent, #editor #behaviourContent {
   position: relative;
 }
 
@@ -326,32 +325,75 @@ ul#nav .popout {
   float: left;
 }
 
+#editor #stageControls #slider {
+  width: 300px;
+}
+
 #placementGraphic {
   float : left;
   border : 2px solid #000;
 }
 
-#gallery .label {
-  background:#FF0000;
+.label {
+  background: url('/assets/gallery_title_bg.png');
+  position:relative;
+  top:-24px;
+  left:44px;
+  padding:15px;
+  font-size:16px;
+  width:84px;
+  height:20px;
+  font-size:16px;
+  color:#fff;
+  text-transform:uppercase;
+}
+
+#gallery {
+} 
+
+#gallery ul.sortables {
+  list-style-type:none;
+}
+
+#gallery ul.sortables li {
+  float:left;
+  margin:0 0 0 44px;
+}
+
+#gallery input.searchbox {
+  width:210px;
+  height:30px;
+  margin:0 0 0 484px;
+  position:relative;
+  top:-10px;
+  padding:4px 0 4px 12px;
+  text-transform:uppercase;
+}
+
+#gallery img.magnifier {
   position:relative;
   top:0px;
   left:0px;
-  font-size:16px;
-  width:45px;
-  height:30px;
 }
 
 #gallery ul.gamelist {
   list-style-type:none;
+  position:relative;
+  left:45px;
+  top:15px;
 }
 
 #gallery .game {
   width:150px;
   height:150px;
-  background:url('/assets/game.png');
   float:left;
   display:block;
-  margin:10px;
-=======
-#editor #stageControls #slider {
-  width: 300px;
+  margin:0 14px 14px 0;
+  overflow:hidden;
+}
+
+#gallery .game span {
+  color:#fff;
+  position:relative;
+  top:150px;
+}
