@@ -34,9 +34,8 @@
   
     <p>Select the area that should {{trigger.word}} with {{trigger.gameObject2.name}}!</p>
 
-    {{view PlacementView 
+    {{view PlayerView 
       type = "area"
-      displayAllBinding = "false" 
       areaBinding = "trigger.area"
     }}
   

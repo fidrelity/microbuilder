@@ -56,8 +56,8 @@ Area.prototype = {
   
   draw : function( ctx ) {
     
-    ctx.fillStyle = '#F00';
     ctx.strokeRect( this.x, this.y, this.width, this.height );
+    // ctx.dashedRect( this.x, this.y, this.width, this.height, 7 );
     
   },
   

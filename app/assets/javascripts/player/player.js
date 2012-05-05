@@ -1,81 +1,124 @@
 var Player = function() {
   
-  this.init();
+  this.ID = Player.count++;
   
-  this.playTime = 5;
+  this.ctx = null;
+  this.canvas = null;
   
-  this.debug = false;
-  this.large = false;
+  this.game = null;
+  this.mouse = null;
+  
+  this.fsm = new StateMachine( this );
+  
+  this.fsm.init({
+    
+    initial : 'init',
+    
+    states : [
+      { name : 'init' },
+      { name : 'load' },
+      
+      { name : 'ready', enter : this.enterReady },
+      { name : 'play', draw : this.draw, update : this.update },
+      { name : 'end' },
+      
+      { name : 'edit', enter: this.enterEdit, draw : this.drawEdit },
+      { name : 'trial', enter: this.enterTrial, draw : this.drawTrial, update : this.update }
+    ],
+    
+    transitions : [
+      { name : 'parse', from : '*', to: 'load' },
+      { name : 'loaded', from : 'load', to: 'ready' },
+      { name : 'edit', from : 'load', to: 'edit', callback : this.onEdit },
+      
+      { name : 'start', from : 'ready', to: 'play', callback : this.onPlay },
+      { name : 'win', from : 'play', to: 'end', callback : this.onWin },
+      { name : 'lose', from : 'play', to: 'end', callback : this.onLose },
+      { name : 'restart', from : 'end', to: 'ready' },
+      
+      { name : 'try', from : 'edit', to: 'trial' },
+      { name : 'winTrial', from : 'trial', to: 'edit', callback : this.onWin },
+      { name : 'loseTrial', from : 'trial', to: 'edit', callback : this.onLose },
+      { name : 'stop', from : 'trial', to: 'edit', callback: this.onStop }
+    ]
+    
+  });
   
   this.edit = false;
-  this.moveObjects = false;
-  this.selectArea = false;
+  this.increment = 96;
   
-  this.dragObject = null;
-  this.dragArea = null;
+  this.time = 0;
+  this.timePlayed = 0;
   
-  this.positionChangeCallback = null;
-  this.areaChangeCallback = null;
+  this.objectsMoveable = false;
+  this.areaSelectable = false;
+  
+  this.showTimeline = false;
+  
+  this.selectObject = null;
+  this.selectArea = null;
+  
+  this.selectedObjectCallback = function() {};
+  this.selectedObjectDragCallback = function() {};
+  this.selectedAreaCallback = function() {};
+  
+  this.terminate = false;
   
 };
 
 Player.prototype = {
   
-  init : function() {
-    
-    this.ctx = null;
-    this.canvas = null;
-    
-    this.loader = null;
-    this.game = null;
-    
-    this.fsm = new StateMachine( this );
-    
-    this.fsm.init({
-      
-      initial : 'init',
-      
-      states : [
-        { name : 'init' },
-        { name : 'load' },
-        { name : 'ready', enter : this.enterReady },
-        { name : 'play', enter : this.enterPlay },
-        { name : 'end' },
-        { name : 'edit' }
-      ],
-      
-      transitions : [
-        { name : 'parse', from : '*', to: 'load' },
-        { name : 'run', from : 'load', to: 'ready', callback : this.run },
-        { name : 'start', from : 'ready', to: 'play' },
-        { name : 'win', from : 'play', to: 'end', callback : this.onWin },
-        { name : 'lose', from : 'play', to: 'end', callback : this.onLose },
-        { name : 'restart', from : 'end', to: 'ready' },
-        { name : 'edit', from : '*', to: 'edit', callback : this.onEdit },
-        { name : 'done', from : 'edit', to: 'ready', callback : this.onDone }
-      ]
-      
-    });
-    
-  },
-  
   setCanvas : function( canvas ) {
     
-    var self = this,
-      ctx = canvas.getContext( '2d' );
+    var ctx = canvas.getContext( '2d' ),
+      mouse = new Mouse( this, canvas ),
+      i = this.increment,
+      self = this;
     
-    ctx.debug = this.debug;
+    if ( this.edit ) {
+      
+      mouse.handleDrag();
+      
+    } else {
+      
+      i = 0;
+      
+      mouse.handleClick();
+      
+    }
+    
+    
+    canvas.width = 640 + 2 * i;
+    canvas.height = 390 + 2 * i;
+    
+    ctx.save();
+    ctx.translate( i, i );
     
     this.ctx = ctx;
     this.canvas = canvas;
+    this.mouse = mouse;
     
-    this.large = false;
+    ctx.debug = false;
     
-    this.mouse = new Mouse( this );
-    this.mouse.handleClick();
+    function run() {
+      
+      if ( self.terminate ) {
+        
+        // console.log( 'terminated player ' + this.ID );
+        return;
+        
+      }
+      
+      self.run();
+      
+      requestAnimationFrame( run );
+    
+    };
+    
+    run();
     
   },
-
+  
   parse : function( data, callback ) {
     
     var self = this;
@@ -86,12 +129,14 @@ Player.prototype = {
     
     Parser.parseData( data, this.game, function() {
       
-      self.fsm.run();
-      
       if ( self.edit ) {
-      
+        
         self.fsm.edit();
-      
+        
+      } else {
+        
+        self.fsm.loaded();
+        
       }
       
       if ( callback ) {
@@ -100,94 +145,134 @@ Player.prototype = {
         
       }
       
-    } );
+    });
     
   },
   
   run : function() {
     
-    var self = this,
-      stateName = this.fsm.currentState.name;
+    var dt, t = Date.now();
     
-    if ( stateName === 'init' || stateName === 'load' ) {
+    dt = t - this.time;
+    dt = dt > 30 ? 30 : dt;
     
-      return;
+    this.time = t;
+    this.timePlayed += dt;
     
-    }
-    
-    if ( this.mouse.dragging ) {
-      
-      this.draw();
-      
-    }
-    
-    if ( stateName === 'play' ) {
-    
-      this.draw();
-      this.update();
-    
-    }
+    this.fsm.update( dt );
+    this.fsm.draw( this.ctx );
     
     this.mouse.clicked = false;
     
-    requestAnimationFrame( function() {
-      
-      self.run();
-      
-    });
+    Player.updates[this.ID] = this.time;
     
   },
   
-  update : function() {
+  update : function( dt ) {
     
-    this.game.update();
-
-    if ( this.game.timePlayed > this.playTime * 1000 ) {
-  
+    this.game.update( dt );
+    
+    if ( this.timePlayed > this.game.duration ) {
+    
       this.fsm.lose();
-  
+      this.fsm.stop();
+    
     }
     
   },
   
-  draw : function() {
+  draw : function( ctx ) {
     
-    var ctx = this.ctx;
+    this.game.draw( ctx );
     
-    if ( this.large ) {
+    if ( this.timePlayed ) {
+      
+      this.ctx.fillStyle = 'rgba(255,255,0,0.5)';
+      this.ctx.fillRect( 0, 386, 640 * this.timePlayed / this.game.duration, 4 );
+      
+    }
     
-      ctx.clearRect( -128, -128, 896, 646 );
+  },
+  
+  drawEdit : function( ctx ) {
+    
+    var i = this.increment;
+    
+    if ( this.mouse.dragging || this.redraw ) {
+    
+      ctx.clearRect( -i, -i, 640 + 2 * i, 390 + 2 * i );
+    
+      ctx.lineWidth = 2;
+    
+      this.game.draw( ctx );
+    
+      if ( this.selectArea ) {
+      
+        ctx.strokeStyle = '#000';
+        this.selectArea.draw( ctx );
+      
+      }
+    
+      if ( this.selectObject ) {
+      
+        this.selectObject.draw( ctx );
+        
+        ctx.strokeStyle = '#000';
+        this.selectObject.getArea().draw( ctx );
+      
+      }
+      
+      if ( this.showTimeline ) {
+        
+        ctx.fillStyle = 'rgba(125,125,125,0.5)';
+        
+        ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
+        ctx.fillRect( - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
+        
+        this.redraw = false;
+        
+      }
     
     }
+    
+  },
+  
+  drawTrial : function( ctx ) {
+    
+    var i = this.increment;
+    
+    ctx.clearRect( -i, -i, 640 + 2 * i, 390 + 2 * i );
     
     ctx.lineWidth = 2;
     
     this.game.draw( ctx );
     
-    if ( this.edit ) {
+    if ( this.showTimeline ) {
       
-      if ( this.dragArea ) {
-    
-        this.dragArea.draw( ctx );
+      ctx.fillStyle = 'rgba(255,0,0,0.5)';
       
-      }
+      ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
+      ctx.fillRect( ( 640 + i ) * this.timePlayed / this.game.duration - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
       
-      if ( this.dragObject ) {
-        
-        this.dragObject.getArea().draw( ctx );
-        
-      }
-    
     }
     
   },
   
   reset : function() {
     
+    this.time = 0;
+    this.timePlayed = 0;
+    
     this.mouse.clicked = false;
     
+    if ( ( this.selectObject && !this.selectObject.stable ) || !this.selectObject ) {
+    
+      this.selectObject = null;
+      this.selectArea = null;
+    
+    }
+    
     this.game.reset();
-    this.draw();
     
   },
 
@@ -207,47 +292,56 @@ Player.prototype = {
 
   mousedown : function( mouse ) {
     
-    if ( this.dragObject && this.dragObject.stable ) {
-      
-      if ( !this.dragObject.getArea().contains( mouse.pos ) ) {
-        
-        mouse.dragging = false;
-        
-      }
-      
-    } else if ( this.moveObjects ) {
+    var object = this.selectObject,
+      area = this.selectArea;
     
-      this.dragObject = this.game.getGameObjectAt( mouse.pos );
+    if ( object && object.stable && !object.getArea().contains( mouse.pos ) ) {
+      
+      mouse.dragging = false;
+      return;
+      
+    } 
+    
+    if ( this.objectsMoveable ) {
+    
+      object = this.game.getGameObjectAt( mouse.pos );
     
     }
     
-    if ( !this.dragObject && this.selectArea ) {
+    if ( !object && this.areaSelectable ) {
       
-      if ( !this.dragArea || !this.dragArea.contains( mouse.pos ) ) {
+      if ( !area || !area.contains( mouse.pos ) ) {
         
-        this.dragArea = new Area( mouse.pos.x, mouse.pos.y, 0, 0 );
+        this.selectArea = new Area( mouse.pos.x, mouse.pos.y, 0, 0 );
         
       }
       
     }
+    
+    this.selectedObjectCallback( object ? object.ID : -1 );
+    
+    this.selectObject = object;
     
   },
   
   mousemove : function( mouse ) {
     
-    if ( this.dragObject ) {
+    var object = this.selectObject,
+      area = this.selectArea;
+    
+    if ( object ) {
       
-      this.dragObject.movePosition( mouse.move );
+      object.movePosition( mouse.move );
       
-    } else if ( this.dragArea ) {
+    } else if ( area ) {
       
-      if ( this.dragArea.done ) {
+      if ( area.done ) {
         
-        this.dragArea.move( mouse.move );
+        area.move( mouse.move );
         
       } else {
         
-        this.dragArea.resize( mouse.move );
+        area.resize( mouse.move );
         
       }
       
@@ -257,32 +351,21 @@ Player.prototype = {
   
   mouseup : function() {
     
-    if ( this.dragArea ) {
+    var object = this.selectObject,
+      area = this.selectArea;
+    
+    if ( area ) {
       
-      this.dragArea.adjust();
-      this.dragArea.done = true;
+      area.adjust();
+      area.done = true;
       
-      if ( this.areaChangeCallback ) {
-        
-        this.areaChangeCallback( this.dragArea );
-        
-      }
+      this.selectedAreaCallback( area );
       
     }
     
-    if ( this.dragObject ) {
+    if ( object ) {
       
-      if ( this.positionChangeCallback ) {
-        
-        this.positionChangeCallback( this.dragObject.ID, this.dragObject.position );
-        
-      }
-      
-      if ( !this.dragObject.stable ) {
-    
-        this.dragObject = null;
-      
-      }
+      this.selectedObjectDragCallback( object.ID, object.position );
     
     }
     
@@ -291,140 +374,101 @@ Player.prototype = {
   enterReady : function() {
     
     this.reset();
+    this.game.start();
     
-    this.ctx.fillStyle = '#FFFFCC';
-    this.ctx.fillRect( 200, 100, 240, 190 );
+    this.draw( this.ctx );
+    
+    this.ctx.fillStyle = 'rgba(255,255,0,0.5)';
+    this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
     
   },
   
-  enterPlay : function() {
+  onPlay : function() {
+    
+    this.reset();
+    this.game.start();
+    
+  },
+  
+  onEdit : function() {
     
     this.reset();
     
-  },
-
-  onEdit : function() {
+    if ( this.game.gameObjects.length ) {
+      
+      this.selectObject = this.game.gameObjects[this.game.gameObjects.length - 1];
+      this.selectedObjectCallback( this.selectObject.ID );
+      
+    }
     
-    this.enlarge();
-    this.edit = true;
-    
-  },
-
-  onDone : function() {
-    
-    this.reduce();
-    this.edit = false;
+    this.redraw = true;
     
   },
   
   onWin : function() {
     
-    this.ctx.fillStyle = '#CCFFCC';
-    this.ctx.fillRect( 200, 100, 240, 190 );
+    this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
+    this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
     
   },
   
   onLose : function() {
     
-    this.ctx.fillStyle = '#FFCCCC';
-    this.ctx.fillRect( 200, 100, 240, 190 );
+    this.ctx.fillStyle = 'rgba(255,0,0,0.5)';
+    this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
     
   },
   
-  enlarge : function() {
+  enterTrial : function() {
     
-    var ctx = this.ctx,
-      canvas = this.canvas;
+    this.mouse.handleClick();
     
-    if ( !this.large ) {
+    this.reset();
+    this.game.start();
     
-      canvas.width = 256 + 640;
-      canvas.height = 256 + 390;
+  },
+  
+  enterEdit : function() {
     
-      ctx.save();
-      ctx.translate( 128, 128 );
-      
-      this.mouse.handleDrag();
-      
-      this.large = true;
-    
-    }
-    
+    this.mouse.handleDrag();
     this.reset();
     
   },
   
-  reduce : function() {
+  onStop : function() {
     
-    var ctx = this.ctx,
-      canvas = this.canvas;
-    
-    if ( this.large ) {
-    
-      canvas.width = 640;
-      canvas.height = 390;
-    
-      ctx.restore();
-      
-      this.mouse.handleClick();
-      
-      this.large = false;
-    
-    }
-    
-    this.reset();
+    this.redraw = true;
     
   },
   
-  setDragObject : function( imagePath, callback ) {
+  setSelectObjectID : function( gameObjectID, callback ) {
     
-    var image = new Image(),
-      graphic = new Graphic( -1 ),
-      gameObject = new GameObject( -1 ),
-      self = this;
+    var selectObject = this.game.getGameObjectWithID( gameObjectID );
+    selectObject.stable = true;
     
-    image.src = imagePath;
+    this.selectArea = selectObject.getArea().clone();
+    this.selectObject = selectObject;
     
-    image.onload = function() {
-    
-      graphic.image = image;
-      gameObject.startGraphic = graphic;
-      gameObject.startPosition.set( Math.floor( Math.random() * 540 ), Math.floor( Math.random() * 290 ) );
-      gameObject.stable = true;
-    
-      self.game.gameObjects.push( gameObject );
-      self.dragObject = gameObject;
-    
-      self.reset();
-      
-      if ( callback ) {
-        
-        self.positionChangeCallback = callback;
-        callback( -1, gameObject.startPosition );
-        
-      }
-    
-    };
-    
-  },
-  
-  setDragObjectID : function( gameObjectID, callback ) {
-    
-    var dragObject = this.game.getGameObjectWithID( gameObjectID );
-    dragObject.stable = true;
-    
-    this.dragArea = dragObject.getArea().clone();
-    this.dragObject = dragObject;
-
     if ( callback ) {
       
-      this.positionChangeCallback = callback;
-      callback( dragObject.ID, dragObject.position );
+      this.selectedObjectDragCallback = callback;
+      callback( selectObject.ID, selectObject.position );
       
     }
     
     this.reset();
+    this.redraw = true;
+    
+  },
+  
+  debug : function() {
+    
+    this.ctx.debug = !this.ctx.debug;
+    this.redraw = true;
     
   }
   
 };
+
+Player.count = 0;
+Player.updates = [];

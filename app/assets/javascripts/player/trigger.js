@@ -25,6 +25,17 @@ ClickTrigger.prototype = {
     
     return false;
     
+  },
+  
+  draw : function( ctx ) {
+    
+    if ( this.area ) {
+      
+      ctx.strokeStyle = '#F77';
+      this.area.draw( ctx );
+      
+    }
+    
   }
   
 };
@@ -74,6 +85,17 @@ ContactTrigger.prototype = {
     } else {
       
       return this.gameObject.getArea().overlaps( this.gameObject2.getArea() );
+      
+    }
+    
+  },
+  
+  draw : function( ctx ) {
+    
+    if ( this.area ) {
+      
+      ctx.strokeStyle = '#F84';
+      this.area.draw( ctx );
       
     }
     

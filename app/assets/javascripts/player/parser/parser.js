@@ -12,6 +12,8 @@ var Parser = {
     this.game = game;
     this.loader = new Loader( callback );
     
+    game.duration = ( data.duration || 5 ) * 1000;
+    
     if ( data.background ) {
     
       game.background = this.loader.loadImage( data.background );
@@ -142,7 +144,7 @@ var Parser = {
     
     } else {
       
-      // console.error( 'parser: behaviour has no actions' );
+      console.error( 'parser: behaviour has no actions' );
       return null;
       
     }
@@ -169,7 +171,7 @@ var Parser = {
     
     } else {
       
-      // console.error( 'parser: behaviour has no triggers' );
+      console.error( 'parser: behaviour has no triggers' );
       return null;
       
     }

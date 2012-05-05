@@ -26,6 +26,7 @@ var ActionController = Ember.Object.extend({
   
   selectGraphic : function( graphic ) {
     
+    this.set( 'contentView', ArtActionView.create() );
     this.get( 'action' ).set( 'graphic', graphic );
     
   },
@@ -38,8 +39,6 @@ var ActionController = Ember.Object.extend({
   },
   
   art : function() {
-    
-    App.libraryController.filter( 'isBackground', false );
     
     this.set( 'contentView', ArtActionView.create() );
     this.set( 'action', ArtActionModel.create() );

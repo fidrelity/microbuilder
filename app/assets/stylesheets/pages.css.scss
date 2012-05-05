@@ -32,9 +32,9 @@ h1 {
 }
 
 h2 {
-   font-size:16px;
+   font-size:20px;
    text-decoration:none;
-   padding: 17px 0 17px 45px;
+   padding: 17px 0;
 }
 
 ul#nav {
@@ -239,14 +239,6 @@ ul#nav .popout {
    z-index:3;
 }
 
-#editor .meta {
-/*  position:relative;
-  width:256px;
-  height:150px;
-  float:left;*/
-  margin:10px;
-}
-
 #editor button {
   padding:5px;
   font-size:11px;
@@ -291,13 +283,47 @@ ul#nav .popout {
   opacity:1.0;
 }
 
-#editor ul.behaviours {
+#editor ul#behaviours, #editor ul#behaviours ul {
   list-style:none;
 }
 
-#editor ul.behaviours li {
-  float:left;
-  margin: 0 10px 10px 0;
+#editor ul#behaviours li.top {
+  border: solid gray 1px;
+  margin-bottom: 10px;
+}
+
+#editor ul#behaviours li.top div.left {
+  float: left;
+  margin: 5px;
+}
+
+#editor ul#behaviours li.top div.right {
+  float: right;
+  margin: 5px;
+}
+
+#editor ul#behaviours li.top div.title {
+/*  background: #FFF;*/
+  text-align: right;
+  width: 70px;
+}
+
+#editor ul#behaviours li.top div.clear {
+  float: none;
+}
+
+#editor ul#behaviours li.top li {
+  margin-bottom: 5px;
+}
+
+#editor #stageContent, 
+#editor #behaviourContent {
+  position: relative;
+}
+
+#editor #stageControls > * {
+  margin: 0 20px 10px 0;
+  float: left;
 }
 
 #placementGraphic {
@@ -326,4 +352,6 @@ ul#nav .popout {
   float:left;
   display:block;
   margin:10px;
-}
+=======
+#editor #stageControls #slider {
+  width: 300px;

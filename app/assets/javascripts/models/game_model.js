@@ -11,6 +11,8 @@ var GameModel = Ember.Object.extend({
   behaviours : [],
   startBehaviour : null,
   
+  duration : 5,
+  
   init : function() {
     
     this.startBehaviour = BehaviourModel.create();
@@ -26,7 +28,7 @@ var GameModel = Ember.Object.extend({
   
   getData : function() {
     
-    var game = {},
+    var game = { duration: this.duration },
         graphics = [],
         graphicIDs = [],
         win = false,
@@ -128,15 +130,43 @@ var GameModel = Ember.Object.extend({
   
   },
   
-  gameObjectPositionChanged : function( gameObjectID, pos ) {
+  getGameObjectWithID : function( gameObjectID ) {
     
     var gameObjects = this.gameObjects.filterProperty( 'ID', gameObjectID );
     
     if ( gameObjects.length ) {
       
-      gameObjects[0].position.copy( pos );
+      return gameObjects[0];
       
     }
+    
+    return null;
+    
+  },
+  
+  gameObjectPositionChanged : function( gameObjectID, pos ) {
+    
+    this.getGameObjectWithID( gameObjectID ).position.copy( pos );
+    
+  },
+  
+  removeGameObject : function( gameObject ) {
+    
+    this.startBehaviour.removeGameObject( gameObject );
+    
+    for ( i = 0; i < this.behaviours.length; i++ ) {
+      
+      this.behaviours[i].removeGameObject( gameObject );
+      
+    }
+    
+    this.gameObjects.removeObject( gameObject );
+    
+  },
+  
+  setDuration : function( value ) {
+    
+    this.set( 'duration', 5 + Math.floor( value / 4 ) );
     
   }
   

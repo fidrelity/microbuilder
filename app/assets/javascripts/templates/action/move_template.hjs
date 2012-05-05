@@ -35,14 +35,13 @@
     <button {{action "moveIn" target="action"}}>in direction</button>
 
   </p>
-
-  <p> {{action.question}} </p>
   
   {{#if action.isComplete}}
   
-    {{view PlacementView 
+    <p> {{action.question}} </p>
+    
+    {{view PlayerView 
       typeBinding = "action.type"
-      displayAllBinding = "false" 
       positionBinding = "action.position"
       gameObjectBinding = "action.gameObject"
     }}

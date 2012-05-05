@@ -1,11 +1,44 @@
 <div class="editor_content">
-  <a href="#">General</a>
-  <a href="#paint">Paint</a>
-  <a href="#action">Action</a>
-  <a href="#trigger">Trigger</a>
-  <a href="#library">Library</a>
-  <a href="#placement">Placement</a>
+
+  <h2>Game Editor</h2>
+
+  <div id="accordion">
+
+    <h3><a href="#">Stage</a></h3>
+    <div>
+      <div id="stageContent">
+        {{dynamicView stageContent}}
+      </div>
+    </div>
+
+    <h3><a href="#">Behaviours</a></h3>
+    <div>
+      <div id="behaviourContent">
+        {{dynamicView behaviourContent}}
+      </div>
+    </div>
+
+    <h3><a href="#">Publish</a></h3>
+    <div>
+
+      <label>game title: </label>
+      {{view Ember.TextField valueBinding="game.title" size="10" placeholder="insert name" maxlength="3"}}
+      <br />
+
+      <label>instructions: </label>
+      {{view Ember.TextField valueBinding="game.instructions" placeholder="(140 chars max)" maxlength="140"}}
+      <br />
+
+      {{view PlayerView 
+        type="test"
+        canvasID="testCanvas"
+        playerBinding="player"
+      }}
+
+      <button {{action "publishGame" target="App.gameController"}}>publish</button>
+    
+    </div>
   
-  {{dynamicView}}
-  
+  </div>
+
 </div>

@@ -69,3 +69,14 @@ Microbuilder::Application.configure do
   FACEBOOK_ID = '148777278524544'
   FACEBOOK_SECRET = '1385b5ed4c03504ba2e8c05a9be5d740'
 end
+
+PAPERCLIP_OPTIONS = {
+  :url => "/:class/:id/:basename" + ".png",
+  :path => "/:class/:id/:basename" + ".png",
+  :storage => :s3,
+  :bucket => 'mbgfx',
+  :s3_credentials => {
+    :access_key_id => ENV['S3_KEY'],
+    :secret_access_key => ENV['S3_SECRET']
+  }
+}

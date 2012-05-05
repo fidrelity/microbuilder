@@ -46,9 +46,9 @@ GEM
       railties (~> 3.1)
       warden (~> 1.1.1)
     diff-lcs (1.1.3)
-    emberjs-rails (2012.2.22)
-      hamlbars
-      rails (~> 3.1)
+    ember-rails (0.4.0)
+      execjs (>= 1.2)
+      railties (~> 3.1)
     erubis (2.7.0)
     execjs (1.3.0)
       multi_json (~> 1.0)
@@ -64,10 +64,6 @@ GEM
     ffi (1.0.11)
     forgery (0.5.0)
     haml (3.1.4)
-    hamlbars (2012.2.22)
-      haml
-      sprockets
-      tilt
     hashie (1.2.0)
     hike (1.2.1)
     httparty (0.8.1)
@@ -186,7 +182,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk
   devise
-  emberjs-rails
+  ember-rails
   factory_girl_rails
   forgery
   haml

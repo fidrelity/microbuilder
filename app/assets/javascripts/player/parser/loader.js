@@ -10,6 +10,13 @@ Loader.prototype = {
   
   loadImage : function( path ) {
     
+    if ( this.imageCount >= 100 ) {
+      
+      console.error( 'Loader does not load more than 100 images' );
+      return;
+      
+    }
+    
     var image = new Image();
     
     var self = this;

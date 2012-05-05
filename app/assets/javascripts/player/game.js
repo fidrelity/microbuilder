@@ -4,15 +4,13 @@ var Game = function( player, mouse ) {
   this.mouse = player.mouse;
   
   this.background = null;
+  this.duration = 5000;
   
   this.graphics = [];
   this.gameObjects = [];
   this.behaviours = [];
   
   this.startActions = [];
-  
-  this.time = 0;
-  this.timePlayed = 0;
   
 };
 
@@ -22,32 +20,17 @@ Game.prototype = {
   
   reset : function() {
     
-    for ( var i = 0; i < this.gameObjects.length; i++ ) {
-      
-      this.gameObjects[i].reset();
-      
-    }
-    
-    for ( var i = 0; i < this.startActions.length; i++ ) {
-      
-      this.startActions[i].execute( this );
-      
-    }
-    
-    this.time = 0;
-    this.timePlayed = 0;
+    this.gameObjects.forEachApply( 'reset' );
     
   },
   
-  update : function() {
+  start : function() {
     
-    var dt;
-      t = new Date().getTime();
-        
-    dt = t - this.time;
-    dt = dt > 30 ? 30 : dt;
+    this.startActions.forEachApply( 'execute', this );
     
-    this.time = t;
+  },
+  
+  update : function( dt ) {
     
     for ( var i = 0; i < this.behaviours.length; i++ ) {
       
@@ -61,11 +44,11 @@ Game.prototype = {
       
     }
     
-    this.timePlayed += dt;
-    
   },
   
   draw : function( ctx ) {
+    
+    var i;
     
     if ( this.background ) {
     
@@ -73,23 +56,35 @@ Game.prototype = {
     
     } else {
       
-      ctx.fillStyle = '#FFFFFF';
+      ctx.fillStyle = '#FFF';
       ctx.fillRect( 0, 0, 640, 390 );
       
     }
     
-    ctx.fillStyle = '#000';
     
-    for ( var i = 0; i < this.gameObjects.length; i++ ) {
+    if ( ctx.debug ) {
+    
+      for ( i = 0; i < this.behaviours.length; i++ ) {
+      
+        this.behaviours[i].draw( ctx );
+      
+      }
+    
+    }
+    
+    ctx.fillStyle = '#AAA';
+    ctx.strokeStyle = '#AAA';
+    
+    for ( i = 0; i < this.gameObjects.length; i++ ) {
       
       this.gameObjects[i].draw( ctx );
       
     }
     
     if ( ctx.debug ) {
-        
-        ctx.fillRect( this.mouse.pos.x - 5, this.mouse.pos.y - 5 , 10, 10 );
-        
+      
+      ctx.fillCircle( this.mouse.pos.x, this.mouse.pos.y, 3 );
+      
     }
     
   },
@@ -132,7 +127,7 @@ Game.prototype = {
   
   getGameObjectAt : function( pos ) {
     
-    for ( var i = 0; i < this.gameObjects.length; i++ ) {
+    for ( var i = this.gameObjects.length - 1; i >= 0 ; i-- ) {
       
       if ( this.gameObjects[i].getArea().contains( pos ) ) {
         

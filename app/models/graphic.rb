@@ -6,18 +6,7 @@ class Graphic < ActiveRecord::Base
 
   before_destroy :referenced?
   
-  if Rails.env.production?
-    has_attached_file :image, 
-      :url => "/:class/:id/:basename" + ".png",
-      :storage => :s3,
-      :bucket => 'mbgfx',
-      :s3_credentials => {
-      :access_key_id => ENV['S3_KEY'],
-      :secret_access_key => ENV['S3_SECRET']
-    }
-  else
-    has_attached_file :image, :url => "/:class/:id/:basename" + ".png"
-  end
+  has_attached_file :image, PAPERCLIP_OPTIONS
   
   before_create :generate_file_name
   before_create :decode_base64_image
@@ -25,27 +14,21 @@ class Graphic < ActiveRecord::Base
   scope :all_public, where(:public => true)
   scope :backgrounds, where(:background => true)
   scope :without_backgrounds, where(:background => false)
-  
-  # override paperclip method to fit custom url
-  def image
-    if Rails.env.production?
-      "https://s3.amazonaws.com/mbgfx/app/public/graphics/#{id}/#{image_file_name}"
-    else
-      "/graphics/#{id}/#{image_file_name}"
-    end
-  end
+  scope :between_size, lambda { |min, max|
+    where("frame_width <= ? AND frame_height <= ? AND (frame_width > ? OR frame_height > ?)", max, max, min, min)
+  }
 
   def to_response_hash
     user_name = user.display_name if user
     {
-      :id => id, :name => image_file_name, :url => image, 
+      :id => id, :name => image_file_name, :url => image.to_s, 
       :background => background, :user_name => user_name,
       :frame_count => frame_count, :frame_width => frame_width,
       :frame_height => frame_height
     }
   end
   
-  protected  
+  protected
     def decode_base64_image
       if image_data
         content_type = 'image/png'
@@ -57,6 +40,23 @@ class Graphic < ActiveRecord::Base
 
         self.image = data
       end
+    end
+    
+    def self.filter(backgrounds, min = nil, max = nil)
+      query = backgrounds ? self.backgrounds : self.without_backgrounds
+
+      unless backgrounds
+        if min && max && min < max
+          query = between_size(min, max)
+        else
+          return ["No size boundaries given", 400]
+        end
+      end
+        
+      response = query.map do |graphic|
+        graphic.to_response_hash 
+      end
+      [response, 200]
     end
     
     def generate_file_name

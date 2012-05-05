@@ -7,89 +7,31 @@
 
 var GameController = Ember.Object.extend({
 
-  game : null,
-
-  player : null,
-
-  init : function() {
-    
-    var player = new Player(),
-      game = GameModel.create();
-    
-    // player.edit = true;
-    
-    // player.debug = true;
-    player.moveObjects = true;
-    // player.selectArea = true;
-    
-    player.positionChangeCallback = bind( game, game.gameObjectPositionChanged );
-    
-    this.player = player;
-    this.game = game;
-    
-  },
-  
-  getGameData : function() {
-    
-    return this.game.getData().game;
-    
-  },
-  
-  getGameObjectsData : function() {
-    
-    return this.game.getGameObjectsData();
-    
-  },
+  gameBinding : 'App.game',
   
   cancel : function() {
     
-    App.routeManager.goToLocation( '' );
-    
-  },
-  
-  setPlayerCanvas : function( canvas ) {
-    
-    this.player.setCanvas( canvas );
-    
-    this.updatePlayer();
-    
-  },
-  
-  updatePlayer : function() {
-    
-    this.player.parse( this.game.getData().game );
+    App.mainView.show( 'stageContent', 'stageView' );
+    App.mainView.show( 'behaviourContent', 'behaviourView' );
     
   },
   
   searchGraphic : function() {
     
-    App.libraryController.setMode( 'graphic' );
+    App.libraryController.set( 'showBackground', false );
+    App.libraryController.set( 'selectFunction', this.selectGraphic );
     
-    App.routeManager.goToLocation( 'library' );
-    
-  },
-  
-  drawGraphic : function() {
-    
-    App.routeManager.goToLocation( 'paint' );
+    App.mainView.show( 'stageContent', 'libraryView' );
     
   },
   
   selectGraphic : function( graphic ) {
     
-    App.placementController.set( 'graphic', graphic );
-    
-    App.routeManager.goToLocation( 'placement' );
-    
-  },
-  
-  placeGraphic : function( graphic, position ) {
-    
     App.gameObjectsController.addObject( GameObjectModel.create({
       
       'name' : graphic.name,
       'graphic' : graphic,
-      'position' : position.clone()
+      'position' : new Vector( Math.floor( Math.random() * 540 ), Math.floor( Math.random() * 290 ) )
       
     }) );
     
@@ -99,9 +41,10 @@ var GameController = Ember.Object.extend({
   
   searchBackground : function() {
     
-    App.libraryController.setMode( 'background' );
+    App.libraryController.set( 'showBackground', true );
+    App.libraryController.set( 'selectFunction', this.selectBackground );
     
-    App.routeManager.goToLocation( 'library' );
+    App.mainView.show( 'stageContent', 'libraryView' );
     
   },
   
@@ -113,23 +56,57 @@ var GameController = Ember.Object.extend({
     
   },
   
-  addBehaviour : function() {
+  searchChangeGraphic : function() {
     
-    App.behaviourController.createBehaviour();
+    App.libraryController.set( 'showBackground', false );
+    App.libraryController.set( 'selectFunction', this.selectChangeGraphic );
+    
+    App.mainView.show( 'stageContent', 'libraryView' );
+    
+  },
+  
+  selectChangeGraphic : function( graphic ) {
+    
+    App.mainView.stageView.gameObject.set( 'graphic', graphic );
+    
+    this.cancel();
+    
+  },
+  
+  searchArtGraphic : function() {
+    
+    App.libraryController.set( 'showBackground', false );
+    App.libraryController.set( 'selectFunction', this.selectArtGraphic );
+    
+    App.mainView.show( 'behaviourContent', 'libraryView' );
+    
+  },
+  
+  selectArtGraphic : function( graphic ) {
+    
+    App.actionController.selectGraphic( graphic );
+    
+    App.mainView.show( 'behaviourContent', 'actionView' );
+    
+  },
+  
+  drawGraphic : function() {
+    
+    App.mainView.show( 'stageContent', 'paintView' );
     
   },
   
   addTrigger : function() {
     
     App.triggerController.reset();
-    App.routeManager.goToLocation( 'trigger' );
+    App.mainView.show( 'behaviourContent', 'triggerView' );
     
   },
   
   addAction : function() {
     
     App.actionController.reset();
-    App.routeManager.goToLocation( 'action' );
+    App.mainView.show( 'behaviourContent', 'actionView' );
     
   },
   
@@ -225,18 +202,6 @@ var GameController = Ember.Object.extend({
   loadGame : function() {
     
     
-    
-  },
-  
-  testGame : function() {
-    
-    this.player.fsm.done();
-    
-  },
-  
-  editGame : function() {
-    
-    this.player.fsm.edit();
     
   }
   

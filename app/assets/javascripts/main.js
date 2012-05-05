@@ -2,87 +2,35 @@ function editor_main() {
 
   window.App = Ember.Application.create();
 
-  App.main = Ember.View.create({
-    templateName: 'templates_main_template'
-  });
-
-
+  App.game = GameModel.create();
   App.gameController = GameController.create();
-
+  
   App.libraryController = LibraryController.create();
-
-  App.gameObjectsController = GameObjectsController.create();
-  App.placementController = PlacementController.create();
-
   App.paintController = PaintController.create();
-
+  
+  App.gameObjectsController = GameObjectsController.create();
   App.behaviourController = BehaviourController.create();
   
   App.triggerController = TriggerController.create();
   App.actionController = ActionController.create();
 
-
-  App.routeManager = Ember.RouteManager.create({
-  
-    rootView: App.main,
-  
-    general: Ember.LayoutState.create({
-      viewClass: GeneralView
-    }),
-
-    paint: Ember.LayoutState.create({
-      route: 'paint',
-      viewClass: PaintView
-    }),
-
-    placement: Ember.LayoutState.create({
-      route: 'placement',
-      viewClass: PlacementView
-    }),
-
-    action: Ember.LayoutState.create({
-      route: 'action',
-      viewClass: ActionView
-    }),
-
-    triggerState: Ember.LayoutState.create({
-      route: 'trigger',
-      viewClass: TriggerView
-    }),
-
-    library: Ember.LayoutState.create({
-      route: 'library',
-      viewClass: LibraryView
-    }),
-    
-    goToLocation: function( routeName ) {
-      
-      window.location.hash = routeName;
-      
-    }
-  
-  });
-
-
-  App.main.appendTo('#content');
+  App.mainView = MainView.create();
+  App.mainView.appendTo('#content');
   
   setTimeout( function() {
   
-    App.gameController.placeGraphic( App.libraryController.get( 'content' )[0], new Vector( 100, 100 ) );
-    App.gameController.placeGraphic( App.libraryController.get( 'content' )[1], new Vector( 400, 100 ) );
+    App.gameController.selectGraphic( App.libraryController.get( 'content' )[0] );
+    App.gameController.selectGraphic( App.libraryController.get( 'content' )[1] );
     
-    App.gameController.updatePlayer();
+    App.mainView.stageView.player.parse( App.game.getData().game );
   
   }, 100 );
 
 };
 
-
-var player;
-
 function player_main( data ) {
   
-  player = new Player();
+  window.player = new Player();
   
   data = data || {
     background:"/assets/preview.png",
@@ -191,6 +139,7 @@ function player_main( data ) {
   if ( $( '#playerCanvas' ) && $( '#playerCanvas' )[0] ) {
   
     player.setCanvas( $( '#playerCanvas' )[0] );
+    player.debug();
   
     if ( data ) {
   
