@@ -68,7 +68,19 @@
                   {{#view ToolView
                     toolBinding = "this"
                   }}
+
                    <button {{action "addSprite"}}>Add</button>
+                    <button {{action "addSprite"}}>Add</button>
+                    <button {{action "clear"}}>Clear</button>
+                    <button {{action "undo"}}>Undo</button>
+                    <button {{action "zoomIn"}}>ZoomIn</button>
+                    <button {{action "zoomOut"}}>ZoomOut</button>
+                  {{/view}}
+
+                  {{#view ToolView
+                    toolBinding = "App.pencilTool"
+                  }}
+                    <button {{action "erase"}}>Eraser</button>
                   {{/view}}
 
                   {{#view ToolView

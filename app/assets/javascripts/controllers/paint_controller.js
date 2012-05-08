@@ -45,7 +45,31 @@ var PaintController =  Ember.ArrayController.extend({
 
   // Undo current SpriteModel
   undo : function() {
+    this.getCurrentSpriteModel().popState();
+  },
 
+    // Undo current SpriteModel
+  clearCurrentSprite : function() {
+    this.getCurrentSpriteModel().clear();
+  },
+
+  // ---------------------------------------
+  // onMouseZoomCanvas Delegate events to current Tool
+  click : function() {
+    var options = { sprite: this.getCurrentSpriteModel() };
+    this.getCurrentTool().click(options);
+  },
+
+  mousedown : function(e) {    
+    var coord = this.getMouseCoordinates(e);
+    var options = { x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel()};
+    this.getCurrentTool().mousedown(options, this.pixelDrawer);
+  },
+
+  mousemove : function(e) {    
+    var coord = this.getMouseCoordinates(e);
+    var options = { x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel() };
+    this.getCurrentTool().mousemove(options);
   },
 
   // ---------------------------------------  

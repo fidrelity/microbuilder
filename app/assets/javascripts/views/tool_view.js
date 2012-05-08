@@ -44,5 +44,22 @@ var ToolView = Ember.View.extend({
   addSprite : function() {
     App.paintController.add();
   },
-  
+
+  clear : function() {
+    App.paintController.clearCurrentSprite();
+  },
+
+  erase : function() {
+    this.setCurrentTool();
+    App.pencilTool.setEraser(true);
+  },
+
+  zoomIn : function() {
+    App.paintController.zoomIn();
+  },
+
+  zoomOut : function() {
+    App.paintController.zoomOut();
+  }
+
 });
