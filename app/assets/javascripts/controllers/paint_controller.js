@@ -16,6 +16,7 @@ var PaintController =  Ember.ArrayController.extend({
   spriteWrapper : 'paints',
   //
   color : "#000000",
+  size : 1,
 
   //
   init : function() {
@@ -64,12 +65,19 @@ var PaintController =  Ember.ArrayController.extend({
     var coord = this.getMouseCoordinates(e);
     var options = { x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel()};
     this.getCurrentTool().mousedown(options, this.pixelDrawer);
+    this.zoomTool.updateTexture();
   },
 
   mousemove : function(e) {    
     var coord = this.getMouseCoordinates(e);
     var options = { x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel() };
     this.getCurrentTool().mousemove(options);
+    this.zoomTool.updateTexture();
+
+    // Set marker position
+    var left = (coord.x - (this.size / 2)) * this.zoomTool.gridSize;
+    var top = (coord.y - (this.size / 2)) * this.zoomTool.gridSize;
+    $("#marker").css({left: left, top: top, width: this.size * this.zoomTool.gridSize, height: this.size * this.zoomTool.gridSize});
   },
 
   // ---------------------------------------  
@@ -94,6 +102,10 @@ var PaintController =  Ember.ArrayController.extend({
   setColor : function(_color) {
     var color = _color || "#000000";
     this.color = color.substr(0,1) != '#' ? '#' + color : color;
+  },
+
+  setSize : function(_size) {
+    this.size = _size || 1;
   },
 
   // ---------------------------------------

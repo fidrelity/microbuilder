@@ -31,7 +31,7 @@ var PencilToolModel = Ember.Object.extend({
       this.sprite.erase(_x, _y, 10 );
     } else {
       this.pixelDrawer.popImageData();
-      this.pixelDrawer.drawLine(_x, _y, _endX, _endY, App.paintController.color, 2);
+      this.pixelDrawer.drawLine(_x, _y, _endX, _endY, App.paintController.color, App.paintController.size);
       this.pixelDrawer.pushImageData();
     }
 
