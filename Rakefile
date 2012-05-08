@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Microbuilder::Application.load_tasks
+Playtin::Application.load_tasks
