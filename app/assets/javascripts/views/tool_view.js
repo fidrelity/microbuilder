@@ -11,9 +11,8 @@ var ToolView = Ember.View.extend({
     App.toolBoxController.setCurrentTool(this.get("tool"));
   },
 
-  drawRect : function() {
-    var pixelDrawer = new PixelDrawer();
-    App.drawTool.drawFunction = pixelDrawer.drawRect;
+  drawRect : function() {    
+    App.drawTool.setDrawFunction("rect");
     App.drawTool.click();
     this.setCurrentTool();
   },

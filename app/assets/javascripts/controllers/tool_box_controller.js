@@ -51,7 +51,6 @@ var DrawToolModel = Ember.Object.extend({
   initAfter : function () {
     this.tempCanvas = $('#canvas-sketch');
     console.log("tempcanvas", $('#canvas-sketch'));
-
   },
   
   click : function(_options) {
@@ -63,10 +62,11 @@ var DrawToolModel = Ember.Object.extend({
     this.sprite = _options.sprite;
 
     this.isActive = true;
-    this.draw(_options.x, _options.y, _options.x, _options.y);
     //
     this.startX = _options.x;
     this.startY = _options.y;
+    this.draw(_options.x, _options.y, _options.x, _options.y);
+
 
     // /////////// //
     /*
@@ -84,26 +84,43 @@ var DrawToolModel = Ember.Object.extend({
 
   mousemove : function(_options) {
     if(!this.isActive) return false;
-    this.draw(this.startX, this.startY, _options.x, _options.y);
+    this.pixelDrawer.context.clearRect(0, 0, this.currentSprite.width, this.currentSprite.height);
 
     this.endX = _options.x;
     this.endY = _options.y;
+
+    this.draw(this.startX, this.startY, _options.x, _options.y);
+
+
   },
 
   mouseup : function(_options) {
     this.isActive = false;
+
+    // Draw on sprite
+    this.pixelDrawer.setCanvasContext(this.currentSprite);
+    this.draw();
     _options.sprite.pushState();
+
+    // Change back to tempCanvas
+    this.pixelDrawer.setCanvasContext(this.tempCanvas[0]);
   },
 
   draw : function(_x, _y, _endX, _endY) {
+    var x = _x || this.startX;
+    var y = _y || this.startY;
+    var endX = _endX || this.endX;
+    var endY = _endY || this.endY;
     this.pixelDrawer.popImageData();
-    this.pixelDrawer.drawLine(_x, _y, _endX, _endY, '#000000', 2);
+    this.drawFunction(x, y, endX, endY, '#000000', 2);
     this.pixelDrawer.pushImageData();
   },
 
   showTempCanvas : function() {
     this.currentSprite = App.paintController.getCurrentSpriteModel().canvas;
-    this.pixelDrawer.setCanvasContext(this.currentSprite);
+    this.currentContext = this.currentSprite.getContext("2d");
+
+    this.pixelDrawer.setCanvasContext(this.tempCanvas[0]);
     
     var canvasObject = $("#" + this.currentSprite.id);
     // Set position of canvasSketch
@@ -124,6 +141,10 @@ var DrawToolModel = Ember.Object.extend({
     Paint.setCurrentCanvas(Paint.canvasToDraw.attr("id"));
     Paint.tempCanvas.hide();
   },
+
+  setDrawFunction : function(_fnc) {
+    this.drawFunction = this.pixelDrawer.fillRect.bind(this.pixelDrawer);
+  }
 
 });
 
