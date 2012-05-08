@@ -23,6 +23,18 @@ var PencilToolModel = Ember.Object.extend({
 
   mouseup : function() {
     this.isActive = false;
+    _options.sprite.pushState();
+  },
+
+  draw : function(_x, _y, _endX, _endY) {
+    if(this.get('isErasing') == true) {
+      this.sprite.erase(_x, _y, 10 );
+    } else {
+      this.pixelDrawer.popImageData();
+      this.pixelDrawer.drawLine(_x, _y, _endX, _endY, App.paintController.color, 2);
+      this.pixelDrawer.pushImageData();
+    }
+
   },
 
 });

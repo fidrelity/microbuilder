@@ -58,7 +58,6 @@
 
         <div id="paintRight">
           <div id="tools" style="padding:10px">
-            <p>
 
                   {{#view ToolView
                     toolBinding = "App.pencilTool"
@@ -72,27 +71,18 @@
                    <button {{action "addSprite"}}>Add</button>
                   {{/view}}
 
-                <input type="image" src="assets/paint/cursor.png" id="selectToolButton" class="tool" value="Selector">
-                <input type="image" src="assets/paint/pencil.png" id="pencilToolButton" class="tool" value="Pencil">
-                <input type="button" id="lineToolButton" class="tool" value="Line">
-                <input type="button" id="rectToolButton" class="tool" value="Rectangle">
-                <input type="button" id="fillRectToolButton" class="tool" value="Filled Rect">
-                <input type="button" id="fillCircleToolButton" class="tool" value="Filled Circle">
-                <input type="button" id="circleToolButton" class="tool" value="Circle">
-                <input type="button" id="eraserToolButton" class="tool" value="Eraser">            
-            </p>
+                  {{#view ToolView
+                    toolBinding = "App.drawTool"
+                  }}
+                    <button {{action "drawRect"}}>Rectangle</button>
+                    <button {{action "drawCircle"}}>Circle</button>
+                    <button {{action "drawRectFill"}}>Rect Fill</button>
+                    <button {{action "drawCircleFill"}}>Circle Fill</button>
+                    <button {{action "drawLine"}}>Line</button>
+                  {{/view}}
 
-            <p>
-                <input type="image" src="assets/paint/picture_add.png" id="addImageButton" title="Load image">
-                <input type="image" src="assets/paint/shading.png" id="clearCanvasButton" value="Clear" title="Clear canvas">
-                <input type="image" src="assets/paint/arrow_undo.png" class="tool" id="undoButton" value="Undo" title="Undo">
-                <input type="image" src="assets/paint/shape_square_add.png" id="addCanvasButton" value="Add Canvas" title="Add canvas">
-                <input type="image" src="assets/paint/shape_ungroup.png" id="copyCanvasButton" value="Copy Canvas" title="copy canvas">
-                <input type="image" src="assets/paint/shape_square_delete.png" id="removeCanvasButton" value="Remove Canvas" title="Remove canvas">
-                <input type="image" src="assets/paint/shape_handles.png" class="tool" id="outlineButton" value="Outline">
-                <input type="image" src="assets/paint/shape_flip_horizontal.png" class="tool" id="flipvButton" value="FlipV">
-                <input type="image" src="assets/paint/shape_flip_vertical.png" class="tool" id="fliphButton" value="FlipH">
-            </p>
+
+
             <p>
                 <input type="text" id="playDelay" value="100" size="2">
                 <input type="image" src="assets/paint/resultset_next.png" id="playButton" value="Play">
@@ -110,7 +100,17 @@
                     <div id="sizeSlider" style="float:left;"></div>
                     <div id="pencilSizePreview" class="sizeBlock" style="float:right;"></div>
                 </div>
-                <div id="palette" style="overflow:hidden"></div>
+                <div id="palette" style="overflow:hidden">
+                  {{#view ColorPaletteView
+                    color = "#000000"
+                  }}
+                    <div class="colorBlock" data-color="#000000" style="background-color:#000000"></div>
+                    <div class="colorBlock" data-color="#FF0000" style="background-color:#FF0000"></div>
+                    <div class="colorBlock" data-color="#00FF00" style="background-color:#00FF00"></div>
+                    <div class="colorBlock" data-color="#0000FF" style="background-color:#0000FF"></div>
+                  {{/view}}
+
+                </div>
             </div>
           </div>
         </div>

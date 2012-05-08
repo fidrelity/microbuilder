@@ -14,6 +14,8 @@ var PaintController =  Ember.ArrayController.extend({
   currentSprite : null,
   currentTool : null,
   spriteWrapper : 'paints',
+  //
+  color : "#000000",
 
   //
   init : function() {
@@ -65,14 +67,40 @@ var PaintController =  Ember.ArrayController.extend({
     return App.ToolBox.getCurrentTool();
   },
 
+  setColor : function(_color) {
+    var color = _color || "#000000";
+    this.color = color.substr(0,1) != '#' ? '#' + color : color;
+  },
+
   // ---------------------------------------
   showPaintView : function() {
     this.set( 'tabState', 'paint' );
   },
-  
-  showSizeView : function() {    
-    this.set( 'tabState', 'setSize' );    
+
+  showSizeView : function() {
+    this.set( 'tabState', 'setSize' );
   },
 
+  // ---------------------------------------
+  zoomIn : function() {
+    this.zoomTool.zoomIn();
+  },
+
+  zoomOut : function() {
+    this.zoomTool.zoomOut();
+  },
+
+  // ---------------------------------------
+  // Helper
+  getMouseCoordinates : function(e) {
+    var zoomCanvas = this.zoomTool.zoomCanvas;
+    var x = e.pageX - zoomCanvas.offset().left;
+    var y = e.pageY - zoomCanvas.offset().top;
+
+    x = Math.floor(x / this.zoomTool.gridSize);
+    y = Math.floor(y / this.zoomTool.gridSize);
+
+    return { x: x, y: y };
+  }
 
 });

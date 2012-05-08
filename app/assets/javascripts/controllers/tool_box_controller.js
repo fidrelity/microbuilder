@@ -58,28 +58,12 @@ var DrawToolModel = Ember.Object.extend({
   },
 
   mousedown : function(_options, _pixelDrawer) {
-    //this.pixelDrawer = _pixelDrawer;
     this.sprite = _options.sprite;
-
     this.isActive = true;
     //
     this.startX = _options.x;
     this.startY = _options.y;
     this.draw(_options.x, _options.y, _options.x, _options.y);
-
-
-    // /////////// //
-    /*
-    Paint.showSketchCanvas();
-    this.isActive = true;
-    this.startX = _options.coordinates.x;
-    this.startY = _options.coordinates.y;
-
-    this.sourceCanvas = Paint.canvasToDraw[0];
-    this.sourceContext = this.sourceCanvas.getContext("2d");
-    this.drawCanvas = Paint.getCurrentCanvasDom()[0];
-    this.drawContext = this.drawCanvas.getContext("2d");
-    */
   },
 
   mousemove : function(_options) {
@@ -104,6 +88,7 @@ var DrawToolModel = Ember.Object.extend({
 
     // Change back to tempCanvas
     this.pixelDrawer.setCanvasContext(this.tempCanvas[0]);
+    this.pixelDrawer.context.clearRect(0, 0, this.currentSprite.width, this.currentSprite.height);
   },
 
   draw : function(_x, _y, _endX, _endY) {
@@ -112,7 +97,7 @@ var DrawToolModel = Ember.Object.extend({
     var endX = _endX || this.endX;
     var endY = _endY || this.endY;
     this.pixelDrawer.popImageData();
-    this.drawFunction(x, y, endX, endY, '#000000', 2);
+    this.drawFunction(x, y, endX, endY, App.paintController.color, 2);
     this.pixelDrawer.pushImageData();
   },
 
@@ -142,8 +127,21 @@ var DrawToolModel = Ember.Object.extend({
     Paint.tempCanvas.hide();
   },
 
-  setDrawFunction : function(_fnc) {
-    this.drawFunction = this.pixelDrawer.fillRect.bind(this.pixelDrawer);
+  setDrawFunction : function(_fnc) {    
+    var drawFnc = null;
+    switch (_fnc) {
+
+      case("rect") : this.drawFunction = this.pixelDrawer.drawRect.bind(this.pixelDrawer); break;
+
+      case("fillrect") : this.drawFunction = this.pixelDrawer.fillRect.bind(this.pixelDrawer); break;
+
+      case("circle") : this.drawFunction = this.pixelDrawer.drawCircle.bind(this.pixelDrawer); break;
+
+      case("fillcircle") : this.drawFunction = this.pixelDrawer.fillCircle.bind(this.pixelDrawer); break;
+
+      case("line") : this.drawFunction = this.pixelDrawer.drawLine.bind(this.pixelDrawer); break;
+    }
+
   }
 
 });
