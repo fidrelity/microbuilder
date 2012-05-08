@@ -7,6 +7,9 @@ var PencilToolModel = Ember.Object.extend({
   
   init : function () {
     
+    pixelDrawer : null,
+    isErasing : false,
+
   },
   
   click : function(toolModel) {
@@ -28,7 +31,7 @@ var PencilToolModel = Ember.Object.extend({
 
   draw : function(_x, _y, _endX, _endY) {
     if(this.get('isErasing') == true) {
-      this.sprite.erase(_x, _y, 10 );
+      this.sprite.erase(_x, _y, App.paintController.size);
     } else {
       this.pixelDrawer.popImageData();
       this.pixelDrawer.drawLine(_x, _y, _endX, _endY, App.paintController.color, App.paintController.size);

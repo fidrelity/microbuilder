@@ -48,8 +48,6 @@
               <canvas id="zoomCanvas" width="256" height="256"></canvas>           
               <div id="marker" style="position:absolute;left:10px;top:10px;pointer-events:none;width:10px;height:10px;border:1px solid #000"></div>
           </div>
-          <input type="image" src="assets/paint/magnifier_zoom_in.png" id="zoomInButton" value="+">
-          <input  type="image" src="assets/paint/magifier_zoom_out.png"id="zoomOutButton" value="-">
         </div>
 
         <div id="paintRight">
