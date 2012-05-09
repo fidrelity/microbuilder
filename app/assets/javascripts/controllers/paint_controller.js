@@ -17,6 +17,7 @@ var PaintController =  Ember.ArrayController.extend({
   //
   color : "#000000",
   size : 1,
+  //  
 
   //
   init : function() {
@@ -31,15 +32,70 @@ var PaintController =  Ember.ArrayController.extend({
     // Switch
       // isBackground
       // setImageSize
+
+    this.pixelDrawer = new PixelDrawer();
+    this.zoomTool = new ZoomTool();
+
+    this.add();
+    
+    this.zoomTool.resizeCanvas();
+    this.finalCanvas = $('#sprite-canvas');
   },
 
   // ---------------------------------------
   save : function() {
 
+    // Stop Animation
+
+    var imageTitle = $("#imageName").val();
+    var makePublic = $("#makePublic").is(":checked") ? 1 : 0;
+
+    var count = this.content.length;
+    var width = this.spriteSize.width;
+    var totalWidth = count * width;
+    var height = this.spriteSize.height;
+    
+    this.finalCanvas.attr('width', totalWidth).attr('height', height).show();
+    var canvas = document.getElementById(this.finalCanvas.attr('id'));
+    var context = canvas.getContext('2d');
+
+    if(!imageTitle || !count) { alert("No Name!"); return false;}
+
+    // Merge canvases
+    for (var i = 0; i < this.content.length; i++) {
+      var area = this.content[i];
+      var xPos = i * width;
+      context.drawImage(area.canvas, xPos, 0);
+    };
+
+    
+    // Push to Server
+    var imgData = this.finalCanvas[0].toDataURL("image/png");   
+    $.ajax({
+      url: "graphics/",
+      type: "post",
+      data: { 
+        graphic: {
+          name : imageTitle,
+          image_data: imgData,
+          frame_count: count,
+          frame_width: width,
+          frame_height: height,
+          public : makePublic,
+          background : 0,
+        },
+      },
+      
+      success : function( data ) {        
+        App.libraryController.graphicSaved( data );        
+      }
+      
+    });
+
   },
 
   reset : function() {
-    // delete all sprites except first 
+    // delete all sprites, except first 
     // clear first one
     // 
   },

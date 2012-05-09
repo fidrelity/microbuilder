@@ -96,7 +96,12 @@
                 <input type="checkbox" value="1" id="replayLoop"> Loop
             </p>
             <p>
-            Name: <input type="text" size="25" id="imageName"> <input type="button" id="saveButton" class="tool" value="Save">
+            Name: <input type="text" size="25" id="imageName">
+            {{#view ToolView
+                    toolBinding = "this"
+            }}
+              <button {{action "save"}}>Save</button>
+            {{/view}}
             isPublic <input type="checkbox" id="makePublic">
             </p>
 

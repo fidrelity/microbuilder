@@ -74,8 +74,8 @@ var DrawToolModel = Ember.Object.extend({
     this.endX = _options.x;
     this.endY = _options.y;
 
-    //var imageData = this.currentContext.getImageData(0, 0, this.currentSprite.width, this.currentSprite.height);    
-    //this.tempContext.putImageData(imageData, 0, 0);
+    var imageData = this.tempContext.getImageData(0, 0, this.currentSprite.width, this.currentSprite.height);    
+    this.currentContext.putImageData(imageData, 0, 0);
 
     this.draw(this.startX, this.startY, _options.x, _options.y);
   },
@@ -108,6 +108,7 @@ var DrawToolModel = Ember.Object.extend({
     this.currentContext = this.currentSprite.getContext("2d");
 
     this.pixelDrawer.setCanvasContext(this.tempCanvas[0]);
+    App.paintController.zoomTool.setTexture(this.tempCanvas[0]);
     
     var canvasObject = $("#" + this.currentSprite.id);
     // Set position of canvasSketch

@@ -60,6 +60,10 @@ var ToolView = Ember.View.extend({
 
   zoomOut : function() {
     App.paintController.zoomOut();
+  },
+
+  save : function() {
+    App.paintController.save();
   }
 
 });
