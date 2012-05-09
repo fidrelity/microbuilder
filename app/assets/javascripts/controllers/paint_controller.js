@@ -17,6 +17,7 @@ var PaintController =  Ember.ArrayController.extend({
   //
   color : "#000000",
   size : 1,
+  zoom : 4,
   //  
 
   //
@@ -34,12 +35,15 @@ var PaintController =  Ember.ArrayController.extend({
       // setImageSize
 
     this.pixelDrawer = new PixelDrawer();
-    this.zoomTool = new ZoomTool();
+    //this.zoomTool = new ZoomTool();
 
     this.add();
     
-    this.zoomTool.resizeCanvas();
+    //this.zoomTool.resizeCanvas();
     this.finalCanvas = $('#sprite-canvas');
+
+    this.zoomCanvas = document.getElementById("zoomCanvas");
+    this.zoomContext = this.zoomCanvas.getContext("2d");
   },
 
   // ---------------------------------------
@@ -121,19 +125,19 @@ var PaintController =  Ember.ArrayController.extend({
     var coord = this.getMouseCoordinates(e);
     var options = { x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel()};
     this.getCurrentTool().mousedown(options, this.pixelDrawer);
-    this.zoomTool.updateTexture();
+    //this.zoomTool.updateTexture();
   },
 
   mousemove : function(e) {    
     var coord = this.getMouseCoordinates(e);
     var options = { x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel() };
     this.getCurrentTool().mousemove(options);
-    this.zoomTool.updateTexture();
+    //this.zoomTool.updateTexture();
 
     // Set marker position
-    var left = (coord.x - (this.size / 2)) * this.zoomTool.gridSize;
-    var top = (coord.y - (this.size / 2)) * this.zoomTool.gridSize;
-    $("#marker").css({left: left, top: top, width: this.size * this.zoomTool.gridSize, height: this.size * this.zoomTool.gridSize});
+    var left = (coord.x - (this.size / 2)) * 4;//this.zoomTool.gridSize;
+    var top = (coord.y - (this.size / 2)) * 4;//this.zoomTool.gridSize;
+    $("#marker").css({left: left, top: top, width: this.size * 4, height: this.size * 4});
   },
 
   // ---------------------------------------  
@@ -145,6 +149,8 @@ var PaintController =  Ember.ArrayController.extend({
   // Getter And Setter
   setCurrentSpriteModel : function(spriteModel) {
     this.set('currentSprite', spriteModel);
+    this.pixelDrawer.setCanvasContext(spriteModel.canvas);
+    //this.zoomTool.setTexture(spriteModel.canvas);
   },
 
   getCurrentSpriteModel : function() {
@@ -175,22 +181,49 @@ var PaintController =  Ember.ArrayController.extend({
 
   // ---------------------------------------
   zoomIn : function() {
-    this.zoomTool.zoomIn();
+    this.zoom++;
+    //this.zoomTool.zoomIn();
   },
 
   zoomOut : function() {
-    this.zoomTool.zoomOut();
+    this.zoom--;
+    //this.zoomTool.zoomOut();
+  },
+
+  clearZoomCanvas : function() {
+    this.zoomContext.clearRect(0, 0, this.zoomCanvas.width, this.zoomCanvas.height);
+  },
+
+  zoomImageData : function( imageData, _zoom ) {
+    var zoom = zoom || this.zoom;
+
+    var width = imageData.width, 
+        height = imageData.height, 
+        data = imageData.data,
+        x, y, i;
+
+    for ( x = 0; x < width; x++ ) {
+
+        for ( y = 0; y < height; y++ ) {
+
+            i = ( y * width + x ) * 4;
+
+            this.zoomContext.fillStyle = "rgba(" + data[i] + "," + data[i+1] + "," + data[i+2] + "," + ( data[i+3] / 255 ) + ")";
+            this.zoomContext.fillRect( x * zoom, y * zoom, zoom, zoom );
+        }
+
+    }
   },
 
   // ---------------------------------------
   // Helper
   getMouseCoordinates : function(e) {
-    var zoomCanvas = this.zoomTool.zoomCanvas;
+    var zoomCanvas = $('#zoomCanvas');
     var x = e.pageX - zoomCanvas.offset().left;
     var y = e.pageY - zoomCanvas.offset().top;
 
-    x = Math.floor(x / this.zoomTool.gridSize);
-    y = Math.floor(y / this.zoomTool.gridSize);
+    x = Math.floor(x / this.zoom);
+    y = Math.floor(y / this.zoom);
 
     return { x: x, y: y };
   }

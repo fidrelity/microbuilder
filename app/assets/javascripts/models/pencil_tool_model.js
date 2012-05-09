@@ -38,6 +38,9 @@ var PencilToolModel = Ember.Object.extend({
       this.pixelDrawer.pushImageData();
     }
 
+    // Update ZoomCanvas
+    App.paintController.clearZoomCanvas();    
+    App.paintController.zoomImageData(this.pixelDrawer.context.getImageData(0, 0, this.pixelDrawer.canvas.width, this.pixelDrawer.canvas.height));
   },
 
 });
