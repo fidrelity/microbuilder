@@ -2,6 +2,17 @@
   PaintController
   
   - manages the graphic being saved
+
+  Todo:
+  - Select current sprite -> update zoomCanvas
+  - on clear -> update zoom canvas
+  - reset endX, endY in drawingTools
+  - FrameAnimator
+  - set width of height on zoomCanvas when zooming
+  - removeCanvas
+  - copy canvas
+  - improve performance!
+
 */
 var PaintController =  Ember.ArrayController.extend({
 
