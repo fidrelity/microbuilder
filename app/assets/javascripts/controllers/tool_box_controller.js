@@ -79,10 +79,7 @@ var DrawToolModel = Ember.Object.extend({
     this.endY = _options.y;
 
     // Clear tempCanvas
-    this.tempContext.clearRect(0, 0, this.currentSprite.width, this.currentSprite.height);    
-
-    //var imageData = this.tempContext.getImageData(0, 0, this.currentSprite.width, this.currentSprite.height);
-    //this.currentContext.putImageData(imageData, 0, 0);
+    this.tempContext.clearRect(0, 0, this.currentSprite.width, this.currentSprite.height);
 
     // Draw on pixelDrawer current canvas => tempCanvas
     this.draw(this.startX, this.startY, _options.x, _options.y);
@@ -115,8 +112,9 @@ var DrawToolModel = Ember.Object.extend({
 
     // Update ZoomCanvas
     App.paintController.clearZoomCanvas();
-    App.paintController.zoomImageData(this.tempContext.getImageData(0, 0, this.currentSprite.width, this.currentSprite.height));
     App.paintController.zoomImageData(this.currentContext.getImageData(0, 0, this.currentSprite.width, this.currentSprite.height));
+    App.paintController.zoomImageData(this.tempContext.getImageData(0, 0, this.currentSprite.width, this.currentSprite.height));
+    
   },
 
   // Show temp canvas over current canvas (sprite)
@@ -126,7 +124,6 @@ var DrawToolModel = Ember.Object.extend({
 
     // Set temp canvas as canvas to draw in pixelDrawer and zoomTool
     this.pixelDrawer.setCanvasContext(this.tempCanvas[0]);
-    //App.paintController.zoomTool.setTexture(this.tempCanvas[0]);
     
     // Set position of temp canvas
     var canvasObject = $("#" + this.currentSprite.id);
@@ -139,8 +136,6 @@ var DrawToolModel = Ember.Object.extend({
   },
 
   hideSketchCanvas : function() {
-    //Paint.canvasSketchContext.clearRect(0, 0, Paint.pixelDrawer.canvas.width, Paint.pixelDrawer.canvas.height);
-    //Paint.setCurrentCanvas(Paint.canvasToDraw.attr("id"));
     Paint.tempCanvas.hide();
   },
 

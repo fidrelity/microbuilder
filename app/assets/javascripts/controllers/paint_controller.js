@@ -107,6 +107,9 @@ var PaintController =  Ember.ArrayController.extend({
   // Undo current SpriteModel
   undo : function() {
     this.getCurrentSpriteModel().popState();
+    this.clearZoomCanvas();
+    var imgData = this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height);
+    this.zoomImageData(imgData);
   },
 
     // Undo current SpriteModel
@@ -125,19 +128,17 @@ var PaintController =  Ember.ArrayController.extend({
     var coord = this.getMouseCoordinates(e);
     var options = { x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel()};
     this.getCurrentTool().mousedown(options, this.pixelDrawer);
-    //this.zoomTool.updateTexture();
   },
 
   mousemove : function(e) {    
     var coord = this.getMouseCoordinates(e);
     var options = { x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel() };
     this.getCurrentTool().mousemove(options);
-    //this.zoomTool.updateTexture();
 
     // Set marker position
-    var left = (coord.x - (this.size / 2)) * 4;//this.zoomTool.gridSize;
-    var top = (coord.y - (this.size / 2)) * 4;//this.zoomTool.gridSize;
-    $("#marker").css({left: left, top: top, width: this.size * 4, height: this.size * 4});
+    var left = (coord.x - (this.size / 2)) * this.zoom;//this.zoomTool.gridSize;
+    var top = (coord.y - (this.size / 2)) * this.zoom;//this.zoomTool.gridSize;
+    $("#marker").css({left: left, top: top, width: this.size * this.zoom, height: this.size * this.zoom});
   },
 
   // ---------------------------------------  
@@ -150,7 +151,6 @@ var PaintController =  Ember.ArrayController.extend({
   setCurrentSpriteModel : function(spriteModel) {
     this.set('currentSprite', spriteModel);
     this.pixelDrawer.setCanvasContext(spriteModel.canvas);
-    //this.zoomTool.setTexture(spriteModel.canvas);
   },
 
   getCurrentSpriteModel : function() {
@@ -182,12 +182,10 @@ var PaintController =  Ember.ArrayController.extend({
   // ---------------------------------------
   zoomIn : function() {
     this.zoom++;
-    //this.zoomTool.zoomIn();
   },
 
   zoomOut : function() {
     this.zoom--;
-    //this.zoomTool.zoomOut();
   },
 
   clearZoomCanvas : function() {
