@@ -24,7 +24,7 @@ var PencilToolModel = Ember.Object.extend({
     if(!this.isActive) return false;   
   },
 
-  mouseup : function() {
+  mouseup : function(_options) {
     this.isActive = false;
     _options.sprite.pushState();
   },
@@ -39,8 +39,8 @@ var PencilToolModel = Ember.Object.extend({
     }
 
     // Update ZoomCanvas
-    App.paintController.clearZoomCanvas();    
-    App.paintController.zoomImageData(this.pixelDrawer.context.getImageData(0, 0, this.pixelDrawer.canvas.width, this.pixelDrawer.canvas.height));
+    App.paintController.clearZoomCanvas();
+    App.paintController.zoomImageData(this.pixelDrawer.context.getImageData(0, 0, this.pixelDrawer.canvas.width, this.pixelDrawer.canvas.height));    
   },
 
 });

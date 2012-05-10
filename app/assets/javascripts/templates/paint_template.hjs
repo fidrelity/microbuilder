@@ -48,7 +48,7 @@
           </div> <!-- canvas -->
           <div id="zoomCanvasWrapper">
               <canvas id="zoomCanvas" width="256" height="256"></canvas>           
-              <div id="marker" style="position:absolute;left:10px;top:10px;pointer-events:none;width:10px;height:10px;border:1px solid #000"></div>
+              <div id="marker" style="display:none;position:absolute;left:10px;top:10px;pointer-events:none;width:10px;height:10px;border:1px solid #000"></div>
           </div>
         </div>
 

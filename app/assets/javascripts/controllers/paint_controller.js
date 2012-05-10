@@ -9,7 +9,6 @@
   - FrameAnimator
   - set width of height on zoomCanvas when zooming
   - removeCanvas
-  - highlight current color
   - highlight current sprite canvas
   - user can set sprite size
   - improve performance!
@@ -26,6 +25,7 @@ var PaintController =  Ember.ArrayController.extend({
   currentSprite : null,
   currentTool : null,
   spriteWrapper : 'paints',
+  showMarker : false,
   //
   color : "#000000",
   size : 1,
@@ -58,6 +58,7 @@ var PaintController =  Ember.ArrayController.extend({
     // Stop Animation
 
     var imageTitle = $("#imageName").val();
+    if(!imageTitle || !count) { alert("No Name!"); return false;}
     var makePublic = $("#makePublic").is(":checked") ? 1 : 0;
 
     var count = this.content.length;
@@ -69,7 +70,7 @@ var PaintController =  Ember.ArrayController.extend({
     var canvas = document.getElementById(this.finalCanvas.attr('id'));
     var context = canvas.getContext('2d');
 
-    if(!imageTitle || !count) { alert("No Name!"); return false;}
+    
 
     // Merge canvases
     for (var i = 0; i < this.content.length; i++) {
@@ -141,9 +142,11 @@ var PaintController =  Ember.ArrayController.extend({
     this.getCurrentTool().mousemove(options);
 
     // Set marker position
-    var left = (coord.x - (this.size / 2)) * this.zoom;//this.zoomTool.gridSize;
-    var top = (coord.y - (this.size / 2)) * this.zoom;//this.zoomTool.gridSize;
-    $("#marker").css({left: left, top: top, width: this.size * this.zoom, height: this.size * this.zoom});
+    if(this.showMarker) {
+      var left = (coord.x - (this.size / 2)) * this.zoom;//this.zoomTool.gridSize;
+      var top = (coord.y - (this.size / 2)) * this.zoom;//this.zoomTool.gridSize;
+      $("#marker").css({left: left, top: top, width: this.size * this.zoom, height: this.size * this.zoom});
+    }
   },
 
   // ---------------------------------------  
@@ -202,10 +205,13 @@ var PaintController =  Ember.ArrayController.extend({
   // ---------------------------------------
   zoomIn : function() {
     this.zoom++;
+    this.updateZoom();
   },
 
   zoomOut : function() {
+    if(this.zoomCanvas.width === this.spriteSize.width) return false;
     this.zoom--;
+    this.updateZoom();
   },
 
   clearZoomCanvas : function() {
@@ -234,6 +240,9 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   updateZoom : function() {
+    this.zoomCanvas.width  = this.zoom * this.spriteSize.width;
+    this.zoomCanvas.height = this.zoom * this.spriteSize.height;
+
     this.clearZoomCanvas();
     var imgData = this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height);
     this.zoomImageData(imgData);

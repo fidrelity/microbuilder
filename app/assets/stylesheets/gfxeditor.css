@@ -29,8 +29,10 @@ body {
 }
 
 #zoomCanvas {
+ background:#FFF;
+ background:url(paint/bg_transparent.png);
  border:1px solid #000000; 
- cursor:none;
+ cursor:crosshair;
  image-rendering: optimizeSpeed;             // Older versions of FF
  image-rendering: -moz-crisp-edges;          // FF 6.0+
  image-rendering: -webkit-optimize-contrast; // Webkit
@@ -47,7 +49,7 @@ body {
 .canvas {
     width:64px;
     height:64px;
-    background: url(paint/bg_transparent.png);
+    background:url(paint/bg_transparent.png);
     margin-right:0.5em;
 }
 .canvas:hover, .canvas:active, .canvas:focus {

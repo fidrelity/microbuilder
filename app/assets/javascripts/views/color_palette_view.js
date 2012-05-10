@@ -7,8 +7,9 @@ var ColorPaletteView = Ember.View.extend({
     $('.colorBlock').click(function() {
       var color = $(this).attr('data-color');
       App.paintController.setColor(color);
-    });
-  }
 
- 
+      $('.colorBlock').removeClass('activeColor');
+      $(this).addClass('activeColor');
+    });
+  } 
 });
