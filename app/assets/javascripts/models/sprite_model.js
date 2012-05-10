@@ -49,6 +49,14 @@ var SpriteModel = Ember.Object.extend({
     this.states = [];
   },
 
+  flipV: function() {
+    this.context.translate(-1,1);
+  },
+
+  flipH: function() {
+    this.context.translate(1,-1);
+  },
+
   pushState : function() {
     if(this.states.length > this.stateLimit) {
       this.states.splice(0,1);

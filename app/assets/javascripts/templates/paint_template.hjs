@@ -27,7 +27,7 @@
       <div class="slide-content">
 
         <div id="paintLeft">
-          View: <input type="image" src="assets/paint/application_tile_vertical.png" class="switchViewButton"> <input type="image" src="assets/paint/application_cascade.png" id="switchViewButton" class="switchViewButton">
+         
           <div id="paints">
               <div id="outlineBox"></div>
               <canvas id="canvas-template" class="canvas canvas-over" width="64" height="64"></canvas>
@@ -38,7 +38,9 @@
                   {{#view SpriteView 
                     spriteBinding = "this"                    
                   }}
-                    <canvas {{action "setCurrentSpriteModel"}} class="canvas canvas-over" width="64" height="64"></canvas>                    
+                    <a {{action "setCurrentSpriteModel"}}>
+                      <canvas class="canvas canvas-over" width="64" height="64"></canvas>
+                    </a>
                   {{/view}}
                   
                 {{/each}}
@@ -87,9 +89,13 @@
                     <button {{action "drawCircleFill"}}>Circle Fill</button>
                     <button {{action "drawLine"}}>Line</button>
                   {{/view}}
+            </p>
 
-
-
+            <p>
+                <input type="image" src="assets/paint/shape_square_delete.png" id="removeCanvasButton" value="Remove Canvas" title="Remove canvas">
+                <input type="image" src="assets/paint/shape_flip_horizontal.png" class="tool" id="flipvButton" value="FlipV">
+                <input type="image" src="assets/paint/shape_flip_vertical.png" class="tool" id="fliphButton" value="FlipH">
+            </p>
             <p>
                 <input type="text" id="playDelay" value="100" size="2">
                 <input type="image" src="assets/paint/resultset_next.png" id="playButton" value="Play">
