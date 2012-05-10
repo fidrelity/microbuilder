@@ -153,8 +153,21 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   // ---------------------------------------  
-  add : function() {
-    this.addObject(SpriteModel.create({ id: this.content.length, width: this.spriteSize.width, height: this.spriteSize.height, wrapper: this.spriteWrapper }));
+  // Sprite Models
+  add : function(copy) {
+
+    var copyData = copy ? this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height) : null;
+
+    var spriteModel = SpriteModel.create({
+      id:       this.content.length,
+      width:    this.spriteSize.width,
+      height:   this.spriteSize.height,
+      wrapper:  this.spriteWrapper,
+      imgData : copyData
+    });
+
+    this.addObject(spriteModel);
+    this.setCurrentSpriteModel(spriteModel);
   },
 
   // ---------------------------------------  

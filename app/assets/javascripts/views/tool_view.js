@@ -45,6 +45,14 @@ var ToolView = Ember.View.extend({
     App.paintController.add();
   },
 
+  copySprite : function() {
+    App.paintController.add(true);
+  },
+
+  undo : function() {
+    App.paintController.undo();
+  },
+
   clear : function() {
     App.paintController.clearCurrentSprite();
   },

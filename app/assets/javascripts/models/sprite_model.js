@@ -10,6 +10,7 @@ var SpriteModel = Ember.Object.extend({
   context : null,
   //
   stateLimit : 5,
+  imgData : null,
 
   init : function() {    
     this.states = [];
@@ -19,6 +20,9 @@ var SpriteModel = Ember.Object.extend({
     //
     this.canvas = document.getElementById(this.id);
     this.context = this.canvas.getContext("2d");
+
+    if(this.imgData)
+      this.context.putImageData(this.imgData, 0, 0);
   },
 
   appendToWrapper : function() {
