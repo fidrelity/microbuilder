@@ -54,8 +54,20 @@ var SpriteModel = Ember.Object.extend({
     $("#" + this.id).addClass("active-sprite");
   },
 
-  clear : function() {
+  reset : function() {
     this.states = [];
+<<<<<<< HEAD
+=======
+    this.clear();
+  },
+
+  clear : function() {
+    this.canvas.width = this.canvas.width;
+  },
+
+  erase : function(_x, _y, _size) {
+    this.context.clearRect(_x, _y, _size, _size);
+>>>>>>> Refactored paint controller
   },
 
   flipV: function() {

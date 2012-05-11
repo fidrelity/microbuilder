@@ -7,11 +7,15 @@
     - user can set sprite size
     - removeCanvas
     - highlight (visualy) current sprite canvas
+    - reset function
   Fix:
     - bug when selecting other sprite -> DrawTool problem
     - didInsertElement - initalizing multipletimes
     - improve performance!
-    - refactor!
+    - refactor
+      -> Create Classes: Zoomer, FramePlayer
+    - on Save -> hide merged canvas
+              -> show message on error
   Feature:
     - Text
     - FillTool
@@ -22,24 +26,23 @@ var PaintController =  Ember.ArrayController.extend({
 
   graphic : null,
   //
-  content : [],       // sprites
-  mode : null,        // [ 'graphic', 'background' ]
-  tabState : 'paint',  // Different views [ 'paint', 'setSize' ]
-  spriteSize : null,
-  currentSprite : null,
-  currentTool : null,
+  content : [],         // contains sprite models
+  mode : null,          // [ 'graphic', 'background' ]
+  tabState : 'paint',   // Different views [ 'paint', 'setSize' ]
+  //
+  spriteSize : null,    // Object {width: , height: }
+  currentSprite : null, // type of spriteModel
   spriteWrapper : 'sprites-area',
   showMarker : false,
-  spriteCounter : 0,
+  spriteCounter : 0,    // spriteModel.index
   //
-  color : "#000000",
-  size : 1,
-  zoom : 4,
+  color : "#000000",    // Paint color
+  size : 1,             // Paint stroke size
+  zoom : 4,             // Zoom size
   //  
   playDelay : 200,
   currentFrameIndex : 0,
 
-  //
   init : function() {
     this.spriteSize = { width: 64, height: 64};
     // Add first Sprite
@@ -47,25 +50,31 @@ var PaintController =  Ember.ArrayController.extend({
     //this.toolBox = ToolBox.create();
   },
 
-  // Should be called when Paint_View called
-
+  // Called when Paint_View init
   initView : function() {    
-    this.zoomCanvas = document.getElementById("zoomCanvas");
+    this.zoomCanvas  = document.getElementById("zoomCanvas");
     this.zoomContext = this.zoomCanvas.getContext("2d");
     this.pixelDrawer = new PixelDrawer();
 
+    // if mode = background -> set spriteSize to background size
+      // remove zoom canvas
+      // remove sprites
+      // remove add button
+
+    // if mode = graphic -> show size-page
+    
+    // set sketch canvas size + position
+
     this.add();
-        
-    this.finalCanvas = $('#sprite-canvas');    
+    this.finalCanvas = $('#sprite-canvas');
   },
 
   // ---------------------------------------
   save : function() {
 
-    // Stop Animation
+    this.stop();
 
     var imageTitle = $("#imageName").val();
-    if(!imageTitle || !count) { alert("No Name!"); return false;}
     var makePublic = $("#makePublic").is(":checked") ? 1 : 0;
 
     var count = this.content.length;
@@ -73,19 +82,18 @@ var PaintController =  Ember.ArrayController.extend({
     var totalWidth = count * width;
     var height = this.spriteSize.height;
     
+    if(!imageTitle || !count) { alert("No Name!"); return false;}
+
     this.finalCanvas.attr('width', totalWidth).attr('height', height).show();
-    var canvas = document.getElementById(this.finalCanvas.attr('id'));
-    var context = canvas.getContext('2d');
+    var canvas = this.finalCanvas[0]; //document.getElementById(this.finalCanvas.attr('id'));
+    var context = canvas.getContext('2d');    
 
-    
-
-    // Merge canvases
+    // Merge sprites into final canvas
     for (var i = 0; i < this.content.length; i++) {
       var area = this.content[i];
       var xPos = i * width;
       context.drawImage(area.canvas, xPos, 0);
     };
-
     
     // Push to Server
     var imgData = this.finalCanvas[0].toDataURL("image/png");   
@@ -112,10 +120,10 @@ var PaintController =  Ember.ArrayController.extend({
 
   },
 
+  // ---------------------------------------
   reset : function() {
     // delete all sprites, except first 
     // clear first one
-    // 
   },
 
   // Undo current SpriteModel
@@ -150,8 +158,8 @@ var PaintController =  Ember.ArrayController.extend({
 
     // Set marker position
     if(this.showMarker) {
-      var left = (coord.x - (this.size / 2)) * this.zoom;//this.zoomTool.gridSize;
-      var top = (coord.y - (this.size / 2)) * this.zoom;//this.zoomTool.gridSize;
+      var left = (coord.x - (this.size / 2)) * this.zoom;
+      var top = (coord.y - (this.size / 2)) * this.zoom;
       $("#marker").css({left: left, top: top, width: this.size * this.zoom, height: this.size * this.zoom});
     }
   },
@@ -176,8 +184,16 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   // ---------------------------------------  
+  remove : function(_spriteModel) {
+    if(this.content.length === 1) return false;
+    var spriteModel = _spriteModel || this.getCurrentSpriteModel();
+    this.removeObject(_spriteModel);
+    // set currentSpriteModel
+  },
+
+  // ---------------------------------------
   // Getter And Setter
-  setCurrentSpriteModel : function(spriteModel) {    
+  setCurrentSpriteModel : function(spriteModel) {
     if(!spriteModel) return false;
     this.set('currentSprite', spriteModel);
     spriteModel.highlight();
@@ -221,6 +237,7 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   // ---------------------------------------
+  // Zoom Canvas
   zoomIn : function() {
     if(this.zoom > 10) return false;
     this.zoom++;
@@ -304,8 +321,8 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   stop : function() {
-    var canvasObjects = $('.canvas').not('#canvas-template, #canvas-sketch, #zoomCanvas').show();
     clearTimeout(this.playInterval);
+    var canvasObjects = $('.canvas').not('#canvas-template, #canvas-sketch, #zoomCanvas').show();
     this.floatSprites();
     $('#playButton').show();
     $('#stopButton').hide();
