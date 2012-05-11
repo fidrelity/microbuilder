@@ -4,14 +4,14 @@
   - manages the graphic being saved
 
   Todo:
-  - Select current sprite -> update zoomCanvas
-  - reset endX, endY in drawingTools
-  - removeCanvas
-  - highlight (visualy) current sprite canvas
-  - user can set sprite size
-  - fix: didInsertElement - initalizing multipletimes
-  - improve performance!
-
+    - Select current sprite -> update zoomCanvas
+    - user can set sprite size
+    - removeCanvas
+    - highlight (visualy) current sprite canvas
+  Fix:
+    - fix: didInsertElement - initalizing multipletimes
+    - improve performance!
+    - refactor!
   Feature:
     - Text
     - FillTool
@@ -30,6 +30,7 @@ var PaintController =  Ember.ArrayController.extend({
   currentTool : null,
   spriteWrapper : 'sprites-area',
   showMarker : false,
+  spriteCounter : 0,
   //
   color : "#000000",
   size : 1,
@@ -161,8 +162,8 @@ var PaintController =  Ember.ArrayController.extend({
 
     var copyData = copy ? this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height) : null;
 
-    var spriteModel = SpriteModel.create({
-      id:       this.content.length,
+    var spriteModel = SpriteModel.create({      
+      index:    this.spriteCounter++,
       width:    this.spriteSize.width,
       height:   this.spriteSize.height,
       wrapper:  this.spriteWrapper,
@@ -177,13 +178,24 @@ var PaintController =  Ember.ArrayController.extend({
   // ---------------------------------------  
   // Getter And Setter
   setCurrentSpriteModel : function(spriteModel) {    
+    if(!spriteModel) return false;
     this.set('currentSprite', spriteModel);
+    spriteModel.highlight();
     this.pixelDrawer.setCanvasContext(spriteModel.canvas);
-
+    this.updateZoom();
   },
 
   getCurrentSpriteModel : function() {
     return this.content[this.currentSprite];
+  },
+
+  getCurrentSpriteModelByIndex : function(_id) {
+    for (var i = 0; i < this.content.length; i++) {
+      var spriteModel = this.content[i];
+      if(spriteModel.index === _id)
+        return spriteModel;
+    };
+    return null;
   },
 
   getCurrentTool : function() {

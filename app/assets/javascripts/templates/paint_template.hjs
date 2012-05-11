@@ -106,14 +106,13 @@
 {{/view}} 
 <button {{action "cancel" target="App.gameController"}}>cancel</button>
 
-
-
 <p>
-Name: <input type="text" size="25" id="imageName">
+Name: <input type="text" size="25" id="imageName"> isPublic <input type="checkbox" id="makePublic">
+
 {{#view ToolView
         toolBinding = "this"
 }}
   <button {{action "save"}}>Save</button>
 {{/view}}
-isPublic <input type="checkbox" id="makePublic">
+
 </p>

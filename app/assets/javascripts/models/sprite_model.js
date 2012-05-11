@@ -1,5 +1,6 @@
 var SpriteModel = Ember.Object.extend({
   id : 0,
+  index : 0,
   width : 0,
   height : 0,  
   wrapper : null,
@@ -14,7 +15,7 @@ var SpriteModel = Ember.Object.extend({
 
   init : function() {    
     this.states = [];
-    this.id = "sprite" + this.id;
+    this.id = "sprite" + this.index;
     //    
     this.appendToWrapper();
     //
@@ -31,18 +32,26 @@ var SpriteModel = Ember.Object.extend({
     var canvasId = document.createAttribute("id");
     canvasId.nodeValue = this.id;
     var canvasWidth = document.createAttribute("width");
-    canvasWidth.nodeValue = this.width;
+    canvasWidth.nodeValue = this.width;    
     var canvasHeight = document.createAttribute("height");
     canvasHeight.nodeValue = this.height;
     var canvasStyle = document.createAttribute("class");
     canvasStyle.nodeValue = "canvas";
+    var dataIndex = document.createAttribute("data-index");
+    dataIndex.nodeValue = this.index;
     //
     canvasElement.setAttributeNode(canvasId);
     canvasElement.setAttributeNode(canvasWidth);    
     canvasElement.setAttributeNode(canvasHeight);        
     canvasElement.setAttributeNode(canvasStyle);
+    canvasElement.setAttributeNode(dataIndex);
     //
     document.getElementById(this.wrapper).appendChild(canvasElement);    
+  },
+
+  highlight : function() {
+    $('.canvas').removeClass("active-sprite");
+    $("#" + this.id).addClass("active-sprite");
   },
 
   clear : function() {

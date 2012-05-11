@@ -107,3 +107,5 @@
     border-radius:7px;
 }
 .activeColor { border:2px solid #000000; }
+
+.active-sprite { border:1px solid #000000; }
