@@ -35,6 +35,8 @@ var PaintController =  Ember.ArrayController.extend({
   size : 1,
   zoom : 4,
   //  
+  playDelay : 200,
+  currentFrameIndex : 0,
 
   //
   init : function() {
@@ -251,6 +253,58 @@ var PaintController =  Ember.ArrayController.extend({
     this.clearZoomCanvas();
     var imgData = this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height);
     this.zoomImageData(imgData);
+  },
+
+  // ---------------------------------------
+  // Animation
+
+  play : function() {
+    $('#playButton').hide();
+    $('#stopButton').show();
+    this.playDelay = parseInt($('#playDelay').val());
+    this.currentFrameIndex = 0;
+    this.overSprites();
+    this.nextFrame();
+  },
+
+  nextFrame : function() {
+    var canvasObjects = $('.canvas').not('#canvas-template, #canvas-sketch, #zoomCanvas');
+    canvasObjects.hide();
+    canvasObjects.eq(this.currentFrameIndex).show();
+
+    if(this.currentFrameIndex == this.content.length) {
+      // Loop
+      if($("#replayLoop").is(":checked")) {
+        this.play();
+        return false;
+      // End
+      } else {        
+        this.stop();
+        return false;
+      }
+    }
+
+    this.currentFrameIndex++;
+    var that = this;
+    this.playInterval = setTimeout(function(){
+      that.nextFrame();
+    }, this.playDelay);    
+  },
+
+  stop : function() {
+    var canvasObjects = $('.canvas').not('#canvas-template, #canvas-sketch, #zoomCanvas').show();
+    clearTimeout(this.playInterval);
+    this.floatSprites();
+    $('#playButton').show();
+    $('#stopButton').hide();
+  },
+
+  floatSprites : function() {
+    $('.canvas').not('#canvas-sketch').removeClass('canvas-over').addClass('canvas-float');
+  },
+
+  overSprites : function() {
+    $('.canvas').not('#canvas-sketch').removeClass('canvas-float').addClass('canvas-over');
   },
 
   // ---------------------------------------

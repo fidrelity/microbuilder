@@ -72,6 +72,14 @@ var ToolView = Ember.View.extend({
 
   save : function() {
     App.paintController.save();
+  },
+
+  play : function() {
+    App.paintController.play();
+  },
+
+  stop : function() {
+    App.paintController.stop();
   }
 
 });
