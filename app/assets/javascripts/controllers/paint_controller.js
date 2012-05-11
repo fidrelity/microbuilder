@@ -6,16 +6,16 @@
   Todo:
   - Select current sprite -> update zoomCanvas
   - reset endX, endY in drawingTools
-  - FrameAnimator
-  - set width of height on zoomCanvas when zooming
   - removeCanvas
-  - highlight current sprite canvas
+  - highlight (visualy) current sprite canvas
   - user can set sprite size
+  - fix: didInsertElement - initalizing multipletimes
   - improve performance!
 
   Feature:
     - Text
     - FillTool
+    - key shortcuts (Undo, Shift -> straight lines)
 
 */
 var PaintController =  Ember.ArrayController.extend({

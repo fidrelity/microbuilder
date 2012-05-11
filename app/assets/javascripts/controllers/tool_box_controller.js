@@ -98,6 +98,9 @@ var DrawToolModel = Ember.Object.extend({
     // Change back to tempCanvas
     this.pixelDrawer.setCanvasContext(this.tempCanvas[0]);
     this.pixelDrawer.context.clearRect(0, 0, this.currentSprite.width, this.currentSprite.height);
+
+    this.endX = this.startX;
+    this.endY = this.startY;
   },
 
   draw : function(_x, _y, _endX, _endY) {

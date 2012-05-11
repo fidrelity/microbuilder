@@ -101,7 +101,7 @@
 }
 
 .colorBlock {
-    width:10px; height:10px; border:1px solid #000000;
+    width:15px; height:15px; border:1px solid #000000;
     text-align:center; cursor:pointer;
     float:left; margin-right:0.2em;
     border-radius:7px;
