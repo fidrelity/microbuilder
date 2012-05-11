@@ -4,12 +4,12 @@
   - manages the graphic being saved
 
   Todo:
-    - Select current sprite -> update zoomCanvas
     - user can set sprite size
     - removeCanvas
     - highlight (visualy) current sprite canvas
   Fix:
-    - fix: didInsertElement - initalizing multipletimes
+    - bug when selecting other sprite -> DrawTool problem
+    - didInsertElement - initalizing multipletimes
     - improve performance!
     - refactor!
   Feature:

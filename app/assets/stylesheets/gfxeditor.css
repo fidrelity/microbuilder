@@ -84,7 +84,7 @@
 
 /* Tools */
 .addSpriteButton {
-  width:64px; height:64px; float:left; margin-right:10px; background:url(paint/bg_transparent.png);border:1px solid #666;
+  width:64px; height:64px; float:left; margin-right:10px; background:#FFF;border:2px solid #666;
 }
 
 #stopButton { display:none; }
