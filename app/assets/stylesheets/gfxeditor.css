@@ -6,7 +6,6 @@
 #paint-wrapper #tool-bar {
   background:#CCC;
   overflow: hidden;
-  margin-bottom:1em;
 }
 
 #paint-wrapper #tool-bar .ember-view { float:left; }
@@ -21,24 +20,37 @@
   background-color:#111;
 }
 
+#paint-wrapper #tool-bar-second {
+  margin-top:0.5em;
+  overflow: hidden;
+}
+
 #paint-wrapper #area-wrapper {
+  margin-top:1.5em;
   overflow:hidden;
   width:100%;
 }
 
 #paint-wrapper #area-wrapper #zoom-canvas-area {
   position:relative;
-  width:300px;
+  width:400px;
   max-height:300px;
-  max-width:300px;
+  max-width:400px;
   overflow:auto;
   float:left;
 }
 
 #paint-wrapper #area-wrapper #sprites-area {
   float:right;
-  width:500px;
+  width:400px;
   margin-left:100px;
+}
+
+#palette {
+  list-style-type:none;
+  margin-left:2em;
+  overflow:hidden;
+  padding-top:10px;
 }
 
 /**/
@@ -69,17 +81,31 @@
 
 #canvas-template { display:none; }
 #canvas-sketch { display:none; z-index:999; position:absolute; background:none;}
-.colorBlock, .sizeBlock {
-    width:20px; height:20px; border:1px solid #000000;
-    text-align:center; cursor:pointer;
-}
-.colorBlock { float:left; margin-right:0.4em; }
-
 
 /* Tools */
 .addSpriteButton {
   width:64px; height:64px; float:left; margin-right:10px; background:url(paint/bg_transparent.png);border:1px solid #666;
 }
+
+#sizeSlider {
+    width:100px;
+    margin:0.5em 0 0.5em 0;
+}
+
+#sizeWrapper {
+    overflow:hidden;
+    float:left;
+    margin-right:1em;
+}
+
+.colorBlock {
+    width:10px; height:10px; border:1px solid #000000;
+    text-align:center; cursor:pointer;
+    float:left; margin-right:0.2em;
+    border-radius:7px;
+}
+.activeColor { border:2px solid #000000; }
+
 
 /* OLD 
 #gfx-editor-wrapper {
@@ -117,18 +143,8 @@
 
 
 
-.activeColor {
-    border:2px solid #000000;
-}
-#sizeSlider {
-    width:180px;
-    margin:0.5em 0 0.5em 0;
-}
 
-#sizeWrapper {
-    height:40px;
-    overflow:hidden;
-}
+
 
 #paints {
     width:100%;

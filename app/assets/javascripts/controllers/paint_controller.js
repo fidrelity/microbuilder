@@ -208,6 +208,7 @@ var PaintController =  Ember.ArrayController.extend({
 
   // ---------------------------------------
   zoomIn : function() {
+    if(this.zoom > 10) return false;
     this.zoom++;
     this.updateZoom();
   },
