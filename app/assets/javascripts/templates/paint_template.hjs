@@ -1,6 +1,77 @@
 <h2>Paint</h2>
 
-<p>paint a new object</p>
+<div id="paint-wrapper">
+
+  <div id="tool-bar">
+    {{#view ToolView
+      toolBinding = "App.pencilTool"
+    }}
+      <button {{action "setCurrentTool"}}>PencilTool</button>     
+      <button {{action "erase"}}>Eraser</button>       
+    {{/view}}
+
+    {{#view ToolView
+      toolBinding = "App.drawTool"
+    }}
+      <button {{action "drawRect"}}>Rectangle</button>
+      <button {{action "drawCircle"}}>Circle</button>
+      <button {{action "drawRectFill"}}>Rect Fill</button>
+      <button {{action "drawCircleFill"}}>Circle Fill</button>
+      <button {{action "drawLine"}}>Line</button>
+    {{/view}} 
+  
+    {{#view ToolView
+      toolBinding = "this"
+    }}
+      <button {{action "copySprite"}}>Copy</button>
+      <button {{action "clear"}}>Clear</button>
+      <button {{action "undo"}}>Undo</button>
+
+    {{/view}}   
+   
+  </div>
+
+  <div id="area-wrapper">
+
+    <div id="zoom-canvas-area">
+      <!-- Zoomed Canvas -->
+      <canvas id="zoomCanvas" width="256" height="256"></canvas> 
+    </div>
+
+    <div id="sprites-area">
+      <!-- Temporary Canvas -->
+      <canvas id="canvas-sketch" class="canvas" width="64" height="64"></canvas>
+      
+        <!-- Sprite Canvas (preview) -->
+        {{#each App.paintController}}
+  
+          {{#view SpriteView
+            spriteBinding = "this"
+          }}
+            
+          {{/view}}
+                  
+        {{/each}}
+
+        {{#view ToolView
+          toolBinding = "this"
+        }}
+          <button {{action "addSprite"}} class="addSpriteButton">Add</button>
+        {{/view}} 
+    </div>
+
+  </div>
+
+</div> <!-- End paint-wrapper -->
+{{#view ToolView
+      toolBinding = "this"
+}}
+<button {{action "zoomIn"}}>ZoomIn</button>
+<button {{action "zoomOut"}}>ZoomOut</button>
+{{/view}} 
+<button {{action "cancel" target="App.gameController"}}>cancel</button>
+
+
 
 
     <!-- Select Size
@@ -21,7 +92,7 @@
     </div>
      -->
 
-    <!-- Paint -->
+    <!-- Paint 
     <div id="paintWrapper" class="slide">
       <canvas id="sprite-canvas"></canvas>
       <div class="slide-content">
@@ -45,7 +116,7 @@
                   
                 {{/each}}
 
-          </div> <!-- canvas -->
+          </div> 
           <div id="zoomCanvasWrapper">
               <canvas id="zoomCanvas" width="256" height="256"></canvas>           
               <div id="marker" style="display:none;position:absolute;left:10px;top:10px;pointer-events:none;width:10px;height:10px;border:1px solid #000"></div>
@@ -135,6 +206,8 @@
 
       </div>
   
-</div><!-- gfx-editor-end -->
+</div> gfx-editor-end -->
+
 
 <button {{action "cancel" target="App.gameController"}}>cancel</button>
+

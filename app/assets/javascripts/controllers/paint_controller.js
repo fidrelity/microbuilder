@@ -13,6 +13,10 @@
   - user can set sprite size
   - improve performance!
 
+  Feature:
+    - Text
+    - FillTool
+
 */
 var PaintController =  Ember.ArrayController.extend({
 
@@ -24,7 +28,7 @@ var PaintController =  Ember.ArrayController.extend({
   spriteSize : null,
   currentSprite : null,
   currentTool : null,
-  spriteWrapper : 'paints',
+  spriteWrapper : 'sprites-area',
   showMarker : false,
   //
   color : "#000000",

@@ -1,8 +1,87 @@
-body {
-    background:#F6F6F6;
-    font-family:Arial;
+#paint-wrapper {
+  width:900px;
+  overflow:hidden;
 }
 
+#paint-wrapper #tool-bar {
+  background:#CCC;
+  overflow: hidden;
+  margin-bottom:1em;
+}
+
+#paint-wrapper #tool-bar .ember-view { float:left; }
+
+#paint-wrapper #tool-bar button { 
+  background:#333;
+  color:#FFF;
+  border:1px solid #222;
+}
+
+#paint-wrapper #tool-bar button:hover {
+  background-color:#111;
+}
+
+#paint-wrapper #area-wrapper {
+  overflow:hidden;
+  width:100%;
+}
+
+#paint-wrapper #area-wrapper #zoom-canvas-area {
+  position:relative;
+  width:300px;
+  max-height:300px;
+  max-width:300px;
+  overflow:auto;
+  float:left;
+}
+
+#paint-wrapper #area-wrapper #sprites-area {
+  float:right;
+  width:500px;
+  margin-left:100px;
+}
+
+/**/
+#zoomCanvas {
+ background:#FFF;
+ background:url(paint/bg_transparent.png);
+ border:1px solid #000000; 
+ cursor:crosshair;
+ image-rendering: optimizeSpeed;             // Older versions of FF
+ image-rendering: -moz-crisp-edges;          // FF 6.0+
+ image-rendering: -webkit-optimize-contrast; // Webkit
+                                                //  (Safari now, Chrome soon)
+ image-rendering: optimize-contrast;         // Possible future browsers.
+ -ms-interpolation-mode: nearest-neighbor;   // IE
+}
+.canvas {
+    width:64px;
+    height:64px;
+    background:url(paint/bg_transparent.png);
+    margin-right:0.5em;
+}
+.canvas:hover, .canvas:active, .canvas:focus {
+
+}
+.canvas-over  { position:absolute; background: rgba(255, 255, 255, 0.9); }
+.canvas-float { position:relative; float:left; }
+.canvas-selected { border:1px solid #4096EE;}
+
+#canvas-template { display:none; }
+#canvas-sketch { display:none; z-index:999; position:absolute; background:none;}
+.colorBlock, .sizeBlock {
+    width:20px; height:20px; border:1px solid #000000;
+    text-align:center; cursor:pointer;
+}
+.colorBlock { float:left; margin-right:0.4em; }
+
+
+/* Tools */
+.addSpriteButton {
+  width:64px; height:64px; float:left; margin-right:10px; background:url(paint/bg_transparent.png);border:1px solid #666;
+}
+
+/* OLD 
 #gfx-editor-wrapper {
   background:#FFF;
   border-radius:7px;
@@ -14,7 +93,7 @@ body {
     width:100%;
     overflow:hidden;
 }
-#paintWrapper { /*display:none;*/}
+#paintWrapper { /*display:none;}
 
 #paintLeft {
   width:450px;
@@ -28,52 +107,15 @@ body {
   background:#F6F6F6;
 }
 
-#zoomCanvas {
- background:#FFF;
- background:url(paint/bg_transparent.png);
- border:1px solid #000000; 
- cursor:crosshair;
- image-rendering: optimizeSpeed;             // Older versions of FF
- image-rendering: -moz-crisp-edges;          // FF 6.0+
- image-rendering: -webkit-optimize-contrast; // Webkit
-                                                //  (Safari now, Chrome soon)
- image-rendering: optimize-contrast;         // Possible future browsers.
- -ms-interpolation-mode: nearest-neighbor;   // IE
-}
-#zoomCanvasWrapper {
-  position:relative;
-  max-height:612px;
-  max-width:512px;
-  overflow:auto;
-}
-.canvas {
-    width:64px;
-    height:64px;
-    background:url(paint/bg_transparent.png);
-    margin-right:0.5em;
-}
-.canvas:hover, .canvas:active, .canvas:focus {
-    cursor: crosshair;
-}
-.canvas-over  { position:absolute; background: rgba(255, 255, 255, 0.9); }
-.canvas-float { position:relative; float:left; }
-.canvas-selected { border:1px solid #4096EE;}
 
-#canvas-template { display:none; }
-#canvas-sketch { display:none; z-index:999; position:absolute; background:none;}
+
 
 #sprite-canvas {
   border:1px solid #333;
   display: none;
 }
 
-.colorBlock, .sizeBlock {
-    width:20px; height:20px; border:1px solid #000000;
-    text-align:center; cursor:pointer;
-}
-.colorBlock {
-    float:left; margin-right:0.4em;
-}
+
 
 .activeColor {
     border:2px solid #000000;
@@ -112,7 +154,7 @@ body {
 #outlineBox { position:absolute; display:none; z-index:999; border:1px solid #000; }
 #cursorRect {
   display: none; height:10px; width:10px; border:2px solid #111; position:absolute; z-index:100000;
-/*  cursor:none;*/
+
   pointer-events:none;
 }
 
@@ -124,8 +166,8 @@ body {
   font-size:2em;
   padding:0.2em;
 }
-
-/* --- Slider --- */
+*/
+/* --- Slider --- 
 .slide-container {
   width:900px;
   margin:auto;
@@ -157,6 +199,6 @@ body {
 }
 
 .nextButton {
-  /*position:absolute;
-  right:0; top:230px;*/
+
 }
+*/
