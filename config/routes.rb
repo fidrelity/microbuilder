@@ -22,7 +22,7 @@ Playtin::Application.routes.draw do
     end
   end
   
-  get '/gallery(/:type)', :to => 'games#index'
+  get '/gallery/:type', :to => 'games#index'
   get '/play/:id', :to => 'games#show', :as => 'play'
   get '/play/:id/embed', :to => 'games#embed'
   get '/build', :to => 'games#new'
