@@ -1110,7 +1110,7 @@ table .span24 {
     width: 1884px;
 }
 [class^="icon-"], [class*=" icon-"] {
-    background-image: url("../img/glyphicons-halflings.png");
+    background-image: url("bootstrap/glyphicons-halflings.png");
     background-position: 14px 14px;
     background-repeat: no-repeat;
     display: inline-block;
@@ -1122,7 +1122,7 @@ table .span24 {
 [class^="icon-"]:last-child, [class*=" icon-"]:last-child {
 }
 .icon-white {
-    background-image: url("../img/glyphicons-halflings-white.png");
+    background-image: url("bootstrap/glyphicons-halflings-white.png");
 }
 .icon-glass {
     background-position: 0 0;

@@ -3,7 +3,7 @@
     Games
   
   %div{ :class => "row"}
-    %div{ :class => "span8"}
+    %div{ :class => "span7"}
 
       %div{:class=>"btn-group"}
         %button{:class=>"btn"}
@@ -13,9 +13,11 @@
         %button{:class=>"btn"}
           Most played
 
-    %div{ :class => "span4"}
-      %input{:type=>"text", :placeholder => "search", :class => "searchbox"}
-      =image_tag("searchbox.png", :class => "magnifier")
+    %div{ :class =>"span5"}
+      %form{:class=>"form-horizontal"}
+        %input{:type=>"text", :placeholder => "search", :class => "searchbox"}
+        %button{:class=>"btn"}
+          <i class="icon-search"></i> Search
       
   %ul{:class=>"thumbnails"}
     - @games.each do |game|
@@ -23,5 +25,6 @@
         %div{:class => "thumbnail"}
           =link_to image_tag("game.png"), play_path(game)
           %h5
-            ="by #{game.author.display_name}"   
+            =game.title
+          =link_to "by #{game.author.display_name}", user_path(game.author)
           
