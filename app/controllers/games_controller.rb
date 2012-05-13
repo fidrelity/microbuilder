@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  respond_to :js, :only => [:create, :index]
+  respond_to :js, :only => [:create, :index, :update]
   before_filter :authenticate_user!, :only => [:create, :destroy]
   
   def index
@@ -11,7 +11,7 @@ class GamesController < ApplicationController
   end
   
   def new
-  end
+  end  
   
   def embed
     @game = Game.find(params[:id])
@@ -42,4 +42,13 @@ class GamesController < ApplicationController
     
     redirect_to user_path(@game.author)
   end
+
+  # Game has been played -> update counter
+  def played
+    @game = Game.find(params[:id])
+    counter = @game.played + 1
+    @game.update_attribute(:played, counter)
+    render :nothing => true, :layout => false
+  end
+
 end

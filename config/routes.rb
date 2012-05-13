@@ -15,7 +15,12 @@ Playtin::Application.routes.draw do
       get 'public', :to => 'graphics#public'
     end
   end
-  resources :games, :only => [:create, :destroy]
+
+  resources :games, :only => [:create, :destroy] do
+    member do 
+      put '/played', :to => 'games#played'
+    end
+  end
   
   get '/gallery', :to => 'games#index'
   get '/play/:id', :to => 'games#show', :as => 'play'
