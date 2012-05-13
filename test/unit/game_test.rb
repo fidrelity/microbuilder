@@ -47,11 +47,4 @@ class GameTest < ActiveSupport::TestCase
     assert @invalid_game.valid?
   end
 
-  should "increase played attribute by one" do
-    @valid_game = Factory.build(:game)
-    @valid_game.played += 1
-    assert_equal 1, @valid_game.played
-  end
 end
-
-
