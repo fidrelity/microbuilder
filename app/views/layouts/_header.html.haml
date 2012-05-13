@@ -1,8 +1,8 @@
-%div{ :class => "row"}
-  %ul{:id => "menu", :class => "nav nav-pills span12"}
-    %li{:class => "logo span4", :id =>"logo"}
-      %h1
-        Playtin
+%div{ :class => "row", :id => "header"}
+  %div{:class => "logo span2", :id =>"logo"}
+    %h1
+      Playtin
+  %ul{:id => "menu", :class => "nav nav-pills span10"}
     %li{:class => "home span2", :id =>"home"}
       =link_to 'Home', root_path
     %li{:class => "gallery span2", :id =>"play"}
