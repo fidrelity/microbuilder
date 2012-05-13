@@ -37,4 +37,11 @@ Playtin::Application.configure do
   
   FACEBOOK_ID = '123456'
   FACEBOOK_SECRET = '123456'
+
+  Paperclip.options[:command_path] = '/usr/bin/identify'
 end
+
+PAPERCLIP_OPTIONS = {
+  :url => "/:class/:id/:basename" + ".png",
+  :path => Rails.root.to_s + "public/:class/:id/:basename" + ".png",
+}
