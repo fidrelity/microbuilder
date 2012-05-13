@@ -28,29 +28,26 @@ body {
     /*padding: 10px 10px 10px 10px;*/
 }
 #menu li a:hover {
-    background: none repeat scroll 0 0 #111111;
+    background: repeat scroll 0 0 #111111;
 }
 
 #home {
-    background: none repeat scroll 0 0 #5E8894;
+    background: repeat scroll 0 0 #5E8894;
 }
 #play {
-    background: none repeat scroll 0 0 #BD1723;
+    background: repeat scroll 0 0 #BD1723;
 }
 #build {
-    background: none repeat scroll 0 0 #718B20;
+    background: repeat scroll 0 0 #718B20;
 }
 #help {
-    background: none repeat scroll 0 0 #F3C10A;
+    background: repeat scroll 0 0 #F3C10A;
 }
 #logo {
     margin: 0;
     text-align: center;
 }
-h1 {
-  margin:0;
-  padding:0;
-}
+h1 {  margin:0;  padding:0; }
 
 
 /* EDITOR */
