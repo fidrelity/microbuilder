@@ -1,26 +1,27 @@
-#gallery
+%div{ :class => "row"}
+  %h2
+    Games
+  
+  %div{ :class => "row"}
+    %div{ :class => "span8"}
 
-  .centered_content
-    .label
-      Gallery
+      %div{:class=>"btn-group"}
+        %button{:class=>"btn"}
+          Latest
+        %button{:class=>"btn"}
+          Best rated
+        %button{:class=>"btn"}
+          Most played
+
+    %div{ :class => "span4"}
+      %input{:type=>"text", :placeholder => "search", :class => "searchbox"}
+      =image_tag("searchbox.png", :class => "magnifier")
       
-    %ul{:class => "sortables"}
-      %li
-        newest
-      %li
-        rating
-      %li
-        most played
-    
-    %input{:type=>"text", :placeholder => "search", :class => "searchbox"}
-    =image_tag("searchbox.png", :class => "magnifier")
-    
-    .clear
-    
-    %ul{:class=>"gamelist"}
-      - @games.each do |game|
-        %li{:id => game.id, :class => "game"}
-          = link_to image_tag("game.png"), play_path(game)
-          %span
+  %ul{:class=>"thumbnails"}
+    - @games.each do |game|
+      %li{:class => "span2"}
+        %div{:class => "thumbnail"}
+          =link_to image_tag("game.png"), play_path(game)
+          %h5
+            ="by #{game.author.display_name}"   
           
-          = "by #{game.author.display_name}"
