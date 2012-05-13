@@ -3,15 +3,19 @@ class GamesController < ApplicationController
   before_filter :authenticate_user!, :only => [:create, :destroy]
   
   def index
-    @games = Game.all
+    @games = case params[:type]
+      when "rating"
+        Game.all_by_rating
+      when "played"
+        Game.all_by_played
+      else
+        Game.all_latest
+      end
   end
   
   def show
     @game = Game.find(params[:id])
   end
-  
-  def new
-  end  
   
   def embed
     @game = Game.find(params[:id])

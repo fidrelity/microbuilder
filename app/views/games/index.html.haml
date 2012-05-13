@@ -1,0 +1,26 @@
+#gallery
+
+  .centered_content
+    .label
+      Gallery
+      
+    %ul{:class => "sortables"}
+      %li
+        newest
+      %li
+        rating
+      %li
+        most played
+    
+    %input{:type=>"text", :placeholder => "search", :class => "searchbox"}
+    =image_tag("searchbox.png", :class => "magnifier")
+    
+    .clear
+    
+    %ul{:class=>"gamelist"}
+      - @games.each do |game|
+        %li{:id => game.id, :class => "game"}
+          = link_to image_tag("game.png"), play_path(game)
+          %span
+          
+          = "by #{game.author.display_name}"
