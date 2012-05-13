@@ -9,6 +9,7 @@
 		=javascript_include_tag "application"
 		=csrf_meta_tags
 	%body{:onorientationchange => "orientationChanged()"}
-		=render :partial => "layouts/header"
-		=yield
-		=render :partial => "layouts/footer"
+		%div{:class => "container"}
+			=render :partial => "layouts/header"
+			=yield
+			=render :partial => "layouts/footer"

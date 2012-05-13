@@ -19,7 +19,7 @@
 
 
 function application_main() {
-    
+    /*
     // Dirty hack for ipad scroll-disabling
     $(document).bind('touchmove', false);
     
@@ -70,12 +70,12 @@ function application_main() {
         /* minimizeSection();
         $('#pages .about').stop().animate({top: '0px'}, 250, function() {
             $(this).attr('active', 1)
-        }); */
+        }); 
         minimizeSection();
     });
-    
+    */
 };
-
+/*
 function placeNav(height, width) {
     $('#nav_top').css({left: width/2-90});
     $('#nav_bottom').css({left: width/2-90});
@@ -134,3 +134,4 @@ function orientationChanged() {
 function isiPad(){
     return (navigator.platform.indexOf("iPad") != -1);
 }
+*/

@@ -1,20 +1,28 @@
-#pages
-  .home
-    =render :partial => "home"
+%div{ :class => "hero-unit", :style => "background:#222;color:#FFF;clear:both;"}
+  %h2
+    Play and Build Microgames*
+  %p
+    Ever wanted to build your own games and share it with your friends? Here you can! Paint you own graphics, make your game and release it!
+    All you need is your browser and imagination!
   
-  .editor
-    #editor
-      #content
+  %p
+    %a{ :href => "#", :class => "btn btn-primary btn-large"}
+      Start building now
+  %small* no programming skills required.
 
-  .profile
-    .centered_content
-      #profile
+%div{ :class => "row"}
+  %div{ :class => "span8"}    
+    %h2
+      Latest games:
 
-  .gallery
-    #gallery
-  
-  .about
-    about
+    %ul{:class => "thumbnails"}
+      - @games.each do |game|
+        %li{:id => game.id, :class => "span2"}
+          %div{:class => "thumbnail"}
+            = link_to image_tag("game.png"), play_path(game)
+            %h5
+              = "by #{game.author.display_name}"
 
-:javascript
-  $(document).ready( function() { editor_main(); player_main(); application_main(); } );
+  %div{ :class => "span4"}
+    %h2
+      Login:      

@@ -1,240 +1,64 @@
 $bg: #fff;
 $font: #000;
 
-html, body {
-    margin: 0px;
-    padding: 0px;
-    border: none;
-    text-decoration:none;
+body {    
     font-family: 'Arimo', sans-serif;
+    /*background:url('/assets/bg2.jpg') no-repeat center center fixed;*/
 }
 
-body {
-    height:100%;
-    width:100%;
+#menu {
+  margin-top:2em;
 }
 
-canvas {
-  z-index:100;
+#menu li {
+    border-radius: 7px 7px 7px 7px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+#menu li img {
+    display: inline;
+    margin-bottom: 8px;
+}
+#menu li:hover {
+    background: none repeat scroll 0 0 #111111;
+}
+#menu li a, #menu li a:visited {
+    color: #FFFFFF;
+    /*padding: 10px 10px 10px 10px;*/
+}
+#menu li a:hover {
+    background: none repeat scroll 0 0 #111111;
 }
 
-* {
-    margin: 0px;
-    padding: 0px;
+#home {
+    background: none repeat scroll 0 0 #5E8894;
 }
-
-.clear {
-   clear:both;
+#play {
+    background: none repeat scroll 0 0 #BD1723;
 }
-
+#build {
+    background: none repeat scroll 0 0 #718B20;
+}
+#help {
+    background: none repeat scroll 0 0 #F3C10A;
+}
+#logo {
+    margin: 0;
+    text-align: center;
+}
 h1 {
-   
+  margin:0;
+  padding:0;
 }
 
-h2 {
-   font-size:20px;
-   text-decoration:none;
-   padding: 17px 0;
-}
-
-ul#nav {
-    list-style:none;
-    z-index: 2;
-}
-
-ul#nav li {
-    position:absolute;
-/*    overflow:hidden;*/
-    z-index:2;
-    display:block;
-    width:45px;
-    height:80px;
-    -webkit-box-shadow: 1px 1px 8px 2px rgba(00, 00, 00, 0.5);
-    -moz-box-shadow: 1px 1px 8px 2px rgba(00, 00, 00, 0.5);
-    box-shadow: 1px 1px 8px 2px rgba(00, 00, 00, 0.5);
-}
-
-ul#nav li img {
-    
-}
-
-ul#nav li#nav_left {
-    position:absolute;
-    left:0px;
-    background:#00CABD;
-}
-
-ul#nav li#nav_right {
-    position:absolute;
-    right:0px;
-}
-
-ul#nav li#nav_top {
-    position:absolute;
-    top:0px;
-    width:80px;
-    height:45px;
-    background:#439AAB;
-}
-
-ul#nav li#nav_bottom {
-    position:absolute;
-    bottom:0px;
-    width:80px;
-    height:45px;
-    background:#A1716C;
-}
-
-ul#nav .popout {
-  position:absolute;
-  width:500px;
-  right:-500px;
-  z-index:2;
-  height:200px;
-}
-
-#pages {
-    position:absolute;
-    top:0px;
-    left:0px;
-    width:100%;
-    height:100%;
-/*    overflow:hidden;*/
-    background: #f1f1f1;
-    background:url('/assets/bg2.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
-#pages div {
-    position:absolute;
-}
-
-#pages div div {
-    position:relative;
-}
-
-#pages .centered_content {
-   width:1050px;
-   height:500px;
-   margin: 0 auto;
-   background: #FFF;
-}
-
-#pages .home {
-    
-}
-
-#pages .profile {
-    
-}
-
-#pages .profile #profileimage {
-   width:225px;
-   height:225px;
-}
-
-#pages .profile #info {
-   float:left;
-   height:605px;
-   width:225px;
-   background:#fff;
-}
-
-#pages .profile #info .info {
-   padding:20px 0 0 13px;
-   font-size: 18px;
-}
-
-#pages .profile #info .info span {
-   color:#464646;
-}
-
-#pages .profile #collection {
-   position:absolute;
-   left: 239px;
-   width:797px;
-   height:492px;
-}
-
-#pages .profile #collection .container {
-   width:795px;
-   height:236px;
-   background:#fff;
-/*   overflow:hidden;*/
-   margin: 0 0 22px 0;
-}
-
-#pages .profile #collection .container .left {
-   float:left;
-   width: 28px;
-   height:236px;
-}
-
-#pages .profile #collection .container .right {
-   width: 30px;
-   height:236px;
-   float:right;
-}
-
-#pages .games {
-   float:left;
-   overflow-y:scroll;
-   list-style-type:none;
-   white-space: nowrap;
-   width:auto;
-   left:20px;
-   width:704px;
-}
-
-#pages .game {
-   display:inline;
-   margin: 0 8px 0 0;
-   width:167px;
-   height:167px;
-}
-
-#pages .game a {
-   color:#000;
-   font-size:14px;
-   text-decoration:none;
-   text-transform:uppercase;
-}
-
-#pages .game .info {
-   position:absolute;
-   bottom: 0px;
-   background:#ededed;
-   height:20px;
-   width:158px;
-   padding:10px 0 0 10px;
-}
-
-#pages .game .edit {
-   position:absolute;
-   top:0px;
-   right:0px;
-   height:30px;
-   width:30px;
-}
-
-#pages .editor {
-}
-
-#pages .gallery {
-}
-
-#pages .about {
-}
 
 /* EDITOR */
 /* ---------------------------------- */
 
 #editor .editor_content {
    top:100px;
-   width:1034px;
+   /*width:1034px;*/
    margin: 0 auto;
    z-index:3;
 }
