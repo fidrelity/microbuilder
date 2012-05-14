@@ -5,12 +5,21 @@
 
   %div{:class=>"span6"}
     %h2=@game.title
-    ="by #{@game.author.display_name}"
+    =link_to "by #{@game.author.display_name}", user_path(@game.author)
     %canvas{:id => "playerCanvas", :width => 640, :height => 390}
   
     %textarea{:cols =>"150", :rows =>"1", :class=>"span6"}
       <iframe width="640" height="390" src="#{root_url}play/#{@game.id}/embed" frameborder="0"></iframe>
 
+    %div{:class=>"btn-group"}
+      %button{:class=>"btn"}
+        <i class="icon-retweet"></i> Share
+      %button{:class=>"btn"}
+        <i class="icon-flag"></i> Report
+      %button{:class=>"btn"}
+        <i class="icon-plus-sign"></i> Like
+      %button{:class=>"btn"}
+        <i class="icon-minus-sign"></i> Dislike
 
 :javascript
   $(document).ready( function() {
