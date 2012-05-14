@@ -6,12 +6,9 @@
     %div{ :class => "span7"}
 
       %div{:class=>"btn-group"}
-        %button{:class=>"btn"}
-          Latest
-        %button{:class=>"btn"}
-          Best rated
-        %button{:class=>"btn"}
-          Most played
+        =link_to "Latest", gallery_path, { :class => 'btn'}
+        =link_to "Rating", gallery_path({:type => "rating"}), { :class => 'btn'}
+        =link_to "Most played", gallery_path({:type => "played"}), { :class => 'btn'}
 
     %div{ :class =>"span5"}
       %form{:class=>"form-horizontal"}
