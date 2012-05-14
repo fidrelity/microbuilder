@@ -55,4 +55,18 @@ class GamesController < ApplicationController
     render :nothing => true, :layout => false
   end
 
+  def like
+    @game = Game.find(params[:id])
+    counter = @game.likes + 1
+    @game.update_attribute(:likes, counter)
+    render :nothing => true, :layout => false
+  end
+
+  def dislike
+    @game = Game.find(params[:id])
+    counter = @game.dislikes + 1
+    @game.update_attribute(:dislikes, counter)
+    render :nothing => true, :layout => false
+  end
+
 end

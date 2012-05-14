@@ -16,13 +16,17 @@
         <i class="icon-retweet"></i> Share
       %button{:class=>"btn"}
         <i class="icon-flag"></i> Report
-      %button{:class=>"btn"}
+      %button{:class=>"btn likeButton", "data-id" => @game.id}
         <i class="icon-plus-sign"></i> Like
-      %button{:class=>"btn"}
-        <i class="icon-minus-sign"></i> Dislike
+        %span{:class=>"likeValue"}
+          =@game.likes
+      %button{:class=>"btn likeButton dislikeButton", "data-id" => @game.id}
+        <i class="icon-minus-sign"></i> Dislike 
+        %span{:class=>"dislikeValue"}
+          =@game.dislikes
 
 :javascript
   $(document).ready( function() {
-    player_main( #{@game.data} ); 
+    player_main( #{@game.data} );
   });
   

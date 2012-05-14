@@ -18,6 +18,34 @@
 //= require_tree .
 
 
+var setLikeButtons = function() {
+  $('.likeButton').addClass("disabled").attr("disabled", "disabled");
+};
+
+var do_like = function(_isDislike, _id) {
+  if(!_id) return false;
+  var path = _isDislike ? 'dislike' : 'like';
+
+  $.ajax({
+    url : '/games/' + _id + '/' + path,
+    type : 'PUT',
+    success : function() {        
+      var newVal = parseInt($('.' + path + 'Value').html()) + 1;
+      $('.' + path + 'Value').html(newVal);
+      setLikeButtons();
+    }
+  });
+};
+
+$(document).ready(function() {
+
+  $('.likeButton').click(function() {
+    if($(this).hasClass('disabled')) return false;
+    do_like($(this).hasClass("dislikeButton"), $(this).attr("data-id"));
+  });
+
+});
+
 function application_main() {
     /*
     // Dirty hack for ipad scroll-disabling
