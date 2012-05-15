@@ -22,8 +22,8 @@ class GamesControllerTest < ActionController::TestCase
     @game = Factory.build(:game, :id => 1, :title => "mygame", :user_id => 1, :likes => 0)
     @game.save
     put :like, :id => 1
-    assert_response 200
-    assert_equal 1, @game.reload.likes
+    put :like, :id => 1
+    assert_equal 2, @game.reload.likes
   end
 
 end
