@@ -3,7 +3,7 @@ class GameCommentsController < ApplicationController
   
   def create
     @comment = GameComment.new(params[:game_comment])
-    @comment.save  
+    @comment.save
   end
   
   def destroy
