@@ -6,6 +6,7 @@
 development:
   adapter: postgresql
   username: root
+  password: pw
   database: microbuilder_dev
   password: pw
   pool: 5
