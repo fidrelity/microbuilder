@@ -28,6 +28,22 @@
       %div{:class => "progress progress-success", :style => "background:#FF0000;"}
         %div{:class => "bar", :style => "width:#{@game.likes}%;"}
 
+%div{:class=>"row"}
+  %h2
+    Comments:
+
+  =form_for @game.game_comments.build, :url => comment_game_path do |t|
+    =t.hidden_field :game_id, :value => @game.id
+    =t.label :comment
+    =t.text_area :comment, :id => "formComment", :cols => 60, :rows => 5 
+    =t.submit "Save", :class => "btn"
+
+
+  - @comments.each do |comment|
+    %div{:class=>"row"}
+      =comment.comment
+      =comment.created_at
+
 :javascript
   $(document).ready( function() {
     player_main( #{@game.data} );
