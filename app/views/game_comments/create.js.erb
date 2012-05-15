@@ -1,0 +1,8 @@
+var comment = "<%= @comment.comment %>" + "<br><%= @comment.created_at %>";
+
+var clone = $("#tempComment").clone().removeAttr("id");
+clone.find(".span1").html("Author");
+clone.find(".span6").html(comment);
+clone.prependTo("#commentsWrapper").fadeIn(1000);
+
+$("#formComment").val("");
