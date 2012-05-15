@@ -20,9 +20,9 @@ ActiveRecord::Schema.define(:version => 20120513112028) do
     t.integer  "user_id"
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
-    t.integer  "played",      :default => 0
     t.integer  "likes",       :default => 0
     t.integer  "dislikes",    :default => 0
+    t.integer  "played",      :default => 0
   end
 
   create_table "games_graphics", :id => false, :force => true do |t|
