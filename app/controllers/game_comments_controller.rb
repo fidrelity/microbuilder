@@ -1,13 +1,15 @@
 class GameCommentsController < ApplicationController
-  #respond_to :js, :only => [:create, :index, :update]
+  respond_to :js, :only => [:create]
   
   def create
     @comment = GameComment.new(params[:game_comment])
     @comment.save    
 
-    redirect_to play_path(params[:game_comment][:game_id])
-
-    #render :json => response, :status => status
+    #render :json => {:data => @comment, :status => 200}
+    #response, status = [add_comment(@comment), 200]
+    #render :json => @comment, :status => 200
+    
+    #redirect_to play_path(params[:game_comment][:game_id])    
   end
   
   def destroy

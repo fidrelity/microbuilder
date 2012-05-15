@@ -18,6 +18,11 @@
 //= require_tree .
 
 
+var add_comment = function(_data) {
+    console.log(_data);
+}
+
+
 var setLikeButtons = function() {
   $('.likeButton').addClass("disabled").attr("disabled", "disabled");
 };

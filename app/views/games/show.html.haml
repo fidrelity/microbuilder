@@ -32,21 +32,26 @@
   %h2
     Comments:
 
-  =form_for @game.game_comments.build, :url => comment_game_path, :html => {:class => "form-vertical well"} do |t|
+  =form_for @game.game_comments.build, :url => comment_game_path, :html => {:class => "form-vertical well"}, :remote => true do |t|
     =t.hidden_field :game_id, :value => @game.id
     =t.label :comment
     =t.text_area :comment, :id => "formComment", :cols => 120, :rows => 2, :class => "span6"
     =t.submit "Save", :class => "btn btn-large"
 
-
-  -@comments.each do |comment|
-    %div{:class=>"row comment"}
-      %div{:class=>"span1"}
-        Author
+  %div{:class=>"row", :id => "commentsWrapper"}
+    %div{:class=>"row comment", :id => "tempComment", :style=>"display:none"}
+      %div{:class=>"span1"}      
       %div{:class=>"span6"}
-        =comment.comment
-        %br
-        =comment.created_at
+
+  
+    -@comments.each do |comment|
+      %div{:class=>"row comment"}
+        %div{:class=>"span1"}
+          Author
+        %div{:class=>"span6"}
+          =comment.comment
+          %br
+          =comment.created_at
 
 :javascript
   $(document).ready( function() {
