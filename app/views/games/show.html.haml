@@ -28,9 +28,11 @@
       %div{:class => "progress progress-success", :style => "background:#FF0000;"}
         %div{:class => "bar", :style => "width:#{@game.likes}%;"}
 
-%div{:class=>"row"}
+%div{:class=>"row", :style => "margin-top:2em"}
   %h2
-    Comments:
+    Comments (
+    =@comments.size
+    ):
 
   =form_for @game.game_comments.build, :url => comment_game_path, :html => {:class => "form-vertical well"}, :remote => true do |t|
     =t.hidden_field :game_id, :value => @game.id
@@ -38,7 +40,9 @@
     =t.text_area :comment, :id => "formComment", :cols => 120, :rows => 2, :class => "span6"
     =t.submit "Save", :class => "btn btn-large"
 
+
   %div{:class=>"row", :id => "commentsWrapper"}
+
     %div{:class=>"row comment", :id => "tempComment", :style=>"display:none"}
       %div{:class=>"span1"}      
       %div{:class=>"span6"}
