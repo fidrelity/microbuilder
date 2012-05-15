@@ -56,8 +56,6 @@ var SpriteModel = Ember.Object.extend({
 
   reset : function() {
     this.states = [];
-<<<<<<< HEAD
-=======
     this.clear();
   },
 
@@ -67,7 +65,6 @@ var SpriteModel = Ember.Object.extend({
 
   erase : function(_x, _y, _size) {
     this.context.clearRect(_x, _y, _size, _size);
->>>>>>> Refactored paint controller
   },
 
   flipV: function() {

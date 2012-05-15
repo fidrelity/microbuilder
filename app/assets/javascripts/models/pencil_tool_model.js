@@ -4,12 +4,11 @@ var PencilToolModel = Ember.Object.extend({
   oldX : 0,
   oldY : 0,
   isActive : false,
+  pixelDrawer : null,
+  isErasing : false,
   
   init : function () {
     
-    pixelDrawer : null,
-    isErasing : false,
-
   },
   
   click : function(toolModel) {
@@ -42,6 +41,6 @@ var PencilToolModel = Ember.Object.extend({
     // Update ZoomCanvas
     App.paintController.clearZoomCanvas();
     App.paintController.zoomImageData(this.pixelDrawer.context.getImageData(0, 0, this.pixelDrawer.canvas.width, this.pixelDrawer.canvas.height));    
-  },
+  }
 
 });
