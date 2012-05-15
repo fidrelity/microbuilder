@@ -3,5 +3,5 @@ class GameComment < ActiveRecord::Base
   belongs_to :user, :class_name => 'User', :foreign_key => 'user_id'
 
   validates_presence_of :comment, :game_id
-  scope :all_latest, order("created_at DESC")
+  default_scope :order => 'created_at DESC'
 end
