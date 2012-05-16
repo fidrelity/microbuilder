@@ -1,9 +1,11 @@
 class GameCommentsController < ApplicationController
   respond_to :js, :only => [:create]
+  before_filter :authenticate_user!, :only => [:create, :destroy]
   
   def create
-    @comment = GameComment.new(params[:game_comment])
-    @comment.save
+    comment = GameComment.create(params[:game_comment])
+    @comments = comment.game.game_comments
+    @game = comment.game
   end
   
   def destroy

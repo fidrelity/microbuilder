@@ -11,10 +11,9 @@
         =link_to "Most played", gallery_path({:type => "played"}), { :class => 'btn'}
 
     %div{ :class =>"span5"}
-      %form{:class=>"form-horizontal"}
-        %input{:type=>"text", :placeholder => "search", :class => "searchbox"}
-        %button{:class=>"btn"}
-          <i class="icon-search"></i> Search
+      = form_tag search_games_path, :method => 'get', :class=>"form-horizontal" do
+        = text_field_tag "query", "", :class => "searchbox"
+        = submit_tag "search", :class => "btn"
       
   %ul{:class=>"thumbnails"}
     - @games.each do |game|
@@ -24,4 +23,3 @@
           %h5
             =game.title
           =link_to "by #{game.author.display_name}", user_path(game.author)
-          

@@ -1,7 +1,9 @@
 class Game < ActiveRecord::Base
+  include PgSearch
+  
   belongs_to :author, :class_name => 'User', :foreign_key => 'user_id'
   has_and_belongs_to_many :graphics
-  has_many :game_comments
+  has_many :game_comments, :dependent => :destroy
   
   before_destroy :destroy_unreferenced_graphics
   before_create :check_graphics
@@ -11,7 +13,8 @@ class Game < ActiveRecord::Base
   
   scope :all_by_played, order("played DESC")
   scope :all_latest, order("created_at DESC")
-    
+  pg_search_scope :search, :against => [:title, :instruction]
+  
   class << self
     def all_by_rating
       query = <<-eos

@@ -36,6 +36,11 @@ class GamesController < ApplicationController
     render :json => response, :status => status
   end
   
+  def search
+    @games = Game.search(params[:query])
+    render 'index'
+  end
+  
   def destroy
     @game = Game.find(params[:id])
     if @game.author == current_user

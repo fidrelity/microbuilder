@@ -17,11 +17,15 @@ Playtin::Application.routes.draw do
   end
 
   resources :games, :only => [:create, :destroy] do
-    member do 
+    member do
       put '/played', :to => 'games#played'
       put '/like', :to => 'games#like'
       put '/dislike', :to => 'games#dislike'
       post '/comment', :to => 'gameComments#create'
+    end
+    
+    collection do 
+      get 'search', :to => 'games#search', :as => 'search'
     end
   end
   
