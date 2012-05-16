@@ -31,6 +31,7 @@
     %div{:class=>"row", :style => "margin-top:2em", :id => "commentsWrapper"}
       = render :partial => 'comments', :locals => {:comments => @comments, :game => @game}
 
+
 :javascript
   $(document).ready( function() {
     player_main( #{@game.data} );

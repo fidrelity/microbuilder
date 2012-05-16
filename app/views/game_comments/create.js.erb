@@ -8,5 +8,7 @@ if(comment) {
   clone.find(".span6").html(comment + date);
   clone.prependTo("#commentsWrapper").fadeIn(1000);
 
+  $(".commentsCount").html($(".comment").not("#tempComment").length -1);
+
   $("#formComment").val("");
 }
