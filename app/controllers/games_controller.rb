@@ -70,4 +70,9 @@ class GamesController < ApplicationController
     render :nothing => true, :layout => false
   end
 
+  def report
+    @game = Game.find(params[:id])
+    render :nothing => true, :layout => false
+  end
+
 end

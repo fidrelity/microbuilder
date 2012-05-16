@@ -51,7 +51,7 @@
     -@comments.each do |comment|
       %div{:class=>"row comment"}
         %div{:class=>"span1"}
-          Author
+          =link_to "Author", user_path()
         %div{:class=>"span6"}
           =comment.comment
           %br
