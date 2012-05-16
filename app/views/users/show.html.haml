@@ -18,6 +18,14 @@
             = link_to image_tag("game.png"), play_path(game)
             %h5
               =link_to(game.title, play_path(game))            
+            %i{:class => "icon-comment"}
+            =game.game_comments.size
+            %i{:class => "icon-eye-open"}
+            =game.played
+            %i{:class => "icon-thumbs-up"}
+            =game.likes
+            %i{:class => "icon-thumbs-down"}
+            =game.dislikes
             =link_to image_tag("edit.png"), '#'
 
 
