@@ -29,6 +29,7 @@ Playtin::Application.routes.draw do
     end
   end
   
+  get '/imprint', :to => 'pages#imprint'
   get '/gallery(/:type)', :to => 'games#index', :as => 'gallery'
   get '/play/:id', :to => 'games#show', :as => 'play'
   get '/play/:id/embed', :to => 'games#embed'

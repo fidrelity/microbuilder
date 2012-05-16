@@ -5,4 +5,7 @@ class PagesController < ApplicationController
 
   def editor
   end
+
+  def imprint
+  end
 end
