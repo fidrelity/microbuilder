@@ -26,7 +26,7 @@
           =@game.dislikes
 
       %div{:class => "progress progress-success", :style => "background:#FF0000;"}
-        %div{:class => "bar", :style => "width:#{@game.likes}%;"}
+        %div{:class => "bar", :style => "width:#{@game.rating * 100}%;"}
 
     %div{:class=>"row", :style => "margin-top:2em", :id => "commentsWrapper"}
       = render :partial => 'comments', :locals => {:comments => @comments, :game => @game}
