@@ -22,3 +22,19 @@
       =flash[:notice]
       =flash[:alert]
       =flash[:error]
+
+%div{:id => "feedback", :class => "well"}
+  %h3
+    Help us to improve Playtin!
+  %div{:id => "feedbackContent", :class => "control-group"}
+    %label
+      Your comment:
+    %textarea{:cols=>"60", :rows=>"4", :class => "span6", :id => "feedbackBody"}
+    %br
+    %button{:class => "btn btn-success sendFeedback"}
+      Send feedback
+    %button{:class => "btn closeFeedback"}
+      Cancel
+
+%div{:id=>"feedbackSideButton", :class=>"showFeedback"}
+  Feedback

@@ -17,6 +17,49 @@
 //= require_tree ./templates
 //= require_tree .
 
+var Feedback = {
+
+  wrapper : null,
+  textarea : null,
+
+  init : function() {
+    Feedback.wrapper = $("#feedback");
+    $('.showFeedback').click(function() { Feedback.show(); });
+    $('.closeFeedback').click(function() { Feedback.close(); });
+    $('.sendFeedback').click(function() { Feedback.send(); });
+    Feedback.textarea = Feedback.wrapper.find("#feedbackBody");
+  },
+
+  show : function() {
+    if(Feedback.wrapper.is(":visible")) {
+      Feedback.close();
+    } else {
+      var newX = ($(document).width() / 2) - (Feedback.wrapper.width() / 2);
+      var newY = 200;
+      Feedback.wrapper.css({left: newX, top: newY}).fadeIn(800);
+      Feedback.textarea.focus();
+    }
+  },
+
+  close : function(_time) {
+    var _time = _time || 0;
+    Feedback.textarea.val("");
+    Feedback.wrapper.hide(_time);
+    Feedback.textarea.removeClass("errorForm");
+  },
+
+  send : function() {    
+    var text = Feedback.textarea.val();
+    if(!text) {
+      Feedback.textarea.addClass("errorForm");
+      return false;
+    }    
+    Feedback.close(500);
+  }
+};
+
+
+
 var setLikeButtons = function() {
   $('.likeButton').addClass("disabled").attr("disabled", "disabled");
 };
@@ -47,6 +90,8 @@ $(document).ready(function() {
       source: "/games/auto_search",
       minLength: 2
   });
+
+  Feedback.init();
 
 });
 
