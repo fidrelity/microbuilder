@@ -28,34 +28,8 @@
       %div{:class => "progress progress-success", :style => "background:#FF0000;"}
         %div{:class => "bar", :style => "width:#{@game.likes}%;"}
 
-%div{:class=>"row", :style => "margin-top:2em"}
-  %h2
-    Comments (
-    =@comments.size
-    ):
-
-  =form_for @game.game_comments.build, :url => comment_game_path, :html => {:class => "form-vertical well"}, :remote => true do |t|
-    =t.hidden_field :game_id, :value => @game.id
-    =t.label :comment
-    =t.text_area :comment, :id => "formComment", :cols => 120, :rows => 2, :class => "span6"
-    =t.submit "Save", :class => "btn btn-large"
-
-
-  %div{:class=>"", :id => "commentsWrapper"}
-
-    %div{:class=>"row comment", :id => "tempComment"}
-      %div{:class=>"span1"}      
-      %div{:class=>"span6"}
-
-  
-    -@comments.each do |comment|
-      %div{:class=>"row comment"}
-        %div{:class=>"span1"}
-          Author
-        %div{:class=>"span6"}
-          =comment.comment
-          %br
-          =comment.created_at
+%div{:class=>"row", :style => "margin-top:2em", :id => "commentsWrapper"}
+  = render :partial => 'comments', :locals => {:comments => @comments, :game => @game}
 
 :javascript
   $(document).ready( function() {

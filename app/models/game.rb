@@ -3,7 +3,7 @@ class Game < ActiveRecord::Base
   
   belongs_to :author, :class_name => 'User', :foreign_key => 'user_id'
   has_and_belongs_to_many :graphics
-  has_many :game_comments
+  has_many :game_comments, :dependent => :destroy
   
   before_destroy :destroy_unreferenced_graphics
   before_create :check_graphics
