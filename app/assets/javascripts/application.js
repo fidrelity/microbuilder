@@ -55,6 +55,7 @@ var Feedback = {
       return false;
     }    
     Feedback.close(500);
+    $("#feedbackSideButton").fadeOut(800).html("T<br>h<br>a<br>n<br>k<br>s").addClass("alert").addClass("alert-success").fadeIn(400);
   }
 };
 
