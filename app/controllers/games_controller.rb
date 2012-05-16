@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   respond_to :js, :only => [:create, :index, :update]
   before_filter :authenticate_user!, :only => [:create, :destroy]
+  autocomplete :game, :title
   
   def index
     @games = case params[:type]
@@ -78,6 +79,13 @@ class GamesController < ApplicationController
   def report
     @game = Game.find(params[:id])
     render :nothing => true, :layout => false
+  end
+
+  def auto_search
+    #@games = Game.search(params[:term])
+    #render :json => @games.title
+    @games = Game.order(:title).where("title like ?", "%#{params[:term]}%")
+    render json: @games.map(&:title)
   end
 
 end

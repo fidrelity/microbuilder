@@ -43,6 +43,11 @@ $(document).ready(function() {
     do_like($(this).hasClass("dislikeButton"), $(this).attr("data-id"));
   });
 
+  $( ".searchbox" ).autocomplete({
+      source: "/games/auto_search",
+      minLength: 2
+  });
+
 });
 
 function application_main() {
