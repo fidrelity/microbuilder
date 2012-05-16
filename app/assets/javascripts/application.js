@@ -48,26 +48,25 @@ var Feedback = {
     Feedback.textarea.removeClass("errorForm");
   },
 
-  send : function() {    
+  send : function() {
     var text = Feedback.textarea.val();
     if(!text) {
       Feedback.textarea.addClass("errorForm");
       return false;
     }    
-    Feedback.close(500);
     /*
       $.ajax({
         url : '/feedback'
-        type: 'POST',
+        type: 'post',
         data : { comment : text },
         success : function( data ) {   
           $("#feedbackSideButton").fadeOut(800).html("T<br>h<br>a<br>n<br>k<br>s").addClass("alert").addClass("alert-success").fadeIn(400);      
         }
       });
     */    
+    Feedback.close(500);
   }
 };
-
 
 
 var setLikeButtons = function() {
