@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(:version => 20120515173302) do
     t.integer  "user_id"
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
-    t.integer  "played",      :default => 0
     t.integer  "likes",       :default => 0
     t.integer  "dislikes",    :default => 0
+    t.integer  "played",      :default => 0
   end
 
   create_table "games_graphics", :id => false, :force => true do |t|
@@ -55,6 +55,14 @@ ActiveRecord::Schema.define(:version => 20120515173302) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.string   "name"
+  end
+
+  create_table "pg_search_documents", :force => true do |t|
+    t.text     "content"
+    t.integer  "searchable_id"
+    t.string   "searchable_type"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "users", :force => true do |t|
