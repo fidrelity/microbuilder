@@ -1,4 +1,5 @@
 =link_to 'Imprint', imprint_path
+=link_to('Logout', destroy_user_session_path, :method => :delete)
 %div{ :class => "row", :id => "header"}
   %div{:class => "logo span3", :id =>"logo"}
     %h1
