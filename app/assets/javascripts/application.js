@@ -120,6 +120,11 @@ $(document).ready(function() {
     toggleLayer($('#embedLayer'));   
   });
 
+  /* Report Button */
+  $('.reportButton').click(function() {
+    toggleLayer($('#reportLayer'));   
+  });
+
   // Close layers
   $('.closeLayer').click(function() {
     $('.layer').hide();
