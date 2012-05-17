@@ -53,7 +53,7 @@ class GamesController < ApplicationController
     redirect_to user_path(@game.author)
   end
 
-  # Game has been played -> update counter
+  # ------------------
   def played
     @game = Game.find(params[:id])
     counter = @game.played + 1
@@ -80,9 +80,8 @@ class GamesController < ApplicationController
     render :nothing => true, :layout => false
   end
 
+  # ------------------
   def auto_search
-    #@games = Game.search(params[:term])
-    #render :json => @games.title
     @games = Game.order(:title).where("title like ?", "%#{params[:term]}%")
     render json: @games.map(&:title)
   end

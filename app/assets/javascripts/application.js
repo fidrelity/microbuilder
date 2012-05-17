@@ -83,7 +83,7 @@ var do_like = function(_isDislike, _id) {
     success : function() {        
       var newVal = parseInt($('.' + path + 'Value').html()) + 1;
       $('.' + path + 'Value').html(newVal);
-      setLikeButtons();
+      deactivateLikeButtons();
     }
   });
 };
