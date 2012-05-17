@@ -104,10 +104,13 @@ $(document).ready(function() {
 
   // ---------------------------------------
   /* Game View Buttons */
-  function toggleLayer(_layer) {
-    $('.layer').hide();
-    if(!_layer.is(':visible'))
+  function toggleLayer(_layer) {    
+    if(!_layer.is(':visible')) {
+      $('.layer').hide();
       _layer.show();    
+    } else {
+      $('.layer').hide();
+    }
   }
 
   /* Share Button */
