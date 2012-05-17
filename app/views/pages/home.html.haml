@@ -15,29 +15,26 @@
     %h2
       Latest games:
 
-    %ul{:class => "thumbnails"}
-      - @games.each do |game|
-        %li{:id => game.id, :class => "span2"}
-          %div{:class => "thumbnail"}
-            = link_to image_tag("game.png"), play_path(game)
-            %h5
-              =link_to "by #{game.author.display_name}", user_path(game.author)
+    = render :partial => 'games/list_games', :locals => {:games => @games}
 
   %div{ :class => "span4"}
-    %h2
-      Login:
+    - if !user_signed_in?
+      %h2
+        Login:
 
-    %div{ :class => "well"}
+      %div{ :class => "well"}
+        = form_tag user_session_path do
+          %label
+            E-Mail:
+          = text_field_tag 'user[email]', '', :class=>"span3"
+          %label
+            Password:
+          = password_field_tag 'user[password]'
+          %p
+            = check_box_tag 'user[remember_me]'
+            = label_tag 'user[remember_me]', 'Remember me'
+          %button{:class=>"btn"}
+            Sign in
+          = link_to "Forgot your password?", new_password_path('user')
 
-      %label
-        E-Mail
-      %input{ :type=>"text", :class=>"span3", :placeholder=>"E-Mail" }
-
-      %label
-        Password
-      %input{ :type=>"password", :class=>"span3", :placeholder=>"Password" }
-
-      %button{:type=>"submit", :class=>"btn"}
-        Login
-
-      =link_to 'Facebook Login', user_omniauth_authorize_path(:facebook), :class=>"btn btn-primary"
+          =link_to 'Facebook Login', user_omniauth_authorize_path(:facebook), :class=>"btn btn-primary"

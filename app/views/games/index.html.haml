@@ -15,18 +15,4 @@
         = text_field_tag "query", "", :class => "searchbox"
         = submit_tag "search", :class => "btn"
       
-  %ul{:class=>"thumbnails"}
-    - @games.each do |game|
-      %li{:class => "span2"}
-        %div{:class => "thumbnail"}
-          =link_to image_tag("game.png"), play_path(game)
-          %h5
-            =game.title
-          =link_to "by #{game.author.display_name}", user_path(game.author)
-          %br
-          %i{:class => "icon-eye-open"}
-          =game.played
-          %i{:class => "icon-thumbs-up"}
-          =game.likes
-          %i{:class => "icon-thumbs-down"}
-          =game.dislikes
+    = render :partial => 'list_games', :locals => {:games => @games}
