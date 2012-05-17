@@ -35,7 +35,8 @@
         %a{:class=>"close closeLayer"}
           &times;
         %h4 Share this game on:
-        Facebook Twitter G+
+        %div{:id=>"fb-root"}
+        %div{:class=>"fb-like", "data-href"=>"#{root_url}play/#{@game.id}/embed", "data-send"=>"false", "data-layout"=>"button_count", "data-width"=>"50", "data-show-faces"=>"false"}
 
       %div{:class => "well layer", :id => "embedLayer"}
         %a{:class=>"close closeLayer"}
