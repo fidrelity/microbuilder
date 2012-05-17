@@ -102,6 +102,30 @@ $(document).ready(function() {
 
   Feedback.init();
 
+  // ---------------------------------------
+  /* Game View Buttons */
+  function toggleLayer(_layer) {
+    $('.layer').hide();
+    if(!_layer.is(':visible'))
+      _layer.show();    
+  }
+
+  /* Share Button */
+  $('.shareButton').click(function() {
+    toggleLayer($('#shareLayer'));
+  });
+
+  /* Embed Button */
+  $('.embedButton').click(function() {
+    toggleLayer($('#embedLayer'));   
+  });
+
+  // Close layers
+  $('.closeLayer').click(function() {
+    $('.layer').hide();
+  });
+  // ---------------------------------------
+
 });
 
 function application_main() {

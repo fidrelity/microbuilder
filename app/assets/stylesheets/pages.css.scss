@@ -70,8 +70,10 @@ h1 {  margin:0;  padding:0; font-size:2.2em; }
   cursor:pointer;
 }
 #feedbackSideButton:hover {background:#F6F6F6;}
+.errorForm { border:1px solid #B94A48;}
 
 /* game/id/play */
+
 #tempComment {  display: none; }
 .comment {
   margin-bottom:2em;
@@ -79,7 +81,9 @@ h1 {  margin:0;  padding:0; font-size:2.2em; }
   border-bottom:1px solid #F6F6F6;
 }
 
-.errorForm { border:1px solid #B94A48;}
+.layer {
+  display: none;
+}
 
 /* EDITOR */
 /* ---------------------------------- */
