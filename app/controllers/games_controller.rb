@@ -1,7 +1,6 @@
 class GamesController < ApplicationController
   respond_to :js, :only => [:create, :index, :update]
   before_filter :authenticate_user!, :only => [:create, :destroy]
-  autocomplete :game, :title
   
   def index
     @games = case params[:type]

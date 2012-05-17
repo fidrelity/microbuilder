@@ -53,7 +53,7 @@ var Feedback = {
     if(!text) {
       Feedback.textarea.addClass("errorForm");
       return false;
-    }    
+    }
     /*
       $.ajax({
         url : '/feedback'
@@ -69,7 +69,7 @@ var Feedback = {
 };
 
 
-var setLikeButtons = function() {
+var deactivateLikeButtons = function() {
   $('.likeButton').addClass("disabled").attr("disabled", "disabled");
 };
 
