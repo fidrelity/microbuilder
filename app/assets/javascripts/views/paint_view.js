@@ -1,6 +1,6 @@
 var PaintView = Ember.View.extend({
   
-  templateName: 'templates_paint_template',
+  templateName: 'templates/paint_template',
   canvas: null,
 
   
