@@ -10,7 +10,6 @@ var ToolBoxController = Ember.Object.extend({
   activeClass : 'active-tool',
 
   init : function () {
-    console.log("init toolbox")
     this.set('currentTool', App.PencilTool);
   },
   
@@ -19,7 +18,6 @@ var ToolBoxController = Ember.Object.extend({
   },
 
   setCurrentTool : function(_tool) {
-    //console.log(_tool);
     if(!_tool) return false;
     this.set('currentTool', _tool);
   },

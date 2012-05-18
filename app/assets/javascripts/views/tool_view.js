@@ -8,7 +8,6 @@ var ToolView = Ember.View.extend({
   },
 
   setCurrentTool : function() {
-    console.log("currentTool");
     App.toolBoxController.setCurrentTool(this.get("tool"));
   },
 
