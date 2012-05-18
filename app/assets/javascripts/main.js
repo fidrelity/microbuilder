@@ -10,11 +10,12 @@ function editor_main() {
   App.gameObjectsController = GameObjectsController.create();
 
   // -------------------
-  // Paint
-  App.pencilTool = PencilToolModel.create();
+  // Paint  
   App.paintController = PaintController.create();  
+  App.pencilTool = PencilToolModel.create();
   App.gameObjectsController = GameObjectsController.create();
   App.toolBoxController = ToolBoxController.create();
+  App.drawTool = DrawToolModel.create();
   // -------------------
 
   App.behaviourController = BehaviourController.create();

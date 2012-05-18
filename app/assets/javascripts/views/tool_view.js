@@ -8,6 +8,7 @@ var ToolView = Ember.View.extend({
   },
 
   setCurrentTool : function() {
+    console.log("currentTool");
     App.toolBoxController.setCurrentTool(this.get("tool"));
   },
 
@@ -55,6 +56,11 @@ var ToolView = Ember.View.extend({
 
   clear : function() {
     App.paintController.clearCurrentSprite();
+  },
+
+  pencil : function() {
+    this.setCurrentTool();
+    App.pencilTool.setEraser(false);
   },
 
   erase : function() {

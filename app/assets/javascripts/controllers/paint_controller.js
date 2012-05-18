@@ -47,16 +47,18 @@ var PaintController =  Ember.ArrayController.extend({
 
   init : function() {
     this.spriteSize = { width: 64, height: 64};
+    this.pixelDrawer = new PixelDrawer();
     // Add first Sprite
     //this.addObject(SpriteModel.create({ id: 0, width: this.spriteSize.width, height: this.spriteSize.height, wrapper: this.spriteWrapper }));
     //this.toolBox = ToolBox.create();
   },
 
   // Called when Paint_View init
-  initView : function() {    
+  initView : function() {
+    console.log("init paint controller")
     this.zoomCanvas  = document.getElementById("zoomCanvas");
     this.zoomContext = this.zoomCanvas.getContext("2d");
-    this.pixelDrawer = new PixelDrawer();
+    
 
     // if mode = background -> set spriteSize to background size
       // remove zoom canvas
@@ -166,13 +168,19 @@ var PaintController =  Ember.ArrayController.extend({
     }
   },
 
+  mouseup : function(e) {
+    var coord = this.getMouseCoordinates(e);
+    var options = { x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel() };
+    this.getCurrentTool().mouseup(options);
+  },
+
   // ---------------------------------------  
   // Sprite Models
   add : function(copy) {
 
     var copyData = copy ? this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height) : null;
 
-    var spriteModel = SpriteModel.create({      
+    var spriteModel = SpriteModel.create({
       index:    this.spriteCounter++,
       width:    this.spriteSize.width,
       height:   this.spriteSize.height,
@@ -204,7 +212,7 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   getCurrentSpriteModel : function() {
-    return this.content[this.currentSprite];
+    return this.get('currentSprite');
   },
 
   getCurrentSpriteModelByIndex : function(_id) {
@@ -217,7 +225,7 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   getCurrentTool : function() {
-    return App.ToolBox.getCurrentTool();
+    return App.toolBoxController.getCurrentTool();
   },
 
   setColor : function(_color) {

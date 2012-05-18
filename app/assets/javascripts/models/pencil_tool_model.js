@@ -6,9 +6,10 @@ var PencilToolModel = Ember.Object.extend({
   isActive : false,
   pixelDrawer : null,
   isErasing : false,
+  sprite : null,
   
   init : function () {
-    
+    this.pixelDrawer = App.paintController.pixelDrawer;
   },
   
   click : function(toolModel) {
@@ -16,11 +17,14 @@ var PencilToolModel = Ember.Object.extend({
   },
 
   mousedown : function(_options) {
-    this.isActive = true;   
+    this.isActive = true;
+    this.sprite = _options.sprite;
+    this.draw(_options.x, _options.y, _options.x, _options.y);
   },
 
   mousemove : function(_options) {
-    if(!this.isActive) return false;   
+    if(!this.isActive) return false;
+    this.draw(_options.x, _options.y, _options.x, _options.y);
   },
 
   mouseup : function(_options) {
@@ -41,6 +45,10 @@ var PencilToolModel = Ember.Object.extend({
     // Update ZoomCanvas
     App.paintController.clearZoomCanvas();
     App.paintController.zoomImageData(this.pixelDrawer.context.getImageData(0, 0, this.pixelDrawer.canvas.width, this.pixelDrawer.canvas.height));    
+  },
+
+  setEraser : function(_state) {
+    this.set('isErasing', _state);
   }
 
 });

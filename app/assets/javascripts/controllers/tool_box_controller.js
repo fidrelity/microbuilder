@@ -10,6 +10,7 @@ var ToolBoxController = Ember.Object.extend({
   activeClass : 'active-tool',
 
   init : function () {
+    console.log("init toolbox")
     this.set('currentTool', App.PencilTool);
   },
   
@@ -18,7 +19,7 @@ var ToolBoxController = Ember.Object.extend({
   },
 
   setCurrentTool : function(_tool) {
-    console.log(_tool);
+    //console.log(_tool);
     if(!_tool) return false;
     this.set('currentTool', _tool);
   },
@@ -51,7 +52,7 @@ var DrawToolModel = Ember.Object.extend({
   initAfter : function () {
     this.tempCanvas = $('#canvas-sketch');
     this.tempContext = this.tempCanvas[0].getContext("2d");
-    console.log("tempcanvas", $('#canvas-sketch'));
+    //console.log("tempcanvas", $('#canvas-sketch'));
 
     this.zoomCanvas = document.getElementById("zoomCanvas");
     this.zoomContext = this.zoomCanvas.getContext("2d");

@@ -2,13 +2,9 @@ var PaintView = Ember.View.extend({
   
   templateName: 'templates/paint_template',
   canvas: null,
-
   
   didInsertElement : function() {  
-    paint_main();
-  },
-
-  mousedown : function() {
+    //paint_main();
     App.paintController.initView();
 
     // OnMouse on zoomed canvas
@@ -16,23 +12,16 @@ var PaintView = Ember.View.extend({
       App.paintController.mousedown(e);
     });
 
-  },
-  
-});
-
-var SpriteView = Ember.View.extend({
-  
-  templateName: 'templates_sprite_template',
-  sprite : null,
-  
-  didInsertElement : function() {
-      
     this.$('#zoomCanvas').mousemove(function(e){
       App.paintController.mousemove(e);
     });
 
+    this.$('#zoomCanvas').mouseup(function(e){
+      App.paintController.mouseup(e);
+    });
+
     // Onclick sprite area
-    this.$('.canvas').live('click', function(e) {      
+    this.$('.canvas').live('click', function(e) {
       var index = parseInt($(this).attr("data-index"));
       var spriteModel = App.paintController.getCurrentSpriteModelByIndex(index);      
       App.paintController.setCurrentSpriteModel(spriteModel);
@@ -40,7 +29,7 @@ var SpriteView = Ember.View.extend({
 
     // Slider for pencil size
     this.$("#sizeSlider").slider({
-      value: Paint.lineWidth, 
+      value: 2, 
       min: 1,
       max: 10, 
       step: 1,
@@ -48,11 +37,6 @@ var SpriteView = Ember.View.extend({
         App.paintController.setSize(ui.value);
       }
     });
-
   },
 
-  setCurrentSpriteModel : function() {
-    App.paintController.setCurrentSpriteModel(this.get("sprite"));
-  }
-  
 });
