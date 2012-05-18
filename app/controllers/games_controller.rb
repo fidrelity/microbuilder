@@ -65,12 +65,14 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     counter = @game.likes + 1
     @game.update_attribute(:likes, counter)
+    #cookies[:game] = "true"
   end
 
   def dislike
     @game = Game.find(params[:id])
     counter = @game.dislikes + 1
     @game.update_attribute(:dislikes, counter)
+    render :file => "app/views/games/like", :layout => false
   end
 
   def report
