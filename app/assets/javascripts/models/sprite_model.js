@@ -81,12 +81,19 @@ var SpriteModel = Ember.Object.extend({
     }
 
     var imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
-    this.states.push(imageData);    
+    this.states.push(imageData);
   },
 
   popState : function() {
-    if(!imageData.length) return false;
-    var imageData = this.states.pop();
-    this.context.putImageData(imageData, 0, 0);
-  },
+    if(!this.states.length) return false;
+
+    if(this.states.length === 1) {
+      this.states.pop();
+      this.clear();
+    } else {
+      this.states.pop();
+      var imageData = this.states[this.states.length - 1];
+      this.context.putImageData(imageData, 0, 0);
+    }
+  }
 });
