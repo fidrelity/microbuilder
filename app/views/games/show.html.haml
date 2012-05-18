@@ -15,18 +15,10 @@
       %button{:class=>"btn embedButton"}
         <i class="icon-share"></i> Embed
       %button{:class=>"btn reportButton"}
-        <i class="icon-flag"></i> Report
-      %button{:class=>"btn likeButton", "data-id" => @game.id}
-        <i class="icon-thumbs-up"></i>
-        %span{:class=>"likeValue"}
-          =@game.likes
-      %button{:class=>"btn likeButton dislikeButton", "data-id" => @game.id}
-        <i class="icon-thumbs-down"></i> 
-        %span{:class=>"dislikeValue"}
-          =@game.dislikes
-
-      %div{:class => "progress progress-success", :style => "background:#FF0000;"}
-        %div{:class => "bar", :style => "width:#{@game.rating * 100}%;"}
+        <i class="icon-flag"></i> Report      
+      
+      %div{:id => "ratingWrapper"}
+        = render :partial => "rating", :locals => {:game => @game}
 
       %i{:class => "icon-eye-open"}
       =@game.played

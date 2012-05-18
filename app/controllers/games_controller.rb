@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  respond_to :js, :only => [:create, :index, :update]
+  respond_to :js, :only => [:create, :index, :update, :like, :dislike]
   before_filter :authenticate_user!, :only => [:create, :destroy]
   
   def index
@@ -65,14 +65,12 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     counter = @game.likes + 1
     @game.update_attribute(:likes, counter)
-    render :nothing => true, :layout => false
   end
 
   def dislike
     @game = Game.find(params[:id])
     counter = @game.dislikes + 1
     @game.update_attribute(:dislikes, counter)
-    render :nothing => true, :layout => false
   end
 
   def report
