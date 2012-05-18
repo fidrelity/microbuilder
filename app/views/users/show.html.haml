@@ -36,4 +36,4 @@
         %li{:class => "span2"}
           %div{:class => "thumbnail"}
             %img{:src => graphic.image}
-            =link_to("[x]", graphic_path(graphic), :method => :delete, :confirm => "Permanently delete this graphic?")
+            =link_to("[x]", graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?")

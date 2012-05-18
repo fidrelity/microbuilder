@@ -1,8 +1,13 @@
-= link_to "Like (#{game.likes})", like_game_path(game.id), :method => :put, :remote => true, :class => "btn likeButton"
+%div{:class => 'span2'}
+  = link_to "Like (#{game.likes})", like_game_path(game.id), :method => :put, :remote => true, :class => "btn likeButton"
 
-= link_to "Dislike (#{game.dislikes})", dislike_game_path(game.id), :method => :put, :remote => true, :class => "btn likeButton"
+%div{:class => 'span4'}
+  %div{:class => "progress progress-success", :style => "background:#FF0000;"}
+    %div{:class => "bar", :style => "width:#{game.rating * 100}%;"}
 
-%div{:class => "progress progress-success", :style => "background:#FF0000;"}
-  %div{:class => "bar", :style => "width:#{game.rating * 100}%;"}
+%div{:class => 'span2'}
+  = link_to "Dislike (#{game.dislikes})", dislike_game_path(game.id), :method => :put, :remote => true, :class => "btn likeButton"
+
+
 
 

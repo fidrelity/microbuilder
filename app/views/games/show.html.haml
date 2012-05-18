@@ -16,12 +16,11 @@
         <i class="icon-share"></i> Embed
       %button{:class=>"btn reportButton"}
         <i class="icon-flag"></i> Report      
-      
-      %div{:id => "ratingWrapper"}
-        = render :partial => "rating", :locals => {:game => @game}
-
       %i{:class => "icon-eye-open"}
-      =@game.played
+      =@game.played      
+    
+    %div{:id => "ratingWrapper", :class=>"row"}
+      = render :partial => "rating", :locals => {:game => @game}    
 
       %div{:class => "well layer", :id => "shareLayer"}
         %a{:class=>"close closeLayer"}
