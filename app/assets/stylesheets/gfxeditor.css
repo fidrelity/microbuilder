@@ -79,7 +79,7 @@
 .canvas-float { position:relative; float:left; }
 .canvas-selected { border:1px solid #4096EE;}
 
-#canvas-template { display:none; }
+#canvas-template, #canvas-merged { display:none; }
 #canvas-sketch { display:none; z-index:999; position:absolute; background:none;}
 
 /* Tools */

@@ -70,7 +70,7 @@ var PaintController =  Ember.ArrayController.extend({
     // set sketch canvas size + position
 
     this.add();
-    this.finalCanvas = $('#sprite-canvas');
+    this.finalCanvas = $('#canvas-merged');
   },
 
   // ---------------------------------------

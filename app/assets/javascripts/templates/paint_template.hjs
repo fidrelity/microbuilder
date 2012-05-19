@@ -76,6 +76,9 @@
     </div>
 
     <div id="sprites-area">
+      <!-- Canvas to save -->
+      <canvas id="canvas-merged" width="64" height="64"></canvas>
+
       <!-- Temporary Canvas -->
       <canvas id="canvas-sketch" width="64" height="64"></canvas>
       
