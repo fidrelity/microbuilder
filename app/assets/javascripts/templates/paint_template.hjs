@@ -41,7 +41,7 @@
   </div>
 
   <!-- Second Toolbar -->
-  <div id="tool-bar-second">
+  <div id="tool-bar-second" class="form-horizontal">
     <!-- SIZE -->
     <div id="sizeWrapper">
       <div id="sizeSlider" style="float:left;"></div>

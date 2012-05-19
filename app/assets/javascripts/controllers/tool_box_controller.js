@@ -58,6 +58,7 @@ var DrawToolModel = Ember.Object.extend({
   
   click : function(_options) {
     this.showTempCanvas();
+    App.paintController.toggleColorPalette(true);
   },
 
   mousedown : function(_options, _pixelDrawer) {

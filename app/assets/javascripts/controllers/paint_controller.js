@@ -246,6 +246,13 @@ var PaintController =  Ember.ArrayController.extend({
     this.set( 'tabState', 'setSize' );
   },
 
+  toggleColorPalette : function(_visible) {
+    if(_visible)
+      $('#palette').show();
+    else
+      $('#palette').hide();
+  },
+
   // ---------------------------------------
   // Zoom Canvas
   zoomIn : function() {
