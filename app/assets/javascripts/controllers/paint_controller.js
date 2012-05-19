@@ -189,6 +189,7 @@ var PaintController =  Ember.ArrayController.extend({
     });
 
     this.addObject(spriteModel);
+    $('.canvas').css({width: this.spriteSize.width, height: this.spriteSize.height});
     this.setCurrentSpriteModel(spriteModel);
     this.updateZoom();
   },
@@ -235,6 +236,10 @@ var PaintController =  Ember.ArrayController.extend({
 
   setSize : function(_size) {
     this.size = _size || 1;
+  },
+
+  setSpriteSize : function(_obj) {
+    this.spriteSize = _obj;
   },
 
   // ---------------------------------------

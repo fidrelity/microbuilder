@@ -1,7 +1,6 @@
 <h2>Paint</h2>
 
 <div id="paint-wrapper">
-
   <!-- Toolbar -->
   <div id="tool-bar" class="row">
     <div class="span8 form-horizontal">
@@ -80,11 +79,13 @@
   <div id="area-wrapper">
 
     <div id="zoom-canvas-area">
+      <h4>Zoomed view:</h4>
       <!-- Zoomed Canvas -->
       <canvas id="zoomCanvas" width="256" height="256"></canvas> 
     </div>
 
     <div id="sprites-area">
+      <h4>Original</h4>
       <!-- Canvas to save -->
       <canvas id="canvas-merged" width="64" height="64"></canvas>
 

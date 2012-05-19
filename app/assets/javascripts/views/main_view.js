@@ -16,6 +16,7 @@ var MainView = Ember.View.extend({
     this.stageView = StageView.create();
     this.libraryView = LibraryView.create();
     this.paintView = PaintView.create();
+    this.paintSizeView = PaintSizeView.create();
     
     this.behaviourView = BehavioursView.create();
     this.actionView = ActionView.create();

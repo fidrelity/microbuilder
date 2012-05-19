@@ -92,7 +92,7 @@ var GameController = Ember.Object.extend({
   
   drawGraphic : function() {
     
-    App.mainView.show( 'stageContent', 'paintView' );
+    App.mainView.show( 'stageContent', 'paintSizeView' );
     
   },
   
