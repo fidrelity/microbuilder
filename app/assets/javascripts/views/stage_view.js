@@ -35,7 +35,7 @@ var StageView = Ember.View.extend({
   },
   
   play : function() {
-    
+
     this.player.fsm.try();
     
   },

@@ -36,6 +36,11 @@
       }}
 
       <button {{action "publishGame" target="App.gameController"}}>publish</button>
+      <button {{action "takePreviewSnapshot" target="App.gameController"}}>Take Snapshot</button>
+
+      <ul id="thumbnail">
+
+      </ul>
     
     </div>
   

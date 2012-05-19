@@ -203,6 +203,24 @@ var GameController = Ember.Object.extend({
     
     
     
+  },
+
+  takePreviewSnapshot : function() {
+
+    //var background_small = this.game.get('background');
+    var canvas = document.getElementById("testCanvas");
+    var img_data = canvas.toDataURL("image/png");
+    var screenshot = '<li><img src="'+img_data+'" width="320" height="195" class="thumb"></li>';
+
+    $('#thumbnail').append(screenshot);
+    /*
+     <li style="background-image:url('+background_small+')">
+      <img src="'+img_data+'" width="320" height="195" class="thumb" data-id="'+counterId+'"/>
+      <br><input type="radio" value="'+counterId+'" name="previewImage" data-id="'+counterId+'">
+     </li>');
+
+      counterId++;
+    */
   }
   
 });

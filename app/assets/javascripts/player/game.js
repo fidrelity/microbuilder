@@ -25,7 +25,7 @@ Game.prototype = {
   },
   
   start : function() {
-    
+
     this.startActions.forEachApply( 'execute', this );
     
   },
