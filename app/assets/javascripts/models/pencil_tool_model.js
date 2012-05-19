@@ -20,11 +20,17 @@ var PencilToolModel = Ember.Object.extend({
     this.isActive = true;
     this.sprite = _options.sprite;
     this.draw(_options.x, _options.y, _options.x, _options.y);
+    //
+    this.oldX = _options.x;
+    this.oldY = _options.y;
   },
 
   mousemove : function(_options) {
     if(!this.isActive) return false;
-    this.draw(_options.x, _options.y, _options.x, _options.y);
+    this.draw(this.oldX, this.oldY, _options.x, _options.y);
+
+    this.oldX = _options.x;
+    this.oldY = _options.y;
   },
 
   mouseup : function(_options) {

@@ -5,7 +5,5 @@
   Select the size of the graphic:
   <div id="canvas-size" class="canvas" style="width:64px;height:64px;"></div>
 
-
   <button {{action "start"}}>Ready to paint</button>
-
 </div>

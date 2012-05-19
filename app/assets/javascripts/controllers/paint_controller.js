@@ -278,7 +278,15 @@ var PaintController =  Ember.ArrayController.extend({
 
   zoomImageData : function( imageData, _zoom ) {
     var zoom = zoom || this.zoom;
+    
+    /*
+    var img_data = this.getCurrentSpriteModel().canvas.toDataURL("image/png");
+    var w = this.spriteSize.width * zoom;
+    var h = this.spriteSize.height * zoom;
+    $('#zoomCanvas').html('<img src="'+img_data+'" width="'+w+'" height="'+h+'" style="pointer-event:none;" id="zoomCanvas">');
+    */
 
+    
     var width = imageData.width, 
         height = imageData.height, 
         data = imageData.data,
