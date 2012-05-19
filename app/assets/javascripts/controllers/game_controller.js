@@ -207,7 +207,6 @@ var GameController = Ember.Object.extend({
 
   takePreviewSnapshot : function() {
 
-    //var background_small = this.game.get('background');
     var canvas = document.getElementById("testCanvas");
     var img_data = canvas.toDataURL("image/png");
     var screenshot = '<li><img src="'+img_data+'" width="320" height="195" class="thumb"><br><input type="radio" value="" name="previewImage" data-id=""></li>';
@@ -215,14 +214,22 @@ var GameController = Ember.Object.extend({
     $('#thumbnail').append(screenshot);
     /*
       Todo:
+      var background_small = this.game.get('background');
      <li style="background-image:url('+background_small+')">
     */
   },
 
+  // Returns Base64 encoded data of img
   getSelectedSnapshotData : function() {
     var selectedRadio = $('#thumbnail').find('li').find('input[type="radio"]:checked');
+
+    if(!selectedRadio) {
+      takePreviewSnapshot();
+      selectedRadio = $('#thumbnail').find('li').find('input[type="radio"]').first();
+    }
+
     var selectedImg = selectedRadio.parent().find('img');
-    return selectedImg.attr("src"); // Send this to server
+    return selectedImg.attr("src");
   }
   
 });
