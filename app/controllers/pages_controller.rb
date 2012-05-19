@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   def home
-    @games = Game.all_latest
+    @games = Game.all_latest.limit(4)
   end
 
   def editor

@@ -111,7 +111,7 @@ var GameController = Ember.Object.extend({
   },
   
   publishGame : function() {
-    
+   
     var data = this.game.getData();
     
     console.log(
