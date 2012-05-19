@@ -53,6 +53,16 @@ var PlayerView = Ember.View.extend({
     
     player.setCanvas( $('#' + this.canvasID)[0] );
     player.parse( App.game.getGameObjectsData(), bind( this, callback ) );
+
+
+    // *** Snapshot of preview game ***
+    // onClick on li element
+    $('#thumbnail').find('li').live('click', function() {
+
+      $(this).find('input[type="radio"]').attr("checked", "checked");
+
+    });
+
     
   },
   
