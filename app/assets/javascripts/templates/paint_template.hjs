@@ -3,36 +3,41 @@
 <div id="paint-wrapper">
 
   <!-- Toolbar -->
-  <div id="tool-bar">
-    {{#view ToolView
-      toolBinding = "App.pencilTool"
-    }}
-      <button {{action "pencil"}}>PencilTool</button>     
-      <button {{action "erase"}}>Eraser</button>       
-    {{/view}}
+  <div id="tool-bar" class="row">
+    <div class="span8 form-horizontal">
+      {{#view ToolView
+        toolBinding = "App.pencilTool"
+      }}
+        <button {{action "pencil"}}>PencilTool</button>     
+        <button {{action "erase"}}>Eraser</button>       
+      {{/view}}
 
-    {{#view ToolView
-      toolBinding = "App.drawTool"
-    }}
-      <button {{action "drawRect"}}>Rectangle</button>
-      <button {{action "drawCircle"}}>Circle</button>
-      <button {{action "drawRectFill"}}>Rect Fill</button>
-      <button {{action "drawCircleFill"}}>Circle Fill</button>
-      <button {{action "drawLine"}}>Line</button>
-    {{/view}} 
+      {{#view ToolView
+        toolBinding = "App.drawTool"
+      }}
+        <button {{action "drawRect"}}>Rectangle</button>
+        <button {{action "drawCircle"}}>Circle</button>
+        <button {{action "drawRectFill"}}>Rect Fill</button>
+        <button {{action "drawCircleFill"}}>Circle Fill</button>
+        <button {{action "drawLine"}}>Line</button>
+      {{/view}} 
+    
+      {{#view ToolView
+        toolBinding = "this"
+      }}
+        <button {{action "copySprite"}}>Copy</button>
+        <button {{action "clear"}}>Clear</button>
+        <button {{action "undo"}}>Undo</button>       
+      {{/view}}   
   
-    {{#view ToolView
-      toolBinding = "this"
-    }}
-      <button {{action "copySprite"}}>Copy</button>
-      <button {{action "clear"}}>Clear</button>
-      <button {{action "undo"}}>Undo</button>
-      <button {{action "play"}} id="playButton">Play</button>
-      <button {{action "stop"}} id="stopButton">Stop</button>
-      <input type="text" id="playDelay" value="100" size="2">
-      <input type="checkbox" value="1" id="replayLoop"> Loop
-    {{/view}}   
-   
+    </div>
+
+    <div class="span3 form-horizontal">
+        <button {{action "play"}} id="playButton">Play</button>
+        <button {{action "stop"}} id="stopButton">Stop</button>
+        <input type="text" id="playDelay" value="100" size="2" class="span1">
+        <input type="checkbox" value="1" id="replayLoop"> Loop
+    </div> 
   </div>
 
   <!-- Second Toolbar -->
