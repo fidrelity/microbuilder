@@ -22,48 +22,48 @@
     %div{:id => "ratingWrapper", :class=>"row"}
       = render :partial => "rating", :locals => {:game => @game}
 
-      %div{:class => "well layer", :id => "shareLayer"}
-        %a{:class=>"close closeLayer"}
-          &times;
-        %h4 Share this game on:
-        %div{:id=>"fb-root"}
-        %div{:class=>"fb-like", "data-href"=>"#{root_url}play/#{@game.id}/embed", "data-send"=>"false", "data-layout"=>"button_count", "data-width"=>"50", "data-show-faces"=>"false"}
+    %div{:class => "well layer", :id => "shareLayer"}
+      %a{:class=>"close closeLayer"}
+        &times;
+      %h4 Share this game on:
+      %div{:id=>"fb-root"}
+      %div{:class=>"fb-like", "data-href"=>"#{root_url}play/#{@game.id}/embed", "data-send"=>"false", "data-layout"=>"button_count", "data-width"=>"50", "data-show-faces"=>"false"}
 
-      %div{:class => "well layer", :id => "embedLayer"}
-        %a{:class=>"close closeLayer"}
-          &times;
-        %h4 Embed code
-        %label
-          Use this code to embed the game on your page:
-        %textarea{:cols =>"150", :rows =>"2", :class=>"span7", :style=>"font-family:Courier New;background:#222;color:#F6F6F6;"}
-          <iframe width="640" height="390" src="#{root_url}play/#{@game.id}/embed" frameborder="0"></iframe>
+    %div{:class => "well layer", :id => "embedLayer"}
+      %a{:class=>"close closeLayer"}
+        &times;
+      %h4 Embed code
+      %label
+        Use this code to embed the game on your page:
+      %textarea{:cols =>"150", :rows =>"2", :class=>"span7", :style=>"font-family:Courier New;background:#222;color:#F6F6F6;"}
+        <iframe width="640" height="390" src="#{root_url}play/#{@game.id}/embed" frameborder="0"></iframe>
 
-      %div{:class => "well layer", :id => "reportLayer"}
-        %a{:class=>"close closeLayer"}
-          &times;
-        %h4 Report us this game
-        %p
-          If you think this game doesn't work, is inappropiate or it hurts any rights, then tell us:
-        %input{:type=>"hidden", :value => @game.id, :name => "game_id"}
-        %label
-          Tell us why:
-        %textarea{:cols =>"150", :rows =>"1", :class=>"span6", :name => "report_comment"}
-        %label
-          Reason:
-        %select
-          %option
-            Flawed
-          %option
-            Copyrigth infrigment
-          %option
-            Spam
-          %option
-            Inappropiate
-        %p
-          %button{:class=>"btn btn-success"}
-            Report
-          %button{:class=>"btn closeLayer"}
-            Cancel
+    %div{:class => "well layer", :id => "reportLayer"}
+      %a{:class=>"close closeLayer"}
+        &times;
+      %h4 Report us this game
+      %p
+        If you think this game doesn't work, is inappropiate or it hurts any rights, then tell us:
+      %input{:type=>"hidden", :value => @game.id, :name => "game_id"}
+      %label
+        Tell us why:
+      %textarea{:cols =>"150", :rows =>"1", :class=>"span6", :name => "report_comment"}
+      %label
+        Reason:
+      %select
+        %option
+          Flawed
+        %option
+          Copyrigth infrigment
+        %option
+          Spam
+        %option
+          Inappropiate
+      %p
+        %button{:class=>"btn btn-success"}
+          Report
+        %button{:class=>"btn closeLayer"}
+          Cancel
 
 
     %div{:class=>"row", :style => "margin-top:2em", :id => "commentsWrapper"}
