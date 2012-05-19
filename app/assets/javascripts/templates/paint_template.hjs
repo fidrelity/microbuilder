@@ -33,10 +33,14 @@
     </div>
 
     <div class="span3 form-horizontal">
+      {{#view ToolView
+        toolBinding = "this"
+      }}
         <button {{action "play"}} id="playButton">Play</button>
         <button {{action "stop"}} id="stopButton">Stop</button>
         <input type="text" id="playDelay" value="100" size="2" class="span1">
         <input type="checkbox" value="1" id="replayLoop"> Loop
+      {{/view}}
     </div> 
   </div>
 
