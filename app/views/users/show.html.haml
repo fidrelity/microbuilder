@@ -27,6 +27,7 @@
             %i{:class => "icon-thumbs-down"}
             =game.dislikes
             =link_to image_tag("edit.png"), '#'
+            =link_to("[x]", game_path(game), :method => :delete, :confirm => "Permanently delete this game?")
 
 
     %h2="Graphics"
