@@ -66,7 +66,7 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     counter = @game.likes + 1
     @game.update_attribute(:likes, counter)
-    #cookies[:game] = "true"
+    #cookies[:game] = "true"    
   end
 
   def dislike
