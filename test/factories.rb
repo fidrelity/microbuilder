@@ -18,6 +18,12 @@ FactoryGirl.define do
     frame_count   1
   end
   
+  factory :game_comment do
+    association   :game
+    association   :user
+    comment       "This is a comment text"
+  end
+
   factory :game do
     association   :author, :factory => :user
     title         "Game X"
