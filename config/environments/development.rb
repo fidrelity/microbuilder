@@ -12,6 +12,7 @@ Playtin::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
+  #config.action_controller.page_cache_directory = Rails.root.join("public/cache").to_s
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
@@ -41,7 +42,7 @@ Playtin::Application.configure do
   
   Paperclip.options[:command_path] = '/usr/bin/identify'
 
-
+  # Pusher Service (Websockets)
   require 'pusher'
   Pusher.app_id = 20822
   Pusher.key = 'a4bc39aab42024a54d27'
