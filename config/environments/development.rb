@@ -40,6 +40,12 @@ Playtin::Application.configure do
   FACEBOOK_SECRET = '236e82c66d6b97dd23422df19680db27'
   
   Paperclip.options[:command_path] = '/usr/bin/identify'
+
+
+  require 'pusher'
+  Pusher.app_id = 20822
+  Pusher.key = 'a4bc39aab42024a54d27'
+  Pusher.secret = 'fcc0e5f4c2220751968e'
 end
 
 PAPERCLIP_OPTIONS = {

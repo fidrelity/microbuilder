@@ -11,6 +11,7 @@ gem 'pg'
 gem 'paperclip'
 gem 'aws-sdk'
 gem 'pg_search'
+gem 'pusher'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

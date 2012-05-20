@@ -16,6 +16,7 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @comments = @game.game_comments
+    push_new_game(@game)
   end
   
   def embed
@@ -29,6 +30,7 @@ class GamesController < ApplicationController
     
     if @game.save
       response, status = [play_url(@game), 200]
+      push_new_game(@game)
     else
       response, status = [I18n.t(".games.create.error"), 400]
     end
@@ -84,6 +86,14 @@ class GamesController < ApplicationController
   def auto_search
     @games = Game.order(:title).where("title like ?", "%#{params[:term]}%")
     render json: @games.map(&:title)
+  end
+
+  def push_new_game(game)
+    Pusher['game_channel'].trigger('newgame', {
+      :name => game.title,
+      :author => game.author.display_name,
+      :author_id => game.author.id
+    })
   end
 
 end

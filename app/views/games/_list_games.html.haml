@@ -1,4 +1,15 @@
 %ul{:class=>"thumbnails"}
+
+  %li{:class => "span2", :id => "game-li-template"}
+    %div{:class => "thumbnail"}
+      %br
+      %i{:class => "icon-eye-open"}
+      0
+      %i{:class => "icon-thumbs-up"}
+      0
+      %i{:class => "icon-thumbs-down"}
+      0
+
   - @games.each do |game|
     %li{:class => "span2"}
       %div{:class => "thumbnail"}
