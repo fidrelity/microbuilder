@@ -68,6 +68,12 @@ Playtin::Application.configure do
   #Facebook Key and Secret
   FACEBOOK_ID = '148777278524544'
   FACEBOOK_SECRET = '1385b5ed4c03504ba2e8c05a9be5d740'
+
+  # Pusher Service (Websockets)
+  require 'pusher'
+  Pusher.app_id = 20822
+  Pusher.key = 'a4bc39aab42024a54d27'
+  Pusher.secret = 'fcc0e5f4c2220751968e'
 end
 
 PAPERCLIP_OPTIONS = {
