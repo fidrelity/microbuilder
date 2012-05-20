@@ -27,7 +27,15 @@
         &times;
       %h4 Share this game on:
       %div{:id=>"fb-root"}
-      %div{:class=>"fb-like", "data-href"=>"#{root_url}play/#{@game.id}/embed", "data-send"=>"false", "data-layout"=>"button_count", "data-width"=>"50", "data-show-faces"=>"false"}
+      .fshare
+        %script{:src => "http://connect.facebook.net/en_US/all.js#xfbml=1"}
+        %fb:like{:layout => "button_count", :show_faces => "false", :width => "450"}
+      .twshare
+      %a.twitter-share-button.left{"data-count" => "horizontal", "data-via" => "playtin", "data-text" => "this game is awesome! #{play_url(@game)}", "data-hashtags" => "minigame", :href => "http://twitter.com/share"}
+        %script{:src => "http://platform.twitter.com/widgets.js", :type => "text/javascript"}
+      .gplusshare
+        %script{:type => "text/javascript", :src => "https://apis.google.com/js/plusone.js"}
+        .gplusshare{:class => "g-plusone", :href => play_url(@game)}
 
     %div{:class => "well layer", :id => "embedLayer"}
       %a{:class=>"close closeLayer"}
