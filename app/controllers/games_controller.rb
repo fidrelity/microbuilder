@@ -16,7 +16,6 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @comments = @game.game_comments
-    push_new_game(@game)
   end
   
   def embed
@@ -91,6 +90,7 @@ class GamesController < ApplicationController
   def push_new_game(game)
     Pusher['game_channel'].trigger('newgame', {
       :name => game.title,
+      :game_id => game.id,
       :author => game.author.display_name,
       :author_id => game.author.id
     })
