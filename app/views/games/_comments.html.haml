@@ -19,7 +19,9 @@
   -comments.each do |comment|
     %div{:class=>"row comment"}
       %div{:class=>"span1"}
-        Author
+        = link_to user_path(comment.user) do 
+          %img{:src => comment.user.display_image}
+          = comment.user.display_name
       %div{:class=>"span6"}
         =comment.id
         =comment.comment

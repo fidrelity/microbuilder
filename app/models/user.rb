@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 
   has_many :games
   has_many :graphics
+  has_many :game_comments
   
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
