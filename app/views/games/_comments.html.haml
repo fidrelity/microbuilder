@@ -3,7 +3,7 @@
   =comments.size
   ):
 
-=form_for game.game_comments.build, :url => comment_game_path, :html => {:class => "form-vertical well"}, :remote => true do |t|
+=form_for GameComment.new, :url => comment_game_path, :html => {:class => "form-vertical well"}, :remote => true do |t|
   =t.hidden_field :game_id, :value => game.id
   =t.label :comment
   =t.text_area :comment, :disabled => !user_signed_in?, :id => "formComment", :cols => 120, :rows => 2, :class => "span6"
@@ -15,8 +15,7 @@
   %div{:class=>"row comment", :id => "tempComment"}
     %div{:class=>"span1"}      
     %div{:class=>"span6"}
-
-
+    
   -comments.each do |comment|
     %div{:class=>"row comment"}
       %div{:class=>"span1"}
