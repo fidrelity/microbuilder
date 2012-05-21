@@ -1,14 +1,16 @@
 # Opens github issue for any support/report/feedback from clients
 # Url: https://github.com/playtin/Support/issues
 class SupportController < ApplicationController
-  respond_to :js, :only => [:feedback, :ticket]
+  respond_to :js, :only => [:feedback, :ticket, :report]
 
   def feedback
     create_issue "Feedback: #{params[:subject]}",  params[:body], "Feedback"
   end
 
-  def report_game
-    create_issue "Report: #{params[:type]} [#{params[:gid]}]", params[:body], "Report"
+  def report
+    game_link = root_url + "play/#{params[:gid]}"
+    body = params[:body] + "\n\n#{game_link}"
+    create_issue "Report: #{params[:type]} [#{params[:gid]}]", body, "Report"
   end
   
   def ticket

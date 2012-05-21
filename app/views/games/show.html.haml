@@ -59,7 +59,7 @@
         = text_area_tag(:body, "", :size => "120x2", :class => "span6")
         %label
           Reason:
-        = select_tag "type", "<option>Broken</option><option>Copyright infrigment</option><option>Inappropiate</option>".html_safe          
+        = select_tag "type", "<option value='broken'>Broken</option><option value='copyright'>Copyright infrigment</option><option value='inappropiate'>Inappropiate</option>".html_safe
         %p
           =submit_tag 'Send report', :class => "btn btn-success"
           %button{:class=>"btn closeLayer"}
