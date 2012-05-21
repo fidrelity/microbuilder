@@ -3,8 +3,7 @@
 class SupportController < ApplicationController
 
   def feedback
-    create_issue "Feedback: #{params[:subject]}",  params[:body], "Feedback"
-
+    create_issue "Feedback: #{params[:subject]}",  params[:body], "Feedback"    
   end
 
   def report_game
@@ -23,6 +22,8 @@ class SupportController < ApplicationController
     return false if title.empty? || body.empty?
     client = Octokit::Client.new(:login => "playtin", :password => "platin3")
     client.create_issue("playtin/support", title, body, { :labels => [ label ]})
+
+    redirect_to root_path
   end
 
 end
