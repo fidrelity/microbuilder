@@ -21,50 +21,38 @@ var Feedback = {
 
   wrapper : null,
   textarea : null,
+  subject : null,
 
   init : function() {
     Feedback.wrapper = $("#feedback");
     $('.showFeedback').click(function() { Feedback.show(); });
     $('.closeFeedback').click(function() { Feedback.close(); });
     $('.sendFeedback').click(function() { Feedback.send(); });
-    Feedback.textarea = Feedback.wrapper.find("#feedbackBody");
+    Feedback.textarea = Feedback.wrapper.find("#body");
+    Feedback.subject = Feedback.wrapper.find("#subject");
   },
 
   show : function() {
+    Feedback.clear();
     if(Feedback.wrapper.is(":visible")) {
       Feedback.close();
     } else {
       var newX = ($(document).width() / 2) - (Feedback.wrapper.width() / 2);
       var newY = 200;
       Feedback.wrapper.css({left: newX, top: newY}).fadeIn(800);
-      Feedback.textarea.focus();
+      Feedback.subject.focus();
     }
+  },
+
+  clear : function() {
+    Feedback.subject.val("");
+    Feedback.textarea.val("");
+    Feedback.textarea.removeClass("errorForm");
   },
 
   close : function(_time) {
     var _time = _time || 0;
-    Feedback.textarea.val("");
-    Feedback.wrapper.hide(_time);
-    Feedback.textarea.removeClass("errorForm");
-  },
-
-  send : function() {
-    var text = Feedback.textarea.val();
-    if(!text) {
-      Feedback.textarea.addClass("errorForm");
-      return false;
-    }
-    /*
-      $.ajax({
-        url : '/feedback'
-        type: 'post',
-        data : { comment : text },
-        success : function( data ) {   
-          $("#feedbackSideButton").fadeOut(800).html("T<br>h<br>a<br>n<br>k<br>s").addClass("alert").addClass("alert-success").fadeIn(400);      
-        }
-      });
-    */    
-    Feedback.close(500);
+    Feedback.wrapper.hide(_time);    
   }
 };
 
