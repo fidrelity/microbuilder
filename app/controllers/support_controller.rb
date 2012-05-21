@@ -8,7 +8,7 @@ class SupportController < ApplicationController
   end
 
   def report_game
-    create_issue "Report: Game [#{params[:game_id]}]", params[:body], "Report"
+    create_issue "Report: #{params[:type]} [#{params[:gid]}]", params[:body], "Report"
   end
   
   def ticket
