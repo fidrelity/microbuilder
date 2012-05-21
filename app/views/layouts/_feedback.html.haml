@@ -1,15 +1,16 @@
 %div{:id => "feedback", :class => "well"}
-  %h3{:class => "page-header"}
-    Help us to improve Playtin!
-  %div{:id => "feedbackContent", :class => "control-group"}
-    %label
-      Your comment:
-    %textarea{:cols=>"60", :rows=>"4", :class => "span6", :id => "feedbackBody"}
-    %br
-    %button{:class => "btn btn-success sendFeedback"}
-      Send feedback
-    %button{:class => "btn closeFeedback"}
-      Cancel
+  = form_tag("/support/feedback", :method => "post") do
+    %h3{:class => "page-header"}
+      Help us to improve Playtin!
+    %div{:id => "feedbackContent", :class => "control-group"}
+      %label
+        Your comment:
+      =text_area_tag(:body, "", :size => "120x2", :class => "span6")
+      %br
+      =submit_tag 'Send feedback', :class => "btn btn-success sendFeedback"
+        
+      %button{:class => "btn closeFeedback"}
+        Cancel
 
 %div{:id=>"feedbackSideButton", :class=>"showFeedback"}
   F<br>e<br>e<br>d<br>b<br>a<br>c<br>k

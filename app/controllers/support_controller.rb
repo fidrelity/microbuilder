@@ -3,16 +3,14 @@
 class SupportController < ApplicationController
 
   def feedback
-    @params = params[:feedback]
-    create_issue  @params[:title],  @params[:body], "Feedback"
+    create_issue  "Feedback",  params[:body], "Feedback"
   end
 
   def report_game
-    @params = params[:report]
-    create_issue  "Report: Game [#{@params[:game_id]}]",  @params[:body], "Report"
+    create_issue  "Report: Game [#{params[:game_id]}]",  params[:body], "Report"
   end
   
-  def support_ticket
+  def ticket
     @params = params[:support]
     create_issue  @params[:subject],  @params[:body], "Support"
   end

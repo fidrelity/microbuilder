@@ -29,6 +29,9 @@ Playtin::Application.routes.draw do
       get 'auto_search', :to => 'games#auto_search', :as => 'auto_search'
     end
   end
+
+  post 'support/feedback', :to => 'support#feedback'    
+  post 'support/ticket', :to => 'support#ticket'
   
   get '/games/auto_search'
   get '/games/autocomplete_game_title'
