@@ -62,6 +62,8 @@ GEM
       addressable (~> 2.2)
       multipart-post (~> 1.1)
       rack (~> 1.1)
+    faraday_middleware (0.8.7)
+      faraday (>= 0.7.4, < 0.9)
     ffi (1.0.11)
     forgery (0.5.0)
     haml (3.1.4)
@@ -95,6 +97,12 @@ GEM
     nokogiri (1.5.0-x86-mingw32)
     oauth2 (0.5.2)
       faraday (~> 0.7)
+      multi_json (~> 1.0)
+    octokit (1.0.2)
+      addressable (~> 2.2)
+      faraday (~> 0.7)
+      faraday_middleware (~> 0.8)
+      hashie (~> 1.2)
       multi_json (~> 1.0)
     omniauth (1.0.2)
       hashie (~> 1.2)
@@ -199,6 +207,7 @@ DEPENDENCIES
   haml
   jasmine
   jquery-rails
+  octokit
   omniauth-facebook
   paperclip
   pg
