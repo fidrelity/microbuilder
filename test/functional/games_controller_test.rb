@@ -6,7 +6,7 @@ class GamesControllerTest < ActionController::TestCase
     @game = Factory.build(:game, :id => 1, :title => "mygame", :user_id => 1, :played => 0)
     @game.save
     
-    #assert_difference(@game.reload.played.to_s, 1) do
+    #assert_difference(@game.played.to_s, 1) do
     #  put :played, :id => 1
     #end
 
