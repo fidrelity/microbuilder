@@ -4,6 +4,9 @@
       Help us to improve Playtin!
     %div{:id => "feedbackContent", :class => "control-group"}
       %label
+        Subject:
+      =text_field_tag(:subject, "", :class => "span6")
+      %label
         Your comment:
       =text_area_tag(:body, "", :size => "120x2", :class => "span6")
       %br
