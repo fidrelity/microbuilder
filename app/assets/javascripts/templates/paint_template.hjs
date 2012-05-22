@@ -134,3 +134,5 @@ Name: <input type="text" size="25" id="imageName"> isPublic <input type="checkbo
 {{/view}}
 
 </p>
+
+<input type="file" id="file">

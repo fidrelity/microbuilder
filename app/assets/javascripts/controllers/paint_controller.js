@@ -61,6 +61,8 @@ var PaintController =  Ember.ArrayController.extend({
 
     this.tempCanvas = $('#canvas-temp');
     this.tempContext = this.tempCanvas[0].getContext("2d");
+
+    $('#file').change(function(e) { App.paintController.handleFile(e) });
     
 
     // if mode = background -> set spriteSize to background size
@@ -410,6 +412,30 @@ var PaintController =  Ember.ArrayController.extend({
     y = Math.floor(y);
 
     return { x: x, y: y };
+  },
+
+  handleFile : function(e) {
+
+    reader = new FileReader;
+
+    reader.onload = function(event) {
+        var w = App.paintController.zoomCanvas.width;
+        var h = App.paintController.zoomCanvas.height;
+        var img = new Image;
+        img.src = event.target.result;
+        img.width = w;
+        img.height = h;
+
+        img.onload = function() {
+          App.paintController.zoomContext.drawImage(img, 0,0, w, h);      
+          App.paintController.drawToSprite();
+        };
+
+        
+    };
+
+    reader.readAsDataURL(e.target.files[0]);
+
   }
 
 });
