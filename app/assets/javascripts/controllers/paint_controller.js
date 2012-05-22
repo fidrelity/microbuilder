@@ -3,20 +3,20 @@
   
   - manages the graphic being saved
 
-  Todo:
-    - user can set sprite size
+  Todo:    
     - removeCanvas
-    - highlight (visualy) current sprite canvas
     - reset function
+    - ColorPaellete toggle
   Fix:
-    - bug when selecting other sprite -> DrawTool problem
+    - sprite limit
     - didInsertElement - initalizing multipletimes
-    - improve performance!
     - refactor
       -> Create Classes: Zoomer, FramePlayer
     - on Save -> hide merged canvas
               -> show message on error
-    - onmouseout zoom canvas
+    - Zoom and temp-canvas
+    - Eraser
+    - Zooming too pixelated
   Feature:
     - Text
     - FillTool
