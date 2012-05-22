@@ -44,36 +44,42 @@
   </div>
 
   <!-- Second Toolbar -->
-  <div id="tool-bar-second" class="form-horizontal">
-    <!-- SIZE -->
-    <div id="sizeWrapper">
-      <div id="sizeSlider" style="float:left;"></div>
+  <div id="tool-bar-second" class="form-horizontal row">
+    <div class="span3 form-horizontal">
+      <!-- SIZE -->
+      <div id="sizeWrapper">
+        <div id="sizeSlider" ></div>
+      </div>
     </div>
 
-    <!-- COLOR PALETTE -->
-    <ul id="palette" style="overflow:hidden;">
-      {{#view ColorPaletteView
-        color = "#000000"
-      }}
-        <li class="colorBlock" data-color="#FFFFFF" style="background-color:#FFFFFF"></li>
-        <li class="colorBlock" data-color="#000000" style="background-color:#000000"></li>
-        <li class="colorBlock" data-color="#FF0000" style="background-color:#FF0000"></li>
-        <li class="colorBlock" data-color="#00FF00" style="background-color:#00FF00"></li>
-        <li class="colorBlock" data-color="#0000FF" style="background-color:#0000FF"></li>
-        <li class="colorBlock" data-color="#FFEA05" style="background-color:#FFEA05"></li>
-        <li class="colorBlock" data-color="#FF1A00" style="background-color:#FF1A00"></li>
-        <li class="colorBlock" data-color="#CC0000" style="background-color:#CC0000"></li>
-        <li class="colorBlock" data-color="#FF7400" style="background-color:#FF7400"></li>
-        <li class="colorBlock" data-color="#C79810" style="background-color:#C79810"></li>
-        <li class="colorBlock" data-color="#73880A" style="background-color:#73880A"></li>
-        <li class="colorBlock" data-color="#008C00" style="background-color:#008C00"></li>
-        <li class="colorBlock" data-color="#006E2E" style="background-color:#006E2E"></li>
-        <li class="colorBlock" data-color="#4096EE" style="background-color:#4096EE"></li>
-        <li class="colorBlock" data-color="#356AA0" style="background-color:#356AA0"></li>
-        <li class="colorBlock" data-color="#3F4C6B" style="background-color:#3F4C6B"></li>
-        <li class="colorBlock" data-color="#FF0084" style="background-color:#FF0084"></li>    
-      {{/view}}
-    </ul>
+    <div class="span8 form-horizontal">
+      <!-- COLOR PALETTE -->
+      <div id="colorChooser"></div>
+      <ul id="palette" style="overflow:hidden;">
+        {{#view ColorPaletteView
+          color = "#000000"
+        }}
+          <li class="colorBlock" data-color="#FFFFFF" style="background-color:#FFFFFF"></li>
+          <li class="colorBlock" data-color="#000000" style="background-color:#000000"></li>
+          <li class="colorBlock" data-color="#FF0000" style="background-color:#FF0000"></li>
+          <li class="colorBlock" data-color="#00FF00" style="background-color:#00FF00"></li>
+          <li class="colorBlock" data-color="#0000FF" style="background-color:#0000FF"></li>
+          <li class="colorBlock" data-color="#FFEA05" style="background-color:#FFEA05"></li>
+          <li class="colorBlock" data-color="#FF1A00" style="background-color:#FF1A00"></li>
+          <li class="colorBlock" data-color="#CC0000" style="background-color:#CC0000"></li>
+          <li class="colorBlock" data-color="#FF7400" style="background-color:#FF7400"></li>
+          <li class="colorBlock" data-color="#C79810" style="background-color:#C79810"></li>
+          <li class="colorBlock" data-color="#73880A" style="background-color:#73880A"></li>
+          <li class="colorBlock" data-color="#008C00" style="background-color:#008C00"></li>
+          <li class="colorBlock" data-color="#006E2E" style="background-color:#006E2E"></li>
+          <li class="colorBlock" data-color="#4096EE" style="background-color:#4096EE"></li>
+          <li class="colorBlock" data-color="#356AA0" style="background-color:#356AA0"></li>
+          <li class="colorBlock" data-color="#3F4C6B" style="background-color:#3F4C6B"></li>
+          <li class="colorBlock" data-color="#FF0084" style="background-color:#FF0084"></li>    
+        {{/view}}
+      </ul>
+    </div>
+    
   </div>
 
   <div id="area-wrapper">

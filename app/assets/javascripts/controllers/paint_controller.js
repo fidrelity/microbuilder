@@ -39,7 +39,7 @@ var PaintController =  Ember.ArrayController.extend({
   spriteCounter : 0,    // spriteModel.index
   //
   color : "#000000",    // Paint color
-  size : 1,             // Paint stroke size
+  size : 2,             // Paint stroke size
   zoom : 4,             // Zoom size
   //  
   playDelay : 200,
@@ -252,9 +252,9 @@ var PaintController =  Ember.ArrayController.extend({
 
   toggleColorPalette : function(_visible) {
     if(_visible)
-      $('#palette').show();
+      $('#colorChooser').show(); //palette
     else
-      $('#palette').hide();
+      $('#colorChooser').hide();
   },
 
   // ---------------------------------------
@@ -416,13 +416,16 @@ var PaintController =  Ember.ArrayController.extend({
 
   handleFile : function(e) {
 
+    var goon = confirm("This will overwrite your current canvas. Proceed?");
+    if(!goon) return false;
+
     reader = new FileReader;
 
     reader.onload = function(event) {
         var w = App.paintController.zoomCanvas.width;
         var h = App.paintController.zoomCanvas.height;
         var img = new Image;
-        img.src = event.target.result;
+        
         img.width = w;
         img.height = h;
 
@@ -431,7 +434,7 @@ var PaintController =  Ember.ArrayController.extend({
           App.paintController.drawToSprite();
         };
 
-        
+        img.src = event.target.result;
     };
 
     reader.readAsDataURL(e.target.files[0]);
