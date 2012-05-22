@@ -5,17 +5,15 @@
 
   Todo:    
     - removeCanvas
-    - reset function
+    - reset function (back to size)
     - ColorPaellete toggle
   Fix:
-    - sprite limit
     - didInsertElement - initalizing multipletimes
     - refactor
-      -> Create Classes: Zoomer, FramePlayer
+      -> Create Classes: Zoomer, FramePlayer, colorpallette
     - on Save -> hide merged canvas
               -> show message on error
     - Zoom and temp-canvas
-    - Eraser
     - Zooming too pixelated
   Feature:
     - Text
@@ -37,6 +35,7 @@ var PaintController =  Ember.ArrayController.extend({
   spriteWrapper : 'sprites-area',
   showMarker : false,
   spriteCounter : 0,    // spriteModel.index
+  LIMIT : 8,
   //
   color : "#000000",    // Paint color
   size : 2,             // Paint stroke size
@@ -151,6 +150,11 @@ var PaintController =  Ember.ArrayController.extend({
     this.clearZoomCanvas();
   },
 
+  erase : function(_x, _y) {
+    this.getCurrentSpriteModel().erase(Math.floor(_x / this.zoom), Math.floor(_y / this.zoom), Math.floor(this.size / this.zoom));
+    this.zoomContext.clearRect(_x, _y, this.size, this.size);
+  },
+
   // ---------------------------------------
   // onMouseZoomCanvas Delegate events to current Tool
   click : function() {
@@ -179,7 +183,7 @@ var PaintController =  Ember.ArrayController.extend({
   // ---------------------------------------  
   // Sprite Models
   add : function(copy) {
-
+    if(this.content.length >= this.LIMIT) return false;
     var copyData = copy ? this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height) : null;  
 
     var spriteModel = SpriteModel.create({

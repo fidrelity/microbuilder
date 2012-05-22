@@ -148,7 +148,8 @@ var GameController = Ember.Object.extend({
         game: {
           title : this.game.title || '',
           instruction: this.game.instructions || '',
-          data : JSON.stringify( data.game )
+          data : JSON.stringify( data.game ),
+          preview_img : this.getSelectedSnapshotData();
         },
         
         graphic_ids: data.graphicIDs

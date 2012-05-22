@@ -41,7 +41,7 @@ var PencilToolModel = Ember.Object.extend({
   draw : function(_x, _y, _endX, _endY) {
     if(this.get('isErasing') == true) {
       var centered = App.paintController.size > 4 ? App.paintController.size / 2 : 0;
-      this.sprite.erase(_x - centered, _y - centered, App.paintController.size);
+      App.paintController.erase(_x - centered, _y - centered);
     } else {
       this.pixelDrawer.popImageData();
       this.pixelDrawer.drawLine(_x, _y, _endX, _endY, App.paintController.color, App.paintController.size * App.paintController.zoom);
