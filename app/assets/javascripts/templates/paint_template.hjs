@@ -82,15 +82,18 @@
       <h4>Zoomed view:</h4>
       <!-- Zoomed Canvas -->
       <canvas id="zoomCanvas" width="256" height="256"></canvas>
+      <!-- Temporary Canvas -->
+      <canvas id="canvas-temp" width="256" height="256"></canvas>
     </div>
 
     <div id="sprites-area">
+
+      <div id="test">
+      </div>
+
       <h4>Original</h4>
       <!-- Canvas to save -->
       <canvas id="canvas-merged" width="64" height="64"></canvas>
-
-      <!-- Temporary Canvas -->
-      <canvas id="canvas-sketch" width="64" height="64"></canvas>
       
         <!-- Sprite Canvas (preview) -->
         {{#each App.paintController}}

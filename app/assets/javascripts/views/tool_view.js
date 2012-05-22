@@ -60,6 +60,7 @@ var ToolView = Ember.View.extend({
   pencil : function() {
     this.setCurrentTool();
     App.pencilTool.setEraser(false);
+    App.paintController.click();
   },
 
   erase : function() {

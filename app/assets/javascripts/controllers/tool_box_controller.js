@@ -44,25 +44,24 @@ var DrawToolModel = Ember.Object.extend({
   tempCanvas : null,
 
   init : function () {
-    this.pixelDrawer = new PixelDrawer();
+    this.pixelDrawer = App.paintController.pixelDrawer;
   },
 
   initAfter : function () {
-    this.tempCanvas = $('#canvas-sketch');
-    this.tempContext = this.tempCanvas[0].getContext("2d");
-    //console.log("tempcanvas", $('#canvas-sketch'));
+    this.tempCanvas = App.paintController.tempCanvas;
+    this.tempContext = App.paintController.tempContext;
 
-    this.zoomCanvas = document.getElementById("zoomCanvas");
-    this.zoomContext = this.zoomCanvas.getContext("2d");
+    this.zoomCanvas = App.paintController.zoomCanvas;
+    this.zoomContext = App.paintController.zoomContext;
   },
   
   click : function(_options) {
-    this.showTempCanvas();
+    this.setTempCanvas();
     App.paintController.toggleColorPalette(true);
   },
 
   mousedown : function(_options, _pixelDrawer) {
-    this.sprite = _options.sprite;
+    //this.sprite = _options.sprite;
     this.isActive = true;
     //
     this.startX = _options.x;
@@ -79,7 +78,7 @@ var DrawToolModel = Ember.Object.extend({
     this.endY = _options.y;
 
     // Clear tempCanvas
-    this.tempContext.clearRect(0, 0, this.currentSprite.width, this.currentSprite.height);
+    this.tempContext.clearRect(0, 0, this.zoomCanvas.width, this.zoomCanvas.height);
 
     // Draw on pixelDrawer current canvas => tempCanvas
     this.draw(this.startX, this.startY, _options.x, _options.y);
@@ -87,17 +86,18 @@ var DrawToolModel = Ember.Object.extend({
 
   mouseup : function(_options) {
     this.isActive = false;
-
-    // Set pixelDrawer canvas to draw to current sprite canvas
-    this.pixelDrawer.setCanvasContext(App.paintController.getCurrentSpriteModel().canvas);
-    // Draw on current sprite canvas
+      
+    // Set pixelDrawer canvas to zoom canvas
+    this.pixelDrawer.setCanvasContext(this.zoomCanvas);
+    // Draw on zoom canvas
     this.draw();
-    // Push state
-    _options.sprite.pushState();
+
+    // Draw on sprite canvas
+    App.paintController.drawToSprite();
 
     // Change back to tempCanvas
     this.pixelDrawer.setCanvasContext(this.tempCanvas[0]);
-    this.pixelDrawer.context.clearRect(0, 0, this.currentSprite.width, this.currentSprite.height);
+    this.pixelDrawer.context.clearRect(0, 0, this.zoomCanvas.width, this.zoomCanvas.height);
 
     this.endX = this.startX;
     this.endY = this.startY;
@@ -114,32 +114,19 @@ var DrawToolModel = Ember.Object.extend({
     this.pixelDrawer.pushImageData();
 
     // Update ZoomCanvas
+    /*
     App.paintController.clearZoomCanvas();
-    App.paintController.zoomImageData(this.currentContext.getImageData(0, 0, this.currentSprite.width, this.currentSprite.height));
-    App.paintController.zoomImageData(this.tempContext.getImageData(0, 0, this.currentSprite.width, this.currentSprite.height));
-    
+    */
+    //App.paintController.zoomImageData(this.currentContext.getImageData(0, 0, this.currentSprite.width, this.currentSprite.height));    
+    //App.paintController.zoomImageData(this.tempContext.getImageData(0, 0, this.currentSprite.width, this.currentSprite.height));
   },
 
   // Show temp canvas over current canvas (sprite)
-  showTempCanvas : function() {
-    this.currentSprite  = App.paintController.getCurrentSpriteModel().canvas;
-    this.currentContext = this.currentSprite.getContext("2d");
+  setTempCanvas : function() {
 
-    // Set temp canvas as canvas to draw in pixelDrawer and zoomTool
-    this.pixelDrawer.setCanvasContext(this.tempCanvas[0]);
-    
-    // Set position of temp canvas
-    var canvasObject = $("#" + this.currentSprite.id);
-    this.tempCanvas.css({     
-                            left: canvasObject.position().left,
-                            top: canvasObject.position().top,
-                            width: canvasObject.width(),
-                            height: canvasObject.height()
-                        }).show();
-  },
-
-  hideSketchCanvas : function() {
-    Paint.tempCanvas.hide();
+    // Set temp canvas as canvas to draw in pixelDrawer
+    this.pixelDrawer.setCanvasContext(App.paintController.tempCanvas[0]);    
+    App.paintController.showTempCanvas();
   },
 
   setDrawFunction : function(_fnc) {    
