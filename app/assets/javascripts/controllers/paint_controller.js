@@ -62,12 +62,16 @@ var PaintController =  Ember.ArrayController.extend({
     this.tempCanvas = $('#canvas-temp');
     this.tempContext = this.tempCanvas[0].getContext("2d");
 
-    $('#file').change(function(e) { App.paintController.handleFile(e) });
-    
+    // Init instanst file load    
+    if (!window.File && !window.FileReader && !window.FileList && !window.Blob) {
+      $('#file').remove();
+    } else {
+      $('#file').change(function(e) { App.paintController.handleFile(e) });
+    }
 
     // if mode = background -> set spriteSize to background size
-      // remove zoom canvas
-      // remove sprites
+      // remove zoom
+      // remove original sprites
       // remove add button
 
     // if mode = graphic -> show size-page
@@ -318,10 +322,10 @@ var PaintController =  Ember.ArrayController.extend({
 
   updateZoom : function(clear) {
     var clear = clear || true;
-    this.zoomCanvas.width  = this.zoom * this.spriteSize.width;
-    this.zoomCanvas.height = this.zoom * this.spriteSize.height;
-    this.tempCanvas[0].width  = this.zoom * this.spriteSize.width;
-    this.tempCanvas[0].height = this.zoom * this.spriteSize.height;
+    this.zoomCanvas.width     = this.zoom * this.spriteSize.width;
+    this.zoomCanvas.height    = this.zoom * this.spriteSize.height;
+    this.tempCanvas[0].width  = this.zoomCanvas.width;
+    this.tempCanvas[0].height = this.zoomCanvas.height;
 
     if(clear) this.clearZoomCanvas();
     var imgData = this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height);

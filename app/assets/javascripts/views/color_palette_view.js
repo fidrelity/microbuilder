@@ -1,6 +1,5 @@
 var ColorPaletteView = Ember.View.extend({
   
-  //templateName: 'templates_sprite_template',
   color : null,
   
   didInsertElement : function() {
