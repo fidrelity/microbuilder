@@ -10,7 +10,7 @@
       %i{:class => "icon-thumbs-down"}
       0
 
-  - @games.each do |game|
+  - games.each do |game|
     %li{:class => "span2"}
       %div{:class => "thumbnail"}
         =link_to image_tag("game.png"), play_path(game)

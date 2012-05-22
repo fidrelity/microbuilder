@@ -18,15 +18,16 @@ Playtin::Application.routes.draw do
 
   resources :games, :only => [:create, :destroy] do
     member do
-      put '/played', :to => 'games#played'
-      put '/like', :to => 'games#like'
-      put '/dislike', :to => 'games#dislike'
+      put 'played'
+      put 'like'
+      put 'dislike'
       post '/comment', :to => 'gameComments#create'
     end
     
     collection do 
+      get 'auto_search'
       get 'search', :to => 'games#search', :as => 'search'
-      get 'auto_search', :to => 'games#auto_search', :as => 'auto_search'
+      #get 'auto_search', :to => 'games#auto_search', :as => 'auto_search'
     end
   end
 
@@ -34,8 +35,8 @@ Playtin::Application.routes.draw do
   post 'support/feedback', :to => 'support#feedback'    
   post 'support/ticket', :to => 'support#ticket'
   
-  get '/games/auto_search'
-  get '/games/autocomplete_game_title'
+  #get '/games/auto_search'
+  #get '/games/autocomplete_game_title'
   get '/imprint', :to => 'pages#imprint'
   get '/gallery(/:type)', :to => 'games#index', :as => 'gallery'
   get '/play/:id', :to => 'games#show', :as => 'play'
