@@ -27,6 +27,7 @@
         <button {{action "copySprite"}}>Copy</button>
         <button {{action "clear"}}>Clear</button>
         <button {{action "undo"}}>Undo</button>       
+        <button {{action "reset"}}>Reset</button>  
       {{/view}}   
   
     </div>

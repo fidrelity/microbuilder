@@ -5,8 +5,6 @@
 
   Todo:    
     - removeCanvas
-    - reset function (back to size)
-    - ColorPaellete toggle
   Fix:
     - didInsertElement - initalizing multipletimes
     - refactor
@@ -47,9 +45,6 @@ var PaintController =  Ember.ArrayController.extend({
   init : function() {
     this.spriteSize = { width: 64, height: 64};
     this.pixelDrawer = new PixelDrawer();
-    // Add first Sprite
-    //this.addObject(SpriteModel.create({ id: 0, width: this.spriteSize.width, height: this.spriteSize.height, wrapper: this.spriteWrapper }));
-    //this.toolBox = ToolBox.create();
   },
 
   // Called when Paint_View init
@@ -134,8 +129,17 @@ var PaintController =  Ember.ArrayController.extend({
 
   // ---------------------------------------
   reset : function() {
-    // delete all sprites, except first 
-    // clear first one
+    var ok = confirm("Remove all sprites and reset paint editor?");
+    if(!ok) return false;
+
+    for (var i = 0; i < this.content.length; i++) {
+      console.log(this.content[i]);
+      this.remove(this.content[i]);
+    };
+    var first = this.content[this.content.length - 1];
+    first.reset();
+    this.setCurrentSpriteModel(first);
+    this.clearZoomCanvas();
   },
 
   // Undo current SpriteModel
@@ -151,8 +155,8 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   erase : function(_x, _y) {
-    this.getCurrentSpriteModel().erase(Math.floor(_x / this.zoom), Math.floor(_y / this.zoom), Math.floor(this.size / this.zoom));
-    this.zoomContext.clearRect(_x, _y, this.size, this.size);
+    this.getCurrentSpriteModel().erase(Math.floor(_x / this.zoom), Math.floor(_y / this.zoom), this.size * this.zoom);
+    this.zoomContext.clearRect(_x, _y, this.size * this.zoom, this.size * this.zoom);
   },
 
   // ---------------------------------------
@@ -204,6 +208,7 @@ var PaintController =  Ember.ArrayController.extend({
   remove : function(_spriteModel) {
     if(this.content.length === 1) return false;
     var spriteModel = _spriteModel || this.getCurrentSpriteModel();
+    $("#" + spriteModel.id).remove();
     this.removeObject(_spriteModel);
     // set currentSpriteModel
   },
@@ -364,7 +369,7 @@ var PaintController =  Ember.ArrayController.extend({
     this.playDelay = parseInt($('#playDelay').val());
     this.currentFrameIndex = 0;
     this.overSprites();
-    this.nextFrame();
+    this.nextFrame();    
   },
 
   nextFrame : function() {

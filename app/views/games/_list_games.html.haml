@@ -1,6 +1,6 @@
 %ul{:class=>"thumbnails"}
 
-  %li{:class => "span2", :id => "game-li-template"}
+  %li{:class => "span3", :id => "game-li-template"}
     %div{:class => "thumbnail"}
       %br
       %i{:class => "icon-eye-open"}
@@ -11,9 +11,9 @@
       0
 
   - games.each do |game|
-    %li{:class => "span2"}
+    %li{:class => "span3"}
       %div{:class => "thumbnail"}
-        =link_to image_tag("game.png"), play_path(game)
+        =link_to image_tag("http://placehold.it/210x130"), play_path(game)
         %h4
           =game.title
         =link_to "by #{game.author.display_name}", user_path(game.author)

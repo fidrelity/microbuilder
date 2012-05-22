@@ -149,7 +149,7 @@ var GameController = Ember.Object.extend({
           title : this.game.title || '',
           instruction: this.game.instructions || '',
           data : JSON.stringify( data.game ),
-          preview_img : this.getSelectedSnapshotData();
+          preview_img : this.getSelectedSnapshotData()
         },
         
         graphic_ids: data.graphicIDs
@@ -210,7 +210,7 @@ var GameController = Ember.Object.extend({
 
     var canvas = document.getElementById("testCanvas");
     var img_data = canvas.toDataURL("image/png");
-    var screenshot = '<li><img src="'+img_data+'" width="320" height="195" class="thumb"><br><input type="radio" value="" name="previewImage" data-id=""></li>';
+    var screenshot = '<li><img src="'+img_data+'" width="210" height="130" class="thumb"><br><input type="radio" value="" name="previewImage" data-id=""></li>';
 
     $('#thumbnail').append(screenshot);
     /*
