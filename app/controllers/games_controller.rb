@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   respond_to :js, :only => [:create, :index, :update, :like, :dislike]
   before_filter :authenticate_user!, :only => [:create, :destroy]
+  before_filter :find_game, :only => [:show, :embed, :destroy, :like, :dislike, :played]
   
   def index
     @games = case params[:type]
@@ -14,12 +15,10 @@ class GamesController < ApplicationController
   end
   
   def show
-    @game = Game.find(params[:id])
     @comments = @game.game_comments
   end
   
   def embed
-    @game = Game.find(params[:id])
     render :file => "app/views/games/embed", :layout => false
   end
   
@@ -44,6 +43,7 @@ class GamesController < ApplicationController
   
   def destroy
     @game = current_user.games.find(params[:id])
+
     if @game.author == current_user
       @game.destroy 
       flash[:notice] = "Successfully deleted game"
@@ -56,28 +56,24 @@ class GamesController < ApplicationController
 
   # ------------------
   def played
-    @game = Game.find(params[:id])
     counter = @game.played + 1
     @game.update_attribute(:played, counter)
     render :nothing => true, :layout => false
   end
 
   def like
-    @game = Game.find(params[:id])
     counter = @game.likes + 1
     @game.update_attribute(:likes, counter)
-    #cookies[:game] = "true"    
+    #cookies[:game] = "true"
   end
 
   def dislike
-    @game = Game.find(params[:id])
     counter = @game.dislikes + 1
     @game.update_attribute(:dislikes, counter)
     render :file => "app/views/games/like", :layout => false
   end
 
-  def report
-    @game = Game.find(params[:id])
+  def report    
     render :nothing => true, :layout => false
   end
 
@@ -87,6 +83,8 @@ class GamesController < ApplicationController
     render json: @games.map(&:title)
   end
 
+  private
+
   def push_new_game(game)
     Pusher['game_channel'].trigger('newgame', {
       :name => game.title,
@@ -94,6 +92,10 @@ class GamesController < ApplicationController
       :author => game.author.display_name,
       :author_id => game.author.id
     })
+  end
+
+  def find_game
+    @game = Game.find(params[:id])
   end
 
 end

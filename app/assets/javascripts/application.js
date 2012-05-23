@@ -27,7 +27,6 @@ var Feedback = {
     Feedback.wrapper = $("#feedback");
     $('.showFeedback').click(function() { Feedback.show(); });
     $('.closeFeedback').click(function() { Feedback.close(); });
-    $('.sendFeedback').click(function() { Feedback.send(); });
     Feedback.textarea = Feedback.wrapper.find("#body");
     Feedback.subject = Feedback.wrapper.find("#subject");
   },

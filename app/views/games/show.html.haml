@@ -47,31 +47,23 @@
         <iframe width="640" height="390" src="#{root_url}play/#{@game.id}/embed" frameborder="0"></iframe>
 
     %div{:class => "well layer", :id => "reportLayer"}
-      %a{:class=>"close closeLayer"}
+      %a{:class =>"close closeLayer"}
         &times;
       %h4 Report us this game
       %p
         If you think this game doesn't work, is inappropiate or it hurts any rights, then tell us:
-      %input{:type=>"hidden", :value => @game.id, :name => "game_id"}
-      %label
-        Tell us why:
-      %textarea{:cols =>"150", :rows =>"1", :class=>"span6", :name => "report_comment"}
-      %label
-        Reason:
-      %select
-        %option
-          Flawed
-        %option
-          Copyrigth infrigment
-        %option
-          Spam
-        %option
-          Inappropiate
-      %p
-        %button{:class=>"btn btn-success"}
-          Report
-        %button{:class=>"btn closeLayer"}
-          Cancel
+      = form_tag("/support/report", :method => "post", :remote => true) do        
+        = hidden_field_tag(:gid, "#{@game.id}", :class => "span6")
+        %label
+          Tell us why:
+        = text_area_tag(:body, "", :size => "120x2", :class => "span6")
+        %label
+          Reason:
+        = select_tag "type", "<option value='broken'>Broken</option><option value='copyright'>Copyright infrigment</option><option value='inappropiate'>Inappropiate</option>".html_safe
+        %p
+          =submit_tag 'Send report', :class => "btn btn-success"
+          %button{:class=>"btn closeLayer"}
+            Cancel
 
 
     %div{:class=>"row", :style => "margin-top:2em", :id => "commentsWrapper"}

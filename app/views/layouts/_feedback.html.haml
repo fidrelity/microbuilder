@@ -1,5 +1,5 @@
 %div{:id => "feedback", :class => "well"}
-  = form_tag("/support/feedback", :method => "post") do
+  = form_tag("/support/feedback", :method => "post", :remote => true) do
     %h3{:class => "page-header"}
       Help us to improve Playtin!
     %div{:id => "feedbackContent", :class => "control-group"}
