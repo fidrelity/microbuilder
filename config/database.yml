@@ -6,6 +6,7 @@
 development:
   adapter: postgresql
   username: root
+  password: pw
   database: microbuilder_dev
   pool: 5
   timeout: 5000
@@ -17,6 +18,7 @@ test:
   adapter: postgresql
   username: root
   database: microbuilder_test
+  password: pw
   pool: 5
   timeout: 5000
 
