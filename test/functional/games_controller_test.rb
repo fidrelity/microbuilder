@@ -18,7 +18,7 @@ class GamesControllerTest < ActionController::TestCase
     assert_equal 1, @game.reload.dislikes
   end
 
-  should "increase like by two" do    
+  should "increase like by two" do
     xhr :put, :like, :id => 1
     assert_response 200
     xhr :put, :like, :id => 1
