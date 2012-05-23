@@ -17,3 +17,9 @@ var ContactTriggerView = TriggerView.extend({
   templateName : 'templates_trigger_contact_template'
   
 });
+
+var NumberTriggerView = TriggerView.extend({
+  
+  templateName : 'templates_trigger_number_template'
+  
+});

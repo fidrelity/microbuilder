@@ -22,6 +22,7 @@ PixelDrawer.prototype.putPixel = function (_x, _y, _color) {
   this.colorPixel(_x,_y,color);
 }
 
+
 PixelDrawer.prototype.fillRect = function(_x1,_y1, _x2, _y2, _color) {  
   var color = this.checkIfParsedColor(_color);
   
@@ -207,22 +208,41 @@ PixelDrawer.prototype.colorPixel = function (_x,_y,_color) {
   }
 }
 
-/*PixelDrawer.prototype.parseColor = function(_color) {
-  return new function color() {
-    
-    if(_color.charAt(0)=="#") 
-      _color = _color.substring(1);
-    
-    this.r = parseInt(_color.substr(0,2), 16);
-    this.g = parseInt(_color.substr(2,2), 16);
-    this.b = parseInt(_color.substr(4,2), 16);
-    this.a = parseInt(_color.substr(6,2), 16);
-    
-    if(!this.a) {
-      this.a = 255;
-    }
-  };
-}*/
+PixelDrawer.prototype.getPixelColor = function(_x,_y) {
+  var colorIndex = ((_y*(this.dataWidth*4)) + (_x*4));
+
+  return [this.data[colorIndex],
+          this.data[colorIndex+1],
+          this.data[colorIndex+2],
+          this.data[colorIndex+3]];
+}
+
+PixelDrawer.prototype.compareColor = function(_color1, _color2) {
+  if(_color1[0] ==_color1[0] &&
+     _color1[1] == _color2[1] &&
+     _color1[2] == _color2[2] &&
+     _color1[3] == _color2[3])
+     return true;
+   else
+     return false;
+}
+
+PixelDrawer.prototype.floodFill = function(_x, _y,_newColor, _oldColor)
+{
+    _newColor = this.checkIfParsedColor(_newColor);
+  
+    if(_x >= 0 && _x < this.dataWidth && _y >= 0 && _y < this.dataHeight
+      && this.compareColor(this.getPixelColor(_x,_y), _oldColor) &&
+         !this.compareColor(this.getPixelColor(_x,_y), _newColor))
+    {
+        this.colorPixel(_x,_y, _newColor); //set color before starting recursion!
+
+        this.floodFill(_x + 1, _y,     _newColor, _oldColor);       
+        this.floodFill(_x - 1, _y,     _newColor, _oldColor);       
+        this.floodFill(_x,     _y + 1, _newColor, _oldColor);
+        this.floodFill(_x,     _y - 1, _newColor, _oldColor);              
+    }    
+}  
 
 PixelDrawer.prototype.parseColor = function(_color) {
     

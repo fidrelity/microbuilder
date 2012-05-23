@@ -46,6 +46,13 @@ var TriggerController = Ember.Object.extend({
     
   },
   
+  number : function() {
+    
+    this.set( 'contentView', NumberTriggerView.create() );
+    this.set( 'trigger', NumberTriggerModel.create() );
+    
+  },
+  
   save : function() {
     
     var trigger = this.get( 'trigger' );

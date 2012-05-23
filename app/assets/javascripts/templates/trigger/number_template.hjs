@@ -1,0 +1,77 @@
+<p>Select type of number trigger</p>
+
+<button {{action "setTypeToEquals" target="trigger"}}>equals</button>
+<button {{action "setTypeToSmallerThan" target="trigger"}}>smaller than</button>
+<button {{action "setTypeToGreaterThan" target="trigger"}}>greater than</button>
+<button {{action "setTypeToOnChange" target="trigger"}}>when changing</button>
+
+{{#if trigger.type}}
+   
+  <p>Which object should the trigger be applied to?</p>
+  
+  <ul class="graphics">
+
+    {{#each App.gameObjectsController}}
+
+      {{#view SelectView 
+        contentBinding="this" 
+        controllerBinding="App.triggerController.trigger" 
+        selectFunctionBinding="App.triggerController.trigger.selectObject" }}
+    
+        <li {{action "select"}} {{bindAttr class="isSelected:selected"}}>
+          <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
+          <p>{{content.name}}</p>
+        </li>
+    
+      {{/view}}
+  
+    {{/each}}
+
+  </ul>
+
+  <div class='clear'><div>
+
+{{/if}}
+
+{{#if trigger.gameObject}}
+  compare with... : <br>
+  <button {{action "selectedGameObject" target="trigger"}}>Game Object</button>
+  <button {{action "selectedNumber" target="trigger"}}>Number</button>
+{{/if}}
+
+{{#if trigger.selectedGameObjectBool}}
+
+  <p>Which objects number should the trigger compare</p>
+  
+  <ul class="graphics">
+
+    {{#each App.gameObjectsController}}
+
+      {{#view SelectView 
+        contentBinding="this" 
+        controllerBinding="App.triggerController.trigger" 
+        compareContentBinding = "App.triggerController.trigger.gameObject"
+        selectFunctionBinding="App.triggerController.trigger.selectObject2" }}
+        
+        {{#unless compares}}
+          <li {{action "select"}} {{bindAttr class="isSelected:selected"}}>
+            <img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} />
+            <p>{{content.name}}</p>
+          </li>
+        {{/unless}}
+
+      {{/view}}
+  
+    {{/each}}
+
+  </ul>
+{{/if}}
+
+{{#if trigger.selectedNumberBool}}
+
+  <p>Which number do you want to compare with?</p>
+  {{view Ember.TextField 
+    valueBinding="App.triggerControler.trigger.number" 
+    size="2" placeholder="0" maxlength="2"
+  }}
+{{/if}}
