@@ -34,6 +34,10 @@ class Graphic < ActiveRecord::Base
     }
   end
   
+  def soft_delete
+    games.any? ? update_attribute(:user, nil) : destroy
+  end
+  
   protected
     def decode_base64_image
       if image_data
