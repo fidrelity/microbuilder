@@ -42,6 +42,8 @@ class GamesController < ApplicationController
   end
   
   def destroy
+    @game = current_user.games.find(params[:id])
+
     if @game.author == current_user
       @game.destroy 
       flash[:notice] = "Successfully deleted game"
