@@ -16,6 +16,7 @@ class Game < ActiveRecord::Base
   pg_search_scope :search, :against => [:title, :instruction]
   
   class << self
+    # SQL from http://evanmiller.org/how-not-to-sort-by-average-rating.html
     def all_by_rating
       query = <<-eos
         SELECT *, ((likes + 1.9208) / (likes + dislikes) 
@@ -36,6 +37,7 @@ class Game < ActiveRecord::Base
     end
   end
 
+  # rating algorithm from http://evanmiller.org/how-not-to-sort-by-average-rating.html
   def rating
     total = (likes + dislikes)
     z = 1.96

@@ -1,9 +1,0 @@
-
-= form_for @graphic, :url => graphics_path, :html => { :multipart => true } do |f|
-  = f.text_field :name
-
-  - 2.times do |state|
-    = f.fields_for "states[#{state}]" do |x|
-      = x.file_field :image
-    
-  = f.submit
