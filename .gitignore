@@ -21,3 +21,4 @@ public/graphics/
 
 # Ignore vendor
 /vendor
+/nbproject/private/

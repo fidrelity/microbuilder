@@ -22,7 +22,7 @@
     <div>
 
       <label>game title: </label>
-      {{view Ember.TextField valueBinding="game.title" size="32" placeholder="insert name" maxlength="32"}}
+      {{view Ember.TextField valueBinding="game.title" size="10" placeholder="insert name" maxlength="3"}}
       <br />
 
       <label>instructions: </label>
@@ -36,6 +36,11 @@
       }}
 
       <button {{action "publishGame" target="App.gameController"}}>publish</button>
+      <button {{action "takePreviewSnapshot" target="App.gameController"}}>Take Snapshot</button>
+
+      <ul id="thumbnail">
+
+      </ul>
     
     </div>
   

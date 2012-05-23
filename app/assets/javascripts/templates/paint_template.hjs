@@ -1,94 +1,146 @@
 <h2>Paint</h2>
 
-<p>paint a new object</p>
+<div id="paint-wrapper">
+  <!-- Toolbar -->
+  <div id="tool-bar" class="row">
+    <div class="span8 form-horizontal">
+      {{#view ToolView
+        toolBinding = "App.pencilTool"
+      }}
+        <button {{action "pencil"}}>PencilTool</button>     
+        <button {{action "erase"}}>Eraser</button>       
+      {{/view}}
 
-
-    <!-- Select Size
-    <div id="introWrapper" class="slide">
-      <div class="slide-content">
-        <h2>Select canvas size:</h2>
-        Draw Background
-        <input type="radio" name="type" value="1" id="drawBackgroundCheckbox">
-
-        <p></p>
-
-        <input type="radio" name="type" value="2" id="drawObjectCheckbox"><br />
-
-        <div id="canvasSizeSlider"></div>
-        <div id="sizeSample"></div>
-      </div>
-
-    </div>
-     -->
-
-    <!-- Paint -->
-    <div id="paintWrapper" class="slide">
-      <canvas id="sprite-canvas"></canvas>
-      <div class="slide-content">
-
-        <div id="paintLeft">
-          View: <input type="image" src="assets/paint/application_tile_vertical.png" class="switchViewButton"> <input type="image" src="assets/paint/application_cascade.png" id="switchViewButton" class="switchViewButton">
-          <div id="paints">
-              <div id="outlineBox"></div>
-              <canvas id="canvas-template" class="canvas canvas-over" width="64" height="64"></canvas>
-              <canvas id="canvas-sketch" class="canvas" width="64" height="64"></canvas>
-          </div> <!-- canvas -->
-          <div id="zoomCanvasWrapper">
-               <canvas id="zoomCanvas" width="256" height="256"></canvas>
-               <div id="cursorRect"></div>
-          </div>
-          <input type="image" src="assets/paint/magnifier_zoom_in.png" id="zoomInButton" value="+">
-          <input  type="image" src="assets/paint/magifier_zoom_out.png"id="zoomOutButton" value="-">
-        </div>
-
-        <div id="paintRight">
-          <div id="tools" style="padding:10px">
-            <p>
-                <input type="image" src="assets/paint/cursor.png" id="selectToolButton" class="tool" value="Selector">
-                <input type="image" src="assets/paint/pencil.png" id="pencilToolButton" class="tool" value="Pencil">
-                <input type="button" id="lineToolButton" class="tool" value="Line">
-                <input type="button" id="rectToolButton" class="tool" value="Rectangle">
-                <input type="button" id="fillRectToolButton" class="tool" value="Filled Rect">
-                <input type="button" id="fillCircleToolButton" class="tool" value="Filled Circle">
-                <input type="button" id="circleToolButton" class="tool" value="Circle">
-                <input type="button" id="eraserToolButton" class="tool" value="Eraser">            
-            </p>
-
-            <p>
-                <input type="image" src="assets/paint/picture_add.png" id="addImageButton" title="Load image">
-                <input type="image" src="assets/paint/shading.png" id="clearCanvasButton" value="Clear" title="Clear canvas">
-                <input type="image" src="assets/paint/arrow_undo.png" class="tool" id="undoButton" value="Undo" title="Undo">
-                <input type="image" src="assets/paint/shape_square_add.png" id="addCanvasButton" value="Add Canvas" title="Add canvas">
-                <input type="image" src="assets/paint/shape_ungroup.png" id="copyCanvasButton" value="Copy Canvas" title="copy canvas">
-                <input type="image" src="assets/paint/shape_square_delete.png" id="removeCanvasButton" value="Remove Canvas" title="Remove canvas">
-                <input type="image" src="assets/paint/shape_handles.png" class="tool" id="outlineButton" value="Outline">
-                <input type="image" src="assets/paint/shape_flip_horizontal.png" class="tool" id="flipvButton" value="FlipV">
-                <input type="image" src="assets/paint/shape_flip_vertical.png" class="tool" id="fliphButton" value="FlipH">
-            </p>
-            <p>
-                <input type="text" id="playDelay" value="100" size="2">
-                <input type="image" src="assets/paint/resultset_next.png" id="playButton" value="Play">
-                <input type="image" src="assets/paint/stop.png" id="stopButton" value="Stop">
-                <input type="checkbox" value="1" id="replayLoop"> Loop
-            </p>
-            <p>
-            Name: <input type="text" size="25" id="imageName"> <input type="button" id="saveButton" class="tool" value="Save">
-            isPublic <input type="checkbox" id="makePublic">
-            </p>
-
-
-            <div id="pencilWrapper">
-                <div id="sizeWrapper">
-                    <div id="sizeSlider" style="float:left;"></div>
-                    <div id="pencilSizePreview" class="sizeBlock" style="float:right;"></div>
-                </div>
-                <div id="palette" style="overflow:hidden"></div>
-            </div>
-          </div>
-        </div>
-
-      </div>
+      {{#view ToolView
+        toolBinding = "App.drawTool"
+      }}
+        <button {{action "drawRect"}}>Rectangle</button>
+        <button {{action "drawCircle"}}>Circle</button>
+        <button {{action "drawRectFill"}}>Rect Fill</button>
+        <button {{action "drawCircleFill"}}>Circle Fill</button>
+        <button {{action "drawLine"}}>Line</button>
+      {{/view}} 
+    
+      {{#view ToolView
+        toolBinding = "this"
+      }}
+        <button {{action "copySprite"}}>Copy</button>
+        <button {{action "clear"}}>Clear</button>
+        <button {{action "undo"}}>Undo</button>       
+        <button {{action "reset"}}>Reset</button>  
+      {{/view}}   
   
-</div><!-- gfx-editor-end -->
+    </div>
 
+    <div class="span3 form-horizontal">
+      {{#view ToolView
+        toolBinding = "this"
+      }}
+        <button {{action "play"}} id="playButton">Play</button>
+        <button {{action "stop"}} id="stopButton">Stop</button>
+        <input type="text" id="playDelay" value="100" size="2" class="span1">
+        <input type="checkbox" value="1" id="replayLoop"> Loop
+      {{/view}}
+    </div> 
+  </div>
+
+  <!-- Second Toolbar -->
+  <div id="tool-bar-second" class="form-horizontal row">
+    <div class="span3 form-horizontal">
+      <!-- SIZE -->
+      <div id="sizeWrapper">
+        <div id="sizeSlider" ></div>
+      </div>
+    </div>
+
+    <div class="span8 form-horizontal">
+      <!-- COLOR PALETTE -->
+      <div id="colorChooser"></div>
+      <ul id="palette" style="overflow:hidden;">
+        {{#view ColorPaletteView
+          color = "#000000"
+        }}
+          <li class="colorBlock" data-color="#FFFFFF" style="background-color:#FFFFFF"></li>
+          <li class="colorBlock" data-color="#000000" style="background-color:#000000"></li>
+          <li class="colorBlock" data-color="#FF0000" style="background-color:#FF0000"></li>
+          <li class="colorBlock" data-color="#00FF00" style="background-color:#00FF00"></li>
+          <li class="colorBlock" data-color="#0000FF" style="background-color:#0000FF"></li>
+          <li class="colorBlock" data-color="#FFEA05" style="background-color:#FFEA05"></li>
+          <li class="colorBlock" data-color="#FF1A00" style="background-color:#FF1A00"></li>
+          <li class="colorBlock" data-color="#CC0000" style="background-color:#CC0000"></li>
+          <li class="colorBlock" data-color="#FF7400" style="background-color:#FF7400"></li>
+          <li class="colorBlock" data-color="#C79810" style="background-color:#C79810"></li>
+          <li class="colorBlock" data-color="#73880A" style="background-color:#73880A"></li>
+          <li class="colorBlock" data-color="#008C00" style="background-color:#008C00"></li>
+          <li class="colorBlock" data-color="#006E2E" style="background-color:#006E2E"></li>
+          <li class="colorBlock" data-color="#4096EE" style="background-color:#4096EE"></li>
+          <li class="colorBlock" data-color="#356AA0" style="background-color:#356AA0"></li>
+          <li class="colorBlock" data-color="#3F4C6B" style="background-color:#3F4C6B"></li>
+          <li class="colorBlock" data-color="#FF0084" style="background-color:#FF0084"></li>    
+        {{/view}}
+      </ul>
+    </div>
+    
+  </div>
+
+  <div id="area-wrapper">
+
+    <div id="zoom-canvas-area">
+      <h4>Zoomed view:</h4>
+      <!-- Zoomed Canvas -->
+      <canvas id="zoomCanvas" width="256" height="256"></canvas>
+      <!-- Temporary Canvas -->
+      <canvas id="canvas-temp" width="256" height="256"></canvas>
+    </div>
+
+    <div id="sprites-area">
+
+      <div id="test">
+      </div>
+
+      <h4>Original</h4>
+      <!-- Canvas to save -->
+      <canvas id="canvas-merged" width="64" height="64"></canvas>
+      
+        <!-- Sprite Canvas (preview) -->
+        {{#each App.paintController}}
+  
+          {{#view SpriteView
+            spriteBinding = "this"
+          }}
+            
+          {{/view}}
+                  
+        {{/each}}
+
+        {{#view ToolView
+          toolBinding = "this"
+        }}
+          <button {{action "addSprite"}} class="addSpriteButton">Add</button>
+        {{/view}} 
+    </div>
+
+  </div>
+
+</div> <!-- End paint-wrapper -->
+{{#view ToolView
+      toolBinding = "this"
+}}
+<button {{action "zoomIn"}}>ZoomIn</button>
+<button {{action "zoomOut"}}>ZoomOut</button>
+{{/view}} 
 <button {{action "cancel" target="App.gameController"}}>cancel</button>
+
+<p>
+Name: <input type="text" size="25" id="imageName"> isPublic <input type="checkbox" id="makePublic">
+
+{{#view ToolView
+        toolBinding = "this"
+}}
+  <button {{action "save"}}>Save</button>
+{{/view}}
+
+</p>
+
+<input type="file" id="file">
+<input type="text" id="loadImageByUrl">

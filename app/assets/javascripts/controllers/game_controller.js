@@ -18,7 +18,7 @@ var GameController = Ember.Object.extend({
   
   searchGraphic : function() {
     
-    App.libraryController.setMode( 'graphic' );
+    App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectGraphic );
     
     App.mainView.show( 'stageContent', 'libraryView' );
@@ -41,7 +41,7 @@ var GameController = Ember.Object.extend({
   
   searchBackground : function() {
     
-    App.libraryController.setMode( 'background' );
+    App.libraryController.set( 'showBackground', true );
     App.libraryController.set( 'selectFunction', this.selectBackground );
     
     App.mainView.show( 'stageContent', 'libraryView' );
@@ -58,7 +58,7 @@ var GameController = Ember.Object.extend({
   
   searchChangeGraphic : function() {
     
-    App.libraryController.setMode( 'graphic' );
+    App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectChangeGraphic );
     
     App.mainView.show( 'stageContent', 'libraryView' );
@@ -75,7 +75,7 @@ var GameController = Ember.Object.extend({
   
   searchArtGraphic : function() {
     
-    App.libraryController.setMode( 'graphic' );
+    App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectArtGraphic );
     
     App.mainView.show( 'behaviourContent', 'libraryView' );
@@ -92,7 +92,7 @@ var GameController = Ember.Object.extend({
   
   drawGraphic : function() {
     
-    App.mainView.show( 'stageContent', 'paintView' );
+    App.mainView.show( 'stageContent', 'paintSizeView' );
     
   },
   
@@ -111,7 +111,7 @@ var GameController = Ember.Object.extend({
   },
   
   publishGame : function() {
-    
+   
     var data = this.game.getData();
     
     console.log(
@@ -148,7 +148,8 @@ var GameController = Ember.Object.extend({
         game: {
           title : this.game.title || '',
           instruction: this.game.instructions || '',
-          data : JSON.stringify( data.game )
+          data : JSON.stringify( data.game ),
+          preview_img : this.getSelectedSnapshotData()
         },
         
         graphic_ids: data.graphicIDs
@@ -203,6 +204,33 @@ var GameController = Ember.Object.extend({
     
     
     
+  },
+
+  takePreviewSnapshot : function() {
+
+    var canvas = document.getElementById("testCanvas");
+    var img_data = canvas.toDataURL("image/png");
+    var screenshot = '<li><img src="'+img_data+'" width="210" height="130" class="thumb"><br><input type="radio" value="" name="previewImage" data-id=""></li>';
+
+    $('#thumbnail').append(screenshot);
+    /*
+      Todo:
+      var background_small = this.game.get('background');
+     <li style="background-image:url('+background_small+')">
+    */
+  },
+
+  // Returns Base64 encoded data of img
+  getSelectedSnapshotData : function() {
+    var selectedRadio = $('#thumbnail').find('li').find('input[type="radio"]:checked');
+
+    if(!selectedRadio) {
+      takePreviewSnapshot();
+      selectedRadio = $('#thumbnail').find('li').find('input[type="radio"]').first();
+    }
+
+    var selectedImg = selectedRadio.parent().find('img');
+    return selectedImg.attr("src");
   }
   
 });

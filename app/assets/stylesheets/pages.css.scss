@@ -1,232 +1,88 @@
 $bg: #fff;
 $font: #000;
 
-html, body {
-    margin: 0px;
-    padding: 0px;
-    border: none;
-    text-decoration:none;
-    font-family: 'Arimo', sans-serif;
-}
-
 body {
-    height:100%;
-    width:100%;
-}
-
-canvas {
-  z-index:100;
-}
-
-* {
-    margin: 0px;
-    padding: 0px;
-}
-
-.clear {
-   clear:both;
-}
-
-h1 {
-   
-}
-
-h2 {
-   font-size:20px;
-   text-decoration:none;
-   padding: 17px 0;
-}
-
-ul#nav {
-    list-style:none;
-    z-index: 2;
-}
-
-ul#nav li {
-    position:absolute;
-/*    overflow:hidden;*/
-    z-index:2;
-    display:block;
-    width:45px;
-    height:80px;
-    -webkit-box-shadow: 1px 1px 8px 2px rgba(00, 00, 00, 0.5);
-    -moz-box-shadow: 1px 1px 8px 2px rgba(00, 00, 00, 0.5);
-    box-shadow: 1px 1px 8px 2px rgba(00, 00, 00, 0.5);
-}
-
-ul#nav li img {
-    
-}
-
-ul#nav li#nav_left {
-    position:absolute;
-    left:0px;
-    background:#00CABD;
-}
-
-ul#nav li#nav_right {
-    position:absolute;
-    right:0px;
-}
-
-ul#nav li#nav_top {
-    position:absolute;
-    top:0px;
-    width:80px;
-    height:45px;
-    background:#439AAB;
-}
-
-ul#nav li#nav_bottom {
-    position:absolute;
-    bottom:0px;
-    width:80px;
-    height:45px;
-    background:#A1716C;
-}
-
-ul#nav .popout {
-  position:absolute;
-  width:500px;
-  right:-500px;
-  z-index:2;
-  height:200px;
-}
-
-#pages {
-    position:absolute;
-    top:0px;
-    left:0px;
-    width:100%;
-    height:100%;
-/*    overflow:hidden;*/
-    background: #f1f1f1;
-    background:url('/assets/bg2.jpg') no-repeat center center fixed;
+    font-family: 'Arimo', sans-serif;
+    background:url(bg2.jpg) no-repeat fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
 }
 
-#pages div {
-    position:absolute;
+#header {
+  margin:2em 0 2em 0;
 }
 
-#pages div div {
-    position:relative;
+#menu li {
+    border-radius: 7px 7px 7px 7px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+#menu li img {
+    display: inline;
+    margin-bottom: 8px;
+}
+#menu li:hover {
+    background: none repeat scroll 0 0 #111111;
+}
+#menu li a, #menu li a:visited {
+    color: #FFFFFF;
+    /*padding: 10px 10px 10px 10px;*/
+}
+#menu li a:hover {
+    background: repeat scroll 0 0 #111111;
 }
 
-#pages .centered_content {
-   width:1034px;
-   height:605px;
-   margin: 0 auto;
-   background: #ccc;
+#home {
+    background: repeat scroll 0 0 #5E8894;
+}
+#play {
+    background: repeat scroll 0 0 #BD1723;
+}
+#build {
+    background: repeat scroll 0 0 #718B20;
+}
+#help {
+    background: repeat scroll 0 0 #F3C10A;
+}
+#logo {
+    margin: 0;
+    text-align: left;
+}
+h1 {  margin:0;  padding:0; font-size:2.2em; }
+
+/* Feedback */
+#feedback {
+  z-index:999;
+  position:absolute;
+  display: none;
+  box-shadow:2px 2px 2px #666;
 }
 
-#pages .home {
-    
+#feedbackSideButton {
+  padding:8px;
+  border:1px solid #CCC;
+  background:#FFF;
+  position:absolute;
+  left:0; top:20%;
+  cursor:pointer;
+}
+#feedbackSideButton:hover {background:#F6F6F6;}
+.errorForm { border:1px solid #B94A48;}
+
+/* game/id/play */
+
+#tempComment {  display: none; }
+.comment {
+  margin-bottom:2em;
+  padding-bottom:5px;
+  border-bottom:1px solid #F6F6F6;
 }
 
-#pages .profile {
-    
-}
-
-#pages .profile #profileimage {
-   width:225px;
-   height:225px;
-}
-
-#pages .profile #info {
-   float:left;
-   height:605px;
-   width:225px;
-   background:#fff;
-}
-
-#pages .profile #info .info {
-   padding:20px 0 0 13px;
-   font-size: 18px;
-}
-
-#pages .profile #info .info span {
-   color:#464646;
-}
-
-#pages .profile #collection {
-   position:absolute;
-   left: 239px;
-   width:797px;
-   height:492px;
-}
-
-#pages .profile #collection .container {
-   width:795px;
-   height:236px;
-   background:#fff;
-/*   overflow:hidden;*/
-   margin: 0 0 22px 0;
-}
-
-#pages .profile #collection .container .left {
-   float:left;
-   width: 28px;
-   height:236px;
-}
-
-#pages .profile #collection .container .right {
-   width: 30px;
-   height:236px;
-   float:right;
-}
-
-#pages .games {
-   float:left;
-   overflow-y:scroll;
-   list-style-type:none;
-   white-space: nowrap;
-   width:auto;
-   left:20px;
-   width:704px;
-}
-
-#pages .game {
-   display:inline;
-   margin: 0 8px 0 0;
-   width:167px;
-   height:167px;
-}
-
-#pages .game a {
-   color:#000;
-   font-size:14px;
-   text-decoration:none;
-   text-transform:uppercase;
-}
-
-#pages .game .info {
-   position:absolute;
-   bottom: 0px;
-   background:#ededed;
-   height:20px;
-   width:158px;
-   padding:10px 0 0 10px;
-}
-
-#pages .game .edit {
-   position:absolute;
-   top:0px;
-   right:0px;
-   height:30px;
-   width:30px;
-}
-
-#pages .editor {
-}
-
-#pages .gallery {
-}
-
-#pages .about {
+.layer, #game-li-template {
+  display: none;
 }
 
 /* EDITOR */
@@ -234,7 +90,7 @@ ul#nav .popout {
 
 #editor .editor_content {
    top:100px;
-   width:1034px;
+   /*width:1034px;*/
    margin: 0 auto;
    z-index:3;
 }
@@ -316,8 +172,7 @@ ul#nav .popout {
   margin-bottom: 5px;
 }
 
-#editor #stageContent, 
-#editor #behaviourContent {
+#editor #stageContent, #editor #behaviourContent {
   position: relative;
 }
 
@@ -328,4 +183,73 @@ ul#nav .popout {
 
 #editor #stageControls #slider {
   width: 300px;
+}
+
+#placementGraphic {
+  float : left;
+  border : 2px solid #000;
+}
+
+.label {
+  background: url('/assets/gallery_title_bg.png');
+  position:relative;
+  top:-24px;
+  left:44px;
+  padding:15px;
+  font-size:16px;
+  width:84px;
+  height:20px;
+  font-size:16px;
+  color:#fff;
+  text-transform:uppercase;
+}
+
+#gallery {
+} 
+
+#gallery ul.sortables {
+  list-style-type:none;
+}
+
+#gallery ul.sortables li {
+  float:left;
+  margin:0 0 0 44px;
+}
+
+#gallery input.searchbox {
+  width:210px;
+  height:30px;
+  margin:0 0 0 484px;
+  position:relative;
+  top:-10px;
+  padding:4px 0 4px 12px;
+  text-transform:uppercase;
+}
+
+#gallery img.magnifier {
+  position:relative;
+  top:0px;
+  left:0px;
+}
+
+#gallery ul.gamelist {
+  list-style-type:none;
+  position:relative;
+  left:45px;
+  top:15px;
+}
+
+#gallery .game {
+  width:150px;
+  height:150px;
+  float:left;
+  display:block;
+  margin:0 14px 14px 0;
+  overflow:hidden;
+}
+
+#gallery .game span {
+  color:#fff;
+  position:relative;
+  top:150px;
 }

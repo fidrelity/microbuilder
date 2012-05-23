@@ -7,19 +7,11 @@ class UsersController < ApplicationController
   end
 
   def graphics
-    graphics = case params[:select]
-      when "all" 
-        current_user.graphics
-      when "backgrounds"
-        current_user.graphics.backgrounds
-      else
-        current_user.graphics.without_backgrounds        
-    end
-    
-    response = graphics.collect do |graphic|
-      graphic.to_response_hash
-    end
-    
-    render :json => response, :status => 200
+    response, status = current_user.graphics.filter(
+      params[:select], 
+      params[:min_size].to_i, 
+      params[:max_size].to_i
+    )
+    render :json => response, :status => status
   end
 end

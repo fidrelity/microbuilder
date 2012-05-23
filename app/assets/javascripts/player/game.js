@@ -25,7 +25,7 @@ Game.prototype = {
   },
   
   start : function() {
-    
+
     this.startActions.forEachApply( 'execute', this );
     
   },
@@ -139,6 +139,22 @@ Game.prototype = {
     
     return null;
     
+  },
+
+
+  // Increases game counter
+  increaseCounter : function() {
+    var gameId = 1; // Todo: get game id
+
+    $.ajax({
+      url : 'games/'+gameId+'/played',
+      type : 'PUT',
+      success : function() {
+        console.log('Game.played++');
+        // Todo: update amount visually
+      }
+    });
+
   }
   
 };

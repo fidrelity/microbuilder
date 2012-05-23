@@ -3,7 +3,19 @@
 <p>Select an item or create a new one</p>
 
 <button {{action "showOwn" target="App.libraryController"}}>own</button>
-<button {{action "showPublic" target="App.libraryController"}}>public</button>
+<button {{action "showPublics" target="App.libraryController"}}>public</button>
+
+{{#unless App.libraryController.showBackground}}
+
+  {{view Ember.Select 
+    viewName="select"
+    contentBinding="App.libraryController.sizes"
+    optionLabelPath="content.string"
+    optionValuePath="content.name"
+    selectionBinding="App.libraryController.size"
+  }}
+
+{{/unless}}
 
 <ul class="graphics">
   {{#each App.libraryController.display}}

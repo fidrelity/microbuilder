@@ -1,4 +1,4 @@
-Microbuilder::Application.configure do
+Playtin::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The test environment is used exclusively to run your application's
@@ -37,4 +37,11 @@ Microbuilder::Application.configure do
   
   FACEBOOK_ID = '123456'
   FACEBOOK_SECRET = '123456'
+
+  Paperclip.options[:command_path] = '/usr/bin/identify'
 end
+
+PAPERCLIP_OPTIONS = {
+  :url => "/:class/:id/:basename" + ".png",
+  :path => Rails.root.to_s + "public/:class/:id/:basename" + ".png",
+}

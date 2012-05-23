@@ -1,32 +1,27 @@
-%ul{:id => "nav"}
-  %li{:class => "home", :id =>"nav_top"}
-    =link_to('home', root_path, :remote => true)
-  %li{:class => "gallery", :id =>"nav_left"}
-    =link_to image_tag("nav_gallery.png", :border=>0), gallery_path, :remote => true
-    
-  -if user_signed_in?
-    %li{:class => "profile", :id =>"nav_right"}
-      =link_to image_tag("nav_profile.png"), user_path(current_user.id), :remote => true
-      =#link_to('profile', user_path(current_user.id), :remote => true)
-  -else
-    %li{:class => "profile login", :id =>"nav_right"}
-      =image_tag("nav_profile.png")
-    .popout
-      = link_to('Login', new_user_session_path)
-      = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
-  
-  %li{:class => "editor", :id =>"nav_bottom"}
-    =link_to image_tag("nav_editor.png", :border=>0), '#'
-  -if false
-    -if user_signed_in?
-      %li= link_to('Profile', user_path(current_user.id))
-      %li= link_to('Logout', destroy_user_session_path, :method => :delete)
-    -else
-      %li= link_to('Login', new_user_session_path)
-      %li= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
+=link_to 'Imprint', imprint_path
+=link_to('Logout', destroy_user_session_path, :method => :delete)
+%div{ :class => "row", :id => "header"}
+  %div{:class => "logo span3", :id =>"logo"}
+    %h1
+      Playtin
+  %ul{:id => "menu", :class => "nav nav-pills span9"}
+    %li{:class => "home span2", :id =>"home"}
+      =link_to 'Home', root_path
+    %li{:class => "gallery span2", :id =>"play"}
+      =link_to "Games", gallery_path
+    %li{:class => "editor span2", :id =>"build"}
+      =link_to "Build", pages_editor_path
+    %li{:class => "profile span2", :id =>"help"}
+      -if user_signed_in?      
+        =link_to "Profile", user_path(current_user.id)
+      -else
+        = link_to 'Login', new_user_session_path      
 
-=if false
-  .flash_message
-    =flash[:notice]
-    =flash[:alert]
-    =flash[:error]
+
+  =if false
+    .flash_message
+      =flash[:notice]
+      =flash[:alert]
+      =flash[:error]
+
+  =render :partial => "layouts/feedback"

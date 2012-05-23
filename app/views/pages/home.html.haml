@@ -1,20 +1,40 @@
-#pages
-  .home
-    =render :partial => "home"
+%div{ :class => "hero-unit", :style => "background:#222;color:#FFF;clear:both;"}
+  %h2
+    Play and Build Microgames*
+  %p
+    Ever wanted to build your own games and share it with your friends? Here you can! Paint you own graphics, make your game and release it!
+    All you need is your browser and imagination!
   
-  .editor
-    #editor
-      #content
+  %p
+    =link_to "Start building now", pages_editor_path, { :class => "btn btn-primary btn-large"}
+    
+  %small* no programming skills required.
 
-  .profile
-    .centered_content
-      #profile
+%div{ :class => "row"}
+  %div{ :class => "span8"}    
+    %h2
+      Latest games:
 
-  .gallery
-    #gallery
-  
-  .about
-    about
+    = render :partial => 'games/list_games', :locals => {:games => @games}
 
-:javascript
-  $(document).ready( function() { editor_main(); player_main(); application_main(); } );
+  %div{ :class => "span4"}
+    - if !user_signed_in?
+      %h2
+        Login:
+
+      %div{ :class => "well"}
+        = form_tag user_session_path do
+          %label
+            E-Mail:
+          = text_field_tag 'user[email]', '', :class=>"span3"
+          %label
+            Password:
+          = password_field_tag 'user[password]'
+          %p
+            = check_box_tag 'user[remember_me]'
+            = label_tag 'user[remember_me]', 'Remember me'
+          %button{:class=>"btn"}
+            Sign in
+          = link_to "Forgot your password?", new_password_path('user')
+
+          =link_to 'Facebook Login', user_omniauth_authorize_path(:facebook), :class=>"btn btn-primary"

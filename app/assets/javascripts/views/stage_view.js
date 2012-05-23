@@ -1,6 +1,6 @@
 var StageView = Ember.View.extend({
   
-  templateName: 'templates_stage_template',
+  templateName: 'templates/stage_template',
   
   player: null,
   
@@ -35,7 +35,7 @@ var StageView = Ember.View.extend({
   },
   
   play : function() {
-    
+
     this.player.fsm.try();
     
   },

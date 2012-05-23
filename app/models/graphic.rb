@@ -1,4 +1,6 @@
 class Graphic < ActiveRecord::Base
+  include PgSearch
+  
   attr_accessor :image_data
   
   belongs_to :user
@@ -11,9 +13,16 @@ class Graphic < ActiveRecord::Base
   before_create :generate_file_name
   before_create :decode_base64_image
   
+  pg_search_scope :search, :against => :name
   scope :all_public, where(:public => true)
   scope :backgrounds, where(:background => true)
   scope :without_backgrounds, where(:background => false)
+  scope :between_size, lambda { |min, max|
+    where(
+      "frame_width <= ? AND frame_height <= ? AND (frame_width > ? OR frame_height > ?)", 
+      max, max, min, min
+    )
+  }
 
   def to_response_hash
     user_name = user.display_name if user
@@ -25,7 +34,7 @@ class Graphic < ActiveRecord::Base
     }
   end
   
-  protected  
+  protected
     def decode_base64_image
       if image_data
         content_type = 'image/png'
@@ -37,6 +46,23 @@ class Graphic < ActiveRecord::Base
 
         self.image = data
       end
+    end
+    
+    def self.filter(backgrounds, min = nil, max = nil)
+      query = backgrounds ? self.backgrounds : self.without_backgrounds
+
+      unless backgrounds
+        if min && max && min < max
+          query = between_size(min, max)
+        else
+          return ["No size boundaries given", 400]
+        end
+      end
+        
+      response = query.map do |graphic|
+        graphic.to_response_hash 
+      end
+      [response, 200]
     end
     
     def generate_file_name

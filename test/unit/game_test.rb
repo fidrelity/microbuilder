@@ -46,6 +46,5 @@ class GameTest < ActiveSupport::TestCase
     @invalid_game = Factory.build(:game, :data => "{\"gameObjects\":[{\"ID\":0,\"name\":\"type\\\":\\\"win\",\"graphicID\":1,\"position\":{\"x\":0,\"y\":0}},{\"ID\":1,\"name\":\"1_1331546360.png\",\"graphicID\":1,\"position\":{\"x\":0,\"y\":0}}],\"behaviours\":[{\"triggers\":[{\"type\":\"onStart\"}]},{\"actions\":[{\"type\":\"win\"}]}],\"graphics\":[{\"ID\":1,\"frameCount\":1,\"imagePath\":\"/graphics/1/1_1331546360.png\"},{\"ID\":1,\"frameCount\":1,\"imagePath\":\"/graphics/1/1_1331546360.png\"}]}")
     assert @invalid_game.valid?
   end
+
 end
-
-

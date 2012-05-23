@@ -1,4 +1,4 @@
-Microbuilder::Application.configure do
+Playtin::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -12,6 +12,7 @@ Microbuilder::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
+  #config.action_controller.page_cache_directory = Rails.root.join("public/cache").to_s
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
@@ -40,10 +41,16 @@ Microbuilder::Application.configure do
   FACEBOOK_SECRET = '236e82c66d6b97dd23422df19680db27'
   
   Paperclip.options[:command_path] = '/usr/bin/identify'
+
+  # Pusher Service (Websockets)
+  require 'pusher'
+  Pusher.app_id = 20822
+  Pusher.key = 'a4bc39aab42024a54d27'
+  Pusher.secret = 'fcc0e5f4c2220751968e'
 end
 
 PAPERCLIP_OPTIONS = {
   :url => "/:class/:id/:basename" + ".png",
-  :path => Rails.root.to_s + "public/:class/:id/:basename" + ".png",
+  :path => Rails.root.to_s + "/public/:class/:id/:basename" + ".png",
 }
 

@@ -11,15 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120417122904) do
+ActiveRecord::Schema.define(:version => 20120515173302) do
+
+  create_table "game_comments", :force => true do |t|
+    t.string   "comment"
+    t.integer  "game_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "games", :force => true do |t|
-    t.string   "title",       :null => false
-    t.string   "instruction", :null => false
-    t.text     "data",        :null => false
+    t.string   "title",                      :null => false
+    t.string   "instruction",                :null => false
+    t.text     "data",                       :null => false
     t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "played",      :default => 0
+    t.integer  "likes",       :default => 0
+    t.integer  "dislikes",    :default => 0
   end
 
   create_table "games_graphics", :id => false, :force => true do |t|
@@ -44,6 +55,14 @@ ActiveRecord::Schema.define(:version => 20120417122904) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.string   "name"
+  end
+
+  create_table "pg_search_documents", :force => true do |t|
+    t.text     "content"
+    t.integer  "searchable_id"
+    t.string   "searchable_type"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "users", :force => true do |t|
