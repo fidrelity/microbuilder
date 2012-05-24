@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   respond_to :js, :only => [:create, :index, :update, :like, :dislike]
-  before_filter :authenticate_user!, :only => [:new, :create, :destroy]
+  before_filter :authenticate_user!, :only => [:create, :destroy]
   before_filter :find_game, :only => [:show, :embed, :destroy, :like, :dislike, :played]
   
   def index

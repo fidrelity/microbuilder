@@ -6,6 +6,9 @@ class GraphicsController < ApplicationController
     @graphics = Graphic.all
   end
 
+  def new
+  end
+
   def create
     @graphic = current_user.graphics.new(params[:graphic])
     response, status = @graphic.save ? [@graphic.to_response_hash, 200] : [@graphic.errors.to_json, 400]
