@@ -46,7 +46,7 @@ class GamesController < ApplicationController
 
     if @game.author == current_user
       @game.destroy 
-      flash[:notice] = "Successfully deleted game"
+      flash[:success] = "Successfully deleted game"
     else
       flash[:error] = "Not allowed to delete game"
     end
