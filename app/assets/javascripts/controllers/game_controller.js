@@ -11,8 +11,8 @@ var GameController = Ember.Object.extend({
   
   cancel : function() {
     
-    App.mainView.show( 'stageContent', 'stageView' );
-    App.mainView.show( 'behaviourContent', 'behaviourView' );
+    // App.mainView.show( 'stageContent', 'stageView' );
+    // App.mainView.show( 'behaviourContent', 'behaviourView' );
     
   },
   
@@ -21,7 +21,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectGraphic );
     
-    App.mainView.show( 'stageContent', 'libraryView' );
+    // App.mainView.show( 'stageContent', 'libraryView' );
     
   },
   
@@ -44,7 +44,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', true );
     App.libraryController.set( 'selectFunction', this.selectBackground );
     
-    App.mainView.show( 'stageContent', 'libraryView' );
+    // App.mainView.show( 'stageContent', 'libraryView' );
     
   },
   
@@ -61,7 +61,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectChangeGraphic );
     
-    App.mainView.show( 'stageContent', 'libraryView' );
+    // App.mainView.show( 'stageContent', 'libraryView' );
     
   },
   
@@ -78,7 +78,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectArtGraphic );
     
-    App.mainView.show( 'behaviourContent', 'libraryView' );
+    // App.mainView.show( 'behaviourContent', 'libraryView' );
     
   },
   
@@ -86,27 +86,27 @@ var GameController = Ember.Object.extend({
     
     App.actionController.selectGraphic( graphic );
     
-    App.mainView.show( 'behaviourContent', 'actionView' );
+    // App.mainView.show( 'behaviourContent', 'actionView' );
     
   },
   
   drawGraphic : function() {
     
-    App.mainView.show( 'stageContent', 'paintSizeView' );
+    // App.mainView.show( 'stageContent', 'paintSizeView' );
     
   },
   
   addTrigger : function() {
     
     App.triggerController.reset();
-    App.mainView.show( 'behaviourContent', 'triggerView' );
+    // App.mainView.show( 'behaviourContent', 'triggerView' );
     
   },
   
   addAction : function() {
     
     App.actionController.reset();
-    App.mainView.show( 'behaviourContent', 'actionView' );
+    // App.mainView.show( 'behaviourContent', 'actionView' );
     
   },
   

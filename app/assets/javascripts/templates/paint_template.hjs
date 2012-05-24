@@ -1,4 +1,4 @@
-<h2>Paint</h2>
+<h3>Paint</h3>
 
 <div id="paint-wrapper">
   <!-- Toolbar -->
@@ -103,15 +103,6 @@
       <canvas id="canvas-merged" width="64" height="64"></canvas>
       
         <!-- Sprite Canvas (preview) -->
-        {{#each App.paintController}}
-  
-          {{#view SpriteView
-            spriteBinding = "this"
-          }}
-            
-          {{/view}}
-                  
-        {{/each}}
 
         {{#view ToolView
           toolBinding = "this"
