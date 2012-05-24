@@ -27,14 +27,14 @@ var MainView = Ember.View.extend({
     this.publishView = Ember.View.create({
       templateName : 'templates/publish_template'
     });
-    // this.paintSizeView = PaintSizeView.create();
+    
+    this.paintSizeView = PaintSizeView.create();
     
   },
   
   didInsertElement : function() {
     
     this.show( 'editorContent', 'stageView' );
-    // this.show( 'overlayContent', 'libraryView' );
     
   },
   
@@ -64,6 +64,7 @@ var MainView = Ember.View.extend({
   showPaint : function() {
     
     this.show( 'editorContent', 'paintView' );
+    this.show( 'overlayContent', 'paintSizeView' );
     
   },
   
