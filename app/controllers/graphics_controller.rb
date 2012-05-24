@@ -1,5 +1,5 @@
 class GraphicsController < ApplicationController
-  respond_to :js, :only => [:create, :public, :delete]
+  respond_to :js, :only => [:create, :public, :destroy]
   before_filter :authenticate_user!, :only => [:create, :destroy]
   
   def index
@@ -19,7 +19,7 @@ class GraphicsController < ApplicationController
     
     if current_user == @graphic.user
       @graphic.soft_delete
-      redirect_to root_path, :notice => I18n.t('.graphics.destroy.success')
+      flash[:success] = I18n.t('.graphics.destroy.success')
     end
   end
   
