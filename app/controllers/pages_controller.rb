@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   caches_page :imprint
 
   def home
+    flash[:success] = "fuck"
     @games = Game.all_latest.limit(4)
   end
 
