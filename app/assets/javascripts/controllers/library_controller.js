@@ -157,7 +157,11 @@ var LibraryController = Ember.ArrayController.extend({
       
       success: function( data ) {
         
-        self.appendGraphics( data );
+        if ( data ) {
+        
+          self.appendGraphics( data );
+        
+        }
         
       }
       

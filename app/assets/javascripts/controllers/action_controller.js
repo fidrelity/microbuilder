@@ -65,7 +65,7 @@ var ActionController = Ember.Object.extend({
     
       this.get( 'behaviour' ).addAction( action );
     
-      App.gameController.cancel();
+      App.mainView.show( 'overlayContent', 'objectsView' );
     
     }
     

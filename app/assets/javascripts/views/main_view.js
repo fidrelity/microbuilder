@@ -4,8 +4,8 @@ var MainView = Ember.View.extend({
   
   gameBinding : 'App.game',
   
-  stageContent : null,
-  behaviourContent : null,
+  editorContent : null,
+  overlayContent : null,
   
   player : null,
   
@@ -14,42 +14,27 @@ var MainView = Ember.View.extend({
     this._super();
     
     this.stageView = StageView.create();
-    this.libraryView = LibraryView.create();
     this.paintView = PaintView.create();
-    this.paintSizeView = PaintSizeView.create();
     
-    this.behaviourView = BehavioursView.create();
+    this.libraryView = LibraryView.create();
+    this.objectsView = Ember.View.create({
+      templateName : 'templates/objects_template'
+    });
+    
     this.actionView = ActionView.create();
     this.triggerView = TriggerView.create();
+    
+    this.publishView = Ember.View.create({
+      templateName : 'templates/publish_template'
+    });
+    
+    this.paintSizeView = PaintSizeView.create();
     
   },
   
   didInsertElement : function() {
     
-    this.$( "#accordion" ).accordion({
-      
-      autoHeight: false,
-      
-      collapsible: true,
-      
-      change: function( event, ui ) {
-        
-        if ( ui.options.active === 0 ) {
-          
-          App.mainView.stageView.player.parse( App.game.getData().game );
-          
-        } else if ( ui.options.active === 2 ) {
-          
-          App.mainView.player.parse( App.game.getData().game );
-          
-        }
-        
-      }
-      
-    });
-    
-    this.show( 'stageContent', 'stageView' );
-    this.show( 'behaviourContent', 'behaviourView' );
+    this.show( 'editorContent', 'stageView' );
     
   },
   
@@ -64,10 +49,29 @@ var MainView = Ember.View.extend({
     
     if ( this.get( viewName ) !== this.get( locationName ) ) {
     
-      // this.$('#' + locationName).css( 'left', 1000 ).animate({ left: 0 }, 1000);
       this.set( locationName, this.get( viewName ) );
     
     }
+    
+  },
+  
+  showStage : function() {
+    
+    this.show( 'editorContent', 'stageView' );
+    
+  },
+  
+  showPaint : function() {
+    
+    this.show( 'editorContent', 'paintView' );
+    this.show( 'overlayContent', 'paintSizeView' );
+    
+  },
+  
+  hideOverlay : function() {
+    
+    this.set( 'overlayContent', null );
+    this.stageView.updatePlayer();
     
   }
   
@@ -75,14 +79,7 @@ var MainView = Ember.View.extend({
 
 var BehavioursView = Ember.View.extend({
   
-  templateName : 'templates/behaviour_template',
-  
-  didInsertElement : function() {
-    
-    this.$( "#behaviours" ).sortable();
-    this.$( "#behaviours" ).disableSelection();
-    
-  },
+  templateName : 'templates/behaviour_template'
   
 });
 
