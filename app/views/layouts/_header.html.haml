@@ -17,9 +17,9 @@
       -else
         = link_to 'Login', new_user_session_path      
 
-  %div{:id => 'flash-messages}
+  %div{:id => 'flash-messages'}
     - flash.each do |key, value|
       :javascript
-        Notifier.add(#{value}, #{key})
+        Notifier.add("#{value}", "#{key}")
   
   =render :partial => "layouts/feedback"
