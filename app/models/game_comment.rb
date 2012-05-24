@@ -5,5 +5,5 @@ class GameComment < ActiveRecord::Base
   validates_presence_of :comment, :game_id
   default_scope :order => 'created_at DESC'
   
-  attr_accessible :comment
+  attr_accessible :comment, :game_id
 end
