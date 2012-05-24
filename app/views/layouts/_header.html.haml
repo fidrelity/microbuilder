@@ -18,10 +18,16 @@
       =link_to "Games", gallery_path
     %li{:class => "editor span2", :id =>"build"}
       =link_to "Create", build_path
+
     %li{:class => "paint span2", :id =>"paint"}
       =link_to "Paint", new_graphic_path
         
-  %div{:id => 'flash-messages'}
+  %div{:id => 'flash-messages', :class => "row"}
+    %ul
+      %li{:id => "flash-template",:class => "alert"}
+        %span{:class=>"msg"}
+        = link_to '&times;'.html_safe, '#', :class => ['close', 'closeFlash']
     =render :partial => 'layouts/flash', :locals => {:flash => flash}
-    
+
   =render :partial => "layouts/feedback"
+
