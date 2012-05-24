@@ -436,3 +436,47 @@ var Parser = {
   }
 
 };
+
+/*
+  {
+    type: "greaterThan",
+    objectID: 1,
+    object2ID: 0
+  }
+  
+  {
+    type: "greaterThan",
+    objectID: 1,
+    number: 3,
+  }
+  
+  {
+    type: "smallerThan",
+    objectID: 1,
+    object2ID: 0
+  }
+  
+  {
+    type: "smallerThan",
+    objectID: 1,
+    number: 3,
+  }
+  
+  {
+    type: "equals",
+    objectID: 1,
+    object2ID: 0
+  }
+  
+  {
+    type: "equals",
+    objectID: 1,
+    number: 3,
+  }
+  
+  {
+    type: "onChange",
+    objectID: 1
+  }
+
+*/

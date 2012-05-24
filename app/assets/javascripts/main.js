@@ -151,7 +151,7 @@ function player_main( data ) {
   if ( $( '#playerCanvas' ) && $( '#playerCanvas' )[0] ) {
   
     player.setCanvas( $( '#playerCanvas' )[0] );
-    player.debug();
+    //player.debug();
   
     if ( data ) {
   

@@ -88,9 +88,9 @@
     <div id="zoom-canvas-area">
       <h4>Zoomed view:</h4>
       <!-- Zoomed Canvas -->
-      <canvas id="zoomCanvas" width="256" height="256"></canvas>
+      <canvas id="zoomCanvas" width="64" height="64"></canvas>
       <!-- Temporary Canvas -->
-      <canvas id="canvas-temp" width="256" height="256"></canvas>
+      <canvas id="canvas-temp" width="64" height="64"></canvas>
     </div>
 
     <div id="sprites-area">
