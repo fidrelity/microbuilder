@@ -17,12 +17,16 @@ var MainView = Ember.View.extend({
     this.paintView = PaintView.create();
     
     this.libraryView = LibraryView.create();
-    this.objectsView = ObjectsView.create();
-    this.behaviourView = BehavioursView.create();
+    this.objectsView = Ember.View.create({
+      templateName : 'templates/objects_template'
+    });
     
     this.actionView = ActionView.create();
     this.triggerView = TriggerView.create();
     
+    this.publishView = Ember.View.create({
+      templateName : 'templates/publish_template'
+    });
     // this.paintSizeView = PaintSizeView.create();
     
   },
@@ -74,14 +78,7 @@ var MainView = Ember.View.extend({
 
 var BehavioursView = Ember.View.extend({
   
-  templateName : 'templates/behaviour_template',
-  
-  didInsertElement : function() {
-    
-    // this.$( "#behaviours" ).sortable();
-    // this.$( "#behaviours" ).disableSelection();
-    
-  },
+  templateName : 'templates/behaviour_template'
   
 });
 

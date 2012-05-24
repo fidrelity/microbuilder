@@ -115,6 +115,12 @@ var GameController = Ember.Object.extend({
     
   },
   
+  finalize : function() {
+    
+    App.mainView.show( 'overlayContent', 'publishView' );
+    
+  },
+  
   publishGame : function() {
    
     var data = this.game.getData();

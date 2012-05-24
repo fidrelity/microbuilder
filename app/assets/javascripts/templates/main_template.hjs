@@ -1,7 +1,5 @@
 <div class="editor_content">
 
-  <h2>Game Editor</h2>
-
   <button {{action "showStage"}}> stage </button>
   <button {{action "showPaint"}}> paint </button>
 

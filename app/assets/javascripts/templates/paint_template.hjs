@@ -120,7 +120,6 @@
 <button {{action "zoomIn"}}>ZoomIn</button>
 <button {{action "zoomOut"}}>ZoomOut</button>
 {{/view}} 
-<button {{action "cancel" target="App.gameController"}}>cancel</button>
 
 <p>
 Name: <input type="text" size="25" id="imageName"> isPublic <input type="checkbox" id="makePublic">
@@ -130,7 +129,6 @@ Name: <input type="text" size="25" id="imageName"> isPublic <input type="checkbo
 }}
   <button {{action "save"}}>Save</button>
 {{/view}}
-
 </p>
 
 <input type="file" id="file">
