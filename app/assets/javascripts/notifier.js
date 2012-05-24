@@ -26,10 +26,10 @@ var Notifier = {
 
   notify : function () {
     for (var i = 0; i < Notifier.queue.length; i++) {
-      Notifier.append(Notifier.queue[i]);
+      Notifier.append(Notifier.queue.pop());
     };
 
-    setTimeout(function() { 
+    setTimeout(function() {
       Notifier.list.find(".alert-success").fadeOut(1000);
     }, Notifier.FADE_OUT_TIME);
   },
