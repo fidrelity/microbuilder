@@ -17,6 +17,7 @@ var MainView = Ember.View.extend({
     this.paintView = PaintView.create();
     
     this.libraryView = LibraryView.create();
+    this.objectsView = ObjectsView.create();
     this.behaviourView = BehavioursView.create();
     
     this.actionView = ActionView.create();
@@ -29,7 +30,7 @@ var MainView = Ember.View.extend({
   didInsertElement : function() {
     
     this.show( 'editorContent', 'stageView' );
-    this.show( 'overlayContent', 'libraryView' );
+    // this.show( 'overlayContent', 'libraryView' );
     
   },
   
@@ -76,8 +77,8 @@ var BehavioursView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    this.$( "#behaviours" ).sortable();
-    this.$( "#behaviours" ).disableSelection();
+    // this.$( "#behaviours" ).sortable();
+    // this.$( "#behaviours" ).disableSelection();
     
   },
   

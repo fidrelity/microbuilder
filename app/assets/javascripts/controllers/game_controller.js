@@ -15,6 +15,12 @@ var GameController = Ember.Object.extend({
     
   },
   
+  showObjects : function() {
+    
+    App.mainView.show( 'overlayContent', 'objectsView' );
+    
+  },
+  
   searchGraphic : function() {
     
     App.libraryController.set( 'showBackground', false );
@@ -34,7 +40,7 @@ var GameController = Ember.Object.extend({
       
     }) );
     
-    this.cancel();
+    App.mainView.show( 'overlayContent', 'objectsView' );
     
   },
   
@@ -68,7 +74,7 @@ var GameController = Ember.Object.extend({
     
     App.mainView.stageView.gameObject.set( 'graphic', graphic );
     
-    this.cancel();
+    App.mainView.show( 'overlayContent', 'objectsView' );
     
   },
   

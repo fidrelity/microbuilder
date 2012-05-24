@@ -1,8 +1,8 @@
 <h3>Stage</h3>
 
 <div id="stageControls">
-  <button {{action "searchBackground" target="App.gameController"}}>select background</button>
-  <button {{action "searchGraphic" target="App.gameController"}}>add object</button>
+  <button {{action "showObjects" target="App.gameController"}}> objects </button>
+  <button {{action "searchBackground" target="App.gameController"}}> background </button>
   <div>duration:</div>
   <div id="slider"></div>
   <div>{{App.game.duration}} seconds</div>

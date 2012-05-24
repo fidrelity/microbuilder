@@ -27,7 +27,7 @@ var PlayerView = Ember.View.extend({
       
       player.showTimeline = true;
       
-      player.selectedObjectCallback = bind( App.mainView.stageView, App.mainView.stageView.selectedObjectCallback );
+      player.selectedObjectCallback = bind( App.gameObjectsController, App.gameObjectsController.selectID );
       player.selectedObjectDragCallback = bind( App.game, App.game.gameObjectPositionChanged );
       
     } else if ( type === 'moveTo' || type === 'jumpTo' ) {

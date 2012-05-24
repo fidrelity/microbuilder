@@ -1,6 +1,10 @@
 /* EDITOR */
 /* ---------------------------------- */
 
+.clear {
+  clear : both;
+}
+
 #editor .editor_content {
    top:100px;
    /*width:1034px;*/
@@ -29,7 +33,7 @@
 
 #editor ul.graphics {
   list-style:none;
-  width: 700px;
+  margin: 0;
 }
 
 #editor ul.graphics li {
@@ -109,7 +113,16 @@
   left: 100px;
   width: 880px;
   z-index: 10;
-  background-color: #CCC;
+  background-color: #EEE;
   border: 2px solid #000;
   padding: 20px;
+}
+
+#editor #overlay #objects {
+  float : left;
+  width : 300px;
+}
+
+#editor #overlay #behaviours {
+  float : left;
 }
