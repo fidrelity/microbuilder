@@ -14,7 +14,6 @@ var MainView = Ember.View.extend({
     this._super();
     
     this.stageView = StageView.create();
-    this.paintView = PaintView.create();
     
     this.libraryView = LibraryView.create();
     this.objectsView = Ember.View.create({
@@ -27,8 +26,6 @@ var MainView = Ember.View.extend({
     this.publishView = Ember.View.create({
       templateName : 'templates/publish_template'
     });
-    
-    this.paintSizeView = PaintSizeView.create();
     
   },
   
@@ -52,19 +49,6 @@ var MainView = Ember.View.extend({
       this.set( locationName, this.get( viewName ) );
     
     }
-    
-  },
-  
-  showStage : function() {
-    
-    this.show( 'editorContent', 'stageView' );
-    
-  },
-  
-  showPaint : function() {
-    
-    this.show( 'editorContent', 'paintView' );
-    this.show( 'overlayContent', 'paintSizeView' );
     
   },
   

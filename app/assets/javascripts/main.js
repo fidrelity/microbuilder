@@ -8,16 +8,6 @@ function editor_main() {
   App.libraryController = LibraryController.create();
 
   App.gameObjectsController = GameObjectsController.create();
-
-  // -------------------
-  // Paint  
-  App.paintController = PaintController.create();  
-  App.pencilTool = PencilToolModel.create();
-  App.gameObjectsController = GameObjectsController.create();
-  App.toolBoxController = ToolBoxController.create();
-  App.drawTool = DrawToolModel.create();
-  // -------------------
-
   App.behaviourController = BehaviourController.create();
   
   App.triggerController = TriggerController.create();
@@ -25,7 +15,6 @@ function editor_main() {
 
   App.mainView = MainView.create();
   App.mainView.appendTo('#content');
-
   
   setTimeout( function() {
   
@@ -38,6 +27,21 @@ function editor_main() {
   
   }, 100 );
 
+};
+
+function paint_main() {
+  
+  window.App = Ember.Application.create();
+  
+  App.paintController = PaintController.create();  
+  App.pencilTool = PencilToolModel.create();
+  
+  App.toolBoxController = ToolBoxController.create();
+  App.drawTool = DrawToolModel.create();
+  
+  App.paintView = PaintView.create();
+  App.paintView.appendTo('#content');
+  
 };
 
 function player_main( data ) {

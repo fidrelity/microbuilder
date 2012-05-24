@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   respond_to :js, :only => [:create, :index, :update, :like, :dislike]
-  before_filter :authenticate_user!, :only => [:new, :create, :destroy]
+  before_filter :authenticate_user!, :only => [:create, :destroy]
   before_filter :find_game, :only => [:show, :embed, :destroy, :like, :dislike, :played]
   
   def index
@@ -43,15 +43,12 @@ class GamesController < ApplicationController
   
   def destroy
     @game = current_user.games.find(params[:id])
-
-    if @game.author == current_user
-      @game.destroy 
-      flash[:notice] = "Successfully deleted game"
+    @user = @game.author
+    if @game.destroy
+      flash[:success] = "Successfully deleted game"
     else
       flash[:error] = "Not allowed to delete game"
     end
-    
-    redirect_to user_path(@game.author)
   end
 
   # ------------------
