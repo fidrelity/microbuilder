@@ -15,6 +15,8 @@ class Game < ActiveRecord::Base
   scope :all_latest, order("created_at DESC")
   pg_search_scope :search, :against => [:title, :instruction]
   
+  attr_accessible :title, :instruction, :data
+  
   class << self
     # SQL from http://evanmiller.org/how-not-to-sort-by-average-rating.html
     def all_by_rating
