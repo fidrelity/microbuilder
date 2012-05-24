@@ -122,8 +122,6 @@ var LibraryController = Ember.ArrayController.extend({
     
     for ( var i = 0; i < graphics.length; i++ ) {
       
-      console.log( graphics[i].frameWidth, graphics[i].frameHeight, this.size.min, this.size.max );
-      
       if ( graphics[i].frameWidth <= this.size.max && graphics[i].frameHeight <= this.size.max && 
         ( graphics[i].frameWidth > this.size.min || graphics[i].frameHeight > this.size.min ) ) {
         
@@ -146,8 +144,6 @@ var LibraryController = Ember.ArrayController.extend({
   },
   
   loadGraphics : function( path ) {
-    
-    console.log( path );
     
     var self = this
     
