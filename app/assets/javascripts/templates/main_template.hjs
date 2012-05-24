@@ -6,5 +6,18 @@
   <button {{action "showPaint"}}> paint </button>
 
   {{dynamicView editorContent}}
+  
+  {{#if overlayContent}}
+  
+    <div id="overlay">
+    
+      <h2>Overlay</h2>
+      <button {{action "hideOverlay"}}> close </button>
+    
+      {{dynamicView overlayContent}}
+    
+    </div>
+  
+  {{/if}}
 
 </div>

@@ -5,8 +5,7 @@ var MainView = Ember.View.extend({
   gameBinding : 'App.game',
   
   editorContent : null,
-  
-  // overlayContent : null,
+  overlayContent : null,
   
   player : null,
   
@@ -17,11 +16,11 @@ var MainView = Ember.View.extend({
     this.stageView = StageView.create();
     this.paintView = PaintView.create();
     
-    // this.libraryView = LibraryView.create();
-    // this.behaviourView = BehavioursView.create();
+    this.libraryView = LibraryView.create();
+    this.behaviourView = BehavioursView.create();
     
-    // this.actionView = ActionView.create();
-    // this.triggerView = TriggerView.create();
+    this.actionView = ActionView.create();
+    this.triggerView = TriggerView.create();
     
     // this.paintSizeView = PaintSizeView.create();
     
@@ -30,7 +29,7 @@ var MainView = Ember.View.extend({
   didInsertElement : function() {
     
     this.show( 'editorContent', 'stageView' );
-    // this.show( 'behaviourContent', 'behaviourView' );
+    this.show( 'overlayContent', 'libraryView' );
     
   },
   
@@ -60,6 +59,12 @@ var MainView = Ember.View.extend({
   showPaint : function() {
     
     this.show( 'editorContent', 'paintView' );
+    
+  },
+  
+  hideOverlay : function() {
+    
+    this.set( 'overlayContent', null );
     
   }
   

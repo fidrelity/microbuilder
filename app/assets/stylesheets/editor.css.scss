@@ -1,0 +1,115 @@
+/* EDITOR */
+/* ---------------------------------- */
+
+#editor .editor_content {
+   top:100px;
+   /*width:1034px;*/
+   margin: 0 auto;
+   z-index:3;
+}
+
+#editor button {
+  padding:5px;
+  font-size:11px;
+}
+
+#editor ul.gameobjects {
+  list-style:none;
+}
+
+#editor ul.gameobjects li {
+  float:left;
+  margin: 0 10px 10px 0;
+}
+
+#editor ul.gameobjects li img {
+  height:50px;
+  width:50px;
+}
+
+#editor ul.graphics {
+  list-style:none;
+  width: 700px;
+}
+
+#editor ul.graphics li {
+  float:left;
+  background:#ccc;
+  margin: 0 10px 10px 0;
+  opacity:0.8;
+}
+
+#editor ul.graphics li.selected {
+  border:solid 2px black;
+} 
+
+#editor ul.graphics li img {
+  height:50px;
+  width:50px;
+}
+
+#editor ul.graphics li:hover {
+  opacity:1.0;
+}
+
+#editor ul#behaviours, #editor ul#behaviours ul {
+  list-style:none;
+}
+
+#editor ul#behaviours li.top {
+  border: solid gray 1px;
+  margin-bottom: 10px;
+}
+
+#editor ul#behaviours li.top div.left {
+  float: left;
+  margin: 5px;
+}
+
+#editor ul#behaviours li.top div.right {
+  float: right;
+  margin: 5px;
+}
+
+#editor ul#behaviours li.top div.title {
+/*  background: #FFF;*/
+  text-align: right;
+  width: 70px;
+}
+
+#editor ul#behaviours li.top div.clear {
+  float: none;
+}
+
+#editor ul#behaviours li.top li {
+  margin-bottom: 5px;
+}
+
+#editor #stageContent, #editor #behaviourContent {
+  position: relative;
+}
+
+#editor #stageControls > * {
+  margin: 0 20px 10px 0;
+  float: left;
+}
+
+#editor #stageControls #slider {
+  width: 300px;
+}
+
+#placementGraphic {
+  float : left;
+  border : 2px solid #000;
+}
+
+#editor #overlay {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  width: 880px;
+  z-index: 10;
+  background-color: #CCC;
+  border: 2px solid #000;
+  padding: 20px;
+}
