@@ -65,10 +65,6 @@ $(document).ready(function() {
   Feedback.init();
   //
   Notifier.init();
-
-  Notifier.add("Info message", "info");
-  Notifier.add("Error message", "error");
-
   Notifier.notify();
 
   // ---------------------------------------
