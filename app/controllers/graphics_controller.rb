@@ -7,15 +7,13 @@ class GraphicsController < ApplicationController
   end
 
   def create
-    @graphic = current_user.graphics.new(params[:graphic])
-    response, status = @graphic.save ? [@graphic.to_response_hash, 200] : [@graphic.errors.to_json, 400]
-      
-    render :json => response, :status => status
+    @graphic = current_user.graphics.create(params[:graphic])
+    flash[:success] = "Your Graphic was created!"
   end
   
   def destroy
     @graphic = Graphic.find(params[:id])
-    user = @graphic.user
+    @user = @graphic.user
     
     if current_user == @graphic.user
       @graphic.soft_delete

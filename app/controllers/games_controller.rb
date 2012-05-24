@@ -43,15 +43,12 @@ class GamesController < ApplicationController
   
   def destroy
     @game = current_user.games.find(params[:id])
-
-    if @game.author == current_user
-      @game.destroy 
+    @user = @game.author
+    if @game.destroy
       flash[:success] = "Successfully deleted game"
     else
       flash[:error] = "Not allowed to delete game"
     end
-    
-    redirect_to user_path(@game.author)
   end
 
   # ------------------
