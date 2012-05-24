@@ -15,16 +15,13 @@
       -if user_signed_in?      
         =link_to "Profile", user_path(current_user.id)
       -else
-        = link_to 'Login', new_user_session_path      
-
+        = link_to 'Login', new_user_session_path
+        
   %div{:id => 'flash-messages', :class => "row"}
-
     %ul
       %li{:id => "flash-template",:class => "alert"}
         %span{:class=>"msg"}
-        <a class="close closeFlash" href="#">&times;</a>
-      - flash.each do |key, value|
-        :javascript          
-          Notifier.add("#{value}", "#{key}")
-  
+        = link_to '&times;'.html_safe, '#', :class => ['close', 'closeFlash']
+    =render :partial => 'layouts/flash', :locals => {:flash => flash}
+
   =render :partial => "layouts/feedback"
