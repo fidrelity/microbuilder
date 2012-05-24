@@ -17,7 +17,11 @@
       -else
         = link_to 'Login', new_user_session_path
         
-  %div{:id => 'flash-messages'}
+  %div{:id => 'flash-messages', :class => "row"}
+    %ul
+      %li{:id => "flash-template",:class => "alert"}
+        %span{:class=>"msg"}
+        = link_to '&times;'.html_safe, '#', :class => ['close', 'closeFlash']
     =render :partial => 'layouts/flash', :locals => {:flash => flash}
-    
+
   =render :partial => "layouts/feedback"

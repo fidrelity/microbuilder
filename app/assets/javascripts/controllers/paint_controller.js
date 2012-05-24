@@ -340,7 +340,7 @@ var PaintController =  Ember.ArrayController.extend({
 
     if(clear) this.clearZoomCanvas();
     var imgData = this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height);
-    this.zoomImageData(imgData);
+    //this.zoomImageData(imgData);
   },
 
   // ---------------------------------------
