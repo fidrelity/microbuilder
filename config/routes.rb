@@ -42,5 +42,4 @@ Playtin::Application.routes.draw do
   get '/play/:id', :to => 'games#show', :as => 'play'
   get '/play/:id/embed', :to => 'games#embed'
   get '/build', :to => 'games#new'
-  get '/editor', :to => 'pages#editor', :as => 'pages_editor' #route for testing only
 end

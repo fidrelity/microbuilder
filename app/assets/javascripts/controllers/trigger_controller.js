@@ -61,7 +61,7 @@ var TriggerController = Ember.Object.extend({
     
       this.get( 'behaviour' ).addTrigger( trigger );
     
-      App.gameController.cancel();
+      App.mainView.show( 'overlayContent', 'objectsView' );
     
     }
     

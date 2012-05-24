@@ -2,6 +2,7 @@ class Graphic < ActiveRecord::Base
   include PgSearch
   
   attr_accessor :image_data
+  attr_accessible :name, :image_data, :frame_count, :frame_width, :frame_height, :public, :background
   
   belongs_to :user
   has_and_belongs_to_many :games
@@ -19,8 +20,8 @@ class Graphic < ActiveRecord::Base
   scope :without_backgrounds, where(:background => false)
   scope :between_size, lambda { |min, max|
     where(
-      "frame_width <= ? AND frame_height <= ? AND (frame_width > ? OR frame_height > ?)", 
-      max, max, min, min
+      "frame_width >= ? AND frame_width <= ? AND frame_height >= ? AND frame_height <= ?", 
+      min, max, min, max
     )
   }
 
@@ -32,6 +33,10 @@ class Graphic < ActiveRecord::Base
       :frame_count => frame_count, :frame_width => frame_width,
       :frame_height => frame_height
     }
+  end
+  
+  def soft_delete
+    games.any? ? update_attribute(:user, nil) : destroy
   end
   
   protected
@@ -53,16 +58,11 @@ class Graphic < ActiveRecord::Base
 
       unless backgrounds
         if min && max && min < max
-          query = between_size(min, max)
+          return query.between_size(min, max)
         else
-          return ["No size boundaries given", 400]
+          raise InvalidGraphicBoundaries, "Boundaries invalid"
         end
       end
-        
-      response = query.map do |graphic|
-        graphic.to_response_hash 
-      end
-      [response, 200]
     end
     
     def generate_file_name
@@ -72,4 +72,7 @@ class Graphic < ActiveRecord::Base
     def referenced?
       self.games.none?
     end
+end
+
+class InvalidGraphicBoundaries < Exception
 end

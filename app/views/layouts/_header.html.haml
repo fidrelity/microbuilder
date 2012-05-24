@@ -10,7 +10,7 @@
     %li{:class => "gallery span2", :id =>"play"}
       =link_to "Games", gallery_path
     %li{:class => "editor span2", :id =>"build"}
-      =link_to "Build", pages_editor_path
+      =link_to "Create", build_path
     %li{:class => "profile span2", :id =>"help"}
       -if user_signed_in?      
         =link_to "Profile", user_path(current_user.id)

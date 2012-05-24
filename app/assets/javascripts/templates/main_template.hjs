@@ -1,49 +1,22 @@
 <div class="editor_content">
 
-  <h2>Game Editor</h2>
+  <button {{action "showStage"}}> stage </button>
+  <button {{action "showPaint"}}> paint </button>
 
-  <div id="accordion">
-
-    <h3><a href="#">Stage</a></h3>
-    <div>
-      <div id="stageContent">
-        {{dynamicView stageContent}}
-      </div>
-    </div>
-
-    <h3><a href="#">Behaviours</a></h3>
-    <div>
-      <div id="behaviourContent">
-        {{dynamicView behaviourContent}}
-      </div>
-    </div>
-
-    <h3><a href="#">Publish</a></h3>
-    <div>
-
-      <label>game title: </label>
-      {{view Ember.TextField valueBinding="game.title" size="10" placeholder="insert name" maxlength="3"}}
-      <br />
-
-      <label>instructions: </label>
-      {{view Ember.TextField valueBinding="game.instructions" placeholder="(140 chars max)" maxlength="140"}}
-      <br />
-
-      {{view PlayerView 
-        type="test"
-        canvasID="testCanvas"
-        playerBinding="player"
-      }}
-
-      <button {{action "publishGame" target="App.gameController"}}>publish</button>
-      <button {{action "takePreviewSnapshot" target="App.gameController"}}>Take Snapshot</button>
-
-      <ul id="thumbnail">
-
-      </ul>
+  {{dynamicView editorContent}}
+  
+  {{#if overlayContent}}
+  
+    <div id="overlay">
+    
+      <h2>Overlay <button {{action "hideOverlay"}}> close </button></h2>
+    
+      {{dynamicView overlayContent}}
     
     </div>
+    
+    <div id="fog" {{action "hideOverlay"}}></div>
   
-  </div>
+  {{/if}}
 
 </div>
