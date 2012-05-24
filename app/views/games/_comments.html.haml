@@ -2,7 +2,6 @@
   Comments (
   =comments.size
   ):
-
 =form_for GameComment.new, :url => comment_game_path, :html => {:class => "form-vertical well"}, :remote => true do |t|
   =t.hidden_field :game_id, :value => game.id
   =t.label :comment
@@ -19,7 +18,9 @@
   -comments.each do |comment|
     %div{:class=>"row comment"}
       %div{:class=>"span1"}
-        Author
+        = link_to user_path(comment.user) do 
+          %img{:src => comment.user.display_image}
+          = comment.user.display_name
       %div{:class=>"span6"}
         =comment.id
         =comment.comment

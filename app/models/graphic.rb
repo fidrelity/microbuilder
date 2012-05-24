@@ -2,6 +2,7 @@ class Graphic < ActiveRecord::Base
   include PgSearch
   
   attr_accessor :image_data
+  attr_accessible :name, :image_data, :frame_count, :frame_width, :frame_height, :public, :background
   
   belongs_to :user
   has_and_belongs_to_many :games

@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 
   has_many :games
   has_many :graphics
+  has_many :game_comments
   
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -18,8 +19,6 @@ class User < ActiveRecord::Base
       if user = User.where(:email => data.email).first
         user
       else # Create a user with a stub password.
-        p '*' * 20
-        p data
         User.create!(
           :email => data.email, :password => Devise.friendly_token[0,20],
           :first_name => data.first_name, :last_name => data.last_name, :facebook_id => data.id
