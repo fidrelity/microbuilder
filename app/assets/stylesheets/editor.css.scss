@@ -121,8 +121,21 @@
 #editor #overlay #objects {
   float : left;
   width : 300px;
+  border-right : 2px solid black;
 }
 
 #editor #overlay #behaviours {
   float : left;
+  margin-left: 20px;
+}
+
+#editor #fog {
+  position : absolute;
+  top : 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  background-color: white;
+  opacity: 0.5;
 }

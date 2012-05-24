@@ -11,12 +11,13 @@
   
     <div id="overlay">
     
-      <h2>Overlay</h2>
-      <button {{action "hideOverlay"}}> close </button>
+      <h2>Overlay <button {{action "hideOverlay"}}> close </button></h2>
     
       {{dynamicView overlayContent}}
     
     </div>
+    
+    <div id="fog" {{action "hideOverlay"}}></div>
   
   {{/if}}
 

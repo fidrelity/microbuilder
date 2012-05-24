@@ -66,6 +66,7 @@ var MainView = Ember.View.extend({
   hideOverlay : function() {
     
     this.set( 'overlayContent', null );
+    this.stageView.updatePlayer();
     
   }
   
