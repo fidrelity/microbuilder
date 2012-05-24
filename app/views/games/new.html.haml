@@ -1,6 +1,6 @@
-#editor
-  #content
+%h2 Editor
 
-:javascript
-  $(document).ready( function() { editor_main(); } );
-
+-if user_signed_in?      
+  =render :partial => "create_tool"
+-else
+  =render :partial => "create_guide"

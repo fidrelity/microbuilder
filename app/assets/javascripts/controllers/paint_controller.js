@@ -346,9 +346,9 @@ var PaintController =  Ember.ArrayController.extend({
 
 
     if(clear) this.clearZoomCanvas();
-    
+
     this.zoomContext.drawImage(this.getCurrentSpriteModel().canvas, 0, 0);
-   
+
   },
 
   // ---------------------------------------
