@@ -1,8 +1,5 @@
 <div class="editor_content">
 
-  <button {{action "showStage"}}> stage </button>
-  <button {{action "showPaint"}}> paint </button>
-
   {{dynamicView editorContent}}
   
   {{#if overlayContent}}
