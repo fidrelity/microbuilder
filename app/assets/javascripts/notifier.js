@@ -12,6 +12,9 @@ var Notifier = {
     Notifier.wrapper = $('#flash-messages');
     Notifier.list = Notifier.wrapper.find("ul");
     Notifier.templateLi = Notifier.list.find("#flash-template");
+    Notifier.wrapper.find(".closeFlash").live("click", function(){
+      $(this).parent().hide();
+    });
   },
 
   add : function(_msg, _type) {
@@ -33,8 +36,10 @@ var Notifier = {
 
   append : function(notification) {
     var clone = Notifier.templateLi.clone().removeAttr("id").hide();
-    clone.html(notification.msg).addClass("alert-" + notification.type).show();
+    clone.find(".msg").html(notification.msg)
+    clone.addClass("alert-" + notification.type)
     Notifier.list.append(clone);
+    clone.fadeIn(500);
   },
 
   clear : function() {

@@ -17,10 +17,12 @@
       -else
         = link_to 'Login', new_user_session_path      
 
-  %div{:id => 'flash-messages'}
+  %div{:id => 'flash-messages', :class => "row"}
 
     %ul
-      %li{:id => "flash-template",:class => "alert"} 
+      %li{:id => "flash-template",:class => "alert"}
+        %span{:class=>"msg"}
+        <a class="close closeFlash" href="#">&times;</a>
       - flash.each do |key, value|
         :javascript          
           Notifier.add("#{value}", "#{key}")
