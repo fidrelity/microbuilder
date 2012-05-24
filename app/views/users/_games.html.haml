@@ -1,0 +1,20 @@
+%h2="Games (#{user.games.size})"
+
+%ul{:class => "thumbnails"}
+  - user.games.each do |game|
+    %li{:id => game.id, :class => "span2"}
+      %div{:class => "thumbnail"}
+        = link_to image_tag("game.png"), play_path(game)
+        %h5
+          =link_to(game.title, play_path(game))            
+        %i{:class => "icon-comment"}
+        =game.game_comments.size
+        %i{:class => "icon-eye-open"}
+        =game.played
+        %i{:class => "icon-thumbs-up"}
+        =game.likes
+        %i{:class => "icon-thumbs-down"}
+        =game.dislikes
+        - if game.author == current_user
+          =link_to image_tag("edit.png"), '#'
+          =link_to("[x]", game_path(game), :method => :delete, :remote => true, :confirm => "Permanently delete this game?")
