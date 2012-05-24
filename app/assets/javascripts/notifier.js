@@ -1,49 +1,44 @@
+var Notification = function(_msg, _type) {
+  this.msg = _msg;
+  this.type = _type;
+};
+
 var Notifier = {
 
+  queue : [],
+  FADE_OUT_TIME : 6000,
 
   init : function() {
-    Notifier.wrapper = $('#flash_messages');
+    Notifier.wrapper = $('#flash-messages');
     Notifier.list = Notifier.wrapper.find("ul");
-    Notifier.templateLi = Notifier.wrapper.find("#flash_template");
+    Notifier.templateLi = Notifier.list.find("#flash-template");
   },
 
   add : function(_msg, _type) {
     if(!_msg) return false;
     var type = _type || "info";
 
-    switch(type) {
-      case('success') : Notifier.add_success(_msg); break;
-      case('info')    : Notifier.add_info(_msg); break;
-      case('error')   : Notifier.add_error(_msg); break;
-    }
+    Notifier.queue.push(new Notification(_msg, _type));
   },
 
-  add_error : function (_msg) {
-    Notifier.append(_msg, 'error');
-  },
-
-  add_info : function (_msg) {
-    Notifier.append(_msg, 'info');
-  },
-
-  add_success : function (_msg) {
-    Notifier.append(_msg, 'success');
+  notify : function () {
+    for (var i = 0; i < Notifier.queue.length; i++) {
+      Notifier.append(Notifier.queue[i]);
+    };
 
     setTimeout(function() { 
       Notifier.list.find(".alert-success").fadeOut(1000);
-    }, 2000);
+    }, Notifier.FADE_OUT_TIME);
   },
 
-  append : function(_msg, _type) {
+  append : function(notification) {
     var clone = Notifier.templateLi.clone().removeAttr("id").hide();
-    clone.html(_msg).addClass("alert-" + _type);
-    Notifier.list.append(clone).fadeIn(300);
+    clone.html(notification.msg).addClass("alert-" + notification.type).show();
+    Notifier.list.append(clone);
   },
 
   clear : function() {
     Notifier.list.find("li").not("#flash_template").remove();
   }
 
-}
-
-Notifier.init();
+};
