@@ -2,7 +2,6 @@
   Comments (
   =comments.size
   ):
-
 =form_for GameComment.new, :url => comment_game_path, :html => {:class => "form-vertical well"}, :remote => true do |t|
   =t.hidden_field :game_id, :value => game.id
   =t.label :comment
