@@ -65,7 +65,6 @@ $(document).ready(function() {
   Feedback.init();
   //
   Notifier.init();
-
   Notifier.notify();
 
   // ---------------------------------------
