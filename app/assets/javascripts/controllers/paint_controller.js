@@ -1,21 +1,15 @@
 /*
   PaintController
-  
-  - manages the graphic being saved
 
   Todo:    
     - removeCanvas
   Fix:
-    - didInsertElement - initalizing multipletimes
-    - refactor
-      -> Create Classes: Zoomer, FramePlayer, colorpallette
+    - didInsertElement - initalizing multipletimes    
     - on Save -> hide merged canvas
               -> show message on error
-    - Zoom and temp-canvas
-    - Zooming too pixelated
+              -> redirect to ...
   Feature:
     - Text
-    - FillTool
     - key shortcuts (Undo, Shift -> straight lines)
     - Order sprite areas by drag&drop
 
@@ -31,7 +25,7 @@ var PaintController =  Ember.ArrayController.extend({
   spriteSize : null,    // Object {width: , height: }
   currentSprite : null, // type of spriteModel
   spriteWrapper : 'sprites-area',
-  showMarker : false,
+  showMarker : false,   // deprecated
   spriteCounter : 0,    // spriteModel.index
   LIMIT : 8,
   //
@@ -49,14 +43,13 @@ var PaintController =  Ember.ArrayController.extend({
 
   // Called when Paint_View init
   initView : function() {
-    console.log("init paint controller")
     this.zoomCanvas  = document.getElementById("zoomCanvas");
     this.zoomContext = this.zoomCanvas.getContext("2d");
 
     this.tempCanvas = $('#canvas-temp');
     this.tempContext = this.tempCanvas[0].getContext("2d");
 
-    // Init instanst file load    
+    // Init file load
     if (!window.File && !window.FileReader && !window.FileList && !window.Blob) {
       $('#file').remove();
     } else {
@@ -92,7 +85,7 @@ var PaintController =  Ember.ArrayController.extend({
     if(!imageTitle || !count) {alert("No Name!");return false;}
 
     this.finalCanvas.attr('width', totalWidth).attr('height', height).show();
-    var canvas = this.finalCanvas[0]; //document.getElementById(this.finalCanvas.attr('id'));
+    var canvas = this.finalCanvas[0];
     var context = canvas.getContext('2d');    
 
     // Merge sprites into final canvas
@@ -350,8 +343,9 @@ var PaintController =  Ember.ArrayController.extend({
   // ---------------------------------------
   // Temp canvas
 
-  showTempCanvas : function() {    
-    // Set position of temp canvas and show it
+  // Set position of temp canvas and display it over zoomCanvas
+  showTempCanvas : function() { 
+    
     var canvasObject = $("#zoomCanvas");    
  
     var newLeft = $("#zoom-canvas-area")[0].scrollLeft + canvasObject.position().left,
@@ -431,12 +425,11 @@ var PaintController =  Ember.ArrayController.extend({
 
     x = Math.floor(x / this.zoom);
     y = Math.floor(y / this.zoom);
-    //x = Math.floor(x);
-    //y = Math.floor(y);
 
     return {x: x, y: y};
   },
 
+  // Loads file from hard drive to canvas
   handleFile : function(e) {
 
     var goon = confirm("This will overwrite your current canvas. Proceed?");
@@ -461,7 +454,6 @@ var PaintController =  Ember.ArrayController.extend({
     };
 
     reader.readAsDataURL(e.target.files[0]);
-
   }
 
 });
