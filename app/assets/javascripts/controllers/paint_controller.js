@@ -126,7 +126,6 @@ var PaintController =  Ember.ArrayController.extend({
     if(!ok) return false;
 
     for (var i = 0; i < this.content.length; i++) {
-      console.log(this.content[i]);
       this.remove(this.content[i]);
     };
     var first = this.content[this.content.length - 1];
