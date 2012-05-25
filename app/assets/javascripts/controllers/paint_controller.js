@@ -62,9 +62,7 @@ var PaintController =  Ember.ArrayController.extend({
     } else {
       $('#file').change(function(e) {App.paintController.handleFile(e)});
     }
-
-
-    $('#loadImageByUrl').change(function() {App.paintController.loadImageToCanvas($(this).val())});
+    
     // if mode = background -> set spriteSize to background size
       // remove zoom
       // remove original sprites
@@ -354,11 +352,14 @@ var PaintController =  Ember.ArrayController.extend({
 
   showTempCanvas : function() {    
     // Set position of temp canvas and show it
-    var canvasObject = $("#zoomCanvas");
+    var canvasObject = $("#zoomCanvas");    
  
+    var newLeft = $("#zoom-canvas-area")[0].scrollLeft + canvasObject.position().left,
+        newTop = $("#zoom-canvas-area")[0].scrollTop + canvasObject.position().top;
+
     this.tempCanvas.css({     
-                            left: canvasObject.position().left,
-                            top: canvasObject.position().top,
+                            left: newLeft,
+                            top: newTop,
                             width: canvasObject.width(),
                             height: canvasObject.height()
                         }).show();
@@ -461,22 +462,6 @@ var PaintController =  Ember.ArrayController.extend({
 
     reader.readAsDataURL(e.target.files[0]);
 
-  },
-
-  loadImageToCanvas : function(_url) {
-
-    var w = App.paintController.zoomCanvas.width;
-    var h = App.paintController.zoomCanvas.height;
-    var img = new Image;
-    img.src = _url;
-    
-    img.width = w;
-    img.height = h;
-
-    img.onload = function() {
-      App.paintController.zoomContext.drawImage(img, 0,0, w, h);      
-      App.paintController.drawToSprite();
-    };
   }
 
 });

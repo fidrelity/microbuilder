@@ -138,4 +138,3 @@ Name: <input type="text" size="25" id="imageName"> isPublic <input type="checkbo
 </p>
 
 <input type="file" id="file">
-<input type="text" id="loadImageByUrl">

@@ -112,18 +112,10 @@ var DrawToolModel = Ember.Object.extend({
     this.pixelDrawer.popImageData();
     this.drawFunction(x, y, endX, endY, App.paintController.color, App.paintController.size);
     this.pixelDrawer.pushImageData();
-
-    // Update ZoomCanvas
-    /*
-    App.paintController.clearZoomCanvas();
-    */
-    //App.paintController.zoomImageData(this.currentContext.getImageData(0, 0, this.currentSprite.width, this.currentSprite.height));    
-    //App.paintController.zoomImageData(this.tempContext.getImageData(0, 0, this.currentSprite.width, this.currentSprite.height));
   },
 
   // Show temp canvas over current canvas (sprite)
   setTempCanvas : function() {
-
     // Set temp canvas as canvas to draw in pixelDrawer
     this.pixelDrawer.setCanvasContext(App.paintController.tempCanvas[0]);    
     App.paintController.showTempCanvas();
@@ -178,11 +170,11 @@ var FillToolModel = Ember.Object.extend({
   },
 
   draw : function(_x, _y) {
-    
     this.pixelDrawer.popImageData();
     var oldColor = this.pixelDrawer.getPixelColor(_x, _y);
     this.pixelDrawer.floodFill(_x, _y, App.paintController.color, oldColor);
     this.pixelDrawer.pushImageData();
+    App.paintController.drawToSprite();
   }
 
 });
