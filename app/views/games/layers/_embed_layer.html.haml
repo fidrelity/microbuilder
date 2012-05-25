@@ -1,0 +1,8 @@
+%div{:class => "well layer", :id => "embedLayer"}
+  %a{:class=>"close closeLayer"}
+    &times;
+  %h4 Embed code
+  %label
+    Use this code to embed the game on your page:
+  %textarea{:cols =>"150", :rows =>"2", :class=>"span7", :style=>"font-family:Courier New;background:#222;color:#F6F6F6;"}
+    <iframe width="640" height="390" src="#{root_url}play/#{game.id}/embed" frameborder="0"></iframe>
