@@ -98,7 +98,7 @@ var PaintController =  Ember.ArrayController.extend({
     // Push to Server
     var imgData = this.finalCanvas[0].toDataURL("image/png");   
     $.ajax({
-      url: "graphics/",
+      url: "/graphics",
       type: "post",
       data: { 
         graphic: {
@@ -113,6 +113,7 @@ var PaintController =  Ember.ArrayController.extend({
       },
       
       success : function( data ) {   
+        console.log('saved')
         App.libraryController.graphicSaved( data );        
       }
       
