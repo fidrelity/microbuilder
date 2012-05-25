@@ -38,6 +38,7 @@ function paint_main() {
   
   App.toolBoxController = ToolBoxController.create();
   App.drawTool = DrawToolModel.create();
+  App.fillTool = FillToolModel.create();
   
   App.paintView = PaintView.create();
   App.paintView.appendTo('#content');

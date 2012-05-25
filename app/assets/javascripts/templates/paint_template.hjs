@@ -19,6 +19,12 @@
         <button {{action "drawRectFill"}}>Rect Fill</button>
         <button {{action "drawCircleFill"}}>Circle Fill</button>
         <button {{action "drawLine"}}>Line</button>
+      {{/view}}
+
+      {{#view ToolView
+        toolBinding = "App.fillTool"
+      }}
+        <button {{action "fill"}}>Fill</button>
       {{/view}} 
     
       {{#view ToolView

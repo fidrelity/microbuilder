@@ -142,9 +142,47 @@ var DrawToolModel = Ember.Object.extend({
       case("fillcircle") : this.drawFunction = this.pixelDrawer.fillCircle.bind(this.pixelDrawer); break;
 
       case("line") : this.drawFunction = this.pixelDrawer.drawLine.bind(this.pixelDrawer); break;
+
     }
 
   }
 
 });
 
+
+// -----------------------
+var FillToolModel = Ember.Object.extend({
+
+  initAfter : function () {
+    this.zoomCanvas = App.paintController.zoomCanvas;
+    this.zoomContext = App.paintController.zoomContext;
+    this.pixelDrawer = App.paintController.pixelDrawer;
+  },
+  
+  click : function(_options) {
+    App.paintController.hideTempCanvas();
+    App.paintController.toggleColorPalette(true);
+  },
+
+  mousedown : function(_options, _pixelDrawer) {
+    // Draw on pixelDrawer current canvas => tempCanvas
+    this.draw(_options.x, _options.y);
+  },
+
+  mousemove : function(_options) {
+
+  },
+
+  mouseup : function(_options) {
+   
+  },
+
+  draw : function(_x, _y) {
+    
+    this.pixelDrawer.popImageData();
+    var oldColor = this.pixelDrawer.getPixelColor(_x, _y);
+    this.pixelDrawer.floodFill(_x, _y, App.paintController.color, oldColor);
+    this.pixelDrawer.pushImageData();
+  }
+
+});
