@@ -41,7 +41,9 @@ function paint_main() {
   App.fillTool = FillToolModel.create();
   
   App.paintView = PaintView.create();
-  App.paintView.appendTo('#content');
+  App.paintSizeView = PaintSizeView.create();
+
+  App.paintSizeView.appendTo('#content');
   
 };
 

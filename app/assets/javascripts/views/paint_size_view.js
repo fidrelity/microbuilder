@@ -17,7 +17,8 @@ var PaintSizeView = Ember.View.extend({
     var w = size_sprite.width();
     var h = size_sprite.height();
 
-    App.mainView.hideOverlay();
+    $("#paint-size-wrapper").hide();
+    App.paintView.appendTo('#content');
     App.paintController.setSpriteSize({width: w, height:h});
     
   }

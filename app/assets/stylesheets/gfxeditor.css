@@ -45,6 +45,8 @@
   margin-left:100px;
 }
 
+#paint-size-wrapper { margin:2em 0 2em 0;}
+
 #palette {
   background:#222;
   display: none;
