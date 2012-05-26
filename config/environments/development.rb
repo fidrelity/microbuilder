@@ -58,3 +58,9 @@ PAPERCLIP_OPTIONS = {
   :path => Rails.root.to_s + "/public/:class/:id/:basename" + ".png",
 }
 
+PAPERCLIP_THUMB_OPTIONS = {
+  :url => "/:class/:id/:basename" + ".png",
+  :path => Rails.root.to_s + "/public/:class/:id/:basename" + ".png",
+  :styles => { :small => "210x130!" }
+}
+

@@ -1,12 +1,15 @@
 class Game < ActiveRecord::Base
   include PgSearch
+  include GraphicPreProcessor
   
   belongs_to :author, :class_name => 'User', :foreign_key => 'user_id'
   has_and_belongs_to_many :graphics
   has_many :game_comments, :dependent => :destroy
+  has_attached_file :thumb, PAPERCLIP_OPTIONS
   
   before_destroy :destroy_unreferenced_graphics
   before_create :check_graphics
+  before_create :decode_base64_image
   
   validate :win_condition_in_data
   validates_presence_of :title, :instruction, :data
