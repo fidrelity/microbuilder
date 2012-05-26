@@ -3,9 +3,7 @@ var ToolView = Ember.View.extend({
   tool : null,
   
   didInsertElement : function() {
-    App.toolBoxController.setCurrentTool(App.pencilTool);
-    App.drawTool.initAfter();
-    App.fillTool.initAfter();
+
   },
 
   setCurrentTool : function() {

@@ -123,3 +123,11 @@
 .activeColor { border:0px solid #000000; }
 
 .active-sprite { border:1px solid #000000; }
+
+.type-selected {
+  border:3px dotted #666;
+}
+
+.paint-type {
+  cursor:pointer;
+}

@@ -1,19 +1,20 @@
 <div id="paint-size-wrapper" class="row">
-<h3>Select what you want to draw:</h3>
+<h3 class="page-header">Select what you want to draw:</h3>
 
 <div class="row">
   <div class="span6">
     <h4>Object</h4>
     Select the size of the graphic:
-    <div id="canvas-size" class="canvas" style="width:64px;height:64px;"></div>
+    <div id="canvas-size" class="canvas paint-type type-selected" style="width:64px;height:64px;" data-type="object"></div>
   </div>
 
   <div class="span4">
     <h4>Background</h4>
-    <div style="width:310px;height:195px;background:#CCC"></div>    
+    <div class="paint-type" style="width:310px;height:195px;background:#CCC" data-type="background"></div>    
   </div>
 </div>
-
-  <button {{action "start"}} class="btn btn-success">Start painting</button>
+  <div class="form-actions">
+    <button {{action "start"}} id="startPainting" class="btn-large btn-success">Start painting a new object</button>
+  </div>
 </div>
 

@@ -10,7 +10,7 @@ var ToolBoxController = Ember.Object.extend({
   activeClass : 'active-tool',
 
   init : function () {
-    this.set('currentTool', App.PencilTool);
+    this.set('currentTool', App.pencilTool);
   },
   
   click : function(toolModel) {
