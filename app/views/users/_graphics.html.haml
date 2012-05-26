@@ -1,6 +1,7 @@
 %h2="Graphics (#{user.graphics.size})"
 %ul{:class => "thumbnails"}
-  -user.graphics.each do |graphic|
+  = will_paginate graphics, :param_name => :graphics_page,  :page_links => false
+  -graphics.each do |graphic|
     %li{:class => "span2"}
       %div{:class => "thumbnail"}
         %img{:src => graphic.image}

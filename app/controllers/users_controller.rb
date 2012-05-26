@@ -4,6 +4,8 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+    @graphics = @user.graphics.paginate(:page => params[:graphics_page], :per_page => 4)
+    @games = @user.games.paginate(:page => params[:games_page], :per_page => 4)
   end
 
   def graphics
@@ -15,3 +17,4 @@ class UsersController < ApplicationController
     render :json => response, :status => status
   end
 end
+  

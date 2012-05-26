@@ -97,5 +97,4 @@ class GamesController < ApplicationController
   def find_game
     @game = Game.find(params[:id])
   end
-
 end
