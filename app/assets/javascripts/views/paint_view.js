@@ -8,4 +8,9 @@ var PaintView = Ember.View.extend({
     //App.paintController.initView();
   },
 
+  showTypeSelection : function() {
+    $("#paint-wrapper").hide();
+    $("#paint-size-wrapper").show();
+  }
+
 });
