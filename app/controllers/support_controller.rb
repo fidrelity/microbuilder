@@ -23,8 +23,12 @@ class SupportController < ApplicationController
 
   def create_issue title, body, label
     return false if title.empty? || body.empty?
-    client = Octokit::Client.new(:login => "playtin", :password => "platin3")
-    client.create_issue("playtin/support", title, body, { :labels => [ label ]})
+    Feedhub::set_user(:name => "playtin", :password => "platin3")
+    Feedhub::set_repo(:account => "playtin", :name => "Support")
+    Feedhub::open_issue(:title => title, :body => body, :label => label)
+
+    #client = Octokit::Client.new(:login => "playtin", :password => "platin3")
+    #client.create_issue("playtin/support", title, body, { :labels => [ label ]})
   end
 
 end
