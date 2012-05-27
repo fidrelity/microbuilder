@@ -130,7 +130,8 @@ var GameController = Ember.Object.extend({
       this.game.instructions,
       JSON.stringify( data.game ),
       JSON.stringify( data.graphicIDs ),
-      data.win
+      data.win,
+      this.getSelectedSnapshotData()
     );
     
 
@@ -235,9 +236,10 @@ var GameController = Ember.Object.extend({
   getSelectedSnapshotData : function() {
     var selectedRadio = $('#thumbnail').find('li').find('input[type="radio"]:checked');
 
-    if(!selectedRadio) {
-      takePreviewSnapshot();
-      selectedRadio = $('#thumbnail').find('li').find('input[type="radio"]').first();
+    // Take automatic snapshot, if user didnt
+    if(!selectedRadio.length) {
+      this.takePreviewSnapshot();
+      selectedRadio = $('#thumbnail').find('li').find('input[type="radio"]').first().prop("checked", true);
     }
 
     var selectedImg = selectedRadio.parent().find('img');
