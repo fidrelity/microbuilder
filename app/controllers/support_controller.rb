@@ -21,7 +21,7 @@ class SupportController < ApplicationController
 
   private
 
-  def create_issue title, body, label
+  def create_issue title, body, label = "question"
     return false if title.empty? || body.empty?
     Feedhub::open_issue(:title => title, :body => body, :label => label)
   end
