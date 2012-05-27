@@ -64,8 +64,7 @@ $(document).ready(function() {
 
   Feedback.init();
   //
-  Notifier.init();
-  Notifier.notify();
+  Notifier.init().notify();
 
   // ---------------------------------------
   /* Game View Buttons */
