@@ -1,6 +1,6 @@
 %div{:class => "row"}
 
-  %div{:class => "span8", :style => "margin-bottom:2em"}  
+  %div{:class => "span11", :style => "margin-bottom:2em"}  
 
     %div{:class => "alert alert-info"}
       Note: You have to be logged in to use the game editor
@@ -8,21 +8,61 @@
     This is the place where you can bring your paintings to life and build you own microgames!
     Just login with your facebook account or sign up to create your first game!
 
-  %div{:class => "span8"}
-    %div{:style => "height:300px;background:#FFF;position:relative;width:600px"}
-      %div{:style => "background:#222;color:#FFF;position:absolute;bottom:0;left:0;margin:0;opacity:0.8;width:100%;"}      
-        %div{:style => "padding:4px;font-size:0.8em;"}
-          1. Define the objects of your game and place them on the canvas
-
   %div{:class => "span4"}
+    &nbsp;
+
+%div{:class => "row"}
+  %div{:class => "span3"}
     This is how it works:
-    %ol
+    %ol{:id => "guideSteps"}
       %li Place objects
       %li Assign behavior
       %li Set trigger and actions
       %li Preview your game
 
+  %div{:class => "span8"}
+    %div{:id => "game-guide-slide-container"}
+  
+      %div{:class => "slide-wrapper"}
+        %div{:class => "slide"}
+          Slide 1
+          %div{:class => "foot-info"}
+            Place objects on the canvas
+
+        %div{:class => "slide"}
+          Slide 2
+          %div{:class => "foot-info"}
+            Assign behavior
+
+        %div{:class => "slide"}
+          Slide 3
+          %div{:class => "foot-info"}
+            Set triggers and actions on your objects
+
+        %div{:class => "slide"}
+          Slide 4
+          %div{:class => "foot-info"}
+            Before you save, play your game and check it
+
 %div{:class => "row", :style => "margin-top:2em"}
   %div{:class => "span12"}
     %h3 Example games:
     See what others have created with the game editor
+
+:javascript
+  $(document).ready(function(){
+    
+    var slider = new SliderDiv({ containerSelector : '#game-guide-slide-container'});
+    slider.autoPlay(5000);
+
+    slider.afterMove(function() {
+      console.log('callback');
+    })
+    
+    $('#guideSteps').find('li').click(function(){
+      var pos = $(this).index();
+      console.log(pos)
+      slider.moveTo(pos).stopPlay();
+    });
+
+  });

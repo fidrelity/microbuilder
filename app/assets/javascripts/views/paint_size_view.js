@@ -6,8 +6,10 @@ var PaintSizeView = Ember.View.extend({
   didInsertElement : function() {
     $('#canvas-size').resizable({
       grid: 16,
-      maxWidth : 128,
-      maxHeight : 128
+      minWidth: 32,
+      minHeight: 32,
+      maxWidth : 256,
+      maxHeight : 256
     });
 
     $('.paint-type').click(function() {

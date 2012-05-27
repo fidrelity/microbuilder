@@ -160,8 +160,8 @@ var PaintController =  Ember.ArrayController.extend({
         },
       },
       
-      success : function( data ) {   
-        console.log('saved')
+      success : function( data ) {
+        App.paintController.reset(false);
         App.libraryController.graphicSaved( data );        
       }
       
@@ -171,11 +171,11 @@ var PaintController =  Ember.ArrayController.extend({
 
   // ---------------------------------------
 
-
-
-  reset : function() {
-    var ok = confirm("Remove all sprites and reset paint editor?");
-    if(!ok) return false;
+  reset : function(_ask) {
+    if(_ask) {
+      var ok = confirm("Remove all sprites and reset paint editor?");
+      if(!ok) return false;
+    }
 
     for (var i = 0; i < this.content.length; i++) {
       this.remove(this.content[i]);

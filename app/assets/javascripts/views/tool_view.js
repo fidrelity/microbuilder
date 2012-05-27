@@ -54,7 +54,7 @@ var ToolView = Ember.View.extend({
   },
 
   reset : function() {
-    App.paintController.reset();
+    App.paintController.reset(true);
   },
 
   undo : function() {
