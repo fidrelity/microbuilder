@@ -59,16 +59,16 @@ class GamesController < ApplicationController
   end
 
   def like
-    unless cookies["liked_game_#{@game.id}"]
+    unless cookies["voted_game_#{@game.id}"]
       @game.update_attribute(:likes, @game.likes + 1)
-      cookies["liked_game_#{@game.id}"] = true
+      cookies["voted_game_#{@game.id}"] = true
     end
   end
 
   def dislike
-    unless cookies["disliked_game_#{@game.id}"]
+    unless cookies["voted_game_#{@game.id}"]
       @game.update_attribute(:dislikes, @game.dislikes + 1)
-      cookies["disliked_game_#{@game.id}"] = true
+      cookies["voted_game_#{@game.id}"] = true
     end
     render "like"
   end
