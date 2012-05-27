@@ -18,8 +18,8 @@
 //= require_tree .
 $(document).ready(function() {
 
-  // Init Autocomplete
-  $( ".searchbox" ).autocomplete({
+  // Init Autocomplete .searchbox
+  $( "#query" ).autocomplete({
       source: "/games/auto_search",
       minLength: 2
   });
@@ -30,22 +30,23 @@ $(document).ready(function() {
 
   // ---------------------------------------
   // Init slides in guide pages
-  var slider = new SliderDiv({ containerSelector : '#guide-slide-container'});
-  slider.autoPlay(5000);
-  var elements = $('#guideSteps').find('li');
-  elements.first().addClass('activeElement');
+  if($('#guide-slide-container').length) {
+    var slider = new SliderDiv({ containerSelector : '#guide-slide-container'});
+    slider.autoPlay(5000);
+    var elements = $('#guideSteps').find('li');
+    elements.first().addClass('activeElement');
 
-  elements.click(function() {
-    var pos = $(this).index();
-    slider.moveTo(pos).stopPlay();
-  });
+    elements.click(function() {
+      var pos = $(this).index();
+      slider.moveTo(pos).stopPlay();
+    });
 
-  slider.afterMove = function() {
-    var index = this.currentSlide;
-    elements.removeClass('activeElement');
-    elements.eq(index).addClass('activeElement');
-  };
-
+    slider.afterMove = function() {
+      var index = this.currentSlide;
+      elements.removeClass('activeElement');
+      elements.eq(index).addClass('activeElement');
+    };
+  }
   // ---------------------------------------
   // Game View Buttons 
   function toggleLayer(_layer) {    
