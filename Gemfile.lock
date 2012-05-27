@@ -186,6 +186,7 @@ GEM
     shoulda-context (1.0.0)
     shoulda-matchers (1.0.0)
     signature (0.1.3)
+    so_social (0.2.1)
     sprockets (2.1.2)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -230,5 +231,6 @@ DEPENDENCIES
   rails (= 3.2.1)
   sass-rails (~> 3.2.3)
   shoulda
+  so_social
   uglifier (>= 1.0.3)
   will_paginate
