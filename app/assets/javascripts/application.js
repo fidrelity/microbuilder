@@ -29,6 +29,7 @@ $(document).ready(function() {
   Notifier.init().notify();
 
   // ---------------------------------------
+  // Init slides in guide pages
   var slider = new SliderDiv({ containerSelector : '#guide-slide-container'});
   slider.autoPlay(5000);
   var elements = $('#guideSteps').find('li');

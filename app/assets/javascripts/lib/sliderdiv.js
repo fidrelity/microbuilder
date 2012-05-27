@@ -115,7 +115,7 @@ SliderDiv.prototype.moveTo = function(_index) {
 
 SliderDiv.prototype.afterMove = function() {
   return true;
-}
+};
 
 SliderDiv.prototype.handleButtonVisibility = function() {
   this.nextButton.show();
@@ -123,7 +123,7 @@ SliderDiv.prototype.handleButtonVisibility = function() {
   if(this.currentSlide == this.slideObj.length - 1)            
     this.nextButton.hide();
   if(this.currentSlide == 0)            
-    this.prevButton.hide()
+    this.prevButton.hide();
 };
 
 SliderDiv.prototype.getViewportHeight = function(_index) {
