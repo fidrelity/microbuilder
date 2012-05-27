@@ -47,6 +47,10 @@ Playtin::Application.configure do
   Pusher.app_id = 20822
   Pusher.key = 'a4bc39aab42024a54d27'
   Pusher.secret = 'fcc0e5f4c2220751968e'
+
+  # https://github.com/webarbeit/feedhub
+  Feedhub::set_user(:name => "playtin", :password => "platin3")
+  Feedhub::set_repo(:account => "playtin", :name => "Support")
 end
 
 PAPERCLIP_OPTIONS = {

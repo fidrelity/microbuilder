@@ -23,8 +23,6 @@ class SupportController < ApplicationController
 
   def create_issue title, body, label
     return false if title.empty? || body.empty?
-    Feedhub::set_user(:name => "playtin", :password => "platin3")
-    Feedhub::set_repo(:account => "playtin", :name => "Support")
     Feedhub::open_issue(:title => title, :body => body, :label => label)
   end
 
