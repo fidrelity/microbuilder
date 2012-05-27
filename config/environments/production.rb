@@ -66,6 +66,7 @@ Playtin::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   
   #Facebook Key and Secret
+  FACEBOOK_APP_NAME = 'playtin'
   FACEBOOK_ID = '148777278524544'
   FACEBOOK_SECRET = '1385b5ed4c03504ba2e8c05a9be5d740'
 
