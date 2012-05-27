@@ -21,7 +21,7 @@
       %li Preview your game
 
   %div{:class => "span8"}
-    %div{:id => "game-guide-slide-container"}
+    %div{:id => "guide-slide-container"}
   
       %div{:class => "slide-wrapper"}
         %div{:class => "slide"}
@@ -52,16 +52,11 @@
 :javascript
   $(document).ready(function(){
     
-    var slider = new SliderDiv({ containerSelector : '#game-guide-slide-container'});
+    var slider = new SliderDiv({ containerSelector : '#guide-slide-container'});
     slider.autoPlay(5000);
-
-    slider.afterMove(function() {
-      console.log('callback');
-    })
     
     $('#guideSteps').find('li').click(function(){
       var pos = $(this).index();
-      console.log(pos)
       slider.moveTo(pos).stopPlay();
     });
 

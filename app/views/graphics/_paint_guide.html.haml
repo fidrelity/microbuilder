@@ -9,12 +9,35 @@
     you can draw graphics for your game with the paint tool!
 
   %div{:class => "span8"}
-    %div{:style => "height:300px;background:#FFF;position:relative;width:600px"}
-      %div{:style => "background:#222;color:#FFF;position:absolute;bottom:0;left:0;margin:0;opacity:0.8;width:100%;"}      
-        %div{:style => "padding:4px;font-size:0.8em;"}
-          You can draw by pencil or select a shape tool.
+    %div{:id => "guide-slide-container"}
+  
+      %div{:class => "slide-wrapper"}
+        %div{:class => "slide"}
+          Slide 1
+          %div{:class => "foot-info"}
+            Use different tools to draw your objects
 
-  %div{:class => "span4"}
+        %div{:class => "slide"}
+          Slide 2
+          %div{:class => "foot-info"}
+            You can also load images from your hard drive and paint on them
+
+        %div{:class => "slide"}
+          Slide 3
+          %div{:class => "foot-info"}
+            Add more sprites to your object
+
+        %div{:class => "slide"}
+          Slide 4
+          %div{:class => "foot-info"}
+            See the different sprites in action
+
+        %div{:class => "slide"}
+          Slide 5
+          %div{:class => "foot-info"}
+            Share your graphic, so that others can use it
+
+  %div{:class => "span4", :id => "guideSteps"}
     This is how it works:
     %ol
       %li Pencil and shape tools
@@ -27,3 +50,16 @@
   %div{:class => "span12"}
     %h3 Example graphics:
     See what others have painted with the paint tool
+
+:javascript
+  $(document).ready(function(){
+    
+    var slider = new SliderDiv({ containerSelector : '#guide-slide-container'});
+    slider.autoPlay(5000);
+    
+    $('#guideSteps').find('li').click(function(){
+      var pos = $(this).index();
+      slider.moveTo(pos).stopPlay();
+    });
+
+  });

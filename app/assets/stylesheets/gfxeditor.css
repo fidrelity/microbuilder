@@ -133,7 +133,7 @@
 }
 
 /* Game guide */
-#slide-container, #game-guide-slide-container {
+#slide-container, #guide-slide-container {
   width:600px;
   overflow:hidden;
   height:auto;
