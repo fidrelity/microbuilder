@@ -68,18 +68,17 @@ $(document).ready(function() {
 
   // ---------------------------------------
   var slider = new SliderDiv({ containerSelector : '#guide-slide-container'});
-    slider.autoPlay(5000);
+  slider.autoPlay(5000);
+  var elements = $('#guideSteps').find('li');
     
-  $('#guideSteps').find('li').click(function() {
+  elements.click(function() {
     var pos = $(this).index();
     slider.moveTo(pos).stopPlay();
   });
 
-  SliderDiv.prototype.afterMove = function() {
+  slider.afterMove = function() {
     var index = this.currentSlide;
-    var elements = $('#guideSteps').find('li');
     elements.removeClass('activeElement');
-    console.log(elements)
     elements.eq(index).addClass('activeElement');
   };
 
