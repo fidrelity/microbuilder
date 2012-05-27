@@ -161,5 +161,9 @@
 #guideSteps li {
   cursor:pointer;
   text-decoration:underline;
-  color:blue;
+  color:#111;
+}
+
+#guideSteps li.activeElement {
+  font-weight:bold;
 }

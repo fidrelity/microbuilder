@@ -88,6 +88,7 @@ SliderDiv.prototype.move = function(_direction, _distance) {
   this.viewport.animate({
     left: to + distance
   }, this.MOVE_SPEED, function() {
+    that.afterMove();
   });
 
   return this;
@@ -112,8 +113,8 @@ SliderDiv.prototype.moveTo = function(_index) {
   return this;
 };
 
-SliderDiv.prototype.afterMove = function(callback) {
-  callback;
+SliderDiv.prototype.afterMove = function() {
+  return true;
 }
 
 SliderDiv.prototype.handleButtonVisibility = function() {

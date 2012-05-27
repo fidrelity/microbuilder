@@ -67,6 +67,23 @@ $(document).ready(function() {
   Notifier.init().notify();
 
   // ---------------------------------------
+  var slider = new SliderDiv({ containerSelector : '#guide-slide-container'});
+    slider.autoPlay(5000);
+    
+  $('#guideSteps').find('li').click(function() {
+    var pos = $(this).index();
+    slider.moveTo(pos).stopPlay();
+  });
+
+  SliderDiv.prototype.afterMove = function() {
+    var index = this.currentSlide;
+    var elements = $('#guideSteps').find('li');
+    elements.removeClass('activeElement');
+    console.log(elements)
+    elements.eq(index).addClass('activeElement');
+  };
+
+  // ---------------------------------------
   /* Game View Buttons */
   function toggleLayer(_layer) {    
     if(!_layer.is(':visible')) {
