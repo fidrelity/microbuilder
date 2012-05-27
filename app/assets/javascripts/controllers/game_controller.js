@@ -225,11 +225,6 @@ var GameController = Ember.Object.extend({
     var screenshot = '<li><img src="'+img_data+'" width="210" height="130" class="thumb"><br><input type="radio" value="" name="previewImage" data-id=""></li>';
 
     $('#thumbnail').append(screenshot);
-    /*
-      Todo:
-      var background_small = this.game.get('background');
-     <li style="background-image:url('+background_small+')">
-    */
   },
 
   // Returns Base64 encoded data of img
