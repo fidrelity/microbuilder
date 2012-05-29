@@ -111,6 +111,7 @@
         }}
           <button {{action "addSprite"}} class="addSpriteButton">Add</button>
         {{/view}} 
+        <div id="sprites-area-scroll"></div>
     </div>
 
     </div>

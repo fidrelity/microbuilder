@@ -24,7 +24,7 @@ var PaintController =  Ember.ArrayController.extend({
   //
   spriteSize : null,    // Object {width: , height: }
   currentSprite : null, // type of spriteModel
-  spriteWrapper : 'sprites-area',
+  spriteWrapper : 'sprites-area-scroll', // 'sprites-area',
   showMarker : false,   // deprecated
   spriteCounter : 0,    // spriteModel.index
   LIMIT : 8,
@@ -242,7 +242,7 @@ var PaintController =  Ember.ArrayController.extend({
   add : function(copy) {
     if(this.content.length >= this.LIMIT) return false;
     var copyData = copy ? this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height) : null;
-
+    
     var spriteModel = SpriteModel.create({
       index:    this.spriteCounter++,
       width:    this.spriteSize.width,
