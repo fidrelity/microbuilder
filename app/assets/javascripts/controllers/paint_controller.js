@@ -33,7 +33,7 @@ var PaintController =  Ember.ArrayController.extend({
   //
   color : "#000000",    // Paint color
   size : 2,             // Paint stroke size
-  zoom : 4,             // Zoom size
+  zoom : 2,             // Zoom size
   //  
   playDelay : 200,
   currentFrameIndex : 0,
@@ -57,8 +57,8 @@ var PaintController =  Ember.ArrayController.extend({
 
     this.tempCanvas = $('#canvas-temp');
     this.tempContext = this.tempCanvas[0].getContext("2d");
-
-    
+    this.tempCanvas[0].width = _width;
+    this.tempCanvas[0].height = _height;
 
     // Init file load
     if (!window.File && !window.FileReader && !window.FileList && !window.Blob) {
@@ -68,18 +68,22 @@ var PaintController =  Ember.ArrayController.extend({
     }
     
     // React if type is background
-    if(this.type === 'background') {
-      this.zoom = 1;
-      $('#area-wrapper').find('#sprites-area').hide();
-      $('#area-wrapper').find('.zoomButtons').hide();
+    var areaWrapper = $('#area-wrapper');    
+    
+    if(this.type === 'background') {   
+      this.zoom = 1;   
+      // Set Size of zoomCanvas wrapper
       var _width = 700;
       var _height = 420;
-      $('#area-wrapper').find('#zoom-canvas-area')
+      areaWrapper.find('#zoom-canvas-area')
         .attr('width', _width).attr('height', _height)
         .css({ 'max-width' : _width, 'max-height' : _height, 'width' : _width, 'height' : _height});
+      // Hide left side (sprite areas)
+      areaWrapper.find('#sprites-area').hide();
+      $('#player').hide();
     } else {
-      $('#area-wrapper').find('#sprites-area').show();
-      $('#area-wrapper').find('.zoomButtons').show();
+      areaWrapper.find('#sprites-area').show();
+      areaWrapper.find('.zoomButtons').show();
     }
 
     this.add();
@@ -324,16 +328,15 @@ var PaintController =  Ember.ArrayController.extend({
   // ---------------------------------------
   // Zoom Canvas
   zoomIn : function() {
+    console.log('zoom')
     if(this.zoom > 10) return false;
-    this.zoom++;
-    //this.setZoomCanvasSize();    
+    this.zoom++;    
     this.updateZoom(false);
   },
 
   zoomOut : function() {
     if(this.zoomCanvas.style.width === this.spriteSize.width+"px") return false;
     this.zoom--;
-    //this.setZoomCanvasSize();
     this.updateZoom(false);
   },
 
@@ -385,9 +388,9 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   setZoomCanvasSize : function () {
-    var width  = this.isBackground ? this.spriteSize.width : this.zoom * this.spriteSize.width;
-    var height = this.isBackground ? this.spriteSize.height : this.zoom * this.spriteSize.height;
-
+    var width  = this.zoom * this.spriteSize.width;//this.isBackground ? this.spriteSize.width : this.zoom * this.spriteSize.width;
+    var height = this.zoom * this.spriteSize.height;//this.isBackground ? this.spriteSize.height : this.zoom * this.spriteSize.height;
+    console.log(width, height, this.zoomCanvas, this.zoom)
     this.zoomCanvas.style.width     = width +"px";
     this.zoomCanvas.style.height    = height +"px";    
     

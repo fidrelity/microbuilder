@@ -36,7 +36,7 @@
   
     </div>
 
-    <div class="span3 form-horizontal">
+    <div class="span3 form-horizontal" id="player">
       {{#view ToolView
         toolBinding = "this"
       }}
