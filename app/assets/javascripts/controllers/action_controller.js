@@ -15,23 +15,26 @@ var ActionController = Ember.Object.extend({
   
   contentView : null,
   
+  optionDepth : 0,
+  
   reset : function( mode ) {
     
     var buttons;
     
     this.set( 'mode', mode );
+    this.set( 'optionDepth', 0 );
     
     if ( mode === 'action' ) {
     
       this.set( 'action', null );
       
-      buttons = ['move', 'art', 'win', 'lose'];
+      buttons = ['move', 'art', 'number', 'win/lose'];
     
     } else {
     
       this.set( 'trigger', null );
       
-      buttons = ['click', 'contact'];
+      buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
     
     }
     
@@ -56,13 +59,44 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  addOption : function( viewClass, question ) {
+  addOption : function( question, viewClass, depth ) {
+    
+    var childViews = this.contentView.get( 'childViews' );
+    
+    if ( !depth ) {
+      
+      console.error( 'option has no depth' );
+      return;
+      
+    }
+    
+    while ( this.optionDepth >= depth ) {
+      
+      childViews.popObject();
+      childViews.popObject();
+      
+      this.optionDepth--;
+      
+    }
+    
+    this.set( 'optionDepth', depth );
     
     var questionView = this.contentView.createChildView( QuestionView.extend({ content : question }) );
-    this.contentView.get( 'childViews' ).pushObject( questionView );
+    childViews.pushObject( questionView );
     
     var optionView = this.contentView.createChildView( viewClass );
-    this.contentView.get( 'childViews' ).pushObject( optionView );
+    childViews.pushObject( optionView );
+    
+    console.log(childViews);
+    
+  },
+  
+  addButtonOption : function( question, buttons, observer, depth ) {
+    
+    this.addOption( question, ButtonView.extend({
+      observer : observer,
+      content : buttons
+    }), depth);
     
   },
   
@@ -82,12 +116,14 @@ var ActionController = Ember.Object.extend({
   
   move : function() {
   
-    // this.set( 'contentView', MoveActionView.create() );
     this.set( 'action', MoveActionModel.create() );
     
-    this.addOption( ButtonView.extend({
-      content : ['hallo']
-    }), 'What the heck?' );
+    this.addButtonOption( 
+      'What type of movement?', 
+      ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop' ], 
+      this.action,
+      1
+    );
   
   },
   

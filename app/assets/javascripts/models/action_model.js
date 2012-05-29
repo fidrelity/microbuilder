@@ -20,7 +20,21 @@ var ActionModel = Ember.Object.extend({
     
     return true;
     
-  }.property()
+  }.property(),
+  
+  notify : function( name ) {
+    
+    if ( this.get( name ) ) {
+      
+      this.get( name ).call( this );
+      
+    } else {
+      
+      console.log( 'unknown action command: ' + name );
+      
+    }
+    
+  }
   
 });
 
@@ -40,10 +54,42 @@ var MoveActionModel = ActionModel.extend({
     
   },
   
-  jumpTo : function() {
+  directional : function() {
+  
+    this.set( 'type', 'directional' );
+    
+    App.actionController.addButtonOption(
+      'How should <gameObject> move directional?', 
+      ['in direction', 'random direction', 'to location', 'to object'],
+      this,
+      2
+    );
+  
+  },
+  
+  'move to' : function() {
+    
+    this.set( 'type', 'moveTo' );
+    
+    App.actionController.addButtonOption(
+      'Where should <gameObject> move?', 
+      ['to location', 'to object'],
+      this,
+      2
+    );
+    
+  },
+  
+  'jump to' : function() {
   
     this.set( 'type', 'jumpTo' );
-    this.set( 'question', 'to what location should ' + this.gameObject.name + ' jump?' );
+    
+    App.actionController.addButtonOption(
+      'Where should <gameObject> jump?', 
+      ['to location', 'to object'],
+      this,
+      2
+    );
   
   },
   

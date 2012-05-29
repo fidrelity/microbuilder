@@ -14,7 +14,21 @@ var TriggerModel = Ember.Object.extend({
   
   },
   
-  isComplete : true
+  isComplete : true,
+  
+  notify : function( name ) {
+    
+    if ( this.get( name ) ) {
+      
+      this.get( name ).call( this );
+      
+    } else {
+      
+      console.log( 'unknown trigger command: ' + name );
+      
+    }
+    
+  }
 
 });
 
