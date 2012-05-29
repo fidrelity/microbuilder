@@ -9,7 +9,12 @@ var PaintSizeView = Ember.View.extend({
       minWidth: 32,
       minHeight: 32,
       maxWidth : 256,
-      maxHeight : 256
+      maxHeight : 256,
+      stop: function(event, ui) { 
+        console.log(ui.size)
+        //$('#zoomCanvas').css({ width: ui.width, height: ui.height}).attr('width', ui.width).attr('height', ui.height);
+      }
+
     });
 
     $('.paint-type').click(function() {
@@ -50,7 +55,7 @@ var PaintSizeView = Ember.View.extend({
     App.paintView.appendTo('#content');
     setTimeout(function() {
       
-      App.paintController.initView(type, w, h);  
+      App.paintController.initView(type, w, h);
 
       App.toolBoxController.setCurrentTool(App.pencilTool);
       App.drawTool.initAfter();

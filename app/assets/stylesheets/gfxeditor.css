@@ -61,7 +61,7 @@
 }
 
 /* Canvas Elements */
-#zoomCanvas {
+#zoomCanvas, #canvas-temp {
  background:#FFF;
  background:url(paint/bg_transparent.png);
  border:1px solid #000000; 

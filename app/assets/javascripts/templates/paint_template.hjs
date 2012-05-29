@@ -36,7 +36,7 @@
   
     </div>
 
-    <div class="span3 form-horizontal">
+    <div class="span3 form-horizontal" id="player">
       {{#view ToolView
         toolBinding = "this"
       }}
@@ -92,7 +92,8 @@
     <div id="zoom-canvas-area">
       <h4>Zoomed view:</h4>
       <!-- Zoomed Canvas -->
-      <canvas id="zoomCanvas" width="64" height="64"></canvas>
+      <canvas id="zoomCanvas" width="128" height="128"></canvas>
+      <!--  -->
       <!-- Temporary Canvas -->
       <canvas id="canvas-temp" width="64" height="64"></canvas>
     </div>
