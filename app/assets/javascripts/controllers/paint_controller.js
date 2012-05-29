@@ -24,7 +24,7 @@ var PaintController =  Ember.ArrayController.extend({
   //
   spriteSize : null,    // Object {width: , height: }
   currentSprite : null, // type of spriteModel
-  spriteWrapper : 'sprites-area',
+  spriteWrapper : 'sprites-area-scroll', // 'sprites-area',
   showMarker : false,   // deprecated
   spriteCounter : 0,    // spriteModel.index
   LIMIT : 8,
@@ -81,6 +81,7 @@ var PaintController =  Ember.ArrayController.extend({
       // Hide left side (sprite areas)
       areaWrapper.find('#sprites-area').hide();
       $('#player').hide();
+      $('#copySpriteButton').hide();
     } else {
       areaWrapper.find('#sprites-area').show();
       areaWrapper.find('.zoomButtons').show();
@@ -102,6 +103,10 @@ var PaintController =  Ember.ArrayController.extend({
     });
 
     $('#zoomCanvas').mouseup(function(e){
+      App.paintController.mouseup(e);
+    });
+
+    $('#zoomCanvas').mouseout(function(e){
       App.paintController.mouseup(e);
     });
 
@@ -207,9 +212,9 @@ var PaintController =  Ember.ArrayController.extend({
     this.clearZoomCanvas();
   },
 
-  erase : function(_x, _y) {
-    this.getCurrentSpriteModel().erase(Math.floor(_x / this.zoom), Math.floor(_y / this.zoom), this.size * this.zoom);
-    this.zoomContext.clearRect(_x, _y, this.size, this.size);
+  erase : function(_x, _y) {    
+    this.zoomContext.clearRect(_x, _y, this.size, this.size);    
+    this.getCurrentSpriteModel().erase(Math.floor(_x), Math.floor(_y), this.size);
   },
 
   // ---------------------------------------
@@ -242,7 +247,7 @@ var PaintController =  Ember.ArrayController.extend({
   add : function(copy) {
     if(this.content.length >= this.LIMIT) return false;
     var copyData = copy ? this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height) : null;
-
+    
     var spriteModel = SpriteModel.create({
       index:    this.spriteCounter++,
       width:    this.spriteSize.width,
@@ -254,7 +259,8 @@ var PaintController =  Ember.ArrayController.extend({
     this.addObject(spriteModel);
     $('.canvas').css({width: this.spriteSize.width, height: this.spriteSize.height});
     this.setCurrentSpriteModel(spriteModel);
-    //this.setZoomCanvasSize();
+    if(copy) this.getCurrentSpriteModel().pushState();
+
     this.updateZoom();
   },
 

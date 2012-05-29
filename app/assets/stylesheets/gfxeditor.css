@@ -45,6 +45,11 @@
   margin-left:100px;
 }
 
+#paint-wrapper #area-wrapper #sprites-area-scroll {      
+  max-height:260px;  
+  overflow:auto;
+}
+
 #paint-size-wrapper { margin:2em 0 2em 0;}
 
 #palette {
