@@ -1,0 +1,3 @@
+:plain
+  $('body').append("#{escape_javascript(render :partial => 'layouts/flash', :locals => {:flash => flash})}")
+  Notifier.notify();

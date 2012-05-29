@@ -43,15 +43,12 @@ class GamesController < ApplicationController
   
   def destroy
     @game = current_user.games.find(params[:id])
-
-    if @game.author == current_user
-      @game.destroy 
-      flash[:notice] = "Successfully deleted game"
+    @user = @game.author
+    if @game.destroy
+      flash[:success] = "Successfully deleted game"
     else
       flash[:error] = "Not allowed to delete game"
     end
-    
-    redirect_to user_path(@game.author)
   end
 
   # ------------------
@@ -62,15 +59,18 @@ class GamesController < ApplicationController
   end
 
   def like
-    counter = @game.likes + 1
-    @game.update_attribute(:likes, counter)
-    #cookies[:game] = "true"
+    unless cookies["voted_game_#{@game.id}"]
+      @game.update_attribute(:likes, @game.likes + 1)
+      cookies["voted_game_#{@game.id}"] = true
+    end
   end
 
   def dislike
-    counter = @game.dislikes + 1
-    @game.update_attribute(:dislikes, counter)
-    render :file => "app/views/games/like", :layout => false
+    unless cookies["voted_game_#{@game.id}"]
+      @game.update_attribute(:dislikes, @game.dislikes + 1)
+      cookies["voted_game_#{@game.id}"] = true
+    end
+    render "like"
   end
 
   def report    
@@ -97,5 +97,4 @@ class GamesController < ApplicationController
   def find_game
     @game = Game.find(params[:id])
   end
-
 end

@@ -16,56 +16,39 @@
 //= require ember
 //= require_tree ./templates
 //= require_tree .
+$(document).ready(function() {
 
-var Feedback = {
-
-  wrapper : null,
-  textarea : null,
-  subject : null,
-
-  init : function() {
-    Feedback.wrapper = $("#feedback");
-    $('.showFeedback').click(function() { Feedback.show(); });
-    $('.closeFeedback').click(function() { Feedback.close(); });
-    Feedback.textarea = Feedback.wrapper.find("#body");
-    Feedback.subject = Feedback.wrapper.find("#subject");
-  },
-
-  show : function() {
-    Feedback.clear();
-    if(Feedback.wrapper.is(":visible")) {
-      Feedback.close();
-    } else {
-      var newX = ($(document).width() / 2) - (Feedback.wrapper.width() / 2);
-      var newY = 200;
-      Feedback.wrapper.css({left: newX, top: newY}).fadeIn(800);
-      Feedback.subject.focus();
-    }
-  },
-
-  clear : function() {
-    Feedback.subject.val("");
-    Feedback.textarea.val("");
-    Feedback.textarea.removeClass("errorForm");
-  },
-
-  close : function(_time) {
-    var _time = _time || 0;
-    Feedback.wrapper.hide(_time);    
-  }
-};
-
-$(document).ready(function() {  
-
-  $( ".searchbox" ).autocomplete({
+  // Init Autocomplete .searchbox
+  $( "#query" ).autocomplete({
       source: "/games/auto_search",
       minLength: 2
   });
 
   Feedback.init();
+  //
+  Notifier.init().notify();
 
   // ---------------------------------------
-  /* Game View Buttons */
+  // Init slides in guide pages
+  if($('#guide-slide-container').length) {
+    var slider = new SliderDiv({ containerSelector : '#guide-slide-container'});
+    slider.autoPlay(5000);
+    var elements = $('#guideSteps').find('li');
+    elements.first().addClass('activeElement');
+
+    elements.click(function() {
+      var pos = $(this).index();
+      slider.moveTo(pos).stopPlay();
+    });
+
+    slider.afterMove = function() {
+      var index = this.currentSlide;
+      elements.removeClass('activeElement');
+      elements.eq(index).addClass('activeElement');
+    };
+  }
+  // ---------------------------------------
+  // Game View Buttons 
   function toggleLayer(_layer) {    
     if(!_layer.is(':visible')) {
       $('.layer').hide();
@@ -97,121 +80,3 @@ $(document).ready(function() {
   // ---------------------------------------
 
 });
-
-function application_main() {
-    /*
-    // Dirty hack for ipad scroll-disabling
-    $(document).bind('touchmove', false);
-    
-    height = $(window).height();
-    width = $(window).width();
-    
-    spaceCheck(false);
-    
-    centerContent(height);
-    
-    placeNav(height, width);
-    placeSections(height, width);
-    
-    $(window).resize(function() {
-        spaceCheck(true);
-    });
-    
-    //$('section#home').css({top: '0px', left: '0px'});
-    
-    $('li#nav_right').click(function() {
-        if($('.popout').length) {
-          $('.popout').animate({'right': '0px'}, 250);
-          console.log('found');
-        }
-        else {
-          minimizeSection();
-          $('#pages .profile').attr('active', 1).css({display:'block'}).stop().animate({left: '0px'}, 500, function() {
-
-          });
-        }
-    });
-    
-    $('li#nav_left').click(function() {
-        minimizeSection();
-        $('#pages .gallery').attr('active', 1).css({display:'block'}).stop().animate({left: '0px'}, 500, function() {
-
-        });
-    });
-    
-    $('li#nav_bottom').click(function() {
-        minimizeSection();
-        $('#pages .editor').attr('active', 1).css({display:'block'}).stop().animate({top: '0px'}, 500, function() {
-
-        });
-    });
-    
-    $('li#nav_top').click(function() {
-        /* minimizeSection();
-        $('#pages .about').stop().animate({top: '0px'}, 250, function() {
-            $(this).attr('active', 1)
-        }); 
-        minimizeSection();
-    });
-    */
-};
-/*
-function placeNav(height, width) {
-    $('#nav_top').css({left: width/2-90});
-    $('#nav_bottom').css({left: width/2-90});
-    $('#nav_left').css({top: height/2-60});
-    $('#nav_right').css({top: height/2-60});
-    $('.popout').css({top: height/2-100});
-}
-
-function placeSections(height, width) {
-    if($('#pages .profile').attr('active') != 1) $('#pages .profile').css({left: width, top: '0px'});
-    if($('#pages .editor').attr('active') != 1) $('#pages .editor').css({top: height, left: '0px'});
-    if($('#pages .gallery').attr('active') != 1) $('#pages .gallery').css({left: -width, top: '0px'});
-    if($('#pages .about').attr('active') != 1) $('#pages .about').css({top: -height, left: '0px'});
-    $('#pages > div').css({width: width, height: height});
-}
-
-function centerContent(height) {
-    $('.centered_content').each(function() {
-        contentHeight = $(this).height();
-        newHeight = height/2-contentHeight/2;
-        $(this).css({top: newHeight});
-    });
-}
-
-function spaceCheck(timer){
-    height = $(window).height();
-    width = $(window).width();
-    console.log('check');
-    placeNav(height, width);
-    placeSections(height, width);
-    centerContent(height);
-    if(!timer) setTimeout("spaceCheck(false)", 3000);
-}
-
-function minimizeSection(section) {
-    $('#pages > div').each(function() {
-        if($(this).attr('active') == 1) {
-            $(this).animate({height: '0px', width: '0px', top: '50%', left: '50%'}, 250, function() {
-                $(this).attr('active', 0);
-                $(this).css({width: width, height: height});
-                placeSections(height, width);
-            });
-        }
-        $(this).css({display:'none'});
-    });
-    //$('#'+section).animate({opacity: 0}, 500);
-    //$('#'+section).animate({height: '0px', width: '0px', top: '50%', left: '50%'});
-    //$('#'+section).css({height: '0px', width: '0px', top: '50%', left: '50%'});
-}
-
-// iPad / iPhone specific
-function orientationChanged() {
-    placeSections(height, width);
-}
-
-function isiPad(){
-    return (navigator.platform.indexOf("iPad") != -1);
-}
-*/

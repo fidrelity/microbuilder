@@ -1,1 +1,6 @@
--# build
+%h2 Editor
+
+-if user_signed_in?      
+  =render :partial => "create_tool"
+-else
+  =render :partial => "create_guide"

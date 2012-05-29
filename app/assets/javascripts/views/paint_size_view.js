@@ -6,19 +6,57 @@ var PaintSizeView = Ember.View.extend({
   didInsertElement : function() {
     $('#canvas-size').resizable({
       grid: 16,
-      maxWidth : 128,
-      maxHeight : 128
+      minWidth: 32,
+      minHeight: 32,
+      maxWidth : 256,
+      maxHeight : 256
+    });
+
+    $('.paint-type').click(function() {
+      $('.paint-type').removeClass('type-selected');
+      $(this).addClass('type-selected');
+
+      App.paintSizeView.setPaintType($(this).attr('data-type'));
     });
   },
 
-  start : function() {
-    
-    var size_sprite = $('#canvas-size');
-    var w = size_sprite.width();
-    var h = size_sprite.height();
 
-    App.mainView.show( 'stageContent', 'paintView' );
-    App.paintController.setSpriteSize({width: w, height:h});
+  setPaintType : function(_type) {
+    var button = $("#startPainting");
+    var msg = "Start painting ";
+    if(_type === 'background') {
+      msg += "a background image";
+    } else {
+      msg += "a new object";
+    }
+    button.html(msg);
+  },
+
+  start : function() {
+
+    var type = $(".type-selected").attr('data-type') || 'object';
+    var w, h = 0;
+
+    if(type === 'object') {
+      var size_sprite = $('#canvas-size');
+      w = size_sprite.width();
+      h = size_sprite.height();
+    } else {
+      w = 640;
+      h = 390;
+    }
+
+    $("#paint-size-wrapper").hide();    
+    App.paintView.appendTo('#content');
+    setTimeout(function() {
+      
+      App.paintController.initView(type, w, h);  
+
+      App.toolBoxController.setCurrentTool(App.pencilTool);
+      App.drawTool.initAfter();
+      App.fillTool.initAfter();
+
+    }, 500);
   }
   
 });

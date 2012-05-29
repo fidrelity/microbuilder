@@ -46,6 +46,13 @@ var TriggerController = Ember.Object.extend({
     
   },
   
+  number : function() {
+    
+    this.set( 'contentView', NumberTriggerView.create() );
+    this.set( 'trigger', NumberTriggerModel.create() );
+    
+  },
+  
   save : function() {
     
     var trigger = this.get( 'trigger' );
@@ -54,7 +61,7 @@ var TriggerController = Ember.Object.extend({
     
       this.get( 'behaviour' ).addTrigger( trigger );
     
-      App.gameController.cancel();
+      App.mainView.show( 'overlayContent', 'objectsView' );
     
     }
     

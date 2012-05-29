@@ -9,35 +9,9 @@
         =@user.first_name 
         =@user.last_name
 
-  %div{ :class => "span8"}      
-    %h2="Games (#{@user.games.size})"
-
-    %ul{:class => "thumbnails"}
-      - @user.games.each do |game|
-        %li{:id => game.id, :class => "span2"}
-          %div{:class => "thumbnail"}
-            = link_to image_tag("game.png"), play_path(game)
-            %h5
-              =link_to(game.title, play_path(game))            
-            %i{:class => "icon-comment"}
-            =game.game_comments.size
-            %i{:class => "icon-eye-open"}
-            =game.played
-            %i{:class => "icon-thumbs-up"}
-            =game.likes
-            %i{:class => "icon-thumbs-down"}
-            =game.dislikes
-            - if game.author == current_user
-              =link_to image_tag("edit.png"), '#'
-              =link_to("[x]", game_path(game), :method => :delete, :confirm => "Permanently delete this game?")
-
-
-    %h2="Graphics (#{@user.graphics.size})"
-
-    %ul{:class => "thumbnails"}
-      -@user.graphics.each do |graphic|
-        %li{:class => "span2"}
-          %div{:class => "thumbnail"}
-            %img{:src => graphic.image}
-            =link_to("[x]", graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?")
-            =graphic.name
+  %div{ :class => "span8"}
+    %div{:id => 'user_games'}
+      = render :partial => 'games', :locals => {:games => @games, :user => @user}
+    %div{:id => 'user_graphics'}
+      = render :partial => 'graphics', :locals => {:graphics => @graphics, :user => @user}
+    

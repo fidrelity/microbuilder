@@ -1,0 +1,9 @@
+%h2="Graphics (#{user.graphics.size})"
+%ul{:class => "thumbnails"}
+  = will_paginate graphics, :param_name => :graphics_page,  :page_links => false
+  -graphics.each do |graphic|
+    %li{:class => "span2"}
+      %div{:class => "thumbnail"}
+        %img{:src => graphic.image}
+        =link_to("[x]", graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?")
+        =graphic.name

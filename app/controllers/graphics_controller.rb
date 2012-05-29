@@ -1,38 +1,45 @@
 class GraphicsController < ApplicationController
-  respond_to :js, :only => [:create, :public, :delete]
+  respond_to :js, :only => [:create, :public, :destroy]
   before_filter :authenticate_user!, :only => [:create, :destroy]
   
   def index
     @graphics = Graphic.all
   end
 
+  def new
+  end
+
   def create
-    @graphic = current_user.graphics.new(params[:graphic])
-    response, status = @graphic.save ? [@graphic.to_response_hash, 200] : [@graphic.errors.to_json, 400]
-      
-    render :json => response, :status => status
+    @graphic = current_user.graphics.create(params[:graphic])
+    flash[:success] = "Your Graphic was created!"
   end
   
   def destroy
     @graphic = Graphic.find(params[:id])
-    user = @graphic.user
+    @user = @graphic.user
     
     if current_user == @graphic.user
-      @graphic.games.any? ? @graphic.update_attribute(:user, nil) : @graphic.destroy
-      flash.now[:notice] = I18n.t('.graphics.destroy.success')
-    else
-      flash.now[:error] = I18n.t('.graphics.destroy.error')
+      @graphic.soft_delete
+      flash[:success] = I18n.t('.graphics.destroy.success')
     end
-
-    redirect_to root_path
   end
   
   def public
-    response, status = Graphic.filter(
-      !!params[:backgrounds],
-      params[:min_size].to_i,
-      params[:max_size].to_i
-    )
-    render :json => response, :status => status
+    begin
+      graphics = Graphic.filter(
+        !!params[:backgrounds],
+        params[:min_size].to_i,
+        params[:max_size].to_i
+      )
+    rescue InvalidGraphicBoundaries => e
+      render :json => e.message, :status => 400
+      return
+    end
+    
+    response = graphics.map do |graphic|
+        graphic.to_response_hash 
+    end
+    
+    render :json => response, :status => 200
   end
 end

@@ -1,5 +1,12 @@
+-if user_signed_in?      
+  =link_to "Profile", user_path(current_user.id)
+  =link_to('Logout', destroy_user_session_path, :method => :delete)
+-else
+  = link_to 'Login', new_user_session_path
+  
 =link_to 'Imprint', imprint_path
-=link_to('Logout', destroy_user_session_path, :method => :delete)
+
+
 %div{ :class => "row", :id => "header"}
   %div{:class => "logo span3", :id =>"logo"}
     %h1
@@ -10,18 +17,17 @@
     %li{:class => "gallery span2", :id =>"play"}
       =link_to "Games", gallery_path
     %li{:class => "editor span2", :id =>"build"}
-      =link_to "Build", pages_editor_path
-    %li{:class => "profile span2", :id =>"help"}
-      -if user_signed_in?      
-        =link_to "Profile", user_path(current_user.id)
-      -else
-        = link_to 'Login', new_user_session_path      
+      =link_to "Create", build_path
 
+    %li{:class => "paint span2", :id =>"paint"}
+      =link_to "Paint", new_graphic_path
+        
+%div{:id => 'flash-messages', :class => "row"}
+  %ul
+    %li{:id => "flash-template",:class => "alert"}
+      %span{:class=>"msg"}
+      = link_to '&times;'.html_safe, '#', :class => ['close', 'closeFlash']
+  =render :partial => 'layouts/flash', :locals => {:flash => flash}
 
-  =if false
-    .flash_message
-      =flash[:notice]
-      =flash[:alert]
-      =flash[:error]
+=render :partial => "layouts/feedback"
 
-  =render :partial => "layouts/feedback"

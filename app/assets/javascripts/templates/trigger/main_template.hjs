@@ -5,6 +5,8 @@
 <button {{action "click" target="App.triggerController"}}>click</button>
 <button {{action "contact" target="App.triggerController"}}>contact</button>
 <button {{action "overlap" target="App.triggerController"}}>overlap</button>
+<button {{action "number" target="App.triggerController"}}>number</button>
+
 
 {{dynamicView App.triggerController.contentView}}
 

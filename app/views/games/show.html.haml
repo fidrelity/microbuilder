@@ -22,53 +22,12 @@
     %div{:id => "ratingWrapper", :class=>"row"}
       = render :partial => "rating", :locals => {:game => @game}
 
-    %div{:class => "well layer", :id => "shareLayer"}
-      %a{:class=>"close closeLayer"}
-        &times;
-      %h4 Share this game on:
-      %div{:id=>"fb-root"}
-      .fshare
-        %script{:src => "http://connect.facebook.net/en_US/all.js#xfbml=1"}
-        %fb:like{:layout => "button_count", :show_faces => "false", :width => "450"}
-      .twshare
-      %a.twitter-share-button.left{"data-count" => "horizontal", "data-via" => "playtin", "data-text" => "this game is awesome!", "data-hashtags" => "minigame", :href => "http://twitter.com/share"}
-        %script{:src => "http://platform.twitter.com/widgets.js", :type => "text/javascript"}
-      .gplusshare
-        %script{:type => "text/javascript", :src => "https://apis.google.com/js/plusone.js"}
-        .gplusshare{:class => "g-plusone", :href => play_url(@game)}
-
-    %div{:class => "well layer", :id => "embedLayer"}
-      %a{:class=>"close closeLayer"}
-        &times;
-      %h4 Embed code
-      %label
-        Use this code to embed the game on your page:
-      %textarea{:cols =>"150", :rows =>"2", :class=>"span7", :style=>"font-family:Courier New;background:#222;color:#F6F6F6;"}
-        <iframe width="640" height="390" src="#{root_url}play/#{@game.id}/embed" frameborder="0"></iframe>
-
-    %div{:class => "well layer", :id => "reportLayer"}
-      %a{:class =>"close closeLayer"}
-        &times;
-      %h4 Report us this game
-      %p
-        If you think this game doesn't work, is inappropiate or it hurts any rights, then tell us:
-      = form_tag("/support/report", :method => "post", :remote => true) do        
-        = hidden_field_tag(:gid, "#{@game.id}", :class => "span6")
-        %label
-          Tell us why:
-        = text_area_tag(:body, "", :size => "120x2", :class => "span6")
-        %label
-          Reason:
-        = select_tag "type", "<option value='broken'>Broken</option><option value='copyright'>Copyright infrigment</option><option value='inappropiate'>Inappropiate</option>".html_safe
-        %p
-          =submit_tag 'Send report', :class => "btn btn-success"
-          %button{:class=>"btn closeLayer"}
-            Cancel
-
+    = render :partial => "games/layers/share_layer", :locals => {:game => @game}
+    = render :partial => "games/layers/embed_layer", :locals => {:game => @game}
+    = render :partial => "games/layers/report_layer", :locals => {:game => @game}
 
     %div{:class=>"row", :style => "margin-top:2em", :id => "commentsWrapper"}
       = render :partial => 'comments', :locals => {:comments => @comments, :game => @game}
-
 
 :javascript
   $(document).ready( function() {

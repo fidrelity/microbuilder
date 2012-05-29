@@ -3,8 +3,7 @@ require 'test_helper'
 class GamesControllerTest < ActionController::TestCase
 
   def setup
-    @game = Factory.build(:game, :id => 1, :title => "test game", :user_id => 1, :played => 0, :dislikes => 0, :likes => 0)
-    @game.save
+    @game = Factory(:game, :id => 1, :title => "test game", :user_id => 1, :played => 0, :dislikes => 0, :likes => 0)
   end
 
   should "increase played by one" do

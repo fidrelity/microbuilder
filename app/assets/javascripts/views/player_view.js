@@ -27,7 +27,7 @@ var PlayerView = Ember.View.extend({
       
       player.showTimeline = true;
       
-      player.selectedObjectCallback = bind( App.mainView.stageView, App.mainView.stageView.selectedObjectCallback );
+      player.selectedObjectCallback = bind( App.gameObjectsController, App.gameObjectsController.selectID );
       player.selectedObjectDragCallback = bind( App.game, App.game.gameObjectPositionChanged );
       
     } else if ( type === 'moveTo' || type === 'jumpTo' ) {
@@ -52,7 +52,7 @@ var PlayerView = Ember.View.extend({
     
     
     player.setCanvas( $('#' + this.canvasID)[0] );
-    player.parse( App.game.getGameObjectsData(), bind( this, callback ) );
+    player.parse( App.game.getData().game, bind( this, callback ) );
 
 
     // *** Snapshot of preview game ***

@@ -3,8 +3,9 @@ class GameCommentsController < ApplicationController
   before_filter :authenticate_user!, :only => [:create, :destroy]
   
   def create
-    comment = GameComment.create(params[:game_comment])
+    comment = current_user.game_comments.create(params[:game_comment])
     @game = comment.game
+    flash[:success] = "Your comment was created!"
     @comments = @game.game_comments
   end
   

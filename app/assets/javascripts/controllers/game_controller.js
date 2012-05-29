@@ -11,8 +11,13 @@ var GameController = Ember.Object.extend({
   
   cancel : function() {
     
-    App.mainView.show( 'stageContent', 'stageView' );
-    App.mainView.show( 'behaviourContent', 'behaviourView' );
+    App.mainView.hideOverlay();
+    
+  },
+  
+  showObjects : function() {
+    
+    App.mainView.show( 'overlayContent', 'objectsView' );
     
   },
   
@@ -21,7 +26,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectGraphic );
     
-    App.mainView.show( 'stageContent', 'libraryView' );
+    App.mainView.show( 'overlayContent', 'libraryView' );
     
   },
   
@@ -35,7 +40,7 @@ var GameController = Ember.Object.extend({
       
     }) );
     
-    this.cancel();
+    App.mainView.show( 'overlayContent', 'objectsView' );
     
   },
   
@@ -44,7 +49,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', true );
     App.libraryController.set( 'selectFunction', this.selectBackground );
     
-    App.mainView.show( 'stageContent', 'libraryView' );
+    App.mainView.show( 'overlayContent', 'libraryView' );
     
   },
   
@@ -61,7 +66,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectChangeGraphic );
     
-    App.mainView.show( 'stageContent', 'libraryView' );
+    App.mainView.show( 'overlayContent', 'libraryView' );
     
   },
   
@@ -69,7 +74,7 @@ var GameController = Ember.Object.extend({
     
     App.mainView.stageView.gameObject.set( 'graphic', graphic );
     
-    this.cancel();
+    App.mainView.show( 'overlayContent', 'objectsView' );
     
   },
   
@@ -78,7 +83,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectArtGraphic );
     
-    App.mainView.show( 'behaviourContent', 'libraryView' );
+    App.mainView.show( 'overlayContent', 'libraryView' );
     
   },
   
@@ -86,27 +91,27 @@ var GameController = Ember.Object.extend({
     
     App.actionController.selectGraphic( graphic );
     
-    App.mainView.show( 'behaviourContent', 'actionView' );
-    
-  },
-  
-  drawGraphic : function() {
-    
-    App.mainView.show( 'stageContent', 'paintSizeView' );
+    App.mainView.show( 'overlayContent', 'actionView' );
     
   },
   
   addTrigger : function() {
     
     App.triggerController.reset();
-    App.mainView.show( 'behaviourContent', 'triggerView' );
+    App.mainView.show( 'overlayContent', 'triggerView' );
     
   },
   
   addAction : function() {
     
     App.actionController.reset();
-    App.mainView.show( 'behaviourContent', 'actionView' );
+    App.mainView.show( 'overlayContent', 'actionView' );
+    
+  },
+  
+  finalize : function() {
+    
+    App.mainView.show( 'overlayContent', 'publishView' );
     
   },
   
@@ -119,7 +124,8 @@ var GameController = Ember.Object.extend({
       this.game.instructions,
       JSON.stringify( data.game ),
       JSON.stringify( data.graphicIDs ),
-      data.win
+      data.win,
+      this.getSelectedSnapshotData()
     );
     
 
@@ -213,20 +219,16 @@ var GameController = Ember.Object.extend({
     var screenshot = '<li><img src="'+img_data+'" width="210" height="130" class="thumb"><br><input type="radio" value="" name="previewImage" data-id=""></li>';
 
     $('#thumbnail').append(screenshot);
-    /*
-      Todo:
-      var background_small = this.game.get('background');
-     <li style="background-image:url('+background_small+')">
-    */
   },
 
   // Returns Base64 encoded data of img
   getSelectedSnapshotData : function() {
     var selectedRadio = $('#thumbnail').find('li').find('input[type="radio"]:checked');
 
-    if(!selectedRadio) {
-      takePreviewSnapshot();
-      selectedRadio = $('#thumbnail').find('li').find('input[type="radio"]').first();
+    // Take automatic snapshot, if user didnt
+    if(!selectedRadio.length) {
+      this.takePreviewSnapshot();
+      selectedRadio = $('#thumbnail').find('li').find('input[type="radio"]').first().prop("checked", true);
     }
 
     var selectedImg = selectedRadio.parent().find('img');

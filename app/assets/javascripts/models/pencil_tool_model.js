@@ -19,6 +19,7 @@ var PencilToolModel = Ember.Object.extend({
   mousedown : function(_options) {
     this.isActive = true;
     this.sprite = _options.sprite;
+
     this.draw(_options.x, _options.y, _options.x, _options.y);
     //
     this.oldX = _options.x;
@@ -44,7 +45,7 @@ var PencilToolModel = Ember.Object.extend({
       App.paintController.erase(_x - centered, _y - centered);
     } else {
       this.pixelDrawer.popImageData();
-      this.pixelDrawer.drawLine(_x, _y, _endX, _endY, App.paintController.color, App.paintController.size * App.paintController.zoom);
+      this.pixelDrawer.drawLine(_x, _y, _endX, _endY, App.paintController.color, App.paintController.size);
       this.pixelDrawer.pushImageData();
     }   
   },
