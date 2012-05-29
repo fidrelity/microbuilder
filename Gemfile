@@ -13,6 +13,9 @@ gem 'aws-sdk'
 gem 'pg_search'
 gem 'pusher'
 gem 'octokit'
+gem 'will_paginate'
+gem 'so_social'
+gem 'feedhub'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

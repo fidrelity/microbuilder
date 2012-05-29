@@ -1,0 +1,18 @@
+%div{:class => "well layer", :id => "reportLayer"}
+  %a{:class =>"close closeLayer"}
+    &times;
+  %h4 Report us this game
+  %p
+    If you think this game doesn't work, is inappropiate or it hurts any rights, then tell us:
+  = form_tag("/support/report", :method => "post", :remote => true) do        
+    = hidden_field_tag(:gid, "#{game.id}", :class => "span6")
+    %label
+      Tell us why:
+    = text_area_tag(:body, "", :size => "120x2", :class => "span6")
+    %label
+      Reason:
+    = select_tag "type", "<option value='broken'>Broken</option><option value='copyright'>Copyright infrigment</option><option value='inappropiate'>Inappropiate</option>".html_safe
+    %p
+      =submit_tag 'Send report', :class => "btn btn-success"
+      %button{:class=>"btn closeLayer"}
+        Cancel

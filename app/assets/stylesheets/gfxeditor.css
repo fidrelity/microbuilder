@@ -45,6 +45,8 @@
   margin-left:100px;
 }
 
+#paint-size-wrapper { margin:2em 0 2em 0;}
+
 #palette {
   background:#222;
   display: none;
@@ -121,3 +123,47 @@
 .activeColor { border:0px solid #000000; }
 
 .active-sprite { border:1px solid #000000; }
+
+.type-selected {
+  border:3px dotted #666;
+}
+
+.paint-type {
+  cursor:pointer;
+}
+
+/* Game guide */
+#slide-container, #guide-slide-container {
+  width:600px;
+  overflow:hidden;
+  height:auto;
+}
+
+.slide-wrapper {
+  overflow:hidden;
+  height:auto;
+  position:relative;
+}
+
+.slide {
+  position:relative;
+  float:left;
+  min-height:300px;
+  background:#FFF;
+}
+
+.slide .foot-info {
+  width:100%;
+  position:absolute; bottom:0; left:0;
+  padding:4px; color:#FFF; background:#222; opacity:0.8;
+}
+
+#guideSteps li {
+  cursor:pointer;
+  text-decoration:underline;
+  color:#111;
+}
+
+#guideSteps li.activeElement {
+  font-weight:bold;
+}

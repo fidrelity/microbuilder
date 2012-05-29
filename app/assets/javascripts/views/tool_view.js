@@ -3,8 +3,7 @@ var ToolView = Ember.View.extend({
   tool : null,
   
   didInsertElement : function() {
-    App.toolBoxController.setCurrentTool(App.pencilTool);
-    App.drawTool.initAfter();
+
   },
 
   setCurrentTool : function() {
@@ -41,6 +40,11 @@ var ToolView = Ember.View.extend({
     this.setCurrentTool();
   },
 
+  fill : function() {
+    App.fillTool.click();
+    this.setCurrentTool();
+  },
+
   addSprite : function() {
     App.paintController.add();
   },
@@ -50,7 +54,7 @@ var ToolView = Ember.View.extend({
   },
 
   reset : function() {
-    App.paintController.reset();
+    App.paintController.reset(true);
   },
 
   undo : function() {

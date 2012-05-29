@@ -10,7 +10,7 @@ var ToolBoxController = Ember.Object.extend({
   activeClass : 'active-tool',
 
   init : function () {
-    this.set('currentTool', App.PencilTool);
+    this.set('currentTool', App.pencilTool);
   },
   
   click : function(toolModel) {
@@ -112,18 +112,10 @@ var DrawToolModel = Ember.Object.extend({
     this.pixelDrawer.popImageData();
     this.drawFunction(x, y, endX, endY, App.paintController.color, App.paintController.size);
     this.pixelDrawer.pushImageData();
-
-    // Update ZoomCanvas
-    /*
-    App.paintController.clearZoomCanvas();
-    */
-    //App.paintController.zoomImageData(this.currentContext.getImageData(0, 0, this.currentSprite.width, this.currentSprite.height));    
-    //App.paintController.zoomImageData(this.tempContext.getImageData(0, 0, this.currentSprite.width, this.currentSprite.height));
   },
 
   // Show temp canvas over current canvas (sprite)
   setTempCanvas : function() {
-
     // Set temp canvas as canvas to draw in pixelDrawer
     this.pixelDrawer.setCanvasContext(App.paintController.tempCanvas[0]);    
     App.paintController.showTempCanvas();
@@ -142,9 +134,47 @@ var DrawToolModel = Ember.Object.extend({
       case("fillcircle") : this.drawFunction = this.pixelDrawer.fillCircle.bind(this.pixelDrawer); break;
 
       case("line") : this.drawFunction = this.pixelDrawer.drawLine.bind(this.pixelDrawer); break;
+
     }
 
   }
 
 });
 
+
+// -----------------------
+var FillToolModel = Ember.Object.extend({
+
+  initAfter : function () {
+    this.zoomCanvas = App.paintController.zoomCanvas;
+    this.zoomContext = App.paintController.zoomContext;
+    this.pixelDrawer = App.paintController.pixelDrawer;
+  },
+  
+  click : function(_options) {
+    App.paintController.hideTempCanvas();
+    App.paintController.toggleColorPalette(true);
+  },
+
+  mousedown : function(_options, _pixelDrawer) {
+    // Draw on pixelDrawer current canvas => tempCanvas
+    this.draw(_options.x, _options.y);
+  },
+
+  mousemove : function(_options) {
+
+  },
+
+  mouseup : function(_options) {
+   
+  },
+
+  draw : function(_x, _y) {
+    this.pixelDrawer.popImageData();
+    var oldColor = this.pixelDrawer.getPixelColor(_x, _y);
+    this.pixelDrawer.floodFill(_x, _y, App.paintController.color, oldColor);
+    this.pixelDrawer.pushImageData();
+    App.paintController.drawToSprite();
+  }
+
+});

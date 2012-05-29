@@ -19,6 +19,7 @@ var PencilToolModel = Ember.Object.extend({
   mousedown : function(_options) {
     this.isActive = true;
     this.sprite = _options.sprite;
+
     this.draw(_options.x, _options.y, _options.x, _options.y);
     //
     this.oldX = _options.x;

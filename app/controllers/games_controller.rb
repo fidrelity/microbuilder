@@ -59,15 +59,18 @@ class GamesController < ApplicationController
   end
 
   def like
-    counter = @game.likes + 1
-    @game.update_attribute(:likes, counter)
-    #cookies[:game] = "true"
+    unless cookies["voted_game_#{@game.id}"]
+      @game.update_attribute(:likes, @game.likes + 1)
+      cookies["voted_game_#{@game.id}"] = true
+    end
   end
 
   def dislike
-    counter = @game.dislikes + 1
-    @game.update_attribute(:dislikes, counter)
-    render :file => "app/views/games/like", :layout => false
+    unless cookies["voted_game_#{@game.id}"]
+      @game.update_attribute(:dislikes, @game.dislikes + 1)
+      cookies["voted_game_#{@game.id}"] = true
+    end
+    render "like"
   end
 
   def report    
@@ -94,5 +97,4 @@ class GamesController < ApplicationController
   def find_game
     @game = Game.find(params[:id])
   end
-
 end

@@ -10,7 +10,7 @@
 
   %div{ :class => "span8"}
     %div{:id => 'user_games'}
-      = render :partial => 'games', :locals => {:user => @user}
+      = render :partial => 'games', :locals => {:games => @games, :user => @user}
     %div{:id => 'user_graphics'}
-      = render :partial => 'graphics', :locals => {:user => @user}
+      = render :partial => 'graphics', :locals => {:graphics => @graphics, :user => @user}
     

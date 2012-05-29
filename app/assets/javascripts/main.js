@@ -32,15 +32,18 @@ function editor_main() {
 function paint_main() {
   
   window.App = Ember.Application.create();
-  
+
   App.paintController = PaintController.create();  
   App.pencilTool = PencilToolModel.create();
   
   App.toolBoxController = ToolBoxController.create();
   App.drawTool = DrawToolModel.create();
-  
+  App.fillTool = FillToolModel.create();
+
   App.paintView = PaintView.create();
-  App.paintView.appendTo('#content');
+  App.paintSizeView = PaintSizeView.create();
+  
+  App.paintSizeView.appendTo('#content');
   
 };
 
