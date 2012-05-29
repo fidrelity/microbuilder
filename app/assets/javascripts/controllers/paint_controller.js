@@ -81,6 +81,7 @@ var PaintController =  Ember.ArrayController.extend({
       // Hide left side (sprite areas)
       areaWrapper.find('#sprites-area').hide();
       $('#player').hide();
+      $('#copySpriteButton').hide();
     } else {
       areaWrapper.find('#sprites-area').show();
       areaWrapper.find('.zoomButtons').show();
@@ -102,6 +103,10 @@ var PaintController =  Ember.ArrayController.extend({
     });
 
     $('#zoomCanvas').mouseup(function(e){
+      App.paintController.mouseup(e);
+    });
+
+    $('#zoomCanvas').mouseout(function(e){
       App.paintController.mouseup(e);
     });
 
@@ -254,7 +259,8 @@ var PaintController =  Ember.ArrayController.extend({
     this.addObject(spriteModel);
     $('.canvas').css({width: this.spriteSize.width, height: this.spriteSize.height});
     this.setCurrentSpriteModel(spriteModel);
-    //this.setZoomCanvasSize();
+    if(copy) this.getCurrentSpriteModel().pushState();
+
     this.updateZoom();
   },
 
