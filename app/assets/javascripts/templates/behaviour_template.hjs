@@ -1,6 +1,8 @@
+<h3>Behaviours of {{App.gameObjectsController.current.name}}</h3>
+
 <ul id="behaviours">
   {{#view BehaviourView 
-    contentBinding = "App.game.startBehaviour"
+    contentBinding = "App.behaviourController.startBehaviour"
     controllerBinding = "App.behaviourController"
   }}
     <li class="top">
@@ -38,7 +40,7 @@
     </li>
   {{/view}}
 
-  {{#each App.game.behaviours}}
+  {{#each App.behaviourController.behaviours}}
     {{#view BehaviourView 
       contentBinding = "this"
       controllerBinding = "App.behaviourController"

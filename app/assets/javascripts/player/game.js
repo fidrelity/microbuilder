@@ -1,3 +1,5 @@
+//= require utilities/vector
+
 var Game = function( player, mouse ) {
   
   this.player = player;

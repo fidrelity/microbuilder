@@ -2,15 +2,10 @@
 
 {{dynamicView App.actionController.contentView}}
 
-{{#if action.isWin}}
-  <h3>Win Action</h3>
-{{/if}}
+{{#if App.actionController.showSaveButton}}
 
-{{#if action.isLose}}
-  <h3>Lose Action</h3>
-{{/if}}
+  <p>{{App.actionController.action.string}}</p>
 
-{{#if action.isComplete}}
   <button {{action "save" target="App.actionController"}}> save </button>
   <br />
 {{/if}}

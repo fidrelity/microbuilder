@@ -1,5 +1,3 @@
-//= require utilities/vector
-
 var ActionModel = Ember.Object.extend({
   
   type : null,
@@ -16,12 +14,6 @@ var ActionModel = Ember.Object.extend({
   
   },
   
-  isComplete : function() {
-    
-    return true;
-    
-  }.property(),
-  
   notify : function( name ) {
     
     if ( this.get( name ) ) {
@@ -34,7 +26,9 @@ var ActionModel = Ember.Object.extend({
       
     }
     
-  }
+  },
+  
+  isComplete : true,
   
 });
 
@@ -91,6 +85,22 @@ var MoveActionModel = ActionModel.extend({
       2
     );
   
+  },
+  
+  'to location' : function() {
+    
+    // {{view PlayerView 
+    //   typeBinding = "action.type"
+    //   positionBinding = "action.position"
+    //   gameObjectBinding = "action.gameObject"
+    // }}
+    
+    // App.actionController.addPlayerOption(
+    //   'Drag <gameObject> to the location where it should move.',
+    //   this,
+    //   3
+    // );
+    
   },
   
   moveTo : function() {
@@ -191,18 +201,22 @@ var ArtActionModel = ActionModel.extend({
   
 });
 
-var WinActionModel = ActionModel.extend({
+var WinLoseActionModel = ActionModel.extend({
   
-  type : 'win',
-  
-  isWin : true
-  
-});
+  win : function() {
+    
+    this.set( 'type', 'win' );
+    
+    App.actionController.set( 'showSaveButton', true );
+    
+  },
 
-var LoseActionModel = ActionModel.extend({
-  
-  type : 'lose',
-  
-  isLose : true
+  lose : function() {
+    
+    this.set( 'type', 'lose' );
+    
+    App.actionController.set( 'showSaveButton', true );
+    
+  }
   
 });

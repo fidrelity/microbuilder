@@ -9,7 +9,6 @@ var ActionController = Ember.Object.extend({
   mode : 'action',
 
   action : null,
-  trigger : null,
   
   behaviourBinding : 'App.behaviourController.currentBehaviour',
   
@@ -17,22 +16,23 @@ var ActionController = Ember.Object.extend({
   
   optionDepth : 0,
   
+  showSaveButton : false,
+  
   reset : function( mode ) {
     
     var buttons;
     
     this.set( 'mode', mode );
     this.set( 'optionDepth', 0 );
+    this.set( 'showSaveButton', false );
+    
+    this.set( 'action', null );
     
     if ( mode === 'action' ) {
-    
-      this.set( 'action', null );
       
       buttons = ['move', 'art', 'number', 'win/lose'];
     
     } else {
-    
-      this.set( 'trigger', null );
       
       buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
     
@@ -53,7 +53,7 @@ var ActionController = Ember.Object.extend({
       
     } else {
       
-      console.log( 'unknown action name: ' + name );
+      console.log( 'unknown action/trigger name: ' + name );
       
     }
     
@@ -86,8 +86,6 @@ var ActionController = Ember.Object.extend({
     
     var optionView = this.contentView.createChildView( viewClass );
     childViews.pushObject( optionView );
-    
-    console.log(childViews);
     
   },
   
@@ -133,31 +131,36 @@ var ActionController = Ember.Object.extend({
   //   this.set( 'action', ArtActionModel.create() );
   //   
   // },
-  // 
-  // win : function() {
-  //   
-  //   this.set( 'action', WinActionModel.create() );
-  //   
-  // },
-  // 
-  // lose : function() {
-  //   
-  //   this.set( 'action', LoseActionModel.create() );
-  //   
-  // },
-  // 
-  // save : function() {
-  //   
-  //   var action = this.get( 'action' );
-  //   
-  //   if ( action.get( 'isComplete' ) ) {
-  //   
-  //     this.get( 'behaviour' ).addAction( action );
-  //   
-  //     App.mainView.show( 'overlayContent', 'objectsView' );
-  //   
-  //   }
-  //   
-  // }
+
+  'win/lose' : function() {
+    
+    this.set( 'action', WinLoseActionModel.create() );
+    
+    this.addButtonOption( 
+      'Win or lose?', 
+      ['win', 'lose' ], 
+      this.action,
+      1
+    );
+    
+  },
+
+  save : function() {
+    
+    var action = this.get( 'action' );
+    
+    if ( this.mode === 'action' ) {
+    
+      this.get( 'behaviour' ).addAction( action );
+    
+    } else {
+    
+      this.get( 'behaviour' ).addTrigger( action );
+    
+    }
+    
+    App.mainView.show( 'overlayContent', 'objectsView' );
+    
+  }
 
 });

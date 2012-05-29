@@ -6,13 +6,22 @@ var GameObjectModel = Ember.Object.extend({
   position : null,
   graphic : null,
   
+  behaviours : [],
+  startBehaviour : null,
+  
   init : function() {
     
     this.ID = App.game.gameObjectCounter++;
     
+    this.startBehaviour = BehaviourModel.create();
+    this.startBehaviour.addTrigger( StartTriggerModel.create() );
+    
   },
   
   getData : function( graphics ) {
+  
+    var behaviours = [], 
+      b, i;
   
     if ( graphics.indexOf( this.graphic ) < 0 ) {
       
@@ -20,11 +29,32 @@ var GameObjectModel = Ember.Object.extend({
       
     }
     
+    b = this.startBehaviour.getData( graphics );
+    
+    if ( b ) {
+    
+      behaviours.push( b );
+    
+    }
+      
+    for ( i = 0; i < this.behaviours.length; i++ ) {
+      
+      b = this.behaviours[i].getData( graphics );
+      
+      if ( b ) {
+        
+        behaviours.push( b );
+      
+      }
+      
+    }
+    
     return {
       ID : this.ID,
       name : this.name,
       graphicID : this.graphic.ID,
-      position : this.position.getData()
+      position : this.position.getData(),
+      behaviours : behaviours
     };
   
   }

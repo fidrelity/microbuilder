@@ -8,17 +8,7 @@ var GameModel = Ember.Object.extend({
   gameObjects : [],
   gameObjectCounter : 0,
   
-  behaviours : [],
-  startBehaviour : null,
-  
   duration : 5,
-  
-  init : function() {
-    
-    this.startBehaviour = BehaviourModel.create();
-    this.startBehaviour.addTrigger( StartTriggerModel.create() );
-    
-  },
   
   setBackground : function( graphic ) {
     
@@ -32,7 +22,7 @@ var GameModel = Ember.Object.extend({
         graphics = [],
         graphicIDs = [],
         win = false,
-        b, i, j;
+        i, j;
     
     if ( this.background ) {
       
@@ -51,43 +41,6 @@ var GameModel = Ember.Object.extend({
     
       }
     
-    }
-    
-    
-    game.behaviours = [];
-    
-    b = this.startBehaviour.getData( graphics );
-    
-    if ( b ) {
-
-      game.behaviours.push( b );
-
-    }
-  
-    for ( i = 0; i < this.behaviours.length; i++ ) {
-  
-      b = this.behaviours[i].getData( graphics );
-  
-      if ( b ) {
-        
-        game.behaviours.push( b );
-  
-        if ( b.actions ) {
-
-          for ( j = 0; j < b.actions.length; j++ ) {
-        
-            if ( b.actions[j].type === 'win' ) {
-            
-                win = true;
-            
-            }
-        
-          }
-      
-        }
-      
-      }
-      
     }
     
     for ( i = 0; i < graphics.length; i++ ) {
