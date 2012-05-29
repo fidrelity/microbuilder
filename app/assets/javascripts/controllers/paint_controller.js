@@ -207,9 +207,9 @@ var PaintController =  Ember.ArrayController.extend({
     this.clearZoomCanvas();
   },
 
-  erase : function(_x, _y) {
-    this.getCurrentSpriteModel().erase(Math.floor(_x / this.zoom), Math.floor(_y / this.zoom), this.size * this.zoom);
-    this.zoomContext.clearRect(_x, _y, this.size, this.size);
+  erase : function(_x, _y) {    
+    this.zoomContext.clearRect(_x, _y, this.size, this.size);    
+    this.getCurrentSpriteModel().erase(Math.floor(_x), Math.floor(_y), this.size);
   },
 
   // ---------------------------------------
