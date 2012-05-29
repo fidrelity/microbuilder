@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @graphics = @user.graphics.paginate(:page => params[:graphics_page], :per_page => 4)
-    @games = @user.games.paginate(:page => params[:games_page], :per_page => 4)
+    @games = @user.games.paginate(:page => params[:games_page], :per_page => 3)
   end
 
   def graphics

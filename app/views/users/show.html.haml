@@ -7,10 +7,22 @@
     =image_tag "edit_icon.png", :class => "edit"
     .clear
     
-    .info
-      %span
-        =@user.first_name 
-        =@user.last_name
+    .meta
+      %p
+        member since:
+        %br
+        %span
+          =@user.created_at.to_date
+      %p
+        profil visits:
+        %br
+        %span
+          LOREM IPSUM
+      %p
+        last login:
+        %br
+        %span
+          =@user.last_sign_in_at.to_date
 
   %div{ :class => "span8"}        
     = render :partial => 'games', :locals => {:games => @games, :user => @user}

@@ -1,17 +1,34 @@
-%div{:id => 'user_graphics', :class => "collection_container"}
+%ul{:id => 'user_graphics', :class => "collection_container"}
   .bar
-    =image_tag "slider_left.png", :class => "slider_left"
+    = will_paginate graphics, :param_name => :graphics_page, :container => false,  :page_links => false, :show_always => true, :previous_label => '<img src="/assets/slider_left.png" alt="Prev page" class="slider_left" />', :next_label => '<img src="/assets/slider_right.png" alt="Next page" class="slider_right" />'
     .description
-      Games
+      Graphics
     .counter
       =@user.graphics.size
-    =image_tag "slider_right.png", :class => "slider_right"
+    .clear
+  
+  = link_to 'new graphic', new_graphic_path, :class => "add addgraphic"
+  .sort
+    sort by:
+    %select
+      %option{:value =>"128 x 128"}
+        128 x 128
+      %option{:value =>"120 x 120"}
+        100 x 100
   .clear
-  %ul{:class => "thumbnails"}
-    = will_paginate graphics, :param_name => :graphics_page,  :page_links => false
+  #graphics
     -graphics.each do |graphic|
-      %li{:class => "span2"}
-        %div{:class => "thumbnail"}
-          %img{:src => graphic.image}
-          =link_to("[x]", graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?")
-          =graphic.name
+      %li{:class => "span2 graphic"}
+        %img{:src => graphic.image}
+        %ul{:class => 'meta'}
+          =link_to image_tag("icon_public.png"), '#'
+          =link_to image_tag("icon_edit.png"), '#'
+          =link_to image_tag("icon_delete.png"), graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanentlydelete this graphic?"
+        .overlay
+          %p
+            = link_to graphic.name, '#'
+            %br
+            %span
+              =graphic.frame_width
+              x
+              =graphic.frame_height
