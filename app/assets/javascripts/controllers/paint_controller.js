@@ -440,9 +440,11 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   nextFrame : function() {
-    var canvasObjects = $('.canvas').not('#canvas-template, #canvas-sketch, #zoomCanvas');
+    var canvasObjects = $('.canvas').not('#canvas-size, #canvas-template, #canvas-sketch, #zoomCanvas');
     canvasObjects.hide();
     canvasObjects.eq(this.currentFrameIndex).show();
+    console.log(canvasObjects);
+    console.log(this.currentFrameIndex, this.content.length);
 
     if(this.currentFrameIndex == this.content.length) {
       // Loop
