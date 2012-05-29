@@ -1,17 +1,18 @@
-%div{ :class => "row"}
+%div{ :class => "row", :id => "profile"}
   %div{ :class => "span3"}
-    =image_tag "banner_profile.png"
+    =image_tag "banner_profile.png", :class => "banner"
     %img{:src => @user.display_image, :id => "profileimage"}
-    %h2
+    .name
       =@user.first_name
+    =image_tag "edit_icon.png", :class => "edit"
+    .clear
+    
     .info
       %span
         =@user.first_name 
         =@user.last_name
 
-  %div{ :class => "span8"}
-    %div{:id => 'user_games'}
-      = render :partial => 'games', :locals => {:games => @games, :user => @user}
-    %div{:id => 'user_graphics'}
-      = render :partial => 'graphics', :locals => {:graphics => @graphics, :user => @user}
+  %div{ :class => "span8"}        
+    = render :partial => 'games', :locals => {:games => @games, :user => @user}
+    = render :partial => 'graphics', :locals => {:graphics => @graphics, :user => @user}
     
