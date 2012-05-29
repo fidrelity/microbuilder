@@ -1,9 +1,17 @@
-%h2="Graphics (#{user.graphics.size})"
-%ul{:class => "thumbnails"}
-  = will_paginate graphics, :param_name => :graphics_page,  :page_links => false
-  -graphics.each do |graphic|
-    %li{:class => "span2"}
-      %div{:class => "thumbnail"}
-        %img{:src => graphic.image}
-        =link_to("[x]", graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?")
-        =graphic.name
+%div{:id => 'user_graphics', :class => "collection_container"}
+  .bar
+    =image_tag "slider_left.png", :class => "slider_left"
+    .description
+      Games
+    .counter
+      =@user.graphics.size
+    =image_tag "slider_right.png", :class => "slider_right"
+  .clear
+  %ul{:class => "thumbnails"}
+    = will_paginate graphics, :param_name => :graphics_page,  :page_links => false
+    -graphics.each do |graphic|
+      %li{:class => "span2"}
+        %div{:class => "thumbnail"}
+          %img{:src => graphic.image}
+          =link_to("[x]", graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?")
+          =graphic.name
