@@ -1,11 +1,4 @@
-<h2>Action Editor</h2>
-
-<p>select an action type</p>
-
-<button {{action "move" target="App.actionController"}}>move</button>
-<button {{action "art" target="App.actionController"}}>art</button>
-<button {{action "win" target="App.actionController"}}>win</button>
-<button {{action "lose" target="App.actionController"}}>lose</button>
+<h2>Action/Trigger Editor</h2>
 
 {{dynamicView App.actionController.contentView}}
 

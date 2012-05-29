@@ -97,14 +97,14 @@ var GameController = Ember.Object.extend({
   
   addTrigger : function() {
     
-    App.triggerController.reset();
-    App.mainView.show( 'overlayContent', 'triggerView' );
+    App.actionController.reset( 'trigger' );
+    App.mainView.show( 'overlayContent', 'actionView' );
     
   },
   
   addAction : function() {
     
-    App.actionController.reset();
+    App.actionController.reset( 'action' );
     App.mainView.show( 'overlayContent', 'actionView' );
     
   },
