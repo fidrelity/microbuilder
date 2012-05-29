@@ -328,7 +328,6 @@ var PaintController =  Ember.ArrayController.extend({
   // ---------------------------------------
   // Zoom Canvas
   zoomIn : function() {
-    console.log('zoom')
     if(this.zoom > 10) return false;
     this.zoom++;    
     this.updateZoom(false);
@@ -388,9 +387,8 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   setZoomCanvasSize : function () {
-    var width  = this.zoom * this.spriteSize.width;//this.isBackground ? this.spriteSize.width : this.zoom * this.spriteSize.width;
-    var height = this.zoom * this.spriteSize.height;//this.isBackground ? this.spriteSize.height : this.zoom * this.spriteSize.height;
-    console.log(width, height, this.zoomCanvas, this.zoom)
+    var width  = this.zoom * this.spriteSize.width;  //this.isBackground ? this.spriteSize.width : this.zoom * this.spriteSize.width;
+    var height = this.zoom * this.spriteSize.height; //this.isBackground ? this.spriteSize.height : this.zoom * this.spriteSize.height;
     this.zoomCanvas.style.width     = width +"px";
     this.zoomCanvas.style.height    = height +"px";    
     
@@ -487,9 +485,9 @@ var PaintController =  Ember.ArrayController.extend({
     var zoomCanvas = $('#zoomCanvas');
     var x = e.pageX - zoomCanvas.offset().left;
     var y = e.pageY - zoomCanvas.offset().top;
-
-    x = this.isBackground ? Math.floor(x) : Math.floor(x / this.zoom);
-    y = this.isBackground ? Math.floor(y) : Math.floor(y / this.zoom);
+  
+    x = Math.floor(x / this.zoom);
+    y = Math.floor(y / this.zoom);
 
     return {x: x, y: y};
   },
