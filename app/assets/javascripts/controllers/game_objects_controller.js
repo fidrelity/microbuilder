@@ -20,6 +20,12 @@ var GameObjectsController = Ember.ArrayController.extend({
     
     this.set( 'current', App.game.getGameObjectWithID( gameObjectID ) );
     
-  }
+  },
+  
+  others : function() {
+    
+    return this.content.without( this.current );
+    
+  }.property( 'current' )
   
 });

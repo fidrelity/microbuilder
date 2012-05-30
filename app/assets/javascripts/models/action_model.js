@@ -2,7 +2,7 @@ var ActionModel = Ember.Object.extend({
   
   type : null,
   
-  gameObjectBinding : 'App.gameObjectsController.current',
+  parentGameObjectBinding : 'App.gameObjectsController.current',
   
   string : function() {
     
@@ -33,18 +33,6 @@ var ActionModel = Ember.Object.extend({
 });
 
 var MoveActionModel = ActionModel.extend({
-  
-  type : 'move',
-  
-  position : null,
-  
-  question : '',
-  
-  init : function() {
-    
-    this.set( 'position', new Vector() );
-    
-  },
   
   directional : function() {
   
@@ -97,17 +85,35 @@ var MoveActionModel = ActionModel.extend({
     
   },
   
+  'to object' : function() {
+    
+    App.actionController.addObjectsOption(
+      'Choose to which other object <gameObject> should move.',
+      this,
+      3
+    );
+    
+  },
+  
+  select : function( gameObject ) {
+    
+    this.set( 'gameObject', gameObject );
+    
+    App.actionController.set( 'showSaveButton', true );
+    
+  },
+  
   moveTo : function() {
   
     this.set( 'type', 'moveTo' );
-    this.set( 'question', 'to what location should ' + this.gameObject.name + ' move?' );
+    this.set( 'question', 'to what location should ' + this.parentGameObject.name + ' move?' );
   
   },
   
   moveIn : function() {
   
     this.set( 'type', 'moveIn' );
-    this.set( 'question', 'in what direction, relative to it\'s position, should ' + this.gameObject.name + ' move?' );
+    this.set( 'question', 'in what direction, relative to it\'s position, should ' + this.parentGameObject.name + ' move?' );
   
   },
   
@@ -130,16 +136,16 @@ var MoveActionModel = ActionModel.extend({
   string : function() {
     
     var type = this.type,
-      name = this.gameObject.name,
-      pos = this.position.string();
+      name = this.parentGameObject.name,
+      other = this.get( 'position' ) ? this.position.string() : this.gameObject.name;
     
     if ( type === 'moveTo' ) {
       
-      return name + ' moves to ' + pos;
+      return name + ' moves to ' + other;
       
     } else if ( type === 'jumpTo' ) {
       
-      return name + ' jumps to ' + pos;
+      return name + ' jumps to ' + other;
       
     } else if ( type === 'moveIn' ) {
       
@@ -147,7 +153,7 @@ var MoveActionModel = ActionModel.extend({
       
     }
     
-  }.property( 'type', 'position' )
+  }.property( 'type', 'position', 'gameObject' )
   
 });
 
