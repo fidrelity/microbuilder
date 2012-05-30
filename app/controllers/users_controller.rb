@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  respond_to :js, :only => [:graphics, :show]
+  respond_to :json, :only => [:graphics, :show]
   before_filter :authenticate_user!, :only => [:graphics]
   
   def show
