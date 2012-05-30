@@ -45,6 +45,7 @@ class Graphic < ActiveRecord::Base
         decoded_data = Base64.decode64(image_data.split(/data:image\/png;base64,/).last)
         
         data = StringIO.new(decoded_data)
+        data.class.class_eval { attr_accessor :original_filename, :content_type }
         data.content_type = content_type
         data.original_filename = File.basename(self.name)
 
