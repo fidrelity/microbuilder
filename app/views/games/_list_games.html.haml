@@ -1,26 +1,62 @@
-%ul{:class=>"thumbnails"}
-
-  %li{:class => "span3", :id => "game-li-template"}
-    %div{:class => "thumbnail"}
-      %br
-      %i{:class => "icon-eye-open"}
-      0
-      %i{:class => "icon-thumbs-up"}
-      0
-      %i{:class => "icon-thumbs-down"}
-      0
-
-  - games.each do |game|
-    %li{:class => "span3"}
+%ul{:id => 'gallerygames', :class => "collection_container"}
+  .bar
+    =image_tag "slider_left.png", :class => "slider_left"
+    =image_tag "slider_right.png", :class => "slider_right"
+    .description
+      Latest Games
+    .counter
+      119
+  .clear
+  
+  = link_to '', gallery_path, :class => "add viewall"
+  = link_to 'new game', build_path, :class => "add addgame"
+  .clear
+  .sortables
+    .sort
+      =link_to "Latest", gallery_path
+      |
+      =link_to "Rating", gallery_path({:type => "rating"})
+      |
+      =link_to "Most played", gallery_path({:type => "played"})
+    
+    .search
+      = form_tag search_games_path, :method => 'get', :class=>"form-horizontal" do
+        = text_field_tag "query", "", :class => "searchbox", :placeholder => "Search game"
+        = submit_tag "", :class => "btn"
+  .clear
+  
+  -if false
+    %li{:class => "span3", :id => "game-li-template"}
       %div{:class => "thumbnail"}
-        =link_to image_tag("http://placehold.it/210x130"), play_path(game)
-        %h4
-          =game.title
-        =link_to "by #{game.author.display_name}", user_path(game.author)
         %br
         %i{:class => "icon-eye-open"}
-        =game.played
+        0
         %i{:class => "icon-thumbs-up"}
-        =game.likes
+        0
         %i{:class => "icon-thumbs-down"}
-        =game.dislikes
+        0
+  .games
+    - games.each do |game|                                                                                                      
+      %li{:id => game.id, :class => "span3 game"}                                                                                            
+        = link_to image_tag("game.png"), play_path(game)
+        
+        .overlay
+          =link_to image_tag("overlay_game_play.png"), game_path(game), :class => "overlay_game_play"
+          %p
+            = link_to game.title, play_path(game)
+            %br
+            %span
+              19 Plays
+        .info                                                                                                              
+          =link_to(game.title, play_path(game))
+          -if false                                                                                 
+            %i{:class => "icon-comment"}                                                                                          
+            =game.game_comments.size                                                                                              
+            %i{:class => "icon-eye-open"}                                                                                         
+            =game.played                                                                                                          
+            %i{:class => "icon-thumbs-up"}                                                                                        
+            =game.likes                                                                                                           
+            %i{:class => "icon-thumbs-down"}                                                                                      
+            =game.dislikes
+    .clear
+.clear

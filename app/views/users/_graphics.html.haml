@@ -1,6 +1,8 @@
 %ul{:id => 'user_graphics', :class => "collection_container"}
   .bar
-    = will_paginate graphics, :param_name => :graphics_page, :container => false,  :page_links => false, :show_always => true, :previous_label => '<img src="/assets/slider_left.png" alt="Prev page" class="slider_left" />', :next_label => '<img src="/assets/slider_right.png" alt="Next page" class="slider_right" />'
+    =image_tag "slider_left.png", :class => "slider_left"
+    =image_tag "slider_right.png", :class => "slider_right"
+    = will_paginate graphics, :show_always => true, :semantic => true, :param_name => :graphics_page, :container => false,  :page_links => false, :previous_label => '<img src="/assets/slider_left.png" alt="Prev page" class="slider_left" />', :next_label => '<img src="/assets/slider_right.png" alt="Next page" class="slider_right" />'
     .description
       Graphics
     .counter
