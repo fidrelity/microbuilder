@@ -52,8 +52,16 @@ var PlayerView = Ember.View.extend({
     
     
     player.setCanvas( $('#' + this.canvasID)[0] );
-    player.parse( App.game.getData().game, bind( this, callback ) );
-
+    
+    if ( callback ) {
+      
+      player.parse( App.game.getGameObjectsData(), bind( this, callback ) );
+      
+    } else {
+      
+      player.parse( App.game.getData().game );
+      
+    }
 
     // *** Snapshot of preview game ***
     // onClick on li element

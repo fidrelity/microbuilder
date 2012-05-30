@@ -7,7 +7,7 @@ var Parser = {
     
     var graphics = data.graphics,
       gameObjects = data.gameObjects,
-      behaviours = data.behaviours;
+      behaviours, gameObject;
     
     this.game = game;
     this.loader = new Loader( callback );
@@ -44,36 +44,42 @@ var Parser = {
     
       for ( var i = 0; i < gameObjects.length; i++ ) {
       
-        var gameObject = this.parseGameObject( gameObjects[i] );
+        gameObject = this.parseGameObject( gameObjects[i] );
       
         game.gameObjects.push( gameObject );
+      
+      }
+      
+      for ( var i = 0; i < gameObjects.length; i++ ) {
+        
+        behaviours = gameObjects[i].behaviours;
+        gameObject = game.gameObjects[i];
+        
+        if ( behaviours && behaviours.length > 0 ) {
+      
+          for ( var j = 0; j < behaviours.length; j++ ) {
+      
+            var behaviour = this.parseBehaviour( behaviours[j], gameObject );
+      
+            if ( behaviour ) {
+      
+              this.game.behaviours.push( behaviour );
+        
+            }
+      
+          }
+      
+        } else {
+      
+          // console.error( 'parser: game has no behaviours' );
+      
+        }
       
       }
     
     } else {
       
       // console.error( 'parser: game has no gameObjects' );
-      
-    }
-    
-    
-    if ( behaviours && behaviours.length > 0 ) {
-      
-      for ( var i = 0; i < behaviours.length; i++ ) {
-      
-        var behaviour = this.parseBehaviour( behaviours[i] );
-      
-        if ( behaviour ) {
-      
-          game.behaviours.push( behaviour );
-        
-        }
-      
-      }
-      
-    } else {
-      
-      // console.error( 'parser: game has no behaviours' );
       
     }
     
@@ -126,7 +132,7 @@ var Parser = {
   
   },
   
-  parseBehaviour : function( behaviourData ) {
+  parseBehaviour : function( behaviourData, gameObject ) {
     
     var behaviour = new Behaviour(),
       actions = behaviourData.actions,
@@ -136,7 +142,7 @@ var Parser = {
 
       for ( var i = 0; i < actions.length; i++ ) {
       
-        var action = this.parseAction( actions[i] );
+        var action = this.parseAction( actions[i], gameObject );
       
         behaviour.actions.push( action );
       
@@ -154,11 +160,11 @@ var Parser = {
     
       for ( var i = 0; i < triggers.length; i++ ) {
       
-        var trigger = this.parseTrigger( triggers[i] );
+        var trigger = this.parseTrigger( triggers[i], gameObject );
       
         if ( trigger === 'onStart' ) {
       
-          this.game.startActions = behaviour.actions;
+          this.game.startActions = this.game.startActions.concat( behaviour.actions );
           return null;
       
         } else if ( trigger ) {
@@ -180,15 +186,15 @@ var Parser = {
     
   },
   
-  parseAction : function( actionData ) {
+  parseAction : function( actionData, gameObject ) {
     
     switch ( actionData.type ) {
       
-      case 'jumpTo' : return this.parseActionJumpTo( actionData );
-      case 'moveTo' : return this.parseActionMoveTo( actionData );
-      case 'moveIn' : return this.parseActionMoveIn( actionData );
+      case 'jumpTo' : return this.parseActionJumpTo( actionData, gameObject );
+      case 'moveTo' : return this.parseActionMoveTo( actionData, gameObject );
+      case 'moveIn' : return this.parseActionMoveIn( actionData, gameObject );
       
-      case 'changeArt' : return this.parseActionChangeArt( actionData );
+      case 'changeArt' : return this.parseActionChangeArt( actionData, gameObject );
       
       case 'win' : return WinAction;
       case 'lose' : return LoseAction;
@@ -203,8 +209,7 @@ var Parser = {
 /**
   {
     type: "jumpTo",
-    objectID: 0,
-    target:{
+    location:{
       x:0,
       y:0
     }
@@ -213,25 +218,24 @@ var Parser = {
   {
     type: "jumpTo",
     objectID: 0,
-    targetID: 1
   }
 */
 
-  parseActionJumpTo : function( actionData ) {
+  parseActionJumpTo : function( actionData, gameObject ) {
     
     var action = new MoveAction();
     
     action.execute = action.executeJumpTo;
     
-    action.gameObject = this.game.getGameObjectWithID( actionData.objectID );
+    action.gameObject = gameObject;
     
-    if ( typeof actionData.targetID !== "undefined" ) {
+    if ( typeof actionData.objectID !== "undefined" ) {
     
-      action.target = this.game.getGameObjectWithID( actionData.targetID ).position;
+      action.target = this.game.getGameObjectWithID( actionData.objectID ).position;
     
     } else {
     
-      action.target = new Vector( actionData.target.x, actionData.target.y );
+      action.target = new Vector( actionData.location.x, actionData.location.y );
     
     }
     
@@ -243,8 +247,7 @@ var Parser = {
 /**
   {
     type: "moveTo",
-    objectID: 0,
-    target:{
+    location:{
       x:0,
       y:0
     }
@@ -252,26 +255,25 @@ var Parser = {
 
   {
     type: "moveTo",
-    objectID: 0,
-    targetID: 1
+    objectID: 0
   }
 */
 
-  parseActionMoveTo : function( actionData ) {
+  parseActionMoveTo : function( actionData, gameObject ) {
     
     var action = new MoveAction();
     
     action.execute = action.executeMoveTo;
     
-    action.gameObject = this.game.getGameObjectWithID( actionData.objectID );
+    action.gameObject = gameObject;
     
-    if ( typeof actionData.targetID !== "undefined" ) {
+    if ( typeof actionData.objectID !== "undefined" ) {
     
-      action.target = this.game.getGameObjectWithID( actionData.targetID ).position;
+      action.target = this.game.getGameObjectWithID( actionData.objectID ).position;
     
     } else {
     
-      action.target = new Vector( actionData.target.x, actionData.target.y );
+      action.target = new Vector( actionData.location.x, actionData.location.y );
     
     }
     
@@ -283,20 +285,53 @@ var Parser = {
 /**
   {
     type: "moveIn",
-    objectID: 0,
     angle: 0
+  }
+
+  {
+    type: "moveIn",
+    random: 1
+  }
+
+  {
+    type: "moveIn",
+    objectID: 1
+  }
+
+  {
+    type: "moveIn",
+    location: {
+      x:2,
+      y:3
+    }
   }
 */
 
-  parseActionMoveIn : function( actionData ) {
+  parseActionMoveIn : function( actionData, gameObject ) {
     
     var action = new MoveAction();
     
     action.execute = action.executeMoveTo;
     
-    action.gameObject = this.game.getGameObjectWithID( actionData.objectID );
+    action.gameObject = gameObject;
     
-    action.target = new Vector( 1e10, 0 ).rotateSelf( actionData.angle );
+    if ( typeof actionData.angle !== 'undefined' ) {
+    
+      action.target = new Vector( 1e10, 0 ).rotateSelf( actionData.angle );
+    
+    } else if ( typeof actionData.random !== 'undefined' ) {
+      
+      action.random = true;
+      
+    } else if ( typeof actionData.objectID !== 'undefined' ) {
+      
+      action.target = this.game.getGameObjectWithID( actionData.objectID ).position;
+    
+    } else {
+      
+      action.target = new Vector( actionData.location.x, actionData.location.y );
+      
+    }
     
     return action;
     

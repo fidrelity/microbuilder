@@ -8,11 +8,11 @@ var ActionModel = Ember.Object.extend({
     
     return this.type
     
-  }.property(),
+  }.property( 'type' ),
   
   getData : function() {
   
-    return { type: this.type }
+    return { type: this.type };
   
   },
   
@@ -38,7 +38,7 @@ var MoveActionModel = ActionModel.extend({
   position : null,
   
   random : false,
-  direction : true,
+  direction : false,
   
   init : function() {
     
@@ -187,7 +187,7 @@ var MoveActionModel = ActionModel.extend({
       
     } else {
       
-      obj.target = this.position.getData();
+      obj.location = this.position.getData();
       
     }
     

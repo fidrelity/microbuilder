@@ -3,6 +3,8 @@ var MoveAction = function() {
   this.gameObject = null;
   this.target = null;
   
+  this.random = false;
+  
 };
 
 MoveAction.prototype = {
