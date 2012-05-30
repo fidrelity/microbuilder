@@ -13,7 +13,7 @@
   - games.each do |game|
     %li{:class => "span3"}
       %div{:class => "thumbnail"}
-        =link_to image_tag("http://placehold.it/210x130"), play_path(game)
+        =link_to image_tag(game.preview_image), play_path(game)
         %h4
           =game.title
         =link_to "by #{game.author.display_name}", user_path(game.author)

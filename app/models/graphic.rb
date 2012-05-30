@@ -1,7 +1,7 @@
 class Graphic < ActiveRecord::Base
   include PgSearch
-  include GraphicPreProcessor
-  
+  include ::GraphicPreProcessor
+
   attr_accessor :image_data
   attr_accessible :name, :image_data, :frame_count, :frame_width, :frame_height, :public, :background
   
@@ -10,10 +10,7 @@ class Graphic < ActiveRecord::Base
 
   before_destroy :referenced?
   
-  has_attached_file :image, PAPERCLIP_OPTIONS
-  
-  before_create :generate_file_name
-  before_create :decode_base64_image
+  has_attached_file :image, PAPERCLIP_OPTIONS  
   
   pg_search_scope :search, :against => :name
   scope :all_public, where(:public => true)
@@ -51,10 +48,6 @@ class Graphic < ActiveRecord::Base
           raise InvalidGraphicBoundaries, "Boundaries invalid"
         end
       end
-    end
-    
-    def generate_file_name
-      self.image_file_name = Time.now.to_i.to_s + "_" + user.id.to_s + ".png" unless self.image_file_name
     end
     
     def referenced?

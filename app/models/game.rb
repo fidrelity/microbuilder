@@ -5,11 +5,10 @@ class Game < ActiveRecord::Base
   belongs_to :author, :class_name => 'User', :foreign_key => 'user_id'
   has_and_belongs_to_many :graphics
   has_many :game_comments, :dependent => :destroy
-  has_attached_file :preview_image, PAPERCLIP_OPTIONS
+  has_attached_file :preview_image, PAPERCLIP_THUMB_OPTIONS
   
   before_destroy :destroy_unreferenced_graphics
   before_create :check_graphics
-  before_create :decode_base64_image
   
   validate :win_condition_in_data
   validates_presence_of :title, :instruction, :data
@@ -18,7 +17,8 @@ class Game < ActiveRecord::Base
   scope :all_latest, order("created_at DESC")
   pg_search_scope :search, :against => [:title, :instruction]
   
-  attr_accessible :title, :instruction, :data, :preview_image
+  attr_accessor :preview_image_file_name, :preview_image_data
+  attr_accessible :title, :instruction, :data, :preview_image, :preview_image_data, :preview_image_file_name
   
   class << self
     # SQL from http://evanmiller.org/how-not-to-sort-by-average-rating.html

@@ -11,6 +11,7 @@ vendor/cache/
 public/system/
 public/images/
 public/graphics/
+public/games/
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
