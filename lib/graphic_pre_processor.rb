@@ -1,13 +1,11 @@
 module GraphicPreProcessor
   def self.included(base)
     base.class_eval do
-      before_save :decode_base64_image
+      before_create :decode_base64_image
     end
   end
 
   def decode_base64_image
-    p '*' * 30
-    p self
     if self.class == Graphic
       content_type = 'image/png'
       decoded_data = Base64.decode64(self.image_data.split(/data:image\/png;base64,/).last)
