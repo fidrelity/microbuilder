@@ -46,7 +46,7 @@ class Graphic < ActiveRecord::Base
         
         data = StringIO.new(decoded_data)
         data.content_type = content_type
-        data.original_filename = File.basename(self.image_file_name)
+        data.original_filename = File.basename(self.name)
 
         self.image = data
       end
