@@ -180,9 +180,8 @@ var PaintController =  Ember.ArrayController.extend({
         },
       },
       
-      success : function( data ) {
-        App.paintController.reset(false);
-        App.libraryController.graphicSaved( data );        
+      success : function( data ) {        
+        App.paintController.goToTypeSelection(true);
       }
       
     });
@@ -206,8 +205,12 @@ var PaintController =  Ember.ArrayController.extend({
     this.clearZoomCanvas();
   },
 
-  goToTypeSelection : function () {
-    console.log("reset")
+  goToTypeSelection : function (_dontAsk) {
+    if(!_dontAsk) {
+      var ok = confirm("Erase all and go back to type selection?");
+      if(!ok) return false;
+    }
+    
     this.reset();
 
     App.paintView.remove();
