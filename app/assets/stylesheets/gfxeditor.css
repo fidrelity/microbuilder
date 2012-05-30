@@ -151,6 +151,7 @@
 }
 
 .slide {
+  overflow:hidden;
   position:relative;
   float:left;
   min-height:300px;
