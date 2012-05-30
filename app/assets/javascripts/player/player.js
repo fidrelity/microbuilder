@@ -34,7 +34,7 @@ var Player = function() {
       { name : 'start', from : 'ready', to: 'play', callback : this.onPlay },
       { name : 'win', from : 'play', to: 'end', callback : this.onWin },
       { name : 'lose', from : 'play', to: 'end', callback : this.onLose },
-      { name : 'restart', from : 'end', to: 'ready' },
+      { name : 'restart', from : 'end', to: 'play', callback : this.onPlay },
       
       { name : 'try', from : 'edit', to: 'trial' },
       { name : 'winTrial', from : 'trial', to: 'edit', callback : this.onWin },
@@ -279,11 +279,12 @@ Player.prototype = {
   click : function() {
     
     if ( this.fsm.hasState( 'ready' ) ) {
-      
+      $('.playerStartScreen').hide();
       this.fsm.start();
       
     } else if ( this.fsm.hasState( 'end' ) ) {
-      
+      $('.playerLoseScreen').hide();
+      $('.playerWinScreen').hide();
       this.fsm.restart();
     
     }
@@ -376,11 +377,7 @@ Player.prototype = {
     this.reset();
     this.game.start();
     
-    this.draw( this.ctx );
-    
-    this.ctx.fillStyle = 'rgba(255,255,0,0.5)';
-    this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
-    
+    this.draw( this.ctx );    
   },
   
   onPlay : function() {
@@ -406,23 +403,20 @@ Player.prototype = {
   },
   
   onWin : function() {
-    
-    this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
-    this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
+    $('.playerWinScreen').fadeIn(600);
+    //this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
+    //this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
     
   },
   
   onLose : function() {
-    
-    this.ctx.fillStyle = 'rgba(255,0,0,0.5)';
-    this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
-    
+    $('.playerLoseScreen').fadeIn(600);    
   },
   
   enterTrial : function() {
     
     this.mouse.handleClick();
-    
+  
     this.reset();
     this.game.start();
     

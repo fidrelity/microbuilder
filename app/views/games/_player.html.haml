@@ -1,0 +1,22 @@
+%div{:id => "playerWrapper"}
+  %canvas{:id => "playerCanvas", :width => 640, :height => 390}
+  
+  %div{:class => "playerStartScreen"}
+    %div{:class => "playButton"}
+    %h2
+      =game.title
+    %p
+    =game.instruction
+
+  %div{:class => "playerWinScreen"}
+    %div{:class => "replayButton"}
+    You have won the game!
+
+  %div{:class => "playerLoseScreen"}
+    %div{:class => "replayButton"}
+    You have lost the game!
+
+:javascript
+  $(document).ready( function() {
+    player_main( #{game.data} ); 
+  });
