@@ -90,7 +90,6 @@ var MoveActionModel = ActionModel.extend({
     App.actionController.addPlayerOption(
       'Drag <gameObject> to the location where it should move.',
       this.type,
-      this.position,
       3
     );
     

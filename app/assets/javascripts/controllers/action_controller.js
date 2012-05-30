@@ -77,6 +77,8 @@ var ActionController = Ember.Object.extend({
       
       this.optionDepth--;
       
+      this.set( 'showSaveButton', false );
+      
     }
     
     this.set( 'optionDepth', depth );
@@ -98,13 +100,17 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  addPlayerOption : function( question, type, position, depth ) {
+  addPlayerOption : function( question, type, depth ) {
     
-    this.addOption( question, PlayerView.extend({
-      type : type,
-      positionBinding : 'App.actionController.action.position',
-      gameObject : App.gameObjectsController.current
-    }), depth );
+    if ( type === 'moveTo' || type === 'jumpTo' ) {
+    
+      this.addOption( question, PlayerView.extend({
+        type : type,
+        positionBinding : 'App.actionController.action.position',
+        gameObject : App.gameObjectsController.current
+      }), depth );
+    
+    }
     
   },
   

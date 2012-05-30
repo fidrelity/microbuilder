@@ -40,7 +40,7 @@
     </li>
   {{/view}}
 
-  {{#each App.behaviourController.behaviours}}
+  {{#each App.behaviourController}}
     {{#view BehaviourView 
       contentBinding = "this"
       controllerBinding = "App.behaviourController"
