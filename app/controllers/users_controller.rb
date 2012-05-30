@@ -9,12 +9,22 @@ class UsersController < ApplicationController
   end
 
   def graphics
-    response, status = current_user.graphics.filter(
-      params[:select], 
-      params[:min_size].to_i, 
-      params[:max_size].to_i
-    )
-    render :json => response, :status => status
+    begin
+      graphics = current_user.graphics.filter(
+        !!params[:backgrounds],
+        params[:min_size].to_i,
+        params[:max_size].to_i
+      )
+    rescue InvalidGraphicBoundaries => e
+      render :json => e.message, :status => 400
+      return
+    end
+    
+    response = graphics.map do |graphic|
+        graphic.to_response_hash 
+    end
+    
+    render :json => response, :status => 200
   end
 end
   
