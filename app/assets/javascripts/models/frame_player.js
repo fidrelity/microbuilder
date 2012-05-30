@@ -10,15 +10,16 @@ var FramePlayer = {
   frameDuration : 1000,
 
   init : function() {
+    if($(this.selector).length) {
+      $(this.selector).live('mouseover', function() {
+        FramePlayer.initPlay($(this).find(FramePlayer.dataSelector));
+      });
 
-    $(this.selector).live('mouseover', function() {
-      FramePlayer.initPlay($(this).find(FramePlayer.dataSelector));
-    });
-
-    $(this.selector).live('mouseout', function() {      
-      FramePlayer.stop();
-      FramePlayer.reset();
-    });
+      $(this.selector).live('mouseout', function() {      
+        FramePlayer.stop();
+        FramePlayer.reset();
+      });
+    }
   },
 
   initPlay : function(_object) {
@@ -59,6 +60,6 @@ var FramePlayer = {
 };
 
 $(document).ready(function() {
-  console.log("frameplayer init")
+
   FramePlayer.init();
 });
