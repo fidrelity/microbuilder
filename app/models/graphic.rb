@@ -3,7 +3,7 @@ class Graphic < ActiveRecord::Base
   #include ::GraphicPreProcessor
 
   attr_accessor :image_data
-  attr_accessible :name, :image_data, :frame_count, :frame_width, :frame_height, :public, :background
+  attr_accessible :name, :image_data, :image_file_name, :frame_count, :frame_width, :frame_height, :public, :background
   
   belongs_to :user
   has_and_belongs_to_many :games
