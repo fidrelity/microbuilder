@@ -79,13 +79,13 @@ SliderDiv.prototype.stopPlay = function() {
 SliderDiv.prototype.move = function(_direction, _distance) {
   this.handleButtonVisibility();
 
-  // Move
+  // Calculate move distance and set direction
   var distance = _distance ? _distance : this.container.width();
   var to = _direction < 0 ? '+=' : '-=';
    
   // Animation
   var that = this;
-  this.viewport.animate({
+  this.viewport.stop().animate({
     left: to + distance
   }, this.MOVE_SPEED, function() {
     that.afterMove();
@@ -117,6 +117,7 @@ SliderDiv.prototype.afterMove = function() {
   return true;
 };
 
+// Hide preview button on first slide, next button on last slide
 SliderDiv.prototype.handleButtonVisibility = function() {
   this.nextButton.show();
   this.prevButton.show()
@@ -133,6 +134,7 @@ SliderDiv.prototype.getViewportHeight = function(_index) {
   return newH;
 };
 
+// on arrow left or right key
 SliderDiv.prototype.keyEvent = function(e) {
   if(!this.HAS_KEY_EVENTS) return false;  
   switch(e.keyCode) {
