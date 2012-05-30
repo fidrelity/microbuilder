@@ -1,11 +1,11 @@
 class Game < ActiveRecord::Base
   include PgSearch
-  include GraphicPreProcessor
+  include ::GraphicPreProcessor
   
   belongs_to :author, :class_name => 'User', :foreign_key => 'user_id'
   has_and_belongs_to_many :graphics
   has_many :game_comments, :dependent => :destroy
-  has_attached_file :thumb, PAPERCLIP_OPTIONS
+  has_attached_file :preview_image, PAPERCLIP_OPTIONS
   
   before_destroy :destroy_unreferenced_graphics
   before_create :check_graphics
@@ -18,7 +18,7 @@ class Game < ActiveRecord::Base
   scope :all_latest, order("created_at DESC")
   pg_search_scope :search, :against => [:title, :instruction]
   
-  attr_accessible :title, :instruction, :data
+  attr_accessible :title, :instruction, :data, :preview_image
   
   class << self
     # SQL from http://evanmiller.org/how-not-to-sort-by-average-rating.html
