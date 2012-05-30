@@ -30,13 +30,9 @@ var PlayerView = Ember.View.extend({
       player.selectedObjectCallback = bind( App.gameObjectsController, App.gameObjectsController.selectID );
       player.selectedObjectDragCallback = bind( App.game, App.game.gameObjectPositionChanged );
       
-    } else if ( type === 'moveTo' || type === 'jumpTo' ) {
+    } else if ( type === 'moveTo' || type === 'jumpTo' || type === 'moveIn' ) {
       
-      callback = this.moveToCallback;
-    
-    } else if ( type === 'moveIn' ) {
-      
-      callback = this.moveInCallback;
+      callback = this.moveCallback;
       
     } else if ( type === 'area' ) {
       
@@ -74,21 +70,11 @@ var PlayerView = Ember.View.extend({
     
   },
   
-  moveToCallback : function() {
+  moveCallback : function() {
     
     this.player.setSelectObjectID( this.gameObject.ID, bind( this, function( ID, pos ) {
       
       this.set( 'position', pos.clone() );
-      
-    }));
-  
-  },
-
-  moveInCallback : function() {
-    
-    this.player.setSelectObjectID( this.gameObject.ID, bind( this, function( ID, pos ) {
-      
-      this.set( 'position', pos.sub( this.gameObject.position ) );
       
     }));
   

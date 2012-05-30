@@ -165,7 +165,7 @@ var MoveActionModel = ActionModel.extend({
   
   angle : function() {
     
-    return this.position.angle().toFixed( 2 );
+    return this.position.sub( this.parentGameObject.position ).angle().toFixed( 2 );
     
   },
   

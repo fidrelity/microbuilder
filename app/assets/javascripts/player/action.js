@@ -4,6 +4,7 @@ var MoveAction = function() {
   this.target = null;
   
   this.random = false;
+  this.direction = null;
   
 };
 
@@ -20,6 +21,24 @@ MoveAction.prototype = {
   executeMoveTo : function() {
     
     this.gameObject.setTarget( this.target );
+    
+  },
+  
+  executeMoveIn : function() {
+    
+    if ( this.random ) {
+      
+      this.gameObject.setDirection( Math.random() * Math.PI * 2 );
+      
+    } else if ( this.direction !== null ) {
+      
+      this.gameObject.setDirection( this.direction );
+      
+    } else {
+      
+      this.gameObject.setDirection( this.target.sub( this.gameObject.position ).angle() );
+      
+    }
     
   }
   

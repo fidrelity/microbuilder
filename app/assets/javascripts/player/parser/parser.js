@@ -311,7 +311,7 @@ var Parser = {
     
     var action = new MoveAction();
     
-    action.execute = action.executeMoveTo;
+    action.execute = action.executeMoveIn;
     
     action.gameObject = gameObject;
     
