@@ -8,6 +8,7 @@
 
   <button {{action "save" target="App.actionController"}}> save </button>
   <br />
+
 {{/if}}
 
-<button {{action "cancel" target="App.gameController"}}>cancel</button>
+<button {{action "showObjects" target="App.gameController"}}> cancel </button>

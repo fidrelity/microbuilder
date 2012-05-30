@@ -172,6 +172,12 @@ var ActionController = Ember.Object.extend({
     );
     
   },
+  
+  cancel : function() {
+    
+    
+    
+  },
 
   save : function() {
     

@@ -39,5 +39,4 @@
 
 <div class="clear"></div>
 
-<!-- <button {{action "cancel" target="App.gameController"}}>cancel</button> -->
-<!-- <button {{action "drawGraphic" target="App.gameController"}}>new</button> -->
+<button {{action "showObjects" target="App.gameController"}}> cancel </button>
