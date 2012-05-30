@@ -36,9 +36,10 @@ function paint_main() {
   
 };
 
-function player_main( data ) {
+function player_main( data, game_id ) {
+  var game_id = game_id || 0;
   
-  window.player = new Player();
+  window.player = new Player();  
   
   data = data || {
     background:"/assets/preview.png",
@@ -152,6 +153,7 @@ function player_main( data ) {
     if ( data ) {
   
       player.parse( data );
+      player.game_id = game_id;
   
     }
     

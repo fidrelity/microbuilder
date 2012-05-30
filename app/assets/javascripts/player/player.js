@@ -7,6 +7,7 @@ var Player = function() {
   
   this.game = null;
   this.mouse = null;
+  this.game_id = null;
   
   this.fsm = new StateMachine( this );
   
@@ -120,7 +121,7 @@ Player.prototype = {
   },
   
   parse : function( data, callback ) {
-    
+    console.log(data);
     var self = this;
     
     this.fsm.parse();
@@ -279,9 +280,9 @@ Player.prototype = {
   click : function() {
     
     if ( this.fsm.hasState( 'ready' ) ) {
-      $('.playerStartScreen').hide();
-      this.fsm.start();
-      
+      $('.playerStartScreen').hide();      
+      this.increaseCounter();
+      this.fsm.start();      
     } else if ( this.fsm.hasState( 'end' ) ) {
       $('.playerLoseScreen').hide();
       $('.playerWinScreen').hide();
@@ -460,6 +461,20 @@ Player.prototype = {
     this.ctx.debug = !this.ctx.debug;
     this.redraw = true;
     
+  },
+
+  // Increases game counter
+  increaseCounter : function() {
+    if(!this.game_id) return false;
+
+    $.ajax({
+      url : '/games/'+this.game_id+'/played',
+      type : 'PUT',
+      success : function() {
+        console.log('Game.played++');
+        // Todo: update amount visually
+      }
+    });
   }
   
 };
