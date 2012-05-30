@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  respond_to :js, :only => [:graphics, :show]
+  respond_to :json, :only => [:graphics, :show]
   before_filter :authenticate_user!, :only => [:graphics]
   
   def show
@@ -23,8 +23,8 @@ class UsersController < ApplicationController
     response = graphics.map do |graphic|
         graphic.to_response_hash 
     end
-    
-    render :json => response, :status => 200
+
+    render :json => response.to_json, :status => 200
   end
 end
   
