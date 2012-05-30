@@ -34,8 +34,11 @@
         <button {{action "copySprite"}} id="copySpriteButton">Copy</button>
         <button {{action "clear"}}>Clear</button>
         <button {{action "undo"}}>Undo</button>       
-        <button {{action "reset"}}>Reset</button>  
+        <button {{action "reset"}}>Clear all</button>  
+        <button {{action "goToTypeSelection" target="App.paintController"}} >Reset</button>
       {{/view}}   
+
+     
   
     </div>
 

@@ -51,17 +51,12 @@ var PaintSizeView = Ember.View.extend({
       h = 390;
     }
 
-    $("#paint-size-wrapper").hide();    
+    //$("#paint-size-wrapper").hide();    
+    App.paintSizeView.remove();
+
+    App.paintController.initType(type, w, h);
+
     App.paintView.appendTo('#content');
-    setTimeout(function() {
-      
-      App.paintController.initView(type, w, h);
-
-      App.toolBoxController.setCurrentTool(App.pencilTool);
-      App.drawTool.initAfter();
-      App.fillTool.initAfter();
-
-    }, 500);
   }
   
 });

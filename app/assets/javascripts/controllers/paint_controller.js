@@ -43,22 +43,24 @@ var PaintController =  Ember.ArrayController.extend({
     this.pixelDrawer = new PixelDrawer();
   },
 
-  // Called when Paint_View init (after dom ready)
-  initView : function(_type, _width, _height) {
+  initType : function(_type, _width, _height) {
     this.type = _type || 'object';
-    this.isBackground = this.type === 'background' ? true : false;
-
     this.setSpriteSize({width: _width, height: _height});
+  },
+
+  // Called when Paint_View init (after dom ready)
+  initView : function() {
+    this.isBackground = this.type === 'background' ? true : false;   
 
     this.zoomCanvas  = document.getElementById("zoomCanvas");
     this.zoomContext = this.zoomCanvas.getContext("2d");
-    this.zoomCanvas.width = _width;
-    this.zoomCanvas.height = _height;
+    this.zoomCanvas.width = this.spriteSize.width;
+    this.zoomCanvas.height = this.spriteSize.height;
 
     this.tempCanvas = $('#canvas-temp');
     this.tempContext = this.tempCanvas[0].getContext("2d");
-    this.tempCanvas[0].width = _width;
-    this.tempCanvas[0].height = _height;    
+    this.tempCanvas[0].width =this.spriteSize.width;
+    this.tempCanvas[0].height = this.spriteSize.height;    
     
     // React if type is background
     var areaWrapper = $('#area-wrapper');    
@@ -202,6 +204,14 @@ var PaintController =  Ember.ArrayController.extend({
     first.reset();
     this.setCurrentSpriteModel(first);
     this.clearZoomCanvas();
+  },
+
+  goToTypeSelection : function () {
+    console.log("reset")
+    this.reset();
+
+    App.paintView.remove();
+    App.paintSizeView.appendTo('#content');
   },
 
   // Undo current SpriteModel
