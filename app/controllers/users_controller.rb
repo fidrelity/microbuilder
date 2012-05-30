@@ -23,8 +23,8 @@ class UsersController < ApplicationController
     response = graphics.map do |graphic|
         graphic.to_response_hash 
     end
-    
-    render :json => response, :status => 200
+
+    render :json => response.to_json, :status => 200
   end
 end
   
