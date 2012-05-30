@@ -6,14 +6,16 @@ var GameObjectModel = Ember.Object.extend({
   position : null,
   graphic : null,
   
-  behaviours : [],
+  behaviours : null,
   startBehaviour : null,
   
   init : function() {
     
     this.ID = App.game.gameObjectCounter++;
     
-    this.startBehaviour = BehaviourModel.create();
+    this.set( 'behaviours', [] );
+    this.set( 'startBehaviour', BehaviourModel.create());
+    
     this.startBehaviour.addTrigger( StartTriggerModel.create() );
     
   },

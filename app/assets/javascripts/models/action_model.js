@@ -1,4 +1,4 @@
-var ActionModel = Ember.Object.extend({
+var ActionTriggerModel = Ember.Object.extend({
   
   type : null,
   
@@ -30,6 +30,14 @@ var ActionModel = Ember.Object.extend({
     
   },
   
+  select : function( gameObject ) {
+    
+    this.set( 'gameObject', gameObject );
+    
+    this.done();
+    
+  },
+  
   done : function() {
     
     App.actionController.set( 'showSaveButton', true );
@@ -38,7 +46,7 @@ var ActionModel = Ember.Object.extend({
   
 });
 
-var MoveActionModel = ActionModel.extend({
+var MoveActionModel = ActionTriggerModel.extend({
   
   gameObject : null,
   position : null,
@@ -177,14 +185,6 @@ var MoveActionModel = ActionModel.extend({
     
   },
   
-  select : function( gameObject ) {
-    
-    this.set( 'gameObject', gameObject );
-    
-    this.done();
-    
-  },
-  
   angle : function() {
     
     return this.position.sub( this.parentGameObject.position ).angle().toFixed( 2 );
@@ -263,7 +263,7 @@ var MoveActionModel = ActionModel.extend({
   
 });
 
-var ArtActionModel = ActionModel.extend({
+var ArtActionModel = ActionTriggerModel.extend({
   
   type : 'art',
   
@@ -294,7 +294,7 @@ var ArtActionModel = ActionModel.extend({
   
 });
 
-var WinLoseActionModel = ActionModel.extend({
+var WinLoseActionModel = ActionTriggerModel.extend({
   
   win : function() {
     
@@ -311,5 +311,71 @@ var WinLoseActionModel = ActionModel.extend({
     App.actionController.set( 'showSaveButton', true );
     
   }
+  
+});
+
+var ClickTriggerModel = ActionTriggerModel.extend({
+  
+  type : 'click',
+  
+  'self' : function() {
+    
+    this.done();
+    
+  },
+  
+  'object' : function() {
+    
+    App.actionController.addObjectsOption( 'Choose the object to trigger the click', this, 2 );
+    
+  },
+  
+  // 'area' : function() {
+  //   
+  //   App.actionController.addAreaOption( 'Select the area to trigger the click', this, 2 );
+  //   
+  // },
+  
+  string : function() {
+    
+    if ( this.atArea ) {
+      
+      return 'click in area ' + this.area.string();
+      
+    } else if ( this.gameObject ) {
+    
+      return 'click on ' + this.gameObject.name;
+    
+    } else {
+      
+      return 'click on ' + this.parentGameObject.name;
+      
+    }
+    
+  }.property( 'gameObject', 'area' ),
+  
+  getData : function() {
+    
+    var data = { type : 'click' };
+    
+    if ( this.area ) {
+    
+      data.area = this.area.getData();
+    
+    } else if ( this.gameObject ) {
+    
+      data.objectID = this.gameObject.ID;
+    
+    }
+    
+    return data;
+    
+  }
+  
+});
+
+var StartTriggerModel = ActionTriggerModel.extend({
+  
+  type : 'start'
   
 });

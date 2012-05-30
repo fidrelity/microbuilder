@@ -35,7 +35,8 @@ var ActionController = Ember.Object.extend({
     
     } else {
       
-      buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
+      // buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
+      buttons = ['click'];
     
     }
     
@@ -155,6 +156,19 @@ var ActionController = Ember.Object.extend({
     this.addButtonOption( 
       'Win or lose?', 
       ['win', 'lose'], 
+      this.action,
+      1
+    );
+    
+  },
+  
+  click : function() {
+    
+    this.set( 'action', ClickTriggerModel.create() );
+    
+    this.addButtonOption( 
+      'Click on what?', 
+      ['self', 'object', 'area'], 
       this.action,
       1
     );

@@ -154,53 +154,6 @@ var NumberTriggerModel = TriggerModel.extend({
 
 });
 
-
-var ClickTriggerModel = ObjectAreaTriggerModel.extend({
-  
-  type : 'click',
-  
-  string : function() {
-    
-    if ( this.atArea ) {
-      
-      return 'click in area ' + this.get( 'area' ).string();
-      
-    } else {
-    
-      return 'click on ' + this.get( 'gameObject' ).name;
-    
-    }
-    
-  }.property( 'gameObject.name', 'area.x' ),
-  
-  getData : function() {
-    
-    if ( this.atArea ) {
-    
-      return {
-        type: 'onClick',
-        area: this.area.getData()
-      };
-    
-    } else {
-    
-      return {
-        type: 'onClick',
-        objectID: this.gameObject.ID
-      };
-    
-    }
-    
-  },
-  
-  isComplete : function() {
-    
-    return this.get( 'gameObject' ) || this.get( 'area' );
-    
-  }.property( 'gameObject', 'area' )
-  
-});
-
 var ContactTriggerModel = ObjectAreaTriggerModel.extend({
   
   type : 'onContact',
@@ -271,11 +224,5 @@ var ContactTriggerModel = ObjectAreaTriggerModel.extend({
     return ( this.get( 'gameObject' ) || this.get( 'area' ) ) && this.get( 'gameObject2' );
     
   }.property( 'gameObject', 'gameObject2', 'area' )
-  
-});
-
-var StartTriggerModel = TriggerModel.extend({
-  
-  type : 'onStart'
   
 });

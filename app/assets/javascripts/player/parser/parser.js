@@ -162,7 +162,7 @@ var Parser = {
       
         var trigger = this.parseTrigger( triggers[i], gameObject );
       
-        if ( trigger === 'onStart' ) {
+        if ( trigger === 'start' ) {
       
           this.game.startActions = this.game.startActions.concat( behaviour.actions );
           return null;
@@ -377,15 +377,15 @@ var Parser = {
   },
   
   
-  parseTrigger : function( triggerData ) {
+  parseTrigger : function( triggerData, gameObject ) {
     
     switch ( triggerData.type ) {
       
-      case 'onStart' : return 'onStart';
+      case 'start' : return 'start';
       
-      case 'onClick' : return this.parseTriggerClick( triggerData );
-      case 'onContact' : return this.parseTriggerContact( triggerData, true );
-      case 'onOverlap' : return this.parseTriggerContact( triggerData, false );
+      case 'click' : return this.parseTriggerClick( triggerData, gameObject );
+      case 'contact' : return this.parseTriggerContact( triggerData, true );
+      case 'overlap' : return this.parseTriggerContact( triggerData, false );
       
       default : console.error( 'parser: trigger type ' + triggerData.type + ' not found' ); return null;
       
@@ -396,12 +396,16 @@ var Parser = {
   
 /**
   {
-    type: "onClick",
+    type: "click"
+  }
+  
+  {
+    type: "click",
     objectID: 0
   }
   
   {
-    type: "onClick",
+    type: "click",
     area: {
       x: 48,
       y:6,
@@ -411,7 +415,7 @@ var Parser = {
   }
 */
 
-  parseTriggerClick : function( triggerData ) {
+  parseTriggerClick : function( triggerData, gameObject ) {
     
     var trigger = new ClickTrigger();
     
@@ -419,9 +423,13 @@ var Parser = {
     
       trigger.area = new Area().copy( triggerData.area );
     
-    } else {
+    } else if ( triggerData.objectID ) {
       
       trigger.gameObject = this.game.getGameObjectWithID( triggerData.objectID );
+      
+    } else {
+      
+      trigger.gameObject = gameObject;
       
     }
     
