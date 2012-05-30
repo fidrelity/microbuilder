@@ -44,6 +44,26 @@ MoveAction.prototype = {
   
 };
 
+var SwapAction = function( one, two ) {
+  
+  this.one = one;
+  this.two = two;
+  
+};
+
+SwapAction.prototype = {
+  
+  execute : function() {
+    
+    var swap = this.one.clone();
+    
+    this.one.copy( this.two );
+    this.two.copy( swap );
+    
+  }
+  
+};
+
 
 var ArtAction = function() {
   

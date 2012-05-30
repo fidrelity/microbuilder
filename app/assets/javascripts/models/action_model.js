@@ -155,6 +155,14 @@ var MoveActionModel = ActionModel.extend({
     
   },
   
+  swap : function() {
+    
+    this.set( 'type', 'swap' );
+    
+    App.actionController.addObjectsOption( 'Choose the object to swap with <gameObject>', this, 2 );
+    
+  },
+  
   select : function( gameObject ) {
     
     this.set( 'gameObject', gameObject );
@@ -224,6 +232,10 @@ var MoveActionModel = ActionModel.extend({
         name += ' moves in direction of ' + other;
         
       }
+      
+    } else if ( type === 'swap' ) {
+      
+      name += ' swaps position with ' + other;
       
     }
     

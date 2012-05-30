@@ -194,6 +194,8 @@ var Parser = {
       case 'moveTo' : return this.parseActionMoveTo( actionData, gameObject );
       case 'moveIn' : return this.parseActionMoveIn( actionData, gameObject );
       
+      case 'swap' : return this.parseActionSwap( actionData, gameObject );
+      
       case 'changeArt' : return this.parseActionChangeArt( actionData, gameObject );
       
       case 'win' : return WinAction;
@@ -336,7 +338,22 @@ var Parser = {
     return action;
     
   },
-  
+
+/**
+  {
+    type: "swap",
+    objectID: 0,
+  }
+*/
+
+  parseActionSwap : function( actionData, gameObject ) {
+    
+    return new SwapAction(
+      gameObject.position,
+      this.game.getGameObjectWithID( actionData.objectID ).position
+    );
+    
+  },
   
 /**
   {
