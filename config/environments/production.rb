@@ -89,3 +89,15 @@ PAPERCLIP_OPTIONS = {
     :secret_access_key => ENV['S3_SECRET']
   }
 }
+
+PAPERCLIP_THUMB_OPTIONS = {
+  :url => "/:class/:id/:basename" + ".png",
+  :path => "/:class/:id/:basename" + ".png",
+  :styles => { :small => "210x130!" },
+  :storage => :s3,
+  :bucket => 'mbgfx',
+  :s3_credentials => {
+    :access_key_id => ENV['S3_KEY'],
+    :secret_access_key => ENV['S3_SECRET']
+  }
+}
