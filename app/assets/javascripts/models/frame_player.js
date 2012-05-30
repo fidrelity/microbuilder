@@ -1,16 +1,18 @@
 var FramePlayer = {
 
-  selector : '.frame_graphic',
+  selector : '.graphic',
+  dataSelector : '.frame_graphic',
   currentFrameIndex : 0,
   currentObject : null,
   totalFrames : 0,
   frameWidth : 64,
   playInterval : null,
+  frameDuration : 1000,
 
   init : function() {
 
     $(this.selector).live('mouseover', function() {
-      FramePlayer.initPlay($(this));
+      FramePlayer.initPlay($(this).find(FramePlayer.dataSelector));
     });
 
     $(this.selector).live('mouseout', function() {      
@@ -25,9 +27,9 @@ var FramePlayer = {
 
     this.currentObject = _object;
     this.frameWidth = _object.width();
-    this.currentFrameIndex = 0;
-    
-    this.playInterval = setInterval( function() { FramePlayer.play() ;} , 1000)
+    this.currentFrameIndex = 1;
+    this.play();
+    this.playInterval = setInterval( function() { FramePlayer.play() ;} , this.frameDuration)
   },
 
   play : function() {
@@ -48,6 +50,8 @@ var FramePlayer = {
   },
 
   reset : function() {
+    this.currentObject.css({"background-position" : '0px' });
+
     this.totalFrames = 0;
     this.currentFrameIndex = 0;
     this.currentObject = null;
