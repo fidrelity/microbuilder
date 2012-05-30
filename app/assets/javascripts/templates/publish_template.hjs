@@ -1,9 +1,9 @@
 <label>game title: </label>
-{{view Ember.TextField valueBinding="game.title" size="10" placeholder="insert name" maxlength="3"}}
+{{view Ember.TextField valueBinding="App.game.title" size="10" placeholder="insert name" maxlength="42"}}
 <br />
 
 <label>instructions: </label>
-{{view Ember.TextField valueBinding="game.instructions" placeholder="(140 chars max)" maxlength="140"}}
+{{view Ember.TextField valueBinding="App.game.instructions" placeholder="(140 chars max)" maxlength="140"}}
 <br />
 
 {{view PlayerView 
