@@ -120,8 +120,7 @@ Player.prototype = {
     
   },
   
-  parse : function( data, callback ) {
-    console.log(data);
+  parse : function( data, callback ) {    
     var self = this;
     
     this.fsm.parse();
@@ -280,14 +279,14 @@ Player.prototype = {
   click : function() {
     
     if ( this.fsm.hasState( 'ready' ) ) {
-      $('.playerStartScreen').hide();      
-      this.increaseCounter();
+      $('.playerStartScreen').hide();            
       this.fsm.start();      
+      this.increaseCounter();
     } else if ( this.fsm.hasState( 'end' ) ) {
       $('.playerLoseScreen').hide();
       $('.playerWinScreen').hide();
       this.fsm.restart();
-    
+      this.increaseCounter();    
     }
     
   },
@@ -404,10 +403,7 @@ Player.prototype = {
   },
   
   onWin : function() {
-    $('.playerWinScreen').fadeIn(600);
-    //this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
-    //this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
-    
+    $('.playerWinScreen').fadeIn(600);   
   },
   
   onLose : function() {
@@ -470,10 +466,7 @@ Player.prototype = {
     $.ajax({
       url : '/games/'+this.game_id+'/played',
       type : 'PUT',
-      success : function() {
-        console.log('Game.played++');
-        // Todo: update amount visually
-      }
+      success : function() {}
     });
   }
   

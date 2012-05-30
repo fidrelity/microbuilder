@@ -17,7 +17,8 @@
       %button{:class=>"btn reportButton"}
         <i class="icon-flag"></i> Report      
       %i{:class => "icon-eye-open"}
-      =@game.played
+      %span{:id => "playedWrapper"}
+        = render :partial => "played", :locals => {:played => @game.played}    
     
     %div{:id => "ratingWrapper", :class=>"row"}
       = render :partial => "rating", :locals => {:game => @game}
