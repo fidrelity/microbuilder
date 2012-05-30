@@ -58,14 +58,7 @@ var PaintController =  Ember.ArrayController.extend({
     this.tempCanvas = $('#canvas-temp');
     this.tempContext = this.tempCanvas[0].getContext("2d");
     this.tempCanvas[0].width = _width;
-    this.tempCanvas[0].height = _height;
-
-    // Init file load
-    if (!window.File && !window.FileReader && !window.FileList && !window.Blob) {
-      $('#file').remove();
-    } else {
-      $('#file').change(function(e) {App.paintController.handleFile(e)});
-    }
+    this.tempCanvas[0].height = _height;    
     
     // React if type is background
     var areaWrapper = $('#area-wrapper');    
@@ -108,7 +101,7 @@ var PaintController =  Ember.ArrayController.extend({
 
     $('#zoomCanvas').mouseout(function(e){
       App.paintController.mouseup(e);
-    });
+    });    
 
     // Onclick sprite area
     $('.canvas').live('click', function(e) {
@@ -127,6 +120,17 @@ var PaintController =  Ember.ArrayController.extend({
         App.paintController.setSize(ui.value);
       }
     });
+
+    // Init file load
+    if (!window.File && !window.FileReader && !window.FileList && !window.Blob) {
+      $('#file').remove();
+    } else {
+      $("#loadFileButton").click(function() { 
+        $('#file').trigger("click"); // trigger hidden file field
+      });
+      
+      $('#file').change(function(e) {App.paintController.handleFile(e)});
+    }
   },
 
   // ---------------------------------------

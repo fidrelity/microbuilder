@@ -25,6 +25,9 @@
         <button {{action "fill"}}>Fill</button>
       {{/view}} 
     
+      <button id="loadFileButton">Load file</button>
+      <input type="file" id="file" size="1" style="display:none;">
+
       {{#view ToolView
         toolBinding = "this"
       }}
@@ -137,5 +140,3 @@ Name: <input type="text" size="25" id="imageName"> isPublic <input type="checkbo
   <button {{action "save"}}>Save</button>
 {{/view}}
 </p>
-
-<input type="file" id="file">
