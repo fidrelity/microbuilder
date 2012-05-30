@@ -127,28 +127,14 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  
-  // selectObject : function( gameObject ) {
-  //   
-  //   this.get( 'action' ).set( 'gameObject', gameObject );
-  //   
-  // },
-  // 
-  // selectGraphic : function( graphic ) {
-  //   
-  //   this.set( 'contentView', ArtActionView.create() );
-  //   this.get( 'action' ).set( 'graphic', graphic );
-  //   
-  // },
-  
   move : function() {
   
     this.set( 'action', MoveActionModel.create() );
     
     this.addButtonOption( 
       'What type of movement?', 
-      ['directional', 'stop', 'swap'], 
       // ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop' ], 
+      ['directional', 'move to', 'jump to', 'swap', 'stop' ], 
       this.action,
       1
     );
@@ -172,12 +158,6 @@ var ActionController = Ember.Object.extend({
       this.action,
       1
     );
-    
-  },
-  
-  cancel : function() {
-    
-    
     
   },
 
