@@ -229,9 +229,9 @@ Player.prototype = {
         ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
         ctx.fillRect( - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
         
-        this.redraw = false;
-        
       }
+      
+      this.redraw = false;
     
     }
     

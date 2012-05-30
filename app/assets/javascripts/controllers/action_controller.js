@@ -98,6 +98,16 @@ var ActionController = Ember.Object.extend({
     
   },
   
+  addPlayerOption : function( question, type, position, depth ) {
+    
+    this.addOption( question, PlayerView.extend({
+      type : type,
+      position : position,
+      gameObject : App.gameObjectsController.current
+    }), depth );
+    
+  },
+  
   
   // selectObject : function( gameObject ) {
   //   

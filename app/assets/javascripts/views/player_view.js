@@ -68,9 +68,9 @@ var PlayerView = Ember.View.extend({
   
   moveToCallback : function() {
     
-    this.player.setSelectObjectID( this.get( 'gameObject' ).ID, bind( this, function( ID, pos ) {
+    this.player.setSelectObjectID( this.gameObject.ID, bind( this, function( ID, pos ) {
       
-      this.get( 'position' ).copy( pos );
+      this.position.copy( pos );
       
     }));
   
@@ -78,9 +78,9 @@ var PlayerView = Ember.View.extend({
 
   moveInCallback : function() {
     
-    this.player.setSelectObjectID( this.get( 'gameObject' ).ID, bind( this, function( ID, pos ) {
+    this.player.setSelectObjectID( this.gameObject.ID, bind( this, function( ID, pos ) {
       
-      this.get( 'position' ).copy( pos.sub( this.get( 'gameObject' ).position ) );
+      this.position.copy( pos.sub( this.gameObject.position ) );
       
     }));
   

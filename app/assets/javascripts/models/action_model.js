@@ -2,6 +2,8 @@ var ActionModel = Ember.Object.extend({
   
   type : null,
   
+  gameObjectBinding : 'App.gameObjectsController.current',
+  
   string : function() {
     
     return this.type
@@ -26,17 +28,13 @@ var ActionModel = Ember.Object.extend({
       
     }
     
-  },
-  
-  isComplete : true,
+  }
   
 });
 
 var MoveActionModel = ActionModel.extend({
   
   type : 'move',
-  
-  gameObject : null,
   
   position : null,
   
@@ -89,17 +87,14 @@ var MoveActionModel = ActionModel.extend({
   
   'to location' : function() {
     
-    // {{view PlayerView 
-    //   typeBinding = "action.type"
-    //   positionBinding = "action.position"
-    //   gameObjectBinding = "action.gameObject"
-    // }}
+    App.actionController.addPlayerOption(
+      'Drag <gameObject> to the location where it should move.',
+      this.type,
+      this.position,
+      3
+    );
     
-    // App.actionController.addPlayerOption(
-    //   'Drag <gameObject> to the location where it should move.',
-    //   this,
-    //   3
-    // );
+    App.actionController.set( 'showSaveButton', true );
     
   },
   
@@ -127,7 +122,6 @@ var MoveActionModel = ActionModel.extend({
   
     return {
       type: this.type,
-      objectID: this.gameObject.ID,
       target: this.position.getData(),
       angle: this.angle()
     }
@@ -136,9 +130,9 @@ var MoveActionModel = ActionModel.extend({
   
   string : function() {
     
-    var type = this.get( 'type' ),
-      name = this.get( 'gameObject' ).name,
-      pos = this.get( 'position' ).string();
+    var type = this.type,
+      name = this.gameObject.name,
+      pos = this.position.string();
     
     if ( type === 'moveTo' ) {
       
@@ -154,13 +148,7 @@ var MoveActionModel = ActionModel.extend({
       
     }
     
-  }.property( 'type', 'gameObject', 'position' ),
-  
-  isComplete : function() {
-    
-    return ( this.get( 'type' ) !== 'move' && this.get( 'gameObject' ) && this.get( 'position' ) );
-    
-  }.property( 'type', 'gameObject', 'position' )
+  }.property( 'type', 'position' )
   
 });
 
@@ -189,13 +177,7 @@ var ArtActionModel = ActionModel.extend({
   
   string : function() {
     
-    return this.get( 'gameObject' ).name + ' changes art to ' + this.get( 'graphic' ).name;
-    
-  }.property( 'gameObject', 'graphic' ),
-  
-  isComplete : function() {
-    
-    return ( this.get( 'gameObject' ) && this.get( 'graphic' ) );
+    return this.gameObject.name + ' changes art to ' + this.graphic.name;
     
   }.property( 'gameObject', 'graphic' )
   
