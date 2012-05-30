@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(:version => 20120530104934) do
     t.integer  "user_id"
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
-    t.integer  "played",                     :default => 0
     t.integer  "likes",                      :default => 0
     t.integer  "dislikes",                   :default => 0
+    t.integer  "played",                     :default => 0
     t.string   "preview_image_file_name"
     t.string   "preview_image_content_type"
     t.integer  "preview_image_file_size"
