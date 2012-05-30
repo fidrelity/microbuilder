@@ -70,7 +70,7 @@ var PlayerView = Ember.View.extend({
     
     this.player.setSelectObjectID( this.gameObject.ID, bind( this, function( ID, pos ) {
       
-      this.position.copy( pos );
+      this.set( 'position', pos.clone() );
       
     }));
   

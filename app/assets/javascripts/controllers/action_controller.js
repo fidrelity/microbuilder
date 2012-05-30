@@ -102,7 +102,7 @@ var ActionController = Ember.Object.extend({
     
     this.addOption( question, PlayerView.extend({
       type : type,
-      position : position,
+      positionBinding : 'App.actionController.action.position',
       gameObject : App.gameObjectsController.current
     }), depth );
     
@@ -148,7 +148,7 @@ var ActionController = Ember.Object.extend({
     
     this.addButtonOption( 
       'Win or lose?', 
-      ['win', 'lose' ], 
+      ['win', 'lose'], 
       this.action,
       1
     );
