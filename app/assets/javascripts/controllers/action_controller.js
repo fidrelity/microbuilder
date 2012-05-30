@@ -59,7 +59,7 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  addOption : function( question, viewClass, depth ) {
+  updateDepth : function( depth ) {
     
     var childViews = this.contentView.get( 'childViews' );
     
@@ -83,6 +83,14 @@ var ActionController = Ember.Object.extend({
     
     this.set( 'optionDepth', depth );
     
+  },
+  
+  addOption : function( question, viewClass, depth ) {
+    
+    var childViews = this.contentView.get( 'childViews' );
+    
+    this.updateDepth( depth );
+    
     var questionView = this.contentView.createChildView( QuestionView.extend({ content : question }) );
     childViews.pushObject( questionView );
     
@@ -100,17 +108,13 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  addPlayerOption : function( question, type, depth ) {
+  addLocationOption : function( question, type, depth ) {
     
-    if ( type === 'moveTo' || type === 'jumpTo' ) {
-    
-      this.addOption( question, PlayerView.extend({
-        type : type,
-        positionBinding : 'App.actionController.action.position',
-        gameObject : App.gameObjectsController.current
-      }), depth );
-    
-    }
+    this.addOption( question, PlayerView.extend({
+      type : type,
+      positionBinding : 'App.actionController.action.position',
+      gameObject : App.gameObjectsController.current
+    }), depth );
     
   },
   

@@ -34,9 +34,21 @@ var ActionModel = Ember.Object.extend({
 
 var MoveActionModel = ActionModel.extend({
   
+  gameObject : null,
+  position : null,
+  
+  random : false,
+  direction : true,
+  
+  init : function() {
+    
+    this.set( 'position', new Vector() );
+    
+  },
+  
   directional : function() {
   
-    this.set( 'type', 'directional' );
+    this.set( 'type', 'moveIn' );
     
     App.actionController.addButtonOption(
       'How should <gameObject> move directional?', 
@@ -45,6 +57,29 @@ var MoveActionModel = ActionModel.extend({
       2
     );
   
+  },
+  
+  'in direction' : function() {
+    
+    this.set( 'direction', true );
+    
+    App.actionController.addLocationOption( 
+      'Drag <gameObject> to it\'s relative direction from where it is', 
+      this.type, 
+      3 
+    );
+    
+    App.actionController.set( 'showSaveButton', true );
+    
+  },
+  
+  'random direction' : function() {
+    
+    this.set( 'random', true );
+    
+    App.actionController.updateDepth( 3 );
+    App.actionController.set( 'showSaveButton', true );
+    
   },
   
   'move to' : function() {
@@ -75,23 +110,48 @@ var MoveActionModel = ActionModel.extend({
   
   'to location' : function() {
     
-    App.actionController.addPlayerOption(
-      'Drag <gameObject> to the location where it should move.',
-      this.type,
-      3
-    );
+    var type = this.type,
+      question;
     
+    if ( type === 'moveIn' ) {
+    
+      question = 'Drag <gameObject> to the location in which direction it should move.';
+    
+    } else if ( type === 'moveTo' ) {
+      
+      question = 'Drag <gameObject> to the location where it should move.';
+      
+    } else if ( type === 'jumpTo' ) {
+      
+      question = 'Drag <gameObject> to the location where it should jump.';
+      
+    }
+    
+    App.actionController.addLocationOption( question, type, 3 );
     App.actionController.set( 'showSaveButton', true );
     
   },
   
   'to object' : function() {
     
-    App.actionController.addObjectsOption(
-      'Choose to which other object <gameObject> should move.',
-      this,
-      3
-    );
+    var type = this.type,
+      question;
+    
+    if ( type === 'moveIn' ) {
+    
+      question = 'Choose to which the direction of which other object <gameObject> should move.';
+    
+    } else if ( type === 'moveTo' ) {
+      
+      question = 'Choose to which other object <gameObject> should move.';
+      
+    } else if ( type === 'jumpTo' ) {
+      
+      question = 'Choose to which other object <gameObject> should jump.';
+      
+    }
+    
+    App.actionController.addObjectsOption( question, this, 3 );
     
   },
   
@@ -103,20 +163,6 @@ var MoveActionModel = ActionModel.extend({
     
   },
   
-  moveTo : function() {
-  
-    this.set( 'type', 'moveTo' );
-    this.set( 'question', 'to what location should ' + this.parentGameObject.name + ' move?' );
-  
-  },
-  
-  moveIn : function() {
-  
-    this.set( 'type', 'moveIn' );
-    this.set( 'question', 'in what direction, relative to it\'s position, should ' + this.parentGameObject.name + ' move?' );
-  
-  },
-  
   angle : function() {
     
     return this.position.angle().toFixed( 2 );
@@ -124,12 +170,28 @@ var MoveActionModel = ActionModel.extend({
   },
   
   getData : function() {
-  
-    return {
-      type: this.type,
-      target: this.position.getData(),
-      angle: this.angle()
+    
+    var obj = { type : this.type };
+    
+    if ( this.random ) {
+      
+      obj.random = 1;
+    
+    } else if ( this.direction ) {
+      
+      obj.angle = this.angle();
+      
+    } else if ( this.gameObject ) {
+      
+      obj.objectID = this.gameObject.ID;
+      
+    } else {
+      
+      obj.target = this.position.getData();
+      
     }
+    
+    return obj;
   
   },
   
@@ -137,23 +199,37 @@ var MoveActionModel = ActionModel.extend({
     
     var type = this.type,
       name = this.parentGameObject.name,
-      other = this.get( 'position' ) ? this.position.string() : this.gameObject.name;
+      other = this.gameObject ? this.gameObject.name : this.position.string();
     
     if ( type === 'moveTo' ) {
       
-      return name + ' moves to ' + other;
+      name += ' moves to ' + other;
       
     } else if ( type === 'jumpTo' ) {
       
-      return name + ' jumps to ' + other;
+      name += ' jumps to ' + other;
       
     } else if ( type === 'moveIn' ) {
       
-      return name + ' moves in direction ' + this.angle();
+      if ( this.random ) {
+        
+        name += ' move in random direction';
+        
+      } else if ( this.direction ) {
+      
+        name += ' moves in direction ' + this.angle();
+      
+      } else {
+        
+        name += ' moves in direction of ' + other;
+        
+      }
       
     }
     
-  }.property( 'type', 'position', 'gameObject' )
+    return name;
+    
+  }.property( 'type', 'position', 'gameObject', 'random' )
   
 });
 
