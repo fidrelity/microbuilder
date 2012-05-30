@@ -46,21 +46,24 @@ MoveAction.prototype = {
 
 var SwapAction = function( one, two ) {
   
-  this.one = one;
-  this.two = two;
+  this.execute = function() {
+    
+    var swap = one.clone();
+    
+    one.copy( two );
+    two.copy( swap );
+    
+  };
   
 };
 
-SwapAction.prototype = {
+var StopAction = function( gameObject ) {
   
-  execute : function() {
+  this.execute = function() {
     
-    var swap = this.one.clone();
+    gameObject.stop();
     
-    this.one.copy( this.two );
-    this.two.copy( swap );
-    
-  }
+  };
   
 };
 

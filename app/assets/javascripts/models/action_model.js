@@ -28,6 +28,12 @@ var ActionModel = Ember.Object.extend({
       
     }
     
+  },
+  
+  done : function() {
+    
+    App.actionController.set( 'showSaveButton', true );
+    
   }
   
 });
@@ -69,7 +75,7 @@ var MoveActionModel = ActionModel.extend({
       3 
     );
     
-    App.actionController.set( 'showSaveButton', true );
+    this.done();
     
   },
   
@@ -78,7 +84,7 @@ var MoveActionModel = ActionModel.extend({
     this.set( 'random', true );
     
     App.actionController.updateDepth( 3 );
-    App.actionController.set( 'showSaveButton', true );
+    this.done();
     
   },
   
@@ -128,7 +134,7 @@ var MoveActionModel = ActionModel.extend({
     }
     
     App.actionController.addLocationOption( question, type, 3 );
-    App.actionController.set( 'showSaveButton', true );
+    this.done();
     
   },
   
@@ -163,11 +169,19 @@ var MoveActionModel = ActionModel.extend({
     
   },
   
+  stop : function() {
+    
+    this.set( 'type', 'stop' );
+    
+    this.done();
+    
+  },
+  
   select : function( gameObject ) {
     
     this.set( 'gameObject', gameObject );
     
-    App.actionController.set( 'showSaveButton', true );
+    this.done();
     
   },
   
@@ -236,6 +250,10 @@ var MoveActionModel = ActionModel.extend({
     } else if ( type === 'swap' ) {
       
       name += ' swaps position with ' + other;
+      
+    } else if ( type === 'stop' ) {
+      
+      name += ' stops';
       
     }
     

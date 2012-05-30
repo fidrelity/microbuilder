@@ -195,6 +195,7 @@ var Parser = {
       case 'moveIn' : return this.parseActionMoveIn( actionData, gameObject );
       
       case 'swap' : return this.parseActionSwap( actionData, gameObject );
+      case 'stop' : return new StopAction( gameObject );
       
       case 'changeArt' : return this.parseActionChangeArt( actionData, gameObject );
       

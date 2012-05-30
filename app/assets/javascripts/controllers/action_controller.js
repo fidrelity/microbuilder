@@ -147,7 +147,7 @@ var ActionController = Ember.Object.extend({
     
     this.addButtonOption( 
       'What type of movement?', 
-      ['swap'], 
+      ['directional', 'stop', 'swap'], 
       // ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop' ], 
       this.action,
       1
