@@ -1,21 +1,27 @@
 %ul{:id => 'user_games', :class => "collection_container"}
+  
   .bar
+    =image_tag "slider_left.png", :class => "slider_left"
+    =image_tag "slider_right.png", :class => "slider_right"
     = will_paginate games, :param_name => :games_page, :container => false,  :page_links => false, :show_always => true, :previous_label => '<img src="/assets/slider_left.png" alt="Prev page" class="slider_left" />', :next_label => '<img src="/assets/slider_right.png" alt="Next page" class="slider_right" />'
+    
     .description
       Games
     .counter
       =@user.games.size
-    .clear
+  .clear
     
   = link_to 'new game', build_path, :class => "add addgame"
-  #games
-    - games.each do |game|                                                                                                      
+  .clear
+  
+  .games
+    - games.each do |game|
       %li{:id => game.id, :class => "span3 game"}                                                                                            
         = link_to image_tag("game.png"), play_path(game)
         - if game.author == current_user
           %ul{:class => 'meta'}
-            =link_to image_tag("icon_public.png"), '#'                                                   
-            =link_to image_tag("icon_edit.png"), '#'                                                
+            =link_to image_tag("icon_public.png"), '#'
+            =link_to image_tag("icon_edit.png"), '#'
             =link_to image_tag("icon_delete.png"), game_path(game), :method => :delete, :remote => true, :confirm => "Permanently delete this game?"
         .overlay
           =link_to image_tag("overlay_game_play.png"), game_path(game), :class => "overlay_game_play"

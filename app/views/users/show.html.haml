@@ -1,13 +1,15 @@
 %div{ :class => "row", :id => "profile"}
   %div{ :class => "span3"}
-    =image_tag "banner_profile.png", :class => "banner"
+    .banner
+      =image_tag "banner_profile.png"
+      Profile
     %img{:src => @user.display_image, :id => "profileimage"}
     .name
       =@user.first_name
     =image_tag "edit_icon.png", :class => "edit"
     .clear
     
-    .meta
+    .metaprofile
       %p
         member since:
         %br

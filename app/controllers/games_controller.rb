@@ -55,7 +55,6 @@ class GamesController < ApplicationController
   def played
     counter = @game.played + 1
     @game.update_attribute(:played, counter)
-    #render :nothing => true, :layout => false
   end
 
   def like
