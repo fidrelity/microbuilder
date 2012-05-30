@@ -7,6 +7,7 @@ var Player = function() {
   
   this.game = null;
   this.mouse = null;
+  this.game_id = null;
   
   this.fsm = new StateMachine( this );
   
@@ -34,7 +35,7 @@ var Player = function() {
       { name : 'start', from : 'ready', to: 'play', callback : this.onPlay },
       { name : 'win', from : 'play', to: 'end', callback : this.onWin },
       { name : 'lose', from : 'play', to: 'end', callback : this.onLose },
-      { name : 'restart', from : 'end', to: 'ready' },
+      { name : 'restart', from : 'end', to: 'play', callback : this.onPlay },
       
       { name : 'try', from : 'edit', to: 'trial' },
       { name : 'winTrial', from : 'trial', to: 'edit', callback : this.onWin },
@@ -119,8 +120,7 @@ Player.prototype = {
     
   },
   
-  parse : function( data, callback ) {
-    
+  parse : function( data, callback ) {    
     var self = this;
     
     this.fsm.parse();
@@ -279,13 +279,14 @@ Player.prototype = {
   click : function() {
     
     if ( this.fsm.hasState( 'ready' ) ) {
-      
-      this.fsm.start();
-      
+      $('.playerStartScreen').hide();            
+      this.fsm.start();      
+      this.increaseCounter();
     } else if ( this.fsm.hasState( 'end' ) ) {
-      
+      $('.playerLoseScreen').hide();
+      $('.playerWinScreen').hide();
       this.fsm.restart();
-    
+      this.increaseCounter();    
     }
     
   },
@@ -376,11 +377,7 @@ Player.prototype = {
     this.reset();
     this.game.start();
     
-    this.draw( this.ctx );
-    
-    this.ctx.fillStyle = 'rgba(255,255,0,0.5)';
-    this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
-    
+    this.draw( this.ctx );    
   },
   
   onPlay : function() {
@@ -406,23 +403,17 @@ Player.prototype = {
   },
   
   onWin : function() {
-    
-    this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
-    this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
-    
+    $('.playerWinScreen').fadeIn(600);   
   },
   
   onLose : function() {
-    
-    this.ctx.fillStyle = 'rgba(255,0,0,0.5)';
-    this.ctx.fillRect( 320 - 64, 195 - 39, 128, 78 );
-    
+    $('.playerLoseScreen').fadeIn(600);    
   },
   
   enterTrial : function() {
     
     this.mouse.handleClick();
-    
+  
     this.reset();
     this.game.start();
     
@@ -466,6 +457,17 @@ Player.prototype = {
     this.ctx.debug = !this.ctx.debug;
     this.redraw = true;
     
+  },
+
+  // Increases game counter
+  increaseCounter : function() {
+    if(!this.game_id) return false;
+
+    $.ajax({
+      url : '/games/'+this.game_id+'/played',
+      type : 'PUT',
+      success : function() {}
+    });
   }
   
 };

@@ -147,6 +147,7 @@
 .slide-wrapper {
   overflow:hidden;
   height:auto;
+  left:0; top:0;
   position:relative;
 }
 

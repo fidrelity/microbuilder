@@ -14,5 +14,5 @@
     = select_tag "type", "<option value='broken'>Broken</option><option value='copyright'>Copyright infrigment</option><option value='inappropiate'>Inappropiate</option>".html_safe
     %p
       =submit_tag 'Send report', :class => "btn btn-success"
-      %button{:class=>"btn closeLayer"}
+      %span{:class=>"btn closeLayer"}
         Cancel
