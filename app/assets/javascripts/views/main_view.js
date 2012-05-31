@@ -21,7 +21,6 @@ var MainView = Ember.View.extend({
     });
     
     this.actionView = ActionView.create();
-    this.triggerView = TriggerView.create();
     
     this.publishView = Ember.View.create({
       templateName : 'templates/publish_template'
@@ -60,13 +59,6 @@ var MainView = Ember.View.extend({
   }
   
 });
-
-var BehavioursView = Ember.View.extend({
-  
-  templateName : 'templates/behaviour_template'
-  
-});
-
 
 var RemoveView = Ember.View.extend({
 
@@ -117,14 +109,14 @@ var BehaviourView = SelectView.extend({
   
   addTrigger : function() {
     
-    App.behaviourController.set( 'currentBehaviour', this.get( 'content' ) );
+    App.behaviourController.set( 'current', this.get( 'content' ) );
     App.gameController.addTrigger();
     
   },
   
   addAction : function() {
     
-    App.behaviourController.set( 'currentBehaviour', this.get( 'content' ) );
+    App.behaviourController.set( 'current', this.get( 'content' ) );
     App.gameController.addAction();
     
   }

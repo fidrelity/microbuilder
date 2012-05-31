@@ -1,7 +1,7 @@
 /*
   ActionController
   
-  - manages the creation of a new Action or editing
+  - manages the creation of new Actions and Triggers
 */
 
 var ActionController = Ember.Object.extend({
@@ -10,7 +10,7 @@ var ActionController = Ember.Object.extend({
 
   action : null,
   
-  behaviourBinding : 'App.behaviourController.currentBehaviour',
+  behaviourBinding : 'App.behaviourController.current',
   
   contentView : null,
   

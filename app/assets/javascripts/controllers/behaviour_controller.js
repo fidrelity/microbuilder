@@ -7,16 +7,15 @@
 var BehaviourController = Ember.ArrayController.extend({
 
   contentBinding : 'App.gameObjectsController.current.behaviours',
-  
   startBehaviourBinding : 'App.gameObjectsController.current.startBehaviour',
   
-  currentBehaviour : null,
+  current : null,
   
   createBehaviour : function() {
     
     var behaviour = BehaviourModel.create();
     
-    this.set( 'currentBehaviour', behaviour );
+    this.set( 'current', behaviour );
     this.addObject( behaviour );
     
   }
