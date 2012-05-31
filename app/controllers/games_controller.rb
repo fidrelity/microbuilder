@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  respond_to :js, :only => [:create, :index, :update, :like, :dislike]
+  respond_to :js, :only => [:create, :index, :update, :like, :dislike, :played]
   before_filter :authenticate_user!, :only => [:create, :destroy]
   before_filter :find_game, :only => [:show, :embed, :destroy, :like, :dislike, :played]
   
@@ -55,7 +55,6 @@ class GamesController < ApplicationController
   def played
     counter = @game.played + 1
     @game.update_attribute(:played, counter)
-    render :nothing => true, :layout => false
   end
 
   def like

@@ -32,7 +32,7 @@ var SpriteModel = Ember.Object.extend({
     var canvasId = document.createAttribute("id");
     canvasId.nodeValue = this.id;
     var canvasWidth = document.createAttribute("width");
-    canvasWidth.nodeValue = this.width;    
+    canvasWidth.nodeValue = this.width;
     var canvasHeight = document.createAttribute("height");
     canvasHeight.nodeValue = this.height;
     var canvasStyle = document.createAttribute("class");
@@ -41,12 +41,12 @@ var SpriteModel = Ember.Object.extend({
     dataIndex.nodeValue = this.index;
     //
     canvasElement.setAttributeNode(canvasId);
-    canvasElement.setAttributeNode(canvasWidth);    
-    canvasElement.setAttributeNode(canvasHeight);        
+    canvasElement.setAttributeNode(canvasWidth);
+    canvasElement.setAttributeNode(canvasHeight);
     canvasElement.setAttributeNode(canvasStyle);
     canvasElement.setAttributeNode(dataIndex);
     //
-    document.getElementById(this.wrapper).appendChild(canvasElement);    
+    document.getElementById(this.wrapper).appendChild(canvasElement);
   },
 
   highlight : function() {

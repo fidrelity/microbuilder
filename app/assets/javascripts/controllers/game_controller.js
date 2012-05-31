@@ -155,7 +155,7 @@ var GameController = Ember.Object.extend({
           title : this.game.title || '',
           instruction: this.game.instructions || '',
           data : JSON.stringify( data.game ),
-          preview_img : this.getSelectedSnapshotData()
+          preview_image_data : this.getSelectedSnapshotData(),
         },
         
         graphic_ids: data.graphicIDs

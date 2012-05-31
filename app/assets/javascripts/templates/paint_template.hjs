@@ -25,18 +25,24 @@
         <button {{action "fill"}}>Fill</button>
       {{/view}} 
     
+      <button id="loadFileButton">Load file</button>
+      <input type="file" id="file" size="1" style="display:none;">
+
       {{#view ToolView
         toolBinding = "this"
       }}
-        <button {{action "copySprite"}}>Copy</button>
+        <button {{action "copySprite"}} id="copySpriteButton">Copy</button>
         <button {{action "clear"}}>Clear</button>
         <button {{action "undo"}}>Undo</button>       
-        <button {{action "reset"}}>Reset</button>  
+        <button {{action "reset"}}>Clear all</button>  
+        <button {{action "goToTypeSelection" target="App.paintController"}} >Reset</button>
       {{/view}}   
+
+     
   
     </div>
 
-    <div class="span3 form-horizontal">
+    <div class="span3 form-horizontal" id="player">
       {{#view ToolView
         toolBinding = "this"
       }}
@@ -92,7 +98,8 @@
     <div id="zoom-canvas-area">
       <h4>Zoomed view:</h4>
       <!-- Zoomed Canvas -->
-      <canvas id="zoomCanvas" width="64" height="64"></canvas>
+      <canvas id="zoomCanvas" width="128" height="128"></canvas>
+      <!--  -->
       <!-- Temporary Canvas -->
       <canvas id="canvas-temp" width="64" height="64"></canvas>
     </div>
@@ -110,6 +117,7 @@
         }}
           <button {{action "addSprite"}} class="addSpriteButton">Add</button>
         {{/view}} 
+        <div id="sprites-area-scroll"></div>
     </div>
 
     </div>
@@ -135,5 +143,3 @@ Name: <input type="text" size="25" id="imageName"> isPublic <input type="checkbo
   <button {{action "save"}}>Save</button>
 {{/view}}
 </p>
-
-<input type="file" id="file">

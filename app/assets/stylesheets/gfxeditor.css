@@ -45,6 +45,11 @@
   margin-left:100px;
 }
 
+#paint-wrapper #area-wrapper #sprites-area-scroll {      
+  max-height:260px;  
+  overflow:auto;
+}
+
 #paint-size-wrapper { margin:2em 0 2em 0;}
 
 #palette {
@@ -61,7 +66,7 @@
 }
 
 /* Canvas Elements */
-#zoomCanvas {
+#zoomCanvas, #canvas-temp {
  background:#FFF;
  background:url(paint/bg_transparent.png);
  border:1px solid #000000; 
@@ -142,10 +147,12 @@
 .slide-wrapper {
   overflow:hidden;
   height:auto;
+  left:0; top:0;
   position:relative;
 }
 
 .slide {
+  overflow:hidden;
   position:relative;
   float:left;
   min-height:300px;

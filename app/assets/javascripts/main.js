@@ -14,17 +14,6 @@ function editor_main() {
 
   App.mainView = MainView.create();
   App.mainView.appendTo('#content');
-  
-  setTimeout( function() {
-  
-    App.gameController.selectGraphic( App.libraryController.get( 'content' )[0] );
-    App.gameController.selectGraphic( App.libraryController.get( 'content' )[1] );
-    
-    App.mainView.hideOverlay();
-    
-    App.mainView.stageView.player.parse( App.game.getData().game );
-  
-  }, 100 );
 
 };
 
@@ -46,9 +35,10 @@ function paint_main() {
   
 };
 
-function player_main( data ) {
+function player_main( data, game_id ) {
+  var game_id = game_id || 0;
   
-  window.player = new Player();
+  window.player = new Player();  
   
   // console.log( JSON.stringify( data ) );
   
@@ -60,6 +50,7 @@ function player_main( data ) {
     if ( data ) {
   
       player.parse( data );
+      player.game_id = game_id;
   
     }
     

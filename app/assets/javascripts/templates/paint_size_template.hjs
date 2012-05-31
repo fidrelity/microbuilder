@@ -5,7 +5,7 @@
   <div class="span6">
     <h4>Object</h4>
     Select the size of the graphic:
-    <div id="canvas-size" class="canvas paint-type type-selected" style="width:64px;height:64px;" data-type="object"></div>
+    <div id="canvas-size" class="canvas paint-type type-selected" style="width:128px;height:128px;" data-type="object"></div>
   </div>
 
   <div class="span4">

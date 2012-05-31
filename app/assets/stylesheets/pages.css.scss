@@ -1,5 +1,10 @@
 $bg: #fff;
 $font: #000;
+$red: #c11924;
+$gray: #464646;
+$lightgray: #dedede;
+$white: #FFFFFF;
+$yellow: #fdc702;
 
 body {
     font-family: 'Arimo', sans-serif;
@@ -51,7 +56,7 @@ body {
     margin: 0;
     text-align: left;
 }
-h1 {  margin:0;  padding:0; font-size:2.2em; }
+h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Arial, sans-serif; }
 
 #flash-template {
   display:none;
@@ -78,6 +83,60 @@ h1 {  margin:0;  padding:0; font-size:2.2em; }
 
 /* game/id/play */
 
+#playerWrapper { 
+  overflow:hidden;
+  position:relative;
+  width:640px; height:390px;
+}
+
+/* Player Start layer */
+#playerWrapper .playerStartScreen { 
+  background:#EEE;
+  position:relative;
+  z-index:1000;
+  height:100px;  
+  left:0; top:-100px;
+  opacity: 0.9;
+  -moz-opacity: 0.9;
+  filter:alpha(opacity=9);
+  padding:1em;
+}
+
+#playerWrapper .playerStartScreen .playButton {
+  cursor:pointer;  
+  pointer-events:none;
+  position: absolute; top:-130px; left:215px;
+  width:210px; height:60px;
+  background:url("overlay_game_play.png") no-repeat;
+}
+
+#playerWrapper .playerStartScreen h2 {
+  color:#C11924;
+  font:24px 'LaconicBold',Arial,sans-serif;
+}
+
+/* Player WIN layer */
+
+#playerWrapper .replayButton {
+  cursor:pointer;
+  pointer-events:none;
+  position: absolute; top:-80px; left:290px;
+  width:60px; height:60px;
+  background:url("replay_button.png") no-repeat;
+}
+
+#playerWrapper .playerWinScreen, .playerLoseScreen {
+  display: none;
+  background:#EEE;
+  position:relative;
+  z-index:1000;
+  height:250px; 
+  left:0; top:-250px;  
+  opacity: 0.9;  -moz-opacity: 0.9; filter:alpha(opacity=9);
+  padding:1em;
+}
+
+
 #tempComment {  display: none; }
 .comment {
   margin-bottom:2em;
@@ -89,66 +148,378 @@ h1 {  margin:0;  padding:0; font-size:2.2em; }
   display: none;
 }
 
-.label {
-  background: url('/assets/gallery_title_bg.png');
-  position:relative;
-  top:-24px;
-  left:44px;
-  padding:15px;
-  font-size:16px;
-  width:84px;
-  height:20px;
-  font-size:16px;
-  color:#fff;
-  text-transform:uppercase;
+/* General */
+/* ---------------------------------- */
+@font-face {
+    font-family: 'LaconicBold';
+    src: url('Laconic_Bold-webfont.eot');
+    src: url('Laconic_Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('Laconic_Bold-webfont.woff') format('woff'),
+         url('Laconic_Bold-webfont.ttf') format('truetype'),
+         url('Laconic_Bold-webfont.svg#LaconicBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
-#gallery {
-} 
-
-#gallery ul.sortables {
-  list-style-type:none;
+@font-face {
+    font-family: 'LaconicRegular';
+    src: url('Laconic_Regular-webfont.eot');
+    src: url('Laconic_Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('Laconic_Regular-webfont.woff') format('woff'),
+         url('Laconic_Regular-webfont.ttf') format('truetype'),
+         url('Laconic_Regular-webfont.svg#LaconicBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
-#gallery ul.sortables li {
-  float:left;
-  margin:0 0 0 44px;
+.banner { /* Profile/Games etc Banner */
+  position:absolute;
+  top:-15px;
+  z-index:1;
+  width:91px;
+  height:49px;
+  font: 18px 'LaconicBold', Arial, sans-serif;
+  color:$white;
+  padding:15px 0 0 13px;
 }
 
-#gallery input.searchbox {
-  width:210px;
-  height:30px;
-  margin:0 0 0 484px;
-  position:relative;
-  top:-10px;
-  padding:4px 0 4px 12px;
-  text-transform:uppercase;
-}
-
-#gallery img.magnifier {
-  position:relative;
+.banner img {
+  position:absolute;
   top:0px;
+  left:0px;
+  width:91px;
+  height:49px;
+  z-index:-1;
+}
+
+.add { /* add Game/Graphic Buttons */
+  background:url('add_button_bg.png') top right no-repeat;
+  font-family: 'Arimo', sans-serif;
+  height:24px;
+  display:block;
+  margin:30px 0px 16px 30px;
+  padding:6px 0 0 14px;
+  border-left:1px solid #dedede;
+  color: $gray;
+  letter-spacing:1px;
+  float:left;
+}
+
+.add:hover {
+  background:url('add_button_bg_hover.png') top right no-repeat;
+  text-decoration:none;
+  font-weight:bold;
+  color: $gray;
+  letter-spacing:0px;
+}
+
+.addgame {
+  width:110px;
+}
+
+.addgraphic {
+  width:120px;
+  float:left;
+}
+
+.viewall {
+  background:url('view_all_button.png') top right no-repeat;
+  width:98px;
+}
+
+.viewall:hover {
+  background:url('view_all_button_hover.png') top right no-repeat;
+}
+
+.collection_container { /* UL with bar containing sliders/info and list items (Games/Graphics) */
+  position:relative;
+  width:720px;
+  height:269px;
+  background:#fff;
+  list-style:none;
+  margin:0px 0px 30px 0px;
+}
+
+.collection_container .bar {
+  background:#e9e9e9;
+  height:30px;
+  font-family: 'Arimo', sans-serif;
+  font-weight:bold;
+  color:$gray;
+}
+
+.collection_container .bar .description {
+  height:30px;
+  width:624px;
+  float:left;
+  margin:6px 0 0 38px;
+}
+
+.collection_container .bar .slider_left {
+  position:absolute;
   left:0px;
 }
 
-#gallery ul.gamelist {
-  list-style-type:none;
-  position:relative;
-  left:45px;
-  top:15px;
+.collection_container .bar .counter {
+  float:left;
+  margin: 6px 14px 0 0;
 }
 
-#gallery .game {
-  width:150px;
-  height:150px;
-  float:left;
-  display:block;
-  margin:0 14px 14px 0;
+.collection_container .bar .slider_right {
+  position:absolute;
+  right:0px;
+}
+
+.collection_container .games {
+  margin: 0 0 0 10px;
+}
+
+.collection_container .games .game { /* Game 'Button' with hover, containing info etc... */
+  position:relative;
+  width:210px;
+  height:135px;
   overflow:hidden;
 }
 
-#gallery .game span {
-  color:#fff;
+.collection_container .games .game .meta, .collection_container .graphic .meta {
+  position:absolute;
+  top:0px;
+  right:0px;
+  height:30px;
+  width:30px;
+  z-index:5;
+  padding:0px;
+  overflow:hidden;
+}
+
+.collection_container .games .game .meta:hover, .collection_container .graphic .meta:hover {
+  height:90px;
+  cursor:hand;
+}
+
+.collection_container .games .game .meta a {
+  display:block;
+}
+
+.collection_container .games .game .overlay p {
+  height:52px;
+}
+
+.collection_container .games .game a, .collection_container .graphic a {
+  color:$red;
+}
+
+.collection_container .games .game a:hover, .collection_container .graphic a:hover {
+  color:$red;
+  text-decoration:none;
+}
+
+.collection_container .games .game .overlay img, .collection_container .games .game .overlay p, .collection_container .graphic .overlay p {
+  position:absolute;
+  top:135px;
+  left:0px;
+  width:198px;
+  padding:12px 0 0 12px;
+  opacity:0;
+  display:block;
+  font: 14px 'LaconicBold', Arial, sans-serif;
+  color:$red;
+}
+
+.collection_container .games .game .overlay p, .collection_container .graphic .overlay p {
+  background:url('/assets/overlay_game_text.png') top left no-repeat;
+}
+
+.collection_container .games .game .overlay p span, .collection_container .graphic .overlay p span {
+  color:$gray;
+  font-size:12px;
+  font-family:'Arimo', sans-serif;
+}
+
+.collection_container .graphic .overlay p {
+  width:116px;
+}
+
+.collection_container .games .game:hover .overlay p, .collection_container .graphic:hover .overlay p {
+  -webkit-transform: translateY(-53px);
+  -moz-transform: translateY(-53px);
+  -o-transform: translateY(-53px);
+  -ms-transform: translateY(-53px);
+  transform: translateY(-53px);
+  -ms-filter: "progid: DYImageTransform.Microsoft.Alpha(Opacity=1)";
+  filter: alpha(opacity=1);
+  opacity: 1;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  translateYtransition: all 0.3s ease-in-out;
+}
+
+.collection_container .games .game:hover .overlay img {
+  -webkit-transform: translateY(-128px);
+  -moz-transform: translateY(-128px);
+  -o-transform: translateY(-128px);
+  -ms-transform: translateY(-128px);
+  transform: translateY(-128px);
+  -ms-filter: "progid: DYImageTransform.Microsoft.Alpha(Opacity=1)";
+  filter: alpha(opacity=1);
+  opacity: 1;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  translateYtransition: all 0.2s ease-in-out;
+}
+
+.collection_container .graphic:hover .overlay p {
+  -webkit-transform: translateY(-50px);
+  -moz-transform: translateY(-50px);
+  -o-transform: translateY(-50px);
+  -ms-transform: translateY(-50px);
+  transform: translateY(-50px);
+}
+
+.sortables {
+  position:absolute;
+  right:30px;
+  top:65px;
+  width:489px;
+}
+
+.sortables a {
+  font: 13px 'Arimo', sans-serif;
+  color: $gray;
+  margin:3px 3px 0 3px;
+}
+
+.sortables a:hover {
+  font: 13px 'Arimo';
+  font-weight:bold;
+  color:$yellow;
+}
+
+.sortables .sort {
   position:relative;
-  top:150px;
+  float:left;
+  margin:5px 0 0 0;
+}
+
+.sortables .search {
+  position:absolute;
+  right:0px;
+}
+
+.sortables .search input[type=text] {
+  border:1px solid $lightgray;
+  border-right:none;
+  border-radius:0px;
+}
+
+.sortables .search input[type=submit] {
+  position:relative;
+  border:1px solid $lightgray;
+  border-left:1px solid $lightgray;
+  border-radius:0px;
+  background:url('/assets/searchbox.png');
+  width:30px;
+  height:30px;
+  left:-5px;
+}
+
+/* Profile */
+/* ---------------------------------- */
+
+#profile {
+  position:relative;
+}
+
+#profileimage {
+  position:relative;
+  left:0px;
+  height:180px;
+  width:180px;
+}
+
+#profile .name {
+  font: 14px 'LaconicBold', Arial, sans-serif;
+  height:21px;
+  width:135px;
+  float:left;
+  background:#fff;
+  padding:9px 0 0 15px;
+}
+
+#profile .edit {
+  width:30px;
+  height:30px;
+  float:left;
+}
+
+#profile .metaprofile {
+  height:128px;
+  width:180px;
+  background:#fff;
+  padding:10px 0 0 0;
+}
+
+#profile .metaprofile p {
+  font-family: 'Arimo', sans-serif;
+  font-weight:bold;
+  font-size:12px;
+  color:$gray;
+  margin: 0 0 0 15px;
+}
+
+#profile .metaprofile p span {
+  font-family: 'Arimo', sans-serif;
+  font-weight:normal;
+  font-size:12px;
+  color:$gray;
+}
+
+#profile .sort {
+  float:left;
+  margin: 30px 0 0 0;
+}
+
+#profile #user_graphics #graphics {
+  margin:0 0 0 10px;
+}
+
+#profile #user_graphics .graphic {
+  position:relative;
+  width:128px;
+  height:128px;
+  border: 1px solid #e9e9e9;
+  overflow:hidden;
+}
+
+#profile #user_graphics .graphic:hover {
+  border: 1px solid $gray;
+}
+
+/* Gallery */
+/* ---------------------------------- */
+
+#gallery {
+  position:relative;
+  background:$white;
+  width:960px;
+}
+
+#gallery .banner {
+  margin: 0 0 0 40px;
+}
+
+#gallery .collection_container {
+  position:relative;
+  width:945px;
+  top:50px;
+  margin:0 0 0 15px;
+}
+
+.frame_graphic {
+  border:1px solid #EEE;
+  background-repeat:no-repeat;
 }
