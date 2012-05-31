@@ -12,7 +12,7 @@ var ButtonView = Ember.CollectionView.extend({
     
     click : function() {
       
-      this._parentView.observer.notify( this.content );
+      this._parentView.observer.choose( this.content );
       
     }
     

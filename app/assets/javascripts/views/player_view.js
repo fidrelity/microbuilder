@@ -7,8 +7,7 @@ var PlayerView = Ember.View.extend({
   player : null,
   type : 'stage',
   
-  position : null,
-  area : null,
+  observer : null,
   gameObject : null,
   
   didInsertElement : function() {
@@ -30,9 +29,9 @@ var PlayerView = Ember.View.extend({
       player.selectedObjectCallback = bind( App.gameObjectsController, App.gameObjectsController.selectID );
       player.selectedObjectDragCallback = bind( App.game, App.game.gameObjectPositionChanged );
       
-    } else if ( type === 'moveTo' || type === 'jumpTo' || type === 'moveIn' ) {
+    } else if ( type === 'location' ) {
       
-      callback = this.moveCallback;
+      callback = this.locationCallback;
       
     } else if ( type === 'area' ) {
       
@@ -70,11 +69,11 @@ var PlayerView = Ember.View.extend({
     
   },
   
-  moveCallback : function() {
+  locationCallback : function() {
     
     this.player.setSelectObjectID( this.gameObject.ID, bind( this, function( ID, pos ) {
       
-      this.set( 'position', pos.clone() );
+      this.observer.locate( pos );
       
     }));
   
@@ -84,7 +83,7 @@ var PlayerView = Ember.View.extend({
     
     this.player.selectedAreaCallback = bind( this, function( area ) {
       
-      this.set( 'area', AreaModel.create( area ) );
+      this.observer.contain( area );
       
     });
     

@@ -47,7 +47,7 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  notify : function( name ) {
+  choose : function( name ) {
     
     if ( this.get( name ) ) {
       
@@ -110,13 +110,25 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  addLocationOption : function( question, type, depth ) {
+  addPlayerOption : function( question, type, observer, depth ) {
     
     this.addOption( question, PlayerView.extend({
+      observer : observer,
       type : type,
-      positionBinding : 'App.actionController.action.position',
       gameObject : App.gameObjectsController.current
     }), depth );
+    
+  },
+  
+  addLocationOption : function( question, observer, depth ) {
+    
+    this.addPlayerOption( question, 'location', observer, depth );
+    
+  },
+  
+  addAreaOption : function( question, observer, depth ) {
+    
+    this.addPlayerOption( question, 'area', observer, depth );
     
   },
   

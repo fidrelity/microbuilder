@@ -16,7 +16,7 @@ var ActionTriggerModel = Ember.Object.extend({
   
   },
   
-  notify : function( name ) {
+  choose : function( name ) {
     
     if ( this.get( name ) ) {
       
@@ -33,6 +33,20 @@ var ActionTriggerModel = Ember.Object.extend({
   select : function( gameObject ) {
     
     this.set( 'gameObject', gameObject );
+    
+    this.done();
+    
+  },
+  
+  locate : function( vector ) {
+    
+    this.set( 'position', vector.clone() );
+    
+  },
+  
+  contain : function( area ) {
+    
+    this.set( 'region', AreaModel.create( area ) );
     
     this.done();
     
@@ -78,8 +92,8 @@ var MoveActionModel = ActionTriggerModel.extend({
     this.set( 'direction', true );
     
     App.actionController.addLocationOption( 
-      'Drag <gameObject> to it\'s relative direction from where it is', 
-      this.type, 
+      'Drag <gameObject> to it\'s relative direction from where it is',
+      this,
       3 
     );
     
@@ -141,7 +155,7 @@ var MoveActionModel = ActionTriggerModel.extend({
       
     }
     
-    App.actionController.addLocationOption( question, type, 3 );
+    App.actionController.addLocationOption( question, this, 3 );
     this.done();
     
   },
@@ -330,17 +344,17 @@ var ClickTriggerModel = ActionTriggerModel.extend({
     
   },
   
-  // 'area' : function() {
-  //   
-  //   App.actionController.addAreaOption( 'Select the area to trigger the click', this, 2 );
-  //   
-  // },
+  'area' : function() {
+    
+    App.actionController.addAreaOption( 'Select the area to trigger the click', this, 2 );
+    
+  },
   
   string : function() {
     
-    if ( this.atArea ) {
+    if ( this.region ) {
       
-      return 'click in area ' + this.area.string();
+      return 'click in area ' + this.region.string();
       
     } else if ( this.gameObject ) {
     
@@ -358,9 +372,9 @@ var ClickTriggerModel = ActionTriggerModel.extend({
     
     var data = { type : 'click' };
     
-    if ( this.area ) {
+    if ( this.region ) {
     
-      data.area = this.area.getData();
+      data.area = this.region.getData();
     
     } else if ( this.gameObject ) {
     
