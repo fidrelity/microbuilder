@@ -222,14 +222,7 @@ Player.prototype = {
       
       }
       
-      if ( this.showTimeline ) {
-        
-        ctx.fillStyle = 'rgba(125,125,125,0.5)';
-        
-        ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
-        ctx.fillRect( - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
-        
-      }
+      this.drawTimeline( ctx, 'rgba(125,125,125,0.5)', 0 );
       
       this.redraw = false;
     
@@ -247,12 +240,20 @@ Player.prototype = {
     
     this.game.draw( ctx );
     
+    this.drawTimeline( ctx, 'rgba(200,200,0,0.5)', this.timePlayed );
+    
+  },
+  
+  drawTimeline : function( ctx, color, timePlayed ) {
+    
+    var i = this.increment;
+    
     if ( this.showTimeline ) {
       
-      ctx.fillStyle = 'rgba(255,0,0,0.5)';
+      ctx.fillStyle = color;
       
       ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
-      ctx.fillRect( ( 640 + i ) * this.timePlayed / this.game.duration - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
+      ctx.fillRect( ( 640 + i ) * timePlayed / this.game.duration - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
       
     }
     
@@ -403,11 +404,33 @@ Player.prototype = {
   },
   
   onWin : function() {
-    $('.playerWinScreen').fadeIn(600);   
+    
+    $('.playerWinScreen').fadeIn(600);
+    
+    if ( !this.edit ) {
+      
+      this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
+      this.ctx.fillRect( 0, 386, 640 * this.timePlayed / this.game.duration, 4 );
+      
+    }
+    
+    this.drawTimeline( this.ctx, 'rgba(0,255,0,0.5)', this.timePlayed );
+    
   },
   
   onLose : function() {
-    $('.playerLoseScreen').fadeIn(600);    
+    
+    $('.playerLoseScreen').fadeIn(600); 
+    
+    if ( !this.edit ) {
+      
+      this.ctx.fillStyle = 'rgba(255,0,0,0.5)';
+      this.ctx.fillRect( 0, 386, 640 * this.timePlayed / this.game.duration, 4 );
+      
+    }
+    
+    this.drawTimeline( this.ctx, 'rgba(255,0,0,0.5)', this.timePlayed );
+    
   },
   
   enterTrial : function() {
