@@ -460,6 +460,71 @@ var ContactTriggerModel = ActionTriggerModel.extend({
   
 });
 
+var TimeTriggerModel = ActionTriggerModel.extend({
+  
+  time : 0,
+  time2 : 0,
+  
+  'exactly' : function() {
+    
+    this.set( 'type', 'exactly' );
+    
+    App.actionController.addTimeOption( 'Drag the handle to the time you want.', this.type, this, 2 );
+    
+    this.done();
+    
+  },
+  
+  'randomly' : function() {
+    
+    this.set( 'type', 'randomly' );
+    
+    App.actionController.addTimeOption( 'Drag the handles to set the range you want.', this.type, this, 2 );
+    
+    this.done();
+    
+  },
+  
+  setTime : function( time, time2 ) {
+    
+    this.set( 'time', time );
+    this.set( 'time2', time2 );
+    
+  },
+  
+  string : function() {
+    
+    if ( this.time2 ) {
+      
+      return 'between ' + this.time + ' to ' + this.time2 + '% in the game';
+      
+    } else {
+      
+      return this.time + '% in the game';
+      
+    }
+    
+  }.property( 'time', 'time2' ),
+  
+  getData : function() {
+    
+    var data = { 
+      type : 'time',
+      time : this.time
+    };
+    
+    if ( this.time2 ) {
+    
+      data.time2 = this.time2;
+    
+    }
+    
+    return data;
+    
+  }
+  
+});
+
 var StartTriggerModel = ActionTriggerModel.extend({
   
   type : 'start'

@@ -62,3 +62,33 @@ var GameObjectsView = Ember.CollectionView.extend({
   })
   
 });
+
+var TimeView = Ember.View.extend({
+  
+  tagName : 'div',
+  
+  observer : null,
+  type : null,
+  
+  didInsertElement : function() {
+    
+    var observer = this.observer,
+      range = this.type === 'randomly',
+      values = range ? [0,100] : [0];
+    
+    this.$().slider({
+      
+      range : range,
+      values: values,
+      
+      slide: function( event, ui ) {
+        
+        observer.setTime( ui.values[0], ui.values[1] );
+        
+      }
+      
+    });
+    
+  }
+  
+});

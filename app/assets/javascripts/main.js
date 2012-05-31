@@ -14,6 +14,17 @@ function editor_main() {
 
   App.mainView = MainView.create();
   App.mainView.appendTo('#content');
+  
+  setTimeout( function() {
+  
+    App.gameController.selectGraphic( App.libraryController.get( 'content' )[0] );
+    App.gameController.selectGraphic( App.libraryController.get( 'content' )[1] );
+    
+    App.mainView.hideOverlay();
+    
+    App.mainView.stageView.player.parse( App.game.getData().game );
+  
+  }, 100 );
 
 };
 

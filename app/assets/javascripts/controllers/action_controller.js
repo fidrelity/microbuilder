@@ -36,7 +36,7 @@ var ActionController = Ember.Object.extend({
     } else {
       
       // buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
-      buttons = ['click', 'contact'];
+      buttons = ['time'];
     
     }
     
@@ -140,6 +140,15 @@ var ActionController = Ember.Object.extend({
     
   },
   
+  addTimeOption : function( question, type, observer, depth ) {
+    
+    this.addOption( question, TimeView.extend({
+      observer : observer,
+      type : type
+    }), depth );
+    
+  },
+  
   move : function() {
   
     this.set( 'action', MoveActionModel.create() );
@@ -194,6 +203,19 @@ var ActionController = Ember.Object.extend({
     this.addButtonOption( 
       'Trigger a touch or overlap?', 
       ['touch', 'overlap'], 
+      this.action,
+      1
+    );
+    
+  },
+  
+  time : function() {
+    
+    this.set( 'action', TimeTriggerModel.create() );
+    
+    this.addButtonOption( 
+      'Trigger an excact time or in a range?', 
+      ['exactly', 'randomly'], 
       this.action,
       1
     );
