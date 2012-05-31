@@ -42,7 +42,7 @@ var StageView = Ember.View.extend({
   
   stop : function() {
     
-    this.player.fsm.stop();
+    this.player.stop();
     
   },
   

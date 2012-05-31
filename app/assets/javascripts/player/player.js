@@ -40,7 +40,7 @@ var Player = function() {
       { name : 'try', from : 'edit', to: 'trial' },
       { name : 'winTrial', from : 'trial', to: 'edit', callback : this.onWin },
       { name : 'loseTrial', from : 'trial', to: 'edit', callback : this.onLose },
-      { name : 'stop', from : 'trial', to: 'edit', callback: this.onStop }
+      { name : 'stop', from : 'trial', to: 'edit' }
     ]
     
   });
@@ -449,7 +449,9 @@ Player.prototype = {
     
   },
   
-  onStop : function() {
+  stop : function() {
+    
+    this.fsm.stop();
     
     this.redraw = true;
     
