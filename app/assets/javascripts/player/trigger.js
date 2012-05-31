@@ -56,7 +56,7 @@ ContactTrigger.prototype = {
   
   check : null,
   
-  checkContact : function() {
+  checkTouch : function() {
     
     var overlaps = this.checkOverlap();
     

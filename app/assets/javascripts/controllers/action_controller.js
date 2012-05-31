@@ -36,7 +36,7 @@ var ActionController = Ember.Object.extend({
     } else {
       
       // buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
-      buttons = ['click'];
+      buttons = ['click', 'contact'];
     
     }
     
@@ -181,6 +181,19 @@ var ActionController = Ember.Object.extend({
     this.addButtonOption( 
       'Click on what?', 
       ['self', 'object', 'area'], 
+      this.action,
+      1
+    );
+    
+  },
+
+  contact : function() {
+    
+    this.set( 'action', ContactTriggerModel.create() );
+    
+    this.addButtonOption( 
+      'Trigger a touch or overlap?', 
+      ['touch', 'overlap'], 
       this.action,
       1
     );

@@ -2,7 +2,11 @@ var ActionTriggerModel = Ember.Object.extend({
   
   type : null,
   
-  parentGameObjectBinding : 'App.gameObjectsController.current',
+  init : function() {
+    
+    this.set( 'parentGameObject', App.gameObjectsController.current );
+    
+  },
   
   string : function() {
     
@@ -69,6 +73,8 @@ var MoveActionModel = ActionTriggerModel.extend({
   direction : false,
   
   init : function() {
+    
+    this._super();
     
     this.set( 'position', new Vector() );
     
@@ -330,8 +336,6 @@ var WinLoseActionModel = ActionTriggerModel.extend({
 
 var ClickTriggerModel = ActionTriggerModel.extend({
   
-  type : 'click',
-  
   'self' : function() {
     
     this.done();
@@ -371,6 +375,74 @@ var ClickTriggerModel = ActionTriggerModel.extend({
   getData : function() {
     
     var data = { type : 'click' };
+    
+    if ( this.region ) {
+    
+      data.area = this.region.getData();
+    
+    } else if ( this.gameObject ) {
+    
+      data.objectID = this.gameObject.ID;
+    
+    }
+    
+    return data;
+    
+  }
+  
+});
+
+var ContactTriggerModel = ActionTriggerModel.extend({
+  
+  'touch' : function() {
+    
+    this.set( 'type', 'touch' );
+    
+    App.actionController.addButtonOption( 'With what?', ['object', 'area'], this, 2 );
+    
+  },
+  
+  'overlap' : function() {
+    
+    this.set( 'type', 'overlap' );
+    
+    App.actionController.addButtonOption( 'With what?', ['object', 'area'], this, 2 );
+    
+  },
+  
+  'object' : function() {
+    
+    App.actionController.addObjectsOption( 'Choose the object to trigger the ' + this.type, this, 3 );
+    
+  },
+  
+  'area' : function() {
+    
+    App.actionController.addAreaOption( 'Select the area to trigger the ' + this.type, this, 3 );
+    
+  },
+  
+  string : function() {
+    
+    var str = this.parentGameObject.name + ( this.type === 'touch' ? ' touches ' : ' overlaps ' );
+    
+    if ( this.region ) {
+      
+      str += 'area ' + this.region.string();
+      
+    } else {
+    
+      str += this.gameObject.name;
+    
+    }
+    
+    return str;
+    
+  }.property( 'gameObject', 'area' ),
+  
+  getData : function() {
+    
+    var data = { type : this.type };
     
     if ( this.region ) {
     
