@@ -388,6 +388,8 @@ var Parser = {
       case 'touch' : return this.parseTriggerContact( triggerData, gameObject, true );
       case 'overlap' : return this.parseTriggerContact( triggerData, gameObject, false );
       
+      case 'time' : return new TimeTrigger( triggerData.time, triggerData.time2 );
+      
       default : console.error( 'parser: trigger type ' + triggerData.type + ' not found' ); return null;
       
     }

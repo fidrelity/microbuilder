@@ -23,6 +23,7 @@ Game.prototype = {
   reset : function() {
     
     this.gameObjects.forEachApply( 'reset' );
+    this.behaviours.forEachApply( 'reset' );
     
   },
   
