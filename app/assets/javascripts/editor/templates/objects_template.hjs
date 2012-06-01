@@ -13,7 +13,7 @@
       
         <li {{action "select"}} class="graphic">
         <div  class="frame_graphic" data-frames="{{unbound "content.graphic.frameCount"}}"
-          style="background-image:url({{unbound "content.graphic.imagePath"}});width:{{unbound "content.graphic.frameWidth"}}px;height:{{unbound "content.graphic.frameHeight"}}px;">
+          style="background-image:url({{unbound "content.graphic.imagePath"}});width:64px;height:64px;background-size: {{unbound "content.graphic.frameWidth"}}px 64px;">
         </div>
 
           <div> {{content.name}} </div>

@@ -25,7 +25,7 @@
       controllerBinding = "App.gameController" 
       selectFunctionBinding = "App.libraryController.selectFunction" }}
       
-      <li {{action "select"}} class="graphic">
+      <li {{action "select"}} class="graphic" style="width:{{unbound App.libraryController.size.max}}px;height:{{unbound App.libraryController.size.max}}px;">
 
         <div  class="frame_graphic" data-frames="{{unbound "content.frameCount"}}"
           style="background-image:url({{unbound "content.imagePath"}});width:{{unbound "content.frameWidth"}}px;height:{{unbound "content.frameHeight"}}px;">
