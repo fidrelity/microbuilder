@@ -10,6 +10,7 @@
   type="test"
   canvasID="testCanvas"
   playerBinding="player"
+  showHTML="true"
 }}
 
 <button {{action "publishGame" target="App.gameController"}}>publish</button>

@@ -10,6 +10,8 @@ var PlayerView = Ember.View.extend({
   observer : null,
   gameObject : null,
   
+  showHTML : false,
+  
   didInsertElement : function() {
     
     var player, callback, type = this.type;
