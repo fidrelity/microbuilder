@@ -25,7 +25,7 @@ var GameObjectModel = Ember.Object.extend({
     
     var obj = GameObjectModel.create({
       
-      name : this.name + 'Copy',
+      name : this.name,
       graphic : this.graphic,
       position : new Vector( 30, 30 ).addSelf( this.position )
       
@@ -35,8 +35,6 @@ var GameObjectModel = Ember.Object.extend({
     
     obj.set( 'behaviours', this.cloneBehaviours() );
     obj.set( 'startBehaviour', this.startBehaviour.clone() );
-    
-    App.obj = obj;
     
     return obj;
     
