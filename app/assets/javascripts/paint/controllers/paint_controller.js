@@ -201,6 +201,7 @@ var PaintController =  Ember.ArrayController.extend({
     };
 
     this.spriteCounter = 0;
+    this.zoom = this.isBackground ? 1 : 2;
     this.add();
   },
 
@@ -210,8 +211,7 @@ var PaintController =  Ember.ArrayController.extend({
       var ok = confirm("Erase all and go back to type selection?");
       if(!ok) return false;
     }
-    
-    this.zoom = this.isBackground ? 1 : 2;
+        
     this.reset();
 
     App.paintView.remove();
