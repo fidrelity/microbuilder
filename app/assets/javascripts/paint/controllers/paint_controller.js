@@ -181,7 +181,7 @@ var PaintController =  Ember.ArrayController.extend({
       },
       
       success : function( data ) {        
-        App.paintController.goToTypeSelection(true);
+        App.paintController.goToTypeSelection(false);
       }
       
     });
@@ -206,7 +206,7 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   goToTypeSelection : function (_dontAsk) {
-    if(!_dontAsk) {
+    if(_dontAsk === false) {
       var ok = confirm("Erase all and go back to type selection?");
       if(!ok) return false;
     }
