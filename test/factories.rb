@@ -16,6 +16,8 @@ FactoryGirl.define do
     frame_width   64
     frame_height  64
     frame_count   1
+    image_data    "data:image/png;base64,iVBORw0KGgoAAAANSUhEU"
+    name          Forgery(:lorem_ipsum).words(1)
   end
   
   factory :game_comment do
@@ -26,6 +28,7 @@ FactoryGirl.define do
 
   factory :game do
     association   :author, :factory => :user
+    preview_image_data    "data:image/png;base64,iVBORw0KGgoAAAANSUhEU"
     title         "Game X"
     instruction   "press X"
     played        0
