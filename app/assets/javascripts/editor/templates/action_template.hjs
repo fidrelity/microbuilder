@@ -1,0 +1,14 @@
+<h2>Action/Trigger Editor</h2>
+
+{{dynamicView App.actionController.contentView}}
+
+{{#if App.actionController.showSaveButton}}
+
+  <p>{{App.actionController.action.string}}</p>
+
+  <button {{action "save" target="App.actionController"}}> save </button>
+  <br />
+
+{{/if}}
+
+<button {{action "showObjects" target="App.gameController"}}> cancel </button>

@@ -35,6 +35,20 @@ Behaviour.prototype = {
     
   },
   
+  reset : function() {
+    
+    for ( var i = 0; i < this.triggers.length; i++ ) {
+      
+      if ( this.triggers[i].reset ) {
+        
+        this.triggers[i].reset();
+        
+      }
+      
+    }
+    
+  },
+  
   draw : function( ctx ) {
     
     for ( var i = 0; i < this.triggers.length; i++ ) {

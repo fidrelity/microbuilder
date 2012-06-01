@@ -1,3 +1,0 @@
-<div class="player">
-  <canvas {{bindAttr id="canvasID"}} style="background:#EEE;border:2px solid black;"></canvas>
-</div>

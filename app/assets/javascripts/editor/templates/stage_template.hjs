@@ -1,0 +1,28 @@
+<h3>Stage</h3>
+
+<div id="stageControls">
+  <button {{action "showObjects" target="App.gameController"}}> objects </button>
+  <button {{action "searchBackground" target="App.gameController"}}> background </button>
+  <div>duration:</div>
+  <div id="slider"></div>
+  <div>{{App.game.duration}} seconds</div>
+</div>
+
+<div class="clear"></div>
+
+{{view PlayerView 
+  type="stage"
+  canvasID="stageCanvas"
+  playerBinding="player"
+}}
+
+<div style="float: left">
+
+  <button {{action "play"}}> play </button>
+  <button {{action "stop"}}> stop </button>
+  <button {{action "debug"}}> debug on/off </button>
+  <button {{action "finalize" target="App.gameController"}}> finalize </button>
+
+</div>
+
+<div class="clear"></div>

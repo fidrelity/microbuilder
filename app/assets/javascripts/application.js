@@ -14,8 +14,10 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require ember
-//= require_tree ./templates
+//= require_tree ./editor/templates
+//= require_tree ./paint/templates
 //= require_tree .
+
 $(document).ready(function() {
 
   // Init Autocomplete .searchbox
@@ -27,6 +29,8 @@ $(document).ready(function() {
   Feedback.init();
   //
   Notifier.init().notify();
+  //
+  FramePlayer.init();
 
   // ---------------------------------------
   // Init slides in guide pages

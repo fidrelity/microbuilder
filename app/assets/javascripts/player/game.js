@@ -1,3 +1,5 @@
+//= require utilities/vector
+
 var Game = function( player, mouse ) {
   
   this.player = player;
@@ -21,6 +23,7 @@ Game.prototype = {
   reset : function() {
     
     this.gameObjects.forEachApply( 'reset' );
+    this.behaviours.forEachApply( 'reset' );
     
   },
   

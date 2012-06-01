@@ -10,6 +10,8 @@ var Mouse = function( player, canvas ) {
   this.pos = new Vector();
   this.move = new Vector();
   
+  this.canvasArea = new Area( 0, 0, 640, 390 );
+  
 }
 
 Mouse.prototype = {
@@ -38,11 +40,15 @@ Mouse.prototype = {
     
     this.setMouse( e, this.pos );
     
-    this.clicked = true;
+    if ( this.canvasArea.contains( this.pos ) ) {
+    
+      this.clicked = true;
+    
+      this.player.click( this );
+    
+    }
     
     e.stopPropagation();
-    
-    this.player.click( this );
     
   },
   

@@ -5,6 +5,7 @@ var GameObject = function( ID ) {
   this.startPosition = new Vector();
   
   this.target = null;
+  this.direction = null;
   
   this.graphic = null;
   this.startGraphic = null;
@@ -24,16 +25,16 @@ GameObject.prototype = {
     this.position.copy( this.startPosition );
     this.graphic = this.startGraphic;
     
-    this.target = null;
+    this.stop();
     
   },
   
   update : function( dt ) {
     
+    var vector = this.vector,
+      distance = dt * 0.1;
+    
     if ( this.target ) {
-      
-      var vector = this.vector,
-        distance = dt * 0.1;
       
       vector.copy( this.target ).subSelf( this.position );
       
@@ -50,6 +51,12 @@ GameObject.prototype = {
         this.position.addSelf( vector );
       
       }
+      
+    } else if ( this.direction !== null ) {
+      
+      vector.set( distance, 0 ).rotateSelf( this.direction );
+      
+      this.position.addSelf( vector );
       
     }
     
@@ -79,10 +86,18 @@ GameObject.prototype = {
     
   },
   
+  stop : function() {
+    
+    this.target = null;
+    this.direction = null;
+    
+  },
+  
   setPosition : function( pos ) {
     
+    this.stop();
+    
     this.position.copy( pos );
-    this.target = null;
     
   },
   
@@ -94,7 +109,17 @@ GameObject.prototype = {
   
   setTarget : function( pos ) {
     
+    this.stop();
+    
     this.target = pos;
+    
+  },
+  
+  setDirection : function( dir ) {
+    
+    this.stop();
+    
+    this.direction = dir;
     
   },
   

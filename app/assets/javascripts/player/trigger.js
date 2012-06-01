@@ -56,7 +56,7 @@ ContactTrigger.prototype = {
   
   check : null,
   
-  checkContact : function() {
+  checkTouch : function() {
     
     var overlaps = this.checkOverlap();
     
@@ -66,9 +66,7 @@ ContactTrigger.prototype = {
       
     } else if ( !this.triggered && overlaps ) {
       
-      this.triggered = true;
-      
-      return true;
+      return this.triggered = true;
       
     }
     
@@ -90,12 +88,58 @@ ContactTrigger.prototype = {
     
   },
   
+  reset : function() {
+    
+    this.triggered = false;
+    
+  },
+  
   draw : function( ctx ) {
     
     if ( this.area ) {
       
       ctx.strokeStyle = '#F84';
       this.area.draw( ctx );
+      
+    }
+    
+  }
+  
+};
+
+var TimeTrigger = function( time, time2 ) {
+  
+  this.time = time;
+  this.time2 = time2;
+  
+  this.reset();
+  
+};
+
+TimeTrigger.prototype = {
+  
+  check : function( game ) {
+    
+    var playtime = game.player.timePlayed / game.duration * 100,
+      time = ( this.time2 ? this.randTime : this.time );
+    
+    if ( !this.triggered && playtime >= time ) {
+      
+      return this.triggered = true;
+      
+    }
+    
+    return false;
+    
+  },
+  
+  reset : function() {
+    
+    this.triggered = false;
+    
+    if ( this.time2 ) {
+      
+      this.randTime = this.time + Math.random() * ( this.time2 - this.time );
       
     }
     
