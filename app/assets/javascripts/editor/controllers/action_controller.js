@@ -179,7 +179,7 @@ var ActionController = Ember.Object.extend({
     this.addButtonOption( 
       'How should the art change?', 
       // ['to frame', 'play', 'stop' ], 
-      ['to frame', 'stop' ], 
+      ['to frame'], 
       this.action,
       1
     );

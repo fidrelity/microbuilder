@@ -10,7 +10,7 @@ var GameObject = function( ID ) {
   this.graphic = null;
   this.startGraphic = null;
   
-  this.animationFrame = 0;
+  this.animationFrame = 1;
   
   this.area = new Area();
   
@@ -24,6 +24,8 @@ GameObject.prototype = {
     
     this.position.copy( this.startPosition );
     this.graphic = this.startGraphic;
+    
+    this.animationFrame = 1;
     
     this.stop();
     
@@ -129,12 +131,18 @@ GameObject.prototype = {
     
   },
   
+  setFrame : function( frame ) {
+    
+    this.animationFrame = frame;
+    
+  },
+  
   getArea : function() {
     
     return this.area.set(
       this.position.x,
       this.position.y,
-      this.graphic.image.width,
+      this.graphic.image.width / this.graphic.frameCount,
       this.graphic.image.height
     )
     

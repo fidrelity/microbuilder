@@ -16,7 +16,7 @@ Graphic.prototype = {
       width = img.width / this.frameCount,
       height = img.height;
     
-    ctx.drawImage( img, 0, 0, width, height, frame * width, 0, width, height );
+    ctx.drawImage( img, ( frame - 1 ) * width, 0, width, height, 0, 0, width, height );
     
     if ( ctx.debug ) {
       

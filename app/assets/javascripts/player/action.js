@@ -70,8 +70,12 @@ var StopAction = function( gameObject ) {
 
 var ArtAction = function() {
   
-  this.gameObject = null;
-  this.graphic = null;
+  this.gameObject;
+  
+  this.frame;
+  this.frame2;
+  
+  this.mode;
   
 };
 
@@ -79,7 +83,7 @@ ArtAction.prototype = {
   
   execute : function() {
     
-    this.gameObject.setGraphic( this.graphic );
+    this.gameObject.setFrame( this.frame );
     
   }
   
