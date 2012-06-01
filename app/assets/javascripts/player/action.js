@@ -26,21 +26,35 @@ MoveAction.prototype = {
   
   executeMoveIn : function() {
     
+    var dir;
+    
     if ( this.random ) {
       
-      this.gameObject.setDirection( Math.random() * Math.PI * 2 );
+      dir = Math.random() * Math.PI * 2;
       
     } else if ( this.direction !== null ) {
       
-      this.gameObject.setDirection( this.direction );
+      dir = this.direction;
       
     } else {
       
-      this.gameObject.setDirection( this.target.sub( this.gameObject.position ).angle() );
+      dir = this.target.sub( this.gameObject.movement.position ).angle();
       
     }
     
+    this.gameObject.setDirection( dir );
+    
   }
+  
+};
+
+var RoamAction = function( gameObject, mode, area ) {
+  
+  this.execute = function() {
+    
+    gameObject.roam( mode, area );
+    
+  };
   
 };
 

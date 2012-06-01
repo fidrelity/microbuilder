@@ -124,9 +124,9 @@ var Parser = {
     
     var gameObject = new GameObject( gameObjectData.ID );
   
-    gameObject.startPosition.set( gameObjectData.position.x, gameObjectData.position.y );
+    gameObject.movement.startPosition.set( gameObjectData.position.x, gameObjectData.position.y );
   
-    gameObject.startGraphic = this.game.getGraphicWithID( gameObjectData.graphicID );
+    gameObject.setGraphic( this.game.getGraphicWithID( gameObjectData.graphicID ) );
   
     return gameObject;
   
@@ -194,6 +194,8 @@ var Parser = {
       case 'moveTo' : return this.parseActionMoveTo( actionData, gameObject );
       case 'moveIn' : return this.parseActionMoveIn( actionData, gameObject );
       
+      case 'roam' : return new RoamAction( gameObject, actionData.mode, new Area().copy( actionData.area ) );
+      
       case 'swap' : return this.parseActionSwap( actionData, gameObject );
       case 'stop' : return new StopAction( gameObject );
       
@@ -232,9 +234,9 @@ var Parser = {
     
     action.gameObject = gameObject;
     
-    if ( typeof actionData.objectID !== "undefined" ) {
+    if ( actionData.objectID ) {
     
-      action.target = this.game.getGameObjectWithID( actionData.objectID ).position;
+      action.target = this.game.getGameObjectWithID( actionData.objectID ).movement.position;
     
     } else {
     
@@ -270,9 +272,9 @@ var Parser = {
     
     action.gameObject = gameObject;
     
-    if ( typeof actionData.objectID !== "undefined" ) {
+    if ( actionData.objectID ) {
     
-      action.target = this.game.getGameObjectWithID( actionData.objectID ).position;
+      action.target = this.game.getGameObjectWithID( actionData.objectID ).movement.position;
     
     } else {
     
@@ -322,13 +324,13 @@ var Parser = {
     
       action.target = new Vector( 1e10, 0 ).rotateSelf( actionData.angle );
     
-    } else if ( typeof actionData.random !== 'undefined' ) {
+    } else if ( actionData.random ) {
       
       action.random = true;
       
-    } else if ( typeof actionData.objectID !== 'undefined' ) {
+    } else if ( actionData.objectID ) {
       
-      action.target = this.game.getGameObjectWithID( actionData.objectID ).position;
+      action.target = this.game.getGameObjectWithID( actionData.objectID ).movement.position;
     
     } else {
       
@@ -350,8 +352,8 @@ var Parser = {
   parseActionSwap : function( actionData, gameObject ) {
     
     return new SwapAction(
-      gameObject.position,
-      this.game.getGameObjectWithID( actionData.objectID ).position
+      gameObject.movement.position,
+      this.game.getGameObjectWithID( actionData.objectID ).movement.position
     );
     
   },

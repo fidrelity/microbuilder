@@ -213,6 +213,30 @@ var MoveActionModel = ActionTriggerModel.extend({
     
   },
   
+  roam : function() {
+    
+    this.set( 'type', 'roam' );
+    
+    App.actionController.addButtonOption( 'Which type of roaming?',
+     // ['wiggle', 'reflect', 'insect', 'bounce'], 
+     ['wiggle', 'reflect', 'insect'], 
+     this, 2 );
+    
+  },
+  
+  chooseMode : function( mode ) {
+    
+    this.set( 'mode', mode );
+    
+    App.actionController.addAreaOption( 'Select the area where <gameObject> should roam', this, 3 );
+    
+  },
+  
+  wiggle : function() { this.chooseMode( 'wiggle' ); },
+  reflect : function() { this.chooseMode( 'reflect' ); },
+  insect : function() { this.chooseMode( 'insect' ); },
+  bounce : function() { this.chooseMode( 'bounce' ); },
+  
   swap : function() {
     
     this.set( 'type', 'swap' );
@@ -250,6 +274,11 @@ var MoveActionModel = ActionTriggerModel.extend({
     } else if ( this.gameObject ) {
       
       obj.objectID = this.gameObject.ID;
+      
+    } else if ( this.mode ) {
+      
+      obj.mode = this.mode;
+      obj.area = this.region.getData();
       
     } else {
       
@@ -295,6 +324,10 @@ var MoveActionModel = ActionTriggerModel.extend({
       
       name += ' swaps position with ' + other;
       
+    } else if ( type === 'roam' ) {
+      
+      name += ' roams in ' + this.mode + ' mode within ' + this.region.string();
+      
     } else if ( type === 'stop' ) {
       
       name += ' stops';
@@ -303,7 +336,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     return name;
     
-  }.property( 'type', 'position', 'gameObject', 'random' )
+  }.property( 'type', 'position', 'gameObject', 'random', 'mode', 'region' )
   
 });
 

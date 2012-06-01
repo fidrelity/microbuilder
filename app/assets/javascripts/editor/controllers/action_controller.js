@@ -31,7 +31,7 @@ var ActionController = Ember.Object.extend({
     if ( mode === 'action' ) {
       
       // buttons = ['move', 'art', 'number', 'win/lose'];
-      buttons = ['art'];
+      buttons = ['move'];
     
     } else {
       
@@ -165,8 +165,8 @@ var ActionController = Ember.Object.extend({
     
     this.addButtonOption( 
       'What type of movement?', 
-      // ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop' ], 
-      ['directional', 'move to', 'jump to', 'swap', 'stop' ], 
+      // ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop' ],
+      ['roam'],
       this.action,
       1
     );

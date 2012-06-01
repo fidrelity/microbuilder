@@ -18,6 +18,24 @@ Area.prototype = {
     
   },
   
+  setPosition : function( x, y ) {
+    
+    this.x = x;
+    this.y = y;
+    
+    return this;
+    
+  },
+  
+  setSize : function( width, height ) {
+    
+    this.width = width;
+    this.height = height;
+    
+    return this;
+    
+  },
+  
   copy : function( area ) {
     
     return this.set( area.x, area.y, area.width, area.height );
@@ -72,6 +90,24 @@ Area.prototype = {
     
     this.width += vec.x;
     this.height += vec.y;
+    
+  },
+  
+  leavesArea : function( area ) {
+    
+    if ( !this.contains( area ) ) {
+      
+      return this.x > area.x ? 'x' : 'y';
+      
+    } else if ( !this.contains( { x : area.x + area.width, y : area.y + area.height } ) ) {
+      
+      return this.x + this.width < area.x + area.width ? 'width' : 'height';
+      
+    } else {
+      
+      return false;
+      
+    }
     
   },
   

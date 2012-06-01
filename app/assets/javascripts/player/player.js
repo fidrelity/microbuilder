@@ -367,7 +367,7 @@ Player.prototype = {
     
     if ( object ) {
       
-      this.selectedObjectDragCallback( object.ID, object.position );
+      this.selectedObjectDragCallback( object.ID, object.movement.position );
     
     }
     
@@ -468,7 +468,7 @@ Player.prototype = {
     if ( callback ) {
       
       this.selectedObjectDragCallback = callback;
-      callback( selectObject.ID, selectObject.position );
+      callback( selectObject.ID, selectObject.movement.position );
       
     }
     
