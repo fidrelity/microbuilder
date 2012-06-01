@@ -25,7 +25,7 @@ var FramePlayer = {
 
   initPlay : function(_object) {
     this.totalFrames = parseInt(_object.attr("data-frames"));
-    if(this.totalFrames === 1) return false;
+    if(this.totalFrames <= 1) return false;
 
     this.currentObject = _object;
     this.frameWidth = _object.width();
@@ -35,6 +35,7 @@ var FramePlayer = {
   },
 
   play : function() {
+    if(!this.currentObject) { this.stop(); return false; }
     var newPosition = -(this.frameWidth * this.currentFrameIndex);
     this.currentObject.css({"background-position" : newPosition });
 
