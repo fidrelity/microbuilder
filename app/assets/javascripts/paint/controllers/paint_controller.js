@@ -205,8 +205,9 @@ var PaintController =  Ember.ArrayController.extend({
     this.clearZoomCanvas();
   },
 
-  goToTypeSelection : function (_dontAsk) {
-    if(_dontAsk === false) {
+  // Resets paint and shows paintSizeView
+  goToTypeSelection : function (_ask) {   
+    if(_ask === true || typeof(_ask) === "object") {
       var ok = confirm("Erase all and go back to type selection?");
       if(!ok) return false;
     }
