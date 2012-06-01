@@ -170,3 +170,21 @@ Array.prototype.forEachApply = function( fn, a ) {
   });
   
 };
+
+Array.prototype.clone = function() {
+  
+  return this.concat();
+  
+};
+
+Array.max = function( array ) {
+  
+  return Math.max.apply( Math, array );
+  
+};
+
+Array.min = function( array ) {
+  
+  return Math.min.apply( Math, array );
+  
+};

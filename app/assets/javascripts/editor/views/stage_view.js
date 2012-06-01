@@ -1,6 +1,6 @@
 var StageView = Ember.View.extend({
   
-  templateName: 'templates/stage_template',
+  templateName: 'editor/templates/stage_template',
   
   player: null,
   

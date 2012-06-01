@@ -1,6 +1,6 @@
 var PaintSizeView = Ember.View.extend({
   
-  templateName: 'templates/paint_size_template',
+  templateName: 'paint/templates/paint_size_template',
   size : null,
   
   didInsertElement : function() {

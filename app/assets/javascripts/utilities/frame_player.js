@@ -58,8 +58,3 @@ var FramePlayer = {
   },
 
 };
-
-$(document).ready(function() {
-
-  FramePlayer.init();
-});

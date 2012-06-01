@@ -1,6 +1,6 @@
 var ActionView = Ember.View.extend({
   
-  templateName : 'templates/action_template',
+  templateName : 'editor/templates/action_template',
   
   actionBinding : 'App.actionController.action'
   

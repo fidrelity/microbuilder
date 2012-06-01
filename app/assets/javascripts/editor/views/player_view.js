@@ -1,6 +1,6 @@
 var PlayerView = Ember.View.extend({
 
-  templateName : 'templates/player_template',
+  templateName : 'editor/templates/player_template',
   
   canvasID : 'playerCanvas',
   

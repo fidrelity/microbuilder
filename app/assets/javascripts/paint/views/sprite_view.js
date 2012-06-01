@@ -1,6 +1,6 @@
 var SpriteView = Ember.View.extend({
   
-  templateName: 'templates/sprite_template',
+  templateName: 'paint/templates/sprite_template',
   sprite : null,
   
   didInsertElement : function() {

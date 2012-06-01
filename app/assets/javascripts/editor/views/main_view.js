@@ -1,6 +1,6 @@
 var MainView = Ember.View.extend({
   
-  templateName : 'templates/main_template',
+  templateName : 'editor/templates/main_template',
   
   gameBinding : 'App.game',
   
@@ -16,17 +16,17 @@ var MainView = Ember.View.extend({
     this.stageView = StageView.create();
     
     this.libraryView = Ember.View.create({
-      templateName : 'templates/library_template'
+      templateName : 'editor/templates/library_template'
     });
     
     this.objectsView = Ember.View.create({
-      templateName : 'templates/objects_template'
+      templateName : 'editor/templates/objects_template'
     });
     
     this.actionView = ActionView.create();
     
     this.publishView = Ember.View.create({
-      templateName : 'templates/publish_template'
+      templateName : 'editor/templates/publish_template'
     });
     
   },
