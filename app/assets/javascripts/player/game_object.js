@@ -54,7 +54,7 @@ GameObject.prototype = {
       
     } else if ( this.direction !== null ) {
       
-      vector.set( 1, 0 ).rotateSelf( this.direction );
+      vector.set( distance, 0 ).rotateSelf( this.direction );
       
       this.position.addSelf( vector );
       
