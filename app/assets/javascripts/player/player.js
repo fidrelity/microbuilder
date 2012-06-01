@@ -395,7 +395,7 @@ Player.prototype = {
     if ( this.game.gameObjects.length ) {
       
       this.selectObject = this.game.gameObjects[this.game.gameObjects.length - 1];
-      this.selectedObjectCallback( this.selectObject.ID );
+      // this.selectedObjectCallback( this.selectObject.ID );
       
     }
     
