@@ -11,9 +11,11 @@
         selectFunctionBinding = "App.gameObjectsController.select"
       }}
       
-        <li {{action "select"}}>
-        
-          <img {{bindAttr src="content.graphic.imagePath"}} />
+        <li {{action "select"}} class="graphic">
+        <div  class="frame_graphic" data-frames="{{unbound "content.graphic.frameCount"}}"
+          style="background-image:url({{unbound "content.graphic.imagePath"}});width:{{unbound "content.graphic.frameWidth"}}px;height:{{unbound "content.graphic.frameHeight"}}px;">
+        </div>
+
           <div> {{content.name}} </div>
         
         </li>
