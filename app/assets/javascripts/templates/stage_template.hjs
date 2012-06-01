@@ -25,24 +25,4 @@
 
 </div>
 
-{{#if gameObject}}
-{{#unless gameObject}}
-  <div style="border: 1px solid gray; margin: 5px; float: left">
-
-    {{#view GameObjectView contentBinding = "gameObject"}}
-
-        <img {{bindAttr src="content.graphic.imagePath"}} style="width:64px;height:64px;display:inline" />
-
-        {{view Ember.TextField valueBinding="content.name" maxlength="32" size="10"}}
-
-        <button {{action "changeArt"}}> change art </button>
-        <button {{action "toTop"}}> to top </button>
-        <button {{action "remove"}}> delete </button>
-
-    {{/view}}
-
-  </div>
-{{/unless}}
-{{/if}}
-
 <div class="clear"></div>

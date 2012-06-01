@@ -105,11 +105,19 @@ var GameModel = Ember.Object.extend({
   
   removeGameObject : function( gameObject ) {
     
-    this.startBehaviour.removeGameObject( gameObject );
+    var obj, i, j;
     
-    for ( i = 0; i < this.behaviours.length; i++ ) {
+    for ( i = 0; i < this.gameObjects.length; i++ ) {
       
-      this.behaviours[i].removeGameObject( gameObject );
+      obj = this.gameObjects[i];
+      
+      obj.startBehaviour.removeGameObject( gameObject );
+      
+      for ( j = 0; j < obj.behaviours.length; j++ ) {
+      
+        obj.behaviours[j].removeGameObject( gameObject );
+      
+      }
       
     }
     

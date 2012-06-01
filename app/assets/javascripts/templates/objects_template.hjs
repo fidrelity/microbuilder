@@ -33,6 +33,20 @@
   
   {{#if App.gameObjectsController.current}}
   
+    <div style="border: 1px solid gray; margin: 5px;">
+
+      {{#view GameObjectView contentBinding = "App.gameObjectsController.current"}}
+
+          <img {{bindAttr src="content.graphic.imagePath"}} style="width:64px;height:64px;display:inline" />
+
+          {{view Ember.TextField valueBinding="content.name" maxlength="32" size="10"}}
+
+          <button {{action "remove"}}> delete </button>
+
+      {{/view}}
+
+    </div>
+  
     <h3>Behaviours of {{App.gameObjectsController.current.name}}</h3>
 
     <ul id="behaviours">

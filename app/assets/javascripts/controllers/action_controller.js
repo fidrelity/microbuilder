@@ -36,7 +36,7 @@ var ActionController = Ember.Object.extend({
     } else {
       
       // buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
-      buttons = ['time'];
+      buttons = ['click', 'contact', 'time'];
     
     }
     
