@@ -88,11 +88,7 @@ var SelectView = RemoveView.extend({
     
     if ( !this.get( 'compares' ) ) {
       
-      var selectFunction = this.get( 'selectFunction' ),
-        controller = this.get( 'controller' ),
-        content = this.get( 'content' );
-      
-      selectFunction.call( controller, content );
+      this.selectFunction.call( this.controller, this.content );
       
       this.set( 'isSelected', true );
       

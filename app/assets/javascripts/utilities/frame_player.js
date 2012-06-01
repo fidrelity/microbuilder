@@ -10,7 +10,8 @@ var FramePlayer = {
   frameDuration : 1000,
 
   init : function() {
-    if($(this.selector).length) {
+
+    //if($(this.selector).length) {
       $(this.selector).live('mouseover', function() {
         FramePlayer.initPlay($(this).find(FramePlayer.dataSelector));
       });
@@ -19,7 +20,7 @@ var FramePlayer = {
         FramePlayer.stop();
         FramePlayer.reset();
       });
-    }
+    //}
   },
 
   initPlay : function(_object) {

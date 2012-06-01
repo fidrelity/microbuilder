@@ -92,3 +92,33 @@ var TimeView = Ember.View.extend({
   }
   
 });
+
+var FrameView = Ember.View.extend({
+  
+  observer : null,
+  graphic : null,
+  
+  templateName : 'editor/templates/frame_template',
+  
+  frames : null,
+  
+  init : function() {
+    
+    this._super();
+    
+    this.set( 'frames', [] );
+    
+    for ( var i = 1; i <= this.graphic.frameCount; i++ ) {
+      
+      this.frames.addObject({
+        number : i,
+        observer : this.observer,
+        frameWidth : this.graphic.frameWidth,
+        frameHeight : this.graphic.frameHeight
+      });
+      
+    }
+    
+  }
+  
+});

@@ -31,7 +31,7 @@ var ActionController = Ember.Object.extend({
     if ( mode === 'action' ) {
       
       // buttons = ['move', 'art', 'number', 'win/lose'];
-      buttons = ['move', 'win/lose'];
+      buttons = ['art'];
     
     } else {
       
@@ -149,6 +149,15 @@ var ActionController = Ember.Object.extend({
     
   },
   
+  addFrameOption : function( question, observer, depth ) {
+    
+    this.addOption( question, FrameView.extend({
+      observer : observer,
+      graphic : App.gameObjectsController.current.graphic
+    }), depth );
+    
+  },
+  
   move : function() {
   
     this.set( 'action', MoveActionModel.create() );
@@ -163,12 +172,19 @@ var ActionController = Ember.Object.extend({
   
   },
   
-  // art : function() {
-  //   
-  //   this.set( 'contentView', ArtActionView.create() );
-  //   this.set( 'action', ArtActionModel.create() );
-  //   
-  // },
+  art : function() {
+    
+    this.set( 'action', ArtActionModel.create() );
+    
+    this.addButtonOption( 
+      'How should the art change?', 
+      // ['to frame', 'play', 'stop' ], 
+      ['to frame'], 
+      this.action,
+      1
+    );
+    
+  },
 
   'win/lose' : function() {
     
