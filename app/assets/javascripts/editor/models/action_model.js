@@ -311,13 +311,17 @@ var ArtActionModel = ActionTriggerModel.extend({
   
   'to frame' : function() {
     
-    App.actionController.addFrameOption( 'Choose the frame', this, 2 );
+    this.set( 'type', 'frame' );
+    
+    App.actionController.addFrameOption( 'Choose the frame', 'frame', this, 2 );
     
   },
   
   play : function() {
     
+    this.set( 'type', 'play' );
     
+    App.actionController.addFrameOption( 'Choose the start frame', 'frame', this, 2 );
     
   },
   
@@ -329,7 +333,47 @@ var ArtActionModel = ActionTriggerModel.extend({
   
   setFrame : function( frame ) {
     
-    this.set( 'frame', frame.number );
+    this.set( frame.type, frame.number );
+    
+    if ( this.type === 'frame' ) {
+    
+      this.done();
+      
+    } else {
+      
+      if ( this.frame2 ) {
+        
+        App.actionController.addButtonOption( 'Choose animation mode?', ['loop', 'ping-pong', 'once'], this, 4 );
+        
+      } else {
+        
+        App.actionController.addFrameOption( 'Choose the end frame', 'frame2', this, 3 );
+        
+      }
+      
+    }
+    
+  },
+  
+  loop : function() {
+    
+    this.set( 'mode', 'loop' );
+    
+    this.done();
+    
+  },
+  
+  'ping-pong' : function() {
+    
+    this.set( 'mode', 'ping-pong' );
+    
+    this.done();
+    
+  },
+  
+  once : function() {
+    
+    this.set( 'mode', 'once' );
     
     this.done();
     

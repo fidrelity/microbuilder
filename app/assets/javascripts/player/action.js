@@ -75,15 +75,29 @@ var ArtAction = function() {
   this.frame;
   this.frame2;
   
-  this.mode;
+  this.mode; // ['loop', 'ping-pong', 'once']
   
 };
 
 ArtAction.prototype = {
   
-  execute : function() {
+  execute : null,
+  
+  executeFrame : function() {
     
     this.gameObject.setFrame( this.frame );
+    
+  },
+  
+  executePlay : function() {
+    
+    this.gameObject.playAnimation( this.frame, this.frame2, this.mode );
+    
+  },
+  
+  executeStop : function() {
+    
+    this.gameObject.stopAnimation();
     
   }
   

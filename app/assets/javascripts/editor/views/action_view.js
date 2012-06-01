@@ -97,6 +97,7 @@ var FrameView = Ember.View.extend({
   
   observer : null,
   graphic : null,
+  type : null,
   
   templateName : 'editor/templates/frame_template',
   
@@ -113,6 +114,7 @@ var FrameView = Ember.View.extend({
       this.frames.addObject({
         number : i,
         observer : this.observer,
+        type : this.type,
         frameWidth : this.graphic.frameWidth,
         frameHeight : this.graphic.frameHeight
       });

@@ -366,7 +366,7 @@ var Parser = {
     type: "art",
     frame: 0,
     frame2: 1,
-    mode : "loop"   ['loop', 'ping-pong', 'once']
+    mode : "loop"
   }
   
   {
@@ -384,6 +384,20 @@ var Parser = {
     action.frame2 = actionData.frame2;
     
     action.mode = actionData.mode;
+    
+    if ( actionData.frame2 ) {
+      
+      action.execute = action.executePlay;
+      
+    } else if ( actionData.frame ) {
+      
+      action.execute = action.executeFrame;
+      
+    } else {
+      
+      action.execute = action.executeStop;
+      
+    }
     
     return action;
     

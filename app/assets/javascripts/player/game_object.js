@@ -10,7 +10,7 @@ var GameObject = function( ID ) {
   this.graphic = null;
   this.startGraphic = null;
   
-  this.animationFrame = 1;
+  this.animation = new Animation();
   
   this.area = new Area();
   
@@ -25,7 +25,7 @@ GameObject.prototype = {
     this.position.copy( this.startPosition );
     this.graphic = this.startGraphic;
     
-    this.animationFrame = 1;
+    this.animation.setFrame( 1 );
     
     this.stop();
     
@@ -35,6 +35,8 @@ GameObject.prototype = {
     
     var vector = this.vector,
       distance = dt * 0.1;
+      
+    this.animation.update( dt );
     
     if ( this.target ) {
       
@@ -71,7 +73,7 @@ GameObject.prototype = {
     ctx.save();
     ctx.translate( pos.x, pos.y );
     
-    this.graphic.draw( ctx, this.animationFrame );
+    this.graphic.draw( ctx, this.animation.frame );
     
     ctx.restore();
     
@@ -133,7 +135,19 @@ GameObject.prototype = {
   
   setFrame : function( frame ) {
     
-    this.animationFrame = frame;
+    this.animation.setFrame( frame );
+    
+  },
+  
+  playAnimation : function( start, end, mode ) {
+    
+    this.animation.play( start, end, mode );
+    
+  },
+  
+  stopAnimation : function() {
+    
+    this.animation.stop();
     
   },
   
