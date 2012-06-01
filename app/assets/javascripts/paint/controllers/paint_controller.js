@@ -275,6 +275,8 @@ var PaintController =  Ember.ArrayController.extend({
     });
 
     this.addObject(spriteModel);
+
+    spriteModel.initView();
     $('.canvas').css({width: this.spriteSize.width, height: this.spriteSize.height});
     this.setCurrentSpriteModel(spriteModel);
     if(copy) this.getCurrentSpriteModel().pushState();
@@ -294,7 +296,8 @@ var PaintController =  Ember.ArrayController.extend({
   // ---------------------------------------
   // Getter And Setter
   setCurrentSpriteModel : function(spriteModel) {
-    if(!spriteModel) return false;
+    console.log( typeof(spriteModel) );
+    if(!spriteModel || typeof(spriteModel) !== 'object') return false;
     this.set('currentSprite', spriteModel);
     spriteModel.highlight();
     //this.pixelDrawer.setCanvasContext(spriteModel.canvas);

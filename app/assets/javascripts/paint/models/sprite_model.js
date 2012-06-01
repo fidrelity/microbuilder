@@ -16,9 +16,14 @@ var SpriteModel = Ember.Object.extend({
   init : function() {    
     this.states = [];
     this.id = "sprite" + this.index;
+    console.log("init model");
     //    
     this.appendToWrapper();
     //
+  },
+
+  initView : function() {
+    console.log("initView", this.id);
     this.canvas = document.getElementById(this.id);
     this.context = this.canvas.getContext("2d");
 
