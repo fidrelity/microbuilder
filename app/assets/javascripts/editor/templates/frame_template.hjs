@@ -1,0 +1,26 @@
+<ul class="frames" style="
+  background-image:url('{{unbound graphic.imagePath}}'); 
+  width:{{unbound graphic.imageWidth}}px;
+  height:{{unbound graphic.frameHeight}}px;
+">
+  
+  {{#each frames}}
+  
+    {{#view SelectView
+      contentBinding = "this"
+      controllerBinding = "observer"
+      selectFunctionBinding = "observer.setFrame"
+    }}
+    
+      <li class="frame" {{action "select"}} style="
+        width:{{unbound content.frameWidth}}px;
+        height:{{unbound content.frameHeight}}px;
+      ">
+        {{content.number}}
+      </li>
+    
+    {{/view}}
+  
+  {{/each}}
+  
+</div>

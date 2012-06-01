@@ -197,7 +197,7 @@ var Parser = {
       case 'swap' : return this.parseActionSwap( actionData, gameObject );
       case 'stop' : return new StopAction( gameObject );
       
-      case 'changeArt' : return this.parseActionChangeArt( actionData, gameObject );
+      case 'art' : return this.parseActionChangeArt( actionData, gameObject );
       
       case 'win' : return WinAction;
       case 'lose' : return LoseAction;
@@ -358,13 +358,23 @@ var Parser = {
   
 /**
   {
-    type: "changeArt",
-    objectID: 0,
-    graphicID: 1
+    type: "art",
+    frame: 0
+  }
+  
+  {
+    type: "art",
+    frame: 0,
+    frame2: 1,
+    mode : "loop"   ['loop', 'wave', 'once']
+  }
+  
+  {
+    type : "art"
   }
 */
   
-  parseActionChangeArt : function( actionData ) {
+  parseActionArt : function( actionData, gameObject ) {
     
     var action = new ArtAction();
     

@@ -92,6 +92,8 @@ var SelectView = RemoveView.extend({
         controller = this.get( 'controller' ),
         content = this.get( 'content' );
       
+      console.log( controller, selectFunction );
+      
       selectFunction.call( controller, content );
       
       this.set( 'isSelected', true );

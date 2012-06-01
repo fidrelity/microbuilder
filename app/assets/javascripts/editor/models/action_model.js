@@ -309,32 +309,74 @@ var MoveActionModel = ActionTriggerModel.extend({
 
 var ArtActionModel = ActionTriggerModel.extend({
   
-  type : 'art',
+  'to frame' : function() {
+    
+    App.actionController.addFrameOption( 'Choose the frame', this, 2 );
+    
+  },
   
-  gameObject : null,
-  graphic : null,
+  play : function() {
+    
+    
+    
+  },
   
-  getData : function( graphics ) {
+  stop : function() {
+    
+    this.done();
+    
+  },
   
-    if ( graphics.indexOf( this.graphic ) < 0 ) {
-      
-      graphics.push( this.graphic.getData() );
-      
-    }
-  
-    return {
-      type: 'changeArt',
-      objectID: this.gameObject.ID,
-      graphicID: this.graphic.ID
-    }
-  
+  setFrame : function( frame ) {
+    
+    this.set( 'frame', frame.number );
+    
+    this.done();
+    
   },
   
   string : function() {
     
-    return this.gameObject.name + ' changes art to ' + this.graphic.name;
+    var name = this.parentGameObject.name;
     
-  }.property( 'gameObject', 'graphic' )
+    if ( this.frame2 ) {
+      
+      name += ' plays animation from frame ' + this.frame + ' to ' + this.frame2 + ' in ' + this.mode;
+      
+    } else if ( this.frame ) {
+      
+      name += ' jumps to frame ' + this.frame;
+      
+    } else {
+      
+      name += ' stops the animation';
+      
+    }
+    
+    return name;
+    
+  }.property( 'frame', 'frame2', 'mode' ),
+  
+  getData : function() {
+  
+    var data = { type : 'art' };
+    
+    if ( this.frame ) {
+      
+      data.frame = this.frame;
+      
+    }
+    
+    if ( this.frame2 ) {
+      
+      data.frame2 = this.frame2;
+      data.mode = this.mode;
+      
+    }
+    
+    return data;
+  
+  }
   
 });
 
