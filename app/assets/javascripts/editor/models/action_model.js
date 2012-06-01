@@ -64,6 +64,16 @@ var ActionTriggerModel = Ember.Object.extend({
     
   },
   
+  speed : 2,
+  
+  speeds : ['very slow', 'slow', 'medium', 'fast', 'very fast'],
+  
+  setSpeed : function( speed ) {
+    
+    this.set( 'speed', speed );
+    
+  },
+  
   done : function() {
     
     App.actionController.set( 'showSaveButton', true );
@@ -388,29 +398,19 @@ var ArtActionModel = ActionTriggerModel.extend({
     
   },
   
-  loop : function() {
+  chooseMode : function( mode ) {
     
     this.set( 'mode', 'loop' );
     
-    this.done();
-    
-  },
-  
-  'ping-pong' : function() {
-    
-    this.set( 'mode', 'ping-pong' );
+    App.actionController.addSpeedOption( 'Set the speed of the animation', this, 5 );
     
     this.done();
     
   },
   
-  once : function() {
-    
-    this.set( 'mode', 'once' );
-    
-    this.done();
-    
-  },
+  loop : function() { this.chooseMode( 'loop' ); },
+  'ping-pong' : function() { this.chooseMode( 'ping-pong' ); },
+  once : function() { this.chooseMode( 'once' ); },
   
   string : function() {
     
@@ -418,7 +418,7 @@ var ArtActionModel = ActionTriggerModel.extend({
     
     if ( this.frame2 ) {
       
-      name += ' plays animation from frame ' + this.frame + ' to ' + this.frame2 + ' in ' + this.mode;
+      name += ' plays animation from frame ' + this.frame + ' to ' + this.frame2 + ' in ' + this.mode + ' ' + this.speeds[ this.speed ];
       
     } else if ( this.frame ) {
       
@@ -432,7 +432,7 @@ var ArtActionModel = ActionTriggerModel.extend({
     
     return name;
     
-  }.property( 'frame', 'frame2', 'mode' ),
+  }.property( 'frame', 'frame2', 'mode', 'speed' ),
   
   getData : function() {
   
@@ -448,6 +448,7 @@ var ArtActionModel = ActionTriggerModel.extend({
       
       data.frame2 = this.frame2;
       data.mode = this.mode;
+      data.speed = this.speed;
       
     }
     

@@ -124,3 +124,32 @@ var FrameView = Ember.View.extend({
   }
   
 });
+
+var SpeedView = Ember.View.extend({
+  
+  tagName : 'div',
+  
+  observer : null,
+  
+  didInsertElement : function() {
+    
+    var observer = this.observer;
+    
+    this.$().slider({
+      
+      value: 2,
+      
+      min: 0,
+      max: 4,
+      
+      slide: function( event, ui ) {
+        
+        observer.setSpeed( ui.value );
+        
+      }
+      
+    });
+    
+  }
+  
+});

@@ -386,6 +386,7 @@ var Parser = {
     action.frame2 = actionData.frame2;
     
     action.mode = actionData.mode;
+    action.speed = actionData.speed;
     
     if ( actionData.frame2 ) {
       

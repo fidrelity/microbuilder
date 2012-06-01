@@ -90,6 +90,7 @@ var ArtAction = function() {
   this.frame2;
   
   this.mode; // ['loop', 'ping-pong', 'once']
+  this.speed;
   
 };
 
@@ -105,7 +106,7 @@ ArtAction.prototype = {
   
   executePlay : function() {
     
-    this.gameObject.playAnimation( this.frame, this.frame2, this.mode );
+    this.gameObject.playAnimation( this.frame, this.frame2, this.mode, this.speed );
     
   },
   

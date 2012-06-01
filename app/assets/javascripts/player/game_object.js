@@ -109,9 +109,9 @@ GameObject.prototype = {
     
   },
   
-  playAnimation : function( start, end, mode ) {
+  playAnimation : function( start, end, mode, speed ) {
     
-    this.animation.play( start, end, mode );
+    this.animation.play( start, end, mode, speed );
     
   },
   
