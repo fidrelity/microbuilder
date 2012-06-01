@@ -42,6 +42,7 @@
           {{view Ember.TextField valueBinding="content.name" maxlength="32" size="10"}}
 
           <button {{action "remove"}}> delete </button>
+          <button {{action "duplicate"}}> duplicate </button>
 
       {{/view}}
 

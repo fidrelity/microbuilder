@@ -73,6 +73,13 @@ var GameObjectView = Ember.View.extend({
     
   },
   
+  duplicate : function() {
+    
+    App.game.duplicateGameObject( this.content );
+    App.mainView.stageView.updatePlayer();
+    
+  },
+  
   changeArt: function() {
     
     App.mainView.stageView.set( 'gameObject', this.content );

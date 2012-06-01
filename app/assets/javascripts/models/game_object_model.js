@@ -14,9 +14,45 @@ var GameObjectModel = Ember.Object.extend({
     this.ID = App.game.gameObjectCounter++;
     
     this.set( 'behaviours', [] );
-    this.set( 'startBehaviour', BehaviourModel.create());
     
+    this.set( 'startBehaviour', BehaviourModel.create());
     this.startBehaviour.addTrigger( StartTriggerModel.create() );
+    
+    
+  },
+  
+  clone : function() {
+    
+    var obj = GameObjectModel.create({
+      
+      name : this.name + 'Copy',
+      graphic : this.graphic,
+      position : new Vector( 30, 30 ).addSelf( this.position )
+      
+    });
+    
+    App.gameObjectsController.set( 'current', obj );
+    
+    obj.set( 'behaviours', this.cloneBehaviours() );
+    obj.set( 'startBehaviour', this.startBehaviour.clone() );
+    
+    App.obj = obj;
+    
+    return obj;
+    
+  },
+  
+  cloneBehaviours : function() {
+    
+    var b = [];
+    
+    for ( var i = 0; i < this.behaviours.length; i++ ) {
+      
+      b.push( this.behaviours[i].clone() );
+      
+    }
+    
+    return b;
     
   },
   

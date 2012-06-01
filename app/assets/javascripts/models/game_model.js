@@ -125,6 +125,12 @@ var GameModel = Ember.Object.extend({
     
   },
   
+  duplicateGameObject : function( gameObject ) {
+    
+    this.gameObjects.addObject( gameObject.clone() );
+    
+  },
+  
   setDuration : function( value ) {
     
     this.set( 'duration', 5 + Math.floor( value / 4 ) );

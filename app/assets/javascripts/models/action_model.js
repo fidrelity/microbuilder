@@ -8,6 +8,14 @@ var ActionTriggerModel = Ember.Object.extend({
     
   },
   
+  clone : function() {
+    
+    return ActionTriggerModel.create({
+      type : this.type,
+    });
+    
+  },
+  
   string : function() {
     
     return this.type
@@ -77,6 +85,22 @@ var MoveActionModel = ActionTriggerModel.extend({
     this._super();
     
     this.set( 'position', new Vector() );
+    
+  },
+  
+  clone : function() {
+    
+    return MoveActionModel.create({
+      
+      type : this.type,
+      
+      gameObject : this.gameObject,
+      position : this.position.clone(),
+      
+      random : this.random,
+      direction : this.direction
+      
+    });
     
   },
   
@@ -336,6 +360,15 @@ var WinLoseActionModel = ActionTriggerModel.extend({
 
 var ClickTriggerModel = ActionTriggerModel.extend({
   
+  clone : function() {
+    
+    return ClickTriggerModel.create({
+      gameObject : this.gameObject,
+      region : this.region ? this.region.clone() : null,
+    });
+    
+  },
+  
   'self' : function() {
     
     this.done();
@@ -422,6 +455,16 @@ var ContactTriggerModel = ActionTriggerModel.extend({
     
   },
   
+  clone : function() {
+    
+    return ContactTriggerModel.create({
+      type : this.type,
+      gameObject : this.gameObject,
+      region : this.region ? this.region.clone() : null,
+    });
+    
+  },
+  
   string : function() {
     
     var str = this.parentGameObject.name + ( this.type === 'touch' ? ' touches ' : ' overlaps ' );
@@ -489,6 +532,15 @@ var TimeTriggerModel = ActionTriggerModel.extend({
     
     this.set( 'time', time );
     this.set( 'time2', time2 );
+    
+  },
+  
+  clone : function() {
+    
+    return TimeTriggerModel.create({
+      time : this.time,
+      time2 : this.time2
+    });
     
   },
   

@@ -5,6 +5,12 @@ var AreaModel = Ember.Object.extend({
   width : 0,
   height : 0,
   
+  clone : function() {
+    
+    return AreaModel.create( this.getData() );
+    
+  },
+  
   getData : function() {
     
     return {

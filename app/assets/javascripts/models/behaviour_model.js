@@ -5,8 +5,31 @@ var BehaviourModel = Ember.Object.extend({
   
   init : function() {
     
-    this.triggers = [];
-    this.actions = [];
+    this.set( 'triggers', this.triggers || [] );
+    this.set( 'actions', this.actions || [] );
+    
+  },
+  
+  clone : function() {
+    
+    var a = [], t = [];
+    
+    for ( var i = 0; i < this.actions.length; i++ ) {
+      
+      a.push( this.actions[i].clone() );
+      
+    }
+    
+    for ( var i = 0; i < this.triggers.length; i++ ) {
+      
+      t.push( this.triggers[i].clone() );
+      
+    }
+    
+    return BehaviourModel.create({
+      triggers : t,
+      actions : a
+    });
     
   },
   
