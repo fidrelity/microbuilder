@@ -89,6 +89,29 @@ Area.prototype = {
       
     }
     
+  },
+  
+  string : function() {
+    
+    return '( ' + this.x + ' | ' + this.y + ' | ' + this.width + ' | ' + this.height + ' )';
+    
+  },
+  
+  log: function() {
+    
+    console.log( this.string() );
+    
+  },
+  
+  getData : function() {
+    
+    return {
+      x : this.x,
+      y : this.y,
+      width : this.width,
+      height : this.height
+    }
+    
   }
   
 };

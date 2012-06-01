@@ -12,6 +12,10 @@ var StageView = Ember.View.extend({
     
     this.$( '#slider' ).slider({
       
+      min: 5,
+      max: 30,
+      step: 5,
+      
       slide: function( event, ui ) {
         
         App.game.setDuration( ui.value );

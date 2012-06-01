@@ -133,7 +133,7 @@ var GameModel = Ember.Object.extend({
   
   setDuration : function( value ) {
     
-    this.set( 'duration', 5 + Math.floor( value / 4 ) );
+    this.set( 'duration', value );
     
   }
   

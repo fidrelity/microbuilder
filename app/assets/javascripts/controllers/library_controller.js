@@ -26,15 +26,15 @@ var LibraryController = Ember.ArrayController.extend({
     },
     {
       name : 'medium',
-      max : 96,
+      max : 128,
       min : 64,
-      string : 'medium (96 x 96)'
+      string : 'medium (128 x 128)'
     },
     {
       name : 'big',
-      max : 128,
-      min : 96,
-      string : 'big (128 x 128)'
+      max : 256,
+      min : 128,
+      string : 'big (256 x 256)'
     }
   ],
 
