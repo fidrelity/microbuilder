@@ -77,6 +77,7 @@ var PaintController =  Ember.ArrayController.extend({
       areaWrapper.find('#sprites-area').hide();
       $('#player').hide();
       $('#copySpriteButton').hide();
+      $('#clearSpritesButton').remove();
     } else {
       areaWrapper.find('#sprites-area').show();
       areaWrapper.find('.zoomButtons').show();
@@ -181,7 +182,7 @@ var PaintController =  Ember.ArrayController.extend({
       },
       
       success : function( data ) {        
-        App.paintController.goToTypeSelection(true);
+        //App.paintController.goToTypeSelection(false);
       }
       
     });
@@ -195,22 +196,22 @@ var PaintController =  Ember.ArrayController.extend({
       if(!ok) return false;
     }
 
-    for (var i = 0; i < this.content.length; i++) {
+    for (var i = this.content.length - 1; i >= 0; i--) {
       this.remove(this.content[i]);
     };
 
-    var first = this.content[this.content.length - 1];
-    first.reset();
-    this.setCurrentSpriteModel(first);
-    this.clearZoomCanvas();
+    this.spriteCounter = 0;
+    this.zoom = this.isBackground ? 1 : 2;
+    this.add();
   },
 
-  goToTypeSelection : function (_dontAsk) {
-    if(!_dontAsk) {
+  // Resets paint and shows paintSizeView
+  goToTypeSelection : function (_ask) {   
+    if(_ask === true || typeof(_ask) === "object") {
       var ok = confirm("Erase all and go back to type selection?");
       if(!ok) return false;
     }
-    
+        
     this.reset();
 
     App.paintView.remove();
@@ -274,6 +275,8 @@ var PaintController =  Ember.ArrayController.extend({
     });
 
     this.addObject(spriteModel);
+
+    spriteModel.initView();
     $('.canvas').css({width: this.spriteSize.width, height: this.spriteSize.height});
     this.setCurrentSpriteModel(spriteModel);
     if(copy) this.getCurrentSpriteModel().pushState();
@@ -283,7 +286,7 @@ var PaintController =  Ember.ArrayController.extend({
 
   // ---------------------------------------  
   remove : function(_spriteModel) {
-    if(this.content.length === 1) return false;
+    if(this.content.length === 0) return false;
     var spriteModel = _spriteModel || this.getCurrentSpriteModel();
     $("#" + spriteModel.id).remove();
     this.removeObject(_spriteModel);
@@ -293,7 +296,8 @@ var PaintController =  Ember.ArrayController.extend({
   // ---------------------------------------
   // Getter And Setter
   setCurrentSpriteModel : function(spriteModel) {
-    if(!spriteModel) return false;
+    console.log( typeof(spriteModel) );
+    if(!spriteModel || typeof(spriteModel) !== 'object') return false;
     this.set('currentSprite', spriteModel);
     spriteModel.highlight();
     //this.pixelDrawer.setCanvasContext(spriteModel.canvas);
