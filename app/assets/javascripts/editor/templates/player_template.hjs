@@ -1,3 +1,30 @@
-<div class="player">
-  <canvas {{bindAttr id="canvasID"}} style="background:#EEE;border:2px solid black;"></canvas>
-</div>
+{{#if showHTML}}
+
+  <div id="playerWrapper">
+    <canvas {{bindAttr id="canvasID"}}></canvas>
+  
+    <div class="playerStartScreen">
+      <div class="playButton"></div>
+      <h2> {{App.game.title}} </h2>
+      <p> {{App.game.instructions}} </p>
+    </div>
+  
+    <div class="playerWinScreen">
+      <div class="replayButton"></div>
+      You have won the game!
+    </div>
+  
+    <div class="playerLoseScreen">
+      <div class="replayButton"></div>
+      You have lost the game!
+    </div>
+  
+  </div>
+
+{{else}}
+
+  <div class="player">
+    <canvas {{bindAttr id="canvasID"}} style="background:#EEE;border:2px solid black;"></canvas>
+  </div>
+
+{{/if}}
