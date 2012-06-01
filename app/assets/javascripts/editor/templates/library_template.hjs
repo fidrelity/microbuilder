@@ -28,7 +28,7 @@
       <li {{action "select"}} class="graphic" style="width:{{unbound App.libraryController.size.max}}px;height:{{unbound App.libraryController.size.max}}px;">
 
         <div  class="frame_graphic" data-frames="{{unbound "content.frameCount"}}"
-          style="background-image:url({{unbound "content.imagePath"}});width:{{unbound "content.frameWidth"}}px;height:{{unbound "content.frameHeight"}}px;">
+          style="margin:auto;background-image:url({{unbound "content.imagePath"}});width:{{unbound "content.frameWidth"}}px;height:{{unbound "content.frameHeight"}}px;">
         </div>
 
         <div> {{content.name}} </div>

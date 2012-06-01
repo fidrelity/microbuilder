@@ -27,6 +27,13 @@ var GraphicModel = Ember.Object.extend({
   frameCount : 1,
   frameWidth : null,
   frameHeight : null,
+  totalWidth : null,
+
+  init : function() {
+
+    this.totalWidth = (this.frameWidth * this.frameCount) / 2;
+                      // (128 * 2) / 2
+  },
   
   getData : function() {
     

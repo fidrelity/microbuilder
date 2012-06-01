@@ -11,12 +11,17 @@
         selectFunctionBinding = "App.gameObjectsController.select"
       }}
       
-        <li {{action "select"}} class="graphic">
-        <div  class="frame_graphic" data-frames="{{unbound "content.graphic.frameCount"}}"
-          style="background-image:url({{unbound "content.graphic.imagePath"}});width:64px;height:64px;background-size: {{unbound "content.graphic.frameWidth"}}px 64px;">
-        </div>
+        <li {{action "select"}} class="graphic" style="width:96px;height:96px;">
 
-          <div> {{content.name}} </div>
+          <div  class="frame_graphic" data-frames="{{unbound "content.graphic.frameCount"}}"
+            style="background-image:url({{unbound "content.graphic.imagePath"}});
+                  background-repeat:no-repeat;
+                  margin:auto;
+                  width:64px;
+                  height:64px;
+                  background-size: {{unbound "content.graphic.totalWidth"}}px 64px;">
+          </div>
+          <div style="font-size:0.8em;text-align:center"> {{content.name}} </div>
         
         </li>
       
