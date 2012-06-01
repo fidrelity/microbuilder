@@ -39,15 +39,16 @@ class Graphic < ActiveRecord::Base
   
   protected
     def self.filter(backgrounds, min = nil, max = nil)
-      query = backgrounds ? self.backgrounds : self.without_backgrounds
+      query = backgrounds ? graphics = self.backgrounds : self.without_backgrounds
 
       unless backgrounds
         if min && max && min < max
-          return query.between_size(min, max)
+          graphics = query.between_size(min, max)
         else
           raise InvalidGraphicBoundaries, "Boundaries invalid"
         end
       end
+      graphics
     end
     
     def referenced?
