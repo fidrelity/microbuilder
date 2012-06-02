@@ -150,7 +150,23 @@ var FrameView = Ember.View.extend({
       
     }
     
-  }
+  },
+  
+  selected : function() {
+    
+    return this.observer[ this.type ];
+    
+  }.property( 'observer.frame', 'observer.frame2' ),
+  
+  divStyle : function() {
+    
+    var width = this.graphic.frameWidth,
+      height = Math.floor( this.graphic.frameHeight * 0.1 ),
+      offset = ( this.observer[ this.type ] - 1 ) * width;
+    
+    return 'width:' + width + 'px;height:' + height + 'px;background-color:black;margin-left:' + offset + 'px;';
+    
+  }.property( 'observer.frame', 'observer.frame2' )
   
 });
 
