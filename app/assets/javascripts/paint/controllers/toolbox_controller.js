@@ -85,6 +85,7 @@ var DrawToolModel = Ember.Object.extend({
   },
 
   mouseup : function(_options) {
+    if(!this.isActive) return false;
     this.isActive = false;
       
     // Set pixelDrawer canvas to zoom canvas

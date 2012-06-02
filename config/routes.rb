@@ -6,7 +6,7 @@ Playtin::Application.routes.draw do
   resources :users, :only => [:show] do
     collection do
       get '/current/graphics', :to => 'users#graphics'
-      get '/current/graphics/:select', :to => 'users#graphics'
+      get '/current/graphics/:backgrounds', :to => 'users#graphics'
     end
   end
   

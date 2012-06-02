@@ -31,12 +31,13 @@ var ActionController = Ember.Object.extend({
     if ( mode === 'action' ) {
       
       // buttons = ['move', 'art', 'number', 'win/lose'];
-      buttons = ['art'];
+      buttons = ['move', 'art', 'win/lose'];
+
     
     } else {
       
-      // buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
-      buttons = ['click', 'contact', 'time'];
+      buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
+      //buttons = ['click', 'contact', 'time'];
     
     }
     
@@ -149,11 +150,20 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  addFrameOption : function( question, observer, depth ) {
+  addFrameOption : function( question, type, observer, depth ) {
     
     this.addOption( question, FrameView.extend({
       observer : observer,
+      type : type,
       graphic : App.gameObjectsController.current.graphic
+    }), depth );
+    
+  },
+  
+  addSpeedOption : function( question, observer, depth ) {
+    
+    this.addOption( question, SpeedView.extend({
+      observer : observer
     }), depth );
     
   },
@@ -164,8 +174,7 @@ var ActionController = Ember.Object.extend({
     
     this.addButtonOption( 
       'What type of movement?', 
-      // ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop' ], 
-      ['directional', 'move to', 'jump to', 'swap', 'stop' ], 
+      ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop'],
       this.action,
       1
     );
@@ -178,8 +187,7 @@ var ActionController = Ember.Object.extend({
     
     this.addButtonOption( 
       'How should the art change?', 
-      // ['to frame', 'play', 'stop' ], 
-      ['to frame'], 
+      ['to frame', 'play', 'stop' ],
       this.action,
       1
     );

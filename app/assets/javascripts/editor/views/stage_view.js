@@ -90,6 +90,10 @@ var GameObjectView = Ember.View.extend({
     App.gameController.searchChangeGraphic();
     
   },
+
+  divStyle : function() {
+    return "background-image:url(" + this.content.graphic.imagePath + ");background-size:" + this.content.graphic.resizeWidth + "px 64px;";
+  }.property(),
   
   toTop: function() {
     

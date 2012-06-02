@@ -6,6 +6,8 @@ var MoveAction = function() {
   this.random = false;
   this.direction = null;
   
+  this.speed;
+  
 };
 
 MoveAction.prototype = {
@@ -20,27 +22,41 @@ MoveAction.prototype = {
   
   executeMoveTo : function() {
     
-    this.gameObject.setTarget( this.target );
+    this.gameObject.setTarget( this.target, this.speed );
     
   },
   
   executeMoveIn : function() {
     
+    var dir;
+    
     if ( this.random ) {
       
-      this.gameObject.setDirection( Math.random() * Math.PI * 2 );
+      dir = Math.random() * Math.PI * 2;
       
     } else if ( this.direction !== null ) {
       
-      this.gameObject.setDirection( this.direction );
+      dir = this.direction;
       
     } else {
       
-      this.gameObject.setDirection( this.target.sub( this.gameObject.position ).angle() );
+      dir = this.target.sub( this.gameObject.movement.position ).angle();
       
     }
     
+    this.gameObject.setDirection( dir, this.speed );
+    
   }
+  
+};
+
+var RoamAction = function( gameObject, mode, area, speed ) {
+  
+  this.execute = function() {
+    
+    gameObject.roam( mode, area, speed );
+    
+  };
   
 };
 
@@ -75,15 +91,30 @@ var ArtAction = function() {
   this.frame;
   this.frame2;
   
-  this.mode;
+  this.mode; // ['loop', 'ping-pong', 'once']
+  this.speed;
   
 };
 
 ArtAction.prototype = {
   
-  execute : function() {
+  execute : null,
+  
+  executeFrame : function() {
     
     this.gameObject.setFrame( this.frame );
+    
+  },
+  
+  executePlay : function() {
+    
+    this.gameObject.playAnimation( this.frame, this.frame2, this.mode, this.speed );
+    
+  },
+  
+  executeStop : function() {
+    
+    this.gameObject.stopAnimation();
     
   }
   

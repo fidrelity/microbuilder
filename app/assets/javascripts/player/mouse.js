@@ -12,11 +12,21 @@ var Mouse = function( player, canvas ) {
   
   this.canvasArea = new Area( 0, 0, 640, 390 );
   
+  this.mode;
+  
 }
 
 Mouse.prototype = {
   
   handleClick : function() {
+    
+    if ( this.mode === 'click' ) {
+      
+      return;
+      
+    }
+    
+    this.mode = 'click';
     
     $( this.canvas ).click( bind( this, this.click ) );
     
@@ -27,6 +37,14 @@ Mouse.prototype = {
   },
   
   handleDrag : function() {
+    
+    if ( this.mode === 'drag' ) {
+      
+      return;
+      
+    }
+    
+    this.mode = 'drag';
     
     $( this.canvas ).mousedown( bind( this, this.mousedown ) );
     $( this.canvas ).mousemove( bind( this, this.mousemove ) );
@@ -98,7 +116,16 @@ Mouse.prototype = {
     var offset = $( this.canvas ).offset(),
       i = this.player.edit ? this.player.increment : 0;
     
-    mouse.set( e.pageX - offset.left - i, e.pageY - offset.top - i );
+    mouse.set( e.pageX - offset.left, e.pageY - offset.top );
+    
+    if ( this.player.half ) {
+      
+      mouse.mulSelf( 2 );
+      
+    }
+    
+    mouse.x -= i;
+    mouse.y -= i;
     
   }
   

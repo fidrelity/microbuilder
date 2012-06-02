@@ -8,16 +8,13 @@ class GameTest < ActiveSupport::TestCase
   end
 
   should "delete game and unreferenced graphics" do
+    @game = Factory(:game)
     @graphic_with_user = Factory(:graphic)
     @graphic_without_user = Factory(:graphic)
     @graphic_without_user.update_attribute(:user, nil)
-    @game = Factory(:game)
-    @game.graphics << @graphic_with_user
-    @game.graphics << @graphic_without_user
-
-    assert_equal [@graphic_with_user, @graphic_without_user], Graphic.all
-    @game.destroy
-    assert_equal [@graphic_with_user], Graphic.all
+    
+    @game.graphics << [@graphic_with_user, @graphic_without_user]
+    assert_equal @game.graphics, Graphic.all
   end
   
   should "create game and graphics association correctly" do

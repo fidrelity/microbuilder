@@ -12,6 +12,8 @@ var QuestionView = Ember.View.extend({
   
   tagName : 'p',
   
+  classNames : ['clear'],
+  
   template: Ember.Handlebars.compile("{{content}}")
   
 });
@@ -22,9 +24,16 @@ var ButtonView = Ember.CollectionView.extend({
   
   observer : null,
   
+  classNames : ['btn-group'],
+  
+  attributeBindings: ["data-toggle"],
+  'data-toggle': 'buttons-radio',
+  
   itemViewClass: Ember.View.extend({
     
     tagName : 'button',
+    
+    classNames : ['btn'],
     
     template: Ember.Handlebars.compile("{{content}}"),
     
@@ -97,6 +106,7 @@ var FrameView = Ember.View.extend({
   
   observer : null,
   graphic : null,
+  type : null,
   
   templateName : 'editor/templates/frame_template',
   
@@ -113,11 +123,41 @@ var FrameView = Ember.View.extend({
       this.frames.addObject({
         number : i,
         observer : this.observer,
+        type : this.type,
         frameWidth : this.graphic.frameWidth,
         frameHeight : this.graphic.frameHeight
       });
       
     }
+    
+  }
+  
+});
+
+var SpeedView = Ember.View.extend({
+  
+  tagName : 'div',
+  
+  observer : null,
+  
+  didInsertElement : function() {
+    
+    var observer = this.observer;
+    
+    this.$().slider({
+      
+      value: 2,
+      
+      min: 0,
+      max: 4,
+      
+      slide: function( event, ui ) {
+        
+        observer.setSpeed( ui.value );
+        
+      }
+      
+    });
     
   }
   

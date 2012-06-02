@@ -38,6 +38,7 @@
 
 #editor ul.graphics li {
   float:left;
+  overflow:hidden;
   background:#ccc;
   margin: 0 10px 10px 0;
   opacity:0.8;
@@ -151,4 +152,9 @@
 #editor .frame:hover {
   background-color: #CCC;
   opacity: 0.2;
+}
+
+#editor .libraryGraphic {
+  background-repeat:no-repeat;
+  width:64px; height:64px;
 }
