@@ -37,6 +37,7 @@ Playtin::Application.routes.draw do
   
   #get '/games/auto_search'
   #get '/games/autocomplete_game_title'
+  get '/itest', :to => 'pages#imgtest'
   get '/imprint', :to => 'pages#imprint'
   get '/gallery(/:type)', :to => 'games#index', :as => 'gallery'
   get '/play/:id', :to => 'games#show', :as => 'play'

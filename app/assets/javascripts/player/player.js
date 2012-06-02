@@ -128,7 +128,7 @@ Player.prototype = {
     
   },
   
-  parse : function( data, callback ) {    
+  parse : function( data, callback, corsSave ) {    
     var self = this;
     
     this.fsm.parse();
@@ -152,8 +152,8 @@ Player.prototype = {
         callback();
         
       }
-      
-    });
+        
+    }, corsSave);
     
   },
   

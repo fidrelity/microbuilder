@@ -10,6 +10,5 @@ class PagesController < ApplicationController
 
   def imgtest
   end
-    
-  end
+  
 end

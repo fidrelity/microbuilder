@@ -3,7 +3,7 @@ var Parser = {
   game : null,
   loader : null,
   
-  parseData : function( data, game, callback ) {
+  parseData : function( data, game, callback, corsSave ) {
     
     var graphics = data.graphics,
       gameObjects = data.gameObjects,
@@ -11,6 +11,7 @@ var Parser = {
     
     this.game = game;
     this.loader = new Loader( callback );
+    this.loader.corsSave = corsSave;
     
     game.duration = ( data.duration || 5 ) * 1000;
     

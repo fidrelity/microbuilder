@@ -1,18 +1,21 @@
 %h2
   Heppi tunneling
 
-%canvas{:id=>"c", :width=>"300", :height=>"300"}
+%canvas{:id=>"c", :width=>"300", :height=>"300", :style=>"background:#CCC;"}
 
-:plain
+:javascript
   $(document).ready(function(){
     var canvas = document.getElementById("c");
-    var context = canvas.getContext("2d");
+    var context = canvas.getContext("2d");    
     
     var newI = new Image();
 
     newI.onload = function() {
         context.drawImage(newI ,0 ,0, 100, 100);
         var l = canvas.toDataURL("image/png");
+        console.log(l);
     }
+
+    newI.src = "/s3?url=https://s3.amazonaws.com/mbgfx/graphics/6/head.png";
 
   });
