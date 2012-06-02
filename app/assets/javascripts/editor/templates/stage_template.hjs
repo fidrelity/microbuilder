@@ -1,12 +1,20 @@
-<div id="stageControls">
-  <button class="btn" {{action "showObjects" target="App.gameController"}}> objects </button>
-  <button class="btn" {{action "searchBackground" target="App.gameController"}}> background </button>
-  <div>duration:</div>
-  <div id="slider"></div>
-  <div>{{App.game.duration}} seconds</div>
+<div id="" class="row form-inline" style="margin-bottom:2em;">
+  <div class="btn-group span4 offset1">
+    <button class="btn-large btn-primary" {{action "showObjects" target="App.gameController"}}> objects </button>
+    <button class="btn-large btn-primary" {{action "searchBackground" target="App.gameController"}}> background </button>
+  </div>
+  <div class="span5 offset2">
+
+    <div class="row">
+      <div class="span1"><span class="label">Duration:</span></div>
+      <div class="span2"><div id="slider"></div></div>
+      <div class="span2"><span>{{App.game.duration}} seconds</span></div>
+    </div>
+    
+  </div>    
 </div>
 
-<div class="clear"></div>
+<div class="row"></div>
 
 {{view PlayerView 
   type="stage"
@@ -14,17 +22,18 @@
   playerBinding="player"
 }}
 
-  
-<span class="btn-group">
-
-  <button class="btn" {{action "play"}}> play </button>
-  <button class="btn" {{action "stop"}}> stop </button>
-
-</span>
-
-<button class="btn" {{action "debug"}}  data-toggle="button"> debug </button>
-
-<button class="btn right" style="margin-right:100px" {{action "finalize" target="App.gameController"}}> finalize </button>
+<div class="row control-group form-actions" style="margin-top:2em">
+  <div class="span8">  
+    <span class="btn-group">
+      <button class="btn" {{action "play"}}><i class="icon-play"></i> play </button>
+      <button class="btn" {{action "stop"}}><i class="icon-stop"></i> stop </button>
+      <button class="btn" {{action "debug"}} data-toggle="button"> <i class="icon-wrench"></i> debug mode </button>
+    </span>
+  </div>
+  <div class="span3">
+    <button class="btn-large btn-success right" style="margin-right:0px" {{action "finalize" target="App.gameController"}}> Finalize game </button>
+  </div>
+</div>
 
 <div class="clear" style="height:100px">
   

@@ -85,7 +85,15 @@
           <li class="colorBlock" data-color="#4096EE" style="background-color:#4096EE"></li>
           <li class="colorBlock" data-color="#356AA0" style="background-color:#356AA0"></li>
           <li class="colorBlock" data-color="#3F4C6B" style="background-color:#3F4C6B"></li>
-          <li class="colorBlock" data-color="#FF0084" style="background-color:#FF0084"></li>    
+          <li class="colorBlock" data-color="#FF0084" style="background-color:#FF0084"></li>
+
+          <li class="colorBlock" data-color="#FACAA0" style="background-color:#FACAA0"></li>
+          <li class="colorBlock" data-color="#945E2F" style="background-color:#945E2F"></li>
+          <li class="colorBlock" data-color="#8C8B89" style="background-color:#8C8B89"></li>
+          <li class="colorBlock" data-color="#AF1BBF" style="background-color:#AF1BBF"></li>
+          <li class="colorBlock" data-color="#999560" style="background-color:#999560"></li>
+          <li class="colorBlock" data-color="#3B3B3B" style="background-color:#3B3B3B"></li>
+
         {{/view}}
       </ul>
     </div>

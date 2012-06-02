@@ -142,3 +142,21 @@
   background-repeat:no-repeat;
   width:64px; height:64px;
 }
+
+
+#editor .player {
+  margin:auto;
+  width:840px;
+  overflow:hidden;
+}
+
+/* Publish */
+#publishView label {
+  font-size:1.2em;
+  font-weight:bold;
+}
+
+/* Snapshot */
+#snapshots {  margin-top:3em;}
+#snapshots li {  cursor:pointer;}
+#snapshots li.active {  background:#BBB;}

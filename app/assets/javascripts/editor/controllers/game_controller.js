@@ -131,7 +131,7 @@ var GameController = Ember.Object.extend({
   
   finalize : function() {
     
-    App.mainView.show( 'overlayContent', 'publishView' );
+    App.mainView.show( 'overlayContent', 'publishView' ); 
     
   },
   
@@ -234,21 +234,36 @@ var GameController = Ember.Object.extend({
 
   takePreviewSnapshot : function() {
     var canvas = document.getElementById("testCanvas");
+
+    var listElements = $('#snapshots').find("li");
  
     var img_data = canvas.toDataURL("image/png");
-    var screenshot = '<li><img src="'+img_data+'" width="210" height="130" class="thumb"><br><input type="radio" value="" name="previewImage" data-id=""></li>';
+    var num = listElements.length;
+    var screenshot = '<li class="thumbnail"><img src="'+img_data+'" width="210" height="130" class="thumb"><br><span class="label"><input type="radio" value="" name="previewImage"> Screen '+num+'</span></li>';
     
-    $('#thumbnail').append(screenshot);
+    $('#snapshots').append(screenshot);
+    //    
+    this.setActiveSnapshot($('#snapshots').find("li").last());
+  },
+
+  // highlight selected snapshot element
+  setActiveSnapshot : function(_obj) {
+
+    _obj.find('input[type="radio"]').attr("checked", "checked");
+
+    $('#snapshots').find('li').removeClass('active');
+    _obj.addClass('active');
+
   },
 
   // Returns Base64 encoded data of img
   getSelectedSnapshotData : function() {
-    var selectedRadio = $('#thumbnail').find('li').find('input[type="radio"]:checked');
+    var selectedRadio = $('#snapshots').find('li').find('input[type="radio"]:checked');
 
     // Take automatic snapshot, if user didnt
     if(!selectedRadio.length) {
       this.takePreviewSnapshot();
-      selectedRadio = $('#thumbnail').find('li').find('input[type="radio"]').first().prop("checked", true);
+      selectedRadio = $('#snapshots').find('li').find('input[type="radio"]').first().prop("checked", true);
     }
 
     var selectedImg = selectedRadio.parent().find('img');
