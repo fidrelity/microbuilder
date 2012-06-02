@@ -526,7 +526,13 @@ var WinLoseActionModel = ActionTriggerModel.extend({
     
     App.actionController.set( 'showSaveButton', true );
     
-  }
+  },
+  
+  string : function() {
+    
+    return this.type + ' the game';
+    
+  }.property( 'type' ),
   
 });
 

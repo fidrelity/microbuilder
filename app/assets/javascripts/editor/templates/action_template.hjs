@@ -1,14 +1,14 @@
-<h2>Action/Trigger Editor</h2>
-
 {{dynamicView App.actionController.contentView}}
 
 {{#if App.actionController.showSaveButton}}
 
-  <p>{{App.actionController.action.string}}</p>
+  <p>Is your {{App.actionController.mode}} correct?</p>
 
-  <button {{action "save" target="App.actionController"}}> save </button>
-  <br />
+  <p>
+    {{App.actionController.action.string}} 
+    <button class="btn" {{action "save" target="App.actionController"}}> save </button>
+  </p>
 
 {{/if}}
 
-<button {{action "showObjects" target="App.gameController"}}> cancel </button>
+<button class="btn" {{action "showObjects" target="App.gameController"}}> cancel </button>

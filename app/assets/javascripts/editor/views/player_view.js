@@ -56,7 +56,7 @@ var PlayerView = Ember.View.extend({
       
     } else {
       
-      player.parse( App.game.getData().game );
+      player.parse( App.game.getData().game, null, this.corsSave );
       
     }
 

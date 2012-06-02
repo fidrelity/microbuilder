@@ -23,4 +23,8 @@
   
   {{/each}}
   
+  {{#if selected}}
+    <div {{bindAttr style="divStyle"}}></div>
+  {{/if}}
+  
 </div>

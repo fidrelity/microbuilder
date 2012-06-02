@@ -81,6 +81,11 @@ $(document).ready(function() {
   $('.closeLayer').click(function() {
     $('.layer').hide();
   });
+
+
+  $('.likeButton').click(function() {    
+    $(this).attr('disabled', 'disabled');
+  });
   // ---------------------------------------
 
 });

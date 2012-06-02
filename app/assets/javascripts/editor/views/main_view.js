@@ -16,10 +16,12 @@ var MainView = Ember.View.extend({
     this.stageView = StageView.create();
     
     this.libraryView = Ember.View.create({
+      heading : 'Library',
       templateName : 'editor/templates/library_template'
     });
     
     this.objectsView = Ember.View.create({
+      heading : 'Objects & Behaviour',
       templateName : 'editor/templates/objects_template'
     });
     
@@ -78,29 +80,15 @@ var RemoveView = Ember.View.extend({
 
 var SelectView = RemoveView.extend({
   
-  compareContent : null,
-  
   selectFunction : null,
   
-  isSelected : false,
+  collection : null,
   
   select : function() {
     
-    if ( !this.get( 'compares' ) ) {
-      
-      this.selectFunction.call( this.controller, this.content );
-      
-      this.set( 'isSelected', true );
-      
-    }
+    this.selectFunction.call( this.controller, this.content );
     
-  },
-  
-  compares : function() {
-    
-    return this.get( 'content' ) === this.get( 'compareContent' );
-    
-  }.property( 'compareContent' )
+  }
   
 });
 

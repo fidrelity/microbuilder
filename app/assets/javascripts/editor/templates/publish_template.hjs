@@ -11,6 +11,7 @@
   canvasID="testCanvas"
   playerBinding="player"
   showHTML="true"
+  corsSave="true"
 }}
 
 <button {{action "publishGame" target="App.gameController"}}>publish</button>

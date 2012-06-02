@@ -1,0 +1,6 @@
+<div 
+    {{bindAttr style="divStyle"}}
+    class="libraryGraphic">
+</div>
+
+<div style="font-size:0.8em;text-align:center"> {{content.name}} </div>

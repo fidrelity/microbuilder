@@ -5,7 +5,7 @@
       {{#view ToolView
         toolBinding = "App.pencilTool"
       }}
-        <button {{action "pencil"}}>PencilTool</button>     
+        <button {{action "pencil"}}>Pencil</button>     
         <button {{action "erase"}}>Eraser</button>       
       {{/view}}
 
