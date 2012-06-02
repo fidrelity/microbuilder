@@ -11,7 +11,6 @@ var PaintSizeView = Ember.View.extend({
       maxWidth : 256,
       maxHeight : 256,
       stop: function(event, ui) { 
-        console.log(ui.size)
         //$('#zoomCanvas').css({ width: ui.width, height: ui.height}).attr('width', ui.width).attr('height', ui.height);
       }
 

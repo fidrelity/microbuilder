@@ -280,6 +280,10 @@ var PaintController =  Ember.ArrayController.extend({
     spriteModel.initView();
     $('.canvas').css({width: this.spriteSize.width, height: this.spriteSize.height});
     this.setCurrentSpriteModel(spriteModel);
+
+    // Draw white background
+    if(this.isBackground) this.fillBackground("#FFFFFF");
+
     if(copy) this.getCurrentSpriteModel().pushState();
 
     this.updateZoom();
@@ -344,6 +348,14 @@ var PaintController =  Ember.ArrayController.extend({
     this.spriteSize = _obj;
   },
 
+  fillBackground : function(_color) {
+    if(_color) {
+      this.getCurrentSpriteModel().context.fillStyle = _color;
+      this.getCurrentSpriteModel().context.fillRect(0, 0, this.spriteSize.width, this.spriteSize.height);
+      $('#zoomCanvas').css({ 'background-image' : 'none'});
+    }
+  },
+
   // ---------------------------------------
   showPaintView : function() {
     this.set( 'tabState', 'paint' );
@@ -375,6 +387,7 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   clearZoomCanvas : function() {
+    if(this.isBackground) this.fillBackground("#FFFFFF");
     this.zoomContext.clearRect(0, 0, this.zoomCanvas.width, this.zoomCanvas.height);
   },
 
