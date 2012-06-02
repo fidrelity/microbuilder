@@ -116,7 +116,16 @@ Mouse.prototype = {
     var offset = $( this.canvas ).offset(),
       i = this.player.edit ? this.player.increment : 0;
     
-    mouse.set( e.pageX - offset.left - i, e.pageY - offset.top - i );
+    mouse.set( e.pageX - offset.left, e.pageY - offset.top );
+    
+    if ( this.player.half ) {
+      
+      mouse.mulSelf( 2 );
+      
+    }
+    
+    mouse.x -= i;
+    mouse.y -= i;
     
   }
   
