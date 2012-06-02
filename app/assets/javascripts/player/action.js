@@ -6,6 +6,8 @@ var MoveAction = function() {
   this.random = false;
   this.direction = null;
   
+  this.speed;
+  
 };
 
 MoveAction.prototype = {
@@ -20,7 +22,7 @@ MoveAction.prototype = {
   
   executeMoveTo : function() {
     
-    this.gameObject.setTarget( this.target );
+    this.gameObject.setTarget( this.target, this.speed );
     
   },
   
@@ -42,17 +44,17 @@ MoveAction.prototype = {
       
     }
     
-    this.gameObject.setDirection( dir );
+    this.gameObject.setDirection( dir, this.speed );
     
   }
   
 };
 
-var RoamAction = function( gameObject, mode, area ) {
+var RoamAction = function( gameObject, mode, area, speed ) {
   
   this.execute = function() {
     
-    gameObject.roam( mode, area );
+    gameObject.roam( mode, area, speed );
     
   };
   

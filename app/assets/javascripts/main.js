@@ -18,7 +18,7 @@ function editor_main() {
   setTimeout( function() {
   
     // App.gameController.selectGraphic( App.libraryController.get( 'content' )[0] );
-    // App.gameController.selectGraphic( App.libraryController.get( 'content' )[1] );
+    App.gameController.selectGraphic( App.libraryController.get( 'content' )[1] );
     App.gameController.selectGraphic( App.libraryController.get( 'content' )[3] );
     
     App.mainView.hideOverlay();

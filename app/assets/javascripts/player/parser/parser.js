@@ -194,7 +194,8 @@ var Parser = {
       case 'moveTo' : return this.parseActionMoveTo( actionData, gameObject );
       case 'moveIn' : return this.parseActionMoveIn( actionData, gameObject );
       
-      case 'roam' : return new RoamAction( gameObject, actionData.mode, new Area().copy( actionData.area ) );
+      case 'roam' : return new RoamAction( 
+        gameObject, actionData.mode, new Area().copy( actionData.area ), actionData.speed );
       
       case 'swap' : return this.parseActionSwap( actionData, gameObject );
       case 'stop' : return new StopAction( gameObject );
@@ -271,6 +272,7 @@ var Parser = {
     action.execute = action.executeMoveTo;
     
     action.gameObject = gameObject;
+    action.speed = actionData.speed;
     
     if ( actionData.objectID ) {
     
@@ -319,6 +321,7 @@ var Parser = {
     action.execute = action.executeMoveIn;
     
     action.gameObject = gameObject;
+    action.speed = actionData.speed;
     
     if ( typeof actionData.angle !== 'undefined' ) {
     

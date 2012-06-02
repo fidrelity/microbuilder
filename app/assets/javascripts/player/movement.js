@@ -11,9 +11,13 @@ var Movement = function() {
   this.roamArea;
   this.roamMode;
   
+  this.speed;
+  
 };
 
 Movement.prototype = {
+  
+  speeds : [0.01, 0.03, 0.08, 0.2, 0.5],
   
   reset : function() {
     
@@ -39,19 +43,21 @@ Movement.prototype = {
     
   },
   
-  setTarget : function( pos ) {
+  setTarget : function( pos, speed ) {
     
     this.stop();
     
     this.target = pos;
+    this.speed = speed;
     
   },
   
-  setDirection : function( dir ) {
+  setDirection : function( dir, speed ) {
     
     this.stop();
     
     this.direction = dir;
+    this.speed = speed;
     
   },
   
@@ -63,7 +69,7 @@ Movement.prototype = {
     
   },
   
-  roam : function( object, mode, area ) {
+  roam : function( object, mode, area, speed ) {
     
     var objArea = this.getArea(),
       increase;
@@ -72,6 +78,8 @@ Movement.prototype = {
     
     this.roamMode = mode;
     this.roamArea = area;
+    
+    this.speed = speed;
     
     if ( area.width < objArea.width ) {
       
@@ -121,13 +129,15 @@ Movement.prototype = {
   
   update : function( dt ) {
     
+    var speed = this.speeds[ this.speed ];
+    
     if ( this.target ) {
       
-      this.updateTarget( dt * 0.1 );
+      this.updateTarget( dt * speed );
       
     } else if ( this.direction !== null ) {
       
-      this.updateDirection( dt * 0.1 );
+      this.updateDirection( dt * speed );
     
     }
     

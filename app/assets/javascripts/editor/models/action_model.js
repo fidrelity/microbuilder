@@ -76,6 +76,12 @@ var ActionTriggerModel = Ember.Object.extend({
   
   done : function() {
     
+    if ( this.addSpeed ) {
+      
+      App.actionController.addSpeedOption( 'Set the speed of the movement', this, this.addSpeed );
+      
+    }
+    
     App.actionController.set( 'showSaveButton', true );
     
   }
@@ -137,6 +143,8 @@ var MoveActionModel = ActionTriggerModel.extend({
       3 
     );
     
+    this.set( 'addSpeed', 4 );
+    
     this.done();
     
   },
@@ -145,7 +153,8 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     this.set( 'random', true );
     
-    App.actionController.updateDepth( 3 );
+    this.set( 'addSpeed', 3 );
+    
     this.done();
     
   },
@@ -196,6 +205,13 @@ var MoveActionModel = ActionTriggerModel.extend({
     }
     
     App.actionController.addLocationOption( question, this, 3 );
+    
+    if ( type !== 'jumpTo' ) {
+    
+      this.set( 'addSpeed', 4 );
+    
+    }
+    
     this.done();
     
   },
@@ -221,6 +237,12 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     App.actionController.addObjectsOption( question, this, 3 );
     
+    if ( type !== 'jumpTo' ) {
+    
+      this.set( 'addSpeed', 4 );
+    
+    }
+    
   },
   
   roam : function() {
@@ -239,6 +261,8 @@ var MoveActionModel = ActionTriggerModel.extend({
     this.set( 'mode', mode );
     
     App.actionController.addAreaOption( 'Select the area where <gameObject> should roam', this, 3 );
+    
+    this.set( 'addSpeed', 4 );
     
   },
   
@@ -271,7 +295,10 @@ var MoveActionModel = ActionTriggerModel.extend({
   
   getData : function() {
     
-    var obj = { type : this.type };
+    var obj = { 
+      type : this.type, 
+      speed : this.speed
+    };
     
     if ( this.random ) {
       
@@ -344,9 +371,15 @@ var MoveActionModel = ActionTriggerModel.extend({
       
     }
     
+    if ( this.addSpeed ) {
+      
+      name += ' - ' + this.speeds[ this.speed ];
+      
+    }
+    
     return name;
     
-  }.property( 'type', 'position', 'gameObject', 'random', 'mode', 'region' )
+  }.property( 'type', 'position', 'gameObject', 'random', 'mode', 'region', 'speed' )
   
 });
 

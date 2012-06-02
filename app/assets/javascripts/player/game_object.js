@@ -67,21 +67,21 @@ GameObject.prototype = {
     
   },
   
-  setTarget : function( pos ) {
+  setTarget : function( pos, speed ) {
     
-    this.movement.setTarget( pos );
-    
-  },
-  
-  setDirection : function( dir ) {
-    
-    this.movement.setDirection( dir );
+    this.movement.setTarget( pos, speed );
     
   },
   
-  roam : function( mode, area ) {
+  setDirection : function( dir, speed ) {
     
-    this.movement.roam( this, mode, area );
+    this.movement.setDirection( dir, speed );
+    
+  },
+  
+  roam : function( mode, area, speed ) {
+    
+    this.movement.roam( this, mode, area, speed );
     
   },
   
