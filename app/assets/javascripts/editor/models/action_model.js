@@ -64,7 +64,23 @@ var ActionTriggerModel = Ember.Object.extend({
     
   },
   
+  speed : 2,
+  
+  speeds : ['very slow', 'slow', 'medium', 'fast', 'very fast'],
+  
+  setSpeed : function( speed ) {
+    
+    this.set( 'speed', speed );
+    
+  },
+  
   done : function() {
+    
+    if ( this.addSpeed ) {
+      
+      App.actionController.addSpeedOption( 'Set the speed of the movement', this, this.addSpeed );
+      
+    }
     
     App.actionController.set( 'showSaveButton', true );
     
@@ -127,6 +143,8 @@ var MoveActionModel = ActionTriggerModel.extend({
       3 
     );
     
+    this.set( 'addSpeed', 4 );
+    
     this.done();
     
   },
@@ -135,7 +153,8 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     this.set( 'random', true );
     
-    App.actionController.updateDepth( 3 );
+    this.set( 'addSpeed', 3 );
+    
     this.done();
     
   },
@@ -186,6 +205,13 @@ var MoveActionModel = ActionTriggerModel.extend({
     }
     
     App.actionController.addLocationOption( question, this, 3 );
+    
+    if ( type !== 'jumpTo' ) {
+    
+      this.set( 'addSpeed', 4 );
+    
+    }
+    
     this.done();
     
   },
@@ -211,7 +237,39 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     App.actionController.addObjectsOption( question, this, 3 );
     
+    if ( type !== 'jumpTo' ) {
+    
+      this.set( 'addSpeed', 4 );
+    
+    }
+    
   },
+  
+  roam : function() {
+    
+    this.set( 'type', 'roam' );
+    
+    App.actionController.addButtonOption( 'Which type of roaming?',
+     // ['wiggle', 'reflect', 'insect', 'bounce'], 
+     ['wiggle', 'reflect', 'insect'], 
+     this, 2 );
+    
+  },
+  
+  chooseMode : function( mode ) {
+    
+    this.set( 'mode', mode );
+    
+    App.actionController.addAreaOption( 'Select the area where <gameObject> should roam', this, 3 );
+    
+    this.set( 'addSpeed', 4 );
+    
+  },
+  
+  wiggle : function() { this.chooseMode( 'wiggle' ); },
+  reflect : function() { this.chooseMode( 'reflect' ); },
+  insect : function() { this.chooseMode( 'insect' ); },
+  bounce : function() { this.chooseMode( 'bounce' ); },
   
   swap : function() {
     
@@ -237,7 +295,10 @@ var MoveActionModel = ActionTriggerModel.extend({
   
   getData : function() {
     
-    var obj = { type : this.type };
+    var obj = { 
+      type : this.type, 
+      speed : this.speed
+    };
     
     if ( this.random ) {
       
@@ -250,6 +311,11 @@ var MoveActionModel = ActionTriggerModel.extend({
     } else if ( this.gameObject ) {
       
       obj.objectID = this.gameObject.ID;
+      
+    } else if ( this.mode ) {
+      
+      obj.mode = this.mode;
+      obj.area = this.region.getData();
       
     } else {
       
@@ -295,15 +361,25 @@ var MoveActionModel = ActionTriggerModel.extend({
       
       name += ' swaps position with ' + other;
       
+    } else if ( type === 'roam' ) {
+      
+      name += ' roams in ' + this.mode + ' mode within ' + this.region.string();
+      
     } else if ( type === 'stop' ) {
       
       name += ' stops';
       
     }
     
+    if ( this.addSpeed ) {
+      
+      name += ' - ' + this.speeds[ this.speed ];
+      
+    }
+    
     return name;
     
-  }.property( 'type', 'position', 'gameObject', 'random' )
+  }.property( 'type', 'position', 'gameObject', 'random', 'mode', 'region', 'speed' )
   
 });
 
@@ -355,29 +431,19 @@ var ArtActionModel = ActionTriggerModel.extend({
     
   },
   
-  loop : function() {
+  chooseMode : function( mode ) {
     
     this.set( 'mode', 'loop' );
     
-    this.done();
-    
-  },
-  
-  'ping-pong' : function() {
-    
-    this.set( 'mode', 'ping-pong' );
+    App.actionController.addSpeedOption( 'Set the speed of the animation', this, 5 );
     
     this.done();
     
   },
   
-  once : function() {
-    
-    this.set( 'mode', 'once' );
-    
-    this.done();
-    
-  },
+  loop : function() { this.chooseMode( 'loop' ); },
+  'ping-pong' : function() { this.chooseMode( 'ping-pong' ); },
+  once : function() { this.chooseMode( 'once' ); },
   
   string : function() {
     
@@ -385,7 +451,7 @@ var ArtActionModel = ActionTriggerModel.extend({
     
     if ( this.frame2 ) {
       
-      name += ' plays animation from frame ' + this.frame + ' to ' + this.frame2 + ' in ' + this.mode;
+      name += ' plays animation from frame ' + this.frame + ' to ' + this.frame2 + ' in ' + this.mode + ' ' + this.speeds[ this.speed ];
       
     } else if ( this.frame ) {
       
@@ -399,7 +465,7 @@ var ArtActionModel = ActionTriggerModel.extend({
     
     return name;
     
-  }.property( 'frame', 'frame2', 'mode' ),
+  }.property( 'frame', 'frame2', 'mode', 'speed' ),
   
   getData : function() {
   
@@ -415,6 +481,7 @@ var ArtActionModel = ActionTriggerModel.extend({
       
       data.frame2 = this.frame2;
       data.mode = this.mode;
+      data.speed = this.speed;
       
     }
     

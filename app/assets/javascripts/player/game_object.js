@@ -1,74 +1,33 @@
 var GameObject = function( ID ) {
   
   this.ID = ID;
-  this.position = new Vector();
-  this.startPosition = new Vector();
-  
-  this.target = null;
-  this.direction = null;
   
   this.graphic = null;
-  this.startGraphic = null;
   
+  this.movement = new Movement();
   this.animation = new Animation();
-  
-  this.area = new Area();
   
 };
 
 GameObject.prototype = {
   
-  init : function() {},
-  
   reset : function() {
     
-    this.position.copy( this.startPosition );
-    this.graphic = this.startGraphic;
-    
+    this.movement.reset();
     this.animation.setFrame( 1 );
-    
-    this.stop();
     
   },
   
   update : function( dt ) {
     
-    var vector = this.vector,
-      distance = dt * 0.1;
-      
+    this.movement.update( dt );
     this.animation.update( dt );
-    
-    if ( this.target ) {
-      
-      vector.copy( this.target ).subSelf( this.position );
-      
-      if ( vector.norm() < distance ) {
-      
-        this.position.copy( this.target );
-        
-        this.target = null;
-      
-      } else {
-      
-        vector.normalizeSelf().mulSelf( distance );
-      
-        this.position.addSelf( vector );
-      
-      }
-      
-    } else if ( this.direction !== null ) {
-      
-      vector.set( distance, 0 ).rotateSelf( this.direction );
-      
-      this.position.addSelf( vector );
-      
-    }
     
   },
   
   draw : function( ctx ) {
     
-    var pos = this.position;
+    var pos = this.movement.position;
     
     ctx.save();
     ctx.translate( pos.x, pos.y );
@@ -77,57 +36,68 @@ GameObject.prototype = {
     
     ctx.restore();
     
-    if ( ctx.debug && this.target ) {
+    if ( this.movement.roamArea ) {
       
-      ctx.save();
-      ctx.translate( this.graphic.image.width / 2, this.graphic.image.height / 2 );
-      
-      ctx.line( pos.x, pos.y, this.target.x, this.target.y );
-      
-      ctx.restore();
+      this.movement.roamArea.draw( ctx );
       
     }
     
-  },
-  
-  stop : function() {
-    
-    this.target = null;
-    this.direction = null;
+    // if ( ctx.debug && this.target ) {
+    //   
+    //   ctx.save();
+    //   ctx.translate( this.graphic.image.width / 2, this.graphic.image.height / 2 );
+    //   
+    //   ctx.line( pos.x, pos.y, this.target.x, this.target.y );
+    //   
+    //   ctx.restore();
+    //   
+    // }
     
   },
   
   setPosition : function( pos ) {
     
-    this.stop();
-    
-    this.position.copy( pos );
+    this.movement.setPosition( pos );
     
   },
   
   movePosition : function( vec ) {
     
-    this.position.copy( this.startPosition.addSelf( vec ) );
+    this.movement.movePosition( vec );
     
   },
   
-  setTarget : function( pos ) {
+  setTarget : function( pos, speed ) {
     
-    this.stop();
-    
-    this.target = pos;
+    this.movement.setTarget( pos, speed );
     
   },
   
-  setDirection : function( dir ) {
+  setDirection : function( dir, speed ) {
     
-    this.stop();
+    this.movement.setDirection( dir, speed );
     
-    this.direction = dir;
+  },
+  
+  roam : function( mode, area, speed ) {
+    
+    this.movement.roam( this, mode, area, speed );
     
   },
   
   setGraphic : function( graphic ) {
+    
+    var img = graphic.image,
+      onload = img.onload,
+      self = this;
+    
+    img.onload = function() {
+      
+      self.movement.area.setSize( img.width / graphic.frameCount, img.height );
+      
+      onload();
+      
+    }
     
     this.graphic = graphic;
     
@@ -139,9 +109,9 @@ GameObject.prototype = {
     
   },
   
-  playAnimation : function( start, end, mode ) {
+  playAnimation : function( start, end, mode, speed ) {
     
-    this.animation.play( start, end, mode );
+    this.animation.play( start, end, mode, speed );
     
   },
   
@@ -153,17 +123,8 @@ GameObject.prototype = {
   
   getArea : function() {
     
-    return this.area.set(
-      this.position.x,
-      this.position.y,
-      this.graphic.image.width / this.graphic.frameCount,
-      this.graphic.image.height
-    )
+    return this.movement.getArea();
     
-    return this.area;
-    
-  },
-  
-  vector : new Vector
+  }
   
 };

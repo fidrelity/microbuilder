@@ -6,9 +6,13 @@ var Animation = function() {
   this.up = true;
   this.plays = false;
   
+  this.speed;
+  
 };
 
 Animation.prototype = {
+  
+  speeds : [400, 250, 150, 90, 40],
   
   setFrame : function( frame ) {
     
@@ -18,7 +22,7 @@ Animation.prototype = {
     
   },
   
-  play : function( start, end, mode ) {
+  play : function( start, end, mode, speed ) {
     
     this.stop();
     
@@ -29,6 +33,7 @@ Animation.prototype = {
     
     this.up = start < end;
     this.mode = start !== end ? mode : 'once';
+    this.speed = this.speeds[ speed ];
     
     this.plays = true;
     
@@ -47,9 +52,9 @@ Animation.prototype = {
     
       this.time += dt;
     
-      if ( this.time >= 100 ) {
+      if ( this.time >= this.speed ) {
       
-        this.time -= 100;
+        this.time -= this.speed;
       
         if ( this.mode === 'loop' ) {
         
