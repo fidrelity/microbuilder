@@ -11,10 +11,17 @@
         selectFunctionBinding = "App.gameObjectsController.select"
       }}
       
-        <li {{action "select"}}>
-        
-          <img {{bindAttr src="content.graphic.imagePath"}} />
-          <div> {{content.name}} </div>
+        <li {{action "select"}} class="graphic" style="width:96px;height:90px;">
+
+          <div  class="frame_graphic" data-frames="{{unbound "content.graphic.frameCount"}}"
+            style="background-image:url({{unbound "content.graphic.imagePath"}});
+                  background-repeat:no-repeat;
+                  margin:auto;
+                  width:64px;
+                  height:64px;
+                  background-size: {{unbound "content.graphic.resizeWidth"}}px 64px;">
+          </div>
+          <div style="font-size:0.8em;text-align:center"> {{content.name}} </div>
         
         </li>
       
@@ -36,6 +43,15 @@
     <div style="border: 1px solid gray; margin: 5px;">
 
       {{#view GameObjectView contentBinding = "App.gameObjectsController.current"}}
+
+        <div 
+            data-frames="{{unbound "content.graphic.frameCount"}}"
+            style="background-image:url({{unbound "content.graphic.imagePath"}});
+                  background-repeat:no-repeat;
+                  width:64px;
+                  height:64px;
+                  background-size: {{unbound "content.graphic.resizeWidth"}}px 64px;">
+        </div>
 
           <img {{bindAttr src="content.graphic.imagePath"}} style="width:64px;height:64px;display:inline" />
 

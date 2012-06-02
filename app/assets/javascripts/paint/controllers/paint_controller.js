@@ -78,9 +78,9 @@ var PaintController =  Ember.ArrayController.extend({
       $('#player').hide();
       $('#copySpriteButton').hide();
       $('#clearSpritesButton').remove();
+      $('#removeSpriteButton').remove();
     } else {
       areaWrapper.find('#sprites-area').show();
-      areaWrapper.find('.zoomButtons').show();
     }
 
     this.add();
@@ -182,7 +182,7 @@ var PaintController =  Ember.ArrayController.extend({
       },
       
       success : function( data ) {        
-        //App.paintController.goToTypeSelection(false);
+        App.paintController.goToTypeSelection(false);
       }
       
     });
@@ -195,14 +195,14 @@ var PaintController =  Ember.ArrayController.extend({
       var ok = confirm("Remove all sprites and reset paint editor?");
       if(!ok) return false;
     }
-
+    
     for (var i = this.content.length - 1; i >= 0; i--) {
       this.remove(this.content[i]);
     };
 
     this.spriteCounter = 0;
     this.zoom = this.isBackground ? 1 : 2;
-    this.add();
+    this.set('content', []);
   },
 
   // Resets paint and shows paintSizeView
@@ -293,14 +293,21 @@ var PaintController =  Ember.ArrayController.extend({
     // set currentSpriteModel
   },
 
+  removeCurrent : function() {
+    if(this.content.length === 1) {
+      this.clearCurrentSprite();
+    } else {
+      this.remove(this.getCurrentSpriteModel());
+      this.setCurrentSpriteModel(this.content[this.content.length - 1]);
+    }
+  },
+
   // ---------------------------------------
   // Getter And Setter
   setCurrentSpriteModel : function(spriteModel) {
-    console.log( typeof(spriteModel) );
     if(!spriteModel || typeof(spriteModel) !== 'object') return false;
     this.set('currentSprite', spriteModel);
     spriteModel.highlight();
-    //this.pixelDrawer.setCanvasContext(spriteModel.canvas);
     this.pixelDrawer.setCanvasContext(this.zoomCanvas);
     this.updateZoom();
     
@@ -470,8 +477,6 @@ var PaintController =  Ember.ArrayController.extend({
     var canvasObjects = $('.canvas').not('#canvas-size, #canvas-template, #canvas-sketch, #zoomCanvas');
     canvasObjects.hide();
     canvasObjects.eq(this.currentFrameIndex).show();
-    console.log(canvasObjects);
-    console.log(this.currentFrameIndex, this.content.length);
 
     if(this.currentFrameIndex == this.content.length) {
       // Loop
