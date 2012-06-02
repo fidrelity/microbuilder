@@ -42,4 +42,11 @@ class GraphicsController < ApplicationController
     
     render :json => response, :status => 200
   end
+  
+  def tunnel
+    response.headers['Content-Type'] = 'image/png'
+    response.headers["Access-Control-Allow-Origin"]= '*'
+    img_data = HTTParty.get(params[:url]).body
+    render :text => img_data
+  end
 end

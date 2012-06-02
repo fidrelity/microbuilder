@@ -220,6 +220,7 @@ DEPENDENCIES
   feedhub
   forgery
   haml
+  httparty
   jasmine
   jquery-rails
   octokit
