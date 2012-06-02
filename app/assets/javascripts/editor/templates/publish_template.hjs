@@ -1,22 +1,28 @@
-<label>game title: </label>
-{{view Ember.TextField valueBinding="App.game.title" size="10" placeholder="insert name" maxlength="42"}}
-<br />
+<div id="publishView">
+  <label>Game title: </label>
+  {{view Ember.TextField valueBinding="App.game.title" size="10" placeholder="insert name" maxlength="42"}}
+  <br />
 
-<label>instructions: </label>
-{{view Ember.TextField valueBinding="App.game.instructions" placeholder="(140 chars max)" maxlength="140"}}
-<br />
+  <label>Instructions: </label>
+  {{view Ember.TextField valueBinding="App.game.instructions" placeholder="(140 chars max)" maxlength="140"}}
+  <br />
 
-{{view PlayerView 
-  type="test"
-  canvasID="testCanvas"
-  playerBinding="player"
-  showHTML="true"
-  corsSave="true"
-}}
+  {{view PlayerView 
+    type="test"
+    canvasID="testCanvas"
+    playerBinding="player"
+    showHTML="true"
+    corsSave="true"
+  }}
 
-<button {{action "publishGame" target="App.gameController"}}>publish</button>
-<button {{action "takePreviewSnapshot" target="App.gameController"}}>Take Snapshot</button>
+  <div class="row" style="margin-top:2em">
+    <div class="span6">
+      <button {{action "takePreviewSnapshot" target="App.gameController"}} class="btn">Take snapshot</button>
+    </div>
+    <div class="span2">
+      <button {{action "publishGame" target="App.gameController"}} class="btn-large btn-success">Publish game</button>    
+    </div>  
+  </div>
 
-<ul id="snapshots" class="thumbnails">
-
-</ul>
+  <ul id="snapshots" class="thumbnails"></ul>
+</div>

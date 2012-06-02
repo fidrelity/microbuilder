@@ -58,16 +58,7 @@ var PlayerView = Ember.View.extend({
       
       player.parse( App.game.getData().game, null, this.corsSave );
       
-    }
-
-    // *** Snapshot of preview game ***
-    // onClick on li element
-    $('#thumbnail').find('li').live('click', function() {
-
-      $(this).find('input[type="radio"]').attr("checked", "checked");
-
-    });
-
+    }   
     
   },
   
