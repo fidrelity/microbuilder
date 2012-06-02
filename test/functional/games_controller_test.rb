@@ -3,25 +3,28 @@ require 'test_helper'
 class GamesControllerTest < ActionController::TestCase
 
   def setup
-    @game = Factory(:game, :id => 1, :title => "test game", :user_id => 1, :played => 0, :dislikes => 0, :likes => 0)
+    @game = Factory(:game)
   end
 
   should "increase played by one" do
-    put :played, :id => 1
+    put :played, :id => @game.id
     assert_equal 1, @game.reload.played
   end
 
   should "increase dislike by one" do
-    xhr :put, :dislike, :id => 1
+    xhr :put, :dislike, :id => @game.id
     assert_response 200
     assert_equal 1, @game.reload.dislikes
   end
 
-  should "increase like by two" do
-    xhr :put, :like, :id => 1
+  should "increase like only once because of cookies" do
+    xhr :put, :like, :id => @game.id
     assert_response 200
-    xhr :put, :like, :id => 1
-    assert_equal 2, @game.reload.likes
+    xhr :put, :like, :id => @game.id
+    assert_equal 1, @game.reload.likes
   end
 
+  should "update games correctly" do
+    
+  end
 end
