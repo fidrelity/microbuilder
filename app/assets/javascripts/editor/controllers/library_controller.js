@@ -171,7 +171,7 @@ var LibraryController = Ember.ArrayController.extend({
       
       var d = data[i],
           filterID = this.content.filterProperty( 'ID', d.id );
-      console.log(d);
+      
       if ( !filterID.length ) {
       
         this.addObject(
