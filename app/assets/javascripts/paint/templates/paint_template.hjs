@@ -30,9 +30,7 @@
 
       {{#view ToolView
         toolBinding = "this"
-      }}
-        <button {{action "copySprite"}} id="copySpriteButton">Copy</button>
-        <button {{action "removeCurrent" target="App.paintController"}} id="removeSpriteButton">Remove</button>
+      }}     
         <button {{action "clear"}}>Clear</button>
         <button {{action "undo"}}>Undo</button>       
         <button {{action "reset"}} id="clearSpritesButton">Clear all</button>  
@@ -117,6 +115,8 @@
           toolBinding = "this"
         }}
           <button {{action "addSprite"}} class="addSpriteButton">Add</button>
+          <button {{action "copySprite"}} id="copySpriteButton">Copy</button>
+          <button {{action "removeCurrent" target="App.paintController"}} id="removeSpriteButton">Remove</button>
         {{/view}} 
         <div id="sprites-area-scroll"></div>
     </div>

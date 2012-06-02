@@ -30,13 +30,13 @@ var ActionController = Ember.Object.extend({
     
     if ( mode === 'action' ) {
       
-      // buttons = ['move', 'art', 'number', 'win/lose'];
-      buttons = ['art'];
+      buttons = ['move', 'art', 'number', 'win/lose'];
+      //buttons = ['art'];
     
     } else {
       
-      // buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
-      buttons = ['click', 'contact', 'time'];
+      buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
+      //buttons = ['click', 'contact', 'time'];
     
     }
     

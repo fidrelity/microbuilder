@@ -27,13 +27,13 @@ var PaintController =  Ember.ArrayController.extend({
   spriteWrapper : 'sprites-area-scroll', // 'sprites-area',
   showMarker : false,   // deprecated
   spriteCounter : 0,    // spriteModel.index
-  LIMIT : 8,
+  LIMIT : 8,            // Limit of sprites
   type : null,          // background or object
   isBackground : false,
   //
-  color : "#000000",    // Paint color
-  size : 2,             // Paint stroke size
-  zoom : 2,             // Zoom size
+  color : "#000000",    // init Paint color
+  size : 2,             // init Paint stroke size
+  zoom : 2,             // init Zoom size (background has 1)
   //  
   playDelay : 200,
   currentFrameIndex : 0,
@@ -117,7 +117,7 @@ var PaintController =  Ember.ArrayController.extend({
     $("#sizeSlider").slider({
       value: 2, 
       min: 1,
-      max: 10, 
+      max: 20, 
       step: 1,
       change: function( event, ui ) {
         App.paintController.setSize(ui.value);
