@@ -35,6 +35,7 @@ var PencilToolModel = Ember.Object.extend({
   },
 
   mouseup : function(_options) {
+    if(!this.isActive) return false;
     this.isActive = false;
     App.paintController.drawToSprite();
   },

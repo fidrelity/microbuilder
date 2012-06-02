@@ -88,7 +88,7 @@ var SpriteModel = Ember.Object.extend({
   },
 
   popState : function() {
-    if(!this.states.length) return false;
+    if(!this.states.length) return false;    
 
     if(this.states.length === 1) {
       this.states.pop();

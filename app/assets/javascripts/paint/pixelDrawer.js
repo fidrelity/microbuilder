@@ -230,7 +230,7 @@ PixelDrawer.prototype.compareColor = function(_color1, _color2) {
 PixelDrawer.prototype.floodFill = function(_x, _y,_newColor, _oldColor)
 {
     _newColor = this.checkIfParsedColor(_newColor);
-  
+
     if(_x >= 0 && _x < this.dataWidth && _y >= 0 && _y < this.dataHeight
       && this.compareColor(this.getPixelColor(_x,_y), _oldColor) &&
          !this.compareColor(this.getPixelColor(_x,_y), _newColor))
