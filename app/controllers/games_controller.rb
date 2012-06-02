@@ -54,25 +54,25 @@ class GamesController < ApplicationController
   # ------------------
   def played
     counter = @game.played + 1
-    @game.update_attribute(:played, counter)
+    Game.transaction { @game.update_attribute(:played, counter) }
   end
 
   def like
     unless cookies["voted_game_#{@game.id}"]
-      @game.update_attribute(:likes, @game.likes + 1)
+      Game.transaction { @game.update_attribute(:likes, @game.likes + 1) }
       cookies["voted_game_#{@game.id}"] = true
     end
   end
 
   def dislike
     unless cookies["voted_game_#{@game.id}"]
-      @game.update_attribute(:dislikes, @game.dislikes + 1)
+      Game.transaction { @game.update_attribute(:dislikes, @game.dislikes + 1) }
       cookies["voted_game_#{@game.id}"] = true
     end
     render "like"
   end
 
-  def report    
+  def report
     render :nothing => true, :layout => false
   end
 
