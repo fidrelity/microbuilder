@@ -8,7 +8,4 @@ class PagesController < ApplicationController
   def imprint
   end
 
-  def imgtest
-  end
-  
 end
