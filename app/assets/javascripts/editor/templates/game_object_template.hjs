@@ -1,5 +1,4 @@
 <div 
-    data-frames="{{unbound "content.graphic.frameCount"}}"
     {{bindAttr style="divStyle"}}
     class="libraryGraphic">
 </div>

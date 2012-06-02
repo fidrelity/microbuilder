@@ -6,7 +6,7 @@
 
 var ActionController = Ember.Object.extend({
 
-  mode : 'action',
+  mode : 'Action',
 
   action : null,
   
@@ -28,7 +28,7 @@ var ActionController = Ember.Object.extend({
     
     this.set( 'action', null );
     
-    if ( mode === 'action' ) {
+    if ( mode === 'Action' ) {
       
       // buttons = ['move', 'art', 'number', 'win/lose'];
       buttons = ['move', 'art', 'win/lose'];
@@ -36,8 +36,8 @@ var ActionController = Ember.Object.extend({
     
     } else {
       
-      buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
-      //buttons = ['click', 'contact', 'time'];
+      // buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
+      buttons = ['click', 'contact', 'time'];
     
     }
     
@@ -251,7 +251,7 @@ var ActionController = Ember.Object.extend({
     
     var action = this.get( 'action' );
     
-    if ( this.mode === 'action' ) {
+    if ( this.mode === 'Action' ) {
     
       this.get( 'behaviour' ).addAction( action );
     

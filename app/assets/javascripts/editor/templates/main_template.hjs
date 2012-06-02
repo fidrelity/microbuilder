@@ -4,15 +4,27 @@
   
   {{#if overlayContent}}
   
-    <div id="overlay">
+    <div id="overlayWrapper">
+  
+      <div id="overlay">
     
-      <h2>Overlay <button {{action "hideOverlay"}}> close </button></h2>
+        <h3 class="left">{{overlayContent.heading}}</h3>
     
-      {{dynamicView overlayContent}}
+        <button class="btn right" {{action "hideOverlay"}}> X </button>
+      
+        <div class="clear"></div>
+    
+        {{dynamicView overlayContent}}
+        
+        <div class="clear"></div>
+    
+      </div>
+    
+      <div id="fog" {{action "hideOverlay"}}></div>
     
     </div>
     
-    <div id="fog" {{action "hideOverlay"}}></div>
+    
   
   {{/if}}
 

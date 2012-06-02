@@ -1,42 +1,49 @@
-<div id="objects">
+<div id="overlayLeft">
 
-  <h3>Objects</h3>
+  <div id="objects">
 
-  {{view GameObjectsView
-    contentBinding = "App.gameObjectsController.content"
-    observerBinding = "App.gameObjectsController"
-  }}
+    {{view GameObjectsView
+      contentBinding = "App.gameObjectsController.content"
+      observerBinding = "App.gameObjectsController"
+    }}
 
-  <div class="clear"></div>
+    <div class="clear"></div>
 
-  <button {{action "searchGraphic" target="App.gameController"}}> add </button>
+  </div>
+  
+  <button class="btn" {{action "searchGraphic" target="App.gameController"}}> + object </button>
 
 </div>
 
-<div id="behaviours">
+<div id="overlayRight">
   
   {{#if App.gameObjectsController.current}}
-  
-    <div style="border: 1px solid gray; margin: 5px;">
 
-      {{#view GameObjectView contentBinding = "App.gameObjectsController.current"}}
+    {{#view GameObjectView contentBinding = "App.gameObjectsController.current"}}
 
-        <div 
-            data-frames="{{unbound "content.graphic.frameCount"}}"
-            {{bindAttr style="divStyle"}}
-            class="libraryGraphic">
+      <div
+          {{bindAttr style="divStyle"}}
+          class="libraryGraphic left">
+      </div>
+
+      <div class="left" style="margin-left:15px">
+
+        {{view Ember.TextField valueBinding="content.name" maxlength="16"}}
+        
+        <div class="btn-group">
+
+          <button class="btn" {{action "duplicate"}}> duplicate </button>
+          <button class="btn" {{action "remove"}}> delete </button>
+
         </div>
+      
+      </div>
+      
+      <div class="clear"></div>
 
-          {{view Ember.TextField valueBinding="content.name" maxlength="32" size="10"}}
-
-          <button {{action "remove"}}> delete </button>
-          <button {{action "duplicate"}}> duplicate </button>
-
-      {{/view}}
-
-    </div>
+    {{/view}}
   
-    <h3>Behaviours of {{App.gameObjectsController.current.name}}</h3>
+    <h4 style="margin: 15px 0"> Behaviours </h4>
 
     <ul id="behaviours">
       {{#view BehaviourView 
@@ -45,7 +52,7 @@
       }}
         <li class="top">
       
-          <div class="left title"> onStart </div>
+          <div class="left title"> on start </div>
       
           <div class="left">
       
@@ -59,17 +66,19 @@
                 }}
 
                   <li>
-                    {{content.string}} 
-                    <button {{action "remove"}}> X </button>
+                    <button class="btn right" {{action "remove"}}> X </button>
+                    <div class="text">{{content.string}}</div>
                   </li>
   
                 {{/view}}
 
               {{/each}}
-
+              
+              <li>
+                <button class="btn" {{action "addAction"}}> + action </button>
+              </li>
+              
             </ul>
-      
-            <button {{action "addAction"}}> + action </button>
         
           </div>
       
@@ -83,11 +92,12 @@
           contentBinding = "this"
           controllerBinding = "App.behaviourController"
         }}
-          <li class="top">
+          <li>
         
             <div class="left title"> if </div>
         
             <div class="left">
+              
               <ul>
     
                 {{#each content.triggers}}
@@ -98,21 +108,23 @@
                   }}
       
                     <li>
-                      {{content.string}} 
-                      <button {{action "remove"}}> X </button>
+                      <button class="btn right" {{action "remove"}}> X </button>
+                      <div class="text">{{content.string}}</div>
                     </li>
         
                   {{/view}}
       
                 {{/each}}
+                
+                <li>
+                  <button class="btn" {{action "addTrigger"}}> + trigger </button>
+                </li>
     
               </ul>
-    
-              <button {{action "addTrigger"}}> + trigger </button>
         
             </div>
   
-            <div class="left title"> | then </div>
+            <div class="left title"> then </div>
   
             <div class="left">
         
@@ -126,25 +138,27 @@
                   }}
       
                     <li>
-                      {{content.string}} 
-                      <button {{action "remove"}}> X </button>
+                      <button class="btn right" {{action "remove"}}> X </button>
+                      <div class="text">{{content.string}}</div>
                     </li>
         
                   {{/view}}
       
                 {{/each}}
+                
+                <li>
+                  <button class="btn" {{action "addAction"}}> + action </button>
+                </li>
     
               </ul>
-
-              <button {{action "addAction"}}> + action </button>
         
             </div>
-        
-            <div class="right">
-              <button {{action "remove"}}> X </button>
-              <button {{action "duplicate"}}> duplicate </button>
+            
+            <div class="btn-group right">
+              <button class="btn" {{action "duplicate"}}> duplicate </button>
+              <button class="btn" {{action "remove"}}> delete </button>
             </div>
-        
+            
             <div class="clear"></div>
         
           </li>
@@ -154,7 +168,7 @@
 
     <div class="clear"></div>
 
-    <button {{action "createBehaviour" target="App.behaviourController"}}>add behaviour</button>
+    <button class="btn" {{action "createBehaviour" target="App.behaviourController"}}> + behaviour </button>
   
   {{else}}
 

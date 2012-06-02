@@ -2,7 +2,13 @@ var ActionView = Ember.View.extend({
   
   templateName : 'editor/templates/action_template',
   
-  actionBinding : 'App.actionController.action'
+  actionBinding : 'App.actionController.action',
+  
+  heading : function() {
+    
+    return App.actionController.mode + ' Editor';
+    
+  }.property( 'App.actionController.mode' )
   
 });
 

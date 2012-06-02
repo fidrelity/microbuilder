@@ -25,20 +25,6 @@
   font-size:11px;
 }
 
-#editor ul.gameobjects {
-  list-style:none;
-}
-
-#editor ul.gameobjects li {
-  float:left;
-  margin: 0 10px 10px 0;
-}
-
-#editor ul.gameobjects li img {
-  height:50px;
-  width:50px;
-}
-
 #editor ul.graphics {
   list-style:none;
   margin: 0;
@@ -46,64 +32,18 @@
 
 #editor ul.graphics li {
   float:left;
-  overflow:hidden;
   background:#ccc;
-  margin: 0 10px 10px 0;
+  margin: 15px 0 0 15px;
+  border: 1px solid gray;
   opacity:0.5;
 }
 
-#editor ul.graphics li.selected {
+#editor ul.graphics li.selected, #editor ul.graphics li:hover {
   opacity:1.0;
-} 
-
-#editor ul.graphics li img {
-  height:50px;
-  width:50px;
-}
-
-#editor ul.graphics li:hover {
-  opacity:1.0;
-}
-
-#editor ul#behaviours, #editor ul#behaviours ul {
-  list-style:none;
-}
-
-#editor ul#behaviours li.top {
-  border: solid gray 1px;
-  margin-bottom: 10px;
-}
-
-#editor ul#behaviours li.top div.left {
-  float: left;
-  margin: 5px;
-}
-
-#editor ul#behaviours li.top div.right {
-  float: right;
-  margin: 5px;
-}
-
-#editor ul#behaviours li.top div.title {
-/*  background: #FFF;*/
-  text-align: right;
-  width: 70px;
-}
-
-#editor ul#behaviours li.top div.clear {
-  float: none;
-}
-
-#editor ul#behaviours li.top li {
-  margin-bottom: 5px;
-}
-
-#editor #stageContent, #editor #behaviourContent {
-  position: relative;
 }
 
 #editor #stageControls > * {
-  margin: 0 20px 10px 0;
+  margin: 0 15px 10px 0;
   float: left;
 }
 
@@ -111,31 +51,72 @@
   width: 300px;
 }
 
-#placementGraphic {
-  float : left;
-  border : 2px solid #000;
+#editor #overlayWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 #editor #overlay {
-  position: absolute;
-  top: 100px;
-  left: 100px;
-  width: 880px;
+  position: relative;
+  margin: 0 auto;
+  top: 20%;
+  width: 724px;
   z-index: 10;
   background-color: #EEE;
-  border: 2px solid #000;
+  border: 2px solid gray;
   padding: 20px;
 }
 
-#editor #overlay #objects {
+#editor #overlay #overlayLeft {
+  height : 100%;
   float : left;
-  width : 300px;
-  border-right : 2px solid black;
 }
 
-#editor #overlay #behaviours {
+#editor #overlay #objects {
+  width : 177px;
+  background-color: white;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+#editor #overlay #overlayRight {
   float : left;
-  margin-left: 20px;
+  margin-left: 32px;
+  width : 510px;
+}
+
+#editor #behaviours, #editor #behaviours ul {
+  list-style:none;
+  margin: 0;
+  padding: 0;
+}
+
+#editor #behaviours li {
+  background-color: white;
+  margin-bottom: 15px;
+  padding: 5px;
+}
+
+#editor #behaviours li li {
+  margin: 3px;
+  padding: 0;
+  background: #EEE;
+  width: 181px;
+  overflow: hidden;
+}
+
+#editor #behaviours li li .text {
+  padding: 6px;
+}
+
+#editor #behaviours li .title {
+  padding: 6px;
+  width: 45px;
+  margin: 3px;
+  text-align: right;
 }
 
 #editor #fog {
