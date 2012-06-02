@@ -18,6 +18,12 @@ var BehaviourController = Ember.ArrayController.extend({
     this.set( 'current', behaviour );
     this.addObject( behaviour );
     
+  },
+  
+  duplicateBehaviour : function( behaviour ) {
+    
+    this.addObject( behaviour.clone() );
+    
   }
 
 });

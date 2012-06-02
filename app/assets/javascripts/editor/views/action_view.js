@@ -24,9 +24,16 @@ var ButtonView = Ember.CollectionView.extend({
   
   observer : null,
   
+  classNames : ['btn-group'],
+  
+  attributeBindings: ["data-toggle"],
+  'data-toggle': 'buttons-radio',
+  
   itemViewClass: Ember.View.extend({
     
     tagName : 'button',
+    
+    classNames : ['btn'],
     
     template: Ember.Handlebars.compile("{{content}}"),
     

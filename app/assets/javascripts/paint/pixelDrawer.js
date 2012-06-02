@@ -56,7 +56,17 @@ PixelDrawer.prototype.drawRect = function(_x1,_y1, _x2, _y2, _color, _width) {
     this.drawLine(_x2,_y1, _x1, _y1, color, _width);
 },
 
-PixelDrawer.prototype.drawCircle = function (_xc, _yc, _a, _b, _color)
+
+PixelDrawer.prototype.drawCircle = function (_xc, _yc, _a, _b, _color, _width)
+{
+  if(_width == 1)
+    this.drawCircleWidth1px(_xc, _yc, _a, _b, _color);
+  else
+    this.drawCircleWidthDirtyHack(_xc, _yc, _a, _b, _color, _width);
+}
+
+
+PixelDrawer.prototype.drawCircleWidth1px = function (_xc, _yc, _a, _b, _color)
 {
     var color = this.checkIfParsedColor(_color);
     
@@ -78,8 +88,55 @@ PixelDrawer.prototype.drawCircle = function (_xc, _yc, _a, _b, _color)
         if (x!=0 || y!=0)
             this.colorPixel(_xc-x, _yc-y, color);
         if (x!=0 && y!=0) {
-            this.colorPixel(_xc+x, _yc-y, color);
-            this.colorPixel(_xc-x, _yc+y, color);
+          this.colorPixel(_xc+x, _yc-y, color);
+          this.colorPixel(_xc-x, _yc+y, color);
+        }
+        if (t + b2*x <= crit1 || t + a2*y <= crit3) {
+            x++;
+            dxt += d2xt;
+            t += dxt;
+        }
+        else if (t - a2*y > crit2) {
+            y--; 
+            dyt += d2yt; 
+            t += dyt;
+        }
+        else {
+            x++;
+            dxt += d2xt;
+            t += dxt;
+            y--; 
+            dyt += d2yt; 
+            t += dyt;
+        }
+    }
+}
+
+
+PixelDrawer.prototype.drawCircleWidthDirtyHack = function (_xc, _yc, _a, _b, _color, _width)
+{
+    var color = this.checkIfParsedColor(_color);
+    
+    _a = Math.abs(_a-_xc);
+    _b = Math.abs(_b-_yc);
+      
+    var x = 0, y = _b;
+    var a2 = _a*_a;
+    var b2 = _b*_b;
+    var crit1 = -(a2/4 + _a%2 + b2);
+    var crit2 = -(b2/4 + _b%2 + a2);
+    var crit3 = -(b2/4 + _b%2);
+    var t = -a2*y;
+    var dxt = 2*b2*x, dyt = -2*a2*y;
+    var d2xt = 2*b2, d2yt = 2*a2;
+    
+    while (y>=0 && x<=_a) {
+        this.fillCircle(_xc+x, _yc+y, _xc+x+_width/2, _yc+y+_width/2, _color);
+        if (x!=0 || y!=0)
+            this.fillCircle(_xc-x, _yc-y,_xc-x+_width/2, _yc-y+_width/2, color);
+        if (x!=0 && y!=0) {
+            this.fillCircle(_xc+x, _yc-y,_xc+x+_width/2, _yc-y+_width/2, color);
+            this.fillCircle(_xc-x, _yc+y,_xc-x+_width/2, _yc+y+_width/2, color);
         }
         if (t + b2*x <= crit1 || t + a2*y <= crit3) {
             x++;
@@ -227,10 +284,11 @@ PixelDrawer.prototype.compareColor = function(_color1, _color2) {
      return false;
 }
 
+
 PixelDrawer.prototype.floodFill = function(_x, _y,_newColor, _oldColor)
 {
     _newColor = this.checkIfParsedColor(_newColor);
-  
+
     if(_x >= 0 && _x < this.dataWidth && _y >= 0 && _y < this.dataHeight
       && this.compareColor(this.getPixelColor(_x,_y), _oldColor) &&
          !this.compareColor(this.getPixelColor(_x,_y), _newColor))
@@ -242,7 +300,7 @@ PixelDrawer.prototype.floodFill = function(_x, _y,_newColor, _oldColor)
         this.floodFill(_x,     _y + 1, _newColor, _oldColor);
         this.floodFill(_x,     _y - 1, _newColor, _oldColor);              
     }    
-}  
+}
 
 PixelDrawer.prototype.parseColor = function(_color) {
     

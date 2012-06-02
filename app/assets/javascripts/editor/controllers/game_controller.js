@@ -139,10 +139,10 @@ var GameController = Ember.Object.extend({
         alert( 'insert instructions' );
         return;
         
-    } else if ( !data.win ) {
-        
-        alert( 'game has no win action' );
-        return;
+    // } else if ( !data.win ) {
+    //     
+    //     alert( 'game has no win action' );
+    //     return;
         
     }
     
@@ -213,11 +213,11 @@ var GameController = Ember.Object.extend({
   },
 
   takePreviewSnapshot : function() {
-
     var canvas = document.getElementById("testCanvas");
+ 
     var img_data = canvas.toDataURL("image/png");
     var screenshot = '<li><img src="'+img_data+'" width="210" height="130" class="thumb"><br><input type="radio" value="" name="previewImage" data-id=""></li>';
-
+    
     $('#thumbnail').append(screenshot);
   },
 

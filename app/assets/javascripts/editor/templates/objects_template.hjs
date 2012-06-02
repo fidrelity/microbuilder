@@ -46,14 +46,9 @@
 
         <div 
             data-frames="{{unbound "content.graphic.frameCount"}}"
-            style="background-image:url({{unbound "content.graphic.imagePath"}});
-                  background-repeat:no-repeat;
-                  width:64px;
-                  height:64px;
-                  background-size: {{unbound "content.graphic.resizeWidth"}}px 64px;">
+            {{bindAttr style="divStyle"}}
+            class="libraryGraphic">
         </div>
-
-          <img {{bindAttr src="content.graphic.imagePath"}} style="width:64px;height:64px;display:inline" />
 
           {{view Ember.TextField valueBinding="content.name" maxlength="32" size="10"}}
 
@@ -170,6 +165,7 @@
         
             <div class="right">
               <button {{action "remove"}}> X </button>
+              <button {{action "duplicate"}}> duplicate </button>
             </div>
         
             <div class="clear"></div>

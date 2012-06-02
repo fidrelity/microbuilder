@@ -47,7 +47,7 @@ var PlayerView = Ember.View.extend({
       
     }
     
-    
+    player.half = !!callback;
     player.setCanvas( $('#' + this.canvasID)[0] );
     
     if ( callback ) {

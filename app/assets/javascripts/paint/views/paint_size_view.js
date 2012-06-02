@@ -4,6 +4,7 @@ var PaintSizeView = Ember.View.extend({
   size : null,
   
   didInsertElement : function() {
+    // Resize object
     $('#canvas-size').resizable({
       grid: 16,
       minWidth: 32,
@@ -11,22 +12,27 @@ var PaintSizeView = Ember.View.extend({
       maxWidth : 256,
       maxHeight : 256,
       stop: function(event, ui) { 
-        console.log(ui.size)
-        //$('#zoomCanvas').css({ width: ui.width, height: ui.height}).attr('width', ui.width).attr('height', ui.height);
+        $(".objWidth").html(ui.size.width);
+        $(".objHeight").html(ui.size.height);
+        App.paintSizeView.setPaintType(ui.helper);
       }
 
     });
 
+    // Click on object type
     $('.paint-type').click(function() {
-      $('.paint-type').removeClass('type-selected');
-      $(this).addClass('type-selected');
-
-      App.paintSizeView.setPaintType($(this).attr('data-type'));
+      App.paintSizeView.setPaintType($(this));
     });
+
   },
 
 
-  setPaintType : function(_type) {
+  setPaintType : function(_obj) {
+    $('.paint-type').removeClass('type-selected');
+
+    _obj.addClass('type-selected');
+    var _type = _obj.attr('data-type');
+
     var button = $("#startPainting");
     var msg = "Start painting ";
     if(_type === 'background') {
@@ -50,8 +56,7 @@ var PaintSizeView = Ember.View.extend({
       w = 640;
       h = 390;
     }
-
-    //$("#paint-size-wrapper").hide();    
+ 
     App.paintSizeView.remove();
 
     App.paintController.initType(type, w, h);
