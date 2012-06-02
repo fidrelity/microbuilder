@@ -54,17 +54,39 @@ var GameObjectsView = Ember.CollectionView.extend({
   tagName : 'ul',
   classNames : ['graphics'],
   
+  emptyView: Ember.View.extend({
+    
+    template: Ember.Handlebars.compile("No objects to select")
+    
+  }),
+  
   itemViewClass: Ember.View.extend({
     
     tagName : 'li',
     
-    template: Ember.Handlebars.compile('<img {{bindAttr src="content.graphic.imagePath"}} {{bindAttr alt="content.graphic.name"}} /><p>{{content.graphic.name}}</p>'),
+    templateName : 'editor/templates/game_object_template',
     
     click : function() {
       
+      var childs = this._parentView._childViews, i;
+      
+      for ( var i = 0; i < childs.length; i++ ) {
+      
+        childs[i].$().removeClass( 'selected' );
+      
+      }
+      
+      this.$().addClass( 'selected' );
+      
       this._parentView.observer.select( this.content );
       
-    }
+    },
+    
+    divStyle : function() {
+  
+      return "background-image:url(" + this.content.graphic.imagePath + ");background-size:" + this.content.graphic.resizeWidth + "px 64px;";
+  
+    }.property()
     
   })
   

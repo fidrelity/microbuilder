@@ -14,8 +14,6 @@ var GameObjectsController = Ember.ArrayController.extend({
     
     this.set( 'current', gameObject );
     
-    console.log( this.content );
-    
   },
   
   selectID : function( gameObjectID ) {
