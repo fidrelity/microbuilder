@@ -45,7 +45,7 @@
         =link_to image_tag(game.preview_image), play_path(game)
         
         .overlay
-          =link_to image_tag("overlay_game_play.png"), game_path(game), :class => "overlay_game_play"
+          =link_to image_tag("overlay_game_play.png"), play_path(game), :class => "overlay_game_play"
           %p
             = link_to game.title, play_path(game)
             %br
