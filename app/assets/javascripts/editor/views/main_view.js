@@ -78,29 +78,15 @@ var RemoveView = Ember.View.extend({
 
 var SelectView = RemoveView.extend({
   
-  compareContent : null,
-  
   selectFunction : null,
   
-  isSelected : false,
+  collection : null,
   
   select : function() {
     
-    if ( !this.get( 'compares' ) ) {
-      
-      this.selectFunction.call( this.controller, this.content );
-      
-      this.set( 'isSelected', true );
-      
-    }
+    this.selectFunction.call( this.controller, this.content );
     
-  },
-  
-  compares : function() {
-    
-    return this.get( 'content' ) === this.get( 'compareContent' );
-    
-  }.property( 'compareContent' )
+  }
   
 });
 

@@ -135,7 +135,8 @@ var ActionController = Ember.Object.extend({
   addObjectsOption : function( question, observer, depth ) {
     
     this.addOption( question, GameObjectsView.extend({
-      observer : observer
+      observer : observer,
+      contentBinding : 'App.gameObjectsController.others',
     }), depth );
     
   },

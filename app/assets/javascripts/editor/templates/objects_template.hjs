@@ -2,33 +2,10 @@
 
   <h3>Objects</h3>
 
-  <ul class="graphics">
-    {{#each App.gameObjectsController}}
-  
-      {{#view SelectView 
-        contentBinding = "this"
-        controllerBinding = "App.gameObjectsController"
-        selectFunctionBinding = "App.gameObjectsController.select"
-      }}
-      
-        <li {{action "select"}} class="graphic" style="width:96px;height:90px;">
-
-          <div  class="frame_graphic" data-frames="{{unbound "content.graphic.frameCount"}}"
-            style="background-image:url({{unbound "content.graphic.imagePath"}});
-                  background-repeat:no-repeat;
-                  margin:auto;
-                  width:64px;
-                  height:64px;
-                  background-size: {{unbound "content.graphic.resizeWidth"}}px 64px;">
-          </div>
-          <div style="font-size:0.8em;text-align:center"> {{content.name}} </div>
-        
-        </li>
-      
-      {{/view}}
-  
-    {{/each}}
-  </ul>
+  {{view GameObjectsView
+    contentBinding = "App.gameObjectsController.content"
+    observerBinding = "App.gameObjectsController"
+  }}
 
   <div class="clear"></div>
 

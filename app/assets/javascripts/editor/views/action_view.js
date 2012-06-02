@@ -49,8 +49,6 @@ var ButtonView = Ember.CollectionView.extend({
 
 var GameObjectsView = Ember.CollectionView.extend({
   
-  contentBinding : 'App.gameObjectsController.others',
-  
   observer : null,
   
   tagName : 'ul',
