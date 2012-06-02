@@ -104,7 +104,8 @@ var PaintController =  Ember.ArrayController.extend({
 
     $('#zoomCanvas').mouseout(function(e){
       App.paintController.mouseup(e);
-    });    
+      //App.pencilTool.isActive
+    });
 
     // Onclick sprite area
     $('.canvas').live('click', function(e) {

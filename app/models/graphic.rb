@@ -12,6 +12,7 @@ class Graphic < ActiveRecord::Base
   
   has_attached_file :image, PAPERCLIP_OPTIONS
   
+  default_scope :order => 'created_at DESC'
   pg_search_scope :search, :against => :name
   scope :all_public, where(:public => true)
   scope :backgrounds, where(:background => true)
