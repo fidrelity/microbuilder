@@ -94,6 +94,8 @@ var ArtAction = function() {
   this.mode; // ['loop', 'ping-pong', 'once']
   this.speed;
   
+  this.graphic
+  
 };
 
 ArtAction.prototype = {
@@ -109,6 +111,12 @@ ArtAction.prototype = {
   executePlay : function() {
     
     this.gameObject.playAnimation( this.frame, this.frame2, this.mode, this.speed );
+    
+  },
+  
+  executeChange : function() {
+    
+    this.gameObject.setGraphic( this.graphic );
     
   },
   

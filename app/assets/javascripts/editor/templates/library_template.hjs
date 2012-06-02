@@ -38,4 +38,4 @@
 
 <div class="clear"></div>
 
-<button {{action "showObjects" target="App.gameController"}}> cancel </button>
+<button {{action "cancel" target="App.gameController"}}> cancel </button>

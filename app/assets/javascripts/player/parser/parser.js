@@ -127,7 +127,7 @@ var Parser = {
   
     gameObject.movement.startPosition.set( gameObjectData.position.x, gameObjectData.position.y );
   
-    gameObject.setGraphic( this.game.getGraphicWithID( gameObjectData.graphicID ) );
+    gameObject.setStartGraphic( this.game.getGraphicWithID( gameObjectData.graphicID ) );
   
     return gameObject;
   
@@ -378,6 +378,11 @@ var Parser = {
   {
     type : "art"
   }
+  
+  {
+    type: "art",
+    graphicID: 2
+  }
 */
   
   parseActionArt : function( actionData, gameObject ) {
@@ -386,19 +391,27 @@ var Parser = {
     
     action.gameObject = gameObject;
     
-    action.frame = actionData.frame;
-    action.frame2 = actionData.frame2;
-    
-    action.mode = actionData.mode;
-    action.speed = actionData.speed;
-    
     if ( actionData.frame2 ) {
+      
+      action.frame = actionData.frame;
+      action.frame2 = actionData.frame2;
+    
+      action.mode = actionData.mode;
+      action.speed = actionData.speed;
       
       action.execute = action.executePlay;
       
     } else if ( actionData.frame ) {
       
+      action.frame = actionData.frame;
+      
       action.execute = action.executeFrame;
+      
+    } else if ( typeof actionData.graphicID !== 'undefined'  ) {
+      
+      action.graphic = this.game.getGraphicWithID( actionData.graphicID );
+      
+      action.execute = action.executeChange;
       
     } else {
       

@@ -28,7 +28,7 @@
 
       <div class="left" style="margin-left:15px">
 
-        {{view Ember.TextField valueBinding="content.name" maxlength="16"}}
+        {{view Ember.TextField valueBinding="content.name" maxlength="10"}}
         
         <div class="btn-group">
 
@@ -50,7 +50,7 @@
         contentBinding = "App.behaviourController.startBehaviour"
         controllerBinding = "App.behaviourController"
       }}
-        <li class="top">
+        <li>
       
           <div class="left title"> on start </div>
       
