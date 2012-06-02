@@ -32,6 +32,8 @@
         
         <div class="btn-group">
 
+          <button class="btn" {{action "changeArt"}}> change art </button>
+          <button class="btn" {{action "toTop"}}> to top </button>
           <button class="btn" {{action "duplicate"}}> duplicate </button>
           <button class="btn" {{action "remove"}}> delete </button>
 

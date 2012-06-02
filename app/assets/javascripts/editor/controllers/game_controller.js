@@ -98,14 +98,16 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'selectFunction', this.selectChangeGraphic );
     
     App.mainView.show( 'overlayContent', 'libraryView' );
+    this.set( 'cancelView', 'objectsView' );
     
   },
   
   selectChangeGraphic : function( graphic ) {
     
-    App.mainView.stageView.gameObject.set( 'graphic', graphic );
+    App.gameObjectsController.current.set( 'graphic', graphic );
     
     App.mainView.show( 'overlayContent', 'objectsView' );
+    this.set( 'cancelView', null );
     
   },
   
