@@ -26,6 +26,14 @@ var GameObjectsController = Ember.ArrayController.extend({
     
     return this.content.without( this.current );
     
-  }.property( 'current' )
+  }.property( 'current' ),
+  
+  moveToTop : function( gameObject ) {
+    
+    this.removeObject( gameObject );
+    
+    this.unshiftObject( gameObject );
+    
+  }
   
 });

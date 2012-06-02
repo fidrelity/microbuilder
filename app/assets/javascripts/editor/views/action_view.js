@@ -204,3 +204,37 @@ var SpeedView = Ember.View.extend({
   }
   
 });
+
+var ArtView = Ember.View.extend({
+  
+  tagName : 'div',
+  
+  observer : null,
+  
+  template: Ember.Handlebars.compile('<div {{bindAttr style="divStyle"}}></div><button class="btn" {{action "searchGraphic"}}> search </button>'),
+  
+  divStyle : function() {
+    
+    var g = this.observer.graphic;
+    
+    if ( g ) {
+      
+      return 'width:' + g.frameWidth + 'px;height:' + g.frameHeight + 'px;border:1px solid gray;background-image:url(' + g.imagePath + ')';
+      
+    } else {
+      
+      return 'width:128px;height:128px;border:1px solid gray;';
+      
+    }
+    
+  }.property( 'observer.graphic' ),
+  
+  searchGraphic : function() {
+    
+    this.observer.set( 'type', 'search' );
+    
+    App.gameController.searchArtGraphic();
+    
+  }
+  
+});

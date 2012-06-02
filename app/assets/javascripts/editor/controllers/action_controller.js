@@ -43,7 +43,22 @@ var ActionController = Ember.Object.extend({
     
     this.set( 'contentView', ButtonView.create({
       observer : this,
-      content : buttons
+      content : buttons,
+      
+      destroy : function() {
+        
+        var action = App.actionController.action;
+        
+        if ( action && action.type === 'search' ) {
+          
+          return;
+          
+        }
+        
+        this._super();
+        
+      }
+      
     }));
     
   },
@@ -169,6 +184,14 @@ var ActionController = Ember.Object.extend({
     
   },
   
+  addArtOption : function( question, observer, depth ) {
+    
+    this.addOption( question, ArtView.extend({
+      observer : observer
+    }), depth );
+    
+  },
+  
   move : function() {
   
     this.set( 'action', MoveActionModel.create() );
@@ -188,7 +211,8 @@ var ActionController = Ember.Object.extend({
     
     this.addButtonOption( 
       'How should the art change?', 
-      ['to frame', 'play', 'stop' ],
+      // ['to frame', 'play', 'stop', 'change' ],
+      ['change'],
       this.action,
       1
     );

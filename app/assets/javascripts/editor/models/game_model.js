@@ -35,7 +35,7 @@ var GameModel = Ember.Object.extend({
       
       game.gameObjects = [];
     
-      for ( i = 0; i < this.gameObjects.length; i++ ) {
+      for ( i = this.gameObjects.length - 1; i >= 0; i-- ) {
     
         game.gameObjects.push( this.gameObjects[i].getData( graphics ) );
     
@@ -71,7 +71,7 @@ var GameModel = Ember.Object.extend({
     
     if ( this.gameObjects.length ) {
     
-      for ( i = 0; i < this.gameObjects.length; i++ ) {
+      for ( i = this.gameObjects.length - 1; i >= 0; i-- ) {
     
         game.gameObjects.push( this.gameObjects[i].getData( game.graphics ) );
     

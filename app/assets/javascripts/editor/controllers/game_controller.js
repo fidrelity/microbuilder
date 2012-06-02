@@ -9,9 +9,19 @@ var GameController = Ember.Object.extend({
 
   gameBinding : 'App.game',
   
+  cancelView : null,
+  
   cancel : function() {
     
-    App.mainView.hideOverlay();
+    if ( this.cancelView ) {
+      
+      App.mainView.show( 'overlayContent', this.cancelView );
+    
+    } else {
+    
+      App.mainView.hideOverlay();
+    
+    }
     
   },
   
@@ -27,6 +37,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'selectFunction', this.selectGraphic );
     
     App.mainView.show( 'overlayContent', 'libraryView' );
+    this.set( 'cancelView', 'objectsView' );
     
   },
   
@@ -44,12 +55,32 @@ var GameController = Ember.Object.extend({
     
   },
   
+  searchArtGraphic : function() {
+    
+    App.libraryController.set( 'showBackground', false );
+    App.libraryController.set( 'selectFunction', this.selectArtGraphic );
+    
+    App.mainView.show( 'overlayContent', 'libraryView' );
+    this.set( 'cancelView', 'actionView' );
+    
+  },
+  
+  selectArtGraphic : function( graphic ) {
+    
+    App.actionController.action.selectGraphic( graphic );
+    
+    App.mainView.show( 'overlayContent', 'actionView' );
+    this.set( 'cancelView', 'objectsView' );
+    
+  },
+  
   searchBackground : function() {
     
     App.libraryController.set( 'showBackground', true );
     App.libraryController.set( 'selectFunction', this.selectBackground );
     
     App.mainView.show( 'overlayContent', 'libraryView' );
+    this.set( 'cancelView', null );
     
   },
   
@@ -67,31 +98,16 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'selectFunction', this.selectChangeGraphic );
     
     App.mainView.show( 'overlayContent', 'libraryView' );
+    this.set( 'cancelView', 'objectsView' );
     
   },
   
   selectChangeGraphic : function( graphic ) {
     
-    App.mainView.stageView.gameObject.set( 'graphic', graphic );
+    App.gameObjectsController.current.set( 'graphic', graphic );
     
     App.mainView.show( 'overlayContent', 'objectsView' );
-    
-  },
-  
-  searchArtGraphic : function() {
-    
-    App.libraryController.set( 'showBackground', false );
-    App.libraryController.set( 'selectFunction', this.selectArtGraphic );
-    
-    App.mainView.show( 'overlayContent', 'libraryView' );
-    
-  },
-  
-  selectArtGraphic : function( graphic ) {
-    
-    App.actionController.selectGraphic( graphic );
-    
-    App.mainView.show( 'overlayContent', 'actionView' );
+    this.set( 'cancelView', null );
     
   },
   

@@ -28,6 +28,7 @@ var MainView = Ember.View.extend({
     this.actionView = ActionView.create();
     
     this.publishView = Ember.View.create({
+      heading : 'Publish',
       templateName : 'editor/templates/publish_template'
     });
     

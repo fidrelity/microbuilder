@@ -410,6 +410,22 @@ var ArtActionModel = ActionTriggerModel.extend({
     
   },
   
+  change : function() {
+    
+    App.actionController.addArtOption( 'Search in the libray for your graphic', this, 2 );
+    
+  },
+  
+  selectGraphic : function( graphic ) {
+    
+    this.set( 'graphic', graphic );
+    
+    this.set( 'type', 'change' );
+    
+    this.done();
+    
+  },
+  
   setFrame : function( frame ) {
     
     this.set( frame.type, frame.number );
@@ -458,7 +474,9 @@ var ArtActionModel = ActionTriggerModel.extend({
       frame2 : this.frame2,
       
       mode : this.mode,
-      speed : this.speed
+      speed : this.speed,
+      
+      graphic : this.graphic,
       
     });
     
@@ -476,6 +494,10 @@ var ArtActionModel = ActionTriggerModel.extend({
       
       name += ' jumps to frame ' + this.frame;
       
+    } else if ( this.graphic ) {
+      
+      name += ' changes art to ' + this.graphic.name;
+      
     } else {
       
       name += ' stops the animation';
@@ -486,13 +508,23 @@ var ArtActionModel = ActionTriggerModel.extend({
     
   }.property( 'frame', 'frame2', 'mode', 'speed' ),
   
-  getData : function() {
+  getData : function( graphics ) {
   
     var data = { type : 'art' };
     
     if ( this.frame ) {
       
       data.frame = this.frame;
+      
+    } else if ( this.graphic ) {
+      
+      if ( graphics.indexOf( this.graphic ) < 0 ) {
+      
+        graphics.push( this.graphic.getData() );
+      
+      }
+      
+      data.graphicID = this.graphic.ID;
       
     }
     
