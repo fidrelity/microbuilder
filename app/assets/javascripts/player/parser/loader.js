@@ -4,12 +4,13 @@ var Loader = function( callback ) {
 
   this.imageCount = 0;
 
+  this.corsSave = false;
 };
 
 Loader.prototype = {
   
   loadImage : function( path ) {
-    
+
     if ( this.imageCount >= 100 ) {
       
       console.error( 'Loader does not load more than 100 images' );
@@ -27,6 +28,13 @@ Loader.prototype = {
     
     }
     
+    var isLocal = document.location.hostname === 'localhost' ? true : false;
+
+    if(this.corsSave)
+      path = isLocal ? "/s3?url=http://"+document.location.host+"/" + path  : "/s3?url=" + path;
+
+    console.log(path)
+
     image.src = path;
     
     this.imageCount++;
