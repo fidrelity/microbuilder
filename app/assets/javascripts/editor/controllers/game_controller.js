@@ -139,10 +139,10 @@ var GameController = Ember.Object.extend({
         alert( 'insert instructions' );
         return;
         
-    } else if ( !data.win ) {
-        
-        alert( 'game has no win action' );
-        return;
+    // } else if ( !data.win ) {
+    //     
+    //     alert( 'game has no win action' );
+    //     return;
         
     }
     

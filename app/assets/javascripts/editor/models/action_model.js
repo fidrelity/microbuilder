@@ -104,22 +104,6 @@ var MoveActionModel = ActionTriggerModel.extend({
     
   },
   
-  clone : function() {
-    
-    return MoveActionModel.create({
-      
-      type : this.type,
-      
-      gameObject : this.gameObject,
-      position : this.position.clone(),
-      
-      random : this.random,
-      direction : this.direction
-      
-    });
-    
-  },
-  
   directional : function() {
   
     this.set( 'type', 'moveIn' );
@@ -293,6 +277,25 @@ var MoveActionModel = ActionTriggerModel.extend({
     
   },
   
+  clone : function() {
+    
+    return MoveActionModel.create({
+      
+      type : this.type,
+      
+      gameObject : this.gameObject,
+      position : this.position.clone(),
+      
+      random : this.random,
+      direction : this.direction,
+      
+      speed : this.speed,
+      addSpeed : this.addSpeed
+      
+    });
+    
+  },
+  
   getData : function() {
     
     var obj = { 
@@ -445,6 +448,22 @@ var ArtActionModel = ActionTriggerModel.extend({
   'ping-pong' : function() { this.chooseMode( 'ping-pong' ); },
   once : function() { this.chooseMode( 'once' ); },
   
+  clone : function() {
+    
+    return ArtActionModel.create({
+      
+      type : this.type,
+      
+      frame : this.frame,
+      frame2 : this.frame2,
+      
+      mode : this.mode,
+      speed : this.speed
+      
+    });
+    
+  },
+  
   string : function() {
     
     var name = this.parentGameObject.name;
@@ -513,15 +532,6 @@ var WinLoseActionModel = ActionTriggerModel.extend({
 
 var ClickTriggerModel = ActionTriggerModel.extend({
   
-  clone : function() {
-    
-    return ClickTriggerModel.create({
-      gameObject : this.gameObject,
-      region : this.region ? this.region.clone() : null,
-    });
-    
-  },
-  
   'self' : function() {
     
     this.done();
@@ -537,6 +547,15 @@ var ClickTriggerModel = ActionTriggerModel.extend({
   'area' : function() {
     
     App.actionController.addAreaOption( 'Select the area to trigger the click', this, 2 );
+    
+  },
+  
+  clone : function() {
+    
+    return ClickTriggerModel.create({
+      gameObject : this.gameObject,
+      region : this.region ? this.region.clone() : null,
+    });
     
   },
   

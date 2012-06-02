@@ -170,6 +170,7 @@
         
             <div class="right">
               <button {{action "remove"}}> X </button>
+              <button {{action "duplicate"}}> duplicate </button>
             </div>
         
             <div class="clear"></div>

@@ -118,6 +118,13 @@ var BehaviourView = SelectView.extend({
     App.behaviourController.set( 'current', this.get( 'content' ) );
     App.gameController.addAction();
     
+  },
+  
+  duplicate : function() {
+    
+    App.behaviourController.duplicateBehaviour( this.content );
+    App.mainView.stageView.updatePlayer();
+    
   }
   
 });

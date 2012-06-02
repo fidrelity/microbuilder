@@ -14,6 +14,6 @@ class GameControllerTest < ActionDispatch::IntegrationTest
     find_by_id('like').has_content?('Like (#{Game.find(1).likes})')
 
     #Capybara.current_driver = :webkit
-  end 
+  end
 
 end

@@ -48,6 +48,8 @@ var Player = function() {
   this.edit = false;
   this.increment = 96;
   
+  this.half = false;
+  
   this.time = 0;
   this.timePlayed = 0;
   
@@ -91,6 +93,12 @@ Player.prototype = {
     
     canvas.width = 640 + 2 * i;
     canvas.height = 390 + 2 * i;
+    
+    if ( this.half ) {
+      
+      $(canvas).css({ width: canvas.width * 0.5, height: canvas.height * 0.5 });
+      
+    }
     
     ctx.save();
     ctx.translate( i, i );
