@@ -83,6 +83,36 @@ var GameModel = Ember.Object.extend({
   
   },
   
+  getSingleData : function() {
+  
+    var game = { graphics : [], gameObjects : [] }, i;
+    
+    if ( this.background ) {
+      
+      game.background = this.background.imagePath;
+      
+    }
+    
+    game.gameObjects.push( App.gameObjectsController.current.getSimpleData( game.graphics ) );
+    
+    return game;
+  
+  },
+  
+  getEmptyData : function() {
+  
+    var game = {};
+    
+    if ( this.background ) {
+      
+      game.background = this.background.imagePath;
+      
+    }
+    
+    return game;
+  
+  },
+  
   getGameObjectWithID : function( gameObjectID ) {
     
     var gameObjects = this.gameObjects.filterProperty( 'ID', gameObjectID );

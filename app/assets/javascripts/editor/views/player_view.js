@@ -14,7 +14,7 @@ var PlayerView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    var player, callback, type = this.type;
+    var player, callback, type = this.type, data;
     
     player = new Player();
     player.edit = true;
@@ -35,11 +35,15 @@ var PlayerView = Ember.View.extend({
       
       callback = this.locationCallback;
       
+      data = App.game.getSingleData();
+      
     } else if ( type === 'area' ) {
       
       callback = this.areaCallback;
       
       player.areaSelectable = true;
+      
+      data = App.game.getEmptyData();
       
     } else {
       
@@ -52,7 +56,7 @@ var PlayerView = Ember.View.extend({
     
     if ( callback ) {
       
-      player.parse( App.game.getGameObjectsData(), bind( this, callback ) );
+      player.parse( data, bind( this, callback ) );
       
     } else {
       
