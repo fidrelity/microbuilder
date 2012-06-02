@@ -352,7 +352,7 @@ var MoveActionModel = ActionTriggerModel.extend({
         
       } else if ( this.direction ) {
       
-        name += ' moves in direction ' + this.angle();
+        name += ' moves in direction ' + Math.floor( this.angle() * -1 / Math.PI * 180 ) + '˚';
       
       } else {
         

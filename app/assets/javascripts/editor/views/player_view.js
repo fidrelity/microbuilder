@@ -81,7 +81,7 @@ var PlayerView = Ember.View.extend({
       
       this.observer.locate( pos );
       
-    }));
+    }), this.observer.type === 'moveIn');
   
   },
   

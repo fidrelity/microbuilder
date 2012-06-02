@@ -60,6 +60,7 @@ var Player = function() {
   
   this.selectObject = null;
   this.selectArea = null;
+  this.selectDirection = null;
   
   this.selectedObjectCallback = function() {};
   this.selectedObjectDragCallback = function() {};
@@ -219,14 +220,41 @@ Player.prototype = {
         ctx.strokeStyle = '#000';
         this.selectArea.draw( ctx );
       
-      }
-    
-      if ( this.selectObject ) {
-      
+      } else if ( this.selectObject ) {
+        
         this.selectObject.draw( ctx );
         
         ctx.strokeStyle = '#000';
+        
         this.selectObject.getArea().draw( ctx );
+        
+        if ( this.selectDirection ) {
+          
+          i = this.selectObject.getArea().center().subSelf( new Vector( 320, 195 ) ).angle();
+          
+          ctx.save();
+          ctx.translate( 320, 195 );
+          ctx.rotate( i );
+          
+          ctx.line( 0, 0, 170, 0 );
+          
+          ctx.translate( 170, 0 );
+          
+          ctx.beginPath();
+          
+          ctx.moveTo( -5, 0 );
+          ctx.lineTo( -10, -12 );
+          ctx.lineTo( 15, 0 );
+          ctx.lineTo( -10, 12 );
+          
+          ctx.closePath();
+          
+          ctx.fillStyle = '#000';
+          ctx.fill();
+          
+          ctx.restore();
+          
+        }
       
       }
       
@@ -375,7 +403,15 @@ Player.prototype = {
     
     if ( object ) {
       
-      this.selectedObjectDragCallback( object.ID, object.movement.position );
+      if ( this.selectDirection ) {
+        
+        this.selectedObjectDragCallback( object.ID, object.getArea().center().addSelf( this.selectDirection ) );
+        
+      } else {
+        
+        this.selectedObjectDragCallback( object.ID, object.getPosition() );
+        
+      }
     
     }
     
@@ -465,12 +501,24 @@ Player.prototype = {
     
   },
   
-  setSelectObjectID : function( gameObjectID, callback ) {
+  setSelectObjectID : function( gameObjectID, callback, showDirection ) {
     
-    var selectObject = this.game.getGameObjectWithID( gameObjectID );
+    var selectObject = this.game.getGameObjectWithID( gameObjectID ),
+      offset = selectObject.getPosition().sub( selectObject.getArea().center() );
     selectObject.stable = true;
     
-    this.selectArea = selectObject.getArea().clone();
+    if ( showDirection ) {
+    
+      this.selectDirection = selectObject.getPosition().sub( new Vector( 320, 195 ) );
+      
+      selectObject.movement.startPosition.set( 420, 195 ).addSelf( offset );
+    
+    } else {
+      
+      selectObject.movement.startPosition.set( 320, 195 ).addSelf( offset );
+      
+    }
+    
     this.selectObject = selectObject;
     
     if ( callback ) {

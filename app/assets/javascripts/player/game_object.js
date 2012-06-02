@@ -145,6 +145,12 @@ GameObject.prototype = {
     
     return this.movement.getArea();
     
+  },
+  
+  getPosition : function() {
+    
+    return this.movement.position;
+    
   }
   
 };
