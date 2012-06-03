@@ -67,6 +67,8 @@ Playtin::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   
+  config.active_record.observers = :game_observer
+  
   #Facebook Key and Secret
   FACEBOOK_APP_NAME = 'playtin'
   FACEBOOK_ID = '148777278524544'

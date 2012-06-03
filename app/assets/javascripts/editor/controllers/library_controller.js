@@ -57,7 +57,7 @@ var LibraryController = Ember.ArrayController.extend({
     
     this.addObserver( 'showBackground', function() {
       
-      self.updateDisplay( true );
+      self.updateDisplay( true );   
       
     });
     
@@ -70,7 +70,10 @@ var LibraryController = Ember.ArrayController.extend({
     this.addObserver( 'size', function() {
       
       self.updateDisplay( true );
-      
+      console.log(this.showBackground);
+      this.thumbSizeWidth  = this.showBackground ? 210 : this.size.max;
+      this.thumbSizeHeight = this.showBackground ? 130 : this.size.max;
+
     });
     
   },
