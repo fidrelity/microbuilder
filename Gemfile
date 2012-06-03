@@ -17,6 +17,7 @@ gem 'will_paginate'
 gem 'so_social'
 gem 'feedhub'
 gem 'httparty'
+gem 'statistics2'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
