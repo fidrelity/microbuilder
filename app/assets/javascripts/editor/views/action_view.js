@@ -45,6 +45,16 @@ var ButtonView = Ember.CollectionView.extend({
     
     template: Ember.Handlebars.compile("{{content}}"),
     
+    didInsertElement : function() {
+      
+      if ( !this._parentView.disable ) {
+      
+        this.$().addClass( 'btn-primary' );
+      
+      }
+      
+    },
+    
     click : function() {
       
       if ( this._parentView.disable ) {
