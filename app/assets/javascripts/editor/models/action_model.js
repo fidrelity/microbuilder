@@ -115,7 +115,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     this.set( 'type', 'moveIn' );
     
     App.actionController.addButtonOption(
-      'How should <gameObject> move directional?', 
+      'How should ' + this.parentGameObject.name + ' move directional?', 
       ['in direction', 'random direction', 'to location', 'to object'],
       this,
       2
@@ -128,7 +128,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     this.set( 'direction', true );
     
     App.actionController.addDirectionOption( 
-      'Drag <gameObject> to it\'s relative direction from where it is',
+      'Drag ' + this.parentGameObject.name + ' to set the direction',
       this,
       3 
     );
@@ -154,7 +154,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     this.set( 'type', 'moveTo' );
     
     App.actionController.addButtonOption(
-      'Where should <gameObject> move?', 
+      'Where should ' + this.parentGameObject.name + ' move?', 
       ['to location', 'to object'],
       this,
       2
@@ -167,7 +167,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     this.set( 'type', 'jumpTo' );
     
     App.actionController.addButtonOption(
-      'Where should <gameObject> jump?', 
+      'Where should ' + this.parentGameObject.name + ' jump?', 
       ['to location', 'to object', 'to area'],
       this,
       2
@@ -182,15 +182,15 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     if ( type === 'moveIn' ) {
     
-      question = 'Drag <gameObject> to the location in which direction it should move.';
+      question = 'Drag ' + this.parentGameObject.name + ' to the location in which direction it should move';
     
     } else if ( type === 'moveTo' ) {
       
-      question = 'Drag <gameObject> to the location where it should move.';
+      question = 'Drag ' + this.parentGameObject.name + ' to the location where it should move';
       
     } else if ( type === 'jumpTo' ) {
       
-      question = 'Drag <gameObject> to the location where it should jump.';
+      question = 'Drag ' + this.parentGameObject.name + ' to the location where it should jump';
       
     }
     
@@ -209,19 +209,20 @@ var MoveActionModel = ActionTriggerModel.extend({
   'to object' : function() {
     
     var type = this.type,
+      name = this.parentGameObject.name,
       question;
     
     if ( type === 'moveIn' ) {
     
-      question = 'Choose to which the direction of which other object <gameObject> should move.';
+      question = 'Choose the object in which direction ' + name + ' should move';
     
     } else if ( type === 'moveTo' ) {
       
-      question = 'Choose to which other object <gameObject> should move.';
+      question = 'Choose to which other object ' + name + ' should move';
       
     } else if ( type === 'jumpTo' ) {
       
-      question = 'Choose to which other object <gameObject> should jump.';
+      question = 'Choose to which other object ' + name + ' should jump';
       
     }
     
@@ -237,7 +238,7 @@ var MoveActionModel = ActionTriggerModel.extend({
   
   'to area' : function() {
     
-    App.actionController.addAreaOption( 'Select the area where <gameObject> should randomly jump', this, 3 );
+    App.actionController.addAreaOption( 'Select the area where ' + this.parentGameObject.name + ' should randomly jump', this, 3 );
     
   },
   
@@ -256,7 +257,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     this.set( 'mode', mode );
     
-    App.actionController.addAreaOption( 'Select the area where <gameObject> should roam', this, 3 );
+    App.actionController.addAreaOption( 'Select the area where ' + this.parentGameObject.name + ' should roam in', this, 3 );
     
     this.set( 'addSpeed', 4 );
     
@@ -271,7 +272,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     this.set( 'type', 'swap' );
     
-    App.actionController.addObjectsOption( 'Choose the object to swap with <gameObject>', this, 2 );
+    App.actionController.addObjectsOption( 'Choose the object to swap position with ' + this.parentGameObject.name, this, 2 );
     
   },
   
@@ -351,11 +352,11 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     var type = this.type,
       name = this.parentGameObject.name,
-      other = this.gameObject ? this.gameObject.name : this.position.string();
+      other = this.gameObject ? this.gameObject.name : 'location ' + this.position.string();
     
     if ( this.region ) {
       
-      other = this.region.string();
+      other = 'area ' + this.region.string();
       
     }
     
@@ -371,7 +372,7 @@ var MoveActionModel = ActionTriggerModel.extend({
       
       if ( this.random ) {
         
-        name += ' move in random direction';
+        name += ' moves in random direction';
         
       } else if ( this.direction ) {
       
@@ -389,11 +390,11 @@ var MoveActionModel = ActionTriggerModel.extend({
       
     } else if ( type === 'roam' ) {
       
-      name += ' roams in ' + this.mode + ' mode within ' + this.region.string();
+      name += ' roams in ' + this.mode + ' mode within ' + other;
       
     } else if ( type === 'stop' ) {
       
-      name += ' stops';
+      name += ' stops moving';
       
     }
     
@@ -415,7 +416,7 @@ var ArtActionModel = ActionTriggerModel.extend({
     
     this.set( 'type', 'frame' );
     
-    App.actionController.addFrameOption( 'Choose the frame', 'frame', this, 2 );
+    App.actionController.addFrameOption( 'Choose the frame ' + this.parentGameObject.name + ' should display', 'frame', this, 2 );
     
   },
   
@@ -423,7 +424,7 @@ var ArtActionModel = ActionTriggerModel.extend({
     
     this.set( 'type', 'play' );
     
-    App.actionController.addFrameOption( 'Choose the start frame', 'frame', this, 2 );
+    App.actionController.addFrameOption( 'Choose the start frame of the animation', 'frame', this, 2 );
     
   },
   
@@ -461,11 +462,11 @@ var ArtActionModel = ActionTriggerModel.extend({
       
       if ( this.frame2 ) {
         
-        App.actionController.addButtonOption( 'Choose animation mode?', ['loop', 'ping-pong', 'once'], this, 4 );
+        App.actionController.addButtonOption( 'Choose animation mode', ['loop', 'ping-pong', 'once'], this, 4 );
         
       } else {
         
-        App.actionController.addFrameOption( 'Choose the end frame', 'frame2', this, 3 );
+        App.actionController.addFrameOption( 'Choose the end frame of your animation', 'frame2', this, 3 );
         
       }
       
@@ -511,11 +512,25 @@ var ArtActionModel = ActionTriggerModel.extend({
     
     if ( this.frame2 ) {
       
-      name += ' plays animation from frame ' + this.frame + ' to ' + this.frame2 + ' in ' + this.mode + ' - ' + this.speeds[ this.speed ];
+      if ( this.mode === 'loop' ) {
+        
+        name += ' loops';
+        
+      } else if ( this.mode === 'ping-pong' ) {
+        
+        name += ' plays ping-pong';
+        
+      } else {
+        
+        name += ' animates once';
+        
+      }
+      
+      name += ' from frame ' + this.frame + ' to ' + this.frame2 + ' - ' + this.speeds[ this.speed ];
       
     } else if ( this.frame ) {
       
-      name += ' jumps to frame ' + this.frame;
+      name += ' displays frame ' + this.frame;
       
     } else if ( this.graphic ) {
       
@@ -664,7 +679,7 @@ var ContactTriggerModel = ActionTriggerModel.extend({
     
     this.set( 'type', 'touch' );
     
-    App.actionController.addButtonOption( 'With what?', ['object', 'area'], this, 2 );
+    App.actionController.addButtonOption( 'Touches what?', ['object', 'area'], this, 2 );
     
   },
   
@@ -672,7 +687,7 @@ var ContactTriggerModel = ActionTriggerModel.extend({
     
     this.set( 'type', 'overlap' );
     
-    App.actionController.addButtonOption( 'With what?', ['object', 'area'], this, 2 );
+    App.actionController.addButtonOption( 'Overlaps what?', ['object', 'area'], this, 2 );
     
   },
   
@@ -745,7 +760,7 @@ var TimeTriggerModel = ActionTriggerModel.extend({
     
     this.set( 'type', 'exactly' );
     
-    App.actionController.addTimeOption( 'Drag the handle to the time you want.', this.type, this, 2 );
+    App.actionController.addTimeOption( 'Drag the handle to the time in the game', this.type, this, 2 );
     
     this.done();
     
@@ -755,7 +770,7 @@ var TimeTriggerModel = ActionTriggerModel.extend({
     
     this.set( 'type', 'randomly' );
     
-    App.actionController.addTimeOption( 'Drag the handles to set the range you want.', this.type, this, 2 );
+    App.actionController.addTimeOption( 'Drag the handles to set the time range', this.type, this, 2 );
     
     this.done();
     
@@ -781,11 +796,11 @@ var TimeTriggerModel = ActionTriggerModel.extend({
     
     if ( this.time2 ) {
       
-      return 'between ' + this.time + ' to ' + this.time2 + '% in the game';
+      return 'randomly after ' + this.time + '-' + this.time2 + '% of the game';
       
     } else {
       
-      return this.time + '% in the game';
+      return 'after ' + this.time + '% of the game';
       
     }
     
