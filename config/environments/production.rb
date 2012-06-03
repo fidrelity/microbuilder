@@ -14,6 +14,8 @@ Playtin::Application.configure do
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
+  config.handlebars.precompile = false
+  
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = true
 
@@ -67,7 +69,7 @@ Playtin::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   
-  config.active_record.observers = :game_observer
+  #config.active_record.observers = :game_observer
   
   #Facebook Key and Secret
   FACEBOOK_APP_NAME = 'playtin'
