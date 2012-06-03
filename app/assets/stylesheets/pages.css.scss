@@ -44,7 +44,8 @@ body {
 }
 
 #menu {
-  float:right;
+  position:relative;
+  left:300px;
 }
 
 #menu li {
