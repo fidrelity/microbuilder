@@ -45,6 +45,8 @@ var ActionController = Ember.Object.extend({
       observer : this,
       content : buttons,
       
+      disable : false,
+      
       destroy : function() {
         
         var action = App.actionController.action;

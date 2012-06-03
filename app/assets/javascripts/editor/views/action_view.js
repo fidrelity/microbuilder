@@ -35,6 +35,8 @@ var ButtonView = Ember.CollectionView.extend({
   attributeBindings: ["data-toggle"],
   'data-toggle': 'buttons-radio',
   
+  disable : true,
+  
   itemViewClass: Ember.View.extend({
     
     tagName : 'button',
@@ -44,6 +46,14 @@ var ButtonView = Ember.CollectionView.extend({
     template: Ember.Handlebars.compile("{{content}}"),
     
     click : function() {
+      
+      if ( this._parentView.disable ) {
+      
+        this._parentView.$( '.btn' ).addClass( 'disabled' );
+        
+        this.$().removeClass( 'disabled' );
+      
+      }
       
       this._parentView.observer.choose( this.content );
       
