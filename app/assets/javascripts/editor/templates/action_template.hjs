@@ -6,9 +6,9 @@
 
   <div class="questionview">Is your {{App.actionController.mode}} correct?</div>
 
-  <div class="optionview">
-    <span class="actionstring"> {{App.actionController.action.string}} </span>
-    <button class="btn btn-success" {{action "save" target="App.actionController"}}> save </button>
+  <div class="optionview form-actions">
+    <button class="btn btn-success right btn-large" {{action "save" target="App.actionController"}}> apply </button>
+    <div class="actionstring"> {{App.actionController.action.string}} </div>
   </div>
 
 {{/if}}

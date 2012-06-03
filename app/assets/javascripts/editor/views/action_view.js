@@ -35,6 +35,9 @@ var ButtonView = Ember.CollectionView.extend({
   attributeBindings: ["data-toggle"],
   'data-toggle': 'buttons-radio',
   
+  disable : true,
+  disabled : false,
+  
   itemViewClass: Ember.View.extend({
     
     tagName : 'button',
@@ -43,7 +46,33 @@ var ButtonView = Ember.CollectionView.extend({
     
     template: Ember.Handlebars.compile("{{content}}"),
     
+    didInsertElement : function() {
+      
+      if ( !this._parentView.disable ) {
+      
+        this.$().addClass( 'btn-primary' );
+      
+      }
+      
+    },
+    
     click : function() {
+      
+      if ( this._parentView.disabled ) {
+        
+        return;
+        
+      }
+      
+      if ( this._parentView.disable ) {
+      
+        this._parentView.$( '.btn' ).addClass( 'disabled' );
+        
+        this.$().removeClass( 'disabled' );
+        
+        this._parentView.set( 'disabled', true )
+      
+      }
       
       this._parentView.observer.choose( this.content );
       
@@ -172,7 +201,7 @@ var FrameView = Ember.View.extend({
     
     this.set( 'frames', [] );
     
-    for ( var i = 1; i <= this.graphic.frameCount; i++ ) {
+    for ( var i = 1; i <= /* this.graphic.frameCount */ 8; i++ ) {
       
       this.frames.addObject({
         number : i,
@@ -200,7 +229,19 @@ var FrameView = Ember.View.extend({
     
     return 'width:' + width + 'px;height:' + height + 'px;background-color:black;margin-left:' + offset + 'px;';
     
-  }.property( 'observer.frame', 'observer.frame2' )
+  }.property( 'observer.frame', 'observer.frame2' ),
+  
+  wrapperWidth : function() {
+    
+    return this.graphic.frameWidth * 8;
+    
+  }.property( 'graphic' ),
+  
+  wrapperHeight : function() {
+    
+    return this.graphic.frameHeight + 20;
+    
+  }.property( 'graphic' )
   
 });
 

@@ -45,6 +45,8 @@ var ActionController = Ember.Object.extend({
       observer : this,
       content : buttons,
       
+      disable : false,
+      
       destroy : function() {
         
         var action = App.actionController.action;
@@ -216,7 +218,7 @@ var ActionController = Ember.Object.extend({
     this.set( 'action', ArtActionModel.create() );
     
     this.addButtonOption( 
-      'How should the art change?', 
+      'What should the art do?', 
       ['to frame', 'play', 'stop', 'change' ],
       this.action,
       1
@@ -255,7 +257,7 @@ var ActionController = Ember.Object.extend({
     this.set( 'action', ContactTriggerModel.create() );
     
     this.addButtonOption( 
-      'Trigger a touch or overlap?', 
+      'Trigger a touch or overlapping?', 
       ['touch', 'overlap'], 
       this.action,
       1
@@ -268,7 +270,7 @@ var ActionController = Ember.Object.extend({
     this.set( 'action', TimeTriggerModel.create() );
     
     this.addButtonOption( 
-      'Trigger an excact time or in a range?', 
+      'Trigger at an excact time or randomly in a range?', 
       ['exactly', 'randomly'], 
       this.action,
       1
