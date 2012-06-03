@@ -9,7 +9,9 @@
     "background":false,
     "frame_count":1,
     "frame_width":64,
-    "frame_height":64
+    "frame_height":64,
+    "is_own":true,
+    "public":true,
   }
 */
 
@@ -23,6 +25,7 @@ var GraphicModel = Ember.Object.extend({
   
   isBackground : false,
   isPublic : false,
+  isOwn : false,
   
   frameCount : 1,
   frameWidth : null,
@@ -49,16 +52,5 @@ var GraphicModel = Ember.Object.extend({
     }
     
   }
-  
-  // divStyle : function() {
-  // 
-  //   var g = this,
-  //     zoom = 64 / Math.max( g.frameWidth, g.frameHeight ),
-  //     width = g.frameWidth * zoom * g.frameCount,
-  //     height = g.frameHeight * zoom;
-  // 
-  //   return "background-image:url(" + g.imagePath + ");background-size:" + width + "px " + height + "px;";
-  // 
-  // }.property( 'frameWidth' )
   
 });

@@ -6,13 +6,13 @@ var LibraryView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    if ( App.libraryController.showPublic ) {
+    if ( App.libraryController.showOwn ) {
     
-      this.$( '#publicButton' ).addClass( 'active' );
+      this.$( '#ownButton' ).addClass( 'active' );
     
     } else {
       
-      this.$( '#ownButton' ).addClass( 'active' );
+      this.$( '#publicButton' ).addClass( 'active' );
       
     }
     

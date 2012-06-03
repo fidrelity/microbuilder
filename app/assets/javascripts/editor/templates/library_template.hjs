@@ -1,6 +1,6 @@
 <div class="btn-group left" data-toggle="buttons-radio">
 
-  <button id="ownButton" class="btn" {{action "showOwn" target="App.libraryController"}}>own</button>
+  <button id="ownButton" class="btn" {{action "showOwns" target="App.libraryController"}}>own</button>
   <button id="publicButton" class="btn" {{action "showPublics" target="App.libraryController"}}>public</button>
 
 </div>
