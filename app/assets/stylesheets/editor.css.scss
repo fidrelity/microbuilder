@@ -159,7 +159,8 @@
 
 #editor .player {
   margin:auto;
-  width:840px;
+  width: 836px;
+  height: 586px;
   overflow:hidden;
 }
 
@@ -240,8 +241,9 @@
 }
 
 #editor .stageControls {
-  margin: 10px auto;
+  margin: 0 auto;
   overflow: hidden;
+  padding: 6px 32px;
 }
 
 #editor .duration {

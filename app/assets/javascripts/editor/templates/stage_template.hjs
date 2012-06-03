@@ -1,4 +1,5 @@
-<div class="stageControls form-actions">
+<div class="form-actions">
+<div class="stageControls">
   <div class="btn-group left">
     <button class="btn-large btn-primary" {{action "showObjects" target="App.gameController"}}> objects </button>
     <button class="btn-large btn-primary" {{action "searchBackground" target="App.gameController"}}> background </button>
@@ -11,15 +12,16 @@
   </div>
 </div>
 
-{{view PlayerView 
-  type="stage"
-  canvasID="stageCanvas"
-  playerBinding="player"
-}}
+<div class="player">
+  {{view PlayerView 
+    type="stage"
+    canvasID="stageCanvas"
+    playerBinding="player"
+  }}
+</div>
 
-
-<div class="stageControls form-actions">
-  <span class="btn-group left" style="margin-top:5px">
+<div class="stageControls">
+  <span class="btn-group left">
     <button class="btn" {{action "play"}}><i class="icon-play"></i> play </button>
     <button class="btn" {{action "stop"}}><i class="icon-stop"></i> stop </button>
     <button class="btn" {{action "debug"}} data-toggle="button"> <i class="icon-wrench"></i> debug mode </button>
@@ -28,4 +30,6 @@
   <button class="btn-large btn-success right" {{action "finalize" target="App.gameController"}}> Finalize game </button>
 </div>
 
-<div class="clear" style="height:100px"></div>
+</div>
+
+<div style="height:100px"></div>
