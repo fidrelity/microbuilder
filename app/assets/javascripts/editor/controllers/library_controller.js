@@ -7,7 +7,7 @@
 var LibraryController = Ember.ArrayController.extend({
 
   showBackground : false,
-  showPublic : false,
+  showOwn : false,
 
   content : [],
 
@@ -61,7 +61,7 @@ var LibraryController = Ember.ArrayController.extend({
       
     });
     
-    this.addObserver( 'showPublic', function() {
+    this.addObserver( 'showOwn', function() {
       
       self.updateDisplay( true );
       
@@ -95,23 +95,32 @@ var LibraryController = Ember.ArrayController.extend({
       path = '';
     
     display = display.filterProperty( 'isBackground', this.showBackground );
-    display = display.filterProperty( 'isPublic', this.showPublic );
+    
+    if ( this.showOwn ) {
+    
+      display = display.filterProperty( 'isOwn', true );
+    
+    } else {
+    
+      display = display.filterProperty( 'isPublic', true );
+    
+    }
     
     if ( this.showBackground ) {
       
-      if ( this.showPublic ) {
+      if ( this.showOwn ) {
         
-        path = 'graphics/public?backgrounds=true';
+        path = 'users/current/graphics/backgrounds';
         
       } else {
         
-        path = 'users/current/graphics/backgrounds';
+        path = 'graphics/public?backgrounds=true';
         
       }
       
     } else {
       
-      path = this.showPublic ? 'graphics/public' : 'users/current/graphics';
+      path = this.showOwn ? 'users/current/graphics' : 'graphics/public';
       
       path += '?min_size=' + this.size.min + '&max_size=' + this.size.max;
       
@@ -120,7 +129,6 @@ var LibraryController = Ember.ArrayController.extend({
     }
     
     this.set( 'display', display );
-    
     
     if ( load ) {
       
@@ -159,8 +167,7 @@ var LibraryController = Ember.ArrayController.extend({
   
   loadGraphics : function( path ) {
     
-    var self = this,
-      isPublic = this.showPublic;
+    var self = this;
     
     $.ajax({
       url : path,
@@ -170,7 +177,7 @@ var LibraryController = Ember.ArrayController.extend({
         
         if ( data ) {
         
-          self.appendGraphics( data, isPublic );
+          self.appendGraphics( data );
         
         }
         
@@ -180,7 +187,9 @@ var LibraryController = Ember.ArrayController.extend({
     
   },
   
-  appendGraphics : function( data, isPublic ) {
+  appendGraphics : function( data ) {
+    
+    console.log( data );
     
     for ( var i = 0; i < data.length; i++ ) {
       
@@ -196,7 +205,8 @@ var LibraryController = Ember.ArrayController.extend({
             userName : d.user_name,
             imagePath : d.url,
             isBackground : d.background,
-            isPublic : isPublic,
+            isPublic : d.public,
+            isOwn : d.is_own,
             frameCount : d.frame_count,
             frameWidth : d.frame_width,
             frameHeight : d.frame_height
@@ -211,15 +221,19 @@ var LibraryController = Ember.ArrayController.extend({
     
   },
   
-  showOwn : function() {
+  showOwns : function() {
     
-    this.set( 'showPublic', false );
+    console.log( 'showOwn' );
+    
+    this.set( 'showOwn', true );
     
   },
   
   showPublics : function() {
     
-    this.set( 'showPublic', true );
+    console.log( 'showPublics' );
+    
+    this.set( 'showOwn', false );
     
   }
 
