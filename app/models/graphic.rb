@@ -14,13 +14,17 @@ class Graphic < ActiveRecord::Base
   
   default_scope :order => 'created_at DESC'
   pg_search_scope :search, :against => :name
-  scope :all_public, where(:public => true)
+  scope :with_public, where(:public => true)
+  scope :with_private, where(:public => false)
   scope :backgrounds, where(:background => true)
   scope :without_backgrounds, where(:background => false)
+  
+  #das größere von width und height soll between min/max sein
+  
   scope :between_size, lambda { |min, max|
     where(
-      "frame_width >= ? AND frame_width <= ? AND frame_height >= ? AND frame_height <= ?", 
-      min, max, min, max
+      "(frame_width >= ? OR frame_height >= ?) AND frame_width  <= ? AND frame_height <= ?",
+      min, min, max, max
     )
   }
 
@@ -39,17 +43,24 @@ class Graphic < ActiveRecord::Base
   end
   
   protected
-    def self.filter(backgrounds, min = nil, max = nil)
-      query = backgrounds ? graphics = self.backgrounds : self.without_backgrounds
+    def self.filter(_public, _backgrounds, min = nil, max = nil)
+      query = _backgrounds ? backgrounds : without_backgrounds
 
-      unless backgrounds
+      case _public
+      when true 
+       query.with_public   
+      when
+        query.with_private
+      end
+
+      unless _backgrounds
         if min && max && min < max
-          graphics = query.between_size(min, max)
+          query = query.between_size(min, max)
         else
           raise InvalidGraphicBoundaries, "Boundaries invalid"
         end
       end
-      graphics
+      query
     end
     
     def referenced?

@@ -24,6 +24,7 @@ class GraphicsController < ApplicationController
   def public
     begin
       graphics = Graphic.filter(
+        true,
         !!params[:backgrounds],
         params[:min_size].to_i,
         params[:max_size].to_i

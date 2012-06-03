@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   def graphics
     begin
       graphics = current_user.graphics.filter(
+        nil,
         !!params[:backgrounds],
         params[:min_size].to_i,
         params[:max_size].to_i
