@@ -40,11 +40,11 @@ class User < ActiveRecord::Base
   end
   
   def facebook_image_url
-    "https://graph.facebook.com/#{facebook_id}/picture"
+    "https://graph.facebook.com/#{facebook_id}/picture?type=large"
   end
   
   def gravatar_image_url
-    "http://www.gravatar.com/avatar/#{gravatar_email_hash}?s=50"
+    "http://www.gravatar.com/avatar/#{gravatar_email_hash}?s=180"
   end
   
   private
