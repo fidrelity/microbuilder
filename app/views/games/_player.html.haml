@@ -15,11 +15,21 @@
       -if current_user
         =current_user.first_name
       , you have won the game!
+    %div{:class => "gameData"}
+      %h2
+        =game.title
+      %p
+        =game.instruction
 
   %div{:class => "playerLoseScreen"}
     %div{:class => "replayButton"}
     %div{:class => "message"}
       You have lost the game!
+    %div{:class => "gameData"}
+      %h2
+        =game.title
+      %p
+        =game.instruction
 
 :javascript
   $(document).ready( function() {
