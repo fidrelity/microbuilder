@@ -45,7 +45,7 @@
 !binary "bHVpZ2kucG5n": luigi-3c2a2f627e6a60348a0b2071cd581f40.png
 !binary "bWFyaW8ucG5n": mario-16ab198c847fcfceb5fa2f3f7f0d33fc.png
 !binary "bWFyaW9TcHJpdGUucG5n": marioSprite-8fad65e504cde5d27ffd3d8f39f700c6.png
-!binary "bmF2X2VkaXRvci5wbmc=": nav_editor-b32de8741d945e9be1647125515e175d.png
+!binary "bmF2X2VkaXRvci5wbmc=": nav_editor-947d01f7e67ccfaddb5fe9f5002da58f.png
 !binary "bmF2X2dhbGxlcnkucG5n": nav_gallery-a508ab59a16a51e74144309ec72f86b8.png
 !binary "bmF2X3Byb2ZpbGUucG5n": nav_profile-3e896dee5fe082b253da024b2a9adda4.png
 !binary "bmV3X2dhbWUucG5n": new_game-efe4a96ae9650c7d939fa26974480bda.png
@@ -76,6 +76,7 @@
 !binary "cGFwZXIuanBlZw==": paper-8c4ee2794f0a1949169258a118a3c569.jpeg
 !binary "cGFwZXIucG5n": paper-7d4891f527ca0bc1b796908c018827be.png
 !binary "cGxhbnQucG5n": plant-1a6494d55f93954e202f15c9e06c7cba.png
+!binary "cGxheXRpbl9sb2dvLnBuZw==": playtin_logo-b87d04485a15756d587f676f9dadfbe9.png
 !binary "cHJldmlldy5wbmc=": preview-ab7034feff0e1eafea305623b2e06126.png
 !binary "cHJvZmlsZS5wbmc=": profile-1ad88e3d776b758dd9431b00418b3e7e.png
 !binary "cmFpbHMucG5n": rails-782b548cc1ba7f898cdad2d9eb8420d2.png
@@ -87,8 +88,8 @@
 !binary "c3dpdGNoX3JpZ2h0LnBuZw==": switch_right-93b49e5856cab4bc779518546eb15a5f.png
 !binary "dmlld19hbGxfYnV0dG9uLnBuZw==": view_all_button-dd6e5e5c4e5b62e386b41208a7592a08.png
 !binary "dmlld19hbGxfYnV0dG9uX2hvdmVyLnBuZw==": view_all_button_hover-699d32659cd5a6bf24596c2148213e80.png
-!binary "YXBwbGljYXRpb24uanM=": application-93e158db7a9e2a989b841b7ee6f902c0.js
-!binary "YXBwbGljYXRpb24uY3Nz": application-b84553de657f9adee72a025c85f4d521.css
+!binary "YXBwbGljYXRpb24uanM=": application-1f89f4bbeb14ff77cb0d6b47ae02c4fa.js
+!binary "YXBwbGljYXRpb24uY3Nz": application-b2a0f5948453c26ec3e539a66c6a7e9e.css
 !binary "aW1hZ2VzL2JsYW5rLmdpZg==": images/blank-b689af5d0f3864399e27dd106e71f6a5.gif
 !binary "aW1hZ2VzL2NvbG9ycGlja2VyX2JhY2tncm91bmQucG5n": images/colorpicker_background-14fa981aa5c53d667144e19515490d7c.png
 !binary "aW1hZ2VzL2NvbG9ycGlja2VyX2hleC5wbmc=": images/colorpicker_hex-3373a79b43ac902fde21e97e6f34160c.png
