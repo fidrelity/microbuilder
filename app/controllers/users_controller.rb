@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   def graphics
     begin
       graphics = current_user.graphics.filter(
+        nil,
         !!params[:backgrounds],
         params[:min_size].to_i,
         params[:max_size].to_i
@@ -21,7 +22,7 @@ class UsersController < ApplicationController
     end
     
     response = graphics.map do |graphic|
-        graphic.to_response_hash 
+        graphic.to_response_hash(current_user)
     end
 
     render :json => response.to_json, :status => 200
