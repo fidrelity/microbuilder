@@ -138,6 +138,9 @@ var PaintController =  Ember.ArrayController.extend({
       step: 1,
       change: function( event, ui ) {
         App.paintController.setSize(ui.value);
+      },
+      slide: function( event, ui) {
+        $('#slidervalue').html(ui.value);
       }
     });
 
