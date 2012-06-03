@@ -35,7 +35,7 @@ Loader.prototype = {
     
     if ( this.corsSave ) {
       
-      path = isLocal ? "/s3?url=http://" + document.location.host + "/" + path  : "/s3?url=" + path;
+      path = isLocal ? path  : "/s3?url=" + path;
     
     }
     console.log(path);
