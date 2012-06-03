@@ -35,8 +35,6 @@ Playtin::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-
-  config.active_record.observers = :game_observer
   
   #Facebook Key and Secret
   FACEBOOK_ID = '392913504057961'

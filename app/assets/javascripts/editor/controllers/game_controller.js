@@ -9,9 +9,19 @@ var GameController = Ember.Object.extend({
 
   gameBinding : 'App.game',
   
+  cancelView : null,
+  
   cancel : function() {
     
-    App.mainView.hideOverlay();
+    if ( this.cancelView ) {
+      
+      App.mainView.show( 'overlayContent', this.cancelView );
+    
+    } else {
+    
+      App.mainView.hideOverlay();
+    
+    }
     
   },
   
@@ -27,6 +37,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'selectFunction', this.selectGraphic );
     
     App.mainView.show( 'overlayContent', 'libraryView' );
+    this.set( 'cancelView', 'objectsView' );
     
   },
   
@@ -44,12 +55,32 @@ var GameController = Ember.Object.extend({
     
   },
   
+  searchArtGraphic : function() {
+    
+    App.libraryController.set( 'showBackground', false );
+    App.libraryController.set( 'selectFunction', this.selectArtGraphic );
+    
+    App.mainView.show( 'overlayContent', 'libraryView' );
+    this.set( 'cancelView', 'actionView' );
+    
+  },
+  
+  selectArtGraphic : function( graphic ) {
+    
+    App.actionController.action.selectGraphic( graphic );
+    
+    App.mainView.show( 'overlayContent', 'actionView' );
+    this.set( 'cancelView', 'objectsView' );
+    
+  },
+  
   searchBackground : function() {
     
     App.libraryController.set( 'showBackground', true );
     App.libraryController.set( 'selectFunction', this.selectBackground );
     
     App.mainView.show( 'overlayContent', 'libraryView' );
+    this.set( 'cancelView', null );
     
   },
   
@@ -67,31 +98,16 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'selectFunction', this.selectChangeGraphic );
     
     App.mainView.show( 'overlayContent', 'libraryView' );
+    this.set( 'cancelView', 'objectsView' );
     
   },
   
   selectChangeGraphic : function( graphic ) {
     
-    App.mainView.stageView.gameObject.set( 'graphic', graphic );
+    App.gameObjectsController.current.set( 'graphic', graphic );
     
     App.mainView.show( 'overlayContent', 'objectsView' );
-    
-  },
-  
-  searchArtGraphic : function() {
-    
-    App.libraryController.set( 'showBackground', false );
-    App.libraryController.set( 'selectFunction', this.selectArtGraphic );
-    
-    App.mainView.show( 'overlayContent', 'libraryView' );
-    
-  },
-  
-  selectArtGraphic : function( graphic ) {
-    
-    App.actionController.selectGraphic( graphic );
-    
-    App.mainView.show( 'overlayContent', 'actionView' );
+    this.set( 'cancelView', null );
     
   },
   
@@ -100,6 +116,8 @@ var GameController = Ember.Object.extend({
     App.mainView.show( 'overlayContent', 'actionView' );
     App.actionController.reset( 'Trigger' );
     
+    this.set( 'cancelView', 'objectsView' );
+    
   },
   
   addAction : function() {
@@ -107,11 +125,13 @@ var GameController = Ember.Object.extend({
     App.mainView.show( 'overlayContent', 'actionView' );
     App.actionController.reset( 'Action' );
     
+    this.set( 'cancelView', 'objectsView' );
+    
   },
   
   finalize : function() {
     
-    App.mainView.show( 'overlayContent', 'publishView' );
+    App.mainView.show( 'overlayContent', 'publishView' ); 
     
   },
   
@@ -139,10 +159,10 @@ var GameController = Ember.Object.extend({
         alert( 'insert instructions' );
         return;
         
-    // } else if ( !data.win ) {
-    //     
-    //     alert( 'game has no win action' );
-    //     return;
+    } else if ( !data.win ) {
+        
+        alert( 'game has no win action' );
+        return;
         
     }
     
@@ -214,24 +234,39 @@ var GameController = Ember.Object.extend({
 
   takePreviewSnapshot : function() {
     var canvas = document.getElementById("testCanvas");
+
+    var listElements = $('#snapshots').find("li");
  
     var img_data = canvas.toDataURL("image/png");
-    var screenshot = '<li><img src="'+img_data+'" width="210" height="130" class="thumb"><br><input type="radio" value="" name="previewImage" data-id=""></li>';
+    var num = listElements.length;
+    var screenshot = '<li class="thumbnail"><img src="'+img_data+'" width="210" height="130" class="thumb"><br><span class="label"><input type="radio" value="" name="previewImage"> Screen '+num+'</span></li>';
     
-    $('#thumbnail').append(screenshot);
+    $('#snapshots').append(screenshot);
+    //    
+    this.setActiveSnapshot($('#snapshots').find("li").last());
+  },
+
+  // highlight selected snapshot element
+  setActiveSnapshot : function(_obj) {
+
+    _obj.find('input[type="radio"]').attr("checked", "checked");
+
+    $('#snapshots').find('li').removeClass('active');
+    _obj.addClass('active');
+
   },
 
   // Returns Base64 encoded data of img
   getSelectedSnapshotData : function() {
-    var selectedRadio = $('#thumbnail').find('li').find('input[type="radio"]:checked');
+    var selectedRadio = $('#snapshots').find('li.active');
 
     // Take automatic snapshot, if user didnt
     if(!selectedRadio.length) {
       this.takePreviewSnapshot();
-      selectedRadio = $('#thumbnail').find('li').find('input[type="radio"]').first().prop("checked", true);
+      selectedRadio = $('#snapshots').find('li').first();
     }
 
-    var selectedImg = selectedRadio.parent().find('img');
+    var selectedImg = selectedRadio.find('img');    
     return selectedImg.attr("src");
   }
   

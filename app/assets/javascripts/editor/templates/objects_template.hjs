@@ -28,10 +28,12 @@
 
       <div class="left" style="margin-left:15px">
 
-        {{view Ember.TextField valueBinding="content.name" maxlength="16"}}
+        {{view Ember.TextField valueBinding="content.name" maxlength="10"}}
         
         <div class="btn-group">
 
+          <button class="btn" {{action "changeArt"}}> change art </button>
+          <button class="btn" {{action "toTop"}}> to top </button>
           <button class="btn" {{action "duplicate"}}> duplicate </button>
           <button class="btn" {{action "remove"}}> delete </button>
 
@@ -50,7 +52,7 @@
         contentBinding = "App.behaviourController.startBehaviour"
         controllerBinding = "App.behaviourController"
       }}
-        <li class="top">
+        <li>
       
           <div class="left title"> on start </div>
       

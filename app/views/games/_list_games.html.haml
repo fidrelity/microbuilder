@@ -50,7 +50,7 @@
             = link_to game.title, play_path(game)
             %br
             %span
-              19 Plays
+              = game.played
         .info                                                                                                              
           =link_to(game.title, play_path(game))
           -if false                                                                                 

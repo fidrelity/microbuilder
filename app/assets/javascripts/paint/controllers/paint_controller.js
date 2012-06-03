@@ -238,7 +238,11 @@ var PaintController =  Ember.ArrayController.extend({
   // Undo current SpriteModel
   undo : function() {
     this.getCurrentSpriteModel().popState();
-    this.updateZoom();
+
+    if(this.isBackground)
+      this.zoomContext.drawImage(this.getCurrentSpriteModel().canvas, 0, 0);
+    else
+      this.updateZoom();
   },
 
   // Clear current SpriteModel

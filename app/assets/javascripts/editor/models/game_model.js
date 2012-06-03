@@ -35,7 +35,7 @@ var GameModel = Ember.Object.extend({
       
       game.gameObjects = [];
     
-      for ( i = 0; i < this.gameObjects.length; i++ ) {
+      for ( i = this.gameObjects.length - 1; i >= 0; i-- ) {
     
         game.gameObjects.push( this.gameObjects[i].getData( graphics ) );
     
@@ -50,6 +50,8 @@ var GameModel = Ember.Object.extend({
     }
     
     game.graphics = graphics;
+    
+    win = this.checkWin( game );
     
     return {
         game: game,
@@ -71,12 +73,42 @@ var GameModel = Ember.Object.extend({
     
     if ( this.gameObjects.length ) {
     
-      for ( i = 0; i < this.gameObjects.length; i++ ) {
+      for ( i = this.gameObjects.length - 1; i >= 0; i-- ) {
     
         game.gameObjects.push( this.gameObjects[i].getData( game.graphics ) );
     
       }
     
+    }
+    
+    return game;
+  
+  },
+  
+  getSingleData : function() {
+  
+    var game = { graphics : [], gameObjects : [] }, i;
+    
+    if ( this.background ) {
+      
+      game.background = this.background.imagePath;
+      
+    }
+    
+    game.gameObjects.push( App.gameObjectsController.current.getSimpleData( game.graphics ) );
+    
+    return game;
+  
+  },
+  
+  getEmptyData : function() {
+  
+    var game = {};
+    
+    if ( this.background ) {
+      
+      game.background = this.background.imagePath;
+      
     }
     
     return game;
@@ -100,6 +132,40 @@ var GameModel = Ember.Object.extend({
   gameObjectPositionChanged : function( gameObjectID, pos ) {
     
     this.getGameObjectWithID( gameObjectID ).position.copy( pos );
+    
+  },
+  
+  checkWin : function( game ) {
+    
+    var g, b, i, j, k;
+    
+    if ( game.gameObjects ) {
+      
+      for ( k = 0; k < game.gameObjects.length; k++ ) {
+    
+        g = game.gameObjects[k];
+    
+        for ( i = 0; i < g.behaviours.length; i++ ) {
+      
+          b = g.behaviours[i];
+        
+          for ( j = 0; j < b.actions.length; j++ ) {
+          
+            if ( b.actions[j].type === 'win' ) {
+            
+              return true;
+            
+            }
+          
+          }
+      
+        }
+      
+      }
+    
+    }
+    
+    return false;
     
   },
   

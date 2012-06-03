@@ -15,13 +15,10 @@ class GraphicsController < ApplicationController
   end
   
   def destroy
-    @graphic = Graphic.find(params[:id])
-    @user = @graphic.user
-    
-    if current_user == @graphic.user
-      @graphic.soft_delete
-      flash[:success] = I18n.t('.graphics.destroy.success')
-    end
+    @user = current_user
+    graphic = current_user.graphics.find(params[:id])
+    flash[:success] = "Successfully deleted graphic" if graphic && graphic.destroy
+    @graphics = current_user.graphics.paginate(:page => params[:graphics_page], :per_page => 4)
   end
   
   def public

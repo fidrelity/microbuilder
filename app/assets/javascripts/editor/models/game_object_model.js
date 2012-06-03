@@ -93,6 +93,22 @@ var GameObjectModel = Ember.Object.extend({
       behaviours : behaviours
     };
   
+  },
+  
+  getSimpleData : function( graphics ) {
+  
+    if ( graphics.indexOf( this.graphic ) < 0 ) {
+      
+      graphics.push( this.graphic.getData() );
+      
+    }
+    
+    return {
+      ID : this.ID,
+      graphicID : this.graphic.ID,
+      position : this.position.getData()
+    };
+  
   }
   
 });

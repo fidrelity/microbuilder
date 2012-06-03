@@ -67,6 +67,8 @@ Playtin::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   
+  config.active_record.observers = :game_observer
+  
   #Facebook Key and Secret
   FACEBOOK_APP_NAME = 'playtin'
   FACEBOOK_ID = '148777278524544'
@@ -94,8 +96,8 @@ PAPERCLIP_OPTIONS = {
 }
 
 PAPERCLIP_THUMB_OPTIONS = {
-  :url => "/:class/:id/:basename" + ".png",
-  :default_url => "/:class/:id/" + "thumbnail.png",
+  :url => "https://s3.amazonaws.com/mbgfx/:class/:id/:basename" + ".png",
+  :default_url => "https://s3.amazonaws.com/mbgfx/:class/:id/" + "thumbnail.png",
   :path => "/:class/:id/" + "thumbnail.png",
   :styles => { :small => "210x130!" },
   :storage => :s3,

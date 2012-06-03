@@ -43,7 +43,24 @@ var ActionController = Ember.Object.extend({
     
     this.set( 'contentView', ButtonView.create({
       observer : this,
-      content : buttons
+      content : buttons,
+      
+      disable : false,
+      
+      destroy : function() {
+        
+        var action = App.actionController.action;
+        
+        if ( action && action.type === 'search' ) {
+          
+          return;
+          
+        }
+        
+        this._super();
+        
+      }
+      
     }));
     
   },
@@ -121,6 +138,12 @@ var ActionController = Ember.Object.extend({
     
   },
   
+  addDirectionOption : function( question, observer, depth ) {
+    
+    this.addPlayerOption( question, 'direction', observer, depth );
+    
+  },
+  
   addLocationOption : function( question, observer, depth ) {
     
     this.addPlayerOption( question, 'location', observer, depth );
@@ -169,6 +192,14 @@ var ActionController = Ember.Object.extend({
     
   },
   
+  addArtOption : function( question, observer, depth ) {
+    
+    this.addOption( question, ArtView.extend({
+      observer : observer
+    }), depth );
+    
+  },
+  
   move : function() {
   
     this.set( 'action', MoveActionModel.create() );
@@ -187,8 +218,8 @@ var ActionController = Ember.Object.extend({
     this.set( 'action', ArtActionModel.create() );
     
     this.addButtonOption( 
-      'How should the art change?', 
-      ['to frame', 'play', 'stop' ],
+      'What should the art do?', 
+      ['to frame', 'play', 'stop', 'change' ],
       this.action,
       1
     );
@@ -226,7 +257,7 @@ var ActionController = Ember.Object.extend({
     this.set( 'action', ContactTriggerModel.create() );
     
     this.addButtonOption( 
-      'Trigger a touch or overlap?', 
+      'Trigger a touch or overlapping?', 
       ['touch', 'overlap'], 
       this.action,
       1
@@ -239,7 +270,7 @@ var ActionController = Ember.Object.extend({
     this.set( 'action', TimeTriggerModel.create() );
     
     this.addButtonOption( 
-      'Trigger an excact time or in a range?', 
+      'Trigger at an excact time or randomly in a range?', 
       ['exactly', 'randomly'], 
       this.action,
       1

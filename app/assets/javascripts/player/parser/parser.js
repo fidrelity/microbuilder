@@ -127,7 +127,7 @@ var Parser = {
   
     gameObject.movement.startPosition.set( gameObjectData.position.x, gameObjectData.position.y );
   
-    gameObject.setGraphic( this.game.getGraphicWithID( gameObjectData.graphicID ) );
+    gameObject.setStartGraphic( this.game.getGraphicWithID( gameObjectData.graphicID ) );
   
     return gameObject;
   
@@ -226,6 +226,16 @@ var Parser = {
     type: "jumpTo",
     objectID: 0,
   }
+  
+  {
+    type: "jumpTo",
+    area: {
+      x: 48,
+      y:6,
+      width:331,
+      height:123
+    }
+  }
 */
 
   parseActionJumpTo : function( actionData, gameObject ) {
@@ -239,6 +249,10 @@ var Parser = {
     if ( actionData.objectID ) {
     
       action.target = this.game.getGameObjectWithID( actionData.objectID ).movement.position;
+      
+    } else if ( actionData.area ) {
+    
+      action.area = new Area().copy( actionData.area );
     
     } else {
     
@@ -378,6 +392,11 @@ var Parser = {
   {
     type : "art"
   }
+  
+  {
+    type: "art",
+    graphicID: 2
+  }
 */
   
   parseActionArt : function( actionData, gameObject ) {
@@ -386,19 +405,27 @@ var Parser = {
     
     action.gameObject = gameObject;
     
-    action.frame = actionData.frame;
-    action.frame2 = actionData.frame2;
-    
-    action.mode = actionData.mode;
-    action.speed = actionData.speed;
-    
     if ( actionData.frame2 ) {
+      
+      action.frame = actionData.frame;
+      action.frame2 = actionData.frame2;
+    
+      action.mode = actionData.mode;
+      action.speed = actionData.speed;
       
       action.execute = action.executePlay;
       
     } else if ( actionData.frame ) {
       
+      action.frame = actionData.frame;
+      
       action.execute = action.executeFrame;
+      
+    } else if ( typeof actionData.graphicID !== 'undefined'  ) {
+      
+      action.graphic = this.game.getGraphicWithID( actionData.graphicID );
+      
+      action.execute = action.executeChange;
       
     } else {
       

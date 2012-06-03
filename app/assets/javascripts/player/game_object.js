@@ -2,6 +2,7 @@ var GameObject = function( ID ) {
   
   this.ID = ID;
   
+  this.startGraphic = null;
   this.graphic = null;
   
   this.movement = new Movement();
@@ -13,8 +14,9 @@ GameObject.prototype = {
   
   reset : function() {
     
+    this.setGraphic( this.startGraphic );
+    
     this.movement.reset();
-    this.animation.setFrame( 1 );
     
   },
   
@@ -36,22 +38,11 @@ GameObject.prototype = {
     
     ctx.restore();
     
-    if ( this.movement.roamArea ) {
+    if ( ctx.debug ) {
       
-      this.movement.roamArea.draw( ctx );
+      this.movement.draw( ctx );
       
     }
-    
-    // if ( ctx.debug && this.target ) {
-    //   
-    //   ctx.save();
-    //   ctx.translate( this.graphic.image.width / 2, this.graphic.image.height / 2 );
-    //   
-    //   ctx.line( pos.x, pos.y, this.target.x, this.target.y );
-    //   
-    //   ctx.restore();
-    //   
-    // }
     
   },
   
@@ -91,15 +82,33 @@ GameObject.prototype = {
       onload = img.onload,
       self = this;
     
-    img.onload = function() {
+    if ( onload ) {
+    
+      img.onload = function() {
       
-      self.movement.area.setSize( img.width / graphic.frameCount, img.height );
+        self.movement.area.setSize( img.width / graphic.frameCount, img.height );
       
-      onload();
+        onload();
+      
+      }
+    
+    } else {
+      
+      this.movement.area.setSize( img.width / graphic.frameCount, img.height );
       
     }
     
     this.graphic = graphic;
+    
+    this.animation.setFrame( 1 );
+    
+  },
+  
+  setStartGraphic : function( graphic ) {
+    
+    this.startGraphic = graphic;
+    
+    this.setGraphic( graphic );
     
   },
   
@@ -124,6 +133,12 @@ GameObject.prototype = {
   getArea : function() {
     
     return this.movement.getArea();
+    
+  },
+  
+  getPosition : function() {
+    
+    return this.movement.position;
     
   }
   

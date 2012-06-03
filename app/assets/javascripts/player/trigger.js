@@ -31,7 +31,7 @@ ClickTrigger.prototype = {
     
     if ( this.area ) {
       
-      ctx.strokeStyle = '#F77';
+      ctx.strokeStyle = '#F84';
       this.area.draw( ctx );
       
     }
@@ -98,7 +98,7 @@ ContactTrigger.prototype = {
     
     if ( this.area ) {
       
-      ctx.strokeStyle = '#F84';
+      ctx.strokeStyle = '#F77';
       this.area.draw( ctx );
       
     }
@@ -142,6 +142,23 @@ TimeTrigger.prototype = {
       this.randTime = this.time + Math.random() * ( this.time2 - this.time );
       
     }
+    
+  },
+  
+  draw : function( ctx ) {
+    
+    var time = this.randTime || this.time, i = Player.prototype.increment;
+    
+    ctx.fillStyle = this.triggered ? '#AAA' : '#333';
+    
+    if ( this.randTime ) {
+      
+      ctx.fillRect( ( 640 + i ) * this.time * 0.01 - i / 2 - 1, 390 + i / 2 - 4, 2, 16 );
+      ctx.fillRect( ( 640 + i ) * this.time2 * 0.01 - i / 2 - 1, 390 + i / 2 - 4, 2, 16 );
+      
+    }
+    
+    ctx.fillRect( ( 640 + i ) * time * 0.01 - i / 2 - 2, 390 + i / 2 - 4, 4, 16 );
     
   }
   

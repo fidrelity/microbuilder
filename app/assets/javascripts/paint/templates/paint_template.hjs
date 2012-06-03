@@ -67,6 +67,7 @@
         Color:  
       </div>
       <div id="colorPicker"></div>
+       
     </div>
   </div>
 
@@ -113,12 +114,16 @@
 
 
 
-<p>
-Name: <input type="text" size="25" id="imageName"> isPublic <input type="checkbox" id="makePublic">
-
-{{#view ToolView
-        toolBinding = "this"
-}}
-  <button {{action "save"}}>Save</button>
-{{/view}}
-</p>
+<div class="row control-group form-actions">
+  <div class="span3 form-vertical">
+    <label>Name of the image:</label> <input type="text" size="25" id="imageName">
+    <label class="checkbox" id="labelMakePublic" title="Share image" data-content="Check, if you want to share your image with others"><input type="checkbox" id="makePublic" >set image public</label> 
+  </div>
+  <div class="span2 offset6">
+    {{#view ToolView
+            toolBinding = "this"
+    }}
+      <button class="btn-large btn-success" {{action "save"}}>Save image</button>
+    {{/view}}
+  </div>
+</div>

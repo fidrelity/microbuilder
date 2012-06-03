@@ -1,14 +1,18 @@
+<div class="questionview">Select the type of {{App.actionController.mode}}</div>
+
 {{dynamicView App.actionController.contentView}}
 
 {{#if App.actionController.showSaveButton}}
 
-  <p>Is your {{App.actionController.mode}} correct?</p>
+  <div class="questionview">Is your {{App.actionController.mode}} correct?</div>
 
-  <p>
-    {{App.actionController.action.string}} 
-    <button class="btn" {{action "save" target="App.actionController"}}> save </button>
-  </p>
+  <div class="optionview form-actions">
+    <button class="btn btn-success right btn-large" {{action "save" target="App.actionController"}}> apply </button>
+    <div class="actionstring"> {{App.actionController.action.string}} </div>
+  </div>
 
 {{/if}}
 
-<button class="btn" {{action "showObjects" target="App.gameController"}}> cancel </button>
+<div class="clear">
+  <button class="btn" {{action "cancel" target="App.gameController"}}> cancel </button>
+</div>

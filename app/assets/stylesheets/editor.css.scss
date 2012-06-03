@@ -20,11 +20,6 @@
    z-index:3;
 }
 
-#editor button {
-  padding:5px;
-  font-size:11px;
-}
-
 #editor ul.graphics {
   list-style:none;
   margin: 0;
@@ -33,7 +28,7 @@
 #editor ul.graphics li {
   float:left;
   background:#ccc;
-  margin: 15px 0 0 15px;
+  margin: 0 15px 15px 0;
   border: 1px solid gray;
   opacity:0.5;
 }
@@ -76,10 +71,10 @@
 }
 
 #editor #overlay #objects {
-  width : 177px;
   background-color: white;
-  padding-bottom: 15px;
+  padding: 15px 0 0 15px;
   margin-bottom: 15px;
+  width: 162px;
 }
 
 #editor #overlay #overlayRight {
@@ -132,6 +127,7 @@
 
 #editor .frames {
   list-style: none;
+  margin: 0;
 }
 
 #editor .frame {
@@ -143,7 +139,101 @@
   opacity: 0.2;
 }
 
+#editor .gameObject {
+  overflow: hidden;
+  width:64px; 
+  height:84px;
+}
+
 #editor .libraryGraphic {
   background-repeat:no-repeat;
-  width:64px; height:64px;
+  width:64px; 
+  height:64px;
 }
+
+#editor .libraryName {
+  padding-top:2px;
+  font-size:0.8em;
+  text-align:center;
+}
+
+#editor .noObject {
+  padding-bottom: 15px;
+}
+
+
+#editor .player {
+  margin:auto;
+  width:840px;
+  overflow:hidden;
+}
+
+/* Publish */
+#publishView label {
+  font-size:1.2em;
+  font-weight:bold;
+}
+
+/* Snapshot */
+#snapshots {  margin-top:3em;}
+#snapshots li {  cursor:pointer;}
+#snapshots li.active {  background:#BBB;}
+
+#editor #overlay .actionstring {
+  font-size: 12pt;
+  padding-top: 12px;
+}
+
+#editor #overlay .questionview {
+  clear: both;
+  margin: 15px 0;
+  padding: 5px 0;
+  border-bottom: 1px solid gray;
+  font-size: 12pt;
+  
+}
+
+#editor #overlay .optionview {
+  margin-bottom: 15px;
+}
+
+#editor #overlay .buttonview .btn {
+  margin-right: 5px;
+}
+
+#editor #overlay .speedview {
+  overflow: hidden;
+}
+
+#editor #overlay .speedview .slider {
+  margin: 5px 7px;
+  width: 300px;
+}
+
+#editor #overlay .speedview .speed {
+  font-size: 12pt;
+  margin: 5px 15px;
+}
+
+#editor #overlay .artview .btn {
+  margin-top: 10px;
+}
+
+#editor #overlay .timeview {
+  overflow: hidden;
+}
+
+#editor #overlay .timeview .time, #editor #overlay .timeview .slider {
+  float : left;
+  margin : 5px 20px 0 0;
+}
+
+#editor #overlay .timeview .slider {
+  width: 300px;
+}
+
+#editor #overlay .timeview .time {
+  width: 30px;
+  font-size : 12pt;
+}
+

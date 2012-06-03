@@ -14,7 +14,7 @@ var PlayerView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    var player, callback, type = this.type;
+    var player, callback, type = this.type, data;
     
     player = new Player();
     player.edit = true;
@@ -31,15 +31,19 @@ var PlayerView = Ember.View.extend({
       player.selectedObjectCallback = bind( App.gameObjectsController, App.gameObjectsController.selectID );
       player.selectedObjectDragCallback = bind( App.game, App.game.gameObjectPositionChanged );
       
-    } else if ( type === 'location' ) {
+    } else if ( type === 'location' || type === 'direction' ) {
       
       callback = this.locationCallback;
+      
+      data = App.game.getSingleData();
       
     } else if ( type === 'area' ) {
       
       callback = this.areaCallback;
       
       player.areaSelectable = true;
+      
+      data = App.game.getEmptyData();
       
     } else {
       
@@ -52,22 +56,13 @@ var PlayerView = Ember.View.extend({
     
     if ( callback ) {
       
-      player.parse( App.game.getGameObjectsData(), bind( this, callback ) );
+      player.parse( data, bind( this, callback ) );
       
     } else {
       
       player.parse( App.game.getData().game, null, this.corsSave );
       
-    }
-
-    // *** Snapshot of preview game ***
-    // onClick on li element
-    $('#thumbnail').find('li').live('click', function() {
-
-      $(this).find('input[type="radio"]').attr("checked", "checked");
-
-    });
-
+    }   
     
   },
   
@@ -77,7 +72,7 @@ var PlayerView = Ember.View.extend({
       
       this.observer.locate( pos );
       
-    }));
+    }), this.type === 'direction');
   
   },
   

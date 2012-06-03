@@ -28,7 +28,17 @@ var MainView = Ember.View.extend({
     this.actionView = ActionView.create();
     
     this.publishView = Ember.View.create({
-      templateName : 'editor/templates/publish_template'
+      heading : 'Publish',
+      templateName : 'editor/templates/publish_template',
+
+      didInsertElement : function() {
+        // *** Snapshot of preview game ***
+        // onClick on li element
+        $('#snapshots').find('li').live('click', function() {
+          App.gameController.setActiveSnapshot($(this));
+        });
+      }
+
     });
     
   },

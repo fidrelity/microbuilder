@@ -5,6 +5,7 @@ var Loader = function( callback ) {
   this.imageCount = 0;
 
   this.corsSave = false;
+
 };
 
 Loader.prototype = {
@@ -24,17 +25,20 @@ Loader.prototype = {
     
     image.onload = function () {
     
+      image.onload = null;
+    
       self.imageLoaded();
     
     }
     
     var isLocal = document.location.hostname === 'localhost' ? true : false;
-
-    if(this.corsSave)
-      path = isLocal ? "/s3?url=http://"+document.location.host+"/" + path  : "/s3?url=" + path;
-
-    console.log(path)
-
+    
+    if ( this.corsSave ) {
+      
+      path = isLocal ? path  : "/s3?url=" + path;
+    
+    }
+    console.log(path);
     image.src = path;
     
     this.imageCount++;
