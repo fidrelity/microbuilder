@@ -51,6 +51,8 @@ var GameModel = Ember.Object.extend({
     
     game.graphics = graphics;
     
+    win = this.checkWin( game );
+    
     return {
         game: game,
         graphicIDs: graphicIDs,
@@ -130,6 +132,40 @@ var GameModel = Ember.Object.extend({
   gameObjectPositionChanged : function( gameObjectID, pos ) {
     
     this.getGameObjectWithID( gameObjectID ).position.copy( pos );
+    
+  },
+  
+  checkWin : function( game ) {
+    
+    var g, b, i, j, k;
+    
+    if ( game.gameObjects ) {
+      
+      for ( k = 0; k < game.gameObjects.length; k++ ) {
+    
+        g = game.gameObjects[k];
+    
+        for ( i = 0; i < g.behaviours.length; i++ ) {
+      
+          b = g.behaviours[i];
+        
+          for ( j = 0; j < b.actions.length; j++ ) {
+          
+            if ( b.actions[j].type === 'win' ) {
+            
+              return true;
+            
+            }
+          
+          }
+      
+        }
+      
+      }
+    
+    }
+    
+    return false;
     
   },
   
