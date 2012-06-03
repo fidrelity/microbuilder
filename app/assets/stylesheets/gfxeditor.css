@@ -10,7 +10,77 @@
 
 #paint-wrapper #tool-bar .ember-view { float:left; }
 
-#paint-wrapper #tool-bar button { 
+#paint-wrapper #tool-bar button {
+  min-width:30px;
+  height:30px;
+  background:top left no-repeat;
+  border:none;
+  margin:0 1px 0 0;
+  float:left;
+}
+
+#paint-wrapper #tool-bar button.pencil {
+  background:url('/assets/edit_button.png');
+}
+
+#paint-wrapper #tool-bar button.eraser {
+  background:url('/assets/eraser_icon.png');
+}
+
+#paint-wrapper #tool-bar button.rectangle {
+  background:url('/assets/rectangle_icon.png');
+}
+
+#paint-wrapper #tool-bar button.circle {
+  background:url('/assets/icon_circle.png');
+}
+
+#paint-wrapper #tool-bar button.rectanglefill {
+  background:url('/assets/rectangle_fill_icon.png');
+}
+
+#paint-wrapper #tool-bar button.circlefill {
+  background:url('/assets/circle_icon_fill.png');
+}
+
+#paint-wrapper #tool-bar button.line {
+  background:url('/assets/icon_line.png');
+}
+
+#paint-wrapper #tool-bar button.loadfile {
+  background:url('/assets/load_image_icon.png');
+}
+
+#paint-wrapper #tool-bar button.fill {
+  background:url('/assets/fill_icon.png');
+}
+
+#paint-wrapper #tool-bar button.clear {
+  background:url('/assets/clear_icon.png');
+}
+
+#paint-wrapper #tool-bar button.undo {
+  background:url('/assets/undo_icon.png');
+}
+
+.zoomButtons button {
+  min-width:30px;
+  height:30px;
+  background:top left no-repeat;
+  border:none;
+  float:left;
+  margin:0 1px 0 0;
+}
+
+.zoomButtons button.zoomin {
+  background:url('/assets/zoom_in.png');
+}
+
+.zoomButtons button.zoomout {
+  background:url('/assets/zoom_out.png');
+}
+
+/*#paint-wrapper #tool-bar button { 
   background:#333;
   color:#FFF;
   border:1px solid #222;
@@ -18,7 +88,46 @@
 
 #paint-wrapper #tool-bar button:hover {
   background-color:#111;
+} */
+
+#paint-wrapper .ui-slider{
+  width:150px; 
+  height:30px; 
+  background:url('/assets/slider_bg.png') no-repeat;
+  border-style:none;
 }
+
+#paint-wrapper .ui-slider .ui-slider-handle{
+  width:10px;
+  height:18px;
+  margin:4px 0 0 0;
+  border-style:none;
+  background:url('/assets/slider_bg_knob.png') center no-repeat;
+}
+
+#paint-wrapper #player {
+  float:left;
+  width:180px;
+}
+
+#paint-wrapper #sizeWrapper {
+  padding:4px 0 0 0;
+  height:26px;
+}
+
+#paint-wrapper #sizeWrapper #sizeSlider {
+  margin:1px 0 0 0;
+}
+
+#paint-wrapper #sizeWrapper #sizeSlider, #paint-wrapper #sizeWrapper #slidervalue {
+  float:left;
+}
+
+#paint-wrapper #sizeWrapper span {
+  float:left;
+  margin: 0 2px 0 0;
+}
+
 
 #paint-wrapper #tool-bar-second {
   margin-top:0.5em;
@@ -48,6 +157,11 @@
 #paint-wrapper #area-wrapper #sprites-area-scroll {      
   max-height:260px;  
   overflow:auto;
+}
+
+.zoomButtons {
+  z-index:999;
+  position:relative;
 }
 
 #paint-size-wrapper { margin:2em 0 2em 0;}
