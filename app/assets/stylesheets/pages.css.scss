@@ -45,40 +45,42 @@ body {
 
 #menu {
   position:relative;
+  right:-138px;
 }
 
 #menu li {
-    border-radius: 7px 7px 7px 7px;
-    font-size: 1.2em;
+    width:106px;
+    height:45px;
     font-weight: bold;
     text-align: center;
+    background-position:0px 0px;
 }
-#menu li img {
-    display: inline;
-    margin-bottom: 8px;
+
+#menu li a {
+    display:block;
+    height:24px;
 }
-#menu li:hover {
-    background: none repeat scroll 0 0 #111111;
-}
-#menu li a, #menu li a:visited {
-    color: #FFFFFF;
-    /*padding: 10px 10px 10px 10px;*/
-}
+
 #menu li a:hover {
-    background: repeat scroll 0 0 #111111;
+    background:none;
+}
+
+#menu li:hover {
+    background-position:0px -45px;
 }
 
 #home {
-    background: repeat scroll 0 0 #5E8894;
+    background:url('nav_home_sprite.png') top left no-repeat;
 }
+
 #play {
-    background: repeat scroll 0 0 #BD1723;
+    background:url('nav_game_sprite.png') top left no-repeat;
 }
 #build {
-    background: repeat scroll 0 0 #718B20;
+    background:url('nav_create_sprite.png') top left no-repeat;
 }
 #paint {
-    background: repeat scroll 0 0 #F3C10A;
+    background:url('nav_paint_sprite.png') top left no-repeat;
 }
 #logo {
     position:absolute;
@@ -613,6 +615,10 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
   width:945px;
   top:50px;
   margin:0 0 0 15px;
+}
+
+#gallery .games {
+  margin:85px 0 0 15px;
 }
 
 .frame_graphic {

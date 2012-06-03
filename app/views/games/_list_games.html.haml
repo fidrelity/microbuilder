@@ -2,15 +2,18 @@
   .bar
     =image_tag "slider_left.png", :class => "slider_left"
     =image_tag "slider_right.png", :class => "slider_right"
+    = will_paginate @games, :param_name => :page, :container => false,  :page_links => false, :show_always => true, :previous_label => '<img src="/assets/slider_left.png" alt="Prev page" class="slider_left" />', :next_label => '<img src="/assets/slider_right.png" alt="Next page" class="slider_right" />'
     .description
       Latest Games
     .counter
-      119
+      =@games.count
   .clear
   
-  = link_to '', gallery_path, :class => "add viewall"
-  = link_to 'new game', build_path, :class => "add addgame"
-  .clear
+  -if false
+    = link_to '', gallery_path, :class => "add viewall"
+    = link_to 'new game', build_path, :class => "add addgame"
+    .clear
+  
   .sortables
     .sort
       =link_to "Latest", gallery_path
