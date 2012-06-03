@@ -226,6 +226,16 @@ var Parser = {
     type: "jumpTo",
     objectID: 0,
   }
+  
+  {
+    type: "jumpTo",
+    area: {
+      x: 48,
+      y:6,
+      width:331,
+      height:123
+    }
+  }
 */
 
   parseActionJumpTo : function( actionData, gameObject ) {
@@ -239,6 +249,10 @@ var Parser = {
     if ( actionData.objectID ) {
     
       action.target = this.game.getGameObjectWithID( actionData.objectID ).movement.position;
+      
+    } else if ( actionData.area ) {
+    
+      action.area = new Area().copy( actionData.area );
     
     } else {
     

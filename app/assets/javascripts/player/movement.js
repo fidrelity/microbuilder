@@ -119,6 +119,14 @@ Movement.prototype = {
     
   },
   
+  jump : function( area ) {
+    
+    this.stop();
+    
+    this.insertObject( area );
+    
+  },
+  
   stop : function() {
     
     this.target = null;

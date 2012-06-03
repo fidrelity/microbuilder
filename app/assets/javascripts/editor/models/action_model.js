@@ -168,7 +168,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     App.actionController.addButtonOption(
       'Where should <gameObject> jump?', 
-      ['to location', 'to object'],
+      ['to location', 'to object', 'to area'],
       this,
       2
     );
@@ -235,6 +235,12 @@ var MoveActionModel = ActionTriggerModel.extend({
     
   },
   
+  'to area' : function() {
+    
+    App.actionController.addAreaOption( 'Select the area where <gameObject> should randomly jump', this, 3 );
+    
+  },
+  
   roam : function() {
     
     this.set( 'type', 'roam' );
@@ -291,6 +297,7 @@ var MoveActionModel = ActionTriggerModel.extend({
       
       gameObject : this.gameObject,
       position : this.position.clone(),
+      region : this.region ? this.region.clone() : null,
       
       random : this.random,
       direction : this.direction,
@@ -321,6 +328,10 @@ var MoveActionModel = ActionTriggerModel.extend({
       
       obj.objectID = this.gameObject.ID;
       
+    } else if ( this.region ) {
+      
+      obj.area = this.region.getData();
+      
     } else if ( this.mode ) {
       
       obj.mode = this.mode;
@@ -341,6 +352,12 @@ var MoveActionModel = ActionTriggerModel.extend({
     var type = this.type,
       name = this.parentGameObject.name,
       other = this.gameObject ? this.gameObject.name : this.position.string();
+    
+    if ( this.region ) {
+      
+      other = this.region.string();
+      
+    }
     
     if ( type === 'moveTo' ) {
       
