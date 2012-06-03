@@ -2,6 +2,7 @@ var MoveAction = function() {
   
   this.gameObject = null;
   this.target = null;
+  this.area = null;
   
   this.random = false;
   this.direction = null;
@@ -16,7 +17,15 @@ MoveAction.prototype = {
   
   executeJumpTo : function() {
     
-    this.gameObject.setPosition( this.target );
+    if ( this.area) {
+      
+      this.gameObject.movement.jump( this.area );
+      
+    } else {
+    
+      this.gameObject.setPosition( this.target );
+      
+    }
     
   },
   
@@ -77,7 +86,7 @@ var StopAction = function( gameObject ) {
   
   this.execute = function() {
     
-    gameObject.stop();
+    gameObject.movement.stop();
     
   };
   

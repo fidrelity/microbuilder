@@ -38,22 +38,11 @@ GameObject.prototype = {
     
     ctx.restore();
     
-    // if ( this.movement.roamArea ) {
-    //   
-    //   this.movement.roamArea.draw( ctx );
-    //   
-    // }
-    
-    // if ( ctx.debug && this.target ) {
-    //   
-    //   ctx.save();
-    //   ctx.translate( this.graphic.image.width / 2, this.graphic.image.height / 2 );
-    //   
-    //   ctx.line( pos.x, pos.y, this.target.x, this.target.y );
-    //   
-    //   ctx.restore();
-    //   
-    // }
+    if ( ctx.debug ) {
+      
+      this.movement.draw( ctx );
+      
+    }
     
   },
   
@@ -144,6 +133,12 @@ GameObject.prototype = {
   getArea : function() {
     
     return this.movement.getArea();
+    
+  },
+  
+  getPosition : function() {
+    
+    return this.movement.position;
     
   }
   

@@ -74,6 +74,12 @@ var ActionTriggerModel = Ember.Object.extend({
     
   },
   
+  speeed : function() {
+    
+    return this.speeds[ this.speed ];
+    
+  }.property( 'speed' ),
+  
   done : function() {
     
     if ( this.addSpeed ) {
@@ -121,7 +127,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     this.set( 'direction', true );
     
-    App.actionController.addLocationOption( 
+    App.actionController.addDirectionOption( 
       'Drag <gameObject> to it\'s relative direction from where it is',
       this,
       3 
@@ -162,7 +168,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     App.actionController.addButtonOption(
       'Where should <gameObject> jump?', 
-      ['to location', 'to object'],
+      ['to location', 'to object', 'to area'],
       this,
       2
     );
@@ -229,6 +235,12 @@ var MoveActionModel = ActionTriggerModel.extend({
     
   },
   
+  'to area' : function() {
+    
+    App.actionController.addAreaOption( 'Select the area where <gameObject> should randomly jump', this, 3 );
+    
+  },
+  
   roam : function() {
     
     this.set( 'type', 'roam' );
@@ -285,6 +297,7 @@ var MoveActionModel = ActionTriggerModel.extend({
       
       gameObject : this.gameObject,
       position : this.position.clone(),
+      region : this.region ? this.region.clone() : null,
       
       random : this.random,
       direction : this.direction,
@@ -320,6 +333,10 @@ var MoveActionModel = ActionTriggerModel.extend({
       obj.mode = this.mode;
       obj.area = this.region.getData();
       
+    } else if ( this.region ) {
+      
+      obj.area = this.region.getData();
+      
     } else {
       
       obj.location = this.position.getData();
@@ -335,6 +352,12 @@ var MoveActionModel = ActionTriggerModel.extend({
     var type = this.type,
       name = this.parentGameObject.name,
       other = this.gameObject ? this.gameObject.name : this.position.string();
+    
+    if ( this.region ) {
+      
+      other = this.region.string();
+      
+    }
     
     if ( type === 'moveTo' ) {
       
@@ -352,7 +375,7 @@ var MoveActionModel = ActionTriggerModel.extend({
         
       } else if ( this.direction ) {
       
-        name += ' moves in direction ' + this.angle();
+        name += ' moves in direction ' + Math.floor( this.angle() * -1 / Math.PI * 180 ) + '˚';
       
       } else {
         
@@ -452,7 +475,7 @@ var ArtActionModel = ActionTriggerModel.extend({
   
   chooseMode : function( mode ) {
     
-    this.set( 'mode', 'loop' );
+    this.set( 'mode', mode );
     
     App.actionController.addSpeedOption( 'Set the speed of the animation', this, 5 );
     
@@ -488,7 +511,7 @@ var ArtActionModel = ActionTriggerModel.extend({
     
     if ( this.frame2 ) {
       
-      name += ' plays animation from frame ' + this.frame + ' to ' + this.frame2 + ' in ' + this.mode + ' ' + this.speeds[ this.speed ];
+      name += ' plays animation from frame ' + this.frame + ' to ' + this.frame2 + ' in ' + this.mode + ' - ' + this.speeds[ this.speed ];
       
     } else if ( this.frame ) {
       
@@ -683,7 +706,7 @@ var ContactTriggerModel = ActionTriggerModel.extend({
       
       str += 'area ' + this.region.string();
       
-    } else {
+    } else if ( this.gameObject ) {
     
       str += this.gameObject.name;
     

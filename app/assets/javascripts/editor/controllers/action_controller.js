@@ -136,6 +136,12 @@ var ActionController = Ember.Object.extend({
     
   },
   
+  addDirectionOption : function( question, observer, depth ) {
+    
+    this.addPlayerOption( question, 'direction', observer, depth );
+    
+  },
+  
   addLocationOption : function( question, observer, depth ) {
     
     this.addPlayerOption( question, 'location', observer, depth );
@@ -211,8 +217,7 @@ var ActionController = Ember.Object.extend({
     
     this.addButtonOption( 
       'How should the art change?', 
-      // ['to frame', 'play', 'stop', 'change' ],
-      ['change'],
+      ['to frame', 'play', 'stop', 'change' ],
       this.action,
       1
     );
