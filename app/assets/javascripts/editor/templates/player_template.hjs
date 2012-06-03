@@ -11,12 +11,16 @@
   
     <div class="playerWinScreen">
       <div class="replayButton"></div>
-      You have won the game!
+      <div class="message">
+        Congratulations - you have won the game!
+      </div>
     </div>
   
     <div class="playerLoseScreen">
       <div class="replayButton"></div>
-      You have lost the game!
+      <div class="message">
+        You have lost the game!
+      </div>
     </div>
   
   </div>

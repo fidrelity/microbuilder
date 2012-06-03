@@ -82,61 +82,6 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
 .errorForm { border:1px solid #B94A48;}
 
 /* game/id/play */
-
-#playerWrapper { 
-  overflow:hidden;
-  position:relative;
-  width:640px; height:390px;
-}
-
-/* Player Start layer */
-#playerWrapper .playerStartScreen { 
-  background:#EEE;
-  position:relative;
-  z-index:1000;
-  height:100px;  
-  left:0; top:-100px;
-  opacity: 0.9;
-  -moz-opacity: 0.9;
-  filter:alpha(opacity=9);
-  padding:1em;
-}
-
-#playerWrapper .playerStartScreen .playButton {
-  cursor:pointer;  
-  pointer-events:none;
-  position: absolute; top:-130px; left:215px;
-  width:210px; height:60px;
-  background:url("overlay_game_play.png") no-repeat;
-}
-
-#playerWrapper .playerStartScreen h2 {
-  color:#C11924;
-  font:24px 'LaconicBold',Arial,sans-serif;
-}
-
-/* Player WIN layer */
-
-#playerWrapper .replayButton {
-  cursor:pointer;
-  pointer-events:none;
-  position: absolute; top:-80px; left:290px;
-  width:60px; height:60px;
-  background:url("replay_button.png") no-repeat;
-}
-
-#playerWrapper .playerWinScreen, .playerLoseScreen {
-  display: none;
-  background:#EEE;
-  position:relative;
-  z-index:1000;
-  height:250px; 
-  left:0; top:-250px;  
-  opacity: 0.9;  -moz-opacity: 0.9; filter:alpha(opacity=9);
-  padding:1em;
-}
-
-
 #tempComment {  display: none; }
 .comment {
   margin-bottom:2em;
