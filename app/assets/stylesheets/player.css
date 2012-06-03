@@ -1,0 +1,66 @@
+#playerWrapper { 
+  overflow:hidden;
+  position:relative;
+  width:640px; height:390px;
+}
+
+/* Player Start layer */
+#playerWrapper .playerStartScreen { 
+  position:relative;
+  z-index:1000;
+  height:100px;  
+  left:0; top:-100px; 
+  padding:1em;
+}
+
+#playerWrapper .playerStartScreen .playButton {
+  cursor:pointer;  
+  pointer-events:none;
+  position: absolute; top:-130px; left:215px;
+  width:210px; height:60px;
+  background:url("overlay_game_play.png") no-repeat;
+}
+
+#playerWrapper .playerStartScreen h2 {
+  color:#C11924;
+  font:24px 'LaconicBold',Arial,sans-serif;
+}
+
+
+#playerWrapper .playerStartScreen, #playerWrapper .playerWinScreen, #playerWrapper .playerLoseScreen {
+  opacity: 0.9;  -moz-opacity: 0.9;  filter:alpha(opacity=9);
+  background:#111; color:#FFF;
+
+}
+
+/* Player WIN/LOSE layer */
+#playerWrapper .replayButton {
+  cursor:pointer;
+  pointer-events:none;
+  position: absolute; top:-80px; left:290px;
+  width:60px; height:60px;
+  background:url("replay_button.png") no-repeat;
+}
+
+#playerWrapper .playerWinScreen, #playerWrapper .playerLoseScreen {
+  display: none;
+  position:relative;
+  z-index:1000;
+  height:250px; 
+  left:0; top:-250px;
+  padding:1em;
+}
+
+
+#playerWrapper .message {
+  text-align:center;  margin-top:4em;
+  font:24px 'LaconicBold',Arial,sans-serif;
+}
+
+#playerWrapper .playerWinScreen .message {
+  color:#00FF00;
+}
+
+#playerWrapper .playerLoseScreen .message {
+  color:#FF0000;
+}
