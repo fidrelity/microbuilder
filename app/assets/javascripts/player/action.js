@@ -86,7 +86,7 @@ var StopAction = function( gameObject ) {
   
   this.execute = function() {
     
-    gameObject.stop();
+    gameObject.movement.stop();
     
   };
   

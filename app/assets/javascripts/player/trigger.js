@@ -143,6 +143,23 @@ TimeTrigger.prototype = {
       
     }
     
+  },
+  
+  draw : function( ctx ) {
+    
+    var time = this.randTime || this.time, i = Player.prototype.increment;
+    
+    ctx.fillStyle = this.triggered ? '#AAA' : '#333';
+    
+    if ( this.randTime ) {
+      
+      ctx.fillRect( ( 640 + i ) * this.time * 0.01 - i / 2 - 1, 390 + i / 2 - 4, 2, 16 );
+      ctx.fillRect( ( 640 + i ) * this.time2 * 0.01 - i / 2 - 1, 390 + i / 2 - 4, 2, 16 );
+      
+    }
+    
+    ctx.fillRect( ( 640 + i ) * time * 0.01 - i / 2 - 2, 390 + i / 2 - 4, 4, 16 );
+    
   }
   
 };

@@ -328,13 +328,13 @@ var MoveActionModel = ActionTriggerModel.extend({
       
       obj.objectID = this.gameObject.ID;
       
-    } else if ( this.region ) {
-      
-      obj.area = this.region.getData();
-      
     } else if ( this.mode ) {
       
       obj.mode = this.mode;
+      obj.area = this.region.getData();
+      
+    } else if ( this.region ) {
+      
       obj.area = this.region.getData();
       
     } else {

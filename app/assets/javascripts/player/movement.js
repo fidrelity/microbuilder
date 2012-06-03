@@ -242,6 +242,35 @@ Movement.prototype = {
     
   },
   
-  vector : new Vector
+  draw : function( ctx ) {
+    
+    var center;
+    
+    if ( this.target ) {
+      
+      ctx.line( this.position.x, this.position.y, this.target.x, this.target.y );
+      
+    } else if ( this.roamMode ) {
+      
+      this.roamArea.draw( ctx );
+      
+    } else if ( this.direction ) {
+      
+      center = this.getArea().center();
+      
+      ctx.save();
+      
+      ctx.translate( center.x, center.y );
+      ctx.rotate( this.direction );
+      
+      ctx.line( 0, 0, 1000, 0 );
+      
+      ctx.restore();
+      
+    }
+    
+  },
+  
+  vector : new Vector,
   
 };

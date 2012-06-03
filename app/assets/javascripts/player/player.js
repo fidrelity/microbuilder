@@ -46,8 +46,6 @@ var Player = function() {
   });
   
   this.edit = false;
-  this.increment = 96;
-  
   this.half = false;
   
   this.time = 0;
@@ -71,6 +69,8 @@ var Player = function() {
 };
 
 Player.prototype = {
+  
+  increment : 96,
   
   setCanvas : function( canvas ) {
     
