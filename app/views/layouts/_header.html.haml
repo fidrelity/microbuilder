@@ -2,32 +2,34 @@
   =image_tag "playtin_logo.png"
 
 %div{ :class => "row", :id => "header"}
-  #toplevel
+  .row
+    #toplevel
     
-    =link_to 'Imprint', imprint_path
+      =link_to 'Imprint', imprint_path
     
-    |
+      |
     
-    -if user_signed_in?
+      -if user_signed_in?
     
-      =link_to "Profile", user_path(current_user.id)
+        =link_to "Profile", user_path(current_user.id)
       
-      =link_to(image_tag(current_user.display_image), user_path(current_user.id))
+        =link_to(image_tag(current_user.display_image), user_path(current_user.id))
       
-      =link_to('Logout', destroy_user_session_path, :method => :delete)
-    -else
-      = link_to 'Login', new_user_session_path
+        =link_to('Logout', destroy_user_session_path, :method => :delete)
+      -else
+        = link_to 'Login', new_user_session_path
   
-  %ul{:id => "menu", :class => "nav nav-pills span12"}
-    %li{:class => "home span2", :id =>"home"}
-      =link_to 'Home', root_path
-    %li{:class => "gallery span2", :id =>"play"}
-      =link_to "Games", gallery_path
-    %li{:class => "editor span2", :id =>"build"}
-      =link_to "Create", build_path
-
-    %li{:class => "paint span2", :id =>"paint"}
-      =link_to "Paint", new_graphic_path
+  .row
+  
+    %ul{:id => "menu", :class => "nav nav-pills"}
+      %li{:class => "home span2 offset4", :id =>"home"}
+        =link_to 'Home', root_path
+      %li{:class => "gallery span2", :id =>"play"}
+        =link_to "Games", gallery_path
+      %li{:class => "editor span2", :id =>"build"}
+        =link_to "Create", build_path
+      %li{:class => "paint span2", :id =>"paint"}
+        =link_to "Paint", new_graphic_path
         
 %div{:id => 'flash-messages', :class => "row"}
   %ul
