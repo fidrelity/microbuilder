@@ -119,6 +119,36 @@
   border:1px solid #111;  
 }
 
+
+  
+#colorWrapper {
+  float:left;
+}
+
+#colorPicker {
+  float:left;
+  margin-left: 5px;
+  position:relative;
+  cursor:pointer;
+  width:30px; height:30px;
+  border:1px solid #BBB;
+  
+  background-image: linear-gradient(right bottom, rgb(245,10,57) 0%, rgb(55,245,17) 51%, rgb(43,65,255) 100%);
+  background-image: -o-linear-gradient(right bottom, rgb(245,10,57) 0%, rgb(55,245,17) 51%, rgb(43,65,255) 100%);
+  background-image: -moz-linear-gradient(right bottom, rgb(245,10,57) 0%, rgb(55,245,17) 51%, rgb(43,65,255) 100%);
+  background-image: -webkit-linear-gradient(right bottom, rgb(245,10,57) 0%, rgb(55,245,17) 51%, rgb(43,65,255) 100%);
+  background-image: -ms-linear-gradient(right bottom, rgb(245,10,57) 0%, rgb(55,245,17) 51%, rgb(43,65,255) 100%);
+
+  background-image: -webkit-gradient(
+          linear,
+          right bottom,
+          left top,
+          color-stop(0, rgb(245,10,57)),
+          color-stop(0.51, rgb(55,245,17)),
+          color-stop(1, rgb(43,65,255))
+  );                                    
+}
+
 .colorBlock {
     width:15px; height:15px; border:1px solid #000000;
     text-align:center; cursor:pointer;

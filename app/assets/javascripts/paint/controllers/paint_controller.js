@@ -31,7 +31,7 @@ var PaintController =  Ember.ArrayController.extend({
   type : null,          // background or object
   isBackground : false,
   //
-  color : "#000000",    // init Paint color
+  color : "#FF0000",    // init Paint color
   size : 2,             // init Paint stroke size
   zoom : 2,             // init Zoom size (background has 1)
   //  
@@ -72,7 +72,7 @@ var PaintController =  Ember.ArrayController.extend({
       var _height = 420;
       areaWrapper.find('#zoom-canvas-area')
         .attr('width', _width).attr('height', _height)
-        .css({ 'max-width' : _width, 'max-height' : _height, 'width' : _width, 'height' : _height});
+        .css({'max-width' : _width, 'max-height' : _height, 'width' : _width, 'height' : _height});
       // Hide left side (sprite areas)
       areaWrapper.find('#sprites-area').hide();
       $('#player').hide();
@@ -113,7 +113,23 @@ var PaintController =  Ember.ArrayController.extend({
       var spriteModel = App.paintController.getCurrentSpriteModelByIndex(index);      
       App.paintController.setCurrentSpriteModel(spriteModel);
     });
-
+    
+     $('#colorPicker').ColorPicker({
+      onShow: function (colpkr) {
+        $(colpkr).fadeIn(500);
+        return false;
+      },
+      onHide: function (colpkr) {
+        $(colpkr).fadeOut(500);
+        return false;
+      },
+      onChange : function(hsb, hex, rgb){
+        App.paintController.colorPicked(hsb, hex, rgb);
+      }
+    });
+    
+    $('#colorPicker').ColorPickerSetColor('FF0000');
+    
     // Slider for pencil size
     $("#sizeSlider").slider({
       value: 2, 
@@ -361,7 +377,7 @@ var PaintController =  Ember.ArrayController.extend({
     if(_color) {
       this.getCurrentSpriteModel().context.fillStyle = _color;
       this.getCurrentSpriteModel().context.fillRect(0, 0, this.spriteSize.width, this.spriteSize.height);
-      $('#zoomCanvas').css({ 'background-image' : 'none'});
+      $('#zoomCanvas').css({'background-image' : 'none'});
     }
   },  
 
@@ -379,6 +395,13 @@ var PaintController =  Ember.ArrayController.extend({
       $('#colorChooser').show(); //palette
     else
       $('#colorChooser').hide();
+  },
+  
+  colorPicked : function (hsb, hex, rgb) {
+      $('#colorPicker').css('background-color', '#'+hex);
+      $('#colorPicker').css('background-image', 'none');
+      
+      this.color = hex;
   },
 
   // ---------------------------------------
