@@ -23,7 +23,7 @@
 
       <div
           {{bindAttr style="content.graphic.divStyle"}}
-          class="libraryGraphic left">
+          class="libraryGraphic frame_graphic left">
       </div>
 
       <div class="left" style="margin-left:15px">
