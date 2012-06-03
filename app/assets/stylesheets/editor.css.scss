@@ -41,15 +41,6 @@
   margin-top : 15px;
 }
 
-#editor #stageControls > * {
-  margin: 0 15px 10px 0;
-  float: left;
-}
-
-#editor #stageControls #slider {
-  width: 300px;
-}
-
 #editor #overlayWrapper {
   position: absolute;
   top: 0;
@@ -168,7 +159,8 @@
 
 #editor .player {
   margin:auto;
-  width:840px;
+  width: 836px;
+  height: 586px;
   overflow:hidden;
 }
 
@@ -246,5 +238,26 @@
   width:100%;
   bottom: 2px;
   text-align: center;
+}
+
+#editor .stageControls {
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 6px 32px;
+}
+
+#editor .duration {
+  font-size: 11pt;
+  margin-top: 15px;
+}
+
+#editor .duration #slider {
+  width: 200px;
+}
+
+#editor .duration > div {
+  margin-left: 20px;
+  width: 80px;
+  text-align: right;
 }
 

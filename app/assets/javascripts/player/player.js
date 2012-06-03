@@ -317,7 +317,7 @@ Player.prototype = {
     
     if ( this.fsm.hasState( 'ready' ) ) {
       $('.playerStartScreen').hide();            
-      this.fsm.start();      
+      this.fsm.start();
       this.increaseCounter();
     } else if ( this.fsm.hasState( 'end' ) ) {
       $('.playerLoseScreen').hide();
