@@ -2,6 +2,7 @@
   %div{ :class => "span3"}
     .banner
       =image_tag "banner_profile.png"
+      Profile
     %img{:src => @user.display_image, :id => "profileimage"}
     .name
       =@user.first_name
@@ -13,17 +14,12 @@
         member since:
         %br
         %span
-          =@user.created_at.to_date
-      %p
-        profil visits:
-        %br
-        %span
-          LOREM IPSUM
+          =@user.created_at.to_date.strftime('%m/%d/%Y')
       %p
         last login:
         %br
         %span
-          =@user.last_sign_in_at.to_date
+          =@user.last_sign_in_at.to_date.strftime('%m/%d/%Y')
 
   %div{ :class => "span8"}        
     = render :partial => 'games', :locals => {:games => @games, :user => @user}

@@ -10,13 +10,14 @@
     .clear
   
   = link_to 'new graphic', new_graphic_path, :class => "add addgraphic"
-  .sort
-    sort by:
-    %select
-      %option{:value =>"128 x 128"}
-        128 x 128
-      %option{:value =>"120 x 120"}
-        100 x 100
+  -if false
+    .sort
+      sort by:
+      %select
+        %option{:value =>"64 x 64"}
+          128 x 128
+        %option{:value =>"128 x 128"}
+          100 x 100
   .clear
   #graphics
     -graphics.each do |graphic|
@@ -24,7 +25,6 @@
         %div{:class => "frame_graphic", "data-frames" => "#{graphic.frame_count}", :style => "background-image:url(#{graphic.image});width:#{graphic.frame_width}px;height:#{graphic.frame_height}px;"}
         %ul{:class => 'meta'}
           =link_to image_tag("icon_public.png"), '#'
-          =link_to image_tag("icon_edit.png"), '#'
           =link_to image_tag("icon_delete.png"), graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanentlydelete this graphic?"
         .overlay
           %p
