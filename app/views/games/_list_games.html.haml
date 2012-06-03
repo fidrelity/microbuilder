@@ -51,9 +51,11 @@
             %br
             %span
               = game.played
-        .info                                                                                                              
-          =link_to(game.title, play_path(game))
-          -if false                                                                                 
+        
+          -if false  
+            .info                                                                                                              
+            =link_to(game.title, play_path(game))
+                                                                                           
             %i{:class => "icon-comment"}                                                                                          
             =game.game_comments.size                                                                                              
             %i{:class => "icon-eye-open"}                                                                                         
@@ -63,4 +65,4 @@
             %i{:class => "icon-thumbs-down"}                                                                                      
             =game.dislikes
     .clear
-.clear
+  .clear
