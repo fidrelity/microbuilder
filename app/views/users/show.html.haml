@@ -2,7 +2,8 @@
   %div{ :class => "span3"}
     .banner
       =image_tag "banner_profile.png"
-    %img{:src => @user.display_image, :id => "profileimage"}
+    #profilewrap
+      %img{:src => @user.display_image, :id => "profileimage"}
     .name
       =@user.first_name
     =image_tag "edit_icon.png", :class => "edit"
