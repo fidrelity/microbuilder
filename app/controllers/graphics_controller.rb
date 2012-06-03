@@ -35,7 +35,7 @@ class GraphicsController < ApplicationController
     end
     
     response = graphics.map do |graphic|
-        graphic.to_response_hash 
+        graphic.to_response_hash(current_user) 
     end
     
     render :json => response, :status => 200
