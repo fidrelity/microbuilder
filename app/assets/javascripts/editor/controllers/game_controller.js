@@ -254,15 +254,15 @@ var GameController = Ember.Object.extend({
 
   // Returns Base64 encoded data of img
   getSelectedSnapshotData : function() {
-    var selectedRadio = $('#snapshots').find('li').find('input[type="radio"]:checked');
+    var selectedRadio = $('#snapshots').find('li.active');
 
     // Take automatic snapshot, if user didnt
     if(!selectedRadio.length) {
       this.takePreviewSnapshot();
-      selectedRadio = $('#snapshots').find('li').find('input[type="radio"]').first().prop("checked", true);
+      selectedRadio = $('#snapshots').find('li').first();
     }
 
-    var selectedImg = selectedRadio.parent().find('img');
+    var selectedImg = selectedRadio.find('img');    
     return selectedImg.attr("src");
   }
   
