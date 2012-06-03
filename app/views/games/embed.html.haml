@@ -3,6 +3,7 @@
   %head
     %title Microbuilder
     =javascript_include_tag "application"
+    =stylesheet_link_tag 'player'
     %style * { margin:0px; padding:0px; }
   %body
     = render :partial => "player", :locals => {:game => @game}

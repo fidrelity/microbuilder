@@ -449,7 +449,7 @@ Player.prototype = {
   
   onWin : function() {
     
-    $('.playerWinScreen').fadeIn(600);
+    $('.playerWinScreen').fadeTo(600, 0.9);
     
     if ( !this.edit ) {
       
@@ -464,7 +464,7 @@ Player.prototype = {
   
   onLose : function() {
     
-    $('.playerLoseScreen').fadeIn(600); 
+    $('.playerLoseScreen').fadeTo(600, 0.9); 
     
     if ( !this.edit ) {
       
