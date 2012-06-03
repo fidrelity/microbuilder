@@ -1,6 +1,13 @@
+<div style="
+  width: 720px;
+  height: {{unbound wrapperHeight}}px;
+  overflow : auto;
+">
+
 <ul class="frames" style="
-  background-image:url('{{unbound graphic.imagePath}}'); 
-  width:{{unbound graphic.imageWidth}}px;
+  background-image:url('{{unbound graphic.imagePath}}');
+  background-repeat:no-repeat;
+  width:{{unbound wrapperWidth}}px;
   height:{{unbound graphic.frameHeight}}px;
 ">
   
@@ -26,5 +33,7 @@
   {{#if selected}}
     <div {{bindAttr style="divStyle"}}></div>
   {{/if}}
+  
+</ul>
   
 </div>

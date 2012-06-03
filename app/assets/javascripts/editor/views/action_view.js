@@ -192,7 +192,7 @@ var FrameView = Ember.View.extend({
     
     this.set( 'frames', [] );
     
-    for ( var i = 1; i <= this.graphic.frameCount; i++ ) {
+    for ( var i = 1; i <= /* this.graphic.frameCount */ 8; i++ ) {
       
       this.frames.addObject({
         number : i,
@@ -220,7 +220,19 @@ var FrameView = Ember.View.extend({
     
     return 'width:' + width + 'px;height:' + height + 'px;background-color:black;margin-left:' + offset + 'px;';
     
-  }.property( 'observer.frame', 'observer.frame2' )
+  }.property( 'observer.frame', 'observer.frame2' ),
+  
+  wrapperWidth : function() {
+    
+    return this.graphic.frameWidth * 8;
+    
+  }.property( 'graphic' ),
+  
+  wrapperHeight : function() {
+    
+    return this.graphic.frameHeight + 20;
+    
+  }.property( 'graphic' )
   
 });
 
