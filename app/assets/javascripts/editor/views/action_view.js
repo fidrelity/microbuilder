@@ -18,7 +18,7 @@ var QuestionView = Ember.View.extend({
   
   tagName : 'p',
   
-  classNames : ['clear'],
+  classNames : ['clear', 'questionview', 'optionview'],
   
   template: Ember.Handlebars.compile("{{content}}")
   
@@ -30,7 +30,7 @@ var ButtonView = Ember.CollectionView.extend({
   
   observer : null,
   
-  classNames : ['btn-group'],
+  classNames : ['buttonview', 'optionview'],
   
   attributeBindings: ["data-toggle"],
   'data-toggle': 'buttons-radio',
@@ -58,7 +58,7 @@ var GameObjectsView = Ember.CollectionView.extend({
   observer : null,
   
   tagName : 'ul',
-  classNames : ['graphics'],
+  classNames : ['graphics', 'gameobjectsview', 'optionview'],
   
   emptyView: Ember.View.extend({
     
@@ -102,27 +102,47 @@ var TimeView = Ember.View.extend({
   
   tagName : 'div',
   
+  classNames : ['timeview', 'optionview'],
+  
+  template: Ember.Handlebars.compile( '<div class="time">{{time}}</div><div class="slider"></div><div class="time">{{time2}}</div>' ),
+  
   observer : null,
   type : null,
   
   didInsertElement : function() {
     
-    var observer = this.observer,
+    var self = this,
       range = this.type === 'randomly',
-      values = range ? [0,100] : [0];
+      values = range ? [30,70] : [30];
     
-    this.$().slider({
+    this.setTime( values[0], values[1] );
+    
+    this.$( '.slider' ).slider({
       
       range : range,
       values: values,
       
       slide: function( event, ui ) {
         
-        observer.setTime( ui.values[0], ui.values[1] );
+        self.setTime( ui.values[0], ui.values[1] );
         
       }
       
     });
+    
+  },
+  
+  setTime : function( time, time2 ) {
+    
+    this.set( 'time', time + '%' );
+    
+    if ( time2 ) {
+    
+      this.set( 'time2', time2 + '%' );
+    
+    }
+    
+    this.observer.setTime( time, time2 );
     
   }
   
@@ -133,6 +153,8 @@ var FrameView = Ember.View.extend({
   observer : null,
   graphic : null,
   type : null,
+  
+  classNames : ['frameview', 'optionview'],
   
   templateName : 'editor/templates/frame_template',
   
@@ -180,13 +202,17 @@ var SpeedView = Ember.View.extend({
   
   tagName : 'div',
   
+  classNames : ['speedview', 'optionview'],
+  
+  template: Ember.Handlebars.compile( '<div class="slider left"></div><div class="speed left">{{observer.speeed}}</div>' ),
+  
   observer : null,
   
   didInsertElement : function() {
     
     var observer = this.observer;
     
-    this.$().slider({
+    this.$('.slider').slider({
       
       value: 2,
       
@@ -208,6 +234,8 @@ var SpeedView = Ember.View.extend({
 var ArtView = Ember.View.extend({
   
   tagName : 'div',
+  
+  classNames : ['artview', 'optionview'],
   
   observer : null,
   

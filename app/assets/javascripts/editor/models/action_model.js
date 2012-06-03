@@ -74,6 +74,12 @@ var ActionTriggerModel = Ember.Object.extend({
     
   },
   
+  speeed : function() {
+    
+    return this.speeds[ this.speed ];
+    
+  }.property( 'speed' ),
+  
   done : function() {
     
     if ( this.addSpeed ) {
@@ -121,7 +127,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     this.set( 'direction', true );
     
-    App.actionController.addLocationOption( 
+    App.actionController.addDirectionOption( 
       'Drag <gameObject> to it\'s relative direction from where it is',
       this,
       3 
@@ -452,7 +458,7 @@ var ArtActionModel = ActionTriggerModel.extend({
   
   chooseMode : function( mode ) {
     
-    this.set( 'mode', 'loop' );
+    this.set( 'mode', mode );
     
     App.actionController.addSpeedOption( 'Set the speed of the animation', this, 5 );
     
@@ -488,7 +494,7 @@ var ArtActionModel = ActionTriggerModel.extend({
     
     if ( this.frame2 ) {
       
-      name += ' plays animation from frame ' + this.frame + ' to ' + this.frame2 + ' in ' + this.mode + ' ' + this.speeds[ this.speed ];
+      name += ' plays animation from frame ' + this.frame + ' to ' + this.frame2 + ' in ' + this.mode + ' - ' + this.speeds[ this.speed ];
       
     } else if ( this.frame ) {
       
@@ -683,7 +689,7 @@ var ContactTriggerModel = ActionTriggerModel.extend({
       
       str += 'area ' + this.region.string();
       
-    } else {
+    } else if ( this.gameObject ) {
     
       str += this.gameObject.name;
     

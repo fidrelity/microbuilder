@@ -31,7 +31,7 @@ var PlayerView = Ember.View.extend({
       player.selectedObjectCallback = bind( App.gameObjectsController, App.gameObjectsController.selectID );
       player.selectedObjectDragCallback = bind( App.game, App.game.gameObjectPositionChanged );
       
-    } else if ( type === 'location' ) {
+    } else if ( type === 'location' || type === 'direction' ) {
       
       callback = this.locationCallback;
       
@@ -72,7 +72,7 @@ var PlayerView = Ember.View.extend({
       
       this.observer.locate( pos );
       
-    }), this.observer.type === 'moveIn');
+    }), this.type === 'direction');
   
   },
   
