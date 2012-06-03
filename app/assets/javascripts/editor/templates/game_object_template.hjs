@@ -3,4 +3,4 @@
     class="libraryGraphic">
 </div>
 
-<div style="font-size:0.8em;text-align:center"> {{content.name}} </div>
+<div class="libraryName"> {{content.name}} </div>

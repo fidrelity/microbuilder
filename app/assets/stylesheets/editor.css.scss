@@ -74,6 +74,7 @@
   background-color: white;
   padding: 15px 0 0 15px;
   margin-bottom: 15px;
+  width: 162px;
 }
 
 #editor #overlay #overlayRight {
@@ -138,9 +139,26 @@
   opacity: 0.2;
 }
 
+#editor .gameObject {
+  overflow: hidden;
+  width:64px; 
+  height:84px;
+}
+
 #editor .libraryGraphic {
   background-repeat:no-repeat;
-  width:64px; height:64px;
+  width:64px; 
+  height:64px;
+}
+
+#editor .libraryName {
+  padding-top:2px;
+  font-size:0.8em;
+  text-align:center;
+}
+
+#editor .noObject {
+  padding-bottom: 15px;
 }
 
 

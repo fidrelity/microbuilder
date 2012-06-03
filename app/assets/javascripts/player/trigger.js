@@ -31,7 +31,7 @@ ClickTrigger.prototype = {
     
     if ( this.area ) {
       
-      ctx.strokeStyle = '#F77';
+      ctx.strokeStyle = '#F84';
       this.area.draw( ctx );
       
     }
@@ -98,7 +98,7 @@ ContactTrigger.prototype = {
     
     if ( this.area ) {
       
-      ctx.strokeStyle = '#F84';
+      ctx.strokeStyle = '#F77';
       this.area.draw( ctx );
       
     }
