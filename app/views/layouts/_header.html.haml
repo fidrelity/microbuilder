@@ -1,17 +1,24 @@
--if user_signed_in?      
-  =link_to "Profile", user_path(current_user.id)
-  =link_to('Logout', destroy_user_session_path, :method => :delete)
--else
-  = link_to 'Login', new_user_session_path
-  
-=link_to 'Imprint', imprint_path
-
+%div{:id => "logo"}
+  =image_tag "playtin_logo.png"
 
 %div{ :class => "row", :id => "header"}
-  %div{:class => "logo span3", :id =>"logo"}
-    %h1
-      Playtin
-  %ul{:id => "menu", :class => "nav nav-pills span9"}
+  #toplevel
+    
+    =link_to 'Imprint', imprint_path
+    
+    |
+    
+    -if user_signed_in?
+    
+      =link_to "Profile", user_path(current_user.id)
+      
+      =link_to(image_tag(current_user.display_image), user_path(current_user.id))
+      
+      =link_to('Logout', destroy_user_session_path, :method => :delete)
+    -else
+      = link_to 'Login', new_user_session_path
+  
+  %ul{:id => "menu", :class => "nav nav-pills"}
     %li{:class => "home span2", :id =>"home"}
       =link_to 'Home', root_path
     %li{:class => "gallery span2", :id =>"play"}
