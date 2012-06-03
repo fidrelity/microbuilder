@@ -16,7 +16,35 @@ body {
 }
 
 #header {
-  margin:2em 0 2em 0;
+  margin:40px 0 10px 0;
+}
+
+/* Navigation */
+/* ---------------------------------- */
+
+#toplevel {
+  position:relative;
+  top:-30px;
+  float:right;
+  font-family:'Arimo', sans-serif;
+  font-size:14px;
+}
+
+#toplevel a {
+  color:$gray;
+}
+
+#toplevel img {
+  width:25px;
+  height:25px;
+}
+
+.nav-pills {
+  position:relative;
+}
+
+#menu {
+  position:relative;
 }
 
 #menu li {
@@ -53,8 +81,9 @@ body {
     background: repeat scroll 0 0 #F3C10A;
 }
 #logo {
-    margin: 0;
-    text-align: left;
+    position:absolute;
+    top:0px;
+    left:0px;
 }
 h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Arial, sans-serif; }
 
@@ -75,7 +104,7 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
   border:1px solid #CCC;
   background:#FFF;
   position:absolute;
-  left:0; top:20%;
+  left:0; top:30%;
   cursor:pointer;
 }
 #feedbackSideButton:hover {background:#F6F6F6;}
@@ -381,7 +410,7 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
   background:$gray;
   color:$white;
   border-radius:0px;
-  width:885px;
+  width:882px;
   height:278px;
   padding:55px 30px 0 30px;
 }
@@ -476,11 +505,12 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
 .latest_games .login .btn {
   float:left;
   border-radius:0px;
-  margin:0 45px 0 0;
+  margin:0 25px 0 0;
 }
 
-.latest_games .login .checkbox {
+.latest_games .login .checkbox,  .latest_games .login input[type=checkbox]{
   float:left;
+  padding:0 3px 0 0;
 }
 
 .latest_games .login a img {

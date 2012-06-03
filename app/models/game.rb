@@ -1,3 +1,5 @@
+require 'statistics2'
+
 class Game < ActiveRecord::Base
   include PgSearch
   include ::GraphicPreProcessor
@@ -45,8 +47,9 @@ class Game < ActiveRecord::Base
   # rating algorithm from http://evanmiller.org/how-not-to-sort-by-average-rating.html
   def rating
     total = (likes + dislikes)
-    z = 1.96
-    return 0 if total == 0
+    z = Statistics2.pnormaldist(1-(1-0.50)/2)
+
+    return 0.5 if total == 0
     
     phat = 1.0 * likes/total
     (phat + z*z/(2*total) - z * Math.sqrt((phat*(1-phat)+z*z/(4*total))/total))/(1+z*z/total)

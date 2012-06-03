@@ -11,10 +11,7 @@
   %div{:class => "playerWinScreen"}
     %div{:class => "replayButton"}
     %div{:class => "message"}
-      Congratulations 
-      -if current_user
-        =current_user.first_name
-      , you have won the game!
+      ="Congratulations, you have won the game!"
     %div{:class => "gameData"}
       %h2
         =game.title
