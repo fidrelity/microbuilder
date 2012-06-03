@@ -1,17 +1,28 @@
-<h2>Sign in</h2>
-
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
-
-<%= render "links" %>
+<div class="latest_games">
+  <div class="login">
+    <div class="banner">
+      <%= image_tag "banner_welcome.png" %>
+      Sign In
+    </div>
+    <div class="form">
+      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+        <div><%= f.label :email %>
+        <%= f.email_field :email %></div>
+    
+        <div><%= f.label :password %>
+        <%= f.password_field :password %></div>
+        
+        <p><button type="submit" class="btn">Sign Up</button></p>
+        
+        <p class="checkbox">
+          <% if devise_mapping.rememberable? -%>
+            <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+          <% end -%>
+        </p>
+        
+      <% end %>
+    
+      <%= render "links" %>
+    </div>
+  </div>
+</div>

@@ -531,11 +531,12 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
 .latest_games .login .btn {
   float:left;
   border-radius:0px;
-  margin:0 45px 0 0;
+  margin:0 25px 0 0;
 }
 
-.latest_games .login .checkbox {
+.latest_games .login .checkbox,  .latest_games .login input[type=checkbox]{
   float:left;
+  padding:0 3px 0 0;
 }
 
 .latest_games .login a img {
