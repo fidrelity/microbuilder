@@ -38,7 +38,7 @@ Loader.prototype = {
       path = isLocal ? path  : "/s3?url=" + path;
     
     }
-    
+    console.log(path);
     image.src = path;
     
     this.imageCount++;

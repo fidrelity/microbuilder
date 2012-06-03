@@ -49,6 +49,7 @@ class GamesController < ApplicationController
     else
       flash[:error] = "Not allowed to delete game"
     end
+    @games = current_user.games.paginate(:page => params[:games_page], :per_page => 4)
   end
 
   # ------------------
