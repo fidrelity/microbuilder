@@ -28,7 +28,7 @@ class GraphicsController < ApplicationController
         !!params[:backgrounds],
         params[:min_size].to_i,
         params[:max_size].to_i
-      )
+      ).paginate(:page=>params[:page],:per_page=>12)
     rescue InvalidGraphicBoundaries => e
       render :json => e.message, :status => 400
       return

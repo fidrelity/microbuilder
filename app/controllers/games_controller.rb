@@ -1,4 +1,4 @@
-class GamesController < ApplicationController
+ class GamesController < ApplicationController
   respond_to :js, :only => [:create, :index, :update, :like, :dislike, :played]
   before_filter :authenticate_user!, :only => [:create, :destroy]
   before_filter :find_game, :only => [:show, :embed, :destroy, :like, :dislike, :played]

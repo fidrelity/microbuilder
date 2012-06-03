@@ -1,3 +1,4 @@
+
 class Graphic < ActiveRecord::Base
   include PgSearch
   include ::GraphicPreProcessor
@@ -18,12 +19,9 @@ class Graphic < ActiveRecord::Base
   scope :with_private, where(:public => false)
   scope :backgrounds, where(:background => true)
   scope :without_backgrounds, where(:background => false)
-  
-  #das größere von width und height soll between min/max sein
-  
   scope :between_size, lambda { |min, max|
     where(
-      "(frame_width >= ? OR frame_height >= ?) AND frame_width  <= ? AND frame_height <= ?",
+      "(frame_width > ? OR frame_height > ?) AND frame_width  <= ? AND frame_height <= ?",
       min, min, max, max
     )
   }
@@ -48,9 +46,9 @@ class Graphic < ActiveRecord::Base
 
       case _public
       when true 
-       query.with_public   
-      when
-        query.with_private
+       query = query.with_public   
+      when false
+       query = query.with_private
       end
 
       unless _backgrounds
