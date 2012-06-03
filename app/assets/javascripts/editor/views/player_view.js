@@ -35,7 +35,7 @@ var PlayerView = Ember.View.extend({
       
       callback = this.locationCallback;
       
-      data = App.game.getSingleData();
+      // data = App.game.getSingleData();
       
     } else if ( type === 'area' ) {
       
@@ -43,7 +43,7 @@ var PlayerView = Ember.View.extend({
       
       player.areaSelectable = true;
       
-      data = App.game.getEmptyData();
+      // data = App.game.getEmptyData();
       
     } else {
       
@@ -56,7 +56,7 @@ var PlayerView = Ember.View.extend({
     
     if ( callback ) {
       
-      player.parse( data, bind( this, callback ) );
+      player.parse( App.game.getGameObjectsData(), bind( this, callback ) );
       
     } else {
       
