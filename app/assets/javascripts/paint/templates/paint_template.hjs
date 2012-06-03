@@ -1,46 +1,50 @@
 <div id="paint-wrapper">
   <!-- Toolbar -->
   <div id="tool-bar" class="row">
-    <div class="span8 form-horizontal">
+    <div class="span9 form-horizontal">
       {{#view ToolView
         toolBinding = "App.pencilTool"
       }}
-        <button {{action "pencil"}}>Pencil</button>     
-        <button {{action "erase"}}>Eraser</button>       
+        <button {{action "pencil"}} class="pencil"></button>     
+        <button {{action "erase"}} class="eraser"></button>       
       {{/view}}
 
       {{#view ToolView
         toolBinding = "App.drawTool"
       }}
-        <button {{action "drawRect"}}>Rectangle</button>
-        <button {{action "drawCircle"}}>Circle</button>
-        <button {{action "drawRectFill"}}>Rect Fill</button>
-        <button {{action "drawCircleFill"}}>Circle Fill</button>
-        <button {{action "drawLine"}}>Line</button>
+        <button {{action "drawRect"}} class="rectangle"></button>
+        <button {{action "drawCircle"}} class="circle"></button>
+        <button {{action "drawRectFill"}} class="rectanglefill"></button>
+        <button {{action "drawCircleFill"}} class="circlefill"></button>
+        <button {{action "drawLine"}}  class="line"></button>
       {{/view}}
 
       {{#view ToolView
         toolBinding = "App.fillTool"
       }}
-        <button {{action "fill"}}>Fill</button>
+        <button {{action "fill"}} class="fill"></button>
       {{/view}} 
     
-      <button id="loadFileButton">Load file</button>
+      <button id="loadFileButton" class="loadfile"></button>
       <input type="file" id="file" size="1" style="display:none;">
 
       {{#view ToolView
         toolBinding = "this"
       }}     
-        <button {{action "clear"}}>Clear</button>
-        <button {{action "undo"}}>Undo</button>       
-        <button {{action "reset"}} id="clearSpritesButton">Clear all</button>     
+        <button {{action "clear"}} class="clear"></button>
+        <button {{action "undo"}} class="undo"></button>       
+        <button {{action "reset"}} id="clearSpritesButton" class="clearall">Clear All</button>     
       {{/view}}   
-
+      
+      <!-- SIZE -->
+      <div id="sizeWrapper">
+        <span>Size:</span><div id="sizeSlider" ></div><div id="slidervalue">1</div><span>px</span>
+      </div>
      
   
     </div>
 
-    <div class="span3 form-horizontal" id="player">
+    <div class=" span2 form-horizontal" id="player">
       {{#view ToolView
         toolBinding = "this"
       }}
@@ -55,10 +59,7 @@
   <!-- Second Toolbar -->
   <div id="tool-bar-second" class="form-horizontal row">
     <div class="span3 form-horizontal">
-      <!-- SIZE -->
-      <div id="sizeWrapper">
-        <div id="sizeSlider" ></div>
-      </div>
+      
     </div>
 
     <div class="span8 form-horizontal">
@@ -74,11 +75,22 @@
 
     <div id="zoom-canvas-area">
       <h4>Zoomed view:</h4>
-      <!-- Zoomed Canvas -->
-      <canvas id="zoomCanvas" width="128" height="128"></canvas>
-      <!--  -->
-      <!-- Temporary Canvas -->
-      <canvas id="canvas-temp" width="64" height="64"></canvas>
+      <div class="canvases">
+        <!-- Zoomed Canvas -->
+        <canvas id="zoomCanvas" width="128" height="128"></canvas>
+        <!--  -->
+        <!-- Temporary Canvas -->
+        <canvas id="canvas-temp" width="64" height="64"></canvas>
+      </div>
+      <div class="zoomButtons">
+        {{#view ToolView
+              toolBinding = "this"
+        }}
+        <button {{action "zoomIn"}} class="zoomin"></button>
+        <br />
+        <button {{action "zoomOut"}} class="zoomout"></button>
+        {{/view}} 
+      </div>
     </div>
 
     <div id="sprites-area">
@@ -99,15 +111,6 @@
         <div id="sprites-area-scroll"></div>
     </div>
 
-    </div>
-
-    <div class="zoomButtons">
-      {{#view ToolView
-            toolBinding = "this"
-      }}
-      <button {{action "zoomIn"}}>ZoomIn</button>
-      <button {{action "zoomOut"}}>ZoomOut</button>
-      {{/view}} 
     </div>
   </div>
 
