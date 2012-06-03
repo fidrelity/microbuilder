@@ -89,8 +89,6 @@ var LibraryController = Ember.ArrayController.extend({
   
   updateDisplay : function( load ) {
     
-    // console.log( 'update', load );
-    
     var display = this.content,
       path = '';
     
@@ -189,8 +187,6 @@ var LibraryController = Ember.ArrayController.extend({
   
   appendGraphics : function( data ) {
     
-    console.log( data );
-    
     for ( var i = 0; i < data.length; i++ ) {
       
       var d = data[i],
@@ -223,15 +219,11 @@ var LibraryController = Ember.ArrayController.extend({
   
   showOwns : function() {
     
-    console.log( 'showOwn' );
-    
     this.set( 'showOwn', true );
     
   },
   
   showPublics : function() {
-    
-    console.log( 'showPublics' );
     
     this.set( 'showOwn', false );
     
