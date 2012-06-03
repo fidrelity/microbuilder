@@ -71,14 +71,25 @@ var LibraryController = Ember.ArrayController.extend({
       
       self.updateDisplay( true );
       
-      this.thumbSizeWidth  = this.showBackground ? 210 : this.size.max;
-      this.thumbSizeHeight = this.showBackground ? 130 : this.size.max;
-
     });
     
   },
   
+  thumbSizeWidth : function() {
+    
+    return this.showBackground ? 210 : this.size.max;
+    
+  }.property( 'size', 'showBackground' ),
+  
+  thumbSizeHeight : function() {
+    
+    return ( this.showBackground ? 130 : this.size.max ) + 25;
+    
+  }.property( 'size', 'showBackground' ),
+  
   updateDisplay : function( load ) {
+    
+    // console.log( 'update', load );
     
     var display = this.content,
       path = '';
@@ -90,7 +101,7 @@ var LibraryController = Ember.ArrayController.extend({
       
       if ( this.showPublic ) {
         
-        path = 'graphics?backgrounds=true';
+        path = 'graphics/public?backgrounds=true';
         
       } else {
         
@@ -148,7 +159,8 @@ var LibraryController = Ember.ArrayController.extend({
   
   loadGraphics : function( path ) {
     
-    var self = this
+    var self = this,
+      isPublic = this.showPublic;
     
     $.ajax({
       url : path,
@@ -158,7 +170,7 @@ var LibraryController = Ember.ArrayController.extend({
         
         if ( data ) {
         
-          self.appendGraphics( data );
+          self.appendGraphics( data, isPublic );
         
         }
         
@@ -168,7 +180,7 @@ var LibraryController = Ember.ArrayController.extend({
     
   },
   
-  appendGraphics : function( data ) {
+  appendGraphics : function( data, isPublic ) {
     
     for ( var i = 0; i < data.length; i++ ) {
       
@@ -184,6 +196,7 @@ var LibraryController = Ember.ArrayController.extend({
             userName : d.user_name,
             imagePath : d.url,
             isBackground : d.background,
+            isPublic : isPublic,
             frameCount : d.frame_count,
             frameWidth : d.frame_width,
             frameHeight : d.frame_height

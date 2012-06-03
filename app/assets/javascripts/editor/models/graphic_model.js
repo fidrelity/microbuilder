@@ -28,11 +28,16 @@ var GraphicModel = Ember.Object.extend({
   frameWidth : null,
   frameHeight : null,
   totalWidth : null,
-
-  init : function() {
-
-    this.resizeWidth = this.frameWidth <= 96 ? this.frameWidth :  ((this.frameWidth * this.frameCount) / 2);
   
+  init : function() {
+    
+    var g = this,
+      zoom = 64 / Math.max( g.frameWidth, g.frameHeight ),
+      width = g.frameWidth * zoom * g.frameCount,
+      height = g.frameHeight * zoom;
+    
+    this.set( 'divStyle', 'width:64px;height:64px;background-image:url("' + g.imagePath + '");background-size:' + width + "px " + height + "px;" );
+    
   },
   
   getData : function() {
@@ -43,12 +48,17 @@ var GraphicModel = Ember.Object.extend({
       imagePath : this.imagePath
     }
     
-  },
+  }
   
-  imageWidth : function() {
-    
-    return this.frameCount * this.frameWidth;
-    
-  }.property( 'frameCount', 'frameWidth' )
+  // divStyle : function() {
+  // 
+  //   var g = this,
+  //     zoom = 64 / Math.max( g.frameWidth, g.frameHeight ),
+  //     width = g.frameWidth * zoom * g.frameCount,
+  //     height = g.frameHeight * zoom;
+  // 
+  //   return "background-image:url(" + g.imagePath + ");background-size:" + width + "px " + height + "px;";
+  // 
+  // }.property( 'frameWidth' )
   
 });

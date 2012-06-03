@@ -90,18 +90,6 @@ var GameObjectView = Ember.View.extend({
     App.mainView.stageView.updatePlayer();
     
   },
-
-  divStyle : function() {
-  
-    if ( !this.content ) {
-      
-      return "";
-      
-    }
-  
-    return "background-image:url(" + this.content.graphic.imagePath + ");background-size:" + this.content.graphic.resizeWidth + "px 64px;";
-  
-  }.property( 'content' ),
   
   toTop: function() {
     

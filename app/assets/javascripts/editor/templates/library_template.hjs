@@ -1,5 +1,11 @@
-<button {{action "showOwn" target="App.libraryController"}}>own</button>
-<button {{action "showPublics" target="App.libraryController"}}>public</button>
+<div class="btn-group left" data-toggle="buttons-radio">
+
+  <button id="ownButton" class="btn" {{action "showOwn" target="App.libraryController"}}>own</button>
+  <button id="publicButton" class="btn" {{action "showPublics" target="App.libraryController"}}>public</button>
+
+</div>
+
+<div class="left">
 
 {{#unless App.libraryController.showBackground}}
 
@@ -13,29 +19,12 @@
 
 {{/unless}}
 
-<ul class="graphics">
-  {{#each App.libraryController.display}}
-  
-    {{#view SelectView 
-      contentBinding = "this"
-      controllerBinding = "App.gameController" 
-      selectFunctionBinding = "App.libraryController.selectFunction" }}
-      
-      <li {{action "select"}} class="graphic" style="width:{{unbound App.libraryController.thumbSizeWidth}}px;height:{{unbound App.libraryController.thumbSizeHeight}}px;overflow:hidden">
-
-        <div  class="frame_graphic" data-frames="{{unbound "content.frameCount"}}"
-          style="margin:auto;background-image:url({{unbound "content.imagePath"}});width:{{unbound "content.frameWidth"}}px;height:{{unbound "content.frameHeight"}}px;">
-        </div>
-
-        <div> {{content.name}} </div>
-        
-      </li>
-      
-    {{/view}}
-  
-  {{/each}}
-</ul>
+</div>
 
 <div class="clear"></div>
 
-<button {{action "cancel" target="App.gameController"}}> cancel </button>
+{{view GraphicsView}}
+
+<div class="clear"></div>
+
+<button class="btn" {{action "cancel" target="App.gameController"}}> cancel </button>

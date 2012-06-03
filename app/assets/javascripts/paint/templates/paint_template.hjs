@@ -63,41 +63,12 @@
     </div>
 
     <div class="span8 form-horizontal">
-      <!-- COLOR PALETTE -->
-      <div id="colorChooser"></div>
-      <ul id="palette" style="overflow:hidden;">
-        {{#view ColorPaletteView
-          color = "#000000"
-        }}
-          <li class="colorBlock" data-color="#FFFFFF" style="background-color:#FFFFFF"></li>
-          <li class="colorBlock" data-color="#000000" style="background-color:#000000"></li>
-          <li class="colorBlock" data-color="#FF0000" style="background-color:#FF0000"></li>
-          <li class="colorBlock" data-color="#00FF00" style="background-color:#00FF00"></li>
-          <li class="colorBlock" data-color="#0000FF" style="background-color:#0000FF"></li>
-          <li class="colorBlock" data-color="#FFEA05" style="background-color:#FFEA05"></li>
-          <li class="colorBlock" data-color="#FF1A00" style="background-color:#FF1A00"></li>
-          <li class="colorBlock" data-color="#CC0000" style="background-color:#CC0000"></li>
-          <li class="colorBlock" data-color="#FF7400" style="background-color:#FF7400"></li>
-          <li class="colorBlock" data-color="#C79810" style="background-color:#C79810"></li>
-          <li class="colorBlock" data-color="#73880A" style="background-color:#73880A"></li>
-          <li class="colorBlock" data-color="#008C00" style="background-color:#008C00"></li>
-          <li class="colorBlock" data-color="#006E2E" style="background-color:#006E2E"></li>
-          <li class="colorBlock" data-color="#4096EE" style="background-color:#4096EE"></li>
-          <li class="colorBlock" data-color="#356AA0" style="background-color:#356AA0"></li>
-          <li class="colorBlock" data-color="#3F4C6B" style="background-color:#3F4C6B"></li>
-          <li class="colorBlock" data-color="#FF0084" style="background-color:#FF0084"></li>
-
-          <li class="colorBlock" data-color="#FACAA0" style="background-color:#FACAA0"></li>
-          <li class="colorBlock" data-color="#945E2F" style="background-color:#945E2F"></li>
-          <li class="colorBlock" data-color="#8C8B89" style="background-color:#8C8B89"></li>
-          <li class="colorBlock" data-color="#AF1BBF" style="background-color:#AF1BBF"></li>
-          <li class="colorBlock" data-color="#999560" style="background-color:#999560"></li>
-          <li class="colorBlock" data-color="#3B3B3B" style="background-color:#3B3B3B"></li>
-
-        {{/view}}
-      </ul>
+      <div id ="colorWrapper">
+        Color:  
+      </div>
+      <div id="colorPicker"></div>
+       
     </div>
-    
   </div>
 
   <div id="area-wrapper">
