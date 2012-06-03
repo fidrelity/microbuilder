@@ -7,7 +7,7 @@
 var LibraryController = Ember.ArrayController.extend({
 
   showBackground : false,
-  showOwn : false,
+  showOwn : true,
 
   content : [],
 
