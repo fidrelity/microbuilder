@@ -33,8 +33,7 @@
       }}     
         <button {{action "clear"}}>Clear</button>
         <button {{action "undo"}}>Undo</button>       
-        <button {{action "reset"}} id="clearSpritesButton">Clear all</button>  
-        <button {{action "goToTypeSelection" target="App.paintController"}} >Reset</button>        
+        <button {{action "reset"}} id="clearSpritesButton">Clear all</button>     
       {{/view}}   
 
      
@@ -123,7 +122,8 @@
     {{#view ToolView
             toolBinding = "this"
     }}
-      <button class="btn-large btn-success" {{action "save"}}>Save image</button>
+      <button class="btn-large btn-success span2" {{action "save"}}>Save image</button>
+      <button class="btn-warning span2" {{action "goToTypeSelection" target="App.paintController"}} style="margin-top:1em">Cancel</button>
     {{/view}}
   </div>
 </div>

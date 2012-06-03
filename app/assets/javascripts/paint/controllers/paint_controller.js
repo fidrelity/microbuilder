@@ -517,6 +517,7 @@ var PaintController =  Ember.ArrayController.extend({
   play : function() {
     $('#playButton').hide();
     $('#stopButton').show();
+    $('.active-sprite').removeClass('active-sprite');
     this.playDelay = parseInt($('#playDelay').val());
     this.currentFrameIndex = 0;
     this.overSprites();
@@ -553,6 +554,7 @@ var PaintController =  Ember.ArrayController.extend({
     this.floatSprites();
     $('#playButton').show();
     $('#stopButton').hide();
+    this.setCurrentSpriteModel(this.getCurrentSpriteModel());
   },
 
   floatSprites : function() {
