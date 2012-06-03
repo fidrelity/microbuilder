@@ -121,13 +121,7 @@ var GameObjectsView = Ember.CollectionView.extend({
       
       this._parentView.observer.select( this.content );
       
-    },
-    
-    divStyle : function() {
-  
-      return "background-image:url(" + this.content.graphic.imagePath + ");background-size:" + this.content.graphic.resizeWidth + "px 64px;";
-  
-    }.property()
+    }
     
   })
   

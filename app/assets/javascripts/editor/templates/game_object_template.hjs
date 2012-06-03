@@ -1,5 +1,5 @@
 <div 
-    {{bindAttr style="divStyle"}}
+    {{bindAttr style="content.graphic.divStyle"}}
     class="libraryGraphic">
 </div>
 

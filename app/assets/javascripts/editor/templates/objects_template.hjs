@@ -22,7 +22,7 @@
     {{#view GameObjectView contentBinding = "App.gameObjectsController.current"}}
 
       <div
-          {{bindAttr style="divStyle"}}
+          {{bindAttr style="content.graphic.divStyle"}}
           class="libraryGraphic left">
       </div>
 

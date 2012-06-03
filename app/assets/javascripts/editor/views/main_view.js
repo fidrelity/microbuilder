@@ -15,10 +15,7 @@ var MainView = Ember.View.extend({
     
     this.stageView = StageView.create();
     
-    this.libraryView = Ember.View.create({
-      heading : 'Library',
-      templateName : 'editor/templates/library_template'
-    });
+    this.libraryView = LibraryView.create();
     
     this.objectsView = Ember.View.create({
       heading : 'Objects & Behaviour',
