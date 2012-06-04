@@ -55,6 +55,7 @@
       {{/view}}
     </div> 
   </div>
+  <div class="clear"></div>
 
   <!-- Second Toolbar -->
   <div id="tool-bar-second" class="form-horizontal row">
