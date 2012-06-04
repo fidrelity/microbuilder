@@ -38,7 +38,7 @@ class GraphicsController < ApplicationController
         graphic.to_response_hash(current_user) 
     end
     
-    render :json => response, :status => 200
+    render :text => response.to_json, :status => 200
   end
   
   def tunnel
