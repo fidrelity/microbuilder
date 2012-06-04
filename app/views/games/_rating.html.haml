@@ -1,9 +1,9 @@
 - disable = !!cookies["voted_game_#{@game.id}"]
 %div{:class => 'span2'}
-  = button_to "Like (#{game.likes})", {:action => "like", :id => game.id}, :method => :put, :remote => true, :disabled => disable, :class => "btn likeButton"
+  = button_to "Like (#{game.likes})", {:action => "like", :id => game.id}, :method => :put, :remote => true, :disabled => disable#, :class => "btn likeButton"
 %div{:class => 'span4'}
   %div{:class => "progress progress-success", :style => "background:#FF0000;"}
     %div{:class => "bar", :style => "width:#{game.rating * 100}%;"}
 
 %div{:class => 'span2'}
-  = button_to "Dislike (#{game.dislikes})", {:action => "dislike", :id => game.id}, :method => :put, :remote => true, :disabled => disable, :class => "btn likeButton"
+  = button_to "Dislike (#{game.dislikes})", {:action => "dislike", :id => game.id}, :method => :put, :remote => true, :disabled => disable#, :class => "btn likeButton"
