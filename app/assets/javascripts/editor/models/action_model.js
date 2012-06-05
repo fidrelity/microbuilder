@@ -106,7 +106,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     this._super();
     
-    this.set( 'position', new Vector() );
+    this.set( 'position', this.position || new Vector );
     
   },
   
