@@ -405,7 +405,7 @@ Player.prototype = {
       
       if ( this.selectDirection ) {
         
-        this.selectedObjectDragCallback( object.ID, object.getArea().center().addSelf( this.selectDirection ) );
+        this.selectedObjectDragCallback( object.ID, object.getArea().center().subSelf( new Vector( 320, 195 ) ) );
         
       } else {
         
@@ -509,7 +509,7 @@ Player.prototype = {
     
     if ( showDirection ) {
     
-      this.selectDirection = selectObject.getPosition().sub( new Vector( 320, 195 ) );
+      this.selectDirection = true;
       
       selectObject.movement.startPosition.set( 420, 195 ).addSelf( offset );
     
