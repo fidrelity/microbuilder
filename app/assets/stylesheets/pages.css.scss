@@ -45,7 +45,6 @@ body {
 
 #menu {
   position:relative;
-  right:-138px;
 }
 
 #menu li {
@@ -54,6 +53,8 @@ body {
     font-weight: bold;
     text-align: center;
     background-position:0px 0px;
+    float: right;
+    margin-left: 20px;
 }
 
 #menu li a {

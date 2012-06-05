@@ -22,14 +22,14 @@
   .row
   
     %ul{:id => "menu", :class => "nav nav-pills"}
-      %li{:class => "home span2 offset4", :id =>"home"}
-        =link_to '', root_path
-      %li{:class => "gallery span2", :id =>"play"}
-        =link_to "", gallery_path
-      %li{:class => "editor span2", :id =>"build"}
-        =link_to "", build_path
-      %li{:class => "paint span2", :id =>"paint"}
+      %li{:class => "paint", :id =>"paint"}
         =link_to "", new_graphic_path
+      %li{:class => "editor", :id =>"build"}
+        =link_to "", build_path
+      %li{:class => "gallery", :id =>"play"}
+        =link_to "", gallery_path
+      %li{:class => "home", :id =>"home"}
+        =link_to '', root_path
         
 %div{:id => 'flash-messages', :class => "row"}
   %ul
