@@ -67,5 +67,30 @@ var Notifier = {
   clear : function() {
     Notifier.list.find("li").not("#flash_template").remove();
     return Notifier;
+  },
+
+  // ----------------------------------------
+  // Shows a popup with a loader animation
+  showLoader : function(_msg) {
+    if(!_msg) return false;
+
+    var overlayHeight = $(document).height();
+    $(".paintOverlay").css({ height : overlayHeight }).fadeTo(800, 0.8);
+
+    var overlayMessageWrapper = $(".paintOverlayMessage");
+    //
+    overlayMessageWrapper.find(".message").html(_msg);
+    //    
+    var newLeft = ( $(document).width() / 2) - ( overlayMessageWrapper.width() / 2) + "px";
+    overlayMessageWrapper.css({left: newLeft});
+
+    return Notifier;
+  },
+
+  hideLoader : function() {
+    $(".paintOverlay").hide();
+    return Notifier;
   }
+
+
 };

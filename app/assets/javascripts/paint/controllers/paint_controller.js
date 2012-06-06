@@ -157,6 +157,7 @@ var PaintController =  Ember.ArrayController.extend({
 
   // ---------------------------------------
   save : function() {
+    this.stop();
 
     var imageTitle = $("#imageName").val();
     var makePublic = $("#makePublic").is(":checked") ? 1 : 0;
@@ -169,6 +170,8 @@ var PaintController =  Ember.ArrayController.extend({
     var isBackground = this.type === 'background' ? true : false;
     
     if(!imageTitle || !count) {alert("No Name!");return false;}
+
+    Notifier.showLoader("Saving your image ...");
 
     this.finalCanvas.attr('width', totalWidth).attr('height', height).show();
     var canvas = this.finalCanvas[0];
@@ -200,11 +203,14 @@ var PaintController =  Ember.ArrayController.extend({
       
       success : function( data ) {        
         App.paintController.goToTypeSelection(false);
+        Notifier.hidewLoader();
+      },
+
+      error : function() {
+        Notifier.hidewLoader();
       }
       
-    });
-    
-    this.stop();
+    });    
 
   },
 
