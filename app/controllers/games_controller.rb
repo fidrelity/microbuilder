@@ -1,7 +1,8 @@
  class GamesController < ApplicationController
   respond_to :js, :only => [:create, :index, :update, :like, :dislike, :played]
+  respond_to :json, :only => [:load, :random]
   before_filter :authenticate_user!, :only => [:create, :destroy]
-  before_filter :find_game, :only => [:show, :embed, :destroy, :like, :dislike, :played]
+  before_filter :find_game, :only => [:show, :embed, :destroy, :like, :dislike, :played, :load]
   
   def index
     @games = case params[:type]
@@ -75,6 +76,22 @@
 
   def report
     render :nothing => true, :layout => false
+  end
+
+  def load
+    respond_with(@game.data)
+  end
+
+  def random
+    game = Game.by_random()
+
+    #game["id"] = game.id
+    #render :json => item
+    #data = game.to_json
+
+    #parsed_json = ActiveSupport::JSON.decode(game.data)
+    #parsed_json
+    respond_with(game)
   end
 
   # ------------------

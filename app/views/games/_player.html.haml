@@ -6,17 +6,25 @@
     %h2
       =game.title
     %p
-    =game.instruction
+      %span{:class => "instruction"}
+        =game.instruction
 
   %div{:class => "playerWinScreen"}
     %div{:class => "replayButton"}
     %div{:class => "message"}
       ="Congratulations, you have won the game!"
+
+    %div{:class => "timer"}
+      Next game in
+      %span{:class=> "label currentSecond"}
+        3 
+      Seconds
     %div{:class => "gameData"}
       %h2
         =game.title
       %p
-        =game.instruction
+        %span{:class => "instruction"}
+          =game.instruction
 
   %div{:class => "playerLoseScreen"}
     %div{:class => "replayButton"}
@@ -26,7 +34,8 @@
       %h2
         =game.title
       %p
-        =game.instruction
+        %span{:class => "instruction"}
+          =game.instruction
 
 :javascript
   $(document).ready( function() {

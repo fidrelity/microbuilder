@@ -68,3 +68,7 @@
 #playerWrapper .gameData {
   margin-top:2em;
 }
+
+#playerWrapper .timer {
+  margin:1em 0 1em 0;
+}

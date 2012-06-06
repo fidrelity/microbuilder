@@ -16,11 +16,12 @@ Playtin::Application.routes.draw do
     end
   end
 
-  resources :games, :only => [:create, :destroy] do
+  resources :games, :only => [:create, :destroy] do    
     member do
       put 'played'
       put 'like'
       put 'dislike'
+      get 'load'
       post '/comment', :to => 'gameComments#create'
     end
     
@@ -43,4 +44,5 @@ Playtin::Application.routes.draw do
   get '/play/:id/embed', :to => 'games#embed'
   get '/build', :to => 'games#new'
   get '/s3', :to => 'graphics#tunnel'
+  get '/random', :to => 'games#random'
 end

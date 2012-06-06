@@ -450,16 +450,23 @@ Player.prototype = {
   onWin : function() {
     
     $('.playerWinScreen').fadeTo(600, 0.9);
-    
+
     if ( !this.edit ) {
       
       this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
       this.ctx.fillRect( 0, 386, 640 * this.timePlayed / this.game.duration, 4 );
       
-    }
+    }    
     
-    this.drawTimeline( this.ctx, 'rgba(0,255,0,0.5)', this.timePlayed );
-    
+    this.drawTimeline( this.ctx, 'rgba(0,255,0,0.5)', this.timePlayed );    
+
+    // Load random next game
+    var that = this;
+
+    this.countDown(3, function() {
+      that.loadRandomGame();
+    });
+   
   },
   
   onLose : function() {
@@ -545,10 +552,92 @@ Player.prototype = {
     if(!this.game_id) return false;
 
     $.ajax({
-      url : '/games/'+this.game_id+'/played',
+      url : '/games/' + this.game_id + '/played',
       type : 'PUT',
       success : function() {}
     });
+  },
+
+  // -----------------------------------------
+  // Count _seconds down and calls back
+  countDown : function(_seconds, callback) {
+    this.countDownTimer = _seconds || 3;
+
+    var that = this;
+    this.countInterval = setInterval(function() {
+      if(that.countDownTimer <= 0) {
+        callback();
+        that.resetCountDown();
+      }
+      that.decreaseCounter();
+    }, _seconds * 1000);
+  },
+
+  // Reset counter
+  resetCountDown : function() {
+    clearInterval(this.countInterval);
+    this.countDownTimer = 4;
+    $(".currentSecond").html(this.countDownTimer);
+  },
+
+  // Decreases counter by one
+  decreaseCounter : function() {
+    if(this.countDownTimer > 0 && this.countInterval) {
+      this.countDownTimer--;
+      $(".currentSecond").html(this.countDownTimer);
+    } else {
+      this.resetCountDown();
+    }
+  },
+
+  // -----------------------------------------
+  // Requestes a random game
+  loadRandomGame : function() {    
+    this.requestGame("/random");
+  },
+
+  // Requests a game by id
+  loadGameById : function(_id) {
+    if(!_id) return false;
+
+    var url = "/games/" + _id + "/load";
+
+    this.requestGame(url, _id);
+
+  },
+
+  // Request url
+  requestGame : function (_url) {
+    if(!_url) throw "No url to request";
+    var that = this;
+
+    $.ajax({
+      url: _url,
+      type : 'GET',
+      success: function(game_data) {
+       that.initGame(game_data);
+      }
+    });
+
+  },
+
+  initGame : function(game_data) {
+    var data = game_data[0];
+    
+    // Adapt HTML
+    $('.playerLoseScreen').hide();
+    $('.playerWinScreen').hide();
+    $('.playerStartScreen').show();          
+    $('#playerWrapper').find("h2").html(data.title);
+    $('#playerWrapper').find(".instruction").html(data.instruction);
+    $(".gameTitle").html(data.title);
+
+    // Init game
+    this.reset();
+    this.game = null;
+    this.game_id = data.id;
+    console.log("Loaded", data.title)
+    this.parse( JSON.parse(data.data) );    
   }
   
 };
