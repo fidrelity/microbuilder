@@ -55,6 +55,7 @@
       {{/view}}
     </div> 
   </div>
+  <div class="clear"></div>
 
   <!-- Second Toolbar -->
   <div id="tool-bar-second" class="form-horizontal row">
@@ -75,23 +76,13 @@
 
     <div id="zoom-canvas-area">
       <h4>Zoomed view:</h4>
-      <div class="canvases">
-        <!-- Zoomed Canvas -->
-        <canvas id="zoomCanvas" width="128" height="128"></canvas>
-        <!--  -->
-        <!-- Temporary Canvas -->
-        <canvas id="canvas-temp" width="64" height="64"></canvas>
-      </div>
-      <div class="zoomButtons">
-        {{#view ToolView
-              toolBinding = "this"
-        }}
-        <button {{action "zoomIn"}} class="zoomin"></button>
-        <br />
-        <button {{action "zoomOut"}} class="zoomout"></button>
-        {{/view}} 
-      </div>
+      <!-- Zoomed Canvas -->
+      <canvas id="zoomCanvas" width="128" height="128"></canvas>
+      <!--  -->
+      <!-- Temporary Canvas -->
+      <canvas id="canvas-temp" width="64" height="64"></canvas>
     </div>
+
 
     <div id="sprites-area">
 
@@ -113,7 +104,15 @@
 
     </div>
   </div>
-
+  <div class="zoomButtons">
+    {{#view ToolView
+          toolBinding = "this"
+    }}
+    <button {{action "zoomIn"}} class="zoomin"></button>
+    <button {{action "zoomOut"}} class="zoomout"></button>
+    {{/view}} 
+  </div>
+  <div class="clear"></div>
 
 
 <div class="row control-group form-actions">

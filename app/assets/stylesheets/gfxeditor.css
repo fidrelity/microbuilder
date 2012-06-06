@@ -63,18 +63,20 @@
   background:url('/assets/undo_icon.png');
 }
 
-#paint-wrapper .zoomButtons button {
+.zoomButtons button {
   min-width:30px;
   height:30px;
   background:top left no-repeat;
   border:none;
+  float:left;
+  margin:0 1px 0 0;
 }
 
-#paint-wrapper .zoomButtons button.zoomin {
+.zoomButtons button.zoomin {
   background:url('/assets/zoom_in.png');
 }
 
-#paint-wrapper .zoomButtons button.zoomout {
+.zoomButtons button.zoomout {
   background:url('/assets/zoom_out.png');
 }
 
@@ -157,9 +159,9 @@
   overflow:auto;
 }
 
-#paint-wrapper .zoomButtons {
-  float:left;
-  margin:198px 0 0 0;
+.zoomButtons {
+  z-index:999;
+  position:relative;
 }
 
 #paint-size-wrapper { margin:2em 0 2em 0;}
@@ -175,10 +177,6 @@
   list-style-type:none;
   overflow:hidden;
   padding:10px;
-}
-
-.canvases {
-  float:left;
 }
 
 /* Canvas Elements */

@@ -1,4 +1,4 @@
-class GamesController < ApplicationController
+ class GamesController < ApplicationController
   respond_to :js, :only => [:create, :index, :update, :like, :dislike, :played]
   before_filter :authenticate_user!, :only => [:create, :destroy]
   before_filter :find_game, :only => [:show, :embed, :destroy, :like, :dislike, :played]
@@ -6,11 +6,11 @@ class GamesController < ApplicationController
   def index
     @games = case params[:type]
       when "rating"
-        Game.all_by_rating
+        Game.all_by_rating(params[:page], 12)
       when "played"
-        Game.all_by_played
+        Game.all_by_played.paginate(:page => params[:page], :per_page => 12)
       else
-        Game.all_latest
+        Game.all_latest.paginate(:page => params[:page], :per_page => 12)
       end
   end
   

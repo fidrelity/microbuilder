@@ -106,7 +106,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     this._super();
     
-    this.set( 'position', new Vector() );
+    this.set( 'position', this.position || new Vector );
     
   },
   
@@ -286,7 +286,7 @@ var MoveActionModel = ActionTriggerModel.extend({
   
   angle : function() {
     
-    return this.position.sub( this.parentGameObject.position ).angle().toFixed( 2 );
+    return this.position.angle().toFixed( 2 );
     
   },
   

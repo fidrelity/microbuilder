@@ -159,8 +159,6 @@ var PaintController =  Ember.ArrayController.extend({
   // ---------------------------------------
   save : function() {
 
-    this.stop();
-
     var imageTitle = $("#imageName").val();
     var makePublic = $("#makePublic").is(":checked") ? 1 : 0;
 
@@ -206,6 +204,8 @@ var PaintController =  Ember.ArrayController.extend({
       }
       
     });
+    
+    this.stop();
 
   },
 

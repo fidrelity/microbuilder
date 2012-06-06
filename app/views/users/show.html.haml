@@ -15,12 +15,12 @@
         member since:
         %br
         %span
-          =@user.created_at.to_date.strftime('%m/%d/%Y')
+          =@user.created_at.to_date
       %p
         last login:
         %br
         %span
-          =@user.last_sign_in_at.to_date.strftime('%m/%d/%Y')
+          =@user.last_sign_in_at.to_date
 
   %div{ :class => "span8"}        
     = render :partial => 'games', :locals => {:games => @games, :user => @user}

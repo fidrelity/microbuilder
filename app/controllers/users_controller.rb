@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @graphics = @user.graphics.paginate(:page => params[:graphics_page], :per_page => 12)
+    @graphics = current_user == @user ? @user.graphics : @user.graphics.with_public 
+    @graphics = @graphics.paginate(:page => params[:graphics_page], :per_page => 12)
     @games = @user.games.paginate(:page => params[:games_page], :per_page => 6)
   end
 
@@ -15,7 +16,7 @@ class UsersController < ApplicationController
         !!params[:backgrounds],
         params[:min_size].to_i,
         params[:max_size].to_i
-      )
+      ).paginate(:page=>params[:page],:per_page=>12)
     rescue InvalidGraphicBoundaries => e
       render :json => e.message, :status => 400
       return

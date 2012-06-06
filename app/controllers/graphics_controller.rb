@@ -28,7 +28,7 @@ class GraphicsController < ApplicationController
         !!params[:backgrounds],
         params[:min_size].to_i,
         params[:max_size].to_i
-      )
+      ).paginate(:page=>params[:page],:per_page=>12)
     rescue InvalidGraphicBoundaries => e
       render :json => e.message, :status => 400
       return
@@ -38,7 +38,7 @@ class GraphicsController < ApplicationController
         graphic.to_response_hash(current_user) 
     end
     
-    render :json => response, :status => 200
+    render :text => response.to_json, :status => 200
   end
   
   def tunnel

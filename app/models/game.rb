@@ -24,15 +24,15 @@ class Game < ActiveRecord::Base
   
   class << self
     # SQL from http://evanmiller.org/how-not-to-sort-by-average-rating.html
-    def all_by_rating
+    def all_by_rating(page, per_page)
       query = <<-eos
         SELECT *, ((likes + 1.9208) / (likes + dislikes) 
           - 1.96 * SQRT((likes * dislikes) / (likes + dislikes) + 0.9604) 
           / (likes + dislikes)) / (1 + 3.8416 / (likes + dislikes)) 
         AS rating FROM games WHERE likes + dislikes > 0 
-        ORDER BY rating DESC;
+        ORDER BY rating DESC
       eos
-      find_by_sql(query);
+      paginate_by_sql(query, :page => page, :per_page => per_page);
     end
   end
   

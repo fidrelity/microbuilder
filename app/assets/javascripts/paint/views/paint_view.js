@@ -10,8 +10,6 @@ var PaintView = Ember.View.extend({
     App.drawTool.initAfter();
     App.fillTool.initAfter();
 
-    $('#labelMakePublic').popover({ placement : 'top'});
-
   },
 
   showTypeSelection : function() {
