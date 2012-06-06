@@ -19,7 +19,7 @@
   float:left;
 }
 
-#paint-wrapper button.activeTool {
+#paint-wrapper #tool-bar button.activeTool, #paint-wrapper #tool-bar-second button.activeTool {
   border-bottom:4px solid #55bd55;
 }
 
