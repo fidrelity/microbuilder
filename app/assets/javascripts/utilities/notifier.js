@@ -74,6 +74,8 @@ var Notifier = {
   showLoader : function(_msg) {
     if(!_msg) return false;
 
+    window.scrollTo(0, 0);
+    
     var overlayHeight = $(document).height();
     $(".paintOverlay").css({ height : overlayHeight }).fadeTo(800, 0.8);
 
