@@ -22,7 +22,6 @@
           %img{:src => comment.user.display_image}
           = comment.user.display_name
       %div{:class=>"span6"}
-        =comment.id
         =comment.comment
         %br
-        =comment.created_at
+        = "#{distance_of_time_in_words(comment.created_at, Time.now)} ago"

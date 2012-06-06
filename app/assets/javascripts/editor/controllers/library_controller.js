@@ -187,8 +187,6 @@ var LibraryController = Ember.ArrayController.extend({
     
     var self = this;
     
-    console.log( path );
-    
     $.ajax({
       url : path,
       type : 'GET',
@@ -214,8 +212,6 @@ var LibraryController = Ember.ArrayController.extend({
   },
   
   appendGraphics : function( data, page ) {
-    
-    console.log( data );
     
     if ( !data.length ) {
       
@@ -254,8 +250,6 @@ var LibraryController = Ember.ArrayController.extend({
     var d = data,
       filterID = this.content.filterProperty( 'ID', d.id ),
       graphic;
-      
-    console.log( "filter", filterID, d );
     
     if ( !filterID.length && d.id ) {
     
