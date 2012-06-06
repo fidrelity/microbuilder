@@ -19,6 +19,10 @@
   float:left;
 }
 
+#paint-wrapper button.activeTool {
+  border-bottom:4px solid #55bd55;
+}
+
 #paint-wrapper #tool-bar button.pencil {
   background:url('/assets/edit_button.png');
 }

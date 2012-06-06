@@ -3,6 +3,13 @@ var ToolView = Ember.View.extend({
   tool : null,
   
   didInsertElement : function() {
+    $('.pencil').addClass("activeTool");
+
+    // Highlight active tool
+    $(".selectable").click(function() {
+      $(".selectable").removeClass("activeTool");
+      $(this).addClass("activeTool");
+    });
 
   },
 

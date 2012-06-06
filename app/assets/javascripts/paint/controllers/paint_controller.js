@@ -31,7 +31,7 @@ var PaintController =  Ember.ArrayController.extend({
   type : null,          // background or object
   isBackground : false,
   //
-  color : "#FF0000",    // init Paint color
+  color : "FF0000",    // init Paint color
   size : 2,             // init Paint stroke size
   zoom : 2,             // init Zoom size (background has 1)
   //  
@@ -127,7 +127,6 @@ var PaintController =  Ember.ArrayController.extend({
         App.paintController.colorPicked(hsb, hex, rgb);
       }
     });
-    
     $('#colorPicker').ColorPickerSetColor('FF0000');
     
     // Slider for pencil size

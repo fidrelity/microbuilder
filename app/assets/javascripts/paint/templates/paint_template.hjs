@@ -5,24 +5,24 @@
       {{#view ToolView
         toolBinding = "App.pencilTool"
       }}
-        <button {{action "pencil"}} class="pencil"></button>     
-        <button {{action "erase"}} class="eraser"></button>       
+        <button {{action "pencil"}} class="pencil selectable"></button>     
+        <button {{action "erase"}} class="eraser selectable"></button>       
       {{/view}}
 
       {{#view ToolView
         toolBinding = "App.drawTool"
       }}
-        <button {{action "drawRect"}} class="rectangle"></button>
-        <button {{action "drawCircle"}} class="circle"></button>
-        <button {{action "drawRectFill"}} class="rectanglefill"></button>
-        <button {{action "drawCircleFill"}} class="circlefill"></button>
-        <button {{action "drawLine"}}  class="line"></button>
+        <button {{action "drawRect"}} class="rectangle selectable"></button>
+        <button {{action "drawCircle"}} class="circle selectable"></button>
+        <button {{action "drawRectFill"}} class="rectanglefill selectable"></button>
+        <button {{action "drawCircleFill"}} class="circlefill selectable"></button>
+        <button {{action "drawLine"}}  class="line selectable"></button>
       {{/view}}
 
       {{#view ToolView
         toolBinding = "App.fillTool"
       }}
-        <button {{action "fill"}} class="fill"></button>
+        <button {{action "fill"}} class="fill selectable"></button>
       {{/view}} 
     
       <button id="loadFileButton" class="loadfile"></button>
@@ -65,13 +65,13 @@
 
     <div class="span8 form-horizontal">
       <div id ="colorWrapper">
-        Color:  
+        Color:
       </div>
       <div id="colorPicker"></div>
       {{#view ToolView
         toolBinding = "App.pipetteTool"
       }}
-        <button {{action "pipette"}} class="pipette">Pipette</button>
+        <button {{action "pipette"}} class="pipette selectable">Pipette</button>
       {{/view}} 
     </div>
   </div>
