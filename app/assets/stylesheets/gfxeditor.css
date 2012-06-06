@@ -186,7 +186,7 @@
 /* Canvas Elements */
 #zoomCanvas, #canvas-temp {
  background:#FFF;
- background:url(paint/bg_transparent.png);
+ background:url(bg_transparent.png);
  border:1px solid #000000; 
  cursor:crosshair;
  image-rendering: optimizeSpeed;             // Older versions of FF
@@ -199,7 +199,7 @@
 .canvas {
     width:64px;
     height:64px;
-    background:url(paint/bg_transparent.png);
+    background:url(bg_transparent.png);
     margin-right:0.5em;
 }
 .canvas:hover, .canvas:active, .canvas:focus {

@@ -1,18 +1,5 @@
 /*
   PaintController
-
-  Todo:    
-    - removeCanvas
-  Fix:
-    - didInsertElement - initalizing multipletimes    
-    - on Save -> hide merged canvas
-              -> show message on error
-              -> redirect to ...
-  Feature:
-    - Text
-    - key shortcuts (Undo, Shift -> straight lines)
-    - Order sprite areas by drag&drop
-
 */
 var PaintController =  Ember.ArrayController.extend({
 
