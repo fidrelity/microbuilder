@@ -405,8 +405,10 @@ var PaintController =  Ember.ArrayController.extend({
   },
   
   colorPicked : function (hsb, hex, rgb) {
+
       $('#colorPicker').css('background-color', '#'+hex);
       $('#colorPicker').css('background-image', 'none');
+      $('#colorPicker').ColorPickerSetColor(hex);
       
       this.color = hex;
   },
@@ -474,8 +476,8 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   setZoomCanvasSize : function () {
-    var width  = this.zoom * this.spriteSize.width;  //this.isBackground ? this.spriteSize.width : this.zoom * this.spriteSize.width;
-    var height = this.zoom * this.spriteSize.height; //this.isBackground ? this.spriteSize.height : this.zoom * this.spriteSize.height;
+    var width  = this.zoom * this.spriteSize.width;
+    var height = this.zoom * this.spriteSize.height;
     this.zoomCanvas.style.width     = width +"px";
     this.zoomCanvas.style.height    = height +"px";    
     

@@ -68,7 +68,11 @@
         Color:  
       </div>
       <div id="colorPicker"></div>
-       
+      {{#view ToolView
+        toolBinding = "App.pipetteTool"
+      }}
+        <button {{action "pipette"}} class="pipette">Pipette</button>
+      {{/view}} 
     </div>
   </div>
 
