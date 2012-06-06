@@ -135,9 +135,7 @@ var GameController = Ember.Object.extend({
     
   },
   
-  publishGame : function() {
-
-    
+  publishGame : function() {    
    
     var data = this.game.getData();
     
@@ -149,8 +147,6 @@ var GameController = Ember.Object.extend({
       data.win,
       this.getSelectedSnapshotData()
     );
-    
-    Notifier.showLoader("Creating game! Please wait a few seconds ...");
 
     if ( !this.game.title ) {
         
@@ -168,7 +164,8 @@ var GameController = Ember.Object.extend({
         return;
         
     }
-    
+        
+    Notifier.showLoader("Creating game! Please wait a few seconds ...");
 
     $.ajax({
       url : 'games/',
