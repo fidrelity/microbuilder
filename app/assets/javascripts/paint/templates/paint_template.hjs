@@ -81,7 +81,7 @@
     <div id="zoom-canvas-area">
       <h4>Zoomed view:</h4>
       <!-- Zoomed Canvas -->
-      <canvas id="zoomCanvas" width="128" height="128"></canvas>
+      <canvas id="zoomCanvas" class="bgTransparent" width="128" height="128"></canvas>
       <!--  -->
       <!-- Temporary Canvas -->
       <canvas id="canvas-temp" width="64" height="64"></canvas>
@@ -112,8 +112,9 @@
     {{#view ToolView
           toolBinding = "this"
     }}
-    <button {{action "zoomIn"}} class="zoomin"></button>
-    <button {{action "zoomOut"}} class="zoomout"></button>
+    <button {{action "zoomIn"}} class="zoomin zoom"></button>
+    <button {{action "zoomOut"}} class="zoomout zoom"></button>
+    <button {{action "bgToggle"}} class="bgToggle"></button>
     {{/view}} 
   </div>
   <div class="clear"></div>

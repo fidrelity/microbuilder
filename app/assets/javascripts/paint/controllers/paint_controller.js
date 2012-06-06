@@ -18,6 +18,7 @@ var PaintController =  Ember.ArrayController.extend({
   type : null,          // background or object
   isBackground : false,
   //
+  bgCounter : 0,
   color : "FF0000",    // init Paint color
   size : 2,             // init Paint stroke size
   zoom : 2,             // init Zoom size (background has 1)
@@ -458,6 +459,22 @@ var PaintController =  Ember.ArrayController.extend({
     this.setZoomCanvasSize();
     if(clear) this.clearZoomCanvas();
     this.zoomContext.drawImage(this.getCurrentSpriteModel().canvas, 0, 0);
+  },
+
+  toogleZoomCanvasBg : function() {
+    var bgClasses = ['bgTransparent', 'bgWhite', 'bgBlack'];
+    this.bgCounter++;
+    this.bgCounter = (this.bgCounter > bgClasses.length - 1) ? 0 : this.bgCounter;
+    
+    var addClass = bgClasses[this.bgCounter];
+
+    $.each(bgClasses, function(k,v) {
+      $('.bgToggle').removeClass(v);
+      $("#zoomCanvas").removeClass(v);
+    });
+    
+    $('.bgToggle').addClass(addClass);
+    $("#zoomCanvas").addClass(addClass);   
   },
 
   // ---------------------------------------

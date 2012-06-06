@@ -67,7 +67,7 @@
   background:url('/assets/undo_icon.png');
 }
 
-.zoomButtons button {
+.zoomButtons button.zoom {
   min-width:30px;
   height:30px;
   background:top left no-repeat;
@@ -163,6 +163,12 @@
   overflow:auto;
 }
 
+.bgToggle {
+  min-width:30px;
+  height:30px;
+  border:1px solid #666;
+}
+
 .zoomButtons {
   z-index:999;
   position:relative;
@@ -185,8 +191,8 @@
 
 /* Canvas Elements */
 #zoomCanvas, #canvas-temp {
- background:#FFF;
- background:url(bg_transparent.png);
+ /*background:#FFF;
+ background:url(bg_transparent.png);*/
  border:1px solid #000000; 
  cursor:crosshair;
  image-rendering: optimizeSpeed;             // Older versions of FF
@@ -211,6 +217,20 @@
 
 #canvas-template, #canvas-merged { display:none; }
 #canvas-temp { display:none; z-index:999; position:absolute; background:none;pointer-events:none;border:1px solid #000}
+
+.bgBlack {
+  background-image:none;
+  background-color:#000000;
+}
+
+.bgWhite, #zoomCanvas .bgWhite {
+  background-image:none;
+  background-color:#FFFFFF;
+}
+
+.bgTransparent {
+  background:url(bg_transparent.png);  
+}
 
 /* Tools */
 .addSpriteButton {
