@@ -31,7 +31,7 @@ var PaintController =  Ember.ArrayController.extend({
   type : null,          // background or object
   isBackground : false,
   //
-  color : "#FF0000",    // init Paint color
+  color : "FF0000",    // init Paint color
   size : 2,             // init Paint stroke size
   zoom : 2,             // init Zoom size (background has 1)
   //  
@@ -104,7 +104,6 @@ var PaintController =  Ember.ArrayController.extend({
 
     $('#zoomCanvas').mouseout(function(e){
       App.paintController.mouseup(e);
-      //App.pencilTool.isActive
     });
 
     // Onclick sprite area
@@ -127,7 +126,6 @@ var PaintController =  Ember.ArrayController.extend({
         App.paintController.colorPicked(hsb, hex, rgb);
       }
     });
-    
     $('#colorPicker').ColorPickerSetColor('FF0000');
     
     // Slider for pencil size
@@ -158,6 +156,7 @@ var PaintController =  Ember.ArrayController.extend({
 
   // ---------------------------------------
   save : function() {
+    this.stop();
 
     var imageTitle = $("#imageName").val();
     var makePublic = $("#makePublic").is(":checked") ? 1 : 0;
@@ -170,6 +169,8 @@ var PaintController =  Ember.ArrayController.extend({
     var isBackground = this.type === 'background' ? true : false;
     
     if(!imageTitle || !count) {alert("No Name!");return false;}
+
+    Notifier.showLoader("Saving your image ...");
 
     this.finalCanvas.attr('width', totalWidth).attr('height', height).show();
     var canvas = this.finalCanvas[0];
@@ -201,11 +202,14 @@ var PaintController =  Ember.ArrayController.extend({
       
       success : function( data ) {        
         App.paintController.goToTypeSelection(false);
+        Notifier.hidewLoader();
+      },
+
+      error : function() {
+        Notifier.hidewLoader();
       }
       
-    });
-    
-    this.stop();
+    });    
 
   },
 
@@ -245,7 +249,7 @@ var PaintController =  Ember.ArrayController.extend({
     if(this.isBackground)
       this.zoomContext.drawImage(this.getCurrentSpriteModel().canvas, 0, 0);
     else
-      this.updateZoom();
+      this.updateZoom(true);
   },
 
   // Clear current SpriteModel
@@ -318,7 +322,7 @@ var PaintController =  Ember.ArrayController.extend({
 
     if(copy) this.getCurrentSpriteModel().pushState();
 
-    this.updateZoom();
+    this.updateZoom(true);
   },
 
   // ---------------------------------------  
@@ -346,7 +350,7 @@ var PaintController =  Ember.ArrayController.extend({
     this.set('currentSprite', spriteModel);
     spriteModel.highlight();
     this.pixelDrawer.setCanvasContext(this.zoomCanvas);
-    this.updateZoom();
+    this.updateZoom(true);
     
   },
 
@@ -405,8 +409,10 @@ var PaintController =  Ember.ArrayController.extend({
   },
   
   colorPicked : function (hsb, hex, rgb) {
+
       $('#colorPicker').css('background-color', '#'+hex);
       $('#colorPicker').css('background-image', 'none');
+      $('#colorPicker').ColorPickerSetColor(hex);
       
       this.color = hex;
   },
@@ -416,42 +422,20 @@ var PaintController =  Ember.ArrayController.extend({
   zoomIn : function() {
     if(this.zoom > 10) return false;
     this.zoom++;    
-    this.updateZoom(false);
+    this.updateZoom();
   },
 
   zoomOut : function() {
     if(this.zoomCanvas.style.width === this.spriteSize.width+"px") return false;
     this.zoom--;
-    this.updateZoom(false);
+    this.updateZoom();
   },
 
   clearZoomCanvas : function() {
+    console.log("clearZoomCanvas()");
     if(this.isBackground) this.fillBackground("#FFFFFF");
     this.zoomContext.clearRect(0, 0, this.zoomCanvas.width, this.zoomCanvas.height);
   },
-
-  /* DEPRECATED
-  zoomImageData : function( imageData, _zoom ) {
-    var zoom = _zoom || this.zoom;
-  
-    var width = imageData.width, 
-        height = imageData.height, 
-        data = imageData.data,
-        x, y, i;
-   
-   
-    for ( x = 0; x < width; x++ ) {
-
-        for ( y = 0; y < height; y++ ) {
-
-            i = ( y * width + x ) * 4;
-
-            this.zoomContext.fillStyle = "rgba(" + data[i] + "," + data[i+1] + "," + data[i+2] + "," + ( data[i+3] / 255 ) + ")";
-            this.zoomContext.fillRect(x, y,1,1 );
-        }
-
-    }
-  },*/
 
   // Copy zoomCanvas data to current sprite
   drawToSprite : function() {
@@ -474,8 +458,8 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   setZoomCanvasSize : function () {
-    var width  = this.zoom * this.spriteSize.width;  //this.isBackground ? this.spriteSize.width : this.zoom * this.spriteSize.width;
-    var height = this.zoom * this.spriteSize.height; //this.isBackground ? this.spriteSize.height : this.zoom * this.spriteSize.height;
+    var width  = this.zoom * this.spriteSize.width;
+    var height = this.zoom * this.spriteSize.height;
     this.zoomCanvas.style.width     = width +"px";
     this.zoomCanvas.style.height    = height +"px";    
     
@@ -485,7 +469,6 @@ var PaintController =  Ember.ArrayController.extend({
 
   updateZoom : function(clear) {
     this.setZoomCanvasSize();
-    var clear  = clear || true;
     if(clear) this.clearZoomCanvas();
     this.zoomContext.drawImage(this.getCurrentSpriteModel().canvas, 0, 0);
   },

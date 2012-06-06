@@ -30,3 +30,9 @@
 
 </div>
 
+<div class="paintOverlay">
+  <div class="paintOverlayMessage row">
+    <div class="span1"><img src="/assets/loader_circle.gif"></div>
+    <div class="span6 message"></div>
+  </div>
+</div>

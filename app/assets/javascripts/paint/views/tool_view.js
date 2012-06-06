@@ -3,6 +3,13 @@ var ToolView = Ember.View.extend({
   tool : null,
   
   didInsertElement : function() {
+    $('.pencil').addClass("activeTool");
+
+    // Highlight active tool
+    $(".selectable").click(function() {
+      $(".selectable").removeClass("activeTool");
+      $(this).addClass("activeTool");
+    });
 
   },
 
@@ -69,6 +76,11 @@ var ToolView = Ember.View.extend({
   pencil : function() {
     this.setCurrentTool();
     App.pencilTool.setEraser(false);
+    App.paintController.click();
+  },
+
+  pipette : function() {
+    this.setCurrentTool();
     App.paintController.click();
   },
 

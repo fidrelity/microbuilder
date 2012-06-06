@@ -135,7 +135,7 @@ var GameController = Ember.Object.extend({
     
   },
   
-  publishGame : function() {
+  publishGame : function() {    
    
     var data = this.game.getData();
     
@@ -147,7 +147,6 @@ var GameController = Ember.Object.extend({
       data.win,
       this.getSelectedSnapshotData()
     );
-    
 
     if ( !this.game.title ) {
         
@@ -165,7 +164,9 @@ var GameController = Ember.Object.extend({
         return;
         
     }
-    
+        
+    Notifier.showLoader("Creating game! Please wait a few seconds ...");
+
     $.ajax({
       url : 'games/',
       type : 'POST',
@@ -191,13 +192,14 @@ var GameController = Ember.Object.extend({
           // alert( 'sucess: ' + data.responseText );
           
           window.location = data.responseText;
+          Notifier.hidewLoader();
         
         },
         
         400: function( data ) {
           
           console.log(data);
-          
+          Notifier.hidewLoader();
           alert( data.responseText );
           
         },
@@ -205,7 +207,7 @@ var GameController = Ember.Object.extend({
         401: function( data ) {
           
           console.log(data);
-          
+          Notifier.hidewLoader();
           alert( 'not logged in: ' + data.responseText );
           
         },
@@ -213,7 +215,7 @@ var GameController = Ember.Object.extend({
         500: function( data ) {
           
           console.log(data);
-          
+          Notifier.hidewLoader();
           alert( 'internal server error: ' + data.responseText );
           
         }

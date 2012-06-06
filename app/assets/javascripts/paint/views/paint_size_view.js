@@ -6,17 +6,29 @@ var PaintSizeView = Ember.View.extend({
   didInsertElement : function() {
     // Resize object
     $('#canvas-size').resizable({
-      grid: 16,
+      grid: 1,
       minWidth: 32,
       minHeight: 32,
       maxWidth : 256,
       maxHeight : 256,
-      stop: function(event, ui) { 
-        $(".objWidth").html(ui.size.width);
-        $(".objHeight").html(ui.size.height);
-        App.paintSizeView.setPaintType(ui.helper);
+      resize : function(event, ui) { 
+        $(".objWidth").val(ui.size.width);
+        $(".objHeight").val(ui.size.height);
+      },
+      stop: function(event, ui) {       
+        App.paintSizeView.setPaintType(ui.helper.parent());
       }
 
+    });
+
+    $('.sizeInput').change(function() {
+        var w = Math.min( parseInt($(".objWidth").val()), 256);
+        var h = Math.min( parseInt($(".objHeight").val()), 256) ;
+        //
+        $('#canvas-size').css({ width: w  + "px", height: h + "px" });
+        //
+        $(".objWidth").val(w);
+        $(".objHeight").val(h);
     });
 
     // Click on object type

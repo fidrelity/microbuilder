@@ -83,10 +83,10 @@ $(document).ready(function() {
     $('.layer').hide();
   });
 
-
-  $('.likeButton').click(function() {    
+  $('.likeButton').click(function() {
     $(this).attr('disabled', 'disabled');
   });
+
   // ---------------------------------------
 
 });

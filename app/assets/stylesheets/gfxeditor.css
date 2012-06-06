@@ -19,6 +19,10 @@
   float:left;
 }
 
+#paint-wrapper #tool-bar button.activeTool, #paint-wrapper #tool-bar-second button.activeTool {
+  border-bottom:4px solid #55bd55;
+}
+
 #paint-wrapper #tool-bar button.pencil {
   background:url('/assets/edit_button.png');
 }
@@ -317,4 +321,26 @@
 
 #guideSteps li.activeElement {
   font-weight:bold;
+}
+
+
+.paintOverlay {
+  z-index:9001;
+  display:none;
+  width:100%; height:100%;
+  position:absolute; left:0; top:0;
+  background:#111; 
+}
+
+.paintOverlay .paintOverlayMessage {
+  z-index:9002;
+  top:30%; left:40%;
+  padding:2em; position:absolute;
+  background:#000; color:#FFF;
+  border-radius:7px;
+  width:600px;  
+}
+
+.paintOverlay .paintOverlayMessage .message {
+  padding-top:6px; font-size:18px;
 }
