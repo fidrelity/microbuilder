@@ -460,11 +460,12 @@ Player.prototype = {
     
     this.drawTimeline( this.ctx, 'rgba(0,255,0,0.5)', this.timePlayed );    
 
-    // Load random next game
+    // Load random next game in 3 seconds
     var that = this;
-
     this.countDown(3, function() {
+
       that.loadRandomGame();
+
     });
    
   },
@@ -621,6 +622,7 @@ Player.prototype = {
 
   },
 
+  // Inits new game with game_data
   initGame : function(game_data) {
     var data = game_data[0];
     
@@ -636,8 +638,8 @@ Player.prototype = {
     this.reset();
     this.game = null;
     this.game_id = data.id;
-    console.log("Loaded", data.title)
-    this.parse( JSON.parse(data.data) );    
+    //
+    this.parse( JSON.parse(data.data) );
   }
   
 };
