@@ -250,7 +250,7 @@ var PaintController =  Ember.ArrayController.extend({
     if(this.isBackground)
       this.zoomContext.drawImage(this.getCurrentSpriteModel().canvas, 0, 0);
     else
-      this.updateZoom();
+      this.updateZoom(true);
   },
 
   // Clear current SpriteModel
@@ -323,7 +323,7 @@ var PaintController =  Ember.ArrayController.extend({
 
     if(copy) this.getCurrentSpriteModel().pushState();
 
-    this.updateZoom();
+    this.updateZoom(true);
   },
 
   // ---------------------------------------  
@@ -351,7 +351,7 @@ var PaintController =  Ember.ArrayController.extend({
     this.set('currentSprite', spriteModel);
     spriteModel.highlight();
     this.pixelDrawer.setCanvasContext(this.zoomCanvas);
-    this.updateZoom();
+    this.updateZoom(true);
     
   },
 
@@ -423,42 +423,20 @@ var PaintController =  Ember.ArrayController.extend({
   zoomIn : function() {
     if(this.zoom > 10) return false;
     this.zoom++;    
-    this.updateZoom(false);
+    this.updateZoom();
   },
 
   zoomOut : function() {
     if(this.zoomCanvas.style.width === this.spriteSize.width+"px") return false;
     this.zoom--;
-    this.updateZoom(false);
+    this.updateZoom();
   },
 
   clearZoomCanvas : function() {
+    console.log("clearZoomCanvas()");
     if(this.isBackground) this.fillBackground("#FFFFFF");
     this.zoomContext.clearRect(0, 0, this.zoomCanvas.width, this.zoomCanvas.height);
   },
-
-  /* DEPRECATED
-  zoomImageData : function( imageData, _zoom ) {
-    var zoom = _zoom || this.zoom;
-  
-    var width = imageData.width, 
-        height = imageData.height, 
-        data = imageData.data,
-        x, y, i;
-   
-   
-    for ( x = 0; x < width; x++ ) {
-
-        for ( y = 0; y < height; y++ ) {
-
-            i = ( y * width + x ) * 4;
-
-            this.zoomContext.fillStyle = "rgba(" + data[i] + "," + data[i+1] + "," + data[i+2] + "," + ( data[i+3] / 255 ) + ")";
-            this.zoomContext.fillRect(x, y,1,1 );
-        }
-
-    }
-  },*/
 
   // Copy zoomCanvas data to current sprite
   drawToSprite : function() {
@@ -492,7 +470,6 @@ var PaintController =  Ember.ArrayController.extend({
 
   updateZoom : function(clear) {
     this.setZoomCanvasSize();
-    var clear  = clear || true;
     if(clear) this.clearZoomCanvas();
     this.zoomContext.drawImage(this.getCurrentSpriteModel().canvas, 0, 0);
   },
