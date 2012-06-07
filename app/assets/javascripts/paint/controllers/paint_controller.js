@@ -431,7 +431,6 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   clearZoomCanvas : function() {
-    console.log("clearZoomCanvas()");
     if(this.isBackground) this.fillBackground("#FFFFFF");
     this.zoomContext.clearRect(0, 0, this.zoomCanvas.width, this.zoomCanvas.height);
   },
