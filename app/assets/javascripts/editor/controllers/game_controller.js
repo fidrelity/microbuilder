@@ -43,13 +43,7 @@ var GameController = Ember.Object.extend({
   
   selectGraphic : function( graphic ) {
     
-    App.gameObjectsController.addObject( GameObjectModel.create({
-      
-      name : graphic.name,
-      graphic : graphic,
-      position : new Vector( Math.floor( Math.random() * 540 ), Math.floor( Math.random() * 290 ) )
-      
-    }) );
+    App.gameObjectsController.createObject( graphic );
     
     App.mainView.show( 'overlayContent', 'objectsView' );
     

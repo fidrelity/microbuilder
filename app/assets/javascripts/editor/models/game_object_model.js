@@ -18,7 +18,6 @@ var GameObjectModel = Ember.Object.extend({
     this.set( 'startBehaviour', BehaviourModel.create());
     this.startBehaviour.addTrigger( StartTriggerModel.create() );
     
-    
   },
   
   clone : function() {
