@@ -3,10 +3,10 @@
 
  <div class="row">
   <div class="span6">
-    <h3>Object <small><span class="objWidth">128</span> x <span class="objHeight">128</span></small></h3>
+    <h3>Object <small><input type="text" class="objWidth span1 sizeInput" value="128"> x <input type="text" class="objHeight span1 sizeInput" value="128" size="2"></small></h3>
     Select game object, if you want to draw for example a car, which has actions in the game (i.e. move) and different states.
-    <div style="width:256px;height:256px;border:5px solid #666;overflow:hidden;">
-      <div id="canvas-size" class="canvas paint-type type-selected" style="width:128px;height:128px;" data-type="object"></div>
+    <div style="width:256px;height:256px;overflow:hidden;" class="paint-type type-selected" data-type="object">
+      <div id="canvas-size" class="canvas" style="width:128px;height:128px;"></div>
     </div>
   </div>
 

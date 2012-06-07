@@ -24,10 +24,13 @@ var GameModel = Ember.Object.extend({
         win = false,
         i, j;
     
+    game.title = this.title;
+    game.instructions = this.instructions;
+    
     if ( this.background ) {
       
-      game.background = this.background.imagePath;
-      graphicIDs.push( this.background.ID );
+      game.backgroundID = this.background.ID;
+      graphics.push( this.background.getData() );
       
     }
     
@@ -188,12 +191,6 @@ var GameModel = Ember.Object.extend({
     }
     
     this.gameObjects.removeObject( gameObject );
-    
-  },
-  
-  duplicateGameObject : function( gameObject ) {
-    
-    this.gameObjects.addObject( gameObject.clone() );
     
   },
   

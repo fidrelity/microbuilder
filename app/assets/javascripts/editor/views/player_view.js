@@ -24,8 +24,6 @@ var PlayerView = Ember.View.extend({
     if ( type === 'stage' ) {
       
       player.objectsMoveable = true;
-      player.areaSelectable = true;
-      
       player.showTimeline = true;
       
       player.selectedObjectCallback = bind( App.gameObjectsController, App.gameObjectsController.selectID );

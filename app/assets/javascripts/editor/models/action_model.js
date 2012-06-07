@@ -348,6 +348,24 @@ var MoveActionModel = ActionTriggerModel.extend({
   
   },
   
+  parse : function( data ) {
+    
+    var d = data;
+    
+    this.setProperties({ 
+      type : d.type,
+      position : d.location ? new Vector( d.location.x, d.location.y ) : new Vector( 1, 0 ).rotateSelf( d.angle ),
+      gameObject : App.gameObjectsController.getGameObject( d.objectID ),
+      region : d.area ? new Area().copy( d.area ) : null,
+      mode : d.mode,
+      speed : d.speed,
+      random : d.random
+    });
+    
+    return this;
+    
+  },
+  
   string : function() {
     
     var type = this.type,
@@ -411,6 +429,8 @@ var MoveActionModel = ActionTriggerModel.extend({
 });
 
 var ArtActionModel = ActionTriggerModel.extend({
+  
+  type : 'art',
   
   'to frame' : function() {
     
@@ -576,6 +596,23 @@ var ArtActionModel = ActionTriggerModel.extend({
     
     return data;
   
+  },
+  
+  parse : function( data ) {
+    
+    var d = data;
+    
+    this.setProperties({ 
+      type : 'art',
+      frame : d.frame,
+      frame2 : d.frame2,
+      mode : d.mode,
+      speed : d.speed,
+      graphic : App.libraryController.getGraphic( d.graphicID )
+    });
+    
+    return this;
+    
   }
   
 });
@@ -607,6 +644,8 @@ var WinLoseActionModel = ActionTriggerModel.extend({
 });
 
 var ClickTriggerModel = ActionTriggerModel.extend({
+  
+  type : 'click',
   
   'self' : function() {
     
@@ -668,6 +707,19 @@ var ClickTriggerModel = ActionTriggerModel.extend({
     }
     
     return data;
+    
+  },
+  
+  parse : function( data ) {
+    
+    var d = data;
+    
+    this.setProperties({ 
+      region : d.area ? new Area().copy( d.area ) : null,
+      gameObject : App.gameObjectsController.getGameObject( d.objectID )
+    });
+    
+    return this;
     
   }
   
@@ -747,6 +799,20 @@ var ContactTriggerModel = ActionTriggerModel.extend({
     
     return data;
     
+  },
+  
+  parse : function( data ) {
+    
+    var d = data;
+    
+    this.setProperties({
+      type : d.type, 
+      region : d.area ? new Area().copy( d.area ) : null,
+      gameObject : App.gameObjectsController.getGameObject( d.objectID )
+    });
+    
+    return this;
+    
   }
   
 });
@@ -820,6 +886,19 @@ var TimeTriggerModel = ActionTriggerModel.extend({
     }
     
     return data;
+    
+  },
+  
+  parse : function( data ) {
+    
+    var d = data;
+    
+    this.setProperties({ 
+      time : d.time,
+      time2 : d.time2
+    });
+    
+    return this;
     
   }
   

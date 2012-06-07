@@ -247,24 +247,13 @@ var LibraryController = Ember.ArrayController.extend({
   
   parseGraphic : function( data, page ) {
     
-    var d = data,
-      filterID = this.content.filterProperty( 'ID', d.id ),
+    var filterID = this.content.findProperty( 'ID', data.id ),
       graphic;
     
-    if ( !filterID.length && d.id ) {
+    if ( !filterID && data.id ) {
     
-      graphic = GraphicModel.create({
-        ID : d.id,
-        name : d.name,
-        userName : d.user_name,
-        imagePath : d.url,
-        isBackground : d.background,
-        isPublic : d.public,
-        isOwn : d.is_own,
-        frameCount : d.frame_count,
-        frameWidth : d.frame_width,
-        frameHeight : d.frame_height
-      });
+      graphic = GraphicModel.create();
+      this.extendGraphic( graphic, data );
       
       if ( page === 1 ) {
       
@@ -277,6 +266,66 @@ var LibraryController = Ember.ArrayController.extend({
       }
     
     }
+    
+  },
+  
+  loadGraphic : function( graphicID, imagePath ) {
+    
+    var graphic = GraphicModel.create({
+      ID : graphicID,
+      imagePath : imagePath
+    });
+    
+    this.addObject( graphic );
+    
+    // $.ajax({
+    //   url : '/graphics/' + graphicID,
+    //   type : 'GET',
+    //   
+    //   success: function( data ) {
+    //     
+    //     if ( data ) {
+    //       
+    //       if ( typeof data === "string" ) {
+    //         
+    //         data = JSON.parse( data );
+    //         
+    //       }
+    //     
+    //       self.extendGraphic( graphic, data );
+    //     
+    //     }
+    //     
+    //   }
+    //   
+    // });
+    
+  },
+  
+  getGraphic : function( graphicID ) {
+    
+    return this.content.findProperty( 'ID', graphicID );
+    
+  },
+  
+  extendGraphic : function( graphic, data ) {
+    
+    var d = data;
+    
+    graphic.setProperties({
+      ID : d.id,
+      name : d.name,
+      userName : d.user_name,
+      imagePath : d.url,
+      isBackground : d.background,
+      isPublic : d.public,
+      isOwn : d.is_own,
+      frameCount : d.frame_count,
+      frameWidth : d.frame_width,
+      frameHeight : d.frame_height
+    });
+    
+    graphic.computeStyle();
     
   },
   

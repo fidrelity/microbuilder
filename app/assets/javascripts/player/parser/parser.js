@@ -15,16 +15,6 @@ var Parser = {
     
     game.duration = ( data.duration || 5 ) * 1000;
     
-    if ( data.background ) {
-    
-      game.background = this.loader.loadImage( data.background );
-    
-    } else {
-      
-      // console.error( 'parser: game has no background' );
-      
-    }
-    
     if ( graphics && graphics.length > 0 ) {
     
       for ( var i = 0; i < graphics.length; i++ ) {
@@ -84,6 +74,20 @@ var Parser = {
       
     }
     
+    if ( data.background ) {
+      
+      game.background = this.loader.loadImage( data.background );
+      
+    } else if ( data.backgroundID ) {
+      
+      game.background = game.getGraphicWithID( data.backgroundID ).image;
+    
+    } else {
+      
+      // console.error( 'parser: game has no background' );
+      
+    }
+    
     this.loader.checkRemaining();
     
   },
@@ -101,9 +105,9 @@ var Parser = {
     
     var graphic = new Graphic( graphicData.ID );
   
-    graphic.frameCount = graphicData.frameCount;
+    graphic.frameCount = graphicData.frameCount || 1;
   
-    graphic.image = this.loader.loadImage( graphicData.imagePath );
+    graphic.image = this.loader.loadImage( graphicData.url || graphicData.imagePath );
   
     return graphic;
   

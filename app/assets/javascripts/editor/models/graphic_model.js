@@ -21,18 +21,24 @@ var GraphicModel = Ember.Object.extend({
   name : null,
   userName : null,
   
-  imagePath : null,
+  imagePath : 'assets/mario.png',
   
   isBackground : false,
   isPublic : false,
   isOwn : false,
   
   frameCount : 1,
-  frameWidth : null,
-  frameHeight : null,
-  totalWidth : null,
+  frameWidth : 32,
+  frameHeight : 32,
+  totalWidth : 0,
   
   init : function() {
+    
+    this.computeStyle();
+    
+  },
+  
+  computeStyle : function() {
     
     var g = this,
       zoom = 64 / Math.max( g.frameWidth, g.frameHeight ),
@@ -48,7 +54,7 @@ var GraphicModel = Ember.Object.extend({
     return {
       ID : this.ID,
       frameCount : this.frameCount,
-      imagePath : this.imagePath
+      url : this.imagePath
     }
     
   }

@@ -15,6 +15,22 @@ function editor_main() {
   App.mainView = MainView.create();
   App.mainView.appendTo('#content');
   
+  if ( window.localStorage ) {
+    
+    var data = JSON.parse( window.localStorage.getItem( 'game' ) );
+    
+    if ( data ) {
+    
+      Ember.run.end();
+    
+      console.log( window.localStorage.getItem( 'game' ) );
+    
+      App.gameController.loadGame( data );
+    
+    }
+    
+  }
+  
   // setTimeout( function() {
   // 
   //   // App.gameController.selectGraphic( App.libraryController.get( 'content' )[0] );
@@ -39,6 +55,8 @@ function paint_main() {
   App.toolBoxController = ToolBoxController.create();
   App.drawTool = DrawToolModel.create();
   App.fillTool = FillToolModel.create();
+  App.pipetteTool = ColorPipetteModel.create();
+  App.spritePlayer = SpritePlayerController.create();
 
   App.paintView = PaintView.create();
   App.paintSizeView = PaintSizeView.create();
@@ -52,7 +70,7 @@ function player_main( data, game_id ) {
   
   window.player = new Player();  
   
-  // console.log( JSON.stringify( data ) );
+  console.log( JSON.stringify( data ) );
   
   if ( $( '#playerCanvas' ) && $( '#playerCanvas' )[0] ) {
   

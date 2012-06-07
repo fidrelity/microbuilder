@@ -15,7 +15,7 @@ var GameController = Ember.Object.extend({
     
     if ( this.cancelView ) {
       
-      App.mainView.show( 'overlayContent', this.cancelView );
+      App.mainView.show( this.cancelView );
     
     } else {
     
@@ -27,7 +27,7 @@ var GameController = Ember.Object.extend({
   
   showObjects : function() {
     
-    App.mainView.show( 'overlayContent', 'objectsView' );
+    App.mainView.show( ObjectsView );
     
   },
   
@@ -36,22 +36,16 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectGraphic );
     
-    App.mainView.show( 'overlayContent', 'libraryView' );
-    this.set( 'cancelView', 'objectsView' );
+    App.mainView.show( LibraryView );
+    this.set( 'cancelView', ObjectsView );
     
   },
   
   selectGraphic : function( graphic ) {
     
-    App.gameObjectsController.addObject( GameObjectModel.create({
-      
-      name : graphic.name,
-      graphic : graphic,
-      position : new Vector( Math.floor( Math.random() * 540 ), Math.floor( Math.random() * 290 ) )
-      
-    }) );
+    App.gameObjectsController.createObject( graphic );
     
-    App.mainView.show( 'overlayContent', 'objectsView' );
+    App.mainView.show( ObjectsView );
     
   },
   
@@ -60,8 +54,8 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectArtGraphic );
     
-    App.mainView.show( 'overlayContent', 'libraryView' );
-    this.set( 'cancelView', 'actionView' );
+    App.mainView.show( LibraryView );
+    this.set( 'cancelView', ActionView );
     
   },
   
@@ -69,8 +63,15 @@ var GameController = Ember.Object.extend({
     
     App.actionController.action.selectGraphic( graphic );
     
-    App.mainView.show( 'overlayContent', 'actionView' );
-    this.set( 'cancelView', 'objectsView' );
+    App.mainView.show( ActionView );
+    this.set( 'cancelView', ObjectsView );
+    
+    var action = App.actionController.action;
+    
+    App.actionController.reset( 'Action' );
+    
+    App.actionController.set( 'action', action );
+    App.actionController.set( 'showSaveButton', true );
     
   },
   
@@ -79,7 +80,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', true );
     App.libraryController.set( 'selectFunction', this.selectBackground );
     
-    App.mainView.show( 'overlayContent', 'libraryView' );
+    App.mainView.show( LibraryView );
     this.set( 'cancelView', null );
     
   },
@@ -97,8 +98,8 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectChangeGraphic );
     
-    App.mainView.show( 'overlayContent', 'libraryView' );
-    this.set( 'cancelView', 'objectsView' );
+    App.mainView.show( LibraryView );
+    this.set( 'cancelView', ObjectsView );
     
   },
   
@@ -106,36 +107,36 @@ var GameController = Ember.Object.extend({
     
     App.gameObjectsController.current.set( 'graphic', graphic );
     
-    App.mainView.show( 'overlayContent', 'objectsView' );
+    App.mainView.show( ObjectsView );
     this.set( 'cancelView', null );
     
   },
   
   addTrigger : function() {
     
-    App.mainView.show( 'overlayContent', 'actionView' );
+    App.mainView.show( ActionView );
     App.actionController.reset( 'Trigger' );
     
-    this.set( 'cancelView', 'objectsView' );
+    this.set( 'cancelView', ObjectsView );
     
   },
   
   addAction : function() {
     
-    App.mainView.show( 'overlayContent', 'actionView' );
+    App.mainView.show( ActionView );
     App.actionController.reset( 'Action' );
     
-    this.set( 'cancelView', 'objectsView' );
+    this.set( 'cancelView', ObjectsView );
     
   },
   
   finalize : function() {
     
-    App.mainView.show( 'overlayContent', 'publishView' ); 
+    App.mainView.show( PublishView ); 
     
   },
   
-  publishGame : function() {
+  publishGame : function() {    
    
     var data = this.game.getData();
     
@@ -147,7 +148,6 @@ var GameController = Ember.Object.extend({
       data.win,
       this.getSelectedSnapshotData()
     );
-    
 
     if ( !this.game.title ) {
         
@@ -165,7 +165,9 @@ var GameController = Ember.Object.extend({
         return;
         
     }
-    
+        
+    Notifier.showLoader("Creating game! Please wait a few seconds ...");
+
     $.ajax({
       url : 'games/',
       type : 'POST',
@@ -190,14 +192,21 @@ var GameController = Ember.Object.extend({
         
           // alert( 'sucess: ' + data.responseText );
           
+          if ( window.localStorage ) {
+          
+            window.localStorage.setItem( 'game', null );
+          
+          }
+          
           window.location = data.responseText;
+          Notifier.hideLoader();
         
         },
         
         400: function( data ) {
           
           console.log(data);
-          
+          Notifier.hideLoader();
           alert( data.responseText );
           
         },
@@ -205,7 +214,7 @@ var GameController = Ember.Object.extend({
         401: function( data ) {
           
           console.log(data);
-          
+          Notifier.hideLoader();
           alert( 'not logged in: ' + data.responseText );
           
         },
@@ -213,7 +222,7 @@ var GameController = Ember.Object.extend({
         500: function( data ) {
           
           console.log(data);
-          
+          Notifier.hideLoader();
           alert( 'internal server error: ' + data.responseText );
           
         }
@@ -221,14 +230,71 @@ var GameController = Ember.Object.extend({
       }
       
     });
-    
-    // window.localStorage.setItem( 'game', JSON.stringify( this.game.getData() ) );
   
   },
   
-  loadGame : function() {
+  loadGame : function( data ) {
     
+    var game = App.game, i;
     
+    game.set( 'title', data.title );
+    game.set( 'instructions', data.instructions );
+    
+    if ( data.duration ) {
+    
+      App.mainView.$( '#slider' ).slider( 'value', [data.duration] );
+      game.set( 'duration', data.duration );
+    
+    }
+    
+    if ( data.graphics ) {
+      
+      for ( i = 0; i < data.graphics.length; i++ ) {
+        
+        App.libraryController.loadGraphic( data.graphics[i].ID, data.graphics[i].url );
+        
+      }
+      
+    }
+    
+    if ( data.backgroundID ) {
+      
+      game.setBackground( App.libraryController.getGraphic( data.backgroundID ) );
+      
+    }
+    
+    if ( data.gameObjects ) {
+      
+      for ( i = 0; i < data.gameObjects.length; i++ ) {
+        
+        App.gameObjectsController.parseObject( data.gameObjects[i] );
+        
+      }
+      
+      for ( i = 0; i < data.gameObjects.length; i++ ) {
+        
+        App.gameObjectsController.parseBehaviour( data.gameObjects[i] );
+        
+      }
+      
+      App.game.gameObjectCounter = App.gameObjectsController.getMaxID() + 1;
+      
+    }
+    
+    App.mainView.updatePlayer();
+    
+  },
+  
+  clear : function() {
+    
+    App.game.setProperties({
+     gameObjects : [],
+     gameObjectCounter : 1,
+     title : null,
+     instructions : null,
+     duration : 5,
+     background : null
+    });
     
   },
 

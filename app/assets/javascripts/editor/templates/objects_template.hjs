@@ -179,3 +179,5 @@
   {{/if}}
 
 </div>
+
+<button id="done" class="btn btn-success" {{action "hideOverlay" target="App.mainView"}}> done </button>

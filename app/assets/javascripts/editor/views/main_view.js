@@ -4,72 +4,126 @@ var MainView = Ember.View.extend({
   
   gameBinding : 'App.game',
   
-  editorContent : null,
-  overlayContent : null,
-  
   player : null,
   
-  init : function() {
+  overlayView : null,
+  overlayView2 : null,
+  
+  show : function( viewClass ) {
     
-    this._super();
+    var self = this, overlay;
     
-    this.stageView = StageView.create();
-    
-    this.libraryView = LibraryView.create();
-    
-    this.objectsView = Ember.View.create({
-      heading : 'Objects & Behaviour',
-      templateName : 'editor/templates/objects_template'
+    overlay = OverlayView.create({
+      heading: viewClass.create().heading,
+      viewClass : viewClass
     });
     
-    this.actionView = ActionView.create();
+    overlay.appendTo( '#overlayView' );
     
-    this.publishView = Ember.View.create({
-      heading : 'Publish',
-      templateName : 'editor/templates/publish_template',
-
-      didInsertElement : function() {
-        // *** Snapshot of preview game ***
-        // onClick on li element
-        $('#snapshots').find('li').live('click', function() {
-          App.gameController.setActiveSnapshot($(this));
-        });
-      }
-
-    });
-    
-  },
-  
-  didInsertElement : function() {
-    
-    this.show( 'editorContent', 'stageView' );
-    
-  },
-  
-  show : function( locationName, viewName ) {
-    
-    if ( !this.get( viewName ) ) {
+    if ( this.overlayView ) {
       
-      console.error( 'no view named ' + viewName );
-      return;
+      overlay.fadeIn = false;
+      self.set( 'overlayView2', overlay );
       
-    }
-    
-    if ( this.get( viewName ) !== this.get( locationName ) ) {
-    
-      this.set( locationName, this.get( viewName ) );
-    
+      this.hideOverlay();
+      
+    } else {
+      
+      self.set( 'overlayView', overlay );
+      
     }
     
   },
   
   hideOverlay : function() {
     
-    this.set( 'overlayContent', null );
-    this.stageView.updatePlayer();
+    var self = this;
+    
+    if ( this.overlayView ) {
+    
+      this.overlayView.$( '#overlayWrapper' ).fadeOut( 100, function() {
+        
+        self.overlayView.remove();
+        
+        if ( self.overlayView2 ) {
+          
+          self.set( 'overlayView', self.overlayView2 );
+          self.set( 'overlayView2', null );
+          
+          self.overlayView.$( '#overlayWrapper' ).fadeIn( 100 );
+          
+        } else {
+          
+          self.set( 'overlayView', null );
+          
+        }
+        
+      });
+      
+      this.updatePlayer();
+      
+    }
+    
+  },
+  
+  updatePlayer : function() {
+    
+    var player = this.player,
+      data = App.game.getData().game;
+      
+    if ( window.localStorage ) {
+      
+      window.localStorage.setItem( 'game', JSON.stringify( data ) );
+      
+    }
+    
+    player.parse( data, function() {
+      
+      if ( App.gameObjectsController.current ) {
+      
+        player.selectObject = player.game.getGameObjectWithID( App.gameObjectsController.current.ID );
+      
+      }
+    
+    });
     
   }
   
+});
+
+var OverlayView = Ember.View.extend({
+  templateName : 'editor/templates/overlay_template',
+  viewClass : null,
+  heading : 'Overlay',
+  fadeIn : true,
+  
+  didInsertElement : function() {
+    
+    if ( this.fadeIn ) {
+    
+      this.$( '#overlayWrapper' ).fadeIn( 100 );
+    
+    }
+    
+  }
+});
+    
+var ObjectsView = Ember.View.extend({
+  heading : 'Objects & Behaviour',
+  templateName : 'editor/templates/objects_template'
+});
+
+var PublishView = Ember.View.extend({
+  heading : 'Publish',
+  templateName : 'editor/templates/publish_template',
+
+  didInsertElement : function() {
+    // *** Snapshot of preview game ***
+    // onClick on li element
+    $('#snapshots').find('li').live('click', function() {
+      App.gameController.setActiveSnapshot($(this));
+    });
+  }
 });
 
 var RemoveView = Ember.View.extend({
@@ -118,7 +172,7 @@ var BehaviourView = SelectView.extend({
   duplicate : function() {
     
     App.behaviourController.duplicateBehaviour( this.content );
-    App.mainView.stageView.updatePlayer();
+    App.mainView.updatePlayer();
     
   }
   

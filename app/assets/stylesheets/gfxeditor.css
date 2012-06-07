@@ -19,6 +19,10 @@
   float:left;
 }
 
+#paint-wrapper #tool-bar button.activeTool, #paint-wrapper #tool-bar-second button.activeTool {
+  border-bottom:4px solid #55bd55;
+}
+
 #paint-wrapper #tool-bar button.pencil {
   background:url('/assets/edit_button.png');
 }
@@ -63,7 +67,7 @@
   background:url('/assets/undo_icon.png');
 }
 
-.zoomButtons button {
+.zoomButtons button.zoom {
   min-width:30px;
   height:30px;
   background:top left no-repeat;
@@ -159,6 +163,12 @@
   overflow:auto;
 }
 
+.bgToggle {
+  min-width:30px;
+  height:30px;
+  border:1px solid #666;
+}
+
 .zoomButtons {
   z-index:999;
   position:relative;
@@ -181,8 +191,8 @@
 
 /* Canvas Elements */
 #zoomCanvas, #canvas-temp {
- background:#FFF;
- background:url(paint/bg_transparent.png);
+ /*background:#FFF;
+ background:url(bg_transparent.png);*/
  border:1px solid #000000; 
  cursor:crosshair;
  image-rendering: optimizeSpeed;             // Older versions of FF
@@ -195,7 +205,7 @@
 .canvas {
     width:64px;
     height:64px;
-    background:url(paint/bg_transparent.png);
+    background:url(bg_transparent.png);
     margin-right:0.5em;
 }
 .canvas:hover, .canvas:active, .canvas:focus {
@@ -207,6 +217,20 @@
 
 #canvas-template, #canvas-merged { display:none; }
 #canvas-temp { display:none; z-index:999; position:absolute; background:none;pointer-events:none;border:1px solid #000}
+
+.bgBlack {
+  background-image:none;
+  background-color:#000000;
+}
+
+.bgWhite, #zoomCanvas .bgWhite {
+  background-image:none;
+  background-color:#FFFFFF;
+}
+
+.bgTransparent {
+  background:url(bg_transparent.png);  
+}
 
 /* Tools */
 .addSpriteButton {
@@ -317,4 +341,26 @@
 
 #guideSteps li.activeElement {
   font-weight:bold;
+}
+
+
+.paintOverlay {
+  z-index:9001;
+  display:none;
+  width:100%; height:100%;
+  position:absolute; left:0; top:0;
+  background:#111; 
+}
+
+.paintOverlay .paintOverlayMessage {
+  z-index:9002;
+  top:30%; left:40%;
+  padding:2em; position:absolute;
+  background:#000; color:#FFF;
+  border-radius:7px;
+  width:600px;  
+}
+
+.paintOverlay .paintOverlayMessage .message {
+  padding-top:6px; font-size:18px;
 }
