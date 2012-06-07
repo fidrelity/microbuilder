@@ -7,16 +7,11 @@ var MainView = Ember.View.extend({
   player : null,
   
   overlayView : null,
+  overlayView2 : null,
   
   show : function( viewClass ) {
     
-    var overlay;
-    
-    if ( this.overlayView ) {
-      
-      this.hideOverlay();
-      
-    }
+    var self = this, overlay;
     
     overlay = OverlayView.create({
       heading: viewClass.create().heading,
@@ -25,16 +20,46 @@ var MainView = Ember.View.extend({
     
     overlay.appendTo( '#overlayView' );
     
-    this.set( 'overlayView', overlay );
+    if ( this.overlayView ) {
+      
+      overlay.fadeIn = false;
+      self.set( 'overlayView2', overlay );
+      
+      this.hideOverlay();
+      
+    } else {
+      
+      self.set( 'overlayView', overlay );
+      
+    }
     
   },
   
   hideOverlay : function() {
     
+    var self = this;
+    
     if ( this.overlayView ) {
     
-      this.overlayView.remove();
-      this.set( 'overlayView', null );
+      this.overlayView.$( '#overlayWrapper' ).fadeOut( 100, function() {
+        
+        self.overlayView.remove();
+        
+        if ( self.overlayView2 ) {
+          
+          self.set( 'overlayView', self.overlayView2 );
+          self.set( 'overlayView2', null );
+          
+          self.overlayView.$( '#overlayWrapper' ).fadeIn( 100 );
+          
+        } else {
+          
+          self.set( 'overlayView', null );
+          
+        }
+        
+      });
+      
       this.updatePlayer();
       
     }
@@ -62,7 +87,18 @@ var MainView = Ember.View.extend({
 var OverlayView = Ember.View.extend({
   templateName : 'editor/templates/overlay_template',
   viewClass : null,
-  heading : 'Overlay'
+  heading : 'Overlay',
+  fadeIn : true,
+  
+  didInsertElement : function() {
+    
+    if ( this.fadeIn ) {
+    
+      this.$( '#overlayWrapper' ).fadeIn( 100 );
+    
+    }
+    
+  }
 });
     
 var ObjectsView = Ember.View.extend({
