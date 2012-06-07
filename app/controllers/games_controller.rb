@@ -9,6 +9,8 @@
         Game.all_by_rating(params[:page], 12)
       when "played"
         Game.all_by_played.paginate(:page => params[:page], :per_page => 12)
+      when "difficulty"
+        Game.all_by_difficulty(params[:page], 12)
       else
         Game.all_latest.paginate(:page => params[:page], :per_page => 12)
       end
@@ -59,7 +61,8 @@
       @game.won += 1 if params[:won]
       @game.save
     end
-  end
+  end@game.played += 1
+      
 
   def like
     unless cookies["voted_game_#{@game.id}"]

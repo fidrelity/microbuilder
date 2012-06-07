@@ -24,6 +24,16 @@ class Game < ActiveRecord::Base
                   :preview_image_data, :preview_image_file_name, :played, :won
   
   class << self
+    
+    def all_by_difficulty(page, per_page)
+      query = <<-eos
+        SELECT *, (CAST(won AS FLOAT) / CAST(played AS FLOAT)) AS difficulty 
+        FROM games WHERE played > 0
+        ORDER BY difficulty ASC
+      eos
+      paginate_by_sql(query, :page => page, :per_page => per_page)
+    end
+    
     # SQL from http://evanmiller.org/how-not-to-sort-by-average-rating.html
     def all_by_rating(page, per_page)
       query = <<-eos
@@ -33,7 +43,7 @@ class Game < ActiveRecord::Base
         AS rating FROM games WHERE likes + dislikes > 0 
         ORDER BY rating DESC
       eos
-      paginate_by_sql(query, :page => page, :per_page => per_page);
+      paginate_by_sql(query, :page => page, :per_page => per_page)
     end
   end
   
