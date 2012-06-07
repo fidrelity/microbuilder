@@ -58,7 +58,7 @@
   def played
     Game.transaction do
       @game.played += 1
-      @game.won += 1 if params[:won]
+      @game.won += 1 if params[:win] == "true"
       @game.save
     end
   end

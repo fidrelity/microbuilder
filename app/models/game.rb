@@ -69,9 +69,10 @@ class Game < ActiveRecord::Base
   def difficulty
     ratio = (self.won.to_f / self.played.to_f) * 100
     case ratio
-    when 67..100 then 0 #easy
+    when 67..100 then 1 #easy
     when 34..67 then 2 #moderate
     when 0..34 then 3 #hard
+    else -1
     end
   end
   
@@ -81,6 +82,7 @@ class Game < ActiveRecord::Base
     when 67..100 then "easy"
     when 34..67 then "moderate"
     when 0..34 then "hard"
+    else "none"
     end
   end
   
