@@ -15,7 +15,7 @@ var GameController = Ember.Object.extend({
     
     if ( this.cancelView ) {
       
-      App.mainView.show( 'overlayContent', this.cancelView );
+      App.mainView.show( this.cancelView );
     
     } else {
     
@@ -27,7 +27,7 @@ var GameController = Ember.Object.extend({
   
   showObjects : function() {
     
-    App.mainView.show( 'overlayContent', 'objectsView' );
+    App.mainView.show( ObjectsView );
     
   },
   
@@ -36,8 +36,8 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectGraphic );
     
-    App.mainView.show( 'overlayContent', 'libraryView' );
-    this.set( 'cancelView', 'objectsView' );
+    App.mainView.show( LibraryView );
+    this.set( 'cancelView', ObjectsView );
     
   },
   
@@ -45,7 +45,7 @@ var GameController = Ember.Object.extend({
     
     App.gameObjectsController.createObject( graphic );
     
-    App.mainView.show( 'overlayContent', 'objectsView' );
+    App.mainView.show( ObjectsView );
     
   },
   
@@ -54,8 +54,8 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectArtGraphic );
     
-    App.mainView.show( 'overlayContent', 'libraryView' );
-    this.set( 'cancelView', 'actionView' );
+    App.mainView.show( LibraryView );
+    this.set( 'cancelView', ActionView );
     
   },
   
@@ -63,8 +63,8 @@ var GameController = Ember.Object.extend({
     
     App.actionController.action.selectGraphic( graphic );
     
-    App.mainView.show( 'overlayContent', 'actionView' );
-    this.set( 'cancelView', 'objectsView' );
+    App.mainView.show( ActionView );
+    this.set( 'cancelView', ObjectsView );
     
     var action = App.actionController.action;
     
@@ -80,7 +80,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', true );
     App.libraryController.set( 'selectFunction', this.selectBackground );
     
-    App.mainView.show( 'overlayContent', 'libraryView' );
+    App.mainView.show( LibraryView );
     this.set( 'cancelView', null );
     
   },
@@ -98,8 +98,8 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectChangeGraphic );
     
-    App.mainView.show( 'overlayContent', 'libraryView' );
-    this.set( 'cancelView', 'objectsView' );
+    App.mainView.show( LibraryView );
+    this.set( 'cancelView', ObjectsView );
     
   },
   
@@ -107,32 +107,32 @@ var GameController = Ember.Object.extend({
     
     App.gameObjectsController.current.set( 'graphic', graphic );
     
-    App.mainView.show( 'overlayContent', 'objectsView' );
+    App.mainView.show( ObjectsView );
     this.set( 'cancelView', null );
     
   },
   
   addTrigger : function() {
     
-    App.mainView.show( 'overlayContent', 'actionView' );
+    App.mainView.show( ActionView );
     App.actionController.reset( 'Trigger' );
     
-    this.set( 'cancelView', 'objectsView' );
+    this.set( 'cancelView', ObjectsView );
     
   },
   
   addAction : function() {
     
-    App.mainView.show( 'overlayContent', 'actionView' );
+    App.mainView.show( ActionView );
     App.actionController.reset( 'Action' );
     
-    this.set( 'cancelView', 'objectsView' );
+    this.set( 'cancelView', ObjectsView );
     
   },
   
   finalize : function() {
     
-    App.mainView.show( 'overlayContent', 'publishView' ); 
+    App.mainView.show( PublishView ); 
     
   },
   

@@ -4,29 +4,7 @@
     playerBinding="player"
   }}
   
-  {{#if overlayContent}}
-  
-    <div id="overlayWrapper">
-  
-      <div id="overlay">
-    
-        <h3 class="left">{{overlayContent.heading}}</h3>
-    
-        <button class="btn right" {{action "hideOverlay"}}> X </button>
-      
-        <div class="clear"></div>
-    
-        {{dynamicView overlayContent}}
-        
-        <div class="clear"></div>
-    
-      </div>
-    
-      <div id="fog" {{action "hideOverlay"}}></div>
-    
-    </div>
-  
-  {{/if}}
+  <div id="overlayView"></div>
 
 </div>
 

@@ -268,7 +268,7 @@ var ActionController = Ember.Object.extend({
     
     }
     
-    App.mainView.show( 'overlayContent', 'objectsView' );
+    App.mainView.show( ObjectsView );
     
   }
 

@@ -1,0 +1,19 @@
+<div id="overlayWrapper">
+
+  <div id="overlay">
+
+    <h3 class="left">{{heading}}</h3>
+
+    <button class="btn right" {{action "hideOverlay" target="App.mainView"}}> X </button>
+
+    <div class="clear"></div>
+
+    {{view viewClass}}
+
+    <div class="clear"></div>
+
+  </div>
+
+  <div id="fog" {{action "hideOverlay" target="App.mainView"}}></div>
+
+</div>

@@ -4,60 +4,40 @@ var MainView = Ember.View.extend({
   
   gameBinding : 'App.game',
   
-  overlayContent : null,
-  
   player : null,
   
-  init : function() {
-    
-    this._super();
-    
-    this.libraryView = LibraryView.create();
-    
-    this.objectsView = Ember.View.create({
-      heading : 'Objects & Behaviour',
-      templateName : 'editor/templates/objects_template'
-    });
-    
-    this.actionView = ActionView.create();
-    
-    this.publishView = Ember.View.create({
-      heading : 'Publish',
-      templateName : 'editor/templates/publish_template',
-
-      didInsertElement : function() {
-        // *** Snapshot of preview game ***
-        // onClick on li element
-        $('#snapshots').find('li').live('click', function() {
-          App.gameController.setActiveSnapshot($(this));
-        });
-      }
-
-    });
-    
-  },
+  overlayView : null,
   
-  show : function( locationName, viewName ) {
+  show : function( viewClass ) {
     
-    if ( !this.get( viewName ) ) {
+    var overlay;
+    
+    if ( this.overlayView ) {
       
-      console.error( 'no view named ' + viewName );
-      return;
+      this.hideOverlay();
       
     }
     
-    if ( this.get( viewName ) !== this.get( locationName ) ) {
+    overlay = OverlayView.create({
+      heading: viewClass.create().heading,
+      viewClass : viewClass
+    });
     
-      this.set( locationName, this.get( viewName ) );
+    overlay.appendTo( '#overlayView' );
     
-    }
+    this.set( 'overlayView', overlay );
     
   },
   
   hideOverlay : function() {
     
-    this.set( 'overlayContent', null );
-    this.updatePlayer();
+    if ( this.overlayView ) {
+    
+      this.overlayView.remove();
+      this.set( 'overlayView', null );
+      this.updatePlayer();
+      
+    }
     
   },
   
@@ -77,6 +57,30 @@ var MainView = Ember.View.extend({
     
   }
   
+});
+
+var OverlayView = Ember.View.extend({
+  templateName : 'editor/templates/overlay_template',
+  viewClass : null,
+  heading : 'Overlay'
+});
+    
+var ObjectsView = Ember.View.extend({
+  heading : 'Objects & Behaviour',
+  templateName : 'editor/templates/objects_template'
+});
+
+var PublishView = Ember.View.extend({
+  heading : 'Publish',
+  templateName : 'editor/templates/publish_template',
+
+  didInsertElement : function() {
+    // *** Snapshot of preview game ***
+    // onClick on li element
+    $('#snapshots').find('li').live('click', function() {
+      App.gameController.setActiveSnapshot($(this));
+    });
+  }
 });
 
 var RemoveView = Ember.View.extend({
