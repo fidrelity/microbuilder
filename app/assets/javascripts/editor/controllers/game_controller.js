@@ -66,6 +66,13 @@ var GameController = Ember.Object.extend({
     App.mainView.show( 'overlayContent', 'actionView' );
     this.set( 'cancelView', 'objectsView' );
     
+    var action = App.actionController.action;
+    
+    App.actionController.reset( 'Action' );
+    
+    App.actionController.set( 'action', action );
+    App.actionController.set( 'showSaveButton', true );
+    
   },
   
   searchBackground : function() {

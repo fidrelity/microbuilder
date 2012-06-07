@@ -12,56 +12,41 @@ var ActionController = Ember.Object.extend({
   
   behaviourBinding : 'App.behaviourController.current',
   
-  contentView : null,
-  
-  optionDepth : 0,
+  optionViews : [],
   
   showSaveButton : false,
   
   reset : function( mode ) {
     
-    var buttons;
-    
-    this.set( 'mode', mode );
-    this.set( 'optionDepth', 0 );
-    this.set( 'showSaveButton', false );
+    var buttons, question;
     
     this.set( 'action', null );
+    
+    this.set( 'mode', mode );
+    this.set( 'showSaveButton', false );
+    
+    this.set( 'optionViews', [] );
     
     if ( mode === 'Action' ) {
       
       // buttons = ['move', 'art', 'number', 'win/lose'];
       buttons = ['move', 'art', 'win/lose'];
+      question = 'Select the type of action';
 
     
     } else {
       
       // buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
       buttons = ['click', 'contact', 'time'];
+      question = 'Select the type of trigger';
     
     }
     
-    this.set( 'contentView', ButtonView.create({
+    this.addOption( question, ButtonView.create({
       observer : this,
       content : buttons,
-      
-      disable : false,
-      
-      destroy : function() {
-        
-        var action = App.actionController.action;
-        
-        if ( action && action.type === 'search' ) {
-          
-          return;
-          
-        }
-        
-        this._super();
-        
-      }
-      
-    }));
+      disable : false
+    }), 0 );
     
   },
   
@@ -81,47 +66,38 @@ var ActionController = Ember.Object.extend({
   
   updateDepth : function( depth ) {
     
-    var childViews = this.contentView.get( 'childViews' );
-    
-    if ( !depth ) {
+    if ( typeof depth === 'undefined' ) {
       
       console.error( 'option has no depth' );
       return;
       
     }
     
-    while ( this.optionDepth >= depth ) {
+    while ( this.optionViews.length > depth * 2 ) {
       
-      childViews.popObject();
-      childViews.popObject();
-      
-      this.optionDepth--;
-      
+      this.optionViews.pop().remove();
       this.set( 'showSaveButton', false );
       
     }
     
-    this.set( 'optionDepth', depth );
-    
   },
   
-  addOption : function( question, viewClass, depth ) {
-    
-    var childViews = this.contentView.get( 'childViews' );
+  addOption : function( question, optionView, depth ) {
     
     this.updateDepth( depth );
     
-    var questionView = this.contentView.createChildView( QuestionView.extend({ content : question }) );
-    childViews.pushObject( questionView );
+    var questionView = QuestionView.create({ content : question });
+    questionView.appendTo( '#actionContent' );
     
-    var optionView = this.contentView.createChildView( viewClass );
-    childViews.pushObject( optionView );
+    optionView.appendTo( '#actionContent' );
+    
+    this.optionViews.push( questionView, optionView );
     
   },
   
   addButtonOption : function( question, buttons, observer, depth ) {
     
-    this.addOption( question, ButtonView.extend({
+    this.addOption( question, ButtonView.create({
       observer : observer,
       content : buttons
     }), depth);
@@ -130,7 +106,7 @@ var ActionController = Ember.Object.extend({
   
   addPlayerOption : function( question, type, observer, depth ) {
     
-    this.addOption( question, PlayerView.extend({
+    this.addOption( question, PlayerView.create({
       observer : observer,
       type : type,
       gameObject : App.gameObjectsController.current
@@ -158,7 +134,7 @@ var ActionController = Ember.Object.extend({
   
   addObjectsOption : function( question, observer, depth ) {
     
-    this.addOption( question, GameObjectsView.extend({
+    this.addOption( question, GameObjectsView.create({
       observer : observer,
       contentBinding : 'App.gameObjectsController.others',
     }), depth );
@@ -167,7 +143,7 @@ var ActionController = Ember.Object.extend({
   
   addTimeOption : function( question, type, observer, depth ) {
     
-    this.addOption( question, TimeView.extend({
+    this.addOption( question, TimeView.create({
       observer : observer,
       type : type
     }), depth );
@@ -176,7 +152,7 @@ var ActionController = Ember.Object.extend({
   
   addFrameOption : function( question, type, observer, depth ) {
     
-    this.addOption( question, FrameView.extend({
+    this.addOption( question, FrameView.create({
       observer : observer,
       type : type,
       graphic : App.gameObjectsController.current.graphic
@@ -186,7 +162,7 @@ var ActionController = Ember.Object.extend({
   
   addSpeedOption : function( question, observer, depth ) {
     
-    this.addOption( question, SpeedView.extend({
+    this.addOption( question, SpeedView.create({
       observer : observer
     }), depth );
     
@@ -194,7 +170,7 @@ var ActionController = Ember.Object.extend({
   
   addArtOption : function( question, observer, depth ) {
     
-    this.addOption( question, ArtView.extend({
+    this.addOption( question, ArtView.create({
       observer : observer
     }), depth );
     

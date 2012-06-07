@@ -1,6 +1,4 @@
-<div class="questionview">Select the type of {{App.actionController.mode}}</div>
-
-{{dynamicView App.actionController.contentView}}
+<div id="actionContent"></div>
 
 {{#if App.actionController.showSaveButton}}
 
