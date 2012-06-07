@@ -26,8 +26,8 @@ var GameModel = Ember.Object.extend({
     
     if ( this.background ) {
       
-      game.background = this.background.imagePath;
-      graphicIDs.push( this.background.ID );
+      game.backgroundID = this.background.ID;
+      graphics.push( this.background.getData() );
       
     }
     

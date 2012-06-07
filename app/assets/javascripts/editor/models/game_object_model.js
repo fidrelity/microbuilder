@@ -11,7 +11,7 @@ var GameObjectModel = Ember.Object.extend({
   
   init : function() {
     
-    this.ID = App.game.gameObjectCounter++;
+    this.ID = this.ID || App.game.gameObjectCounter++;
     
     this.set( 'behaviours', [] );
     

@@ -229,9 +229,51 @@ var GameController = Ember.Object.extend({
   
   },
   
-  loadGame : function() {
+  loadGame : function( data ) {
     
+    var game = App.game, i;
     
+    if ( data.duration ) {
+    
+      App.mainView.$( '#slider' ).slider( 'value', [data.duration] );
+      game.set( 'duration', data.duration );
+    
+    }
+    
+    if ( data.graphics ) {
+      
+      for ( i = 0; i < data.graphics.length; i++ ) {
+        
+        App.libraryController.loadGraphic( data.graphics[i].ID, data.graphics[i].url );
+        
+      }
+      
+    }
+    
+    if ( data.backgroundID ) {
+      
+      game.setBackground( App.libraryController.getGraphic( data.backgroundID ) );
+      
+    }
+    
+    if ( data.gameObjects ) {
+      
+      for ( i = 0; i < data.gameObjects.length; i++ ) {
+        
+        App.gameObjectsController.parseObject( data.gameObjects[i] );
+        
+      }
+      
+      for ( i = 0; i < data.gameObjects.length; i++ ) {
+        
+        App.gameObjectsController.parseBehaviour( data.gameObjects[i] );
+        
+      }
+      
+    }
+    
+    App.game.gameObjectCounter = App.gameObjectsController.getMaxID() + 1;
+    App.mainView.updatePlayer();
     
   },
 

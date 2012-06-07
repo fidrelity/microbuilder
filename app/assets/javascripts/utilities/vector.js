@@ -196,6 +196,12 @@ Vector.prototype = {
   
   rotateSelf: function(angle) {
     
+    if ( !angle ) {
+      
+      return this;
+      
+    }
+    
     return this.set(
       Math.cos(angle) * this.x - Math.sin(angle) * this.y,
       Math.sin(angle) * this.x + Math.cos(angle) * this.y

@@ -33,7 +33,6 @@ var GameObjectsController = Ember.ArrayController.extend({
     });
   
     this.select( gameObject );
-  
     this.addObject( gameObject );
   
   },
@@ -43,8 +42,50 @@ var GameObjectsController = Ember.ArrayController.extend({
     var gameObject = object.clone();
     
     this.select( gameObject );
-    
     this.addObject( gameObject );
+    
+  },
+  
+  parseObject : function( object ) {
+    
+    this.addObject( GameObjectModel.create({
+      
+      ID : object.ID,
+      name : object.name,
+      graphic : App.libraryController.getGraphic( object.graphicID ),
+      position : new Vector( object.position.x, object.position.y )
+    
+    }));
+    
+  },
+  
+  parseBehaviour : function( object ) {
+    
+    var i, gameObject = this.getGameObject( object.ID );
+    
+    this.select( gameObject );
+    
+    for ( i = 0; i < object.behaviours.length; i++ ) {
+      
+      App.behaviourController.parseBehaviour( gameObject, object.behaviours[i] );
+      
+    }
+    
+  },
+  
+  getGameObject : function( objectID ) {
+    
+    return this.content.findProperty( 'ID', objectID );
+    
+  },
+  
+  getMaxID : function() {
+    
+    return this.content.reduce( function( previousValue, item, index, enumerable ) {
+      
+      return Math.max( item.ID, previousValue.ID );
+      
+    }).ID;
     
   },
   
@@ -57,7 +98,6 @@ var GameObjectsController = Ember.ArrayController.extend({
   moveToTop : function( gameObject ) {
     
     this.removeObject( gameObject );
-    
     this.unshiftObject( gameObject );
     
   }
