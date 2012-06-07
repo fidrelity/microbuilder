@@ -54,8 +54,11 @@
 
   # ------------------
   def played
-    counter = @game.played + 1
-    Game.transaction { @game.update_attribute(:played, counter) }
+    Game.transaction do
+      @game.played += 1
+      @game.won += 1 if params[:won]
+      @game.save
+    end
   end
 
   def like
@@ -77,7 +80,6 @@
     render :nothing => true, :layout => false
   end
 
-  # ------------------
   def auto_search
     @games = Game.order(:title).where("title like ?", "%#{params[:term]}%")
     render json: @games.map(&:title)
