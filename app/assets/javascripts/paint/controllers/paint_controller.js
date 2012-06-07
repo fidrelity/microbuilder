@@ -385,8 +385,12 @@ var PaintController =  Ember.ArrayController.extend({
 
   fillBackground : function(_color) {
     if(_color) {
-      this.getCurrentSpriteModel().context.fillStyle = _color;
-      this.getCurrentSpriteModel().context.fillRect(0, 0, this.spriteSize.width, this.spriteSize.height);
+      this.zoomContext.fillStyle = _color;
+      this.zoomContext.fillRect(0, 0, this.spriteSize.width, this.spriteSize.height);
+
+      //this.getCurrentSpriteModel().context.fillStyle = _color;
+      //this.getCurrentSpriteModel().context.fillRect(0, 0, this.spriteSize.width, this.spriteSize.height);
+
       $('#zoomCanvas').css({'background-image' : 'none'});
     }
   },  
@@ -430,9 +434,9 @@ var PaintController =  Ember.ArrayController.extend({
     this.updateZoom();
   },
 
-  clearZoomCanvas : function() {
-    if(this.isBackground) this.fillBackground("#FFFFFF");
+  clearZoomCanvas : function() {    
     this.zoomContext.clearRect(0, 0, this.zoomCanvas.width, this.zoomCanvas.height);
+    if(this.isBackground) this.fillBackground("#FFFFFF");
   },
 
   // Copy zoomCanvas data to current sprite
