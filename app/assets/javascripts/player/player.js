@@ -30,7 +30,7 @@ var Player = function() {
     transitions : [
       { name : 'parse', from : '*', to: 'load' },
       { name : 'loaded', from : 'load', to: 'ready' },
-      { name : 'edit', from : 'load', to: 'edit', callback : this.onEdit },
+      { name : 'edit', from : 'load', to: 'edit' },
       
       { name : 'start', from : 'ready', to: 'play', callback : this.onPlay },
       { name : 'win', from : 'play', to: 'end', callback : this.onWin },
@@ -432,21 +432,6 @@ Player.prototype = {
     
   },
   
-  onEdit : function() {
-    
-    this.reset();
-    
-    if ( this.game.gameObjects.length ) {
-      
-      this.selectObject = this.game.gameObjects[this.game.gameObjects.length - 1];
-      // this.selectedObjectCallback( this.selectObject.ID );
-      
-    }
-    
-    this.redraw = true;
-    
-  },
-  
   onWin : function() {
     
     $('.playerWinScreen').fadeTo(600, 0.9);
@@ -490,6 +475,8 @@ Player.prototype = {
     
     this.mouse.handleDrag();
     this.reset();
+    
+    this.redraw = true;
     
   },
   

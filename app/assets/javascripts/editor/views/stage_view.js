@@ -34,7 +34,17 @@ var StageView = Ember.View.extend({
   
   updatePlayer : function() {
     
-    this.player.parse( App.game.getData().game );
+    var player = this.player;
+    
+    player.parse( App.game.getData().game, function() {
+      
+      if ( App.gameObjectsController.current ) {
+      
+        player.selectObject = player.game.getGameObjectWithID( App.gameObjectsController.current.ID );
+      
+      }
+    
+    });
     
   },
   
