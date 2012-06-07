@@ -318,12 +318,12 @@ Player.prototype = {
     if ( this.fsm.hasState( 'ready' ) ) {
       $('.playerStartScreen').hide();            
       this.fsm.start();
-      this.increaseCounter();
+      //this.increaseCounter();
     } else if ( this.fsm.hasState( 'end' ) ) {
       $('.playerLoseScreen').hide();
       $('.playerWinScreen').hide();
       this.fsm.restart();
-      this.increaseCounter();    
+      //this.increaseCounter();    
     }
     
   },
@@ -444,6 +444,8 @@ Player.prototype = {
     }
     
     this.drawTimeline( this.ctx, 'rgba(0,255,0,0.5)', this.timePlayed );
+
+    this.increaseCounter("win");
     
   },
   
@@ -459,7 +461,7 @@ Player.prototype = {
     }
     
     this.drawTimeline( this.ctx, 'rgba(255,0,0,0.5)', this.timePlayed );
-    
+    this.increaseCounter("lose");
   },
   
   enterTrial : function() {
@@ -528,11 +530,13 @@ Player.prototype = {
   },
 
   // Increases game counter
-  increaseCounter : function() {
+  increaseCounter : function(_state) {
     if(!this.game_id) return false;
+    var state = _state === "win" ? true : false;
 
     $.ajax({
       url : '/games/'+this.game_id+'/played',
+      data : { win : state },
       type : 'PUT',
       success : function() {}
     });
