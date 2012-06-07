@@ -67,6 +67,7 @@ var PaintController =  Ember.ArrayController.extend({
       $('#copySpriteButton').hide();
       $('#clearSpritesButton').remove();
       $('#removeSpriteButton').remove();
+      $('.bgToggle').remove();
     } else {
       areaWrapper.find('#sprites-area').show();
     }
@@ -143,8 +144,7 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   // ---------------------------------------
-  save : function() {
-    this.stop();
+  save : function() {    
 
     var imageTitle = $("#imageName").val();
     var makePublic = $("#makePublic").is(":checked") ? 1 : 0;
@@ -156,13 +156,13 @@ var PaintController =  Ember.ArrayController.extend({
 
     var isBackground = this.type === 'background' ? true : false;
     
-    if(!imageTitle || !count) {alert("No Name!");return false;}
+    if(!imageTitle || !count) {alert("Image has no name!");return false;}
 
     Notifier.showLoader("Saving your image ...");
 
     this.finalCanvas.attr('width', totalWidth).attr('height', height).show();
     var canvas = this.finalCanvas[0];
-    var context = canvas.getContext('2d');    
+    var context = canvas.getContext('2d');
 
     // Merge sprites into final canvas
     for (var i = 0; i < this.content.length; i++) {
@@ -172,7 +172,8 @@ var PaintController =  Ember.ArrayController.extend({
     };
     
     // Push to Server
-    var imgData = this.finalCanvas[0].toDataURL("image/png");   
+    var imgData = this.finalCanvas[0].toDataURL("image/png");
+
     $.ajax({
       url: "/graphics",
       type: "post",
@@ -188,17 +189,17 @@ var PaintController =  Ember.ArrayController.extend({
         },
       },
       
-      success : function( data ) {        
+      success : function( data ) {
         App.paintController.goToTypeSelection(false);
-        Notifier.hidewLoader();
+        Notifier.hideLoader();
       },
 
       error : function() {
-        Notifier.hidewLoader();
+        Notifier.hideLoader();
       }
       
     });    
-
+    this.stop();
   },
 
   // ---------------------------------------
