@@ -61,7 +61,7 @@
       @game.won += 1 if params[:won]
       @game.save
     end
-  end@game.played += 1
+  end
       
 
   def like
