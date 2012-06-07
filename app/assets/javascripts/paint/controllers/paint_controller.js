@@ -38,45 +38,55 @@ var PaintController =  Ember.ArrayController.extend({
 
   // Called when Paint_View init (after dom ready)
   initView : function() {
-    this.isBackground = this.type === 'background' ? true : false;   
+    this.isBackground = this.type === 'background' ? true : false; 
 
     this.zoomCanvas  = document.getElementById("zoomCanvas");
     this.zoomContext = this.zoomCanvas.getContext("2d");
-    this.zoomCanvas.width = this.spriteSize.width;
-    this.zoomCanvas.height = this.spriteSize.height;
+    this.zoomCanvas.width   = this.spriteSize.width;
+    this.zoomCanvas.height  = this.spriteSize.height;
 
-    this.tempCanvas = $('#canvas-temp');
-    this.tempContext = this.tempCanvas[0].getContext("2d");
-    this.tempCanvas[0].width =this.spriteSize.width;
+    this.tempCanvas   = $('#canvas-temp');
+    this.tempContext  = this.tempCanvas[0].getContext("2d");
+    this.tempCanvas[0].width  = this.spriteSize.width;
     this.tempCanvas[0].height = this.spriteSize.height;    
     
-    // React if type is background
-    var areaWrapper = $('#area-wrapper');    
-    
-    if(this.type === 'background') {   
-      this.zoom = 1;   
-      // Set Size of zoomCanvas wrapper
-      var _width = 700;
-      var _height = 420;
-      areaWrapper.find('#zoom-canvas-area')
-        .attr('width', _width).attr('height', _height)
-        .css({'max-width' : _width, 'max-height' : _height, 'width' : _width, 'height' : _height});
-      // Hide left side (sprite areas)
-      areaWrapper.find('#sprites-area').hide();
-      $('#player').hide();
-      $('#copySpriteButton').hide();
-      $('#clearSpritesButton').remove();
-      $('#removeSpriteButton').remove();
-      $('.bgToggle').remove();
-    } else {
-      areaWrapper.find('#sprites-area').show();
-    }
+    this.handleType();
 
     this.add();
     this.finalCanvas = $('#canvas-merged');
     this.initEvents();
   },
 
+  // React if type is background
+  handleType : function() {
+
+    var areaWrapper = $('#area-wrapper');
+    
+    // *** Type is background ***
+    if(this.type === 'background') {
+      this.zoom = 1;   
+      
+      // Set Size of zoomCanvas wrapper
+      var _width = 700;
+      var _height = 420;
+      areaWrapper.find('#zoom-canvas-area')
+        .attr('width', _width).attr('height', _height)
+        .css({'max-width' : _width, 'max-height' : _height, 'width' : _width, 'height' : _height});
+      
+      // Hide unnecessary buttons and divs
+      App.spritePlayer.hide();
+
+      areaWrapper.find('#sprites-area').hide();
+      $('#copySpriteButton').hide();
+      $('#clearSpritesButton').remove();
+      $('#removeSpriteButton').remove();
+      $('.bgToggle').remove();
+    }
+
+
+  },
+
+  // Init DOM events
   initEvents : function() {
     // OnMouse on zoomed canvas
     $('#zoomCanvas').mousedown(function(e){
@@ -102,7 +112,7 @@ var PaintController =  Ember.ArrayController.extend({
       App.paintController.setCurrentSpriteModel(spriteModel);
     });
     
-     $('#colorPicker').ColorPicker({
+    $('#colorPicker').ColorPicker({
       onShow: function (colpkr) {
         $(colpkr).fadeIn(500);
         return false;
@@ -199,7 +209,7 @@ var PaintController =  Ember.ArrayController.extend({
       }
       
     });    
-    this.stop();
+    //this.stop();
   },
 
   // ---------------------------------------
@@ -501,61 +511,7 @@ var PaintController =  Ember.ArrayController.extend({
     this.tempCanvas.hide();
     this.pixelDrawer.setCanvasContext(this.zoomCanvas);
   },
-
-  // ---------------------------------------
-  // Animation
-
-  play : function() {
-    $('#playButton').hide();
-    $('#stopButton').show();
-    $('.active-sprite').removeClass('active-sprite');
-    this.playDelay = parseInt($('#playDelay').val());
-    this.currentFrameIndex = 0;
-    this.overSprites();
-    this.nextFrame();    
-  },
-
-  nextFrame : function() {
-    var canvasObjects = $('.canvas').not('#canvas-size, #canvas-template, #canvas-sketch, #zoomCanvas');
-    canvasObjects.hide();
-    canvasObjects.eq(this.currentFrameIndex).show();
-
-    if(this.currentFrameIndex == this.content.length) {
-      // Loop
-      if($("#replayLoop").is(":checked")) {
-        this.play();
-        return false;
-      // End
-      } else {        
-        this.stop();
-        return false;
-      }
-    }
-
-    this.currentFrameIndex++;
-    var that = this;
-    this.playInterval = setTimeout(function(){
-      that.nextFrame();
-    }, this.playDelay);    
-  },
-
-  stop : function() {
-    clearTimeout(this.playInterval);
-    var canvasObjects = $('.canvas').not('#canvas-template, #canvas-sketch, #zoomCanvas').show();
-    this.floatSprites();
-    $('#playButton').show();
-    $('#stopButton').hide();
-    this.setCurrentSpriteModel(this.getCurrentSpriteModel());
-  },
-
-  floatSprites : function() {
-    $('.canvas').not('#canvas-sketch').removeClass('canvas-over').addClass('canvas-float');
-  },
-
-  overSprites : function() {
-    $('.canvas').not('#canvas-sketch').removeClass('canvas-float').addClass('canvas-over');
-  },
-
+  
   // ---------------------------------------
   // Helper
   getMouseCoordinates : function(e) {

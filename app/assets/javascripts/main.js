@@ -40,6 +40,7 @@ function paint_main() {
   App.drawTool = DrawToolModel.create();
   App.fillTool = FillToolModel.create();
   App.pipetteTool = ColorPipetteModel.create();
+  App.spritePlayer = SpritePlayerController.create();
 
   App.paintView = PaintView.create();
   App.paintSizeView = PaintSizeView.create();

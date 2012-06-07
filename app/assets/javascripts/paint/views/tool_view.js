@@ -106,11 +106,13 @@ var ToolView = Ember.View.extend({
   },
 
   play : function() {
-    App.paintController.play();
+    //App.paintController.play();
+    App.spritePlayer.play();
   },
 
   stop : function() {
-    App.paintController.stop();
+    //App.paintController.stop();
+    App.spritePlayer.stop();
   }
 
 });
