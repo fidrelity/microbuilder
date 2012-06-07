@@ -4,7 +4,6 @@ var MainView = Ember.View.extend({
   
   gameBinding : 'App.game',
   
-  editorContent : null,
   overlayContent : null,
   
   player : null,
@@ -12,8 +11,6 @@ var MainView = Ember.View.extend({
   init : function() {
     
     this._super();
-    
-    this.stageView = StageView.create();
     
     this.libraryView = LibraryView.create();
     
@@ -40,12 +37,6 @@ var MainView = Ember.View.extend({
     
   },
   
-  didInsertElement : function() {
-    
-    this.show( 'editorContent', 'stageView' );
-    
-  },
-  
   show : function( locationName, viewName ) {
     
     if ( !this.get( viewName ) ) {
@@ -66,7 +57,23 @@ var MainView = Ember.View.extend({
   hideOverlay : function() {
     
     this.set( 'overlayContent', null );
-    this.stageView.updatePlayer();
+    this.updatePlayer();
+    
+  },
+  
+  updatePlayer : function() {
+    
+    var player = this.player;
+    
+    player.parse( App.game.getData().game, function() {
+      
+      if ( App.gameObjectsController.current ) {
+      
+        player.selectObject = player.game.getGameObjectWithID( App.gameObjectsController.current.ID );
+      
+      }
+    
+    });
     
   }
   
@@ -118,7 +125,7 @@ var BehaviourView = SelectView.extend({
   duplicate : function() {
     
     App.behaviourController.duplicateBehaviour( this.content );
-    App.mainView.stageView.updatePlayer();
+    App.mainView.updatePlayer();
     
   }
   

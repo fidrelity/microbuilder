@@ -1,6 +1,8 @@
 <div class="editor_content">
 
-  {{dynamicView editorContent}}
+  {{view StageView
+    playerBinding="player"
+  }}
   
   {{#if overlayContent}}
   
@@ -23,8 +25,6 @@
       <div id="fog" {{action "hideOverlay"}}></div>
     
     </div>
-    
-    
   
   {{/if}}
 

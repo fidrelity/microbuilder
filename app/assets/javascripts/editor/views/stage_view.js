@@ -8,8 +8,6 @@ var StageView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    var self = this;
-    
     this.$( '#slider' ).slider({
       
       min: 5,
@@ -24,26 +22,10 @@ var StageView = Ember.View.extend({
       
       change: function( event, ui ) {
         
-        self.updatePlayer();
+        App.mainView.updatePlayer();
         
       }
       
-    });
-    
-  },
-  
-  updatePlayer : function() {
-    
-    var player = this.player;
-    
-    player.parse( App.game.getData().game, function() {
-      
-      if ( App.gameObjectsController.current ) {
-      
-        player.selectObject = player.game.getGameObjectWithID( App.gameObjectsController.current.ID );
-      
-      }
-    
     });
     
   },
@@ -81,7 +63,7 @@ var GameObjectView = Ember.View.extend({
   remove: function() {
     
     App.game.removeGameObject( this.content );
-    App.mainView.stageView.updatePlayer();
+    App.mainView.updatePlayer();
     
     this.set( 'content', null );
     
@@ -90,21 +72,21 @@ var GameObjectView = Ember.View.extend({
   duplicate : function() {
     
     App.gameObjectsController.duplicateObject( this.content );
-    App.mainView.stageView.updatePlayer();
+    App.mainView.updatePlayer();
     
   },
   
   changeArt: function() {
     
     App.gameController.searchChangeGraphic();
-    App.mainView.stageView.updatePlayer();
+    App.mainView.updatePlayer();
     
   },
   
   toTop: function() {
     
     App.gameObjectsController.moveToTop( this.content );
-    App.mainView.stageView.updatePlayer();
+    App.mainView.updatePlayer();
     
   }
   
