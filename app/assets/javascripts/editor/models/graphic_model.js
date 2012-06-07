@@ -54,7 +54,7 @@ var GraphicModel = Ember.Object.extend({
     return {
       ID : this.ID,
       frameCount : this.frameCount,
-      imagePath : this.imagePath
+      url : this.imagePath
     }
     
   }

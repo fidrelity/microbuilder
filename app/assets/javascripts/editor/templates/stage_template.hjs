@@ -5,11 +5,14 @@
     <button class="btn-large btn-primary" {{action "searchBackground" target="App.gameController"}}> background </button>
   </div>
   
+  <button id="trash" class="btn right" {{action "trash"}}><i class="icon-trash"></i> trash </button>
+  
   <div class="duration right">
     <div class="right">{{App.game.duration}} seconds</div>
     <div id="slider" class="right"></div>
     <div class="right">duration:</div>
   </div>
+  
 </div>
 
 <div class="player">

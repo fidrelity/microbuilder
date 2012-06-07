@@ -42,6 +42,23 @@ var StageView = Ember.View.extend({
     
   },
   
+  trash : function() {
+    
+    App.gameController.clear();
+    
+    App.gameObjectsController.set( 'current', null );
+    App.behaviourController.set( 'current', null );
+    
+    App.mainView.updatePlayer();
+    
+    if ( window.localStorage ) {
+    
+      window.localStorage.setItem( 'game', null );
+    
+    }
+    
+  },
+  
   debug : function() {
     
     this.player.debug();

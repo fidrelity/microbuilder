@@ -15,11 +15,21 @@ function editor_main() {
   App.mainView = MainView.create();
   App.mainView.appendTo('#content');
   
-  Ember.run.end();
-  
-  App.gameController.loadGame({"duration":10,"backgroundID":3,"gameObjects":[{"ID":1,"name":"red_rect","graphicID":9,"position":{"x":354,"y":42},"behaviours":[{"triggers":[{"type":"start"}],"actions":[{"type":"roam","speed":4,"mode":"reflect","area":{"x":4,"y":4,"width":632,"height":386}}]},{"triggers":[{"type":"click"}],"actions":[{"type":"win"}]}]}],"graphics":[{"ID":9,"frameCount":1,"url":"/graphics/9/red_rect.png?1338726927"},{"ID":3,"frameCount":1,"url":"/graphics/12/rainy.png?1338733088"}]});
-  
-  // Ember.run.end();
+  if ( window.localStorage ) {
+    
+    var data = JSON.parse( window.localStorage.getItem( 'game' ) );
+    
+    if ( data ) {
+    
+      Ember.run.end();
+    
+      console.log( window.localStorage.getItem( 'game' ) );
+    
+      App.gameController.loadGame( data );
+    
+    }
+    
+  }
   
   // setTimeout( function() {
   // 

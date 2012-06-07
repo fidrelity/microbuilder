@@ -192,6 +192,12 @@ var GameController = Ember.Object.extend({
         
           // alert( 'sucess: ' + data.responseText );
           
+          if ( window.localStorage ) {
+          
+            window.localStorage.setItem( 'game', null );
+          
+          }
+          
           window.location = data.responseText;
           Notifier.hideLoader();
         
@@ -224,14 +230,15 @@ var GameController = Ember.Object.extend({
       }
       
     });
-    
-    // window.localStorage.setItem( 'game', JSON.stringify( this.game.getData() ) );
   
   },
   
   loadGame : function( data ) {
     
     var game = App.game, i;
+    
+    game.set( 'title', data.title );
+    game.set( 'instructions', data.instructions );
     
     if ( data.duration ) {
     
@@ -274,6 +281,19 @@ var GameController = Ember.Object.extend({
     
     App.game.gameObjectCounter = App.gameObjectsController.getMaxID() + 1;
     App.mainView.updatePlayer();
+    
+  },
+  
+  clear : function() {
+    
+    App.game.setProperties({
+     gameObjects : [],
+     gameObjectCounter : 1,
+     title : null,
+     instructions : null,
+     duration : 5,
+     background : null
+    });
     
   },
 

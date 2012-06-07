@@ -278,27 +278,27 @@ var LibraryController = Ember.ArrayController.extend({
     
     this.addObject( graphic );
     
-    $.ajax({
-      url : '/graphics/' + graphicID,
-      type : 'GET',
-      
-      success: function( data ) {
-        
-        if ( data ) {
-          
-          if ( typeof data === "string" ) {
-            
-            data = JSON.parse( data );
-            
-          }
-        
-          self.extendGraphic( graphic, data );
-        
-        }
-        
-      }
-      
-    });
+    // $.ajax({
+    //   url : '/graphics/' + graphicID,
+    //   type : 'GET',
+    //   
+    //   success: function( data ) {
+    //     
+    //     if ( data ) {
+    //       
+    //       if ( typeof data === "string" ) {
+    //         
+    //         data = JSON.parse( data );
+    //         
+    //       }
+    //     
+    //       self.extendGraphic( graphic, data );
+    //     
+    //     }
+    //     
+    //   }
+    //   
+    // });
     
   },
   

@@ -68,9 +68,16 @@ var MainView = Ember.View.extend({
   
   updatePlayer : function() {
     
-    var player = this.player;
+    var player = this.player,
+      data = App.game.getData().game;
+      
+    if ( window.localStorage ) {
+      
+      window.localStorage.setItem( 'game', JSON.stringify( data ) );
+      
+    }
     
-    player.parse( App.game.getData().game, function() {
+    player.parse( data, function() {
       
       if ( App.gameObjectsController.current ) {
       

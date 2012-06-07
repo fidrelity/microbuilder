@@ -24,6 +24,9 @@ var GameModel = Ember.Object.extend({
         win = false,
         i, j;
     
+    game.title = this.title;
+    game.instructions = this.instructions;
+    
     if ( this.background ) {
       
       game.backgroundID = this.background.ID;
