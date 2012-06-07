@@ -193,14 +193,14 @@ var GameController = Ember.Object.extend({
           // alert( 'sucess: ' + data.responseText );
           
           window.location = data.responseText;
-          Notifier.hidewLoader();
+          Notifier.hideLoader();
         
         },
         
         400: function( data ) {
           
           console.log(data);
-          Notifier.hidewLoader();
+          Notifier.hideLoader();
           alert( data.responseText );
           
         },
@@ -208,7 +208,7 @@ var GameController = Ember.Object.extend({
         401: function( data ) {
           
           console.log(data);
-          Notifier.hidewLoader();
+          Notifier.hideLoader();
           alert( 'not logged in: ' + data.responseText );
           
         },
@@ -216,7 +216,7 @@ var GameController = Ember.Object.extend({
         500: function( data ) {
           
           console.log(data);
-          Notifier.hidewLoader();
+          Notifier.hideLoader();
           alert( 'internal server error: ' + data.responseText );
           
         }
