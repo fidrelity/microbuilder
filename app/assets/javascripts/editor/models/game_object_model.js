@@ -24,7 +24,7 @@ var GameObjectModel = Ember.Object.extend({
     
     var obj = GameObjectModel.create({
       
-      name : this.name,
+      name : incrementString( this.name ),
       graphic : this.graphic,
       position : new Vector( 30, 30 ).addSelf( this.position )
       

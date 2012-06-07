@@ -83,6 +83,31 @@ function randBool() {
   
 };
 
+function incrementString( str ) {
+  
+  if ( !str || !str.length ) {
+    
+    return '2';
+    
+  }
+  
+  var num = parseInt( str.charAt( str.length - 1 ) );
+  
+  if ( isNaN( num ) ) {
+    
+    str += '2';
+    
+  } else {
+    
+    str = str.slice(0, -1)
+    str += num + 1;
+    
+  }
+  
+  return str;
+  
+}
+
 extend( CanvasRenderingContext2D.prototype, {
   
   line : function( x, y, x2, y2 ) {
