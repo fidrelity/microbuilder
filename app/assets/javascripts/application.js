@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require ember
-//= require lib/ember-layout
 //= require_tree ./editor/templates
 //= require_tree ./paint/templates
 //= require_tree .
