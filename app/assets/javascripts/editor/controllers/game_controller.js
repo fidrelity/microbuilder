@@ -277,9 +277,10 @@ var GameController = Ember.Object.extend({
         
       }
       
+      App.game.gameObjectCounter = App.gameObjectsController.getMaxID() + 1;
+      
     }
     
-    App.game.gameObjectCounter = App.gameObjectsController.getMaxID() + 1;
     App.mainView.updatePlayer();
     
   },
