@@ -13,6 +13,7 @@ var StageView = Ember.View.extend({
       min: 5,
       max: 30,
       step: 5,
+      value: App.game.duration,
       
       slide: function( event, ui ) {
         
@@ -50,6 +51,7 @@ var StageView = Ember.View.extend({
     App.behaviourController.set( 'current', null );
     
     App.mainView.updatePlayer();
+    this.$( '#slider' ).slider( 'value', [5] );
     
     if ( window.localStorage ) {
     
