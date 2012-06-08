@@ -1,4 +1,4 @@
-function editor_main() {
+function editor_main( data ) {
 
   window.App = Ember.Application.create();
 
@@ -15,19 +15,19 @@ function editor_main() {
   App.mainView = MainView.create();
   App.mainView.appendTo('#content');
   
-  if ( window.localStorage ) {
+  if ( !data && window.localStorage ) {
     
-    var data = JSON.parse( window.localStorage.getItem( 'game' ) );
+    data = JSON.parse( window.localStorage.getItem( 'game' ) );
     
-    if ( data ) {
+  }
+  
+  if ( data ) {
     
-      Ember.run.end();
+    Ember.run.end();
     
-      console.log( window.localStorage.getItem( 'game' ) );
+    console.log( data );
     
-      App.gameController.loadGame( data );
-    
-    }
+    App.gameController.loadGame( data );
     
   }
   
