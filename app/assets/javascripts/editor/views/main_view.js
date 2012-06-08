@@ -99,6 +99,8 @@ var OverlayView = Ember.View.extend({
   
   didInsertElement : function() {
     
+    window.scrollTo( 0, 0 );
+    
     if ( this.fadeIn ) {
     
       this.$( '#overlayWrapper' ).fadeIn( 100 );
