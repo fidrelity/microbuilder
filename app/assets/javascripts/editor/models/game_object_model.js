@@ -53,18 +53,14 @@ var GameObjectModel = Ember.Object.extend({
     
   },
   
-  getData : function( graphics ) {
+  getData : function( graphicIDs ) {
   
     var behaviours = [], 
       b, i;
   
-    if ( graphics.indexOf( this.graphic ) < 0 ) {
-      
-      graphics.push( this.graphic.getData() );
-      
-    }
+    graphicIDs.push( this.graphic.ID );
     
-    b = this.startBehaviour.getData( graphics );
+    b = this.startBehaviour.getData( graphicIDs );
     
     if ( b ) {
     
@@ -74,7 +70,7 @@ var GameObjectModel = Ember.Object.extend({
       
     for ( i = 0; i < this.behaviours.length; i++ ) {
       
-      b = this.behaviours[i].getData( graphics );
+      b = this.behaviours[i].getData( graphicIDs );
       
       if ( b ) {
         
@@ -90,22 +86,6 @@ var GameObjectModel = Ember.Object.extend({
       graphicID : this.graphic.ID,
       position : this.position.getData(),
       behaviours : behaviours
-    };
-  
-  },
-  
-  getSimpleData : function( graphics ) {
-  
-    if ( graphics.indexOf( this.graphic ) < 0 ) {
-      
-      graphics.push( this.graphic.getData() );
-      
-    }
-    
-    return {
-      ID : this.ID,
-      graphicID : this.graphic.ID,
-      position : this.position.getData()
     };
   
   }

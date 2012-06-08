@@ -14,7 +14,7 @@ var PlayerView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    var player, callback, type = this.type, data;
+    var player, callback, type = this.type;
     
     player = new Player();
     player.edit = true;
@@ -27,21 +27,17 @@ var PlayerView = Ember.View.extend({
       player.showTimeline = true;
       
       player.selectedObjectCallback = bind( App.gameObjectsController, App.gameObjectsController.selectID );
-      player.selectedObjectDragCallback = bind( App.game, App.game.gameObjectPositionChanged );
+      player.selectedObjectDragCallback = bind( App.gameObjectsController, App.gameObjectsController.positionChanged );
       
     } else if ( type === 'location' || type === 'direction' ) {
       
       callback = this.locationCallback;
-      
-      // data = App.game.getSingleData();
       
     } else if ( type === 'area' ) {
       
       callback = this.areaCallback;
       
       player.areaSelectable = true;
-      
-      // data = App.game.getEmptyData();
       
     } else {
       

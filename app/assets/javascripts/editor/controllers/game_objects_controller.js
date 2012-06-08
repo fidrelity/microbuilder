@@ -18,7 +18,7 @@ var GameObjectsController = Ember.ArrayController.extend({
   
   selectID : function( gameObjectID ) {
     
-    this.set( 'current', App.game.getGameObjectWithID( gameObjectID ) );
+    this.set( 'current', this.getObject( gameObjectID ) );
     
   },
   
@@ -61,7 +61,7 @@ var GameObjectsController = Ember.ArrayController.extend({
   
   parseBehaviour : function( object ) {
     
-    var i, gameObject = this.getGameObject( object.ID );
+    var i, gameObject = this.getObject( object.ID );
     
     this.select( gameObject );
     
@@ -73,9 +73,31 @@ var GameObjectsController = Ember.ArrayController.extend({
     
   },
   
-  getGameObject : function( objectID ) {
+  getObject : function( objectID ) {
     
     return this.content.findProperty( 'ID', objectID );
+    
+  },
+  
+  removeGameObject : function( gameObject ) {
+    
+    var obj, i, j;
+    
+    for ( i = 0; i < this.content.length; i++ ) {
+      
+      obj = this.content[i];
+      
+      obj.startBehaviour.removeGameObject( gameObject );
+      
+      for ( j = 0; j < obj.behaviours.length; j++ ) {
+      
+        obj.behaviours[j].removeGameObject( gameObject );
+      
+      }
+      
+    }
+    
+    this.removeObject( gameObject );
     
   },
   
@@ -83,9 +105,15 @@ var GameObjectsController = Ember.ArrayController.extend({
     
     return this.content.reduce( function( previousValue, item, index, enumerable ) {
       
-      return Math.max( item.ID, previousValue.ID );
+      return { ID : Math.max( item.ID, previousValue.ID ) };
       
     }).ID;
+    
+  },
+  
+  positionChanged : function( gameObjectID, pos ) {
+    
+    this.getObject( gameObjectID ).position.copy( pos );
     
   },
   

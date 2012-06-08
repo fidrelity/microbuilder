@@ -21,7 +21,7 @@ var GraphicModel = Ember.Object.extend({
   name : null,
   userName : null,
   
-  imagePath : 'assets/mario.png',
+  imagePath : null,
   
   isBackground : false,
   isPublic : false,
