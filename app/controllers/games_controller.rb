@@ -9,6 +9,8 @@
         Game.all_by_rating(params[:page], 12)
       when "played"
         Game.all_by_played.paginate(:page => params[:page], :per_page => 12)
+      when "difficulty"
+        Game.all_by_difficulty(params[:page], 12)
       else
         Game.all_latest.paginate(:page => params[:page], :per_page => 12)
       end
@@ -54,9 +56,13 @@
 
   # ------------------
   def played
-    counter = @game.played + 1
-    Game.transaction { @game.update_attribute(:played, counter) }
+    Game.transaction do
+      @game.played += 1
+      @game.won += 1 if params[:win] == "true"
+      @game.save
+    end
   end
+      
 
   def like
     unless cookies["voted_game_#{@game.id}"]
@@ -77,7 +83,6 @@
     render :nothing => true, :layout => false
   end
 
-  # ------------------
   def auto_search
     @games = Game.order(:title).where("title like ?", "%#{params[:term]}%")
     render json: @games.map(&:title)

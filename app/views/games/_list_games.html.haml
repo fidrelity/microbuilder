@@ -20,7 +20,9 @@
       |
       =link_to "Rating", gallery_path({:type => "rating"})
       |
-      =link_to "Most played", gallery_path({:type => "played"})
+      =link_to "Most played", gallery_path({:type => "played"})    
+      |
+      =link_to "Difficulty", gallery_path({:type => "difficulty"})
     
     .search
       = form_tag search_games_path, :method => 'get', :class=>"form-horizontal" do

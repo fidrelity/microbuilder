@@ -362,7 +362,7 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
   position:absolute;
   right:30px;
   top:65px;
-  width:489px;
+  width:589px;
 }
 
 .sortables a {
@@ -633,3 +633,14 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
 canvas {
   -webkit-tap-highlight-color: transparent; /* Fix for iOS' annoying highlight on canvas select */
 }
+
+#difficulty span {
+  font-size: 14px;
+  font-weight: bolder;
+}
+.easy { color: #5EB95E; }
+
+.moderate { color: #FFBC00; }
+
+.hard { color: #FF0000; }
+
