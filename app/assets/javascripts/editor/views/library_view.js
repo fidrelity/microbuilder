@@ -22,8 +22,6 @@ var LibraryView = Ember.View.extend({
   
 });
 
-// <img {{bindAttr src="content.imagePath"}} />
-
 var GraphicsView = Ember.CollectionView.extend({
   
   tagName : 'ul',
