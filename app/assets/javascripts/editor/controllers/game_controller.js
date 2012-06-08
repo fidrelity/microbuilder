@@ -235,7 +235,7 @@ var GameController = Ember.Object.extend({
   
   loadGame : function( data ) {
     
-    var game = App.game, i;
+    var game = App.game, i, g;
     
     game.set( 'title', data.title );
     game.set( 'instructions', data.instructions );
@@ -251,7 +251,9 @@ var GameController = Ember.Object.extend({
       
       for ( i = 0; i < data.graphics.length; i++ ) {
         
-        App.libraryController.loadGraphic( data.graphics[i].ID, data.graphics[i].url );
+        g = data.graphics[i];
+        
+        App.libraryController.loadGraphic( g.ID, g.url, g.frameCount );
         
       }
       
@@ -265,7 +267,7 @@ var GameController = Ember.Object.extend({
     
     if ( data.gameObjects ) {
       
-      for ( i = 0; i < data.gameObjects.length; i++ ) {
+      for ( i = data.gameObjects.length - 1; i >= 0; i-- ) {
         
         App.gameObjectsController.parseObject( data.gameObjects[i] );
         

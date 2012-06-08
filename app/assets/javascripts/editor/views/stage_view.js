@@ -67,7 +67,7 @@ var StageView = Ember.View.extend({
   
   selectedObjectCallback : function( gameObjectID ) {
     
-    this.set( 'gameObject', App.game.getGameObjectWithID( gameObjectID ) );
+    this.set( 'gameObject', App.gameObjectsController.getObject( gameObjectID ) );
     
   }
   
@@ -79,7 +79,7 @@ var GameObjectView = Ember.View.extend({
   
   remove: function() {
     
-    App.game.removeGameObject( this.content );
+    App.gameObjectsController.removeGameObject( this.content );
     App.mainView.updatePlayer();
     
     this.set( 'content', null );

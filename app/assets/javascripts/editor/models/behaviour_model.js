@@ -46,7 +46,7 @@ var BehaviourModel = Ember.Object.extend({
     
   },
   
-  getData : function( graphics ) {
+  getData : function( graphicIDs ) {
     
     var data, i;
     
@@ -62,7 +62,7 @@ var BehaviourModel = Ember.Object.extend({
     
       for ( i = 0; i < this.actions.length; i++ ) {
       
-        data.actions.push( this.actions[i].getData( graphics ) );
+        data.actions.push( this.actions[i].getData( graphicIDs ) );
       
       }
     

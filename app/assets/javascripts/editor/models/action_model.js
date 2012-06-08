@@ -355,7 +355,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     this.setProperties({ 
       type : d.type,
       position : d.location ? new Vector( d.location.x, d.location.y ) : new Vector( 1, 0 ).rotateSelf( d.angle ),
-      gameObject : App.gameObjectsController.getGameObject( d.objectID ),
+      gameObject : App.gameObjectsController.getObject( d.objectID ),
       region : d.area ? new Area().copy( d.area ) : null,
       mode : d.mode,
       speed : d.speed,
@@ -566,7 +566,7 @@ var ArtActionModel = ActionTriggerModel.extend({
     
   }.property( 'frame', 'frame2', 'mode', 'speed' ),
   
-  getData : function( graphics ) {
+  getData : function( graphicIDs ) {
   
     var data = { type : 'art' };
     
@@ -576,11 +576,7 @@ var ArtActionModel = ActionTriggerModel.extend({
       
     } else if ( this.graphic ) {
       
-      if ( graphics.indexOf( this.graphic ) < 0 ) {
-      
-        graphics.push( this.graphic.getData() );
-      
-      }
+      graphicIDs.push( this.graphic.ID );
       
       data.graphicID = this.graphic.ID;
       
@@ -716,7 +712,7 @@ var ClickTriggerModel = ActionTriggerModel.extend({
     
     this.setProperties({ 
       region : d.area ? new Area().copy( d.area ) : null,
-      gameObject : App.gameObjectsController.getGameObject( d.objectID )
+      gameObject : App.gameObjectsController.getObject( d.objectID )
     });
     
     return this;
@@ -808,7 +804,7 @@ var ContactTriggerModel = ActionTriggerModel.extend({
     this.setProperties({
       type : d.type, 
       region : d.area ? new Area().copy( d.area ) : null,
-      gameObject : App.gameObjectsController.getGameObject( d.objectID )
+      gameObject : App.gameObjectsController.getObject( d.objectID )
     });
     
     return this;

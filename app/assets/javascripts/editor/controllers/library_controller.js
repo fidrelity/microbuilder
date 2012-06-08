@@ -93,8 +93,7 @@ var LibraryController = Ember.ArrayController.extend({
   
   updateDisplay : function( load, page ) {
     
-    var display = this.content,
-      path = '';
+    var display = this.content;
       
     page = page || 1;
     
@@ -110,25 +109,7 @@ var LibraryController = Ember.ArrayController.extend({
     
     }
     
-    if ( this.showBackground ) {
-      
-      if ( this.showOwn ) {
-        
-        path = 'users/current/graphics/backgrounds?page=' + page;
-        
-      } else {
-        
-        path = 'graphics/public?backgrounds=true&page=' + page;
-        
-      }
-      
-    } else {
-      
-      path = this.showOwn ? 'users/current/graphics' : 'graphics/public';
-      
-      path += '?min_size=' + this.size.min + '&max_size=' + this.size.max;
-      
-      path += '&page=' + page;
+    if ( !this.showBackground ) {
       
       display = this.filterSize( display );
       
@@ -138,9 +119,10 @@ var LibraryController = Ember.ArrayController.extend({
     
     this.set( 'display', display );
     
+    
     if ( load && ( display.length < this.perPage || page === 1 ) ) {
       
-      this.loadGraphics( path, page );
+      this.loadGraphics( page );
       
     } else {
       
@@ -183,9 +165,32 @@ var LibraryController = Ember.ArrayController.extend({
     
   },
   
-  loadGraphics : function( path, page ) {
+  loadGraphics : function( page ) {
     
-    var self = this;
+    var path,
+      self = this;
+    
+    if ( this.showBackground ) {
+      
+      if ( this.showOwn ) {
+        
+        path = 'users/current/graphics/backgrounds?page=' + page;
+        
+      } else {
+        
+        path = 'graphics/public?backgrounds=true&page=' + page;
+        
+      }
+      
+    } else {
+      
+      path = this.showOwn ? 'users/current/graphics' : 'graphics/public';
+      
+      path += '?min_size=' + this.size.min + '&max_size=' + this.size.max;
+      
+      path += '&page=' + page;
+      
+    }
     
     $.ajax({
       url : path,
@@ -195,7 +200,7 @@ var LibraryController = Ember.ArrayController.extend({
         
         if ( data ) {
           
-          if (typeof data === "string") {
+          if ( typeof data === "string" ) {
             
             data = JSON.parse( data );
             
@@ -216,8 +221,6 @@ var LibraryController = Ember.ArrayController.extend({
     if ( !data.length ) {
       
       this.updateDisplay( false, this.page );
-      
-      //TODO disable next
       
       return;
       
@@ -269,11 +272,12 @@ var LibraryController = Ember.ArrayController.extend({
     
   },
   
-  loadGraphic : function( graphicID, imagePath ) {
+  loadGraphic : function( graphicID, imagePath, frameCount ) {
     
     var graphic = GraphicModel.create({
       ID : graphicID,
-      imagePath : imagePath
+      imagePath : imagePath,
+      frameCount : frameCount
     });
     
     this.addObject( graphic );
