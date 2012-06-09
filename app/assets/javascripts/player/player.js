@@ -51,9 +51,7 @@ var Player = function() {
   this.timePlayed = 0;
   
   this.selectObject = null;
-  
   this.selectedObjectCallback = function() {};
-  this.selectedObjectDragCallback = function() {};
   
   this.terminate = false;
   
@@ -278,7 +276,7 @@ Player.prototype = {
     }
     
   },
-
+  
   mousedown : function( mouse ) {
     
     var object = this.selectObject;
@@ -313,7 +311,7 @@ Player.prototype = {
     
     if ( object ) {
     
-      this.selectedObjectDragCallback( object.ID, object.getPosition() );
+      this.selectedObjectCallback( object.ID, object.getPosition() );
     
     }
     
@@ -365,14 +363,13 @@ Player.prototype = {
     
     this.drawTimeline( this.ctx, 'rgba(255,0,0,0.5)', this.timePlayed );
     this.increaseCounter("lose");
+    
   },
   
   enterTrial : function() {
     
     this.mouse.handleClick();
-  
     this.reset();
-    this.game.start();
     
   },
   
@@ -388,29 +385,6 @@ Player.prototype = {
   stop : function() {
     
     this.fsm.stop();
-    
-    this.redraw = true;
-    
-  },
-  
-  setSelectObjectID : function( gameObjectID, callback, showDirection ) {
-    
-    var selectObject = this.game.getGameObjectWithID( gameObjectID ),
-      offset = selectObject.getPosition().sub( selectObject.getPosition() );
-    selectObject.stable = true;
-    
-    selectObject.movement.startPosition.set( 320, 195 ).addSelf( offset );
-    
-    this.selectObject = selectObject;
-    
-    if ( callback ) {
-      
-      this.selectedObjectDragCallback = callback;
-      callback( selectObject.ID, selectObject.movement.position );
-      
-    }
-    
-    this.reset();
     this.redraw = true;
     
   },

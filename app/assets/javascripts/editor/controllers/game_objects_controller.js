@@ -16,9 +16,21 @@ var GameObjectsController = Ember.ArrayController.extend({
     
   },
   
-  selectID : function( gameObjectID ) {
+  selectID : function( gameObjectID, newPosition ) {
     
-    this.set( 'current', this.getObject( gameObjectID ) );
+    var object = this.getObject( gameObjectID );
+    
+    if ( object ) {
+    
+      this.set( 'current', object );
+      
+      if ( newPosition ) {
+        
+        object.position.copy( newPosition );
+        
+      }
+    
+    }
     
   },
   
@@ -111,12 +123,6 @@ var GameObjectsController = Ember.ArrayController.extend({
       return { ID : Math.max( item.ID, previousValue.ID ) };
       
     }).ID;
-    
-  },
-  
-  positionChanged : function( gameObjectID, pos ) {
-    
-    this.getObject( gameObjectID ).position.copy( pos );
     
   },
   

@@ -22,7 +22,6 @@ var PlayerView = Ember.View.extend({
       player.edit = true;
       
       player.selectedObjectCallback = bind( App.gameObjectsController, App.gameObjectsController.selectID );
-      player.selectedObjectDragCallback = bind( App.gameObjectsController, App.gameObjectsController.positionChanged );
       
     }
     
