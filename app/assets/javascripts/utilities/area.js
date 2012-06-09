@@ -27,6 +27,15 @@ Area.prototype = {
     
   },
   
+  setCenter : function( x, y ) {
+    
+    this.x = x - this.width * 0.5;
+    this.y = y - this.height * 0.5;
+    
+    return this;
+    
+  },
+  
   setSize : function( width, height ) {
     
     this.width = width;

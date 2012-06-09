@@ -65,7 +65,7 @@ Movement.prototype = {
     
     var pos = this.position;
     
-    return this.area.setPosition( pos.x, pos.y );
+    return this.area.setCenter( pos.x, pos.y );
     
   },
   
@@ -83,19 +83,19 @@ Movement.prototype = {
     
     if ( area.width < objArea.width ) {
       
-      increase = objArea.width * 0.1;
+      increase = objArea.width * 1.2 - area.width;
       
-      area.width = objArea.width + increase * 2;
-      area.x -= increase;
+      area.width += increase;
+      area.x -= increase * 0.5;
       
     }
     
     if ( area.height < objArea.height ) {
       
-      increase = objArea.height * 0.1;
+      increase = objArea.height * 1.2 - area.height;
       
-      area.height = objArea.height + increase * 2;
-      area.y -= increase;
+      area.height += increase;
+      area.y -= increase * 0.5;
       
     }
     
@@ -235,16 +235,18 @@ Movement.prototype = {
   
   insertObject : function( area ) {
     
-    this.position.set(
-      area.x + Math.random() * ( area.width - this.area.width ),
-      area.y + Math.random() * ( area.height - this.area.height )
+    var objArea = this.getArea();
+    
+    objArea.setPosition(
+      area.x + Math.random() * ( area.width - objArea.width ),
+      area.y + Math.random() * ( area.height - objArea.height )
     );
+    
+    this.position.copy( objArea.center() );
     
   },
   
   draw : function( ctx ) {
-    
-    var center;
     
     if ( this.target ) {
       
@@ -256,11 +258,9 @@ Movement.prototype = {
       
     } else if ( this.direction ) {
       
-      center = this.getArea().center();
-      
       ctx.save();
       
-      ctx.translate( center.x, center.y );
+      ctx.translate( this.position.x, this.position.y );
       ctx.rotate( this.direction );
       
       ctx.line( 0, 0, 1000, 0 );

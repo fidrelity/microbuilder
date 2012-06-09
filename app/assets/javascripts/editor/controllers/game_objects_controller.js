@@ -28,7 +28,10 @@ var GameObjectsController = Ember.ArrayController.extend({
     
       name : graphic.name,
       graphic : graphic,
-      position : new Vector( Math.floor( Math.random() * 540 ), Math.floor( Math.random() * 290 ) )
+      position : new Vector( 
+        Math.floor( ( 640 - graphic.frameWidth ) * Math.random() + graphic.frameWidth / 2 ), 
+        Math.floor( ( 390 - graphic.frameHeight ) * Math.random() + graphic.frameHeight / 2 )
+      )
     
     });
   

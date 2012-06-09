@@ -29,7 +29,7 @@ GameObject.prototype = {
   
   draw : function( ctx ) {
     
-    var pos = this.movement.position;
+    var pos = this.movement.getArea();
     
     ctx.save();
     ctx.translate( pos.x, pos.y );

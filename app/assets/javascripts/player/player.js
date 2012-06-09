@@ -230,7 +230,7 @@ Player.prototype = {
         
         if ( this.selectDirection ) {
           
-          i = this.selectObject.getArea().center().subSelf( new Vector( 320, 195 ) ).angle();
+          i = new Vector( -320, -195 ).addSelf( this.selectObject.getPosition() ).angle();
           
           ctx.save();
           ctx.translate( 320, 195 );
@@ -405,7 +405,7 @@ Player.prototype = {
       
       if ( this.selectDirection ) {
         
-        this.selectedObjectDragCallback( object.ID, object.getArea().center().subSelf( new Vector( 320, 195 ) ) );
+        this.selectedObjectDragCallback( object.ID, new Vector( -320, -195 ).addSelf( object.getPosition() ) );
         
       } else {
         
@@ -493,7 +493,7 @@ Player.prototype = {
   setSelectObjectID : function( gameObjectID, callback, showDirection ) {
     
     var selectObject = this.game.getGameObjectWithID( gameObjectID ),
-      offset = selectObject.getPosition().sub( selectObject.getArea().center() );
+      offset = selectObject.getPosition().sub( selectObject.getPosition() );
     selectObject.stable = true;
     
     if ( showDirection ) {
