@@ -71,6 +71,7 @@ var Player = function() {
 Player.prototype = {
   
   increment : 96,
+  scale : 1,
   
   setCanvas : function( canvas ) {
     
@@ -85,6 +86,7 @@ Player.prototype = {
       
     } else {
       
+      this.increment = 0;
       i = 0;
       
       mouse.handleClick();
@@ -97,6 +99,7 @@ Player.prototype = {
     
     if ( this.half ) {
       
+      this.scale = 2;
       $(canvas).css({ width: canvas.width * 0.5, height: canvas.height * 0.5 });
       
     }

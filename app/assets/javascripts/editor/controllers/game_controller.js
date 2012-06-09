@@ -28,6 +28,7 @@ var GameController = Ember.Object.extend({
   showObjects : function() {
     
     App.mainView.show( ObjectsView );
+    // App.mainView.show( PlacementView );
     
   },
   

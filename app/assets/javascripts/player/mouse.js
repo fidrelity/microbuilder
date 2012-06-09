@@ -10,7 +10,7 @@ var Mouse = function( player, canvas ) {
   this.pos = new Vector();
   this.move = new Vector();
   
-  this.canvasArea = new Area( 0, 0, 640, 390 );
+  this.area = new Area( 0, 0, 640, 390 );
   
   this.mode;
   
@@ -58,7 +58,7 @@ Mouse.prototype = {
     
     this.setMouse( e, this.pos );
     
-    if ( this.canvasArea.contains( this.pos ) ) {
+    if ( this.area.contains( this.pos ) ) {
     
       this.clicked = true;
     
@@ -114,15 +114,11 @@ Mouse.prototype = {
   setMouse : function( e, mouse ) {
     
     var offset = $( this.canvas ).offset(),
-      i = this.player.edit ? this.player.increment : 0;
+      i = this.player.increment;
     
     mouse.set( e.pageX - offset.left, e.pageY - offset.top );
     
-    if ( this.player.half ) {
-      
-      mouse.mulSelf( 2 );
-      
-    }
+    mouse.mulSelf( this.player.scale );
     
     mouse.x -= i;
     mouse.y -= i;
