@@ -7,9 +7,6 @@ var PlayerView = Ember.View.extend({
   player : null,
   type : 'stage',
   
-  observer : null,
-  gameObject : null,
-  
   showHTML : false,
   
   didInsertElement : function() {
@@ -17,70 +14,22 @@ var PlayerView = Ember.View.extend({
     var player, callback, type = this.type;
     
     player = new Player();
-    player.edit = true;
     
     this.set( 'player', player );
     
     if ( type === 'stage' ) {
       
-      player.objectsMoveable = true;
-      player.showTimeline = true;
+      player.edit = true;
       
       player.selectedObjectCallback = bind( App.gameObjectsController, App.gameObjectsController.selectID );
       player.selectedObjectDragCallback = bind( App.gameObjectsController, App.gameObjectsController.positionChanged );
       
-    } else if ( type === 'location' || type === 'direction' ) {
-      
-      callback = this.locationCallback;
-      
-    } else if ( type === 'area' ) {
-      
-      callback = this.areaCallback;
-      
-      player.areaSelectable = true;
-      
-    } else {
-      
-      player.edit = false;
-      
     }
     
-    player.half = !!callback;
     player.setCanvas( $('#' + this.canvasID)[0] );
     
-    if ( callback ) {
-      
-      player.parse( App.game.getGameObjectsData(), bind( this, callback ) );
-      
-    } else {
-      
-      player.parse( App.game.getData().game, null, this.corsSave );
-      
-    }   
+    player.parse( App.game.getData().game, null, this.corsSave );
     
-  },
-  
-  locationCallback : function() {
-    
-    this.player.setSelectObjectID( this.gameObject.ID, bind( this, function( ID, pos ) {
-      
-      this.observer.locate( pos );
-      
-    }), this.type === 'direction');
-  
-  },
-  
-  areaCallback : function() {
-    
-    this.player.selectedAreaCallback = bind( this, function( area ) {
-      
-      this.observer.contain( area );
-      
-    });
-    
-    this.player.selectObject = null;
-    this.player.reset();
-  
   },
   
   destroy : function() {

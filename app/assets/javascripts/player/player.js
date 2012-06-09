@@ -46,23 +46,14 @@ var Player = function() {
   });
   
   this.edit = false;
-  this.half = false;
   
   this.time = 0;
   this.timePlayed = 0;
   
-  this.objectsMoveable = false;
-  this.areaSelectable = false;
-  
-  this.showTimeline = false;
-  
   this.selectObject = null;
-  this.selectArea = null;
-  this.selectDirection = null;
   
   this.selectedObjectCallback = function() {};
   this.selectedObjectDragCallback = function() {};
-  this.selectedAreaCallback = function() {};
   
   this.terminate = false;
   
@@ -77,8 +68,7 @@ Player.prototype = {
     
     var ctx = canvas.getContext( '2d' ),
       mouse = new Mouse( this, canvas ),
-      i = this.increment,
-      self = this;
+      self = this, i;
     
     if ( this.edit ) {
       
@@ -87,22 +77,15 @@ Player.prototype = {
     } else {
       
       this.increment = 0;
-      i = 0;
       
       mouse.handleClick();
       
     }
     
+    i = this.increment;
     
     canvas.width = 640 + 2 * i;
     canvas.height = 390 + 2 * i;
-    
-    if ( this.half ) {
-      
-      this.scale = 2;
-      $(canvas).css({ width: canvas.width * 0.5, height: canvas.height * 0.5 });
-      
-    }
     
     ctx.save();
     ctx.translate( i, i );
@@ -132,7 +115,8 @@ Player.prototype = {
     
   },
   
-  parse : function( data, callback, corsSave ) {    
+  parse : function( data, callback, corsSave ) {
+    
     var self = this;
     
     this.fsm.parse();
@@ -157,7 +141,7 @@ Player.prototype = {
         
       }
         
-    }, corsSave);
+    }, corsSave );
     
   },
   
@@ -218,46 +202,13 @@ Player.prototype = {
     
       this.game.draw( ctx );
     
-      if ( this.selectArea ) {
-      
-        ctx.strokeStyle = '#000';
-        this.selectArea.draw( ctx );
-      
-      } else if ( this.selectObject ) {
+      if ( this.selectObject ) {
         
         this.selectObject.draw( ctx );
         
         ctx.strokeStyle = '#000';
         
         this.selectObject.getArea().draw( ctx );
-        
-        if ( this.selectDirection ) {
-          
-          i = new Vector( -320, -195 ).addSelf( this.selectObject.getPosition() ).angle();
-          
-          ctx.save();
-          ctx.translate( 320, 195 );
-          ctx.rotate( i );
-          
-          ctx.line( 0, 0, 170, 0 );
-          
-          ctx.translate( 170, 0 );
-          
-          ctx.beginPath();
-          
-          ctx.moveTo( -5, 0 );
-          ctx.lineTo( -10, -12 );
-          ctx.lineTo( 15, 0 );
-          ctx.lineTo( -10, 12 );
-          
-          ctx.closePath();
-          
-          ctx.fillStyle = '#000';
-          ctx.fill();
-          
-          ctx.restore();
-          
-        }
       
       }
       
@@ -287,14 +238,10 @@ Player.prototype = {
     
     var i = this.increment;
     
-    if ( this.showTimeline ) {
-      
-      ctx.fillStyle = color;
-      
-      ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
-      ctx.fillRect( ( 640 + i ) * timePlayed / this.game.duration - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
-      
-    }
+    ctx.fillStyle = color;
+    
+    ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
+    ctx.fillRect( ( 640 + i ) * timePlayed / this.game.duration - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
     
   },
   
@@ -305,12 +252,7 @@ Player.prototype = {
     
     this.mouse.clicked = false;
     
-    if ( ( this.selectObject && !this.selectObject.stable ) || !this.selectObject ) {
-    
-      this.selectObject = null;
-      this.selectArea = null;
-    
-    }
+    this.selectObject = null;
     
     this.game.reset();
     
@@ -319,47 +261,31 @@ Player.prototype = {
   click : function() {
     
     if ( this.fsm.hasState( 'ready' ) ) {
-      $('.playerStartScreen').hide();            
+      
+      $('.playerStartScreen').hide();
+      
       this.fsm.start();
       //this.increaseCounter();
+      
     } else if ( this.fsm.hasState( 'end' ) ) {
+      
       $('.playerLoseScreen').hide();
       $('.playerWinScreen').hide();
+      
       this.fsm.restart();
-      //this.increaseCounter();    
+      //this.increaseCounter();
+      
     }
     
   },
 
   mousedown : function( mouse ) {
     
-    var object = this.selectObject,
-      area = this.selectArea;
+    var object = this.selectObject;
     
-    if ( object && object.stable && !object.getArea().contains( mouse.pos ) ) {
-      
-      mouse.dragging = false;
-      return;
-      
-    } 
     
-    if ( this.objectsMoveable ) {
     
-      object = this.game.getGameObjectAt( mouse.pos );
-    
-    }
-    
-    if ( !object && this.areaSelectable ) {
-      
-      if ( !area || !area.contains( mouse.pos ) ) {
-        
-        this.selectArea = new Area( mouse.pos.x, mouse.pos.y, 0, 0 );
-        
-      }
-      
-    }
-    
-    this.selectedObjectCallback( object ? object.ID : -1 );
+    this.selectedObjectCallback( object ? object.ID : 0 );
     
     this.selectObject = object;
     
@@ -367,24 +293,11 @@ Player.prototype = {
   
   mousemove : function( mouse ) {
     
-    var object = this.selectObject,
-      area = this.selectArea;
+    var object = this.selectObject;
     
     if ( object ) {
       
       object.movePosition( mouse.move );
-      
-    } else if ( area ) {
-      
-      if ( area.done ) {
-        
-        area.move( mouse.move );
-        
-      } else {
-        
-        area.resize( mouse.move );
-        
-      }
       
     }
     
@@ -392,29 +305,11 @@ Player.prototype = {
   
   mouseup : function() {
     
-    var object = this.selectObject,
-      area = this.selectArea;
-    
-    if ( area ) {
-      
-      area.adjust();
-      area.done = true;
-      
-      this.selectedAreaCallback( area );
-      
-    }
+    var object = this.selectObject;
     
     if ( object ) {
-      
-      if ( this.selectDirection ) {
-        
-        this.selectedObjectDragCallback( object.ID, new Vector( -320, -195 ).addSelf( object.getPosition() ) );
-        
-      } else {
-        
-        this.selectedObjectDragCallback( object.ID, object.getPosition() );
-        
-      }
+    
+      this.selectedObjectDragCallback( object.ID, object.getPosition() );
     
     }
     
@@ -499,17 +394,7 @@ Player.prototype = {
       offset = selectObject.getPosition().sub( selectObject.getPosition() );
     selectObject.stable = true;
     
-    if ( showDirection ) {
-    
-      this.selectDirection = true;
-      
-      selectObject.movement.startPosition.set( 420, 195 ).addSelf( offset );
-    
-    } else {
-      
-      selectObject.movement.startPosition.set( 320, 195 ).addSelf( offset );
-      
-    }
+    selectObject.movement.startPosition.set( 320, 195 ).addSelf( offset );
     
     this.selectObject = selectObject;
     

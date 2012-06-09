@@ -15,7 +15,7 @@ var PlacementView = Ember.View.extend({
   background : null,
   gameObjects : [],
   
-  gameObject : null,
+  object : null,
   area : null,
   
   increment : 96,
@@ -107,9 +107,9 @@ var PlacementView = Ember.View.extend({
         
           this.gameObjects.push( img );
           
-          if ( this.gameObject === objs[i] ) {
+          if ( this.object === objs[i] ) {
             
-            this.gameObject = img;
+            this.object = img;
             
           }
         
@@ -119,12 +119,12 @@ var PlacementView = Ember.View.extend({
       
     } else {
       
-      this.gameObject = this.getImage( this.gameObject );
-      this.gameObjects = [this.gameObject];
+      this.object = this.getImage( this.object );
+      this.gameObjects = [this.object];
       
       if ( this.type === 'direction' ) {
       
-        this.gameObject.pos.set( this.width * 0.75, this.height * 0.5 );
+        this.object.pos.set( this.width * 0.75, this.height * 0.5 );
       
       }
       
@@ -176,9 +176,9 @@ var PlacementView = Ember.View.extend({
       
     }
     
-    if ( this.gameObject ) {
+    if ( this.object ) {
       
-      img = this.gameObject;
+      img = this.object;
       w = img.frameWidth;
       h = img.height;
       
@@ -200,7 +200,7 @@ var PlacementView = Ember.View.extend({
   
   drawArrow : function( ctx ) {
     
-    var i = new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( this.gameObject.pos ).angle();
+    var i = new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( this.object.pos ).angle();
     
     ctx.save();
     ctx.translate( this.width * 0.5, this.height * 0.5 );
@@ -228,7 +228,7 @@ var PlacementView = Ember.View.extend({
   
   mousedown : function( mouse ) {
     
-    var obj = this.gameObject,
+    var obj = this.object,
       area = this.area;
     
     if ( obj ) {
@@ -252,7 +252,7 @@ var PlacementView = Ember.View.extend({
   
   mousemove : function( mouse ) {
     
-    var obj = this.gameObject,
+    var obj = this.object,
       area = this.area;
     
     if ( obj ) {
@@ -279,7 +279,7 @@ var PlacementView = Ember.View.extend({
   
   mouseup : function( mouse ) {
     
-    var obj = this.gameObject,
+    var obj = this.object,
       area = this.area;
     
     if ( obj ) {

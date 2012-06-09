@@ -116,8 +116,6 @@ var ActionController = Ember.Object.extend({
   
   addDirectionOption : function( question, observer, depth ) {
     
-    // this.addPlayerOption( question, 'direction', observer, depth );
-    
     this.addOption( question, PlacementView.create({
       observer : observer,
       type : 'direction',
