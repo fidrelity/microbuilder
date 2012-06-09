@@ -4,6 +4,8 @@ var PlacementView = Ember.View.extend({
   
   type : 'location', // location, direction, area, offset
   
+  observer : null,
+  
   width : 640,
   height : 390,
   
@@ -13,7 +15,8 @@ var PlacementView = Ember.View.extend({
   background : null,
   gameObjects : [],
   
-  selectObject : null,
+  gameObject : null,
+  gameObjectID : 0,
   area : null,
   
   increment : 96,
@@ -105,10 +108,14 @@ var PlacementView = Ember.View.extend({
         img.pos = objs[i].position.clone();
         
         this.gameObjects.push( img );
+        
+        if ( this.gameObjectID === objs[i].ID ) {
+          
+          this.gameObject = img;
+          
+        }
       
       }
-      
-      // this.selectObject = img;
       
     }
     
@@ -145,9 +152,9 @@ var PlacementView = Ember.View.extend({
       
     }
     
-    if ( this.selectObject ) {
+    if ( this.gameObject ) {
       
-      img = this.selectObject;
+      img = this.gameObject;
       w = img.frameWidth;
       h = img.height;
       
@@ -163,7 +170,7 @@ var PlacementView = Ember.View.extend({
   
   mousedown : function( mouse ) {
     
-    var obj = this.selectObject,
+    var obj = this.gameObject,
       area = this.area;
     
     if ( obj ) {
@@ -187,12 +194,12 @@ var PlacementView = Ember.View.extend({
   
   mousemove : function( mouse ) {
     
-    var obj = this.selectObject,
+    var obj = this.gameObject,
       area = this.area;
     
     if ( obj ) {
       
-      this.selectObject.pos.addSelf( mouse.move );
+      obj.pos.addSelf( mouse.move );
       
     } else {
     
@@ -214,12 +221,19 @@ var PlacementView = Ember.View.extend({
   
   mouseup : function( mouse ) {
     
-    var area = this.area;
+    var obj = this.gameObject,
+      area = this.area;
     
-    if ( !this.selectObject ) {
+    if ( obj ) {
+      
+      this.observer.locate( obj.pos );
+      
+    } else {
       
       area.adjust();
       area.done = true;
+      
+      this.observer.contain( area );
       
     }
     

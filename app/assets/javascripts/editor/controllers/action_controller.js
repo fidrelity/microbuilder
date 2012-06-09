@@ -122,13 +122,22 @@ var ActionController = Ember.Object.extend({
   
   addLocationOption : function( question, observer, depth ) {
     
-    this.addPlayerOption( question, 'location', observer, depth );
+    // this.addPlayerOption( question, 'location', observer, depth );
+    
+    this.addOption( question, PlacementView.create({
+      observer : observer,
+      type : 'location',
+      gameObjectID : App.gameObjectsController.current.ID
+    }), depth );
     
   },
   
   addAreaOption : function( question, observer, depth ) {
     
-    this.addPlayerOption( question, 'area', observer, depth );
+    this.addOption( question, PlacementView.create({
+      observer : observer,
+      type : 'area'
+    }), depth );
     
   },
   
