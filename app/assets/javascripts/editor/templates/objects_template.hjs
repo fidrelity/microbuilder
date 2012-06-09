@@ -58,7 +58,7 @@
       
           <div class="left">
       
-            <ul>
+            <ul class="actions">
 
               {{#each content.actions}}
 
@@ -100,7 +100,7 @@
         
             <div class="left">
               
-              <ul>
+              <ul class="triggers">
     
                 {{#each content.triggers}}
     
@@ -130,7 +130,7 @@
   
             <div class="left">
         
-              <ul>
+              <ul class="actions">
     
                 {{#each content.actions}}
     

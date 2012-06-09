@@ -112,7 +112,28 @@ var OverlayView = Ember.View.extend({
     
 var ObjectsView = Ember.View.extend({
   heading : 'Objects & Behaviour',
-  templateName : 'editor/templates/objects_template'
+  templateName : 'editor/templates/objects_template',
+  
+  // didInsertElement : function() {
+  //   
+  //   $( '.actions' ).sortable({
+  //     connectWith: '.actions',
+  //     placeholder: 'ui-state-highlight',
+  //     stop: function(event, ui) {
+  //       console.log( event, ui );
+  //     }
+  //   }).disableSelection();
+  //   
+  //   $( '.triggers' ).sortable({
+  //     connectWith: '.triggers',
+  //     placeholder: 'ui-state-highlight',
+  //     stop: function(event, ui) {
+  //       console.log( event, ui );
+  //     }
+  //   }).disableSelection();
+  //   
+  // }
+  
 });
 
 var PublishView = Ember.View.extend({
