@@ -16,7 +16,6 @@ var PlacementView = Ember.View.extend({
   gameObjects : [],
   
   gameObject : null,
-  gameObjectID : 0,
   area : null,
   
   increment : 96,
@@ -45,6 +44,7 @@ var PlacementView = Ember.View.extend({
     } else if ( type === 'direction' || type === 'offset' ) {
       
       canvas.width = canvas.height = 200;
+      this.width = this.height = 400;
       
       ctx.scale( 0.5, 0.5 );
       
@@ -83,41 +83,65 @@ var PlacementView = Ember.View.extend({
   
   load : function() {
     
-    var img, objs = App.gameObjectsController.content, i;
+    var img, objs = App.gameObjectsController.content, i, type = this.type;
     
-    if ( App.game.background ) {
-      
-      img = new Image();
-      img.src = App.game.background.imagePath;
-      img.onload = this.doDraw;
-      
-      this.background = img;
-      
-    }
+    if ( type === 'location' || type === 'area' ) {
     
-    if ( objs ) {
-      
-      this.gameObjects = [];
-      
-      for ( i = 0; i < objs.length; i++ ) {
+      if ( App.game.background ) {
       
         img = new Image();
-        img.src = objs[i].graphic.imagePath;
+        img.src = App.game.background.imagePath;
         img.onload = this.doDraw;
-        img.frameWidth = objs[i].graphic.frameWidth;
-        img.pos = objs[i].position.clone();
+      
+        this.background = img;
+      
+      }
+      
+      if ( objs ) {
+      
+        this.gameObjects = [];
+      
+        for ( i = 0; i < objs.length; i++ ) {
         
-        this.gameObjects.push( img );
+          img = this.getImage( objs[i] );
         
-        if ( this.gameObjectID === objs[i].ID ) {
+          this.gameObjects.push( img );
           
-          this.gameObject = img;
-          
+          if ( this.gameObject === objs[i] ) {
+            
+            this.gameObject = img;
+            
+          }
+        
         }
       
       }
       
+    } else {
+      
+      this.gameObject = this.getImage( this.gameObject );
+      this.gameObjects = [this.gameObject];
+      
+      if ( this.type === 'direction' ) {
+      
+        this.gameObject.pos.set( this.width * 0.75, this.height * 0.5 );
+      
+      }
+      
     }
+    
+  },
+  
+  getImage : function( obj ) {
+    
+    var img = new Image();
+    
+    img.src = obj.graphic.imagePath;
+    img.onload = this.doDraw;
+    img.frameWidth = obj.graphic.frameWidth;
+    img.pos = obj.position.clone();
+    
+    return img;
     
   },
   
@@ -160,11 +184,45 @@ var PlacementView = Ember.View.extend({
       
       ctx.strokeRect( img.pos.x - w * 0.5, img.pos.y - h * 0.5, w, h );
       
+      if ( this.type === 'direction' ) {
+        
+        this.drawArrow( ctx );
+        
+      }
+      
     } else {
       
       this.area.draw( this.ctx );
       
     }
+    
+  },
+  
+  drawArrow : function( ctx ) {
+    
+    var i = new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( this.gameObject.pos ).angle();
+    
+    ctx.save();
+    ctx.translate( this.width * 0.5, this.height * 0.5 );
+    ctx.rotate( i );
+    
+    ctx.line( 0, 0, 130, 0 );
+    
+    ctx.translate( 130, 0 );
+    
+    ctx.beginPath();
+    
+    ctx.moveTo( -5, 0 );
+    ctx.lineTo( -10, -12 );
+    ctx.lineTo( 15, 0 );
+    ctx.lineTo( -10, 12 );
+    
+    ctx.closePath();
+    
+    ctx.fillStyle = '#000';
+    ctx.fill();
+    
+    ctx.restore();
     
   },
   
@@ -226,7 +284,15 @@ var PlacementView = Ember.View.extend({
     
     if ( obj ) {
       
-      this.observer.locate( obj.pos );
+      if ( this.type === 'direction' ) {
+        
+        this.observer.locate( new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( obj.pos ) );
+        
+      } else {
+      
+        this.observer.locate( obj.pos );
+        
+      }
       
     } else {
       
