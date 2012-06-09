@@ -25,7 +25,7 @@
         %div{:class => "frame_graphic", "data-frames" => "#{graphic.frame_count}", :style => "background-image:url(#{graphic.image});width:#{graphic.frame_width}px;height:#{graphic.frame_height}px;"}
         %ul{:class => 'meta'}
           =link_to image_tag("icon_public.png"), '#'
-          =link_to image_tag("icon_delete.png"), graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanentlydelete this graphic?"
+          =link_to image_tag("icon_delete.png"), graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?"
         .overlay
           %p
             = link_to graphic.name, '#'

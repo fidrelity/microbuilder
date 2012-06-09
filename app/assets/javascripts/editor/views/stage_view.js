@@ -45,17 +45,21 @@ var StageView = Ember.View.extend({
   
   trash : function() {
     
-    App.gameController.clear();
+    if ( confirm( 'Throw the game away?' ) ) {
     
-    App.gameObjectsController.set( 'current', null );
-    App.behaviourController.set( 'current', null );
+      App.gameController.clear();
     
-    App.mainView.updatePlayer();
-    this.$( '#slider' ).slider( 'value', [5] );
+      App.gameObjectsController.set( 'current', null );
+      App.behaviourController.set( 'current', null );
     
-    if ( window.localStorage ) {
+      App.mainView.updatePlayer();
+      this.$( '#slider' ).slider( 'value', [5] );
     
-      window.localStorage.setItem( 'game', null );
+      if ( window.localStorage ) {
+    
+        window.localStorage.setItem( 'game', null );
+    
+      }
     
     }
     
