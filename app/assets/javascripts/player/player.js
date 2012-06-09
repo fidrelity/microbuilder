@@ -283,7 +283,11 @@ Player.prototype = {
     
     var object = this.selectObject;
     
-    
+    if ( !object || !object.getArea().contains( mouse.pos ) ) {
+      
+      object = this.game.getGameObjectAt( mouse.pos );
+      
+    } 
     
     this.selectedObjectCallback( object ? object.ID : 0 );
     
@@ -320,7 +324,8 @@ Player.prototype = {
     this.reset();
     this.game.start();
     
-    this.draw( this.ctx );    
+    this.draw( this.ctx );
+    
   },
   
   onPlay : function() {
@@ -342,7 +347,7 @@ Player.prototype = {
     }
     
     this.drawTimeline( this.ctx, 'rgba(0,255,0,0.5)', this.timePlayed );
-
+    
     this.increaseCounter("win");
     
   },
