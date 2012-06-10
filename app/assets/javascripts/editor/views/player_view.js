@@ -2,8 +2,6 @@ var PlayerView = Ember.View.extend({
 
   templateName : 'editor/templates/player_template',
   
-  canvasID : 'playerCanvas',
-  
   player : null,
   type : 'stage',
   
@@ -11,9 +9,9 @@ var PlayerView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    var player, callback, type = this.type;
+    var player;
     
-    if ( type === 'stage' ) {
+    if ( this.type === 'stage' ) {
       
       player = new Stage();
       
@@ -25,12 +23,12 @@ var PlayerView = Ember.View.extend({
       
     }
     
-    this.set( 'player', player );
-    
-    player.init( $('#' + this.canvasID)[0] );
+    player.init( this.$( '.playerCanvas' )[0] );
     player.startRunloop();
     
     player.parse( App.game.getData().game, null, this.corsSave );
+    
+    this.set( 'player', player );
     
   },
   

@@ -7,9 +7,8 @@
   {{view Ember.TextField valueBinding="App.game.instructions" placeholder="(140 chars max)" maxlength="140"}}
   <br />
 
-  {{view PlayerView 
+  {{view PlayerView
     type="test"
-    canvasID="testCanvas"
     playerBinding="player"
     showHTML="true"
     corsSave="true"

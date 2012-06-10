@@ -18,7 +18,6 @@
 <div class="player">
   {{view PlayerView 
     type="stage"
-    canvasID="stageCanvas"
     playerBinding="player"
   }}
 </div>
