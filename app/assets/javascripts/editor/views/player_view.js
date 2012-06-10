@@ -13,19 +13,22 @@ var PlayerView = Ember.View.extend({
     
     var player, callback, type = this.type;
     
-    player = new Player();
-    
-    this.set( 'player', player );
-    
     if ( type === 'stage' ) {
       
-      player.edit = true;
+      player = new Stage();
       
       player.selectedObjectCallback = bind( App.gameObjectsController, App.gameObjectsController.selectID );
       
+    } else {
+      
+      player = new Player();
+      
     }
     
-    player.setCanvas( $('#' + this.canvasID)[0] );
+    this.set( 'player', player );
+    
+    player.init( $('#' + this.canvasID)[0] );
+    player.startRunloop();
     
     player.parse( App.game.getData().game, null, this.corsSave );
     

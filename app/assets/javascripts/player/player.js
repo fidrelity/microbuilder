@@ -1,3 +1,5 @@
+//= require ./../utilities/state_machine
+
 var Player = function() {
   
   this.ID = Player.count++;
@@ -12,46 +14,34 @@ var Player = function() {
   this.fsm = new StateMachine( this );
   
   this.fsm.init({
-    
+  
     initial : 'init',
-    
+  
     states : [
       { name : 'init' },
       { name : 'load' },
-      
-      { name : 'ready', enter : this.enterReady },
-      { name : 'play', draw : this.draw, update : this.update },
-      { name : 'end' },
-      
-      { name : 'edit', enter: this.enterEdit, draw : this.drawEdit },
-      { name : 'trial', enter: this.enterTrial, draw : this.drawTrial, update : this.update }
+    
+      { name : 'ready', enter : this.enterReady, draw : this.drawReady },
+      { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update },
+      { name : 'end' }
     ],
-    
-    transitions : [
-      { name : 'parse', from : '*', to: 'load' },
-      { name : 'loaded', from : 'load', to: 'ready' },
-      { name : 'edit', from : 'load', to: 'edit' },
-      
-      { name : 'start', from : 'ready', to: 'play', callback : this.onPlay },
-      { name : 'win', from : 'play', to: 'end', callback : this.onWin },
-      { name : 'lose', from : 'play', to: 'end', callback : this.onLose },
-      { name : 'restart', from : 'end', to: 'play', callback : this.onPlay },
-      
-      { name : 'try', from : 'edit', to: 'trial' },
-      { name : 'winTrial', from : 'trial', to: 'edit', callback : this.onWin },
-      { name : 'loseTrial', from : 'trial', to: 'edit', callback : this.onLose },
-      { name : 'stop', from : 'trial', to: 'edit' }
-    ]
-    
-  });
   
-  this.edit = false;
+    transitions : [
+      { name : 'parse', from : '*', to : 'load' },
+      { name : 'loaded', from : 'load', to : 'ready' },
+    
+      { name : 'start', from : 'ready', to : 'play', callback : this.onPlay },
+      { name : 'win', from : 'play', to : 'end', callback : this.onWin },
+      { name : 'lose', from : 'play', to : 'end', callback : this.onLose },
+      
+      { name : 'restart', from : 'end', to : 'play', callback : this.onPlay },
+      { name : 'reset', from : '*', to : 'ready' }
+    ]
+  
+  });
   
   this.time = 0;
   this.timePlayed = 0;
-  
-  this.selectObject = null;
-  this.selectedObjectCallback = function() {};
   
   this.terminate = false;
   
@@ -59,28 +49,17 @@ var Player = function() {
 
 Player.prototype = {
   
-  increment : 96,
+  increment : 0,
   scale : 1,
   
-  setCanvas : function( canvas ) {
+  init : function( canvas ) {
     
     var ctx = canvas.getContext( '2d' ),
       mouse = new Mouse( this, canvas ),
-      self = this, i;
+      i = this.increment,
+      self = this;
     
-    if ( this.edit ) {
-      
-      mouse.handleDrag();
-      
-    } else {
-      
-      this.increment = 0;
-      
-      mouse.handleClick();
-      
-    }
-    
-    i = this.increment;
+    mouse.handleClick();
     
     canvas.width = 640 + 2 * i;
     canvas.height = 390 + 2 * i;
@@ -93,6 +72,12 @@ Player.prototype = {
     this.mouse = mouse;
     
     ctx.debug = false;
+    
+  },
+  
+  startRunloop : function() {
+    
+    var self = this;
     
     function run() {
       
@@ -123,15 +108,7 @@ Player.prototype = {
     
     Parser.parseData( data, this.game, function() {
       
-      if ( self.edit ) {
-        
-        self.fsm.edit();
-        
-      } else {
-        
-        self.fsm.loaded();
-        
-      }
+      self.fsm.loaded();
       
       if ( callback ) {
         
@@ -162,6 +139,17 @@ Player.prototype = {
     
   },
   
+  reset : function() {
+    
+    this.time = 0;
+    this.timePlayed = 0;
+    
+    this.mouse.clicked = false;
+    
+    this.game.reset();
+    
+  },
+  
   update : function( dt ) {
     
     this.game.update( dt );
@@ -169,7 +157,6 @@ Player.prototype = {
     if ( this.timePlayed > this.game.duration ) {
     
       this.fsm.lose();
-      this.fsm.stop();
     
     }
     
@@ -179,83 +166,18 @@ Player.prototype = {
     
     this.game.draw( ctx );
     
-    if ( this.timePlayed ) {
-      
-      this.ctx.fillStyle = 'rgba(255,255,0,0.5)';
-      this.ctx.fillRect( 0, 386, 640 * this.timePlayed / this.game.duration, 4 );
-      
-    }
+    this.drawTimeline( ctx, this.timePlayed, 'rgba(255,255,0,0.5)' );
     
   },
   
-  drawEdit : function( ctx ) {
-    
-    var i = this.increment;
-    
-    if ( this.mouse.dragging || this.redraw ) {
-    
-      ctx.clearRect( -i, -i, 640 + 2 * i, 390 + 2 * i );
-    
-      ctx.lineWidth = 2;
-    
-      this.game.draw( ctx );
-    
-      if ( this.selectObject ) {
-        
-        this.selectObject.draw( ctx );
-        
-        ctx.strokeStyle = '#000';
-        
-        this.selectObject.getArea().draw( ctx );
-      
-      }
-      
-      this.drawTimeline( ctx, 'rgba(125,125,125,0.5)', 0 );
-      
-      this.redraw = false;
-    
-    }
-    
-  },
-  
-  drawTrial : function( ctx ) {
-    
-    var i = this.increment;
-    
-    ctx.clearRect( -i, -i, 640 + 2 * i, 390 + 2 * i );
-    
-    ctx.lineWidth = 2;
-    
-    this.game.draw( ctx );
-    
-    this.drawTimeline( ctx, 'rgba(200,200,0,0.5)', this.timePlayed );
-    
-  },
-  
-  drawTimeline : function( ctx, color, timePlayed ) {
-    
-    var i = this.increment;
+  drawTimeline : function( ctx, timePlayed, color ) {
     
     ctx.fillStyle = color;
     
-    ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
-    ctx.fillRect( ( 640 + i ) * timePlayed / this.game.duration - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
+    ctx.fillRect( 0, 386, 640 * timePlayed / this.game.duration, 4 );
     
   },
   
-  reset : function() {
-    
-    this.time = 0;
-    this.timePlayed = 0;
-    
-    this.mouse.clicked = false;
-    
-    this.selectObject = null;
-    
-    this.game.reset();
-    
-  },
-
   click : function() {
     
     if ( this.fsm.hasState( 'ready' ) ) {
@@ -263,7 +185,6 @@ Player.prototype = {
       $('.playerStartScreen').hide();
       
       this.fsm.start();
-      //this.increaseCounter();
       
     } else if ( this.fsm.hasState( 'end' ) ) {
       
@@ -271,48 +192,7 @@ Player.prototype = {
       $('.playerWinScreen').hide();
       
       this.fsm.restart();
-      //this.increaseCounter();
       
-    }
-    
-  },
-  
-  mousedown : function( mouse ) {
-    
-    var object = this.selectObject;
-    
-    if ( !object || !object.getArea().contains( mouse.pos ) ) {
-      
-      object = this.game.getGameObjectAt( mouse.pos );
-      
-    } 
-    
-    this.selectedObjectCallback( object ? object.ID : 0 );
-    
-    this.selectObject = object;
-    
-  },
-  
-  mousemove : function( mouse ) {
-    
-    var object = this.selectObject;
-    
-    if ( object ) {
-      
-      object.movePosition( mouse.move );
-      
-    }
-    
-  },
-  
-  mouseup : function() {
-    
-    var object = this.selectObject;
-    
-    if ( object ) {
-    
-      this.selectedObjectCallback( object.ID, object.getPosition() );
-    
     }
     
   },
@@ -337,16 +217,9 @@ Player.prototype = {
     
     $('.playerWinScreen').fadeTo(600, 0.9);
     
-    if ( !this.edit ) {
-      
-      this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
-      this.ctx.fillRect( 0, 386, 640 * this.timePlayed / this.game.duration, 4 );
-      
-    }
-    
     this.drawTimeline( this.ctx, 'rgba(0,255,0,0.5)', this.timePlayed );
     
-    this.increaseCounter("win");
+    this.increaseCounter( "win" );
     
   },
   
@@ -354,38 +227,9 @@ Player.prototype = {
     
     $('.playerLoseScreen').fadeTo(600, 0.9); 
     
-    if ( !this.edit ) {
-      
-      this.ctx.fillStyle = 'rgba(255,0,0,0.5)';
-      this.ctx.fillRect( 0, 386, 640 * this.timePlayed / this.game.duration, 4 );
-      
-    }
-    
     this.drawTimeline( this.ctx, 'rgba(255,0,0,0.5)', this.timePlayed );
-    this.increaseCounter("lose");
     
-  },
-  
-  enterTrial : function() {
-    
-    this.mouse.handleClick();
-    this.reset();
-    
-  },
-  
-  enterEdit : function() {
-    
-    this.mouse.handleDrag();
-    this.reset();
-    
-    this.redraw = true;
-    
-  },
-  
-  stop : function() {
-    
-    this.fsm.stop();
-    this.redraw = true;
+    this.increaseCounter( "lose" );
     
   },
   

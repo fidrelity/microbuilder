@@ -74,7 +74,7 @@ function player_main( data, game_id ) {
   
   if ( $( '#playerCanvas' ) && $( '#playerCanvas' )[0] ) {
   
-    player.setCanvas( $( '#playerCanvas' )[0] );
+    player.init( $( '#playerCanvas' )[0] );
     //player.debug();
   
     if ( data ) {
