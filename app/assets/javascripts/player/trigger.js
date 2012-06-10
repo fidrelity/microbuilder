@@ -36,7 +36,9 @@ ClickTrigger.prototype = {
       
     }
     
-  }
+  },
+  
+  reset : function() {}
   
 };
 

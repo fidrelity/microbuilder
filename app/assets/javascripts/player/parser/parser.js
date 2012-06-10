@@ -74,7 +74,7 @@ var Parser = {
       
     }
     
-    if ( data.background ) {
+    if ( data.background ) { // deprecated
       
       game.background = this.loader.loadImage( data.background );
       

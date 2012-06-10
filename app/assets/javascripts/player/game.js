@@ -28,24 +28,16 @@ Game.prototype = {
   },
   
   start : function() {
-
+    
     this.startActions.forEachApply( 'execute', this );
     
   },
   
   update : function( dt ) {
     
-    for ( var i = 0; i < this.behaviours.length; i++ ) {
-      
-      this.behaviours[i].check( this );
-      
-    }
+    this.behaviours.forEachApply( 'check', this );
     
-    for ( var i = 0; i < this.gameObjects.length; i++ ) {
-      
-      this.gameObjects[i].update( dt );
-      
-    }
+    this.gameObjects.forEachApply( 'update', dt );
     
   },
   
@@ -67,22 +59,14 @@ Game.prototype = {
     
     if ( ctx.debug ) {
     
-      for ( i = 0; i < this.behaviours.length; i++ ) {
-      
-        this.behaviours[i].draw( ctx );
-      
-      }
+      this.behaviours.forEachApply( 'draw', ctx );
     
     }
     
     ctx.fillStyle = '#AAA';
     ctx.strokeStyle = '#AAA';
     
-    for ( i = 0; i < this.gameObjects.length; i++ ) {
-      
-      this.gameObjects[i].draw( ctx );
-      
-    }
+    this.gameObjects.forEachApply( 'draw', ctx );
     
     if ( ctx.debug ) {
       
