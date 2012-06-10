@@ -22,6 +22,8 @@ extend( Stage.prototype, {
     
     this.mouse.handleDrag();
     
+    this.ctx.lineWidth = 2;
+    
   },
   
   reset : function() {
@@ -40,8 +42,6 @@ extend( Stage.prototype, {
     if ( this.mouse.dragging || this.redraw ) {
     
       ctx.clearRect( -i, -i, 640 + 2 * i, 390 + 2 * i );
-    
-      ctx.lineWidth = 2;
     
       this.game.draw( ctx );
     
@@ -63,17 +63,15 @@ extend( Stage.prototype, {
     
   },
   
-  draw : function( ctx ) {
+  draw : function( ctx, color ) {
     
     var i = this.increment;
     
     ctx.clearRect( -i, -i, 640 + 2 * i, 390 + 2 * i );
     
-    ctx.lineWidth = 2;
-    
     this.game.draw( ctx );
     
-    this.drawTimeline( ctx, this.timePlayed, 'rgba(200,200,0,0.5)' );
+    this.drawTimeline( ctx, this.timePlayed, color || 'rgba(200,200,0,0.5)' );
     
   },
   
@@ -88,9 +86,13 @@ extend( Stage.prototype, {
     
   },
   
+  onReady : function() {},
+  
   enterReady : function() {
     
-    Player.prototype.enterReady.call( this );
+    this.reset();
+    
+    this.game.reset();
     
     this.mouse.handleDrag();
     
@@ -101,7 +103,33 @@ extend( Stage.prototype, {
   enterPlay : function() {
     
     this.mouse.handleClick();
+    
     this.reset();
+    
+    this.game.reset();
+    this.game.start();
+    
+  },
+  
+  onWin : function() {
+    
+    this.draw( this.ctx, 'rgba(0,255,0,0.5)' );
+    
+  },
+  
+  onLose : function() {
+    
+    this.draw( this.ctx, 'rgba(255,0,0,0.5)' );
+    
+  },
+  
+  click : function() {
+    
+    if ( this.fsm.hasState( 'end' ) ) {
+      
+      this.fsm.reset();
+      
+    }
     
   },
   

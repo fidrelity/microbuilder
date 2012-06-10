@@ -28,13 +28,13 @@ var Player = function() {
   
     transitions : [
       { name : 'parse', from : '*', to : 'load' },
-      { name : 'loaded', from : 'load', to : 'ready' },
+      { name : 'loaded', from : 'load', to : 'ready', callback : this.onReady },
     
-      { name : 'start', from : 'ready', to : 'play', callback : this.onPlay },
+      { name : 'start', from : 'ready', to : 'play', callback : this.reset },
       { name : 'win', from : 'play', to : 'end', callback : this.onWin },
       { name : 'lose', from : 'play', to : 'end', callback : this.onLose },
       
-      { name : 'restart', from : 'end', to : 'play', callback : this.onPlay },
+      { name : 'restart', from : 'end', to : 'play', callback : this.onReady },
       { name : 'reset', from : '*', to : 'ready' }
     ]
   
@@ -98,28 +98,6 @@ Player.prototype = {
     
   },
   
-  parse : function( data, callback, corsSave ) {
-    
-    var self = this;
-    
-    this.fsm.parse();
-    
-    this.game = new Game( this, this.mouse );
-    
-    Parser.parseData( data, this.game, function() {
-      
-      self.fsm.loaded();
-      
-      if ( callback ) {
-        
-        callback();
-        
-      }
-        
-    }, corsSave );
-    
-  },
-  
   run : function() {
     
     var dt, t = Date.now();
@@ -146,7 +124,27 @@ Player.prototype = {
     
     this.mouse.clicked = false;
     
-    this.game.reset();
+  },
+  
+  parse : function( data, callback, corsSave ) {
+    
+    var self = this;
+    
+    this.fsm.parse();
+    
+    this.game = new Game( this, this.mouse );
+    
+    Parser.parseData( data, this.game, function() {
+      
+      self.fsm.loaded();
+      
+      if ( callback ) {
+        
+        callback();
+        
+      }
+        
+    }, corsSave );
     
   },
   
@@ -197,19 +195,14 @@ Player.prototype = {
     
   },
   
-  enterReady : function() {
+  onReady : function() {
     
     this.reset();
+    
+    this.game.reset();
     this.game.start();
     
     this.draw( this.ctx );
-    
-  },
-  
-  onPlay : function() {
-    
-    this.reset();
-    this.game.start();
     
   },
   
@@ -217,7 +210,7 @@ Player.prototype = {
     
     $('.playerWinScreen').fadeTo(600, 0.9);
     
-    this.drawTimeline( this.ctx, 'rgba(0,255,0,0.5)', this.timePlayed );
+    this.drawTimeline( this.ctx, this.timePlayed, 'rgba(0,255,0,0.5)' );
     
     this.increaseCounter( "win" );
     
@@ -227,7 +220,7 @@ Player.prototype = {
     
     $('.playerLoseScreen').fadeTo(600, 0.9); 
     
-    this.drawTimeline( this.ctx, 'rgba(255,0,0,0.5)', this.timePlayed );
+    this.drawTimeline( this.ctx, this.timePlayed, 'rgba(255,0,0,0.5)' );
     
     this.increaseCounter( "lose" );
     

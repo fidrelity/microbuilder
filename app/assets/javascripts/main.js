@@ -75,6 +75,8 @@ function player_main( data, game_id ) {
   if ( $( '#playerCanvas' ) && $( '#playerCanvas' )[0] ) {
   
     player.init( $( '#playerCanvas' )[0] );
+    player.startRunloop();
+    
     //player.debug();
   
     if ( data ) {
