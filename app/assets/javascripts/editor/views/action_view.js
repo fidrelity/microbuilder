@@ -24,6 +24,16 @@ var QuestionView = Ember.View.extend({
   
 });
 
+var OptionsView = Ember.ContainerView.extend({
+  
+  // currentViewBinding : 'App.actionController.view',
+  
+  currentView : QuestionView.create({content:"ih there?"})
+  
+  // childViews : [QuestionView.create({content:'Hallo?'}), QuestionView.create({content:'Du?'})]
+  
+});
+
 var ButtonView = Ember.CollectionView.extend({
   
   content : [],

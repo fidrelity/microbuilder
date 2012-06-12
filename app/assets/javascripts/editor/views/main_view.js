@@ -11,54 +11,55 @@ var MainView = Ember.View.extend({
   
   show : function( viewClass ) {
     
-    var self = this, overlay;
+    var overlay;
     
     overlay = OverlayView.create({
       heading: viewClass.create().heading,
       viewClass : viewClass
     });
     
-    overlay.appendTo( '#overlayView' );
-    
-    if ( this.overlayView ) {
-      
-      overlay.fadeIn = false;
-      self.set( 'overlayView2', overlay );
+    // if ( this.overlayView ) {
+    //   
+    //   overlay.fadeIn = false;
+    //   self.set( 'overlayView2', overlay );
+    //   
+    //   this.hideOverlay();
+    //   
+    // } else {
       
       this.hideOverlay();
+      this.set( 'overlayView', overlay );
       
-    } else {
-      
-      self.set( 'overlayView', overlay );
-      
-    }
+    // }
     
   },
   
   hideOverlay : function() {
     
-    var self = this;
+    // var self = this;
     
     if ( this.overlayView ) {
     
-      this.overlayView.$( '#overlayWrapper' ).fadeOut( 100, function() {
-        
-        self.overlayView.remove();
-        
-        if ( self.overlayView2 ) {
-          
-          self.set( 'overlayView', self.overlayView2 );
-          self.set( 'overlayView2', null );
-          
-          self.overlayView.$( '#overlayWrapper' ).fadeIn( 100 );
-          
-        } else {
-          
-          self.set( 'overlayView', null );
-          
-        }
-        
-      });
+      this.overlayView.remove();
+    
+      // this.overlayView.$( '.overlayWrapper' ).fadeOut( 100, function() {
+      //   
+      //   self.overlayView.remove();
+      //   
+      //   if ( self.overlayView2 ) {
+      //     
+      //     self.set( 'overlayView', self.overlayView2 );
+      //     self.set( 'overlayView2', null );
+      //     
+      //     self.overlayView.$( '.overlayWrapper' ).fadeIn( 100 );
+      //     
+      //   } else {
+      //     
+      //     self.set( 'overlayView', null );
+      //     
+      //   }
+      //   
+      // });
       
       this.updatePlayer();
       
@@ -101,11 +102,11 @@ var OverlayView = Ember.View.extend({
     
     window.scrollTo( 0, 0 );
     
-    if ( this.fadeIn ) {
-    
-      this.$( '#overlayWrapper' ).fadeIn( 100 );
-    
-    }
+    // if ( this.fadeIn ) {
+    // 
+    //   this.$( '.overlayWrapper' ).fadeIn( 100 );
+    // 
+    // }
     
   }
 });

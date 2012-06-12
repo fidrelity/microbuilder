@@ -1,6 +1,6 @@
-<div id="overlayWrapper">
+<div class="overlayWrapper">
 
-  <div id="overlay">
+  <div class="overlay">
 
     <h3 class="left">{{heading}}</h3>
 

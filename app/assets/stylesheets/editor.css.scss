@@ -37,20 +37,20 @@
   opacity:1.0;
 }
 
-#editor #overlay .libaryGraphics {
+#editor .overlay .libaryGraphics {
   margin-top : 15px;
 }
 
-#editor #overlayWrapper {
+#editor .overlayWrapper {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  display: none;
+/*  display: none;*/
 }
 
-#editor #overlay {
+#editor .overlay {
   position: relative;
   margin: 0 auto;
   top: 20%;
@@ -61,25 +61,25 @@
   padding: 20px;
 }
 
-#editor #overlay #overlayLeft {
+#editor .overlay #overlayLeft {
   height : 100%;
   float : left;
 }
 
-#editor #overlay #objects {
+#editor .overlay #objects {
   background-color: white;
   padding: 15px 0 0 15px;
   margin-bottom: 15px;
   width: 162px;
 }
 
-#editor #overlay #overlayRight {
+#editor .overlay #overlayRight {
   float: left;
   margin-left: 32px;
   width: 515px;
 }
 
-#editor #overlay #done {
+#editor .overlay #done {
   position : absolute;
   bottom : 20px;
   right : 20px;
@@ -191,12 +191,12 @@
 #snapshots li {  cursor:pointer;}
 #snapshots li.active {  background:#BBB;}
 
-#editor #overlay .actionstring {
+#editor .overlay .actionstring {
   font-size: 12pt;
   padding-top: 12px;
 }
 
-#editor #overlay .questionview {
+#editor .overlay .questionview {
   clear: both;
   margin: 15px 0;
   padding: 5px 0;
@@ -205,51 +205,51 @@
   
 }
 
-#editor #overlay .optionview {
+#editor .overlay .optionview {
   margin-bottom: 15px;
 }
 
-#editor #overlay .buttonview .btn {
+#editor .overlay .buttonview .btn {
   margin-right: 5px;
 }
 
-#editor #overlay .speedview {
+#editor .overlay .speedview {
   overflow: hidden;
 }
 
-#editor #overlay .speedview .slider {
+#editor .overlay .speedview .slider {
   margin: 5px 7px;
   width: 300px;
 }
 
-#editor #overlay .speedview .speed {
+#editor .overlay .speedview .speed {
   font-size: 12pt;
   margin: 5px 15px;
 }
 
-#editor #overlay .artview .btn {
+#editor .overlay .artview .btn {
   margin-top: 10px;
 }
 
-#editor #overlay .timeview {
+#editor .overlay .timeview {
   overflow: hidden;
 }
 
-#editor #overlay .timeview .time, #editor #overlay .timeview .slider {
+#editor .overlay .timeview .time, #editor .overlay .timeview .slider {
   float : left;
   margin : 5px 20px 0 0;
 }
 
-#editor #overlay .timeview .slider {
+#editor .overlay .timeview .slider {
   width: 300px;
 }
 
-#editor #overlay .timeview .time {
+#editor .overlay .timeview .time {
   width: 30px;
   font-size : 12pt;
 }
 
-#editor #overlay .frame_name {
+#editor .overlay .frame_name {
   position: absolute;
   width:100%;
   bottom: 2px;

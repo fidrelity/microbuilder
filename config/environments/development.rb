@@ -51,6 +51,9 @@ Playtin::Application.configure do
   # https://github.com/webarbeit/feedhub
   Feedhub::set_user(:name => "playtin", :password => "platin3")
   Feedhub::set_repo(:account => "playtin", :name => "Support")
+  
+  # ember-rails
+  config.ember.variant = :development
 end
 
 PAPERCLIP_OPTIONS = {

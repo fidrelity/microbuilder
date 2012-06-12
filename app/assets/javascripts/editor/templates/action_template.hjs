@@ -1,5 +1,7 @@
 <div id="actionContent"></div>
 
+{{view Ember.ContainerView currentViewBinding="App.actionController.optionViews"}}
+
 {{#if App.actionController.showSaveButton}}
 
   <div class="questionview">Is your {{App.actionController.mode}} correct?</div>

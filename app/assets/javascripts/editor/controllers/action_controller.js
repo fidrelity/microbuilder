@@ -12,7 +12,7 @@ var ActionController = Ember.Object.extend({
   
   behaviourBinding : 'App.behaviourController.current',
   
-  optionViews : [],
+  optionViews : null,
   
   showSaveButton : false,
   
@@ -42,6 +42,8 @@ var ActionController = Ember.Object.extend({
     
     }
     
+    this.set( 'optionViews', Ember.ContainerView.create() );
+    
     this.addOption( question, ButtonView.create({
       observer : this,
       content : buttons,
@@ -66,6 +68,8 @@ var ActionController = Ember.Object.extend({
   
   updateDepth : function( depth ) {
     
+    var childs = this.optionViews.get( 'childViews' );
+    
     if ( typeof depth === 'undefined' ) {
       
       console.error( 'option has no depth' );
@@ -73,9 +77,10 @@ var ActionController = Ember.Object.extend({
       
     }
     
-    while ( this.optionViews.length > depth * 2 ) {
+    while ( childs.length > depth * 2 ) {
       
-      this.optionViews.pop().remove();
+      childs[childs.length - 1].removeFromParent();
+      
       this.set( 'showSaveButton', false );
       
     }
@@ -86,12 +91,8 @@ var ActionController = Ember.Object.extend({
     
     this.updateDepth( depth );
     
-    var questionView = QuestionView.create({ content : question });
-    questionView.appendTo( '#actionContent' );
-    
-    optionView.appendTo( '#actionContent' );
-    
-    this.optionViews.push( questionView, optionView );
+    this.optionViews.get( 'childViews' ).pushObject( QuestionView.create({ content : question }) );
+    this.optionViews.get( 'childViews' ).pushObject( optionView );
     
   },
   
