@@ -7,63 +7,37 @@ var MainView = Ember.View.extend({
   player : null,
   
   overlayView : null,
-  overlayView2 : null,
+  overlay : null,
   
-  show : function( viewClass ) {
+  init : function() {
     
-    var overlay;
+    this._super();
     
-    overlay = OverlayView.create({
-      heading: viewClass.create().heading,
-      viewClass : viewClass
-    });
+    this.libraryView = LibraryView.create();
+    this.objectsView = ObjectsView.create();
+    this.actionView = ActionView.create();
+    this.publishView = PublishView.create();
     
-    // if ( this.overlayView ) {
-    //   
-    //   overlay.fadeIn = false;
-    //   self.set( 'overlayView2', overlay );
-    //   
-    //   this.hideOverlay();
-    //   
-    // } else {
-      
-      this.hideOverlay();
-      this.set( 'overlayView', overlay );
-      
-    // }
+    this.overlayView = OverlayView.create();
+    
+  },
+  
+  show : function( name ) {
+    
+    var view = this.get( name );
+    
+    this.overlayView.set( 'showView', view );
+    this.overlayView.set( 'heading', view.get( 'heading' ) );
+    
+    this.set( 'overlay', this.overlayView );
     
   },
   
   hideOverlay : function() {
     
-    // var self = this;
+    this.set( 'overlay', null );
     
-    if ( this.overlayView ) {
-    
-      this.overlayView.remove();
-    
-      // this.overlayView.$( '.overlayWrapper' ).fadeOut( 100, function() {
-      //   
-      //   self.overlayView.remove();
-      //   
-      //   if ( self.overlayView2 ) {
-      //     
-      //     self.set( 'overlayView', self.overlayView2 );
-      //     self.set( 'overlayView2', null );
-      //     
-      //     self.overlayView.$( '.overlayWrapper' ).fadeIn( 100 );
-      //     
-      //   } else {
-      //     
-      //     self.set( 'overlayView', null );
-      //     
-      //   }
-      //   
-      // });
-      
-      this.updatePlayer();
-      
-    }
+    this.updatePlayer();
     
   },
   

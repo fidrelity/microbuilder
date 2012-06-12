@@ -2,7 +2,7 @@
 
   {{view StageView playerBinding="player"}}
   
-  {{view Ember.ContainerView currentViewBinding="overlayView"}}
+  {{view Ember.ContainerView currentViewBinding="overlay"}}
 
 </div>
 

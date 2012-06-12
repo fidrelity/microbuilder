@@ -8,7 +8,7 @@
 
     <div class="clear"></div>
 
-    {{view viewClass}}
+    {{view Ember.ContainerView currentViewBinding="showView"}}
 
     <div class="clear"></div>
 

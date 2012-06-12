@@ -25,8 +25,6 @@ var ActionController = Ember.Object.extend({
     this.set( 'mode', mode );
     this.set( 'showSaveButton', false );
     
-    this.set( 'optionViews', [] );
-    
     if ( mode === 'Action' ) {
       
       // buttons = ['move', 'art', 'number', 'win/lose'];
@@ -42,7 +40,13 @@ var ActionController = Ember.Object.extend({
     
     }
     
-    this.set( 'optionViews', Ember.ContainerView.create() );
+    this.set( 'optionViews', Ember.ContainerView.create({
+      destroy : function() {
+        if ( App.actionController.action.type !== 'search' ) {
+          this._super();
+        }
+      }
+    }));
     
     this.addOption( question, ButtonView.create({
       observer : this,
@@ -280,7 +284,7 @@ var ActionController = Ember.Object.extend({
     
     }
     
-    App.mainView.show( ObjectsView );
+    App.mainView.show( 'objectsView' );
     
   }
 
