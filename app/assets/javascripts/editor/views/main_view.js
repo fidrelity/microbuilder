@@ -7,7 +7,6 @@ var MainView = Ember.View.extend({
   player : null,
   
   overlayView : null,
-  overlay : null,
   
   init : function() {
     
@@ -18,8 +17,6 @@ var MainView = Ember.View.extend({
     this.actionView = ActionView.create();
     this.publishView = PublishView.create();
     
-    this.overlayView = OverlayView.create();
-    
   },
   
   show : function( name ) {
@@ -29,13 +26,13 @@ var MainView = Ember.View.extend({
     this.overlayView.set( 'showView', view );
     this.overlayView.set( 'heading', view.get( 'heading' ) );
     
-    this.set( 'overlay', this.overlayView );
+    this.overlayView.set( 'isVisible', true );
     
   },
   
   hideOverlay : function() {
     
-    this.set( 'overlay', null );
+    this.overlayView.set( 'isVisible', false );
     
     this.updatePlayer();
     
@@ -67,22 +64,17 @@ var MainView = Ember.View.extend({
 });
 
 var OverlayView = Ember.View.extend({
+  
   templateName : 'editor/templates/overlay_template',
-  viewClass : null,
-  heading : 'Overlay',
-  fadeIn : true,
+  
+  isVisible : false,
   
   didInsertElement : function() {
     
-    window.scrollTo( 0, 0 );
-    
-    // if ( this.fadeIn ) {
-    // 
-    //   this.$( '.overlayWrapper' ).fadeIn( 100 );
-    // 
-    // }
+    App.mainView.set( 'overlayView', this );
     
   }
+  
 });
     
 var ObjectsView = Ember.View.extend({

@@ -42,7 +42,7 @@ var ActionController = Ember.Object.extend({
     
     this.set( 'optionViews', Ember.ContainerView.create({
       destroy : function() {
-        if ( App.actionController.action.type !== 'search' ) {
+        if ( App.actionController.action && App.actionController.action.type !== 'search' ) {
           this._super();
         }
       }

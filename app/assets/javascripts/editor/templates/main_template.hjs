@@ -1,8 +1,8 @@
 <div class="editor_content">
 
   {{view StageView playerBinding="player"}}
-  
-  {{view Ember.ContainerView currentViewBinding="overlay"}}
+
+  {{view OverlayView}}
 
 </div>
 
