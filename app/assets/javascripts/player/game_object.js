@@ -46,30 +46,6 @@ GameObject.prototype = {
     
   },
   
-  setPosition : function( pos ) {
-    
-    this.movement.setPosition( pos );
-    
-  },
-  
-  movePosition : function( vec ) {
-    
-    this.movement.movePosition( vec );
-    
-  },
-  
-  setTarget : function( pos, speed ) {
-    
-    this.movement.setTarget( pos, speed );
-    
-  },
-  
-  setDirection : function( dir, speed ) {
-    
-    this.movement.setDirection( dir, speed );
-    
-  },
-  
   roam : function( mode, area, speed ) {
     
     this.movement.roam( this, mode, area, speed );

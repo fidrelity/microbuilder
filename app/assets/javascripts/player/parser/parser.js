@@ -229,6 +229,10 @@ var Parser = {
   {
     type: "jumpTo",
     objectID: 0,
+    offset:{
+      x:3,
+      y:4
+    }
   }
   
   {
@@ -254,13 +258,19 @@ var Parser = {
     
       action.target = this.game.getGameObjectWithID( actionData.objectID ).movement.position;
       
+      if ( actionData.offset ) {
+        
+        action.offset = new Vector().copy( actionData.offset );
+        
+      }
+    
     } else if ( actionData.area ) {
     
       action.area = new Area().copy( actionData.area );
     
     } else {
     
-      action.target = new Vector( actionData.location.x, actionData.location.y );
+      action.target = new Vector().copy( actionData.location );
     
     }
     
@@ -280,7 +290,11 @@ var Parser = {
 
   {
     type: "moveTo",
-    objectID: 0
+    objectID: 0,
+    offset:{
+      x:3,
+      y:4
+    }
   }
 */
 
@@ -296,6 +310,12 @@ var Parser = {
     if ( actionData.objectID ) {
     
       action.target = this.game.getGameObjectWithID( actionData.objectID ).movement.position;
+      
+      if ( actionData.offset ) {
+        
+        action.offset = new Vector().copy( actionData.offset );
+        
+      }
     
     } else {
     

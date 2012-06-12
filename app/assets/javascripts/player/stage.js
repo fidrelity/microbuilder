@@ -155,7 +155,7 @@ extend( Stage.prototype, {
     
     if ( object ) {
       
-      object.movePosition( mouse.move );
+      object.movement.movePosition( mouse.move );
       
     }
     

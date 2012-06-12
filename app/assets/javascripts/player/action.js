@@ -2,6 +2,7 @@ var MoveAction = function() {
   
   this.gameObject = null;
   this.target = null;
+  this.offset = new Vector();
   this.area = null;
   
   this.random = false;
@@ -23,7 +24,7 @@ MoveAction.prototype = {
       
     } else {
     
-      this.gameObject.setPosition( this.target );
+      this.gameObject.movement.setPosition( this.target.add( this.offset ) );
       
     }
     
@@ -31,7 +32,7 @@ MoveAction.prototype = {
   
   executeMoveTo : function() {
     
-    this.gameObject.setTarget( this.target, this.speed );
+    this.gameObject.movement.setTarget( this.target, this.offset, this.speed );
     
   },
   
@@ -53,7 +54,7 @@ MoveAction.prototype = {
       
     }
     
-    this.gameObject.setDirection( dir, this.speed );
+    this.gameObject.movement.setDirection( dir, this.speed );
     
   }
   

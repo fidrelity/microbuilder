@@ -43,11 +43,13 @@ Movement.prototype = {
     
   },
   
-  setTarget : function( pos, speed ) {
+  setTarget : function( pos, offset, speed ) {
     
     this.stop();
     
     this.target = pos;
+    this.offset = offset;
+    
     this.speed = speed;
     
   },
@@ -157,7 +159,7 @@ Movement.prototype = {
       target = this.target,
       pos = this.position;
     
-    vector.copy( target ).subSelf( pos );
+    vector.copy( target ).addSelf( this.offset ).subSelf( pos );
     
     if ( vector.norm() < distance ) {
     
@@ -250,7 +252,7 @@ Movement.prototype = {
     
     if ( this.target ) {
       
-      ctx.line( this.position.x, this.position.y, this.target.x, this.target.y );
+      ctx.line( this.position.x, this.position.y, this.target.x + this.offset.x, this.target.y + this.offset.y );
       
     } else if ( this.roamMode ) {
       
