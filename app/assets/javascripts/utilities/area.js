@@ -74,10 +74,12 @@ Area.prototype = {
   
   overlaps : function( area ) {
     
-    var x = this.x < area.x ? [this, area] : [area, this],
-      y = this.y < area.y ? [this, area] : [area, this];
-    
-    return ( x[0].x + x[0].width > x[1].x && y[0].y + y[0].height > y[1].y );
+    return (
+      this.x + this.width > area.x &&
+      this.y + this.height > area.y &&
+      this.x < area.x + area.width &&
+      this.y < area.y + area.height
+    );
     
   },
   
