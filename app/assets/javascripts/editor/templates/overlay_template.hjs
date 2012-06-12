@@ -2,11 +2,13 @@
 
   <div class="overlay">
 
-    <h3 class="left">{{heading}}</h3>
+    <h4 class="left">{{heading}}</h4>
 
     <button class="btn right" {{action "hideOverlay" target="App.mainView"}}> X </button>
 
     <div class="clear"></div>
+
+    <h3>{{currentHeading}}</h3>
 
     {{view Ember.ContainerView currentViewBinding="showView"}}
 

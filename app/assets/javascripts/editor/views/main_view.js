@@ -19,12 +19,21 @@ var MainView = Ember.View.extend({
     
   },
   
-  show : function( name ) {
+  show : function( name, push ) {
     
     var view = this.get( name );
     
     this.overlayView.set( 'showView', view );
-    this.overlayView.set( 'heading', view.get( 'heading' ) );
+    
+    if ( push ) {
+      
+      this.overlayView.pushHeading( view.get( 'heading' ) );
+      
+    } else {
+      
+      this.overlayView.popHeading();
+      
+    }
     
     this.overlayView.set( 'isVisible', true );
     
@@ -69,11 +78,38 @@ var OverlayView = Ember.View.extend({
   
   isVisible : false,
   
+  heading : null,
+  headings : [],
+  
   didInsertElement : function() {
     
     App.mainView.set( 'overlayView', this );
     
-  }
+  },
+  
+  pushHeading : function( heading ) {
+    
+    this.headings.pushObject( heading );
+    
+  },
+  
+  popHeading : function() {
+    
+    this.headings.popObject();
+    
+  },
+  
+  heading : function() {
+    
+    return this.headings.join( ' > ' );
+    
+  }.property( 'headings.length' ),
+  
+  currentHeading : function() {
+    
+    return this.headings.objectAt( this.headings.length - 1 );
+    
+  }.property( 'headings.length' )
   
 });
     

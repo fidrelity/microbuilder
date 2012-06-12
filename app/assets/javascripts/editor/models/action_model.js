@@ -362,7 +362,7 @@ var ArtActionModel = ActionTriggerModel.extend({
   
   change : function() {
     
-    App.actionController.addArtOption( 'Search in the libray for your graphic', this, 2 );
+    App.actionController.addArtOption( 'Search in the library for your graphic', this, 2 );
     
   },
   

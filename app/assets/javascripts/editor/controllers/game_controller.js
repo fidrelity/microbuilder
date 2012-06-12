@@ -27,7 +27,7 @@ var GameController = Ember.Object.extend({
   
   showObjects : function() {
     
-    App.mainView.show( 'objectsView' );
+    App.mainView.show( 'objectsView', true );
     
   },
   
@@ -36,7 +36,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectGraphic );
     
-    App.mainView.show( 'libraryView' );
+    App.mainView.show( 'libraryView', true );
     this.set( 'cancelView', 'objectsView' );
     
   },
@@ -54,7 +54,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectArtGraphic );
     
-    App.mainView.show( 'libraryView' );
+    App.mainView.show( 'libraryView', true );
     this.set( 'cancelView', 'actionView' );
     
   },
@@ -73,7 +73,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', true );
     App.libraryController.set( 'selectFunction', this.selectBackground );
     
-    App.mainView.show( 'libraryView' );
+    App.mainView.show( 'libraryView', true );
     this.set( 'cancelView', null );
     
   },
@@ -91,7 +91,7 @@ var GameController = Ember.Object.extend({
     App.libraryController.set( 'showBackground', false );
     App.libraryController.set( 'selectFunction', this.selectChangeGraphic );
     
-    App.mainView.show( 'libraryView' );
+    App.mainView.show( 'libraryView', true );
     this.set( 'cancelView', 'objectsView' );
     
   },
@@ -107,25 +107,25 @@ var GameController = Ember.Object.extend({
   
   addTrigger : function() {
     
-    App.mainView.show( 'actionView' );
     App.actionController.reset( 'Trigger' );
     
+    App.mainView.show( 'actionView', true );
     this.set( 'cancelView', 'objectsView' );
     
   },
   
   addAction : function() {
     
-    App.mainView.show( 'actionView' );
     App.actionController.reset( 'Action' );
     
+    App.mainView.show( 'actionView', true );
     this.set( 'cancelView', 'objectsView' );
     
   },
   
   finalize : function() {
     
-    App.mainView.show( 'publishView' ); 
+    App.mainView.show( 'publishView', true ); 
     
   },
   
