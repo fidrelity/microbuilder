@@ -4,6 +4,7 @@ var MoveActionModel = ActionTriggerModel.extend({
   
   gameObject : null,
   position : null,
+  offset : null,
   
   random : false,
   direction : false,
@@ -13,6 +14,13 @@ var MoveActionModel = ActionTriggerModel.extend({
     this._super();
     
     this.set( 'position', this.position || new Vector );
+    this.set( 'offset', this.offset || new Vector );
+    
+  },
+  
+  setOffset : function( vector ) {
+    
+    this.set( 'offset', vector.clone() );
     
   },
   
@@ -116,6 +124,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     
     var type = this.type,
       name = this.parentGameObject.name,
+      depth = 3,
       question;
     
     if ( type === 'moveIn' ) {
@@ -132,11 +141,17 @@ var MoveActionModel = ActionTriggerModel.extend({
       
     }
     
-    App.actionController.addObjectsOption( question, this, 3 );
+    App.actionController.addObjectsOption( question, this, depth++ );
+    
+    if ( type !== 'moveIn' ) {
+    
+      this.set( 'addOffset', depth++ );
+    
+    }
     
     if ( type !== 'jumpTo' ) {
     
-      this.set( 'addSpeed', 4 );
+      this.set( 'addSpeed', depth++ );
     
     }
     
@@ -204,6 +219,7 @@ var MoveActionModel = ActionTriggerModel.extend({
       
       gameObject : this.gameObject,
       position : this.position.clone(),
+      offset : this.offset.clone(),
       region : this.region ? this.region.clone() : null,
       
       random : this.random,
@@ -250,6 +266,12 @@ var MoveActionModel = ActionTriggerModel.extend({
       
     }
     
+    if ( this.offset.norm() ) {
+      
+      obj.offset = this.offset.getData();
+      
+    }
+    
     return obj;
   
   },
@@ -261,6 +283,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     this.setProperties({ 
       type : d.type,
       position : d.location ? new Vector( d.location.x, d.location.y ) : new Vector( 1, 0 ).rotateSelf( d.angle ),
+      offset : d.offset ? new Vector( d.offset.x, d.offset.y ) : new Vector(),
       gameObject : App.gameObjectsController.getObject( d.objectID ),
       region : d.area ? new Area().copy( d.area ) : null,
       mode : d.mode,
@@ -322,15 +345,12 @@ var MoveActionModel = ActionTriggerModel.extend({
       
     }
     
-    if ( this.addSpeed ) {
-      
-      name += ' - ' + this.speeds[ this.speed ];
-      
-    }
+    name += this.offset.norm() ? ' - offset ' + this.offset.string() : '';
+    name += this.addSpeed ? ' - ' + this.speeds[ this.speed ] : '';
     
     return name;
     
-  }.property( 'type', 'position', 'gameObject', 'random', 'mode', 'region', 'speed' )
+  }.property( 'type', 'position', 'gameObject', 'random', 'mode', 'region', 'speed', 'offset' )
   
 });
 

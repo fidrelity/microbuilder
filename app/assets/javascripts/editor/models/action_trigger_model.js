@@ -82,6 +82,12 @@ var ActionTriggerModel = Ember.Object.extend({
   
   done : function() {
     
+    if ( this.addOffset ) {
+      
+      App.actionController.addOffsetOption( 'Drag the object to define the offset', this, this.gameObject, this.addOffset );
+      
+    }
+    
     if ( this.addSpeed ) {
       
       App.actionController.addSpeedOption( 'Set the speed of the movement', this, this.addSpeed );

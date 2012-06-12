@@ -109,16 +109,6 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  addPlayerOption : function( question, type, observer, depth ) {
-    
-    this.addOption( question, PlayerView.create({
-      observer : observer,
-      type : type,
-      gameObject : App.gameObjectsController.current
-    }), depth );
-    
-  },
-  
   addDirectionOption : function( question, observer, depth ) {
     
     this.addOption( question, PlacementView.create({
@@ -144,6 +134,17 @@ var ActionController = Ember.Object.extend({
     this.addOption( question, PlacementView.create({
       observer : observer,
       type : 'area'
+    }), depth );
+    
+  },
+  
+  addOffsetOption : function( question, observer, gameObject, depth ) {
+    
+    this.addOption( question, PlacementView.create({
+      observer : observer,
+      type : 'offset',
+      object : App.gameObjectsController.current,
+      object2 : gameObject
     }), depth );
     
   },

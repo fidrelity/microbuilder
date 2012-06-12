@@ -16,6 +16,8 @@ var PlacementView = Ember.View.extend({
   gameObjects : [],
   
   object : null,
+  object2 : null,
+  
   area : null,
   
   increment : 96,
@@ -122,9 +124,22 @@ var PlacementView = Ember.View.extend({
       this.object = this.getImage( this.object );
       this.gameObjects = [this.object];
       
+      if ( this.object2 ) {
+        
+        img = this.getImage( this.object2 );
+        img.pos.set( this.width * 0.5, this.height * 0.5 );
+        
+        this.gameObjects.push( img );
+        
+      }
+      
       if ( this.type === 'direction' ) {
       
         this.object.pos.set( this.width * 0.75, this.height * 0.5 );
+      
+      } else {
+      
+        this.object.pos.set( this.width * 0.5, this.height * 0.5 );
       
       }
       
@@ -166,7 +181,7 @@ var PlacementView = Ember.View.extend({
       
     }
     
-    for ( i = 0; i < this.gameObjects.length; i++ ) {
+    for ( i = this.gameObjects.length - 1; i >= 0; i-- ) {
       
       img = this.gameObjects[i];
       w = img.frameWidth;
@@ -287,6 +302,10 @@ var PlacementView = Ember.View.extend({
       if ( this.type === 'direction' ) {
         
         this.observer.locate( new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( obj.pos ) );
+        
+      } else if ( this.type === 'offset' ) {
+        
+        this.observer.setOffset( new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( obj.pos ) );
         
       } else {
       
