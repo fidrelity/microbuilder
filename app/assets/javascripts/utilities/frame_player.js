@@ -1,62 +1,70 @@
-var FramePlayer = ( function() {
+var FramePlayer = {
 
-  var _frame = null,
-    _index = 0,
-    _width = 64,
-    _totalFrames = 1,
-    _playInterval = null,
-    _duration = 1000;
+  frame : null,
+  index : 0,
+  width : 64,
+  totalFrames : 1,
+  
+  duration : 1000,
+  playInterval : null,
 
-  this.init = function() {
+  init : function() {
+    
+    var self = this;
+    
     $('.graphic').live('mouseover', function() {
       
-      initPlay($(this).find('.frame_graphic'));
+      self.initPlay($(this).find('.frame_graphic'));
       
-    }).live('mouseout', stop);
-  };
+    }).live('mouseout', function() { 
+      
+      self.stop();
+      
+    });
+    
+  },
 
-  function initPlay(frame) {
-    if(_frame) {
-      stop();
+  initPlay : function(_frame) {
+    
+    if(this.frame) {
+      this.stop();
     }
     
-    _frame = frame;
-    _totalFrames = parseInt(_frame.attr("data-frames"));
+    this.frame = _frame;
+    this.totalFrames = parseInt(_frame.attr("data-frames"));
     
-    if(_totalFrames > 1) {
+    if(this.totalFrames > 1) {
       _frame.css({"background-position" : '0px' });
     
-      _index = 1;
-      _width = _frame.width();
+      this.index = 1;
+      this.width = _frame.width();
     
-      _playInterval = setInterval(play, _duration);
+      this.playInterval = setInterval(bind(this, this.play), this.duration);
     
-      play();
+      this.play();
     }
-  };
+  },
 
-  function play() {
-    if(!_frame) { 
+  play : function() {
+    if(!this.frame) { 
       return stop();
     }
     
-    _frame.css({"background-position" : -(_width * _index)});
-    _index++;
+    this.frame.css({"background-position" : -(this.width * this.index)});
+    this.index++;
     
-    if(_index === _totalFrames) {
-      _index = 0; // reset when last one
+    if(this.index === this.totalFrames) {
+      this.index = 0; // reset when last one
     }
-  };
+  },
 
-  function stop() {
-    clearInterval(_playInterval);
+  stop : function() {
+    clearInterval(this.playInterval);
     
-    if(_frame) {
-      _frame.css({"background-position" : '0px'});
-      _frame = null;
+    if(this.frame) {
+      this.frame.css({"background-position" : '0px'});
+      this.frame = null;
     }
-  };
+  }
   
-  return this;
-  
-})();
+};
