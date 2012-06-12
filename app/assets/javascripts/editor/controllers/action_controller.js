@@ -120,7 +120,7 @@ var ActionController = Ember.Object.extend({
     this.addOption( question, PlacementView.create({
       observer : observer,
       type : 'direction',
-      gameObject : App.gameObjectsController.current
+      object : App.gameObjectsController.current
     }), depth );
     
   },
@@ -130,7 +130,7 @@ var ActionController = Ember.Object.extend({
     this.addOption( question, PlacementView.create({
       observer : observer,
       type : 'location',
-      gameObject : App.gameObjectsController.current
+      object : App.gameObjectsController.current
     }), depth );
     
   },
