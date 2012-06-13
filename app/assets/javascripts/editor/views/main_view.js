@@ -42,6 +42,7 @@ var MainView = Ember.View.extend({
   hideOverlay : function() {
     
     this.overlayView.set( 'isVisible', false );
+    this.overlayView.set( 'headings', [] );
     
     this.updatePlayer();
     
@@ -78,7 +79,6 @@ var OverlayView = Ember.View.extend({
   
   isVisible : false,
   
-  heading : null,
   headings : [],
   
   didInsertElement : function() {
