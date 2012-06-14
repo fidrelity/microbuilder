@@ -17,7 +17,6 @@ var ActionController = Ember.Object.extend({
   showSaveButton : false,
   
   options : {},
-  decisions : {},
   
   init : function() {
     
@@ -30,6 +29,8 @@ var ActionController = Ember.Object.extend({
       'moveIn' : ButtonOption.create({ name: 'moveIn', setType: 'moveIn', decisions: ['moveInDirection', 'moveSpeed', 'moveInLocation', 'moveInObject'], buttons: ['in direction', 'random direction', 'to location', 'to object'], question: 'How should it move directional?' }),
       
       'moveInDirection' : DirectionOption.create({ name: 'moveInDirection', child: 'moveSpeed', question: 'Drag it to set the direction' }),
+      'moveInLocation' : LocationOption.create({ name: 'moveInLocation', child: 'moveSpeed', question: 'Drag it to the location in which direction it should move' }),
+      'moveInObject' : ObjectOption.create({ name: 'moveInObject', decision: 'moveSpeed', question: 'Choose the object in which direction it should move' }),
       
       'moveTo' : ButtonOption.create({ name: 'moveTo', setType: 'moveTo', decisions: ['moveToLocation', 'moveToObject'], buttons: ['to location', 'to object'], question: 'Where should it move?' }),
       
@@ -43,15 +44,7 @@ var ActionController = Ember.Object.extend({
       'art' : ButtonOption.create({ name: 'art', decisions: ['toFrame', 'play', 'stop'], buttons: ['to frame', 'play', 'stop'], question: 'What should the art do?' }),
       'game' : ButtonOption.create({ name: 'game', decisions: ['win', 'lose'], buttons: ['win', 'lose'], question: 'Win or lose?' }),
       
-      'save' : SaveOption.create({ name: 'save' }),
-      
-    }));
-    
-    this.set( 'decisions', Ember.Object.create({
-      
-      'move' : this.options.get( 'move' ),
-      'art' : this.options.get( 'art' ),
-      'game' : this.options.get( 'game' ),
+      'save' : SaveOption.create({ name: 'save' })
       
     }));
     
@@ -59,7 +52,7 @@ var ActionController = Ember.Object.extend({
   
   insert : function( name ) {
     
-    var option = this.decisions.get( name ) || this.options.get( name );
+    var option = this.options.get( name );
     
     option.insert();
     
