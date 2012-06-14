@@ -58,6 +58,13 @@ var ActionModel = Ember.Object.extend({
   }.property( 'speed' ),
   
   
+  angle : function() {
+    
+    return this.location.angle().toFixed( 2 );
+    
+  },
+  
+  
   string : function() {
     
     return this.decisions.join( ' > ' );
@@ -99,8 +106,7 @@ var ActionModel = Ember.Object.extend({
       
       gameObject : d.objectID ? App.gameObjectsController.getObject( d.objectID ) : null,
       
-      // location : d.location ? new Vector( d.location.x, d.location.y ) : new Vector( 1, 0 ).rotateSelf( d.angle ),
-      location : d.location ? new Vector().copy( d.location ) : null,
+      location : d.location ? new Vector().copy( d.location ) : d.angle ? new Vector( 1, 0 ).rotateSelf( d.angle ) : null,
       offset : d.offset ? new Vector().copy( d.offset ) : null,
       
       // region : d.area ? new Area().copy( d.area ) : null,
@@ -127,7 +133,9 @@ var ActionModel = Ember.Object.extend({
         
         case 'object': data.objectID = this.gameObject.ID; break;
         
-        case 'location': if ( this.location ) data.location = this.location.getData(); break;
+        case 'location': data.location = this.location.getData(); break;
+        case 'direction': data.angle = this.angle(); break;
+        
         case 'offset': if ( this.offset ) data.offset = this.offset.getData(); break;
         case 'speed': data.speed = this.speed; break;
         
@@ -239,6 +247,26 @@ var LocationOption = Option.extend({
     }));
     
     App.actionController.action.setLocation( App.gameObjectsController.current.position.clone() );
+    
+    this._super();
+    
+  }
+  
+});
+
+var DirectionOption = Option.extend({
+  
+  type : 'direction',
+  
+  insert : function() {
+    
+    App.actionController.addOption( this.question, PlacementView.create({
+      observer : App.actionController.action,
+      type : 'direction',
+      object : App.gameObjectsController.current
+    }));
+    
+    App.actionController.action.setLocation( new Vector( 1, 0 ) );
     
     this._super();
     
