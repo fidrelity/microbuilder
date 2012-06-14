@@ -318,7 +318,7 @@ var PlacementView = Ember.View.extend({
       area.adjust();
       area.done = true;
       
-      this.observer.contain( area );
+      this.observer.decide( area );
       
     }
     

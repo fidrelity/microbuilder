@@ -34,6 +34,12 @@ var ActionModel = Ember.Object.extend({
     
   },
   
+  setArea : function( area ) {
+    
+    this.set( 'area', area );
+    
+  },
+  
   setOffset : function( offset ) {
     
     this.set( 'offset', offset );
@@ -83,7 +89,7 @@ var ActionModel = Ember.Object.extend({
       location : this.location ? this.position.clone() : null,
       offset : this.offset ? this.offset.clone() : null,
       
-      // region : this.region ? this.region.clone() : null,
+      area : this.area ? this.area.clone() : null,
       
       // random : this.random,
       // direction : this.direction,
@@ -109,7 +115,7 @@ var ActionModel = Ember.Object.extend({
       location : d.location ? new Vector().copy( d.location ) : d.angle ? new Vector( 1, 0 ).rotateSelf( d.angle ) : null,
       offset : d.offset ? new Vector().copy( d.offset ) : null,
       
-      // region : d.area ? new Area().copy( d.area ) : null,
+      area : d.area ? new Area().copy( d.area ) : null,
       // mode : d.mode,
       speed : d.speed,
       // random : d.random
@@ -135,6 +141,8 @@ var ActionModel = Ember.Object.extend({
         
         case 'location': data.location = this.location.getData(); break;
         case 'direction': data.angle = this.angle(); break;
+        
+        case 'area': data.area = this.area.getData(); break;
         
         case 'offset': if ( this.offset ) data.offset = this.offset.getData(); break;
         case 'speed': data.speed = this.speed; break;
@@ -269,6 +277,29 @@ var DirectionOption = Option.extend({
     App.actionController.action.setLocation( new Vector( 1, 0 ) );
     
     this._super();
+    
+  }
+  
+});
+
+var AreaOption = Option.extend({
+  
+  type : 'area',
+  
+  insert : function() {
+    
+    App.actionController.addOption( this.question, PlacementView.create({
+      observer : this,
+      type : 'area'
+    }));
+    
+  },
+  
+  decide : function( area ) {
+    
+    App.actionController.action.setArea( area );
+    
+    App.actionController.insert( this.decision );
     
   }
   

@@ -39,6 +39,15 @@ var ActionController = Ember.Object.extend({
       
       'moveToOffset' : OffsetOption.create({ name: 'moveToOffset', child: 'moveSpeed', question: 'Drag the object to define the offset' }),
       
+      'jumpTo' : ButtonOption.create({ name: 'jumpTo', setType: 'jumpTo', decisions: ['jumpToLocation', 'jumpToObject', 'jumpToArea'], buttons: ['to location', 'to object', 'to area'], question: 'Where should it jump?' }),
+      
+      'jumpToLocation' : LocationOption.create({ name: 'jumpToLocation', child: 'save', question: 'Drag it to the location where it should jump' }),
+      'jumpToObject' : ObjectOption.create({ name: 'jumpToObject', decision: 'jumpToOffset', question: 'Choose to which other object it should jump' }),
+      
+      'jumpToOffset' : OffsetOption.create({ name: 'jumpToOffset', child: 'save', question: 'Drag the object to define the offset' }),
+      
+      'jumpToArea' : AreaOption.create({ name: 'jumpToArea', decision: 'save', question: 'Select the area where it should randomly jump'}),
+      
       'moveSpeed' : SpeedOption.create({ name: 'moveSpeed', child: 'save', question: 'Set the speed of the movement' }),
       
       'art' : ButtonOption.create({ name: 'art', decisions: ['toFrame', 'play', 'stop'], buttons: ['to frame', 'play', 'stop'], question: 'What should the art do?' }),
@@ -152,15 +161,6 @@ var ActionController = Ember.Object.extend({
     
     this.optionViews.get( 'childViews' ).pushObject( QuestionView.create({ content : question }) );
     this.optionViews.get( 'childViews' ).pushObject( optionView );
-    
-  },
-  
-  addAreaOption : function( question, observer, depth ) {
-    
-    this.addOption( question, PlacementView.create({
-      observer : observer,
-      type : 'area'
-    }), depth );
     
   },
   
