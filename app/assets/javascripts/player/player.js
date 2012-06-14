@@ -30,7 +30,7 @@ var Player = function() {
       { name : 'parse', from : '*', to : 'load' },
       { name : 'loaded', from : 'load', to : 'ready', callback : this.onReady },
     
-      { name : 'start', from : 'ready', to : 'play', callback : this.reset },
+      { name : 'start', from : '*', to : 'play', callback : this.reset },
       { name : 'win', from : 'play', to : 'end', callback : this.onWin },
       { name : 'lose', from : 'play', to : 'end', callback : this.onLose },
       

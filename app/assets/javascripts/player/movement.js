@@ -52,7 +52,7 @@ Movement.prototype = {
     this.target = pos;
     this.offset = offset;
     
-    this.speed = speed;
+    this.setSpeed( speed );
     
   },
   
@@ -61,7 +61,13 @@ Movement.prototype = {
     this.stop();
     
     this.direction = dir;
-    this.speed = speed;
+    this.setSpeed( speed );
+    
+  },
+  
+  setSpeed : function( speed ) {
+    
+    this.speed = this.speeds[speed];
     
   },
   
@@ -83,7 +89,7 @@ Movement.prototype = {
     this.roamMode = mode;
     this.roamArea = area;
     
-    this.speed = speed;
+    this.setSpeed( speed );
     
     if ( area.width < objArea.width ) {
       
@@ -121,7 +127,7 @@ Movement.prototype = {
       
       var height = ( area.height - objArea.height );
       
-      this.direction = new Vector( this.speeds[this.speed], Math.sqrt( 2 * height * 9.81 ) );
+      this.direction = new Vector( this.speed, Math.sqrt( 2 * height * 9.81 ) );
       this.time = 0;
       
       this.insertObjectAtBottom( area );
@@ -150,7 +156,7 @@ Movement.prototype = {
   
   update : function( dt ) {
     
-    var distance = this.speeds[ this.speed ] * 0.08 * dt;
+    var distance = this.speed * 0.08 * dt;
     
     if ( this.target ) {
       
@@ -235,7 +241,7 @@ Movement.prototype = {
     
     var breakout;
     
-    time *= 10 * this.speeds[this.speed];
+    time *= 10 * this.speed;
     
     this.position.x += this.direction.x;
     this.position.y = this.roamStart.y - this.direction.y * time + 9.81 / 2 * time * time;
