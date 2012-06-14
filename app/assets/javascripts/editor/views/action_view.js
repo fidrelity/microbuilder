@@ -24,16 +24,6 @@ var QuestionView = Ember.View.extend({
   
 });
 
-var OptionsView = Ember.ContainerView.extend({
-  
-  // currentViewBinding : 'App.actionController.view',
-  
-  currentView : QuestionView.create({content:"ih there?"})
-  
-  // childViews : [QuestionView.create({content:'Hallo?'}), QuestionView.create({content:'Du?'})]
-  
-});
-
 var ButtonView = Ember.CollectionView.extend({
   
   content : [],
@@ -68,23 +58,31 @@ var ButtonView = Ember.CollectionView.extend({
     
     click : function() {
       
-      if ( this._parentView.disabled ) {
+      // if ( this._parentView.disabled ) {
+      //   
+      //   return;
+      //   
+      // }
+      // 
+      // if ( this._parentView.disable ) {
+      // 
+      //   this._parentView.$( '.btn' ).addClass( 'disabled' );
+      //   
+      //   this.$().removeClass( 'disabled' );
+      //   
+      //   this._parentView.set( 'disabled', true )
+      // 
+      // }
+      
+      if ( this._parentView.observer.decide ) {
+      
+        this._parentView.observer.decide( this.content );
+      
+      } else {
         
-        return;
+        this._parentView.observer.choose( this.content );
         
       }
-      
-      if ( this._parentView.disable ) {
-      
-        this._parentView.$( '.btn' ).addClass( 'disabled' );
-        
-        this.$().removeClass( 'disabled' );
-        
-        this._parentView.set( 'disabled', true )
-      
-      }
-      
-      this._parentView.observer.choose( this.content );
       
     }
     
@@ -135,7 +133,15 @@ var GameObjectsView = Ember.CollectionView.extend({
       
       this.$().addClass( 'selected' );
       
-      this._parentView.observer.select( this.content );
+      if ( this._parentView.observer.select ) {
+        
+        this._parentView.observer.select( this.content );
+        
+      } else {
+      
+        this._parentView.observer.decide( this.content );
+      
+      }
       
     },
     
@@ -273,7 +279,7 @@ var SpeedView = Ember.View.extend({
   
   classNames : ['speedview', 'optionview'],
   
-  template: Ember.Handlebars.compile( '<div class="slider left"></div><div class="speed left">{{observer.speeed}}</div>' ),
+  template: Ember.Handlebars.compile( '<div class="slider left"></div><div class="speed left">{{observer.speedName}}</div>' ),
   
   observer : null,
   

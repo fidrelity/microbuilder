@@ -16,11 +16,62 @@ var ActionController = Ember.Object.extend({
   
   showSaveButton : false,
   
+  options : {},
+  decisions : {},
+  
+  init : function() {
+    
+    this.set( 'options', Ember.Object.create({
+      
+      'action' : ButtonOption.create({ name: 'action', decisions: ['move', 'art', 'game'], buttons: ['move', 'art', 'game'], question: 'Select the type of action', depth: 0 }),
+      
+      'move' : ButtonOption.create({ name: 'move', decisions: ['directional', 'moveTo', 'jumpTo'], buttons: ['directional', 'move to', 'jump to'], question: 'What type of movement?', depth: 1 }),
+      'art' : ButtonOption.create({ name: 'art', decisions: ['toFrame', 'play', 'stop'], buttons: ['to frame', 'play', 'stop'], question: 'What should the art do?', depth: 1 }),
+      'game' : ButtonOption.create({ name: 'game', decisions: ['win', 'lose'], buttons: ['win', 'lose'], question: 'Win or lose?', depth: 1 }),
+      
+      'moveTo' : ButtonOption.create({ name: 'moveTo', setType: 'moveTo', decisions: ['moveToLocation', 'moveToObject'], buttons: ['to location', 'to object'], question: 'Where should it move?', depth: 2 }),
+      
+      'moveToObject' : ObjectOption.create({ name: 'moveToObject', decision: 'moveToOffset', question: 'Choose to which other object it should move', depth: 3 }),
+      
+      'moveToOffset' : OffsetOption.create({ name: 'moveToOffset', child: 'moveToSpeed', question: 'Drag the object to define the offset', depth : 4 }),
+      
+      'moveToSpeed' : SpeedOption.create({ name: 'moveToSpeed', child: 'saveAction', question: 'Set the speed of the movement', depth : 5 }),
+      
+      'saveAction' : SaveOption.create({ name: 'save', question: 'Is your Action correct?' }),
+      
+    }));
+    
+    this.set( 'decisions', Ember.Object.create({
+      
+      'move' : this.options.get( 'move' ),
+      'art' : this.options.get( 'art' ),
+      'game' : this.options.get( 'game' ),
+      
+    }));
+    
+  },
+  
+  insert : function( name ) {
+    
+    var option = this.decisions.get( name ) || this.options.get( name );
+    
+    option.insert();
+    
+  },
+  
+  decide : function( name ) {
+    
+    this.action.addDecision( name );
+    
+    this.insert( name );
+    
+  },
+  
   reset : function( mode ) {
     
     var buttons, question;
     
-    this.set( 'action', null );
+    this.set( 'action', ActionModel.create() );
     
     this.set( 'mode', mode );
     this.set( 'showSaveButton', false );
@@ -48,11 +99,13 @@ var ActionController = Ember.Object.extend({
       }
     }));
     
-    this.addOption( question, ButtonView.create({
-      observer : this,
-      content : buttons,
-      disable : false
-    }), 0 );
+    // this.addOption( question, ButtonView.create({
+    //   observer : this,
+    //   content : buttons,
+    //   disable : false
+    // }), 0 );
+    
+    this.options.get( 'action' ).insert();
     
   },
   

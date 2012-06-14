@@ -57,6 +57,8 @@ var BehaviourController = Ember.ArrayController.extend({
   
   parseAction : function( data ) {
     
+    return ActionModel.create().parse( data );
+    
     switch ( data.type ) {
       
       case 'jumpTo' : return MoveActionModel.create().parse( data );
