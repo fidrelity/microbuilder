@@ -153,15 +153,6 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  addButtonOption : function( question, buttons, observer, depth ) {
-    
-    this.addOption( question, ButtonView.create({
-      observer : observer,
-      content : buttons
-    }), depth);
-    
-  },
-  
   addDirectionOption : function( question, observer, depth ) {
     
     this.addOption( question, PlacementView.create({
@@ -191,26 +182,6 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  addOffsetOption : function( question, observer, gameObject, depth ) {
-    
-    this.addOption( question, PlacementView.create({
-      observer : observer,
-      type : 'offset',
-      object : App.gameObjectsController.current,
-      object2 : gameObject
-    }), depth );
-    
-  },
-  
-  addObjectsOption : function( question, observer, depth ) {
-    
-    this.addOption( question, GameObjectsView.create({
-      observer : observer,
-      contentBinding : 'App.gameObjectsController.others',
-    }), depth );
-    
-  },
-  
   addTimeOption : function( question, type, observer, depth ) {
     
     this.addOption( question, TimeView.create({
@@ -226,14 +197,6 @@ var ActionController = Ember.Object.extend({
       observer : observer,
       type : type,
       graphic : App.gameObjectsController.current.graphic
-    }), depth );
-    
-  },
-  
-  addSpeedOption : function( question, observer, depth ) {
-    
-    this.addOption( question, SpeedView.create({
-      observer : observer
     }), depth );
     
   },

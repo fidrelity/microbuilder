@@ -167,7 +167,10 @@ var ButtonOption = Option.extend({
   
   insert : function() {
     
-    App.actionController.addButtonOption( this.question, this.buttons, this, this.depth );
+    App.actionController.addOption( this.question, ButtonView.create({
+      observer : this,
+      content : this.buttons
+    }), this.depth);
     
     this._super();
     
@@ -189,7 +192,10 @@ var ObjectOption = Option.extend({
   
   insert : function() {
     
-    App.actionController.addObjectsOption( this.question, this, this.depth );
+    App.actionController.addOption( this.question, GameObjectsView.create({
+      observer : this,
+      contentBinding : 'App.gameObjectsController.others',
+    }), this.depth );
     
   },
   
@@ -209,7 +215,12 @@ var OffsetOption = Option.extend({
   
   insert : function() {
     
-    App.actionController.addOffsetOption( this.question, App.actionController.action, App.actionController.action.gameObject, this.depth );
+    App.actionController.addOption( this.question, PlacementView.create({
+      observer : App.actionController.action,
+      type : 'offset',
+      object : App.gameObjectsController.current,
+      object2 : App.actionController.action.gameObject
+    }), this.depth );
     
     this._super();
     
@@ -223,7 +234,10 @@ var SpeedOption = Option.extend({
   
   insert : function() {
     
-    App.actionController.addSpeedOption( this.question, App.actionController.action, this.depth );
+    App.actionController.addOption( this.question, SpeedView.create({
+      observer : App.actionController.action
+    }), this.depth );
+    
     App.actionController.action.addDecision( this.name );
     
     this._super();
