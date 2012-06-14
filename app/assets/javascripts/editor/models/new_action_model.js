@@ -4,6 +4,12 @@ var ActionModel = Ember.Object.extend({
   
   decisions : [],
   
+  init : function() {
+    
+    this.set( 'decisions', [] );
+    
+  },
+  
   addDecision : function( name ) {
     
     this.decisions.addObject( name );
@@ -19,6 +25,12 @@ var ActionModel = Ember.Object.extend({
   setObject : function( object ) {
     
     this.set( 'gameObject', object );
+    
+  },
+  
+  setLocation : function( location ) {
+    
+    this.set( 'location', location );
     
   },
   
@@ -60,8 +72,10 @@ var ActionModel = Ember.Object.extend({
       decisions : this.decisions.concat(),
       
       gameObject : this.gameObject,
-      // location : this.position.clone(),
+      
+      location : this.location ? this.position.clone() : null,
       offset : this.offset ? this.offset.clone() : null,
+      
       // region : this.region ? this.region.clone() : null,
       
       // random : this.random,
@@ -83,9 +97,12 @@ var ActionModel = Ember.Object.extend({
       type : d.type,
       decisions : d.decisions,
       
-      // location : d.location ? new Vector( d.location.x, d.location.y ) : new Vector( 1, 0 ).rotateSelf( d.angle ),
-      offset : d.offset ? new Vector( d.offset.x, d.offset.y ) : null,
       gameObject : d.objectID ? App.gameObjectsController.getObject( d.objectID ) : null,
+      
+      // location : d.location ? new Vector( d.location.x, d.location.y ) : new Vector( 1, 0 ).rotateSelf( d.angle ),
+      location : d.location ? new Vector().copy( d.location ) : null,
+      offset : d.offset ? new Vector().copy( d.offset ) : null,
+      
       // region : d.area ? new Area().copy( d.area ) : null,
       // mode : d.mode,
       speed : d.speed,
@@ -109,7 +126,9 @@ var ActionModel = Ember.Object.extend({
         case 'button': break;
         
         case 'object': data.objectID = this.gameObject.ID; break;
-        case 'offset': data.offset = this.offset.getData(); break;
+        
+        case 'location': if ( this.location ) data.location = this.location.getData(); break;
+        case 'offset': if ( this.offset ) data.offset = this.offset.getData(); break;
         case 'speed': data.speed = this.speed; break;
         
         default : console.error( 'unknown optionType: ' + optionType );
@@ -131,8 +150,6 @@ var Option = Ember.Object.extend({
   
   type : null, // ['button', 'direction', 'location', 'area', 'offset', 'object', 'time', 'frame', 'speed', 'art']
   setType : null,
-  
-  depth : 0,
   
   decision : null,
   decisions : [],
@@ -170,7 +187,7 @@ var ButtonOption = Option.extend({
     App.actionController.addOption( this.question, ButtonView.create({
       observer : this,
       content : this.buttons
-    }), this.depth);
+    }));
     
     this._super();
     
@@ -180,7 +197,7 @@ var ButtonOption = Option.extend({
     
     var index = this.buttons.indexOf( button );
     
-    App.actionController.decide( this.decisions[index] );
+    App.actionController.decide( this.decisions[index], this.name );
     
   }
   
@@ -195,7 +212,7 @@ var ObjectOption = Option.extend({
     App.actionController.addOption( this.question, GameObjectsView.create({
       observer : this,
       contentBinding : 'App.gameObjectsController.others',
-    }), this.depth );
+    }));
     
   },
   
@@ -204,6 +221,26 @@ var ObjectOption = Option.extend({
     App.actionController.action.setObject( object );
     
     App.actionController.decide( this.decision );
+    
+  }
+  
+});
+
+var LocationOption = Option.extend({
+  
+  type : 'location',
+  
+  insert : function() {
+    
+    App.actionController.addOption( this.question, PlacementView.create({
+      observer : App.actionController.action,
+      type : 'location',
+      object : App.gameObjectsController.current
+    }));
+    
+    App.actionController.action.setLocation( App.gameObjectsController.current.position.clone() );
+    
+    this._super();
     
   }
   
@@ -220,7 +257,7 @@ var OffsetOption = Option.extend({
       type : 'offset',
       object : App.gameObjectsController.current,
       object2 : App.actionController.action.gameObject
-    }), this.depth );
+    }));
     
     this._super();
     
@@ -236,7 +273,7 @@ var SpeedOption = Option.extend({
     
     App.actionController.addOption( this.question, SpeedView.create({
       observer : App.actionController.action
-    }), this.depth );
+    }));
     
     App.actionController.action.addDecision( this.name );
     

@@ -23,21 +23,22 @@ var ActionController = Ember.Object.extend({
     
     this.set( 'options', Ember.Object.create({
       
-      'action' : ButtonOption.create({ name: 'action', decisions: ['move', 'art', 'game'], buttons: ['move', 'art', 'game'], question: 'Select the type of action', depth: 0 }),
+      'action' : ButtonOption.create({ name: 'action', decisions: ['move', 'art', 'game'], buttons: ['move', 'art', 'game'], question: 'Select the type of action' }),
       
-      'move' : ButtonOption.create({ name: 'move', decisions: ['directional', 'moveTo', 'jumpTo'], buttons: ['directional', 'move to', 'jump to'], question: 'What type of movement?', depth: 1 }),
-      'art' : ButtonOption.create({ name: 'art', decisions: ['toFrame', 'play', 'stop'], buttons: ['to frame', 'play', 'stop'], question: 'What should the art do?', depth: 1 }),
-      'game' : ButtonOption.create({ name: 'game', decisions: ['win', 'lose'], buttons: ['win', 'lose'], question: 'Win or lose?', depth: 1 }),
+        'move' : ButtonOption.create({ name: 'move', decisions: ['directional', 'moveTo', 'jumpTo'], buttons: ['directional', 'move to', 'jump to'], question: 'What type of movement?' }),
       
-      'moveTo' : ButtonOption.create({ name: 'moveTo', setType: 'moveTo', decisions: ['moveToLocation', 'moveToObject'], buttons: ['to location', 'to object'], question: 'Where should it move?', depth: 2 }),
+          'moveTo' : ButtonOption.create({ name: 'moveTo', setType: 'moveTo', decisions: ['moveToLocation', 'moveToObject'], buttons: ['to location', 'to object'], question: 'Where should it move?' }),
       
-      'moveToObject' : ObjectOption.create({ name: 'moveToObject', decision: 'moveToOffset', question: 'Choose to which other object it should move', depth: 3 }),
+            'moveToLocation' : LocationOption.create({ name: 'moveToLocation', child: 'moveToSpeed', question: 'Drag it to the location where it should move' }),
+            'moveToObject' : ObjectOption.create({ name: 'moveToObject', decision: 'moveToOffset', question: 'Choose to which other object it should move' }),
       
-      'moveToOffset' : OffsetOption.create({ name: 'moveToOffset', child: 'moveToSpeed', question: 'Drag the object to define the offset', depth : 4 }),
+              'moveToOffset' : OffsetOption.create({ name: 'moveToOffset', child: 'moveToSpeed', question: 'Drag the object to define the offset' }),
+              'moveToSpeed' : SpeedOption.create({ name: 'moveToSpeed', child: 'save', question: 'Set the speed of the movement' }),
       
-      'moveToSpeed' : SpeedOption.create({ name: 'moveToSpeed', child: 'saveAction', question: 'Set the speed of the movement', depth : 5 }),
+        'art' : ButtonOption.create({ name: 'art', decisions: ['toFrame', 'play', 'stop'], buttons: ['to frame', 'play', 'stop'], question: 'What should the art do?' }),
+        'game' : ButtonOption.create({ name: 'game', decisions: ['win', 'lose'], buttons: ['win', 'lose'], question: 'Win or lose?' }),
       
-      'saveAction' : SaveOption.create({ name: 'save', question: 'Is your Action correct?' }),
+      'save' : SaveOption.create({ name: 'save' }),
       
     }));
     
@@ -59,11 +60,19 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  decide : function( name ) {
+  decide : function( name, parentName ) {
+    
+    if ( parentName ) {
+    
+      this.updateDepth( parentName );
+    
+    }
     
     this.action.addDecision( name );
     
     this.insert( name );
+    
+    console.log( this.action.decisions );
     
   },
   
@@ -99,12 +108,6 @@ var ActionController = Ember.Object.extend({
       }
     }));
     
-    // this.addOption( question, ButtonView.create({
-    //   observer : this,
-    //   content : buttons,
-    //   disable : false
-    // }), 0 );
-    
     this.options.get( 'action' ).insert();
     
   },
@@ -123,18 +126,21 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  updateDepth : function( depth ) {
+  updateDepth : function( name ) {
     
-    var childs = this.optionViews.get( 'childViews' );
+    var childs = this.optionViews.get( 'childViews' ),
+      decisions = this.action.decisions,
+      depth = decisions.indexOf( name ) + 1;
     
-    if ( typeof depth === 'undefined' ) {
+    if ( !depth || decisions.length === depth ) {
       
-      console.error( 'option has no depth' );
       return;
       
     }
     
-    while ( childs.length > depth * 2 ) {
+    this.action.set( 'decisions', decisions.splice( 0, depth ) );
+    
+    while ( childs.length > ( depth + 1 ) * 2 ) {
       
       childs[childs.length - 1].removeFromParent();
       
@@ -144,9 +150,7 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  addOption : function( question, optionView, depth ) {
-    
-    this.updateDepth( depth );
+  addOption : function( question, optionView ) {
     
     this.optionViews.get( 'childViews' ).pushObject( QuestionView.create({ content : question }) );
     this.optionViews.get( 'childViews' ).pushObject( optionView );
@@ -158,16 +162,6 @@ var ActionController = Ember.Object.extend({
     this.addOption( question, PlacementView.create({
       observer : observer,
       type : 'direction',
-      object : App.gameObjectsController.current
-    }), depth );
-    
-  },
-  
-  addLocationOption : function( question, observer, depth ) {
-    
-    this.addOption( question, PlacementView.create({
-      observer : observer,
-      type : 'location',
       object : App.gameObjectsController.current
     }), depth );
     

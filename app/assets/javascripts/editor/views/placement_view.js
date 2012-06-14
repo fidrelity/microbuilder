@@ -301,7 +301,7 @@ var PlacementView = Ember.View.extend({
       
       if ( this.type === 'direction' ) {
         
-        this.observer.locate( new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( obj.pos ) );
+        this.observer.setLocation( new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( obj.pos ) );
         
       } else if ( this.type === 'offset' ) {
         
@@ -309,7 +309,7 @@ var PlacementView = Ember.View.extend({
         
       } else {
       
-        this.observer.locate( obj.pos );
+        this.observer.setLocation( obj.pos.clone() );
         
       }
       
