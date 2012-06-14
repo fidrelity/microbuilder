@@ -168,8 +168,7 @@ var MoveActionModel = ActionTriggerModel.extend({
     this.set( 'type', 'roam' );
     
     App.actionController.addButtonOption( 'Which type of roaming?',
-     // ['wiggle', 'reflect', 'insect', 'bounce'], 
-     ['wiggle', 'reflect', 'insect'], 
+     ['wiggle', 'reflect', 'insect', 'bounce'],
      this, 2 );
     
   },

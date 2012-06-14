@@ -10,14 +10,16 @@ var Movement = function() {
   
   this.roamArea;
   this.roamMode;
+  this.roamStart = new Vector();
   
+  this.time;
   this.speed;
   
 };
 
 Movement.prototype = {
   
-  speeds : [0.01, 0.03, 0.08, 0.2, 0.5],
+  speeds : [0.125, 0.375, 1, 2.5, 6.25],
   
   reset : function() {
     
@@ -117,6 +119,15 @@ Movement.prototype = {
       
     } else if ( mode === 'bounce' ) {
       
+      var height = ( area.height - objArea.height );
+      
+      this.direction = new Vector( this.speeds[this.speed], Math.sqrt( 2 * height * 9.81 ) );
+      this.time = 0;
+      
+      this.insertObjectAtBottom( area );
+      
+      this.roamStart.copy( this.position );
+      
     }
     
   },
@@ -139,16 +150,22 @@ Movement.prototype = {
   
   update : function( dt ) {
     
-    var speed = this.speeds[ this.speed ];
+    var distance = this.speeds[ this.speed ] * 0.08 * dt;
     
     if ( this.target ) {
       
-      this.updateTarget( dt * speed );
+      this.updateTarget( distance );
+      
+    } else if ( this.roamMode === 'bounce' ) {
+      
+      this.time += dt;
+      
+      this.updateBounce( this.time * 0.001 );
       
     } else if ( this.direction !== null ) {
       
-      this.updateDirection( dt * speed );
-    
+      this.updateDirection( distance );
+      
     }
     
   },
@@ -198,10 +215,7 @@ Movement.prototype = {
       
         this.direction = Math.random() * Math.PI * 2;
       
-      } else if ( mode === 'bounce' ) {
-      
       }
-      
       
       breakout = roamArea.leavesArea( this.getArea() );
       
@@ -213,6 +227,35 @@ Movement.prototype = {
         
       }
     
+    }
+    
+  },
+  
+  updateBounce : function( time ) {
+    
+    var breakout;
+    
+    time *= 10 * this.speeds[this.speed];
+    
+    this.position.x += this.direction.x;
+    this.position.y = this.roamStart.y - this.direction.y * time + 9.81 / 2 * time * time;
+    
+    breakout = this.roamArea.leavesArea( this.getArea() );
+    
+    if ( breakout ) {
+      
+      if ( breakout === 'x' || breakout === 'width' ) {
+      
+        this.direction.x *= -1;
+        this.position.x += this.direction.x;
+      
+      } else {
+      
+        this.time = 0;
+        this.position.y = this.roamStart.y;
+      
+      }
+      
     }
     
   },
@@ -242,6 +285,19 @@ Movement.prototype = {
     objArea.setPosition(
       area.x + Math.random() * ( area.width - objArea.width ),
       area.y + Math.random() * ( area.height - objArea.height )
+    );
+    
+    this.position.copy( objArea.center() );
+    
+  },
+  
+  insertObjectAtBottom : function( area ) {
+    
+    var objArea = this.getArea();
+    
+    objArea.setPosition(
+      area.x + Math.random() * ( area.width - objArea.width ),
+      area.y + ( area.height - objArea.height )
     );
     
     this.position.copy( objArea.center() );
