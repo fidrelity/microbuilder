@@ -335,8 +335,7 @@ var Parser = {
   }
 
   {
-    type: "moveIn",
-    random: 1
+    type: "moveIn"
   }
 
   {
@@ -365,18 +364,18 @@ var Parser = {
     if ( typeof actionData.angle !== 'undefined' ) {
     
       action.target = new Vector( 1e10, 0 ).rotateSelf( actionData.angle );
-    
-    } else if ( actionData.random ) {
-      
-      action.random = true;
       
     } else if ( actionData.objectID ) {
       
       action.target = this.game.getGameObjectWithID( actionData.objectID ).movement.position;
     
+    } else if ( actionData.location ) {
+      
+      action.target = new Vector().copy( actionData.location );
+      
     } else {
       
-      action.target = new Vector( actionData.location.x, actionData.location.y );
+      action.random = true;
       
     }
     

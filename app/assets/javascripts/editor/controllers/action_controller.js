@@ -27,7 +27,7 @@ var ActionController = Ember.Object.extend({
       
       'move' : ButtonOption.create({ name: 'move', decisions: ['moveIn', 'moveTo', 'jumpTo'], buttons: ['directional', 'move to', 'jump to'], question: 'What type of movement?' }),
       
-      'moveIn' : ButtonOption.create({ name: 'moveIn', setType: 'moveIn', decisions: ['moveInDirection', 'moveInRandom', 'moveInLocation', 'moveInObject'], buttons: ['in direction', 'random direction', 'to location', 'to object'], question: 'How should it move directional?' }),
+      'moveIn' : ButtonOption.create({ name: 'moveIn', setType: 'moveIn', decisions: ['moveInDirection', 'moveSpeed', 'moveInLocation', 'moveInObject'], buttons: ['in direction', 'random direction', 'to location', 'to object'], question: 'How should it move directional?' }),
       
       'moveInDirection' : DirectionOption.create({ name: 'moveInDirection', child: 'moveSpeed', question: 'Drag it to set the direction' }),
       
