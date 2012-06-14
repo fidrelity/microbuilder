@@ -17,7 +17,7 @@
   .games
     - games.each do |game|
       %li{:id => game.id, :class => "span3 game"}                                                                                            
-        = link_to image_tag("game.png"), play_path(game)
+        = link_to image_tag(game.preview_image), play_path(game)
         - if game.author == current_user
           %ul{:class => 'meta'}
             =link_to image_tag("icon_delete.png"), game_path(game), :method => :delete, :remote => true, :confirm => "Permanently delete this game?"
