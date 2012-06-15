@@ -82,6 +82,9 @@ var ActionController = Ember.Object.extend({
       
       'game' : ButtonOption.create({ name: 'game', decisions: ['win', 'lose'], buttons: ['win', 'lose'], question: 'Win or lose?' }),
       
+      'win' : Option.create({ name: 'win', setType: 'win', child: 'save' }),
+      'lose' : Option.create({ name: 'lose', setType: 'lose', child: 'save' }),
+      
       'save' : SaveOption.create({ name: 'save' })
       
     }));
