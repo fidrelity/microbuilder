@@ -2,11 +2,11 @@ var ActionTriggerModel = Ember.Object.extend({
   
   type : null,
   
-  decisions : [],
+  decisions : null,
   
   init : function() {
     
-    this.set( 'decisions', [] );
+    this.set( 'decisions', this.decisions || [] );
     
   },
   

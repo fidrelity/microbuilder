@@ -59,26 +59,6 @@ var BehaviourController = Ember.ArrayController.extend({
     
     return ActionTriggerModel.create().parse( data );
     
-    switch ( data.type ) {
-      
-      case 'jumpTo' : return MoveActionModel.create().parse( data );
-      case 'moveTo' : return MoveActionModel.create().parse( data );
-      case 'moveIn' : return MoveActionModel.create().parse( data );
-      
-      case 'roam' : return MoveActionModel.create().parse( data );
-      
-      case 'swap' : return MoveActionModel.create().parse( data );
-      case 'stop' : return MoveActionModel.create({ type : 'stop' });
-      
-      case 'art' : return ArtActionModel.create().parse( data );
-      
-      case 'win' : return WinLoseActionModel.create({ type : 'win' });
-      case 'lose' : return WinLoseActionModel.create({ type : 'lose' });
-      
-      default : console.error( 'action type ' + data.type + ' not found' ); return null;
-      
-    }
-    
   },
   
   parseTrigger : function( data ) {
