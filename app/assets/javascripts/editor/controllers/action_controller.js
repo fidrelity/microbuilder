@@ -24,13 +24,15 @@ var ActionController = Ember.Object.extend({
       
       'action' : ButtonOption.create({ name: 'action', decisions: ['move', 'art', 'game'], buttons: ['move', 'art', 'game'], question: 'Select the type of action' }),
       
-      'move' : ButtonOption.create({ name: 'move', decisions: ['moveIn', 'moveTo', 'jumpTo'], buttons: ['directional', 'move to', 'jump to'], question: 'What type of movement?' }),
+      'move' : ButtonOption.create({ name: 'move', decisions: ['moveIn', 'moveTo', 'jumpTo', 'roam', 'swap', 'stop'], buttons: ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop'], question: 'What type of movement?' }),
       
       'moveIn' : ButtonOption.create({ name: 'moveIn', setType: 'moveIn', decisions: ['moveInDirection', 'moveSpeed', 'moveInLocation', 'moveInObject'], buttons: ['in direction', 'random direction', 'to location', 'to object'], question: 'How should it move directional?' }),
       
       'moveInDirection' : DirectionOption.create({ name: 'moveInDirection', child: 'moveSpeed', question: 'Drag it to set the direction' }),
       'moveInLocation' : LocationOption.create({ name: 'moveInLocation', child: 'moveSpeed', question: 'Drag it to the location in which direction it should move' }),
       'moveInObject' : ObjectOption.create({ name: 'moveInObject', decision: 'moveSpeed', question: 'Choose the object in which direction it should move' }),
+      
+      'moveSpeed' : SpeedOption.create({ name: 'moveSpeed', child: 'save', question: 'Set the speed of the movement' }),
       
       'moveTo' : ButtonOption.create({ name: 'moveTo', setType: 'moveTo', decisions: ['moveToLocation', 'moveToObject'], buttons: ['to location', 'to object'], question: 'Where should it move?' }),
       
@@ -48,7 +50,17 @@ var ActionController = Ember.Object.extend({
       
       'jumpToArea' : AreaOption.create({ name: 'jumpToArea', decision: 'save', question: 'Select the area where it should randomly jump'}),
       
-      'moveSpeed' : SpeedOption.create({ name: 'moveSpeed', child: 'save', question: 'Set the speed of the movement' }),
+      'roam' : AreaOption.create({ name: 'roam', setType: 'roam', decision: 'roamMode', question: 'Select the area where it should roam in'}),
+      'roamMode' : ButtonOption.create({ name: 'roamMode', decisions: ['roamWiggle', 'roamReflect', 'roamInsect', 'roamBounce'], buttons: ['wiggle', 'reflect', 'insect', 'bounce'], question: 'Which type of roaming?' }),
+      
+      'roamWiggle' : Option.create({ name: 'roamWiggle', type: 'mode', setMode: 'wiggle', child: 'moveSpeed' }),
+      'roamReflect' : Option.create({ name: 'roamReflect', type: 'mode', setMode: 'reflect', child: 'moveSpeed' }),
+      'roamInsect' : Option.create({ name: 'roamInsect', type: 'mode', setMode: 'insect', child: 'moveSpeed' }),
+      'roamBounce' : Option.create({ name: 'roamBounce', type: 'mode', setMode: 'bounce', child: 'moveSpeed' }),
+      
+      'swap' : ObjectOption.create({ name: 'swap', setType: 'swap', decision: 'save', question: 'Choose the object to swap position' }),
+      
+      'stop' : Option.create({ name: 'stop', setType: 'stop', child: 'save' }),
       
       'art' : ButtonOption.create({ name: 'art', decisions: ['toFrame', 'play', 'stop'], buttons: ['to frame', 'play', 'stop'], question: 'What should the art do?' }),
       'game' : ButtonOption.create({ name: 'game', decisions: ['win', 'lose'], buttons: ['win', 'lose'], question: 'Win or lose?' }),

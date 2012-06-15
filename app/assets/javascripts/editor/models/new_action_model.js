@@ -22,6 +22,12 @@ var ActionModel = Ember.Object.extend({
     
   },
   
+  setMode : function( mode ) {
+    
+    this.set( 'mode', mode );
+    
+  },
+  
   setObject : function( object ) {
     
     this.set( 'gameObject', object );
@@ -91,11 +97,9 @@ var ActionModel = Ember.Object.extend({
       
       area : this.area ? this.area.clone() : null,
       
-      // random : this.random,
       // direction : this.direction,
-      
-      speed : this.speed,
-      // addSpeed : this.addSpeed
+      mode : this.mode,
+      speed : this.speed
       
     });
     
@@ -116,9 +120,10 @@ var ActionModel = Ember.Object.extend({
       offset : d.offset ? new Vector().copy( d.offset ) : null,
       
       area : d.area ? new Area().copy( d.area ) : null,
-      // mode : d.mode,
-      speed : d.speed,
-      // random : d.random
+      
+      mode : d.mode,
+      speed : d.speed
+      
     });
     
     return this;
@@ -135,6 +140,7 @@ var ActionModel = Ember.Object.extend({
       
       switch ( optionType ) {
         
+        case 'empty': break;
         case 'button': break;
         
         case 'object': data.objectID = this.gameObject.ID; break;
@@ -145,7 +151,9 @@ var ActionModel = Ember.Object.extend({
         case 'area': data.area = this.area.getData(); break;
         
         case 'offset': if ( this.offset ) data.offset = this.offset.getData(); break;
+        
         case 'speed': data.speed = this.speed; break;
+        case 'mode': data.mode = this.mode; break;
         
         default : console.error( 'unknown optionType: ' + optionType );
         
@@ -164,8 +172,9 @@ var Option = Ember.Object.extend({
   name : null,
   question : null,
   
-  type : null, // ['button', 'direction', 'location', 'area', 'offset', 'object', 'time', 'frame', 'speed', 'art']
+  type : 'empty', // ['button', 'direction', 'location', 'area', 'offset', 'object', 'time', 'frame', 'speed', 'art']
   setType : null,
+  setMode : null,
   
   decision : null,
   decisions : [],
@@ -180,6 +189,12 @@ var Option = Ember.Object.extend({
       
     }
     
+    if ( this.setMode ) {
+      
+      App.actionController.action.setMode( this.setMode );
+      
+    }
+    
     if ( this.child ) {
       
       App.actionController.insert( this.child );
@@ -188,7 +203,19 @@ var Option = Ember.Object.extend({
     
   },
   
-  decide : function() {}
+  decide : function( decision ) {
+    
+    if ( decision === 'save' ) {
+      
+      App.actionController.insert( decision );
+      
+    } else {
+      
+      App.actionController.decide( decision );
+      
+    }
+    
+  }
   
 });
 
@@ -230,13 +257,15 @@ var ObjectOption = Option.extend({
       contentBinding : 'App.gameObjectsController.others',
     }));
     
+    this._super();
+    
   },
   
   decide : function( object ) {
     
     App.actionController.action.setObject( object );
     
-    App.actionController.decide( this.decision );
+    this._super( this.decision );
     
   }
   
@@ -293,13 +322,15 @@ var AreaOption = Option.extend({
       type : 'area'
     }));
     
+    this._super();
+    
   },
   
   decide : function( area ) {
     
     App.actionController.action.setArea( area );
     
-    App.actionController.insert( this.decision );
+    this._super( this.decision );
     
   }
   
