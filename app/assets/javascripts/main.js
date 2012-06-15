@@ -10,7 +10,7 @@ function editor_main( data ) {
   App.gameObjectsController = GameObjectsController.create();
   App.behaviourController = BehaviourController.create();
   
-  App.actionController = ActionController.create();
+  App.set( 'actionController', ActionController.create() );
 
   App.mainView = MainView.create();
   App.mainView.appendTo('#content');

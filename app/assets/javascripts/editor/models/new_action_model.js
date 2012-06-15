@@ -173,6 +173,9 @@ var Option = Ember.Object.extend({
   question : null,
   
   type : 'empty', // ['button', 'direction', 'location', 'area', 'offset', 'object', 'time', 'frame', 'speed', 'art']
+  
+  actionBinding : 'App.actionController.action',
+  
   setType : null,
   setMode : null,
   
@@ -185,13 +188,13 @@ var Option = Ember.Object.extend({
     
     if ( this.setType ) {
       
-      App.actionController.action.setType( this.setType );
+      this.action.setType( this.setType );
       
     }
     
     if ( this.setMode ) {
       
-      App.actionController.action.setMode( this.setMode );
+      this.action.setMode( this.setMode );
       
     }
     
@@ -263,7 +266,7 @@ var ObjectOption = Option.extend({
   
   decide : function( object ) {
     
-    App.actionController.action.setObject( object );
+    this.action.setObject( object );
     
     this._super( this.decision );
     
@@ -278,12 +281,12 @@ var LocationOption = Option.extend({
   insert : function() {
     
     App.actionController.addOption( this.question, PlacementView.create({
-      observer : App.actionController.action,
+      observer : this.action,
       type : 'location',
       object : App.gameObjectsController.current
     }));
     
-    App.actionController.action.setLocation( App.gameObjectsController.current.position.clone() );
+    this.action.setLocation( App.gameObjectsController.current.position.clone() );
     
     this._super();
     
@@ -298,12 +301,12 @@ var DirectionOption = Option.extend({
   insert : function() {
     
     App.actionController.addOption( this.question, PlacementView.create({
-      observer : App.actionController.action,
+      observer : this.action,
       type : 'direction',
       object : App.gameObjectsController.current
     }));
     
-    App.actionController.action.setLocation( new Vector( 1, 0 ) );
+    this.action.setLocation( new Vector( 1, 0 ) );
     
     this._super();
     
@@ -328,7 +331,7 @@ var AreaOption = Option.extend({
   
   decide : function( area ) {
     
-    App.actionController.action.setArea( area );
+    this.action.setArea( area );
     
     this._super( this.decision );
     
@@ -343,10 +346,10 @@ var OffsetOption = Option.extend({
   insert : function() {
     
     App.actionController.addOption( this.question, PlacementView.create({
-      observer : App.actionController.action,
+      observer : this.action,
       type : 'offset',
       object : App.gameObjectsController.current,
-      object2 : App.actionController.action.gameObject
+      object2 : this.action.gameObject
     }));
     
     this._super();
@@ -362,10 +365,11 @@ var SpeedOption = Option.extend({
   insert : function() {
     
     App.actionController.addOption( this.question, SpeedView.create({
-      observer : App.actionController.action
+      observer : this.action
     }));
     
-    App.actionController.action.addDecision( this.name );
+    this.action.setSpeed( 2 );
+    this.action.addDecision( this.name );
     
     this._super();
     
