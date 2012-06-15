@@ -12,11 +12,10 @@ var ActionController = Ember.Object.extend({
   
   behaviourBinding : 'App.behaviourController.current',
   
+  options : {},
   optionViews : null,
   
   showSaveButton : false,
-  
-  options : {},
   
   init : function() {
     
@@ -135,7 +134,7 @@ var ActionController = Ember.Object.extend({
     
     this.set( 'optionViews', Ember.ContainerView.create({
       destroy : function() {
-        if ( App.actionController.action && App.actionController.action.type !== 'search' ) {
+        if ( App.actionController.action.type !== 'search' ) {
           this._super();
         }
       }
@@ -188,45 +187,6 @@ var ActionController = Ember.Object.extend({
   selectGraphic : function( graphic ) {
     
     this.options.get( 'artChange' ).decide( graphic );
-    
-  },
-  
-  move : function() {
-  
-    this.set( 'action', MoveActionModel.create() );
-    
-    this.addButtonOption( 
-      'What type of movement?', 
-      ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop'],
-      this.action,
-      1
-    );
-  
-  },
-  
-  art : function() {
-    
-    this.set( 'action', ArtActionModel.create() );
-    
-    this.addButtonOption( 
-      'What should the art do?', 
-      ['to frame', 'play', 'stop', 'change' ],
-      this.action,
-      1
-    );
-    
-  },
-
-  'win/lose' : function() {
-    
-    this.set( 'action', WinLoseActionModel.create() );
-    
-    this.addButtonOption( 
-      'Win or lose?', 
-      ['win', 'lose'], 
-      this.action,
-      1
-    );
     
   },
   
