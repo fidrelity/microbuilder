@@ -35,9 +35,6 @@ var ButtonView = Ember.CollectionView.extend({
   attributeBindings: ["data-toggle"],
   'data-toggle': 'buttons-radio',
   
-  disable : true,
-  disabled : false,
-  
   itemViewClass: Ember.View.extend({
     
     tagName : 'button',
@@ -48,7 +45,7 @@ var ButtonView = Ember.CollectionView.extend({
     
     didInsertElement : function() {
       
-      if ( !this._parentView.disable ) {
+      if ( this._parentView.observer.name === 'action' || this._parentView.observer.name === 'trigger' ) {
       
         this.$().addClass( 'btn-primary' );
       
@@ -58,31 +55,7 @@ var ButtonView = Ember.CollectionView.extend({
     
     click : function() {
       
-      // if ( this._parentView.disabled ) {
-      //   
-      //   return;
-      //   
-      // }
-      // 
-      // if ( this._parentView.disable ) {
-      // 
-      //   this._parentView.$( '.btn' ).addClass( 'disabled' );
-      //   
-      //   this.$().removeClass( 'disabled' );
-      //   
-      //   this._parentView.set( 'disabled', true )
-      // 
-      // }
-      
-      if ( this._parentView.observer.decide ) {
-      
-        this._parentView.observer.decide( this.content );
-      
-      } else {
-        
-        this._parentView.observer.choose( this.content );
-        
-      }
+      this._parentView.observer.decide( this.content );
       
     }
     

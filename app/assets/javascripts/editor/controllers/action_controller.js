@@ -117,8 +117,6 @@ var ActionController = Ember.Object.extend({
   
   reset : function( mode ) {
     
-    var buttons, question;
-    
     this.set( 'action', ActionModel.create() );
     
     this.set( 'mode', mode );
@@ -126,16 +124,12 @@ var ActionController = Ember.Object.extend({
     
     if ( mode === 'Action' ) {
       
-      // buttons = ['move', 'art', 'number', 'win/lose'];
-      buttons = ['move', 'art', 'win/lose'];
-      question = 'Select the type of action';
-
+      // buttons = ['move', 'art', 'number', 'game'];
     
     } else {
       
       // buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
-      buttons = ['click', 'contact', 'time'];
-      question = 'Select the type of trigger';
+      // question = 'Select the type of trigger';
     
     }
     
@@ -148,20 +142,6 @@ var ActionController = Ember.Object.extend({
     }));
     
     this.options.get( 'action' ).insert();
-    
-  },
-  
-  choose : function( name ) {
-    
-    if ( this.get( name ) ) {
-      
-      this.get( name ).call( this );
-      
-    } else {
-      
-      console.log( 'unknown action/trigger name: ' + name );
-      
-    }
     
   },
   
