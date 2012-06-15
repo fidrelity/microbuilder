@@ -58,6 +58,14 @@ var ActionModel = Ember.Object.extend({
     
   },
   
+  setGraphic : function( graphic ) {
+    
+    this.set( 'graphic', graphic );
+    
+    this.set( 'type', 'art' );
+    
+  },
+  
   
   speed : 2,
   
@@ -106,6 +114,8 @@ var ActionModel = Ember.Object.extend({
       frame : this.frame,
       frame2 : this.frame2,
       
+      graphic : this.graphic,
+      
       mode : this.mode,
       speed : this.speed
       
@@ -131,6 +141,8 @@ var ActionModel = Ember.Object.extend({
       
       frame : d.frame,
       frame2 : d.frame2,
+      
+      graphic : d.graphicID ? App.libraryController.getGraphic( d.graphicID ) : null,
       
       mode : d.mode,
       speed : d.speed
@@ -164,6 +176,7 @@ var ActionModel = Ember.Object.extend({
         case 'offset': if ( this.offset ) data.offset = this.offset.getData(); break;
         
         case 'frame': data.frame = this.frame; if ( this.frame2 ) data.frame2 = this.frame2; break;
+        case 'art': data.graphicID = this.graphic.ID; break;
         
         case 'speed': data.speed = this.speed; break;
         case 'mode': data.mode = this.mode; break;
@@ -413,6 +426,33 @@ var FrameOption = Option.extend({
     
     this.set( 'frame', frame.number );
     this.action.setFrame( this.mode, frame.number );
+    
+    this._super( this.decision );
+    
+  }
+  
+});
+
+var ArtOption = Option.extend({
+  
+  type : 'art',
+  
+  graphic : null,
+  
+  insert : function() {
+    
+    App.actionController.addOption( this.question, ArtView.create({
+      observer : this
+    }));
+    
+    this._super();
+    
+  },
+  
+  decide : function( graphic ) {
+    
+    this.set( 'graphic', graphic );
+    this.action.setGraphic( graphic );
     
     this._super( this.decision );
     

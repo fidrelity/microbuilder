@@ -62,7 +62,7 @@ var ActionController = Ember.Object.extend({
       
       'stop' : Option.create({ name: 'stop', setType: 'stop', child: 'save' }),
       
-      'art' : ButtonOption.create({ name: 'art', setType: 'art', decisions: ['toFrame', 'play', 'save', 'artChange'], buttons: ['to frame', 'play', 'stop', 'change'], question: 'What should the art do?' }),
+      'art' : ButtonOption.create({ name: 'art', setType: 'art', decisions: ['toFrame', 'play', 'playStop', 'artChange'], buttons: ['to frame', 'play', 'stop', 'change'], question: 'What should the art do?' }),
       
       'toFrame' : FrameOption.create({ name: 'toFrame', decision: 'save', question : 'Choose the frame it should display' }),
       
@@ -75,6 +75,10 @@ var ActionController = Ember.Object.extend({
       'playOnce' : Option.create({ name: 'playOnce', type: 'mode', setMode: 'once', child: 'playSpeed' }),
       
       'playSpeed' : SpeedOption.create({ name: 'playSpeed', child: 'save', question: 'Set the speed of the animation' }),
+      
+      'playStop' : Option.create({ name: 'playStop', child: 'save' }),
+      
+      'artChange' : ArtOption.create({ name: 'artChange', decision: 'save', question: 'Search in the libray for your graphic' }),
       
       'game' : ButtonOption.create({ name: 'game', decisions: ['win', 'lose'], buttons: ['win', 'lose'], question: 'Win or lose?' }),
       
@@ -198,11 +202,9 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  addArtOption : function( question, observer, depth ) {
+  selectGraphic : function( graphic ) {
     
-    this.addOption( question, ArtView.create({
-      observer : observer
-    }), depth );
+    this.options.get( 'artChange' ).decide( graphic );
     
   },
   

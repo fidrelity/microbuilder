@@ -61,7 +61,7 @@ var GameController = Ember.Object.extend({
   
   selectArtGraphic : function( graphic ) {
     
-    App.actionController.action.selectGraphic( graphic );
+    App.actionController.selectGraphic( graphic );
     
     App.mainView.show( 'actionView' );
     this.set( 'cancelView', 'objectsView' );
