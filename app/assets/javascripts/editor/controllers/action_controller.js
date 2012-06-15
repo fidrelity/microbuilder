@@ -62,7 +62,20 @@ var ActionController = Ember.Object.extend({
       
       'stop' : Option.create({ name: 'stop', setType: 'stop', child: 'save' }),
       
-      'art' : ButtonOption.create({ name: 'art', decisions: ['toFrame', 'play', 'stop'], buttons: ['to frame', 'play', 'stop'], question: 'What should the art do?' }),
+      'art' : ButtonOption.create({ name: 'art', setType: 'art', decisions: ['toFrame', 'play', 'save', 'artChange'], buttons: ['to frame', 'play', 'stop', 'change'], question: 'What should the art do?' }),
+      
+      'toFrame' : FrameOption.create({ name: 'toFrame', decision: 'save', question : 'Choose the frame it should display' }),
+      
+      'play' : FrameOption.create({ name: 'play', decision: 'play2', question : 'Choose the start frame of the animation' }),
+      'play2' : FrameOption.create({ name: 'play2', mode: 'frame2', decision: 'playMode', question : 'Choose the end frame of your animation' }),
+      'playMode' : ButtonOption.create({ name: 'playMode', decisions: ['playLoop', 'playPingPong', 'playOnce'], buttons:  ['loop', 'ping-pong', 'once'], question: 'Choose the animation mode' }),
+      
+      'playLoop' : Option.create({ name: 'playLoop', type: 'mode', setMode: 'loop', child: 'playSpeed' }),
+      'playPingPong' : Option.create({ name: 'playPingPong', type: 'mode', setMode: 'ping-pong', child: 'playSpeed' }),
+      'playOnce' : Option.create({ name: 'playOnce', type: 'mode', setMode: 'once', child: 'playSpeed' }),
+      
+      'playSpeed' : SpeedOption.create({ name: 'playSpeed', child: 'save', question: 'Set the speed of the animation' }),
+      
       'game' : ButtonOption.create({ name: 'game', decisions: ['win', 'lose'], buttons: ['win', 'lose'], question: 'Win or lose?' }),
       
       'save' : SaveOption.create({ name: 'save' })
@@ -151,7 +164,7 @@ var ActionController = Ember.Object.extend({
       decisions = this.action.decisions,
       depth = decisions.indexOf( name ) + 1;
     
-    if ( !depth || decisions.length === depth ) {
+    if ( decisions.length === depth ) {
       
       return;
       
@@ -181,16 +194,6 @@ var ActionController = Ember.Object.extend({
     this.addOption( question, TimeView.create({
       observer : observer,
       type : type
-    }), depth );
-    
-  },
-  
-  addFrameOption : function( question, type, observer, depth ) {
-    
-    this.addOption( question, FrameView.create({
-      observer : observer,
-      type : type,
-      graphic : App.gameObjectsController.current.graphic
     }), depth );
     
   },

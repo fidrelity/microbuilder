@@ -52,6 +52,12 @@ var ActionModel = Ember.Object.extend({
     
   },
   
+  setFrame : function( name, frame ) {
+    
+    this.set( name, frame );
+    
+  },
+  
   
   speed : 2,
   
@@ -97,7 +103,9 @@ var ActionModel = Ember.Object.extend({
       
       area : this.area ? this.area.clone() : null,
       
-      // direction : this.direction,
+      frame : this.frame,
+      frame2 : this.frame2,
+      
       mode : this.mode,
       speed : this.speed
       
@@ -120,6 +128,9 @@ var ActionModel = Ember.Object.extend({
       offset : d.offset ? new Vector().copy( d.offset ) : null,
       
       area : d.area ? new Area().copy( d.area ) : null,
+      
+      frame : d.frame,
+      frame2 : d.frame2,
       
       mode : d.mode,
       speed : d.speed
@@ -151,6 +162,8 @@ var ActionModel = Ember.Object.extend({
         case 'area': data.area = this.area.getData(); break;
         
         case 'offset': if ( this.offset ) data.offset = this.offset.getData(); break;
+        
+        case 'frame': data.frame = this.frame; if ( this.frame2 ) data.frame2 = this.frame2; break;
         
         case 'speed': data.speed = this.speed; break;
         case 'mode': data.mode = this.mode; break;
@@ -372,6 +385,36 @@ var SpeedOption = Option.extend({
     this.action.addDecision( this.name );
     
     this._super();
+    
+  }
+  
+});
+
+var FrameOption = Option.extend({
+  
+  type : 'frame',
+  
+  frame : 0,
+  
+  mode : 'frame',
+  
+  insert : function() {
+    
+    App.actionController.addOption( this.question, FrameView.create({
+      observer : this,
+      graphic : App.gameObjectsController.current.graphic
+    }));
+    
+    this._super();
+    
+  },
+  
+  decide : function( frame ) {
+    
+    this.set( 'frame', frame.number );
+    this.action.setFrame( this.mode, frame.number );
+    
+    this._super( this.decision );
     
   }
   

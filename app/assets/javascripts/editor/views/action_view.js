@@ -215,7 +215,6 @@ var FrameView = Ember.View.extend({
   
   observer : null,
   graphic : null,
-  type : null,
   
   classNames : ['frameview', 'optionview'],
   
@@ -234,7 +233,6 @@ var FrameView = Ember.View.extend({
       this.frames.addObject({
         number : i,
         observer : this.observer,
-        type : this.type,
         frameWidth : this.graphic.frameWidth,
         frameHeight : this.graphic.frameHeight
       });
@@ -245,19 +243,19 @@ var FrameView = Ember.View.extend({
   
   selected : function() {
     
-    return this.observer[ this.type ];
+    return this.observer.frame;
     
-  }.property( 'observer.frame', 'observer.frame2' ),
+  }.property( 'observer.frame' ),
   
   divStyle : function() {
     
     var width = this.graphic.frameWidth,
       height = Math.floor( this.graphic.frameHeight * 0.1 ),
-      offset = ( this.observer[ this.type ] - 1 ) * width;
+      offset = ( this.observer.frame - 1 ) * width;
     
     return 'width:' + width + 'px;height:' + height + 'px;background-color:black;margin-left:' + offset + 'px;';
     
-  }.property( 'observer.frame', 'observer.frame2' ),
+  }.property( 'observer.frame' ),
   
   wrapperWidth : function() {
     
