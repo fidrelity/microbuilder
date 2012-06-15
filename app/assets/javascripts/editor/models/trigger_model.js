@@ -1,6 +1,4 @@
-//= require ./action_trigger_model
-
-var ClickTriggerModel = ActionTriggerModel.extend({
+var ClickTriggerModel = Ember.Object.extend({
   
   type : 'click',
   
@@ -82,7 +80,7 @@ var ClickTriggerModel = ActionTriggerModel.extend({
   
 });
 
-var ContactTriggerModel = ActionTriggerModel.extend({
+var ContactTriggerModel = Ember.Object.extend({
   
   'touch' : function() {
     
@@ -174,7 +172,7 @@ var ContactTriggerModel = ActionTriggerModel.extend({
   
 });
 
-var TimeTriggerModel = ActionTriggerModel.extend({
+var TimeTriggerModel = Ember.Object.extend({
   
   time : 0,
   time2 : 0,
@@ -261,91 +259,22 @@ var TimeTriggerModel = ActionTriggerModel.extend({
   
 });
 
-var NumberTriggerModel = ActionTriggerModel.extend({
-
-  gameObject: null,
-  gameObject2: null,
-  number : null, 
-  type: null,
+var StartTriggerModel = Ember.Object.extend({
   
-  selectedNumberBool : false,
-  selectedGameObjectBool : false,
+  type : 'start',
   
-  selectedNumber: function () {
-    this.set ('selectedNumberBool', true);
-    this.set ('selectedGameObjectBool', false);
+  clone : function() {
+    
+    return StartTriggerModel.create({
+      type : this.type,
+    });
+    
   },
   
-  selectedGameObject: function () {
-    this.set ('selectedNumberBool', false);
-    this.set ('selectedGameObjectBool', true);
-  },
+  getData : function() {
   
-  selectObject : function( gameObject ) {    
-    this.set( 'gameObject', gameObject ); //equals this.gameObject = gameObject damit de view des mitgriagt
-  },
+    return { type: this.type };
   
-  selectObject2 : function( gameObject ) {    
-    this.set( 'gameObject2', gameObject );    
-  },
-  
-  setTypeToGreaterThan : function ( ) {
-    this.set( 'type', 'greatherThan');
-  },
-
-  setTypeToSmallerThan : function ( ) {
-    this.set( 'type', 'smallerThan');
-  },
-  
-  setTypeToEquals : function ( ) {
-    this.set( 'type', 'equals');
-  },
-  
-  setTypeToOnChange : function ( ) {
-    this.set( 'type', 'onChange');
-  },
-  
-  string : function() {
-    switch(this.type) {
-      case 'greatherThan':
-        if(this.number)
-          return 'number of' + this.gameObject.name + 'greather than' + this.number;
-        else
-          return 'number of' + this.gameObject.name + 'greather than' + 'number of' + this.gameObject2.name;
-      case 'smallerThan':
-        if(this.number)
-          return 'number of' + this.gameObject.name + 'smaller than' + this.number;
-        else
-          return 'number of' + this.gameObject.name + 'smaller than' + 'number of' + this.gameObject2.name;
-      case 'equals':
-        if(this.number)
-          return 'number of' + this.gameObject.name + 'equals' + this.number;
-        else
-          return 'number of' + this.gameObject.name + 'greather than' + 'number of' + this.gameObject2.name;
-      case 'onChange':
-          return 'number of' + this.gameObject.name + 'changes';
-    }
-  }.property( 'number', 'gameObject2' ), // .property sets on which data this function gets invoked
-  
-  getData : function() { //returns jSon Object for Parser
-    if(this.number)
-      return {
-        type: this.type,
-        objectID: this.gameObject.ID,
-        number: this.number
-      }
-    else
-      return {
-        type: this.type,
-        objectID: this.gameObject.ID,
-        object2ID: this.gameObject2.ID
-      } 
   }
-
-});
-
-var StartTriggerModel = ActionTriggerModel.extend({
-  
-  type : 'start'
   
 });
