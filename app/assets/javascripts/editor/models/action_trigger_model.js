@@ -1,4 +1,4 @@
-var ActionModel = Ember.Object.extend({
+var ActionTriggerModel = Ember.Object.extend({
   
   type : null,
   
@@ -99,7 +99,7 @@ var ActionModel = Ember.Object.extend({
   
   clone : function() {
     
-    return ActionModel.create({
+    return ActionTriggerModel.create({
       
       type : this.type,
       decisions : this.decisions.concat(),

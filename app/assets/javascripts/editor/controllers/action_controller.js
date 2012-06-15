@@ -116,7 +116,7 @@ var ActionController = Ember.Object.extend({
   
   reset : function( mode ) {
     
-    this.set( 'action', ActionModel.create() );
+    this.set( 'action', ActionTriggerModel.create() );
     
     this.set( 'mode', mode );
     this.set( 'showSaveButton', false );

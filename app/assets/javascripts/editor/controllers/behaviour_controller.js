@@ -57,7 +57,7 @@ var BehaviourController = Ember.ArrayController.extend({
   
   parseAction : function( data ) {
     
-    return ActionModel.create().parse( data );
+    return ActionTriggerModel.create().parse( data );
     
     switch ( data.type ) {
       
