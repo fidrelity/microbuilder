@@ -28,11 +28,11 @@ Mouse.prototype = {
     
     this.mode = 'click';
     
-    $( this.canvas ).click( bind( this, this.click ) );
-    
     $( this.canvas ).unbind( 'mousedown' );
     $( this.canvas ).unbind( 'mousemove' );
     $( this.canvas ).unbind( 'mouseup' );
+    
+    $( this.canvas ).mousedown( bind( this, this.click ) );
     
   },
   
@@ -46,11 +46,11 @@ Mouse.prototype = {
     
     this.mode = 'drag';
     
+    $( this.canvas ).unbind( 'mousedown' );
+    
     $( this.canvas ).mousedown( bind( this, this.mousedown ) );
     $( this.canvas ).mousemove( bind( this, this.mousemove ) );
     $( this.canvas ).mouseup( bind( this, this.mouseup ) );
-    
-    $( this.canvas ).unbind( 'click' );
     
   },
   
