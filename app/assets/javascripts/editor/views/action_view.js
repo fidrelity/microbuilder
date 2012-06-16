@@ -98,11 +98,21 @@ var GameObjectsView = Ember.CollectionView.extend({
     
     didInsertElement : function() {
       
+      var self = this;
+      
+      this.addObserver( 'App.gameObjectsController.current', function() {
+        
+        if ( self.content === App.gameObjectsController.current ) {
+          
+          self.selectSelf();
+          
+        }
+      
+      });
+      
       if ( this.content === App.gameObjectsController.current || this.content.active ) {
         
-        this.deselectAll();
-        
-        this.$().addClass( 'selected' );
+        this.selectSelf();
         
         this.content.set( 'active', false );
         
@@ -112,9 +122,7 @@ var GameObjectsView = Ember.CollectionView.extend({
     
     click : function() {
       
-      this.deselectAll();
-      
-      this.$().addClass( 'selected' );
+      this.selectSelf();
       
       if ( this._parentView.observer.select ) {
         
@@ -128,7 +136,7 @@ var GameObjectsView = Ember.CollectionView.extend({
       
     },
     
-    deselectAll : function() {
+    selectSelf : function() {
       
       var childs = this._parentView._childViews, i;
       
@@ -137,6 +145,8 @@ var GameObjectsView = Ember.CollectionView.extend({
         childs[i].$().removeClass( 'selected' );
       
       }
+      
+      this.$().addClass( 'selected' );
       
     }
     
