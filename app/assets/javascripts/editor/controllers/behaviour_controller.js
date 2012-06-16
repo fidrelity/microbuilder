@@ -28,17 +28,20 @@ var BehaviourController = Ember.ArrayController.extend({
   
   parseBehaviour : function( gameObject, data ) {
     
-    var behaviour = BehaviourModel.create(), i, trigger;
+    var behaviour = BehaviourModel.create(), 
+      action, trigger, i;
     
     for ( i = 0; i < data.actions.length; i++ ) {
       
-      behaviour.addAction( this.parseActionTrigger( data.actions[i] ) );
+      action = ActionTriggerModel.create().parse( data.actions[i] );
+      
+      behaviour.addAction( action );
       
     }
     
     for ( i = 0; i < data.triggers.length; i++ ) {
       
-      trigger = this.parseActionTrigger( data.triggers[i] );
+      trigger = ActionTriggerModel.create().parse( data.triggers[i] );
       
       behaviour.addTrigger( trigger );
       
@@ -52,12 +55,6 @@ var BehaviourController = Ember.ArrayController.extend({
     }
     
     gameObject.behaviours.addObject( behaviour );
-    
-  },
-  
-  parseActionTrigger : function( data ) {
-    
-    return ActionTriggerModel.create().parse( data );
     
   }
 

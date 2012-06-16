@@ -80,6 +80,8 @@ var GameObjectsController = Ember.ArrayController.extend({
     
     this.select( gameObject );
     
+    gameObject.set( 'behaviours', [] );
+    
     for ( i = 0; i < object.behaviours.length; i++ ) {
       
       App.behaviourController.parseBehaviour( gameObject, object.behaviours[i] );
