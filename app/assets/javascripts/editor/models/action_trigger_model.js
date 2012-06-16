@@ -77,6 +77,13 @@ var ActionTriggerModel = Ember.Object.extend({
     
   },
   
+  setTime : function( time, time2 ) {
+    
+    this.set( 'time', time );
+    this.set( 'time2', time2 );
+    
+  },
+  
   
   speed : 2,
   
@@ -112,7 +119,7 @@ var ActionTriggerModel = Ember.Object.extend({
   //   
   //   return this.choice ? this.choice.string( this.parentGameObject, this ) : this.type;
   //   
-  // }.property( 'choice', 'gameObject', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed' ),
+  // }.property( 'choice', 'gameObject', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2' ),
   
   
   clone : function() {
@@ -134,6 +141,9 @@ var ActionTriggerModel = Ember.Object.extend({
       frame2 : this.frame2,
       
       graphic : this.graphic,
+      
+      time : this.time,
+      time2 : this.time2,
       
       mode : this.mode,
       speed : this.speed
@@ -162,6 +172,9 @@ var ActionTriggerModel = Ember.Object.extend({
       frame2 : d.frame2,
       
       graphic : d.graphicID ? App.libraryController.getGraphic( d.graphicID ) : null,
+      
+      time : d.time,
+      time2 : d.time2,
       
       mode : d.mode,
       speed : d.speed
@@ -206,6 +219,8 @@ var ActionTriggerModel = Ember.Object.extend({
         
         case 'frame': data.frame = this.frame; if ( this.frame2 ) data.frame2 = this.frame2; break;
         case 'art': data.graphicID = this.graphic.ID; graphicIDs.push( this.graphic.ID ); break;
+        
+        case 'time': data.time = this.time; if ( this.time2 ) data.time2 = this.time2; break;
         
         case 'speed': data.speed = this.speed; break;
         case 'mode': data.mode = this.mode; break;

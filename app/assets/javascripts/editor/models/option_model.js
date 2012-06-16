@@ -352,6 +352,23 @@ var ArtOption = Option.extend({
   
 });
 
+var TimeOption = Option.extend({
+  
+  type : 'time',
+  
+  mode : 'exact',
+  
+  doInsert : function() {
+    
+    App.actionController.addOption( this.question, TimeView.create({
+      observer : this.action,
+      type : this.mode
+    }));
+    
+  }
+  
+});
+
 var SaveOption = Option.extend({
   
   type : 'save',

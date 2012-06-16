@@ -148,7 +148,7 @@ var TimeView = Ember.View.extend({
   didInsertElement : function() {
     
     var self = this,
-      range = this.type === 'randomly',
+      range = this.type === 'random',
       values = range ? [30,70] : [30];
     
     this.setTime( values[0], values[1] );

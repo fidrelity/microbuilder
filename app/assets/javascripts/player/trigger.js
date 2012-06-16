@@ -149,7 +149,7 @@ TimeTrigger.prototype = {
   
   draw : function( ctx ) {
     
-    var time = this.randTime || this.time, i = Player.prototype.increment;
+    var time = this.randTime || this.time, i = Stage.prototype.increment;
     
     ctx.fillStyle = this.triggered ? '#AAA' : '#333';
     

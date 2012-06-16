@@ -32,13 +32,13 @@ var BehaviourController = Ember.ArrayController.extend({
     
     for ( i = 0; i < data.actions.length; i++ ) {
       
-      behaviour.addAction( this.parseAction( data.actions[i] ) );
+      behaviour.addAction( this.parseActionTrigger( data.actions[i] ) );
       
     }
     
     for ( i = 0; i < data.triggers.length; i++ ) {
       
-      trigger = this.parseTrigger( data.triggers[i] );
+      trigger = this.parseActionTrigger( data.triggers[i] );
       
       behaviour.addTrigger( trigger );
       
@@ -55,28 +55,9 @@ var BehaviourController = Ember.ArrayController.extend({
     
   },
   
-  parseAction : function( data ) {
+  parseActionTrigger : function( data ) {
     
     return ActionTriggerModel.create().parse( data );
-    
-  },
-  
-  parseTrigger : function( data ) {
-    
-    switch ( data.type ) {
-      
-      case 'start' : return StartTriggerModel.create();
-      
-      case 'click' : return ClickTriggerModel.create().parse( data );
-      
-      case 'touch' : return ContactTriggerModel.create().parse( data );
-      case 'overlap' : return ContactTriggerModel.create().parse( data );
-      
-      case 'time' : return TimeTriggerModel.create().parse( data );
-      
-      default : console.error( 'trigger type ' + data.type + ' not found' ); return null;
-      
-    }
     
   }
 

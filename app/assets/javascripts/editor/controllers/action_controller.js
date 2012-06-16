@@ -37,8 +37,8 @@ var ActionController = Ember.Object.extend({
     
     'timeExact', 'timeRandom',
     
-    // 'artHasFrame', 'artToFrame',
-    // 'artHasGraphic', 'artToGraphic',
+    // 'artHasFrame', 'artGetsFrame',
+    // 'artHasGraphic', 'artGetsGraphic',
     
     // 'counterEqualsNumber', 'counterEqualsObject',
     // 'counterGreaterNumber', 'counterGreaterObject',
@@ -69,10 +69,16 @@ var ActionController = Ember.Object.extend({
       
     }
     
+    for ( i = 0; i < this.triggerIDs.length; i++ ) {
+      
+      this.choices.addObject( Choice.create({ ID : this.triggerIDs[i] }) );
+      
+    }
+    
     this.set( 'actionOption', ButtonOption.create({ 
       name: 'action', 
       question: 'Select the type of action',
-      buttons: ['move', 'art', 'game'],
+      buttons: ['move', 'art', 'game'], // 'counter'],
       
       decisions: [
         
@@ -344,12 +350,163 @@ var ActionController = Ember.Object.extend({
       ]
     }));
     
+    this.set( 'triggerOption', ButtonOption.create({ 
+      name: 'trigger', 
+      question: 'Select the type of trigger',
+      buttons: ['click', 'contact', 'time'], // 'art', 'number', 'game'],
+      
+      decisions: [
+        
+        // click
+        
+        ButtonOption.create({
+          name: 'click',
+          setType: 'click',
+          question: 'Click on what?',
+          buttons: ['self', 'object', 'area'],
+          
+          decisions: [
+            
+            // self
+            
+            SaveOption.create({ choiceID: 'clickSelf' }),
+            
+            // object
+            
+            ObjectOption.create({
+              name: 'clickObject',
+              question: 'Choose the object to trigger the click',
+              
+              decision: SaveOption.create({ choiceID: 'clickObject' })
+            }),
+            
+            // area
+            
+            AreaOption.create({
+              name: 'clickArea',
+              question: 'Select the area to trigger the click',
+              
+              decision : SaveOption.create({ choiceID: 'clickArea' })
+            })
+            
+          ]
+          
+        }),
+        
+        // contact
+        
+        ButtonOption.create({
+          name: 'contact',
+          question: 'Trigger a touch or overlapping?', 
+          buttons: ['touch', 'overlap'], 
+          decisions: [
+            
+            // touch
+            
+            ButtonOption.create({
+              name: 'touch',
+              setType: 'touch',
+              question: 'Touches what?',
+              buttons: ['object', 'area'],
+              
+              decisions: [
+                
+                // object
+                
+                ObjectOption.create({
+                  name: 'touchObject',
+                  question: 'Choose the object to trigger the touch',
+                  
+                  decision: SaveOption.create({ choiceID: 'touchObject' })
+                }),
+                
+                // area
+                
+                AreaOption.create({
+                  name: 'touchArea',
+                  question: 'Select the area to trigger the touch',
+                  
+                  decision : SaveOption.create({ choiceID: 'touchArea' })
+                })
+                
+              ]
+            }),
+            
+            // overlap
+            
+            ButtonOption.create({
+              name: 'overlap',
+              setType: 'overlap',
+              question: 'Overlaps what?',
+              buttons: ['object', 'area'],
+              
+              decisions: [
+                
+                // object
+                
+                ObjectOption.create({
+                  name: 'overlapObject',
+                  question: 'Choose the object to trigger the overlap',
+                  
+                  decision: SaveOption.create({ choiceID: 'overlapObject' })
+                }),
+                
+                // area
+                
+                AreaOption.create({
+                  name: 'overlapArea',
+                  question: 'Select the area to trigger the overlap',
+                  
+                  decision : SaveOption.create({ choiceID: 'overlapArea' })
+                })
+                
+              ]
+            })
+            
+          ]
+        }),
+        
+        // time
+        
+        ButtonOption.create({
+          name: 'time',
+          setType: 'time',
+          question: 'Trigger at an excact time or randomly in a range?', 
+          buttons: ['exactly', 'randomly'], 
+          
+          decisions: [
+            
+            // exact
+            
+            TimeOption.create({
+              name: 'timeExact',
+              question: 'Drag the handle to the time in the game',
+              child: SaveOption.create({ choiceID: 'timeExact' })
+            }),
+            
+            // random
+            
+            TimeOption.create({
+              name: 'timeRandom',
+              mode: 'random',
+              question: 'Drag the handles to set the time range',
+              child: SaveOption.create({ choiceID: 'timeRandom' })
+            })
+            
+          ]
+        })
+        
+      ]
+    }));
   },
   
   start : function() {
     
     this.actionOption.setParents( null );
+    this.triggerOption.setParents( null );
+    
     this.actionOption.setChoices();
+    this.triggerOption.setChoices();
     
   },
   
@@ -372,13 +529,10 @@ var ActionController = Ember.Object.extend({
       
       this.actionOption.insert( this.action );
       
-      // buttons = ['move', 'art', 'number', 'game'];
-    
     } else {
       
-      // buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
-      // question = 'Select the type of trigger';
-    
+      this.triggerOption.insert( this.action );
+      
     }
     
   },
@@ -414,15 +568,6 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  addTimeOption : function( question, type, observer, depth ) {
-    
-    this.addOption( question, TimeView.create({
-      observer : observer,
-      type : type
-    }), depth );
-    
-  },
-  
   selectGraphic : function( graphic ) {
     
     var childs = this.optionViews.get( 'childViews' );
@@ -431,45 +576,6 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  click : function() {
-    
-    this.set( 'action', ClickTriggerModel.create() );
-    
-    this.addButtonOption( 
-      'Click on what?', 
-      ['self', 'object', 'area'], 
-      this.action,
-      1
-    );
-    
-  },
-
-  contact : function() {
-    
-    this.set( 'action', ContactTriggerModel.create() );
-    
-    this.addButtonOption( 
-      'Trigger a touch or overlapping?', 
-      ['touch', 'overlap'], 
-      this.action,
-      1
-    );
-    
-  },
-  
-  time : function() {
-    
-    this.set( 'action', TimeTriggerModel.create() );
-    
-    this.addButtonOption( 
-      'Trigger at an excact time or randomly in a range?', 
-      ['exactly', 'randomly'], 
-      this.action,
-      1
-    );
-    
-  },
-
   getChoice : function( choiceID ) {
     
     var choice = this.choices.findProperty( 'ID', choiceID );
