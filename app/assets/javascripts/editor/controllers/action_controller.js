@@ -9,6 +9,7 @@ var ActionController = Ember.Object.extend({
   mode : 'Action',
 
   action : null,
+  actionCopy : null,
   
   actionIDs : [
     
@@ -514,7 +515,8 @@ var ActionController = Ember.Object.extend({
     
     mode = mode || ( action.decisions[0].name === 'action' ? 'Action' : 'Trigger' );
     
-    this.set( 'action', action || ActionTriggerModel.create() );
+    this.set( 'action', action ? action.clone() : ActionTriggerModel.create() );
+    this.set( 'actionCopy', action );
     
     this.set( 'mode', mode );
     this.set( 'showSaveButton', false );
@@ -529,7 +531,7 @@ var ActionController = Ember.Object.extend({
     
     if ( action ) {
       
-      action.choice.option.reInsert( action );
+      action.choice.option.reInsert( this.action );
       
     } else if ( mode === 'Action' ) {
       
@@ -598,15 +600,13 @@ var ActionController = Ember.Object.extend({
 
   save : function() {
     
-    var action = this.get( 'action' );
-    
     if ( this.mode === 'Action' ) {
     
-      this.get( 'behaviour' ).addAction( action );
+      this.get( 'behaviour' ).addAction( this.action, this.actionCopy );
     
     } else {
     
-      this.get( 'behaviour' ).addTrigger( action );
+      this.get( 'behaviour' ).addTrigger( this.action, this.actionCopy );
     
     }
     

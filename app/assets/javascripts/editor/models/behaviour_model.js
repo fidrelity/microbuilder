@@ -30,19 +30,31 @@ var BehaviourModel = Ember.Object.extend({
     
   },
   
-  addAction : function( action ) {
+  addAction : function( action, oldAction, actions ) {
     
-    action.parent = this;
+    var i;
     
-    this.actions.push( action );
+    actions = actions || this.actions;
+    
+    if ( oldAction ) {
+      
+      i = actions.indexOf( oldAction );
+      
+      actions.removeAt( i );
+      actions.insertAt( i, action );
+      
+    } else {
+      
+      action.parent = this;
+      actions.addObject( action );
+      
+    }
     
   },
   
-  addTrigger : function( trigger ) {
+  addTrigger : function( trigger, oldTrigger ) {
     
-    trigger.parent = this;
-    
-    this.triggers.push( trigger );
+    this.addAction( trigger, oldTrigger, this.triggers );
     
   },
   

@@ -132,7 +132,7 @@ var ActionTriggerModel = Ember.Object.extend({
       
       gameObject : this.gameObject,
       
-      location : this.location ? this.position.clone() : null,
+      location : this.location ? this.location.clone() : null,
       offset : this.offset ? this.offset.clone() : null,
       
       area : this.area ? this.area.clone() : null,
