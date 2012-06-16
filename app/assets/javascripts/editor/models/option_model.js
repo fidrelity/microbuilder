@@ -71,6 +71,8 @@ var Option = Ember.Object.extend({
     
   },
   
+  doInsert : function() {},
+  
   setParents : function( parent ) {
     
     var i;
@@ -99,14 +101,9 @@ var Option = Ember.Object.extend({
   
   setChoices : function() {
     
-    var i, choice;
+    var i;
     
-    if ( this.choiceID ) {
-      
-      choice = App.actionController.getChoice( this.choiceID );
-      choice.setOption( this );
-      
-    } else if ( this.decisions.length ) {
+    if ( this.decisions.length ) {
       
       for ( i = 0; i < this.decisions.length; i++ ) {
         
@@ -336,6 +333,8 @@ var ArtOption = Option.extend({
   
   doInsert : function() {
     
+    this.set( 'graphic', null );
+    
     App.actionController.addOption( this.question, ArtView.create({
       observer : this
     }));
@@ -364,6 +363,13 @@ var SaveOption = Option.extend({
     
     this.action.setChoice( this.choiceID );
     App.actionController.set( 'showSaveButton', true );
+    
+  },
+  
+  setChoices : function() {
+    
+    var choice = App.actionController.getChoice( this.choiceID );
+    choice.setOption( this );
     
   }
   

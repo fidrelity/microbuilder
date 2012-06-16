@@ -53,7 +53,6 @@ var ActionController = Ember.Object.extend({
   actionOption : null,
   triggerOption : null,
   
-  // options : {},
   optionViews : null,
   
   choices : [],
@@ -70,79 +69,10 @@ var ActionController = Ember.Object.extend({
       
     }
     
-    // this.set( 'options', Ember.Object.create({
-    //   
-    //   'action' : ButtonOption.create({ name: 'action', decisions: ['move', 'art', 'game'], buttons: ['move', 'art', 'game'], question: 'Select the type of action' }),
-    //   
-    //   'move' : ButtonOption.create({ name: 'move', decisions: ['moveIn', 'moveTo', 'jumpTo', 'roam', 'swap', 'stop'], buttons: ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop'], question: 'What type of movement?' }),
-    //   
-    //   'moveIn' : ButtonOption.create({ name: 'moveIn', setType: 'moveIn', decisions: ['moveInDirection', 'moveSpeed', 'moveInLocation', 'moveInObject'], buttons: ['in direction', 'random direction', 'to location', 'to object'], question: 'How should it move directional?' }),
-    //   
-    //   'moveInDirection' : DirectionOption.create({ name: 'moveInDirection', child: 'moveSpeed', question: 'Drag it to set the direction' }),
-    //   'moveInLocation' : LocationOption.create({ name: 'moveInLocation', child: 'moveSpeed', question: 'Drag it to the location in which direction it should move' }),
-    //   'moveInObject' : ObjectOption.create({ name: 'moveInObject', decision: 'moveSpeed', question: 'Choose the object in which direction it should move' }),
-    //   
-    //   'moveSpeed' : SpeedOption.create({ name: 'moveSpeed', child: 'save', question: 'Set the speed of the movement' }),
-    //   
-    //   'moveTo' : ButtonOption.create({ name: 'moveTo', setType: 'moveTo', decisions: ['moveToLocation', 'moveToObject'], buttons: ['to location', 'to object'], question: 'Where should it move?' }),
-    //   
-    //   'moveToLocation' : LocationOption.create({ name: 'moveToLocation', child: 'moveSpeed', question: 'Drag it to the location where it should move' }),
-    //   'moveToObject' : ObjectOption.create({ name: 'moveToObject', decision: 'moveToOffset', question: 'Choose to which other object it should move' }),
-    //   
-    //   'moveToOffset' : OffsetOption.create({ name: 'moveToOffset', child: 'moveSpeed', question: 'Drag the object to define the offset' }),
-    //   
-    //   'jumpTo' : ButtonOption.create({ name: 'jumpTo', setType: 'jumpTo', decisions: ['jumpToLocation', 'jumpToObject', 'jumpToArea'], buttons: ['to location', 'to object', 'to area'], question: 'Where should it jump?' }),
-    //   
-    //   'jumpToLocation' : LocationOption.create({ name: 'jumpToLocation', child: 'save', question: 'Drag it to the location where it should jump' }),
-    //   'jumpToObject' : ObjectOption.create({ name: 'jumpToObject', decision: 'jumpToOffset', question: 'Choose to which other object it should jump' }),
-    //   
-    //   'jumpToOffset' : OffsetOption.create({ name: 'jumpToOffset', child: 'save', question: 'Drag the object to define the offset' }),
-    //   
-    //   'jumpToArea' : AreaOption.create({ name: 'jumpToArea', decision: 'save', question: 'Select the area where it should randomly jump'}),
-    //   
-    //   'roam' : AreaOption.create({ name: 'roam', setType: 'roam', decision: 'roamMode', question: 'Select the area where it should roam in'}),
-    //   'roamMode' : ButtonOption.create({ name: 'roamMode', decisions: ['roamWiggle', 'roamReflect', 'roamInsect', 'roamBounce'], buttons: ['wiggle', 'reflect', 'insect', 'bounce'], question: 'Which type of roaming?' }),
-    //   
-    //   'roamWiggle' : Option.create({ name: 'roamWiggle', type: 'mode', setMode: 'wiggle', child: 'moveSpeed' }),
-    //   'roamReflect' : Option.create({ name: 'roamReflect', type: 'mode', setMode: 'reflect', child: 'moveSpeed' }),
-    //   'roamInsect' : Option.create({ name: 'roamInsect', type: 'mode', setMode: 'insect', child: 'moveSpeed' }),
-    //   'roamBounce' : Option.create({ name: 'roamBounce', type: 'mode', setMode: 'bounce', child: 'moveSpeed' }),
-    //   
-    //   'swap' : ObjectOption.create({ name: 'swap', setType: 'swap', decision: 'save', question: 'Choose the object to swap position' }),
-    //   
-    //   'stop' : Option.create({ name: 'stop', setType: 'stop', child: 'save' }),
-    //   
-    //   'art' : ButtonOption.create({ name: 'art', setType: 'art', decisions: ['toFrame', 'play', 'playStop', 'artChange'], buttons: ['to frame', 'play', 'stop', 'change'], question: 'What should the art do?' }),
-    //   
-    //   'toFrame' : FrameOption.create({ name: 'toFrame', decision: 'save', question : 'Choose the frame it should display' }),
-    //   
-    //   'play' : FrameOption.create({ name: 'play', decision: 'play2', question : 'Choose the start frame of the animation' }),
-    //   'play2' : FrameOption.create({ name: 'play2', mode: 'frame2', decision: 'playMode', question : 'Choose the end frame of your animation' }),
-    //   'playMode' : ButtonOption.create({ name: 'playMode', decisions: ['playLoop', 'playPingPong', 'playOnce'], buttons:  ['loop', 'ping-pong', 'once'], question: 'Choose the animation mode' }),
-    //   
-    //   'playLoop' : Option.create({ name: 'playLoop', type: 'mode', setMode: 'loop', child: 'playSpeed' }),
-    //   'playPingPong' : Option.create({ name: 'playPingPong', type: 'mode', setMode: 'ping-pong', child: 'playSpeed' }),
-    //   'playOnce' : Option.create({ name: 'playOnce', type: 'mode', setMode: 'once', child: 'playSpeed' }),
-    //   
-    //   'playSpeed' : SpeedOption.create({ name: 'playSpeed', child: 'save', question: 'Set the speed of the animation' }),
-    //   
-    //   'playStop' : Option.create({ name: 'playStop', child: 'save' }),
-    //   
-    //   'artChange' : ArtOption.create({ name: 'artChange', decision: 'save', question: 'Search in the libray for your graphic' }),
-    //   
-    //   'game' : ButtonOption.create({ name: 'game', decisions: ['win', 'lose'], buttons: ['win', 'lose'], question: 'Win or lose?' }),
-    //   
-    //   'win' : Option.create({ name: 'win', setType: 'win', child: 'save' }),
-    //   'lose' : Option.create({ name: 'lose', setType: 'lose', child: 'save' }),
-    //   
-    //   'save' : SaveOption.create({ name: 'save' })
-    //   
-    // }));
-    
     this.set( 'actionOption', ButtonOption.create({ 
       name: 'action', 
       question: 'Select the type of action',
-      buttons: ['move'],// 'art', 'game'],
+      buttons: ['move', 'art', 'game'],
       
       decisions: [
         
@@ -304,12 +234,16 @@ var ActionController = Ember.Object.extend({
               })
             }),
             
+            // swap
+            
             ObjectOption.create({ 
               name: 'moveSwap', 
               setType: 'swap', 
               question: 'Choose the object to swap position',
               decision: SaveOption.create({ choiceID: 'moveSwap' })
             }),
+            
+            // stop
             
             Option.create({ 
               name: 'moveStop', 
@@ -318,36 +252,97 @@ var ActionController = Ember.Object.extend({
             })
             
           ]
-        })
+        }),
         
-        // 'art',
-        // 'game'
+        // art
+        
+        ButtonOption.create({ 
+          name: 'art', 
+          setType: 'art', 
+          question: 'What should the art do?',
+          buttons: ['to frame', 'play', 'stop', 'change'],
+          
+          decisions: [
+            
+            // to frame
+            
+            FrameOption.create({
+              name: 'toFrame', 
+              question : 'Choose the frame it should display',
+              decision: SaveOption.create({ choiceID: 'artToFrame' })
+            }),
+            
+            // play
+            
+            FrameOption.create({ 
+              name: 'play', 
+              question : 'Choose the start frame of the animation',
+              
+              decision: FrameOption.create({ 
+                name: 'play2', 
+                mode: 'frame2', 
+                question : 'Choose the end frame of your animation',
+                
+                decision: ModeOption.create({ 
+                  name: 'playMode',                   
+                  question: 'Choose the animation mode',
+                  
+                  buttons:  ['loop', 'ping-pong', 'once'], 
+                  modes:  ['loop', 'ping-pong', 'once'], 
+                  
+                  decision: SpeedOption.create({ 
+                    name: 'playSpeed', 
+                    question: 'Set the speed of the animation',
+                    child: SaveOption.create({ choiceID: 'artPlay' })
+                  })
+                })
+              })
+            }),
+            
+            // stop
+            
+            SaveOption.create({ choiceID: 'artStop' }),
+            
+            // change
+            
+            ArtOption.create({ 
+              name: 'artChange', 
+              question: 'Search in the libray for your graphic',
+              decision: SaveOption.create({ choiceID: 'artChange' })
+            })
+          ]
+        }),
+        
+        // game
+        
+        ButtonOption.create({ 
+          name: 'game', 
+          question: 'Win or lose?',
+          buttons: ['win', 'lose'],
+          
+          decisions: [
+            
+            // win
+            
+            Option.create({ 
+              name: 'win', 
+              setType: 'win', 
+              child: SaveOption.create({ choiceID: 'gameWin' })
+            }),
+            
+            // lose
+            
+            Option.create({ 
+              name: 'lose', 
+              setType: 'lose', 
+              child: SaveOption.create({ choiceID: 'gameLose' })
+            })
+            
+          ] 
+        })
         
       ]
     }));
-    
-    // 'art' : ButtonOption.create({ name: 'art', setType: 'art', decisions: ['toFrame', 'play', 'playStop', 'artChange'], buttons: ['to frame', 'play', 'stop', 'change'], question: 'What should the art do?' }),
-    // 
-    // 'toFrame' : FrameOption.create({ name: 'toFrame', decision: 'save', question : 'Choose the frame it should display' }),
-    // 
-    // 'play' : FrameOption.create({ name: 'play', decision: 'play2', question : 'Choose the start frame of the animation' }),
-    // 'play2' : FrameOption.create({ name: 'play2', mode: 'frame2', decision: 'playMode', question : 'Choose the end frame of your animation' }),
-    // 'playMode' : ButtonOption.create({ name: 'playMode', decisions: ['playLoop', 'playPingPong', 'playOnce'], buttons:  ['loop', 'ping-pong', 'once'], question: 'Choose the animation mode' }),
-    // 
-    // 'playLoop' : Option.create({ name: 'playLoop', type: 'mode', setMode: 'loop', child: 'playSpeed' }),
-    // 'playPingPong' : Option.create({ name: 'playPingPong', type: 'mode', setMode: 'ping-pong', child: 'playSpeed' }),
-    // 'playOnce' : Option.create({ name: 'playOnce', type: 'mode', setMode: 'once', child: 'playSpeed' }),
-    // 
-    // 'playSpeed' : SpeedOption.create({ name: 'playSpeed', child: 'save', question: 'Set the speed of the animation' }),
-    // 
-    // 'playStop' : Option.create({ name: 'playStop', child: 'save' }),
-    // 
-    // 'artChange' : ArtOption.create({ name: 'artChange', decision: 'save', question: 'Search in the libray for your graphic' }),
-    // 
-    // 'game' : ButtonOption.create({ name: 'game', decisions: ['win', 'lose'], buttons: ['win', 'lose'], question: 'Win or lose?' }),
-    // 
-    // 'win' : Option.create({ name: 'win', setType: 'win', child: 'save' }),
-    // 'lose' : Option.create({ name: 'lose', setType: 'lose', child: 'save' }),
     
   },
   
@@ -392,15 +387,7 @@ var ActionController = Ember.Object.extend({
     
     var childs = this.optionViews.get( 'childViews' ),
       decisions = this.action.decisions,
-      depth = parentOption ? decisions.indexOf( parentOption ) + 1 : 0;
-    
-    if ( depth === 0 ) {
-      
-      return;
-      
-    }
-    
-    console.log( decisions.map( function(i){ return i.name; }), parentOption.name, depth );
+      depth = decisions.indexOf( parentOption ) + 1;
     
     if ( decisions.length === depth ) {
       
@@ -438,7 +425,9 @@ var ActionController = Ember.Object.extend({
   
   selectGraphic : function( graphic ) {
     
-    this.options.get( 'artChange' ).decide( graphic );
+    var childs = this.optionViews.get( 'childViews' );
+    
+    childs[childs.length - 1].observer.decide( graphic );
     
   },
   

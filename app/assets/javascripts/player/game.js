@@ -106,7 +106,7 @@ Game.prototype = {
       
     }
     
-    console.error( "no gameObject with ID " + graphicID );
+    console.error( "no graphic with ID " + graphicID );
     
     return null;
     

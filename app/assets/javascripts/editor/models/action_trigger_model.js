@@ -172,15 +172,13 @@ var ActionTriggerModel = Ember.Object.extend({
       
       this.set( 'decisions', this.choice.getDecisions() );
       
-      console.log( this.decisions.map( function(i){ return i.name; }).join( ' > ' ) );
-      
     }
     
     return this;
     
   },
   
-  getData : function() {
+  getData : function( graphicIDs ) {
     
     var data = { 
       type : this.type,
@@ -207,7 +205,7 @@ var ActionTriggerModel = Ember.Object.extend({
         case 'offset': if ( this.offset ) data.offset = this.offset.getData(); break;
         
         case 'frame': data.frame = this.frame; if ( this.frame2 ) data.frame2 = this.frame2; break;
-        case 'art': data.graphicID = this.graphic.ID; break;
+        case 'art': data.graphicID = this.graphic.ID; graphicIDs.push( this.graphic.ID ); break;
         
         case 'speed': data.speed = this.speed; break;
         case 'mode': data.mode = this.mode; break;
