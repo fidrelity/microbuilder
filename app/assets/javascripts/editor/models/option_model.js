@@ -16,11 +16,64 @@ var Choice = Ember.Object.extend({
     
   },
   
-  string : function( gameObject, action ) {
+  string : function( name, action ) {
+    
+    var n = name, a = action;
     
     switch ( this.ID ) {
       
-      case 'moveInDirection' : return 'moves in direction';
+      // actions
+      
+      case 'moveInDirection' : 
+        n += ' moves in direction ' + Math.floor( a.angle() * -1 / Math.PI * 180 ) + '˚';
+        return n + ' - ' + a.getSpeedName();
+      case 'moveInRandom' : return n + ' moves in random direction' + ' - ' + a.getSpeedName();
+      case 'moveInObject' : return n + ' moves in direction of ' + a.gameObject.name + ' - ' + a.getSpeedName();
+      case 'moveInLocation' : return n + ' moves in direction of location ' + a.location.string() + ' - ' + a.getSpeedName();
+      
+      case 'moveToLocation' : return n + ' moves to location ' + a.location.string() + ' - ' + a.getSpeedName();
+      case 'moveToObject' : 
+        n += ' moves to ' + a.gameObject.name + ' - ' + a.getSpeedName();
+        return n + ( a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
+      
+      case 'jumpToLocation' : return n + ' jumps to location ' + a.location.string();
+      case 'jumpToObject' : 
+        n += ' jumps to ' + a.gameObject.name;
+        return n + ( a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
+      case 'jumpToArea' : return n + ' jumps to area ' + a.area.string();
+      
+      case 'moveRoam' : 
+        n += ' roams in ' + a.mode + ' mode within area ' + a.area.string();
+        return n + ' - ' + a.getSpeedName();
+      case 'moveSwap' : return n + ' swaps position with ' + a.gameObject.name;
+      case 'moveStop' : return n + ' stops moving';
+      
+      case 'artToFrame' : return n + ' displays frame ' + a.frame;
+      case 'artPlay' : 
+        n += ( a.mode === 'loop' ? ' loops ' : ( a.mode === 'once' ? ' plays once ' : ' plays ping-pong ' ) );
+        return n + ' from frame ' + a.frame + ' to ' + a.frame2 + ' - ' + a.getSpeedName();
+      case 'artStop' : return n + ' stops the animation';
+      case 'artChange' : return n + ' changes art to ' + a.graphic.name;
+      
+      case 'gameWin' : return 'win the game';
+      case 'gameLose' : return 'lose the game';
+      
+      // triggers
+      
+      case 'clickSelf' : return 'click on ' + n;
+      case 'clickObject' : return 'click on ' + a.gameObject.name;
+      case 'clickArea' : return 'click in area ' + a.area.string();
+      
+      case 'touchObject' : return n + ' touches ' + a.gameObject.name;
+      case 'touchArea' : return n + ' touches area ' + a.area.string();
+      
+      case 'overlapObject' : return n + ' overlaps ' + a.gameObject.name;
+      case 'overlapArea' : return n + ' overlaps area ' + a.area.string();
+      
+      case 'timeExact' : return 'randomly after ' + a.time + '-' + a.time2 + '% of the game';
+      case 'timeRandom' : return 'after ' + this.time + '% of the game';
+      
+      case 'gameStart' : return 'start';
       
       default : console.error( 'Unknow choice name: ' + this.ID );
       

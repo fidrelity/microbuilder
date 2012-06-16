@@ -101,6 +101,12 @@ var ActionTriggerModel = Ember.Object.extend({
     
   }.property( 'speed' ),
   
+  getSpeedName : function() {
+    
+    return this.speeds[ this.speed ];
+    
+  },
+  
   
   angle : function() {
     
@@ -109,17 +115,17 @@ var ActionTriggerModel = Ember.Object.extend({
   },
   
   
-  string : function() {
-    
-    return this.decisions.map( function(i){ return i.name; }).join( ' > ' );
-    
-  }.property( 'decisions.length' ),
-  
   // string : function() {
   //   
-  //   return this.choice ? this.choice.string( this.parentGameObject, this ) : this.type;
+  //   return this.decisions.map( function(i){ return i.name; }).join( ' > ' );
   //   
-  // }.property( 'choice', 'gameObject', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2' ),
+  // }.property( 'decisions.length' ),
+  
+  string : function() {
+    
+    return this.choice ? this.choice.string( this.parentGameObject.name, this ) : this.type;
+    
+  }.property( 'choice', 'gameObject', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2' ),
   
   
   clone : function() {
