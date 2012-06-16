@@ -179,6 +179,17 @@ var SelectView = RemoveView.extend({
   
 });
 
+var ActionSummaryView = RemoveView.extend({
+  
+  edit: function() {
+    
+    App.behaviourController.set( 'current', this.content.parent );
+    App.gameController.editAction( this.content );
+    
+  }
+  
+});
+
 var BehaviourView = SelectView.extend({
   
   addTrigger : function() {

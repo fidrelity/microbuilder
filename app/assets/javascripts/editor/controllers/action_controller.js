@@ -510,9 +510,11 @@ var ActionController = Ember.Object.extend({
     
   },
   
-  reset : function( mode ) {
+  reset : function( mode, action ) {
     
-    this.set( 'action', ActionTriggerModel.create() );
+    mode = mode || ( action.decisions[0].name === 'action' ? 'Action' : 'Trigger' );
+    
+    this.set( 'action', action || ActionTriggerModel.create() );
     
     this.set( 'mode', mode );
     this.set( 'showSaveButton', false );
@@ -525,7 +527,11 @@ var ActionController = Ember.Object.extend({
       }
     }));
     
-    if ( mode === 'Action' ) {
+    if ( action ) {
+      
+      action.choice.option.reInsert( action );
+      
+    } else if ( mode === 'Action' ) {
       
       this.actionOption.insert( this.action );
       

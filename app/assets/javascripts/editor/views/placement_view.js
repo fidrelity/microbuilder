@@ -85,7 +85,10 @@ var PlacementView = Ember.View.extend({
   
   load : function() {
     
-    var img, objs = App.gameObjectsController.content, i, type = this.type;
+    var objs = App.gameObjectsController.content, 
+      type = this.type, 
+      obs = this.observer, 
+      img, i;
     
     if ( type === 'location' || type === 'area' ) {
     
@@ -113,6 +116,8 @@ var PlacementView = Ember.View.extend({
             
             this.object = img;
             
+            this.object.pos.copy( obs.location );
+            
           }
         
         }
@@ -133,15 +138,25 @@ var PlacementView = Ember.View.extend({
         
       }
       
-      if ( this.type === 'direction' ) {
       
-        this.object.pos.set( this.width * 0.75, this.height * 0.5 );
+      this.object.pos.set( this.width * 0.5, this.height * 0.5 );
       
-      } else {
+      if ( type === 'direction' ) {
       
-        this.object.pos.set( this.width * 0.5, this.height * 0.5 );
+        this.object.pos.addSelf( obs.location );
       
+      } else if ( type === 'offset' && obs.offset ) {
+        
+        this.object.pos.addSelf( obs.offset );
+        
       }
+      
+    }
+    
+    if ( type === 'area' && obs.action && obs.action.area ) {
+      
+      this.area = obs.action.area.clone();
+      this.area.done = true;
       
     }
     

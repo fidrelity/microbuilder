@@ -4,7 +4,7 @@
 
     <h4 class="left">{{heading}}</h4>
 
-    <button class="btn right" {{action "hideOverlay" target="App.mainView"}}> X </button>
+    <button class="close right" {{action "hideOverlay" target="App.mainView"}}> &times; </button>
 
     <div class="clear"></div>
 

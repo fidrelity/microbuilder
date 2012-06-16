@@ -35,13 +35,15 @@ var ButtonView = Ember.CollectionView.extend({
   attributeBindings: ["data-toggle"],
   'data-toggle': 'buttons-radio',
   
+  preSelect : -1,
+  
   itemViewClass: Ember.View.extend({
     
     tagName : 'button',
     
     classNames : ['btn'],
     
-    template: Ember.Handlebars.compile("{{content}}"),
+    template: Ember.Handlebars.compile("{{content.name}}"),
     
     didInsertElement : function() {
       
@@ -51,11 +53,17 @@ var ButtonView = Ember.CollectionView.extend({
       
       }
       
+      if ( this.content.select ) {
+        
+        this.$().addClass( 'active' );
+        
+      }
+      
     },
     
     click : function() {
       
-      this._parentView.observer.decide( this.content );
+      this._parentView.observer.decide( this.content.name );
       
     }
     
@@ -90,11 +98,13 @@ var GameObjectsView = Ember.CollectionView.extend({
     
     didInsertElement : function() {
       
-      if ( this.content === App.gameObjectsController.current ) {
+      if ( this.content === App.gameObjectsController.current || this.content.active ) {
         
         this.deselectAll();
         
         this.$().addClass( 'selected' );
+        
+        this.content.set( 'active', false );
         
       }
       
@@ -145,11 +155,14 @@ var TimeView = Ember.View.extend({
   observer : null,
   type : null,
   
+  min : 30,
+  max : 70,
+  
   didInsertElement : function() {
     
     var self = this,
       range = this.type === 'random',
-      values = range ? [30,70] : [30];
+      values = range ? [this.min, this.max] : [this.min];
     
     this.setTime( values[0], values[1] );
     
@@ -254,13 +267,15 @@ var SpeedView = Ember.View.extend({
   
   observer : null,
   
+  speed : 2,
+  
   didInsertElement : function() {
     
     var observer = this.observer;
     
     this.$('.slider').slider({
       
-      value: 2,
+      value: this.speed,
       
       min: 0,
       max: 4,

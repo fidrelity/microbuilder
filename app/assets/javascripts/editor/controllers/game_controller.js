@@ -123,6 +123,15 @@ var GameController = Ember.Object.extend({
     
   },
   
+  editAction : function( action ) {
+    
+    App.actionController.reset( null, action );
+    
+    App.mainView.show( 'actionView', true );
+    this.set( 'cancelView', 'objectsView' );
+    
+  },
+  
   finalize : function() {
     
     App.mainView.show( 'publishView', true ); 

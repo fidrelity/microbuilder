@@ -73,6 +73,20 @@ var Option = Ember.Object.extend({
   
   doInsert : function() {},
   
+  reInsert : function( action ) {
+    
+    this.set( 'action', action );
+    
+    if ( this.parent ) {
+      
+      this.parent.reInsert( action );
+      
+    }
+    
+    this.doInsert( true );
+    
+  },
+  
   setParents : function( parent ) {
     
     var i;
@@ -145,11 +159,32 @@ var ButtonOption = Option.extend({
   
   buttons : [],
   
-  doInsert : function() {
+  doInsert : function( reinsert ) {
+    
+    var buttons = this.buttons.map( function(i){ return { name: i }; } ),
+      decisions = this.action.decisions,
+      i;
+    
+    if ( reinsert ) {
+      
+      if ( this.type === 'mode' ) {
+      
+        i = this.modes.indexOf( this.action.mode );
+      
+      } else {
+      
+        i = decisions.indexOf( this ) + 1;
+        i = this.decisions.indexOf( decisions[i] );
+      
+      }
+      
+      buttons[i].select = true;
+      
+    }
     
     App.actionController.addOption( this.question, ButtonView.create({
       observer : this,
-      content : this.buttons
+      content : buttons
     }));
     
   },
@@ -186,7 +221,13 @@ var ObjectOption = Option.extend({
   
   type : 'object',
   
-  doInsert : function() {
+  doInsert : function( reinsert ) {
+    
+    if ( reinsert ) {
+      
+      this.action.gameObject.set( 'active', true );
+      
+    }
     
     App.actionController.addOption( this.question, GameObjectsView.create({
       observer : this,
@@ -209,7 +250,7 @@ var LocationOption = Option.extend({
   
   type : 'location',
   
-  doInsert : function() {
+  doInsert : function( reinsert ) {
     
     App.actionController.addOption( this.question, PlacementView.create({
       observer : this.action,
@@ -217,7 +258,11 @@ var LocationOption = Option.extend({
       object : App.gameObjectsController.current
     }));
     
-    this.action.setLocation( App.gameObjectsController.current.position.clone() );
+    if ( !reinsert ) {
+    
+      this.action.setLocation( App.gameObjectsController.current.position.clone() );
+    
+    }
     
   }
   
@@ -227,7 +272,7 @@ var DirectionOption = Option.extend({
   
   type : 'direction',
   
-  doInsert : function() {
+  doInsert : function( reinsert ) {
     
     App.actionController.addOption( this.question, PlacementView.create({
       observer : this.action,
@@ -235,7 +280,11 @@ var DirectionOption = Option.extend({
       object : App.gameObjectsController.current
     }));
     
-    this.action.setLocation( new Vector( 1, 0 ) );
+    if ( !reinsert ) {
+    
+      this.action.setLocation( new Vector( 100, 0 ) );
+    
+    }
     
   }
   
@@ -245,12 +294,18 @@ var AreaOption = Option.extend({
   
   type : 'area',
   
-  doInsert : function() {
+  doInsert : function( reinsert ) {
     
     App.actionController.addOption( this.question, PlacementView.create({
       observer : this,
       type : 'area'
     }));
+    
+    if ( !reinsert ) {
+      
+      this.action.setArea( null );
+      
+    }
     
   },
   
@@ -285,13 +340,18 @@ var SpeedOption = Option.extend({
   
   type : 'speed',
   
-  doInsert : function() {
+  doInsert : function( reinsert ) {
     
     App.actionController.addOption( this.question, SpeedView.create({
-      observer : this.action
+      observer : this.action,
+      speed : reinsert ? this.action.speed : 2
     }));
     
-    this.action.setSpeed( 2 );
+    if ( !reinsert ) {
+    
+      this.action.setSpeed( 2 );
+    
+    }
     
   }
   
@@ -331,9 +391,9 @@ var ArtOption = Option.extend({
   
   graphic : null,
   
-  doInsert : function() {
+  doInsert : function( reinsert ) {
     
-    this.set( 'graphic', null );
+    this.set( 'graphic', reinsert ? this.action.graphic : null );
     
     App.actionController.addOption( this.question, ArtView.create({
       observer : this
@@ -362,7 +422,9 @@ var TimeOption = Option.extend({
     
     App.actionController.addOption( this.question, TimeView.create({
       observer : this.action,
-      type : this.mode
+      type : this.mode,
+      min : this.action.time || 30,
+      max : this.action.time2 || 70
     }));
     
   }
