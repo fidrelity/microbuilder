@@ -44,7 +44,7 @@ var ActionController = Ember.Object.extend({
     // 'counterGreaterNumber', 'counterGreaterObject',
     // 'counterSmallerNumber', 'counterSmallerObject',
     
-    'gameWon', 'gameLost'
+    'gameStart' // 'gameWon', 'gameLost'
   
   ],
   

@@ -11,12 +11,17 @@ var GameObjectModel = Ember.Object.extend({
   
   init : function() {
     
+    var startTrigger = ActionTriggerModel.create();
+    
+    startTrigger.setType( 'start' );
+    startTrigger.setChoice( 'gameStart' );
+    
     this.ID = this.ID || App.game.gameObjectCounter++;
     
     this.set( 'behaviours', [BehaviourModel.create()] );
     
     this.set( 'startBehaviour', BehaviourModel.create());
-    this.startBehaviour.addTrigger( StartTriggerModel.create() );
+    this.startBehaviour.addTrigger( startTrigger );
     
   },
   
