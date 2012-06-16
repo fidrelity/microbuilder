@@ -34,12 +34,12 @@ var Choice = Ember.Object.extend({
       case 'moveToLocation' : return n + ' moves to location ' + a.location.string() + ' - ' + a.getSpeedName();
       case 'moveToObject' : 
         n += ' moves to ' + a.gameObject.name + ' - ' + a.getSpeedName();
-        return n + ( a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
+        return n + ( a.offset && a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
       
       case 'jumpToLocation' : return n + ' jumps to location ' + a.location.string();
       case 'jumpToObject' : 
         n += ' jumps to ' + a.gameObject.name;
-        return n + ( a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
+        return n + ( a.offset && a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
       case 'jumpToArea' : return n + ' jumps to area ' + a.area.string();
       
       case 'moveRoam' : 

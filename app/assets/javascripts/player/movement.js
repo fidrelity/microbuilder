@@ -186,7 +186,7 @@ Movement.prototype = {
     
     if ( vector.norm() < distance ) {
     
-      pos.copy( target );
+      pos.copy( target ).addSelf( this.offset );
       
       this.target = null;
     
