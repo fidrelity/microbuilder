@@ -11,6 +11,7 @@ function editor_main( data ) {
   App.behaviourController = BehaviourController.create();
   
   App.set( 'actionController', ActionController.create() );
+  App.actionController.start();
 
   App.mainView = MainView.create();
   App.mainView.appendTo('#content');

@@ -1,3 +1,35 @@
+var Choice = Ember.Object.extend({
+  
+  ID : null,
+  
+  option : null,
+  
+  setOption : function( option ) {
+    
+    this.set( 'option', option );
+    
+  },
+  
+  getDecisions : function() {
+    
+    return this.option.getDecisions( [] );
+    
+  },
+  
+  string : function( gameObject, action ) {
+    
+    switch ( this.ID ) {
+      
+      case 'moveInDirection' : return 'moves in direction';
+      
+      default : console.error( 'Unknow choice name: ' + this.ID );
+      
+    }
+    
+  }
+  
+});
+
 var Option = Ember.Object.extend({
   
   name : null,
@@ -5,49 +37,106 @@ var Option = Ember.Object.extend({
   
   type : 'empty', // ['button', 'mode', 'direction', 'location', 'area', 'offset', 'object', 'time', 'frame', 'speed', 'art']
   
-  actionBinding : 'App.actionController.action',
+  action : null,
   
   setType : null,
-  setMode : null,
   
   decision : null,
   decisions : [],
   
   child : null,
+  parent : null,
   
-  insert : function() {
+  insert : function( action ) {
+    
+    this.set( 'action', action );
+    
+    App.actionController.updateDepth( this.parent );
+    
+    this.doInsert();
+    
+    action.addDecision( this );
     
     if ( this.setType ) {
       
-      this.action.setType( this.setType );
-      
-    }
-    
-    if ( this.setMode ) {
-      
-      this.action.setMode( this.setMode );
+      action.setType( this.setType );
       
     }
     
     if ( this.child ) {
       
-      App.actionController.insert( this.child );
+      this.child.insert( action );
       
     }
     
   },
   
-  decide : function( decision ) {
+  setParents : function( parent ) {
     
-    if ( decision === 'save' ) {
+    var i;
+    
+    this.set( 'parent', parent );
+    
+    if ( this.decisions.length ) {
       
-      App.actionController.insert( decision );
+      for ( i = 0; i < this.decisions.length; i++ ) {
+        
+        this.decisions[i].setParents( this );
+        
+      }
       
-    } else {
+    } else if ( this.decision ) {
       
-      App.actionController.decide( decision );
+      this.decision.setParents( this );
+      
+    } else if ( this.child ) {
+      
+      this.child.setParents( this );
       
     }
+    
+  },
+  
+  setChoices : function() {
+    
+    var i, choice;
+    
+    if ( this.choiceID ) {
+      
+      choice = App.actionController.getChoice( this.choiceID );
+      choice.setOption( this );
+      
+    } else if ( this.decisions.length ) {
+      
+      for ( i = 0; i < this.decisions.length; i++ ) {
+        
+        this.decisions[i].setChoices();
+        
+      }
+      
+    } else if ( this.decision ) {
+      
+      this.decision.setChoices();
+      
+    } else if ( this.child ) {
+      
+      this.child.setChoices();
+      
+    }
+    
+  },
+  
+  getDecisions : function( decisions ) {
+    
+    if ( this.parent ) {
+      
+      this.parent.getDecisions( decisions );
+      
+    }
+    
+    decisions.addObject( this );
+    
+    return decisions;
     
   }
   
@@ -59,14 +148,12 @@ var ButtonOption = Option.extend({
   
   buttons : [],
   
-  insert : function() {
+  doInsert : function() {
     
     App.actionController.addOption( this.question, ButtonView.create({
       observer : this,
       content : this.buttons
     }));
-    
-    this._super();
     
   },
   
@@ -74,7 +161,25 @@ var ButtonOption = Option.extend({
     
     var index = this.buttons.indexOf( button );
     
-    App.actionController.decide( this.decisions[index], this.name );
+    this.decisions[index].insert( this.action );
+    
+  }
+  
+});
+
+var ModeOption = ButtonOption.extend({
+  
+  type : 'mode',
+  
+  modes : [],
+  
+  decide : function( button ) {
+    
+    var index = this.buttons.indexOf( button );
+    
+    this.action.setMode( this.modes[index] );
+    
+    this.decision.insert( this.action );
     
   }
   
@@ -84,14 +189,12 @@ var ObjectOption = Option.extend({
   
   type : 'object',
   
-  insert : function() {
+  doInsert : function() {
     
     App.actionController.addOption( this.question, GameObjectsView.create({
       observer : this,
       contentBinding : 'App.gameObjectsController.others',
     }));
-    
-    this._super();
     
   },
   
@@ -99,7 +202,7 @@ var ObjectOption = Option.extend({
     
     this.action.setObject( object );
     
-    this._super( this.decision );
+    this.decision.insert( this.action );
     
   }
   
@@ -109,7 +212,7 @@ var LocationOption = Option.extend({
   
   type : 'location',
   
-  insert : function() {
+  doInsert : function() {
     
     App.actionController.addOption( this.question, PlacementView.create({
       observer : this.action,
@@ -119,8 +222,6 @@ var LocationOption = Option.extend({
     
     this.action.setLocation( App.gameObjectsController.current.position.clone() );
     
-    this._super();
-    
   }
   
 });
@@ -129,7 +230,7 @@ var DirectionOption = Option.extend({
   
   type : 'direction',
   
-  insert : function() {
+  doInsert : function() {
     
     App.actionController.addOption( this.question, PlacementView.create({
       observer : this.action,
@@ -139,8 +240,6 @@ var DirectionOption = Option.extend({
     
     this.action.setLocation( new Vector( 1, 0 ) );
     
-    this._super();
-    
   }
   
 });
@@ -149,14 +248,12 @@ var AreaOption = Option.extend({
   
   type : 'area',
   
-  insert : function() {
+  doInsert : function() {
     
     App.actionController.addOption( this.question, PlacementView.create({
       observer : this,
       type : 'area'
     }));
-    
-    this._super();
     
   },
   
@@ -164,7 +261,7 @@ var AreaOption = Option.extend({
     
     this.action.setArea( area );
     
-    this._super( this.decision );
+    this.decision.insert( this.action );
     
   }
   
@@ -174,7 +271,7 @@ var OffsetOption = Option.extend({
   
   type : 'offset',
   
-  insert : function() {
+  doInsert : function() {
     
     App.actionController.addOption( this.question, PlacementView.create({
       observer : this.action,
@@ -182,8 +279,6 @@ var OffsetOption = Option.extend({
       object : App.gameObjectsController.current,
       object2 : this.action.gameObject
     }));
-    
-    this._super();
     
   }
   
@@ -193,16 +288,13 @@ var SpeedOption = Option.extend({
   
   type : 'speed',
   
-  insert : function() {
+  doInsert : function() {
     
     App.actionController.addOption( this.question, SpeedView.create({
       observer : this.action
     }));
     
     this.action.setSpeed( 2 );
-    this.action.addDecision( this.name );
-    
-    this._super();
     
   }
   
@@ -216,14 +308,12 @@ var FrameOption = Option.extend({
   
   mode : 'frame',
   
-  insert : function() {
+  doInsert : function() {
     
     App.actionController.addOption( this.question, FrameView.create({
       observer : this,
       graphic : App.gameObjectsController.current.graphic
     }));
-    
-    this._super();
     
   },
   
@@ -232,7 +322,7 @@ var FrameOption = Option.extend({
     this.set( 'frame', frame.number );
     this.action.setFrame( this.mode, frame.number );
     
-    this._super( this.decision );
+    this.decision.insert( this.action );
     
   }
   
@@ -244,13 +334,11 @@ var ArtOption = Option.extend({
   
   graphic : null,
   
-  insert : function() {
+  doInsert : function() {
     
     App.actionController.addOption( this.question, ArtView.create({
       observer : this
     }));
-    
-    this._super();
     
   },
   
@@ -259,7 +347,7 @@ var ArtOption = Option.extend({
     this.set( 'graphic', graphic );
     this.action.setGraphic( graphic );
     
-    this._super( this.decision );
+    this.decision.insert( this.action );
     
   }
   
@@ -267,8 +355,14 @@ var ArtOption = Option.extend({
 
 var SaveOption = Option.extend({
   
-  insert : function() {
+  type : 'save',
+  name : 'save',
+  
+  choiceID : null,
+  
+  doInsert : function() {
     
+    this.action.setChoice( this.choiceID );
     App.actionController.set( 'showSaveButton', true );
     
   }

@@ -4,15 +4,26 @@ var ActionTriggerModel = Ember.Object.extend({
   
   decisions : null,
   
+  choice : null,
+  
+  parentGameObject : null,
+  
   init : function() {
     
     this.set( 'decisions', this.decisions || [] );
+    this.set( 'parentGameObject', App.gameObjectsController.current );
     
   },
   
-  addDecision : function( name ) {
+  addDecision : function( option ) {
     
-    this.decisions.addObject( name );
+    this.decisions.addObject( option );
+    
+  },
+  
+  setChoice : function( choiceID ) {
+    
+    this.set( 'choice', App.actionController.getChoice( choiceID ) );
     
   },
   
@@ -93,9 +104,16 @@ var ActionTriggerModel = Ember.Object.extend({
   
   string : function() {
     
-    return this.decisions.join( ' > ' );
+    return this.decisions.map( function(i){ return i.name; }).join( ' > ' );
     
   }.property( 'decisions.length' ),
+  
+  // string : function() {
+  //   
+  //   return this.choice ? this.choice.string( this.parentGameObject, this ) : this.type;
+  //   
+  // }.property( 'choice', 'gameObject', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed' ),
+  
   
   clone : function() {
     
@@ -103,6 +121,7 @@ var ActionTriggerModel = Ember.Object.extend({
       
       type : this.type,
       decisions : this.decisions.concat(),
+      choice : this.choice,
       
       gameObject : this.gameObject,
       
@@ -130,7 +149,7 @@ var ActionTriggerModel = Ember.Object.extend({
     this.setProperties({
       
       type : d.type,
-      decisions : d.decisions,
+      choice : App.actionController.getChoice( d.choiceID ),
       
       gameObject : d.objectID ? App.gameObjectsController.getObject( d.objectID ) : null,
       
@@ -149,22 +168,34 @@ var ActionTriggerModel = Ember.Object.extend({
       
     });
     
+    if ( this.choice ) {
+      
+      this.set( 'decisions', this.choice.getDecisions() );
+      
+      console.log( this.decisions.map( function(i){ return i.name; }).join( ' > ' ) );
+      
+    }
+    
     return this;
     
   },
   
   getData : function() {
     
-    var data = { type : this.type, decisions : this.decisions.concat() }, i, optionType;
+    var data = { 
+      type : this.type,
+      choiceID : this.choice.ID
+    }, i, optionType;
     
     for ( i = 0; i < this.decisions.length; i++ ) {
       
-      optionType = App.actionController.options.get( this.decisions[i] ).type;
+      optionType = this.decisions[i].type;
       
       switch ( optionType ) {
         
         case 'empty': break;
         case 'button': break;
+        case 'save': break;
         
         case 'object': data.objectID = this.gameObject.ID; break;
         
