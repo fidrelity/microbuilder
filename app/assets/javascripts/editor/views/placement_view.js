@@ -20,7 +20,7 @@ var PlacementView = Ember.View.extend({
   
   area : null,
   
-  increment : 96,
+  increment : { x : 96, y : 60 },
   scale : 2,
   
   didInsertElement : function() {
@@ -37,11 +37,11 @@ var PlacementView = Ember.View.extend({
     
     if ( type === 'location' || type === 'area' ) {
       
-      canvas.width = ( 640 + inc * 2 ) * 0.5;
-      canvas.height = ( 390 + inc * 2 ) * 0.5;
+      canvas.width = ( 640 + inc.x * 2 ) * 0.5;
+      canvas.height = ( 390 + inc.y * 2 ) * 0.5;
       
       ctx.scale( 0.5, 0.5 );
-      ctx.translate( inc, inc );
+      ctx.translate( inc.x, inc.y );
       
     } else if ( type === 'direction' || type === 'offset' ) {
       
@@ -50,7 +50,7 @@ var PlacementView = Ember.View.extend({
       
       ctx.scale( 0.5, 0.5 );
       
-      this.increment = 0;
+      this.increment = { x : 0, y : 0 };
       
     }
     
@@ -179,9 +179,9 @@ var PlacementView = Ember.View.extend({
     
     var ctx = this.ctx, i = this.increment, img, w, h;
     
-    if ( i ) {
+    if ( i.x || i.y ) {
       
-      ctx.clearRect( -i, -i, this.width + 2 * i, this.height + 2 * i );
+      ctx.clearRect( -i.x, -i.y, this.width + 2 * i.x, this.height + 2 * i.y );
       
     }
     
@@ -333,7 +333,7 @@ var PlacementView = Ember.View.extend({
       area.adjust();
       area.done = true;
       
-      this.observer.decide( area );
+      this.observer.decide( area.clone() );
       
     }
     

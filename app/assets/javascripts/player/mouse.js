@@ -120,8 +120,8 @@ Mouse.prototype = {
     
     mouse.mulSelf( this.player.scale );
     
-    mouse.x -= i;
-    mouse.y -= i;
+    mouse.x -= i.x;
+    mouse.y -= i.y;
     
   }
   

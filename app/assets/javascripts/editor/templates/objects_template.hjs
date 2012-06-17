@@ -34,7 +34,7 @@
 
           <button class="btn" {{action "changeArt"}}><i class="icon-picture"></i> change art </button>
           <button class="btn" {{action "toTop"}}><i class="icon-arrow-up"></i> to top </button>
-          <button class="btn" {{action "duplicate"}}><i class="icon-repeat"></i> duplicate </button>
+          <button class="btn" {{action "duplicate"}}><i class="icon-retweet"></i> duplicate </button>
           <button class="btn" {{action "remove"}}><i class="icon-trash"></i> delete </button>
 
         </div>
@@ -160,7 +160,7 @@
             </div>
             
             <div class="btn-group right">
-              <button class="btn" {{action "duplicate"}}><i class="icon-repeat"></i> duplicate </button>
+              <button class="btn" {{action "duplicate"}}><i class="icon-retweet"></i> duplicate </button>
               <button class="btn" {{action "remove"}}><i class="icon-trash"></i> delete </button>
             </div>
             

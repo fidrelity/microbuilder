@@ -155,12 +155,17 @@ TimeTrigger.prototype = {
     
     if ( this.randTime ) {
       
-      ctx.fillRect( ( 640 + i ) * this.time * 0.01 - i / 2 - 1, 390 + i / 2 - 4, 2, 16 );
-      ctx.fillRect( ( 640 + i ) * this.time2 * 0.01 - i / 2 - 1, 390 + i / 2 - 4, 2, 16 );
+      // ctx.fillRect( ( 640 + i.x ) * this.time * 0.01 - i.x / 2 - 1, 390 + i.y / 2 - 4, 2, 16 );
+      // ctx.fillRect( ( 640 + i.x ) * this.time2 * 0.01 - i.x / 2 - 1, 390 + i.y / 2 - 4, 2, 16 );
+      
+      ctx.fillRect( 640 * this.time * 0.01 - 1, 390 + i.y / 2 - 4, 2, 16 );
+      ctx.fillRect( 640 * this.time2 * 0.01 - 1, 390 + i.y / 2 - 4, 2, 16 );
       
     }
     
-    ctx.fillRect( ( 640 + i ) * time * 0.01 - i / 2 - 2, 390 + i / 2 - 4, 4, 16 );
+    // ctx.fillRect( ( 640 + i.x ) * time * 0.01 - i.x / 2 - 2, 390 + i.y / 2 - 4, 4, 16 );
+    
+    ctx.fillRect( 640 * time * 0.01 - 2, 390 + i.y / 2 - 4, 4, 16 );
     
   }
   

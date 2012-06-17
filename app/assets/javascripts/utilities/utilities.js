@@ -71,6 +71,12 @@ function rand( min, max ) {
   
 };
 
+function randInt( min, max ) {
+  
+  return Math.floor( rand( min, max ) );
+  
+};
+
 function randSign() {
   
   return Math.random() > 0.5 ? 1 : -1;

@@ -70,8 +70,8 @@ var Choice = Ember.Object.extend({
       case 'overlapObject' : return n + ' overlaps ' + a.gameObject.name;
       case 'overlapArea' : return n + ' overlaps area ' + a.area.string();
       
-      case 'timeExact' : return 'randomly after ' + a.time + '-' + a.time2 + '% of the game';
-      case 'timeRandom' : return 'after ' + this.time + '% of the game';
+      case 'timeExact' : return 'after ' + a.time + '% of the game';
+      case 'timeRandom' : return 'randomly after ' + a.time + '-' + a.time2 + '% of the game';
       
       case 'gameStart' : return 'start';
       
@@ -364,9 +364,13 @@ var AreaOption = Option.extend({
   
   decide : function( area ) {
     
-    this.action.setArea( area );
+    if ( !this.action.area ) {
+      
+      this.decision.insert( this.action );
+      
+    }
     
-    this.decision.insert( this.action );
+    this.action.setArea( area );
     
   }
   
@@ -473,11 +477,13 @@ var TimeOption = Option.extend({
   
   doInsert : function() {
     
+    this.action.setTime( randInt( 20, 45 ), this.mode === 'random' ? randInt( 60, 85 ) : 0 );
+    
     App.actionController.addOption( this.question, TimeView.create({
       observer : this.action,
       type : this.mode,
-      min : this.action.time || 30,
-      max : this.action.time2 || 70
+      min : this.action.time,
+      max : this.action.time2
     }));
     
   }

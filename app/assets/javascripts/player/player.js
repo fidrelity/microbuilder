@@ -49,7 +49,7 @@ var Player = function() {
 
 Player.prototype = {
   
-  increment : 0,
+  increment : { x : 0, y : 0 },
   scale : 1,
   
   init : function( canvas ) {
@@ -61,11 +61,11 @@ Player.prototype = {
     
     mouse.handleClick();
     
-    canvas.width = 640 + 2 * i;
-    canvas.height = 390 + 2 * i;
+    canvas.width = 640 + 2 * i.x;
+    canvas.height = 390 + 2 * i.y;
     
     ctx.save();
-    ctx.translate( i, i );
+    ctx.translate( i.x, i.y );
     
     this.ctx = ctx;
     this.canvas = canvas;

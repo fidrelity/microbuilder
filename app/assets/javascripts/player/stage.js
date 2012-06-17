@@ -14,7 +14,7 @@ Stage.prototype.constructor = Player;
 
 extend( Stage.prototype, {
   
-  increment : 96,
+  increment : { x : 96, y : 60 },
   
   init : function( canvas ) {
     
@@ -41,7 +41,7 @@ extend( Stage.prototype, {
     
     if ( this.mouse.dragging || this.redraw ) {
     
-      ctx.clearRect( -i, -i, 640 + 2 * i, 390 + 2 * i );
+      ctx.clearRect( -i.x, -i.y, 640 + 2 * i.x, 390 + 2 * i.y );
     
       this.game.draw( ctx );
     
@@ -67,7 +67,7 @@ extend( Stage.prototype, {
     
     var i = this.increment;
     
-    ctx.clearRect( -i, -i, 640 + 2 * i, 390 + 2 * i );
+    ctx.clearRect( -i.x, -i.y, 640 + 2 * i.x, 390 + 2 * i.y );
     
     this.game.draw( ctx );
     
@@ -81,8 +81,11 @@ extend( Stage.prototype, {
     
     ctx.fillStyle = color;
     
-    ctx.fillRect( - i / 2, 390 + i / 2, ( 640 + i ), 8 );
-    ctx.fillRect( ( 640 + i ) * timePlayed / this.game.duration - i / 2 - 8, 390 + i / 2 - 4, 16, 16 );
+    // ctx.fillRect( - i.x / 2, 390 + i.y / 2, 640 + i.x, 8 );
+    // ctx.fillRect( ( 640 + i.x ) * timePlayed / this.game.duration - i.x / 2 - 8, 390 + i.y / 2 - 4, 16, 16 );
+    
+    ctx.fillRect( 0, 390 + i.y / 2, 640, 8 );
+    ctx.fillRect( 640 * timePlayed / this.game.duration - 8, 390 + i.y / 2 - 4, 16, 16 );
     
   },
   

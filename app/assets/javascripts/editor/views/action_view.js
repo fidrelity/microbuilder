@@ -165,8 +165,8 @@ var TimeView = Ember.View.extend({
   observer : null,
   type : null,
   
-  min : 30,
-  max : 70,
+  min : 0,
+  max : 0,
   
   didInsertElement : function() {
     
