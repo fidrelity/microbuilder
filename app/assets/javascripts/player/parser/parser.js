@@ -3,11 +3,247 @@ var Parser = {
   game : null,
   loader : null,
   
+  actionIDs : {
+    
+    moveInDirection : function( data, gameObject ) { 
+      
+      var action = new MoveAction( 'moveIn', gameObject, data.speed );
+      
+      action.direction = data.angle;
+      
+      return action;
+      
+    },
+      
+    moveInRandom : function( data, gameObject ) { 
+      
+      var action = new MoveAction( 'moveIn', gameObject, data.speed );
+      
+      action.random = true;
+      
+      return action;
+      
+    },
+    
+    moveInLocation : function( data, gameObject ) { 
+      
+      var action = new MoveAction( 'moveIn', gameObject, data.speed );
+      
+      action.target = new Vector().copy( data.location );
+      
+      return action;
+      
+    },
+    
+    moveInObject : function( data, gameObject, game ) { 
+      
+      var action = new MoveAction( 'moveIn', gameObject, data.speed );
+      
+      action.target = game.getGameObjectWithID( data.objectID ).movement.position;
+      
+      return action;
+      
+    },
+    
+    // 'moveInClick',
+    
+    
+    moveToLocation : function( data, gameObject ) { 
+      
+      var action = new MoveAction( 'moveTo', gameObject, data.speed );
+      
+      action.target = new Vector().copy( data.location );
+      
+      return action;
+      
+    },
+    
+    moveToObject : function( data, gameObject, game ) { 
+      
+      var action = new MoveAction( 'moveTo', gameObject, data.speed );
+      
+      action.target = game.getGameObjectWithID( data.objectID ).movement.position;
+      action.offset = new Vector().copy( data.offset );
+      
+      return action;
+      
+    },
+    
+    // 'moveToClick',
+    
+    
+    jumpToLocation : function( data, gameObject ) { 
+      
+      var action = new MoveAction( 'jumpTo', gameObject );
+      
+      action.target = new Vector().copy( data.location );
+      
+      return action;
+      
+    },
+    
+    jumpToObject : function( data, gameObject, game ) { 
+      
+      var action = new MoveAction( 'jumpTo', gameObject );
+      
+      action.target = game.getGameObjectWithID( data.objectID ).movement.position;
+      action.offset = new Vector().copy( data.offset );
+      
+      return action;
+      
+    },
+    
+    jumpToArea : function( data, gameObject ) { 
+      
+      var action = new MoveAction( 'jumpTo', gameObject );
+      
+      action.area = new Area().copy( data.area );
+      
+      return action;
+      
+    },
+    
+    // 'jumpToClick',
+    
+    
+    moveRoam : function( data, gameObject ) {
+      
+      return new RoamAction( gameObject, data.mode, new Area().copy( data.area ), data.speed );
+      
+    },
+    
+    moveSwap : function( data, gameObject, game ) {
+      
+      return new SwapAction( 
+        gameObject.movement.position, 
+        game.getGameObjectWithID( data.objectID ).movement.position
+      );
+      
+    },
+    
+    moveStop : function( data, gameObject ) {
+      
+      return new StopAction( gameObject );
+      
+    },
+    
+    
+    artToFrame : function( data, gameObject ) {
+      
+      return new ArtAction( 'frame', gameObject, data.frame );
+      
+    },
+    
+    artPlay : function( data, gameObject ) {
+      
+      return new ArtAction( 'play', gameObject, data.frame, data.frame2, data.mode, data.speed );
+      
+    },
+    
+    artStop : function( data, gameObject ) {
+      
+      return new ArtAction( 'stop', gameObject );
+      
+    },
+    
+    artChange : function( data, gameObject, game ) {
+      
+      var action = new ArtAction( 'change', gameObject );
+      
+      action.graphic = game.getGraphicWithID( data.graphicID );
+      
+      return action
+      
+    },
+    
+    
+    // 'counterSet', 'counterUp', 'counterDown'
+    
+    gameWin : function() { return WinAction; },
+    gameLose : function() { return LoseAction; },
+    
+    // 'gameEnd'
+    
+  },
+  
+  triggerIDs : {
+    
+    clickSelf : function( data, gameObject ) {
+      
+      return new ClickTrigger( gameObject );
+      
+    },
+    
+    clickObject : function( data, gameObject, game ) {
+      
+      return new ClickTrigger( game.getGameObjectWithID( data.objectID ) );
+      
+    },
+    
+    clickArea : function( data ) {
+      
+      return new ClickTrigger( null, new Area().copy( data.area ) );
+      
+    },
+    
+    // 'clickStage',
+    
+    
+    touchObject : function( data, gameObject, game ) {
+      
+      return new ContactTrigger( 'touch', gameObject, game.getGameObjectWithID( data.objectID ) );
+      
+    },
+    
+    touchArea : function( data, gameObject ) {
+      
+      return new ContactTrigger( 'touch', gameObject, null, new Area().copy( data.area ) );
+      
+    },
+    
+    overlapObject : function( data, gameObject, game ) {
+      
+      return new ContactTrigger( 'overlap', gameObject, game.getGameObjectWithID( data.objectID ) );
+      
+    },
+    
+    overlapArea : function( data, gameObject ) {
+      
+      return new ContactTrigger( 'overlap', gameObject, null, new Area().copy( data.area ) );
+      
+    },
+    
+    
+    timeExact : function( data ) {
+      
+      return new TimeTrigger( data.time );
+      
+    },
+    
+    timeRandom : function( data ) {
+      
+      return new TimeTrigger( data.time, data.time2 );
+      
+    },
+    
+    // 'artHasFrame', 'artGetsFrame',
+    // 'artHasGraphic', 'artGetsGraphic',
+    
+    // 'counterEqualsNumber', 'counterEqualsObject',
+    // 'counterGreaterNumber', 'counterGreaterObject',
+    // 'counterSmallerNumber', 'counterSmallerObject',
+    
+    gameStart : function() { return 'start'; }
+    
+    // 'gameWon', 'gameLost'
+    
+  },
+  
   parseData : function( data, game, callback, corsSave ) {
     
     var graphics = data.graphics,
       gameObjects = data.gameObjects,
-      behaviours, gameObject;
+      behaviours, gameObject, i, j;
     
     this.game = game;
     this.loader = new Loader( callback );
@@ -16,63 +252,65 @@ var Parser = {
     game.duration = ( data.duration || 5 ) * 1000;
     
     if ( graphics && graphics.length > 0 ) {
-    
-      for ( var i = 0; i < graphics.length; i++ ) {
       
+      for ( i = 0; i < graphics.length; i++ ) {
+        
         var graphic = this.parseGraphic( graphics[i] );
-      
+        
         game.graphics.push( graphic );
-      
+        
       }
-    
+      
     } else {
       
       // console.error( 'parser: game has no graphics' );
       
     }
     
-    if ( gameObjects && gameObjects.length > 0 ) {
     
-      for ( var i = 0; i < gameObjects.length; i++ ) {
+    if ( gameObjects && gameObjects.length > 0 ) {
       
+      for ( i = 0; i < gameObjects.length; i++ ) {
+        
         gameObject = this.parseGameObject( gameObjects[i] );
-      
+        
         game.gameObjects.push( gameObject );
-      
+        
       }
       
-      for ( var i = 0; i < gameObjects.length; i++ ) {
+      for ( i = 0; i < gameObjects.length; i++ ) {
         
         behaviours = gameObjects[i].behaviours;
         gameObject = game.gameObjects[i];
         
         if ( behaviours && behaviours.length > 0 ) {
-      
-          for ( var j = 0; j < behaviours.length; j++ ) {
-      
+          
+          for ( j = 0; j < behaviours.length; j++ ) {
+            
             var behaviour = this.parseBehaviour( behaviours[j], gameObject );
-      
+            
             if ( behaviour ) {
-      
+              
               this.game.behaviours.push( behaviour );
-        
+              
             }
-      
+            
           }
-      
+          
         } else {
-      
+          
           // console.error( 'parser: game has no behaviours' );
-      
+          
         }
-      
+        
       }
-    
+      
     } else {
       
       // console.error( 'parser: game has no gameObjects' );
       
     }
+    
     
     if ( data.background ) { // deprecated
       
@@ -81,7 +319,7 @@ var Parser = {
     } else if ( data.backgroundID ) {
       
       game.background = game.getGraphicWithID( data.backgroundID ).image;
-    
+      
     } else {
       
       // console.error( 'parser: game has no background' );
@@ -91,68 +329,51 @@ var Parser = {
     this.loader.checkRemaining();
     
   },
-
-
-/**
-  {
-    ID : 1,
-    frameCount : 3,
-    imagePath : '/image.png'
-  }
-*/
-
-  parseGraphic : function( graphicData ) {
+  
+  parseGraphic : function( data ) {
     
-    var graphic = new Graphic( graphicData.ID );
-  
-    graphic.frameCount = graphicData.frameCount || 1;
-  
-    graphic.image = this.loader.loadImage( graphicData.url || graphicData.imagePath );
-  
+    var graphic = new Graphic( data.ID );
+    
+    graphic.frameCount = data.frameCount || 1;
+    
+    graphic.image = this.loader.loadImage( data.url || data.imagePath );
+    
     return graphic;
-  
-  },
-
-/**
-  {
-    ID: 1,
-    name:"Raidel",
-    graphicID: 1,
-    position: {
-      x:220,
-      y:228
-    }
-  }
-*/
-
-  parseGameObject : function( gameObjectData ) {
     
-    var gameObject = new GameObject( gameObjectData.ID );
-  
-    gameObject.movement.startPosition.set( gameObjectData.position.x, gameObjectData.position.y );
-  
-    gameObject.setStartGraphic( this.game.getGraphicWithID( gameObjectData.graphicID ) );
-  
-    return gameObject;
-  
   },
   
-  parseBehaviour : function( behaviourData, gameObject ) {
+  parseGameObject : function( data ) {
+    
+    var gameObject = new GameObject( data.ID );
+    
+    gameObject.movement.startPosition.copy( data.position );
+    
+    gameObject.setStartGraphic( this.game.getGraphicWithID( data.graphicID ) );
+    
+    return gameObject;
+    
+  },
+  
+  parseBehaviour : function( data, gameObject ) {
     
     var behaviour = new Behaviour(),
-      actions = behaviourData.actions,
-      triggers = behaviourData.triggers;
-
-    if ( actions && actions.length > 0 ) {
-
-      for ( var i = 0; i < actions.length; i++ ) {
-      
-        var action = this.parseAction( actions[i], gameObject );
-      
-        behaviour.actions.push( action );
-      
-      }
+      actions = data.actions,
+      triggers = data.triggers,
+      game = this.game,
+      action, trigger, d, i;
     
+    if ( actions && actions.length > 0 ) {
+      
+      for ( i = 0; i < actions.length; i++ ) {
+        
+        d = actions[i];
+        
+        action = this.actionIDs[d.ID]( d, gameObject, game );
+        
+        behaviour.actions.push( action );
+        
+      }
+      
     } else {
       
       console.error( 'parser: behaviour has no actions' );
@@ -162,24 +383,24 @@ var Parser = {
     
     
     if ( triggers && triggers.length > 0 ) {
-    
-      for ( var i = 0; i < triggers.length; i++ ) {
       
-        var trigger = this.parseTrigger( triggers[i], gameObject );
-      
+      for ( i = 0; i < triggers.length; i++ ) {
+        
+        d = triggers[i];
+        
+        trigger = this.triggerIDs[d.ID]( d, gameObject, game );
+        
         if ( trigger === 'start' ) {
-      
-          this.game.startActions = this.game.startActions.concat( behaviour.actions );
+          
+          game.startActions = game.startActions.concat( behaviour.actions );
           return null;
-      
-        } else if ( trigger ) {
-        
-          behaviour.triggers.push( trigger );
-        
+          
         }
-      
+        
+        behaviour.triggers.push( trigger );
+        
       }
-    
+      
     } else {
       
       console.error( 'parser: behaviour has no triggers' );
@@ -189,438 +410,6 @@ var Parser = {
     
     return behaviour;
     
-  },
-  
-  parseAction : function( actionData, gameObject ) {
-    
-    switch ( actionData.type ) {
-      
-      case 'jumpTo' : return this.parseActionJumpTo( actionData, gameObject );
-      case 'moveTo' : return this.parseActionMoveTo( actionData, gameObject );
-      case 'moveIn' : return this.parseActionMoveIn( actionData, gameObject );
-      
-      case 'roam' : return new RoamAction( 
-        gameObject, actionData.mode, new Area().copy( actionData.area ), actionData.speed );
-      
-      case 'swap' : return this.parseActionSwap( actionData, gameObject );
-      case 'stop' : return new StopAction( gameObject );
-      
-      case 'art' : return this.parseActionArt( actionData, gameObject );
-      
-      case 'win' : return WinAction;
-      case 'lose' : return LoseAction;
-      
-      default : console.error( 'parser: action type ' + actionData.type + ' not found' ); return null;
-      
-    }
-    
-  },
-
-
-/**
-  {
-    type: "jumpTo",
-    location:{
-      x:0,
-      y:0
-    }
-  }
-
-  {
-    type: "jumpTo",
-    objectID: 0,
-    offset:{
-      x:3,
-      y:4
-    }
-  }
-  
-  {
-    type: "jumpTo",
-    area: {
-      x: 48,
-      y:6,
-      width:331,
-      height:123
-    }
-  }
-*/
-
-  parseActionJumpTo : function( actionData, gameObject ) {
-    
-    var action = new MoveAction();
-    
-    action.execute = action.executeJumpTo;
-    
-    action.gameObject = gameObject;
-    
-    if ( actionData.objectID ) {
-    
-      action.target = this.game.getGameObjectWithID( actionData.objectID ).movement.position;
-      
-      if ( actionData.offset ) {
-        
-        action.offset = new Vector().copy( actionData.offset );
-        
-      }
-    
-    } else if ( actionData.area ) {
-    
-      action.area = new Area().copy( actionData.area );
-    
-    } else {
-    
-      action.target = new Vector().copy( actionData.location );
-    
-    }
-    
-    return action;
-    
-  },
-
-
-/**
-  {
-    type: "moveTo",
-    location:{
-      x:0,
-      y:0
-    }
-  }
-
-  {
-    type: "moveTo",
-    objectID: 0,
-    offset:{
-      x:3,
-      y:4
-    }
-  }
-*/
-
-  parseActionMoveTo : function( actionData, gameObject ) {
-    
-    var action = new MoveAction();
-    
-    action.execute = action.executeMoveTo;
-    
-    action.gameObject = gameObject;
-    action.speed = actionData.speed;
-    
-    if ( actionData.objectID ) {
-    
-      action.target = this.game.getGameObjectWithID( actionData.objectID ).movement.position;
-      
-      if ( actionData.offset ) {
-        
-        action.offset = new Vector().copy( actionData.offset );
-        
-      }
-    
-    } else {
-    
-      action.target = new Vector( actionData.location.x, actionData.location.y );
-    
-    }
-    
-    return action;
-    
-  },
-
-
-/**
-  {
-    type: "moveIn",
-    angle: 0
-  }
-
-  {
-    type: "moveIn"
-  }
-
-  {
-    type: "moveIn",
-    objectID: 1
-  }
-
-  {
-    type: "moveIn",
-    location: {
-      x:2,
-      y:3
-    }
-  }
-*/
-
-  parseActionMoveIn : function( actionData, gameObject ) {
-    
-    var action = new MoveAction();
-    
-    action.execute = action.executeMoveIn;
-    
-    action.gameObject = gameObject;
-    action.speed = actionData.speed;
-    
-    if ( typeof actionData.angle !== 'undefined' ) {
-    
-      action.target = new Vector( 1e10, 0 ).rotateSelf( actionData.angle );
-      
-    } else if ( actionData.objectID ) {
-      
-      action.target = this.game.getGameObjectWithID( actionData.objectID ).movement.position;
-    
-    } else if ( actionData.location ) {
-      
-      action.target = new Vector().copy( actionData.location );
-      
-    } else {
-      
-      action.random = true;
-      
-    }
-    
-    return action;
-    
-  },
-
-/**
-  {
-    type: "swap",
-    objectID: 0,
-  }
-*/
-
-  parseActionSwap : function( actionData, gameObject ) {
-    
-    return new SwapAction(
-      gameObject.movement.position,
-      this.game.getGameObjectWithID( actionData.objectID ).movement.position
-    );
-    
-  },
-  
-/**
-  {
-    type: "art",
-    frame: 0
-  }
-  
-  {
-    type: "art",
-    frame: 0,
-    frame2: 1,
-    mode : "loop"
-  }
-  
-  {
-    type : "art"
-  }
-  
-  {
-    type: "art",
-    graphicID: 2
-  }
-*/
-  
-  parseActionArt : function( actionData, gameObject ) {
-    
-    var action = new ArtAction();
-    
-    action.gameObject = gameObject;
-    
-    if ( actionData.frame2 ) {
-      
-      action.frame = actionData.frame;
-      action.frame2 = actionData.frame2;
-    
-      action.mode = actionData.mode;
-      action.speed = actionData.speed;
-      
-      action.execute = action.executePlay;
-      
-    } else if ( actionData.frame ) {
-      
-      action.frame = actionData.frame;
-      
-      action.execute = action.executeFrame;
-      
-    } else if ( typeof actionData.graphicID !== 'undefined'  ) {
-      
-      action.graphic = this.game.getGraphicWithID( actionData.graphicID );
-      
-      action.execute = action.executeChange;
-      
-    } else {
-      
-      action.execute = action.executeStop;
-      
-    }
-    
-    return action;
-    
-  },
-  
-  
-  parseTrigger : function( triggerData, gameObject ) {
-    
-    switch ( triggerData.type ) {
-      
-      case 'start' : return 'start';
-      
-      case 'click' : return this.parseTriggerClick( triggerData, gameObject );
-      
-      case 'touch' : return this.parseTriggerContact( triggerData, gameObject, true );
-      case 'overlap' : return this.parseTriggerContact( triggerData, gameObject, false );
-      
-      case 'time' : return new TimeTrigger( triggerData.time, triggerData.time2 );
-      
-      default : console.error( 'parser: trigger type ' + triggerData.type + ' not found' ); return null;
-      
-    }
-    
-  },
-  
-  
-/**
-  {
-    type: "click"
-  }
-  
-  {
-    type: "click",
-    objectID: 0
-  }
-  
-  {
-    type: "click",
-    area: {
-      x: 48,
-      y:6,
-      width:331,
-      height:123
-    }
-  }
-*/
-
-  parseTriggerClick : function( triggerData, gameObject ) {
-    
-    var trigger = new ClickTrigger();
-    
-    if ( triggerData.area ) {
-    
-      trigger.area = new Area().copy( triggerData.area );
-    
-    } else if ( triggerData.objectID ) {
-      
-      trigger.gameObject = this.game.getGameObjectWithID( triggerData.objectID );
-      
-    } else {
-      
-      trigger.gameObject = gameObject;
-      
-    }
-    
-    return trigger;
-    
-  },
-
-
-/**
-  {
-    type: "touch",
-    objectID: 1,
-  }
-  
-  {
-    type: "touch",
-    area: {
-      x: -44,
-      y: -33,
-      width: 160,
-      height: 395
-    }
-  }
-
-  {
-    type: "overlap",
-    objectID: 1,
-  }
-  
-  {
-    type: "overlap",
-    area: {
-      x: -44,
-      y: -33,
-      width: 160,
-      height: 395
-    }
-  }
-*/
-
-  parseTriggerContact : function( triggerData, gameObject, isTouch ) {
-    
-    var trigger = new ContactTrigger();
-    
-    trigger.check = isTouch ? trigger.checkTouch : trigger.checkOverlap;
-    
-    if ( triggerData.area ) {
-    
-      trigger.area = new Area().copy( triggerData.area );
-    
-    } else {
-      
-      trigger.gameObject2 = this.game.getGameObjectWithID( triggerData.objectID );
-      
-    }
-    
-    trigger.gameObject = gameObject;
-    
-    return trigger;
-    
   }
 
 };
-
-/*
-  {
-    type: "greaterThan",
-    objectID: 1,
-    object2ID: 0
-  }
-  
-  {
-    type: "greaterThan",
-    objectID: 1,
-    number: 3,
-  }
-  
-  {
-    type: "smallerThan",
-    objectID: 1,
-    object2ID: 0
-  }
-  
-  {
-    type: "smallerThan",
-    objectID: 1,
-    number: 3,
-  }
-  
-  {
-    type: "equals",
-    objectID: 1,
-    object2ID: 0
-  }
-  
-  {
-    type: "equals",
-    objectID: 1,
-    number: 3,
-  }
-  
-  {
-    type: "onChange",
-    objectID: 1
-  }
-
-*/

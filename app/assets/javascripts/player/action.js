@@ -1,6 +1,8 @@
-var MoveAction = function() {
+var MoveAction = function( type, gameObject, speed ) {
   
-  this.gameObject = null;
+  this.gameObject = gameObject;
+  this.speed = speed;
+  
   this.target = null;
   this.offset = new Vector();
   this.area = null;
@@ -8,7 +10,19 @@ var MoveAction = function() {
   this.random = false;
   this.direction = null;
   
-  this.speed;
+  if ( type === 'moveIn' ) {
+    
+    this.execute = this.executeMoveIn;
+    
+  } else if ( type === 'moveTo' ) {
+    
+    this.execute = this.executeMoveTo;
+    
+  } else if ( type === 'jumpTo' ) {
+    
+    this.execute = this.executeJumpTo;
+    
+  }
   
 };
 
@@ -18,7 +32,7 @@ MoveAction.prototype = {
   
   executeJumpTo : function() {
     
-    if ( this.area) {
+    if ( this.area ) {
       
       this.gameObject.movement.jump( this.area );
       
@@ -94,17 +108,35 @@ var StopAction = function( gameObject ) {
 };
 
 
-var ArtAction = function() {
+var ArtAction = function( type, gameObject, frame, frame2, mode, speed ) {
   
-  this.gameObject;
+  this.gameObject = gameObject;
   
-  this.frame;
-  this.frame2;
+  this.frame = frame;
+  this.frame2 = frame2;
   
-  this.mode; // ['loop', 'ping-pong', 'once']
-  this.speed;
+  this.mode = mode; // ['loop', 'ping-pong', 'once']
+  this.speed = speed;
   
-  this.graphic
+  this.graphic;
+  
+  if ( type === 'frame' ) {
+    
+    this.execute = this.executeFrame;
+    
+  } else if ( type === 'play' ) {
+    
+    this.execute = this.executePlay;
+    
+  } else if ( type === 'stop' ) {
+    
+    this.execute = this.executeStop;
+    
+  } else if ( type === 'change' ) {
+    
+    this.execute = this.executeChange;
+    
+  }
   
 };
 

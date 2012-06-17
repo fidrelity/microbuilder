@@ -1,7 +1,7 @@
-var ClickTrigger = function() {
+var ClickTrigger = function( gameObject, area ) {
   
-  this.gameObject = null;
-  this.area = null;
+  this.gameObject = gameObject;
+  this.area = area;
   
 };
 
@@ -43,14 +43,24 @@ ClickTrigger.prototype = {
 };
 
 
-var ContactTrigger = function() {
+var ContactTrigger = function( type, gameObject, gameObject2, area ) {
   
-  this.gameObject = null;
-  this.gameObject2 = null;
+  this.gameObject = gameObject;
+  this.gameObject2 = gameObject2;
   
-  this.area = null;
+  this.area = area;
   
   triggered = false;
+  
+  if ( type === 'touch' ) {
+    
+    this.check = this.checkTouch;
+    
+  } else if ( type === 'overlap' ) {
+    
+    this.check = this.checkOverlap;
+    
+  }
   
 };
 
