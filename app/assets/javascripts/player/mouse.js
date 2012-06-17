@@ -56,9 +56,11 @@ Mouse.prototype = {
   
   click : function( e ) {
     
-    this.setMouse( e, this.pos );
+    this.setMouse( e, this._pos );
     
-    if ( this.area.contains( this.pos ) ) {
+    if ( this.area.contains( this._pos ) ) {
+    
+      this.pos.copy( this._pos );
     
       this.clicked = true;
     
