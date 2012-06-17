@@ -7,12 +7,14 @@
   <div class="questionview">Is your {{App.actionController.mode}} correct?</div>
 
   <div class="optionview form-actions">
-    <button class="btn btn-success right btn-large" {{action "save" target="App.actionController"}}> apply </button>
+    <button class="btn btn-success right btn-large" {{action "save" target="App.actionController"}}>
+      <i class="icon-ok icon-white"></i> apply </button>
     <div class="actionstring"> {{App.actionController.action.string}} </div>
   </div>
 
 {{/if}}
 
 <div class="clear">
-  <button class="btn" {{action "cancel" target="App.gameController"}}> cancel </button>
+  <button class="btn" {{action "cancel" target="App.gameController"}}> 
+    <i class="icon-arrow-left"></i> cancel </button>
 </div>

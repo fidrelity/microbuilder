@@ -16,10 +16,12 @@
 
   <div class="row" style="margin-top:2em">
     <div class="span6">
-      <button {{action "takePreviewSnapshot" target="App.gameController"}} class="btn">Take snapshot</button>
+      <button {{action "takePreviewSnapshot" target="App.gameController"}} class="btn">
+        <i class="icon-camera"></i> Take snapshot</button>
     </div>
     <div class="span2">
-      <button {{action "publishGame" target="App.gameController"}} class="btn-large btn-success">Publish game</button>    
+      <button {{action "publishGame" target="App.gameController"}} class="btn-large btn-success"> 
+        Publish game</button>
     </div>  
   </div>
 

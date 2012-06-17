@@ -54,9 +54,9 @@ var GraphicsView = Ember.CollectionView.extend({
     },
     
     divStyle : function() {
-  
+      
       var c = this.content;
-  
+      
       if ( c.isBackground ) {
         
         return "background-image:url(" + c.imagePath + ");background-size:210px 130px;width:210px;height:130px;";
@@ -66,9 +66,7 @@ var GraphicsView = Ember.CollectionView.extend({
         return "background-image:url(" + c.imagePath + ");width:" + c.frameWidth + "px;height:" + c.frameHeight + "px;";
         
       }
-      
-      return 
-  
+    
     }.property()
     
   })

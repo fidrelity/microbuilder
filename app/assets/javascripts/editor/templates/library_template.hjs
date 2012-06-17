@@ -1,8 +1,10 @@
 <div class="libraryControls">
   <div class="btn-group left" data-toggle="buttons-radio">
 
-    <button id="ownButton" class="btn" {{action "showOwns" target="App.libraryController"}}>own</button>
-    <button id="publicButton" class="btn" {{action "showPublics" target="App.libraryController"}}>public</button>
+    <button id="ownButton" class="btn" {{action "showOwns" target="App.libraryController"}}>
+      <i class="icon-user"></i> own</button>
+    <button id="publicButton" class="btn" {{action "showPublics" target="App.libraryController"}}>
+      <i class="icon-globe"></i> public</button>
 
   </div>
 
@@ -26,8 +28,10 @@
 
   <div class="btn-group left">
 
-    <button class="btn" {{action "previous" target="App.libraryController"}}>previous</button>
-    <button class="btn" {{action "next" target="App.libraryController"}}>next</button>
+    <button class="btn" {{action "previous" target="App.libraryController"}}>
+      <i class="icon-arrow-left"></i> previous</button>
+    <button class="btn" {{action "next" target="App.libraryController"}}>
+      next <i class="icon-arrow-right"></i></button>
 
   </div>
 
@@ -39,4 +43,4 @@
 
 <div class="clear"></div>
 
-<button class="btn" {{action "cancel" target="App.gameController"}}> cancel </button>
+<button class="btn" {{action "cancel" target="App.gameController"}}><i class="icon-arrow-left"></i> cancel </button>

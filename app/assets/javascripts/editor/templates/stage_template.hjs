@@ -10,7 +10,7 @@
   <div class="duration right">
     <div class="right">{{App.game.duration}} seconds</div>
     <div id="slider" class="right"></div>
-    <div class="right">duration:</div>
+    <div class="right"><i class="icon-time"></i> duration:</div>
   </div>
   
 </div>
