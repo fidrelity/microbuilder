@@ -312,11 +312,7 @@ var Parser = {
     }
     
     
-    if ( data.background ) { // deprecated
-      
-      game.background = this.loader.loadImage( data.background );
-      
-    } else if ( data.backgroundID ) {
+    if ( data.backgroundID ) {
       
       game.background = game.getGraphicWithID( data.backgroundID ).image;
       
@@ -336,7 +332,7 @@ var Parser = {
     
     graphic.frameCount = data.frameCount || 1;
     
-    graphic.image = this.loader.loadImage( data.url || data.imagePath );
+    graphic.image = this.loader.loadImage( data.url );
     
     return graphic;
     

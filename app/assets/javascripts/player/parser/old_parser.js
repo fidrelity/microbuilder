@@ -9,6 +9,8 @@ var OldParser = {
       gameObjects = data.gameObjects,
       behaviours, gameObject;
     
+    console.log( 'old parser' );
+    
     this.game = game;
     this.loader = new Loader( callback );
     this.loader.corsSave = corsSave;
@@ -130,6 +132,27 @@ var OldParser = {
     var gameObject = new GameObject( gameObjectData.ID );
   
     gameObject.movement.startPosition.set( gameObjectData.position.x, gameObjectData.position.y );
+  
+    var graphic = this.game.getGraphicWithID( gameObjectData.graphicID ),
+      onload = graphic.image.onload;
+    
+    if ( onload ) {
+      
+      graphic.image.onload = function() {
+        
+        gameObject.movement.startPosition.x -= graphic.image.width / graphic.frameCount / 2;
+        gameObject.movement.startPosition.y -= graphic.image.height / 2;
+        
+        onload();
+        
+      };
+      
+    } else {
+      
+      gameObject.movement.startPosition.x -= graphic.image.width / graphic.frameCount / 2;
+      gameObject.movement.startPosition.y -= graphic.image.height / 2;
+      
+    }
   
     gameObject.setStartGraphic( this.game.getGraphicWithID( gameObjectData.graphicID ) );
   
