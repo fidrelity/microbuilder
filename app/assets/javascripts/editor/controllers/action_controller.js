@@ -510,8 +510,10 @@ var ActionController = Ember.Object.extend({
     
     this.set( 'optionViews', Ember.ContainerView.create({
       destroy : function() {
-        if ( App.actionController.action.isSearching ) {
+        if ( !App.actionController.action.isSearching ) {
           this._super();
+        } else {
+          App.actionController.action.set( 'isSearching', false );
         }
       }
     }));

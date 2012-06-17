@@ -65,8 +65,6 @@ var ActionTriggerModel = Ember.Object.extend({
     
     this.set( 'graphic', graphic );
     
-    this.set( 'isSearching', false );
-    
   },
   
   setTime : function( time, time2 ) {
