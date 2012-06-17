@@ -6,6 +6,8 @@ var Stage = function() {
   
   this.selectObject = null;
   this.selectedObjectCallback = function() {};
+  
+  this.stageOffset = new Vector();
 
 };
 
@@ -43,6 +45,9 @@ extend( Stage.prototype, {
     
       ctx.clearRect( -i.x, -i.y, 640 + 2 * i.x, 390 + 2 * i.y );
     
+      ctx.save();
+      ctx.translate( this.stageOffset.x, this.stageOffset.y );
+    
       this.game.draw( ctx );
     
       if ( this.selectObject ) {
@@ -54,6 +59,8 @@ extend( Stage.prototype, {
         this.selectObject.getArea().draw( ctx );
       
       }
+      
+      ctx.restore();
       
       this.drawTimeline( ctx, 0, 'rgba(125,125,125,0.5)' );
       
@@ -69,7 +76,12 @@ extend( Stage.prototype, {
     
     ctx.clearRect( -i.x, -i.y, 640 + 2 * i.x, 390 + 2 * i.y );
     
+    ctx.save();
+    ctx.translate( this.stageOffset.x, this.stageOffset.y );
+    
     this.game.draw( ctx );
+    
+    ctx.restore();
     
     this.drawTimeline( ctx, this.timePlayed, color || 'rgba(200,200,0,0.5)' );
     
@@ -138,11 +150,12 @@ extend( Stage.prototype, {
   
   mousedown : function( mouse ) {
     
-    var object = this.selectObject;
+    var object = this.selectObject,
+      mousePos = mouse.pos.sub( this.stageOffset );
     
-    if ( !object || !object.getArea().contains( mouse.pos ) ) {
+    if ( !object || !object.getArea().contains( mousePos ) ) {
       
-      object = this.game.getGameObjectAt( mouse.pos );
+      object = this.game.getGameObjectAt( mousePos );
       
     } 
     
@@ -159,6 +172,10 @@ extend( Stage.prototype, {
     if ( object ) {
       
       object.movement.movePosition( mouse.move );
+      
+    } else if ( this.ctx.debug ) {
+      
+      this.stageOffset.addSelf( mouse.move );
       
     }
     
