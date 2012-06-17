@@ -254,9 +254,13 @@ var ModeOption = ButtonOption.extend({
     
     var index = this.buttons.indexOf( button );
     
-    this.action.setMode( this.modes[index] );
+    if ( !this.action.mode ) {
+      
+      this.decision.insert( this.action );
+      
+    }
     
-    this.decision.insert( this.action );
+    this.action.setMode( this.modes[index] );
     
   }
   
