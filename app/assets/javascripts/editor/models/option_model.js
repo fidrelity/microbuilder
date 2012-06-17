@@ -34,12 +34,12 @@ var Choice = Ember.Object.extend({
       case 'moveToLocation' : return n + ' moves to location ' + a.location.string() + ' - ' + a.getSpeedName();
       case 'moveToObject' : 
         n += ' moves to ' + a.gameObject.name + ' - ' + a.getSpeedName();
-        return n + ( a.offset && a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
+        return n + ( a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
       
       case 'jumpToLocation' : return n + ' jumps to location ' + a.location.string();
       case 'jumpToObject' : 
         n += ' jumps to ' + a.gameObject.name;
-        return n + ( a.offset && a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
+        return n + ( a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
       case 'jumpToArea' : return n + ' jumps to area ' + a.area.string();
       
       case 'moveRoam' : 
@@ -372,7 +372,7 @@ var OffsetOption = Option.extend({
   
   type : 'offset',
   
-  doInsert : function() {
+  doInsert : function( reinsert ) {
     
     App.actionController.addOption( this.question, PlacementView.create({
       observer : this.action,
@@ -380,6 +380,12 @@ var OffsetOption = Option.extend({
       object : App.gameObjectsController.current,
       object2 : this.action.gameObject
     }));
+    
+    if ( !reinsert ) {
+    
+      this.action.setOffset( new Vector( 0, 0 ) );
+    
+    }
     
   }
   

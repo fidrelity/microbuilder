@@ -145,7 +145,7 @@ var PlacementView = Ember.View.extend({
       
         this.object.pos.addSelf( obs.location );
       
-      } else if ( type === 'offset' && obs.offset ) {
+      } else if ( type === 'offset' ) {
         
         this.object.pos.addSelf( obs.offset );
         

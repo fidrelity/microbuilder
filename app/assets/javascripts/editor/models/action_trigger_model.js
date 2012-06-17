@@ -204,7 +204,7 @@ var ActionTriggerModel = Ember.Object.extend({
         
         case 'area': data.area = this.area.getData(); break;
         
-        case 'offset': if ( this.offset ) data.offset = this.offset.getData(); break;
+        case 'offset': data.offset = this.offset.getData(); break;
         
         case 'frame': data.frame = this.frame; if ( this.frame2 ) data.frame2 = this.frame2; break;
         case 'art': data.graphicID = this.graphic.ID; graphicIDs.push( this.graphic.ID ); break;
