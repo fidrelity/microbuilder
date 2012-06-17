@@ -114,10 +114,7 @@ var Parser = {
     
     moveSwap : function( data, gameObject, game ) {
       
-      return new SwapAction( 
-        gameObject.movement.position, 
-        game.getGameObjectWithID( data.objectID ).movement.position
-      );
+      return new SwapAction( gameObject, game.getGameObjectWithID( data.objectID ) );
       
     },
     

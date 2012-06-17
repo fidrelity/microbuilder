@@ -84,11 +84,16 @@ var RoamAction = function( gameObject, mode, area, speed ) {
   
 };
 
-var SwapAction = function( one, two ) {
+var SwapAction = function( objectOne, objectTwo ) {
   
   this.execute = function() {
     
-    var swap = one.clone();
+    var one = objectOne.movement.position,
+      two = objectTwo.movement.position,
+      swap = one.clone();
+    
+    objectOne.movement.stop();
+    objectTwo.movement.stop();
     
     one.copy( two );
     two.copy( swap );
