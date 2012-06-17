@@ -252,8 +252,6 @@ Movement.prototype = {
     
     if ( breakout ) {
       
-      console.log( 'breakout' );
-      
       if ( breakout === 'x' || breakout === 'width' ) {
       
         this.direction.x *= -1;

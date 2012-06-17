@@ -247,10 +247,7 @@ var ActionController = Ember.Object.extend({
             
             // stop
             
-            Option.create({ 
-              name: 'moveStop', 
-              child: SaveOption.create({ choiceID: 'moveStop' })
-            })
+            SaveOption.create({ choiceID: 'moveStop' })
             
           ]
         }),
@@ -321,28 +318,9 @@ var ActionController = Ember.Object.extend({
           buttons: ['win', 'lose', 'end'],
           
           decisions: [
-            
-            // win
-            
-            Option.create({ 
-              name: 'win', 
-              child: SaveOption.create({ choiceID: 'gameWin' })
-            }),
-            
-            // lose
-            
-            Option.create({ 
-              name: 'lose', 
-              child: SaveOption.create({ choiceID: 'gameLose' })
-            }),
-            
-            // end
-            
-            Option.create({ 
-              name: 'end', 
-              child: SaveOption.create({ choiceID: 'gameEnd' })
-            })
-            
+            SaveOption.create({ choiceID: 'gameWin' }),
+            SaveOption.create({ choiceID: 'gameLose' }),
+            SaveOption.create({ choiceID: 'gameEnd' })
           ] 
         })
         
