@@ -154,7 +154,7 @@ Player.prototype = {
     
     if ( this.timePlayed > this.game.duration ) {
     
-      this.fsm.end();
+      EndAction.execute( this.game );
     
     }
     

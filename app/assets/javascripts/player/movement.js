@@ -82,7 +82,7 @@ Movement.prototype = {
   roam : function( object, mode, area, speed ) {
     
     var objArea = this.getArea(),
-      increase;
+      increase, v, h, y, g = 9.81;
     
     this.stop();
     
@@ -125,14 +125,16 @@ Movement.prototype = {
       
     } else if ( mode === 'bounce' ) {
       
-      var height = ( area.height - objArea.height );
+      objArea = this.getArea();
       
-      this.direction = new Vector( this.speed, Math.sqrt( 2 * height * 9.81 ) );
-      this.time = 0;
+      h = ( area.height - objArea.height );
+      y = h - objArea.y;
+      v = Math.sqrt( 2 * h * g );
       
-      this.insertObjectAtBottom( area );
+      this.direction = new Vector( this.speed * randSign(), v );
+      this.time = ( v - Math.sqrt( v * v - 2 * y * g ) ) / g * 100;
       
-      this.roamStart.copy( this.position );
+      this.roamStart.set( 0, area.y + ( area.height - objArea.height / 2 ) );
       
     }
     
@@ -249,6 +251,8 @@ Movement.prototype = {
     breakout = this.roamArea.leavesArea( this.getArea() );
     
     if ( breakout ) {
+      
+      console.log( 'breakout' );
       
       if ( breakout === 'x' || breakout === 'width' ) {
       

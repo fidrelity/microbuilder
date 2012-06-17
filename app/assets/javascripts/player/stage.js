@@ -95,7 +95,7 @@ extend( Stage.prototype, {
     ctx.fillStyle = g.isWon ? 'rgba(0,255,0,0.5)' : ( g.isLost ? 'rgba(255,0,0,0.5)' : color );
     
     ctx.fillRect( 0, 390 + i.y / 2 - 4, 640, 8 );
-    ctx.fillRect( 640 * timePlayed / this.game.duration - 8, 390 + i.y / 2 - 8, 16, 16 );
+    ctx.fillRect( 640 * timePlayed / g.duration - 8, 390 + i.y / 2 - 8, 16, 16 );
     
   },
   
