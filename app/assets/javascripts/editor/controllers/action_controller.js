@@ -593,16 +593,16 @@ var ActionController = Ember.Object.extend({
     return choice;
     
   },
-
+  
   save : function() {
     
     if ( this.mode === 'Action' ) {
     
-      this.get( 'behaviour' ).addAction( this.action, this.actionCopy );
+      this.behaviour.addAction( this.action, this.actionCopy );
     
     } else {
     
-      this.get( 'behaviour' ).addTrigger( this.action, this.actionCopy );
+      this.behaviour.addTrigger( this.action, this.actionCopy );
     
     }
     

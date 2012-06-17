@@ -45,10 +45,11 @@ var BehaviourModel = Ember.Object.extend({
       
     } else {
       
-      action.parent = this;
       actions.addObject( action );
       
     }
+    
+    action.parent = this;
     
   },
   
