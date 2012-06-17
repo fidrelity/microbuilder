@@ -24,7 +24,7 @@ var GameModel = Ember.Object.extend({
   
   getData : function() {
     
-    var game = { duration: this.duration, graphics : [] },
+    var game = { version: 1, duration: this.duration, graphics : [] },
         graphicIDs = [], i;
     
     game.title = this.title;

@@ -165,7 +165,7 @@ var ActionTriggerModel = Ember.Object.extend({
     this.setProperties({
       
       type : d.type,
-      choice : App.actionController.getChoice( d.choiceID ),
+      choice : App.actionController.getChoice( d.ID ),
       
       gameObject : d.objectID ? App.gameObjectsController.getObject( d.objectID ) : null,
       
@@ -197,7 +197,7 @@ var ActionTriggerModel = Ember.Object.extend({
     
     var data = { 
       type : this.type,
-      choiceID : this.choice.ID
+      ID : this.choice.ID
     }, i, optionType;
     
     for ( i = 0; i < this.decisions.length; i++ ) {
