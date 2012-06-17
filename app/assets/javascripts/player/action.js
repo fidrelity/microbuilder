@@ -174,7 +174,11 @@ var WinAction = {
   
   execute : function( game ) {
     
-    game.player.fsm.win();
+    if ( !game.isLost ) {
+      
+      game.isWon = true;
+      
+    }
     
   }
   
@@ -184,7 +188,27 @@ var LoseAction = {
   
   execute : function( game ) {
     
-    game.player.fsm.lose();
+    if ( !game.isWon ) {
+      
+      game.isLost = true;
+      
+    }
+    
+  }
+  
+};
+
+var EndAction = {
+  
+  execute : function( game ) {
+    
+    if ( !game.isWon ) {
+      
+      game.isLost = true;
+      
+    }
+    
+    game.player.fsm.end();
     
   }
   

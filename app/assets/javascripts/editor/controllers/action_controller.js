@@ -25,7 +25,7 @@ var ActionController = Ember.Object.extend({
     
     // 'counterSet', 'counterUp', 'counterDown'
     
-    'gameWin', 'gameLose' // 'gameEnd',
+    'gameWin', 'gameLose', 'gameEnd',
     
   ],
   
@@ -317,8 +317,8 @@ var ActionController = Ember.Object.extend({
         
         ButtonOption.create({ 
           name: 'game', 
-          question: 'Win or lose?',
-          buttons: ['win', 'lose'],
+          question: 'Choose what should happen to the game',
+          buttons: ['win', 'lose', 'end'],
           
           decisions: [
             
@@ -334,6 +334,13 @@ var ActionController = Ember.Object.extend({
             Option.create({ 
               name: 'lose', 
               child: SaveOption.create({ choiceID: 'gameLose' })
+            }),
+            
+            // end
+            
+            Option.create({ 
+              name: 'end', 
+              child: SaveOption.create({ choiceID: 'gameEnd' })
             })
             
           ] 

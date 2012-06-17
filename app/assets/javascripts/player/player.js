@@ -31,8 +31,7 @@ var Player = function() {
       { name : 'loaded', from : 'load', to : 'ready', callback : this.onReady },
     
       { name : 'start', from : '*', to : 'play', callback : this.reset },
-      { name : 'win', from : 'play', to : 'end', callback : this.onWin },
-      { name : 'lose', from : 'play', to : 'end', callback : this.onLose },
+      { name : 'end', from : 'play', to : 'end', callback : this.onEnd },
       
       { name : 'restart', from : 'end', to : 'play', callback : this.onReady },
       { name : 'reset', from : '*', to : 'ready' }
@@ -155,7 +154,7 @@ Player.prototype = {
     
     if ( this.timePlayed > this.game.duration ) {
     
-      this.fsm.lose();
+      this.fsm.end();
     
     }
     
@@ -165,15 +164,17 @@ Player.prototype = {
     
     this.game.draw( ctx );
     
-    this.drawTimeline( ctx, this.timePlayed, 'rgba(255,255,0,0.5)' );
+    this.drawTimeline( ctx, this.timePlayed  );
     
   },
   
-  drawTimeline : function( ctx, timePlayed, color ) {
+  drawTimeline : function( ctx, timePlayed ) {
     
-    ctx.fillStyle = color;
+    var g = this.game;
     
-    ctx.fillRect( 0, 386, 640 * timePlayed / this.game.duration, 4 );
+    ctx.fillStyle = g.isWon ? 'rgba(0,255,0,0.5)' : ( g.isLost ? 'rgba(255,0,0,0.5)' : 'rgba(255,255,0,0.5)' );
+    
+    ctx.fillRect( 0, 386, 640 * timePlayed / g.duration, 4 );
     
   },
   
@@ -207,23 +208,23 @@ Player.prototype = {
     
   },
   
-  onWin : function() {
+  onEnd : function() {
     
-    $('.playerWinScreen').fadeTo(600, 0.9);
+    if ( this.game.isWon ) {
+      
+      $('.playerWinScreen').fadeTo( 600, 0.9 );
+      
+      this.increaseCounter( "win" );
+      
+    } else {
+      
+      $('.playerLoseScreen').fadeTo( 600, 0.9 );
+      
+      this.increaseCounter( "lose" );
+      
+    }
     
-    this.drawTimeline( this.ctx, this.timePlayed, 'rgba(0,255,0,0.5)' );
-    
-    this.increaseCounter( "win" );
-    
-  },
-  
-  onLose : function() {
-    
-    $('.playerLoseScreen').fadeTo(600, 0.9); 
-    
-    this.drawTimeline( this.ctx, this.timePlayed, 'rgba(255,0,0,0.5)' );
-    
-    this.increaseCounter( "lose" );
+    this.draw( this.ctx );
     
   },
   

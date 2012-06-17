@@ -14,6 +14,9 @@ var Game = function( player, mouse ) {
   
   this.startActions = [];
   
+  this.isWon = false;
+  this.isLost = false;
+  
 };
 
 Game.prototype = {
@@ -21,6 +24,9 @@ Game.prototype = {
   init : function() {},
   
   reset : function() {
+    
+    this.isWon = false;
+    this.isLost = false;
     
     this.gameObjects.forEachApply( 'reset' );
     this.behaviours.forEachApply( 'reset' );

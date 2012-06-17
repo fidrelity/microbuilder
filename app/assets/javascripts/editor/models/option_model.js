@@ -57,6 +57,7 @@ var Choice = Ember.Object.extend({
       
       case 'gameWin' : return 'win the game';
       case 'gameLose' : return 'lose the game';
+      case 'gameEnd' : return 'end the game';
       
       // triggers
       

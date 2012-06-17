@@ -161,8 +161,7 @@ var Parser = {
     
     gameWin : function() { return WinAction; },
     gameLose : function() { return LoseAction; },
-    
-    // 'gameEnd'
+    gameEnd : function() { return EndAction; }
     
   },
   
@@ -356,17 +355,19 @@ var Parser = {
       actions = data.actions,
       triggers = data.triggers,
       game = this.game,
-      action, trigger, d, i;
+      action, trigger, i;
     
     if ( actions && actions.length > 0 ) {
       
       for ( i = 0; i < actions.length; i++ ) {
         
-        d = actions[i];
+        action = this.parseAction( actions[i], gameObject, game );
         
-        action = this.actionIDs[d.ID]( d, gameObject, game );
-        
-        behaviour.actions.push( action );
+        if ( action ) {
+          
+          behaviour.actions.push( action );
+          
+        }
         
       }
       
@@ -382,18 +383,18 @@ var Parser = {
       
       for ( i = 0; i < triggers.length; i++ ) {
         
-        d = triggers[i];
-        
-        trigger = this.triggerIDs[d.ID]( d, gameObject, game );
+        trigger = this.parseTrigger( triggers[i], gameObject, game );
         
         if ( trigger === 'start' ) {
           
           game.startActions = game.startActions.concat( behaviour.actions );
           return null;
           
+        } else if ( trigger ) {
+          
+          behaviour.triggers.push( trigger );
+          
         }
-        
-        behaviour.triggers.push( trigger );
         
       }
       
@@ -405,6 +406,36 @@ var Parser = {
     }
     
     return behaviour;
+    
+  },
+  
+  parseAction : function( data, gameObject, game ) {
+    
+    var parseFunc = this.actionIDs[ data.ID ];
+    
+    if ( !parseFunc ) {
+      
+      console.error( 'parser: no action with ID: ' + data.ID );
+      return null;
+      
+    }
+    
+    return parseFunc( data, gameObject, game );
+    
+  },
+  
+  parseTrigger : function( data, gameObject, game ) {
+    
+    var parseFunc = this.triggerIDs[ data.ID ];
+    
+    if ( !parseFunc ) {
+      
+      console.error( 'parser: no trigger with ID: ' + data.ID );
+      return null;
+      
+    }
+    
+    return parseFunc( data, gameObject, game );
     
   }
 

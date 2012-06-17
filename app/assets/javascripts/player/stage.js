@@ -70,7 +70,7 @@ extend( Stage.prototype, {
     
   },
   
-  draw : function( ctx, color ) {
+  draw : function( ctx ) {
     
     var i = this.increment;
     
@@ -83,18 +83,19 @@ extend( Stage.prototype, {
     
     ctx.restore();
     
-    this.drawTimeline( ctx, this.timePlayed, color || 'rgba(200,200,0,0.5)' );
+    this.drawTimeline( ctx, this.timePlayed, 'rgba(200,200,0,0.5)' );
     
   },
   
   drawTimeline : function( ctx, timePlayed, color ) {
     
-    var i = this.increment;
+    var i = this.increment,
+      g = this.game;
     
-    ctx.fillStyle = color;
+    ctx.fillStyle = g.isWon ? 'rgba(0,255,0,0.5)' : ( g.isLost ? 'rgba(255,0,0,0.5)' : color );
     
-    // ctx.fillRect( - i.x / 2, 390 + i.y / 2, 640 + i.x, 8 );
-    // ctx.fillRect( ( 640 + i.x ) * timePlayed / this.game.duration - i.x / 2 - 8, 390 + i.y / 2 - 4, 16, 16 );
+    //ctx.fillRect( - i.x / 2, 390 + i.y / 2, 640 + i.x, 8 );
+    //ctx.fillRect( ( 640 + i.x ) * timePlayed / this.game.duration - i.x / 2 - 8, 390 + i.y / 2 - 4, 16, 16 );
     
     ctx.fillRect( 0, 390 + i.y / 2, 640, 8 );
     ctx.fillRect( 640 * timePlayed / this.game.duration - 8, 390 + i.y / 2 - 4, 16, 16 );
@@ -126,15 +127,9 @@ extend( Stage.prototype, {
     
   },
   
-  onWin : function() {
+  onEnd : function() {
     
-    this.draw( this.ctx, 'rgba(0,255,0,0.5)' );
-    
-  },
-  
-  onLose : function() {
-    
-    this.draw( this.ctx, 'rgba(255,0,0,0.5)' );
+    this.draw( this.ctx );
     
   },
   
