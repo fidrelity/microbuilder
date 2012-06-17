@@ -96,7 +96,6 @@ var ActionController = Ember.Object.extend({
             
             ButtonOption.create({ 
               name: 'moveIn', 
-              setType: 'moveIn',
               question: 'How should it move directional?',
               buttons: ['in direction', 'random direction', 'to location', 'to object'], 
               
@@ -148,7 +147,6 @@ var ActionController = Ember.Object.extend({
             
             ButtonOption.create({ 
               name: 'moveTo', 
-              setType: 'moveTo', 
               question: 'Where should it move?',
               buttons: ['to location', 'to object'],
               
@@ -188,7 +186,6 @@ var ActionController = Ember.Object.extend({
             
             ButtonOption.create({ 
               name: 'jumpTo', 
-              setType: 'jumpTo', 
               question: 'Where should it jump?',
               buttons: ['to location', 'to object', 'to area'],
               
@@ -224,7 +221,6 @@ var ActionController = Ember.Object.extend({
             
             AreaOption.create({ 
               name: 'roam', 
-              setType: 'roam', 
               question: 'Select the area where it should roam in',
               
               decision: ModeOption.create({ 
@@ -245,7 +241,6 @@ var ActionController = Ember.Object.extend({
             
             ObjectOption.create({ 
               name: 'moveSwap', 
-              setType: 'swap', 
               question: 'Choose the object to swap position',
               decision: SaveOption.create({ choiceID: 'moveSwap' })
             }),
@@ -254,7 +249,6 @@ var ActionController = Ember.Object.extend({
             
             Option.create({ 
               name: 'moveStop', 
-              setType: 'stop', 
               child: SaveOption.create({ choiceID: 'moveStop' })
             })
             
@@ -265,7 +259,6 @@ var ActionController = Ember.Object.extend({
         
         ButtonOption.create({ 
           name: 'art', 
-          setType: 'art', 
           question: 'What should the art do?',
           buttons: ['to frame', 'play', 'stop', 'change'],
           
@@ -333,7 +326,6 @@ var ActionController = Ember.Object.extend({
             
             Option.create({ 
               name: 'win', 
-              setType: 'win', 
               child: SaveOption.create({ choiceID: 'gameWin' })
             }),
             
@@ -341,7 +333,6 @@ var ActionController = Ember.Object.extend({
             
             Option.create({ 
               name: 'lose', 
-              setType: 'lose', 
               child: SaveOption.create({ choiceID: 'gameLose' })
             })
             
@@ -362,7 +353,6 @@ var ActionController = Ember.Object.extend({
         
         ButtonOption.create({
           name: 'click',
-          setType: 'click',
           question: 'Click on what?',
           buttons: ['self', 'object', 'area'],
           
@@ -406,7 +396,6 @@ var ActionController = Ember.Object.extend({
             
             ButtonOption.create({
               name: 'touch',
-              setType: 'touch',
               question: 'Touches what?',
               buttons: ['object', 'area'],
               
@@ -437,7 +426,6 @@ var ActionController = Ember.Object.extend({
             
             ButtonOption.create({
               name: 'overlap',
-              setType: 'overlap',
               question: 'Overlaps what?',
               buttons: ['object', 'area'],
               
@@ -471,7 +459,6 @@ var ActionController = Ember.Object.extend({
         
         ButtonOption.create({
           name: 'time',
-          setType: 'time',
           question: 'Trigger at an excact time or randomly in a range?', 
           buttons: ['exactly', 'randomly'], 
           
@@ -523,7 +510,7 @@ var ActionController = Ember.Object.extend({
     
     this.set( 'optionViews', Ember.ContainerView.create({
       destroy : function() {
-        if ( App.actionController.action.type !== 'search' ) {
+        if ( App.actionController.action.isSearching ) {
           this._super();
         }
       }

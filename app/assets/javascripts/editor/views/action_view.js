@@ -330,7 +330,7 @@ var ArtView = Ember.View.extend({
   
   searchGraphic : function() {
     
-    App.actionController.action.set( 'type', 'search' );
+    App.actionController.action.set( 'isSearching', true );
     
     App.gameController.searchArtGraphic();
     

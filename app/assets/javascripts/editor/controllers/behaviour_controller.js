@@ -45,7 +45,7 @@ var BehaviourController = Ember.ArrayController.extend({
       
       behaviour.addTrigger( trigger );
       
-      if ( trigger.type === 'start' ) {
+      if ( data.triggers[i].ID === 'gameStart' ) {
         
         gameObject.set( 'startBehaviour', behaviour );
         return;

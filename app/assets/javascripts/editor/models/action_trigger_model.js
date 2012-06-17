@@ -1,7 +1,5 @@
 var ActionTriggerModel = Ember.Object.extend({
   
-  type : null,
-  
   decisions : null,
   
   choice : null,
@@ -24,12 +22,6 @@ var ActionTriggerModel = Ember.Object.extend({
   setChoice : function( choiceID ) {
     
     this.set( 'choice', App.actionController.getChoice( choiceID ) );
-    
-  },
-  
-  setType : function( type ) {
-    
-    this.set( 'type', type );
     
   },
   
@@ -73,7 +65,7 @@ var ActionTriggerModel = Ember.Object.extend({
     
     this.set( 'graphic', graphic );
     
-    this.set( 'type', 'art' );
+    this.set( 'isSearching', false );
     
   },
   
@@ -123,7 +115,7 @@ var ActionTriggerModel = Ember.Object.extend({
   
   string : function() {
     
-    return this.choice ? this.choice.string( this.parentGameObject.name, this ) : this.type;
+    return this.choice ? this.choice.string( this.parentGameObject.name, this ) : 'no choice';
     
   }.property( 'choice', 'gameObject', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2' ),
   
@@ -132,7 +124,6 @@ var ActionTriggerModel = Ember.Object.extend({
     
     return ActionTriggerModel.create({
       
-      type : this.type,
       decisions : this.decisions.concat(),
       choice : this.choice,
       
@@ -164,7 +155,6 @@ var ActionTriggerModel = Ember.Object.extend({
     
     this.setProperties({
       
-      type : d.type,
       choice : App.actionController.getChoice( d.ID ),
       
       gameObject : d.objectID ? App.gameObjectsController.getObject( d.objectID ) : null,
@@ -195,8 +185,7 @@ var ActionTriggerModel = Ember.Object.extend({
   
   getData : function( graphicIDs ) {
     
-    var data = { 
-      type : this.type,
+    var data = {
       ID : this.choice.ID
     }, i, optionType;
     

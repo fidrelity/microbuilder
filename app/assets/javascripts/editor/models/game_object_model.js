@@ -13,7 +13,7 @@ var GameObjectModel = Ember.Object.extend({
     
     var startTrigger = ActionTriggerModel.create();
     
-    startTrigger.setType( 'start' );
+    startTrigger.set( 'type', 'start' );
     startTrigger.setChoice( 'gameStart' );
     
     this.ID = this.ID || App.game.gameObjectCounter++;

@@ -92,8 +92,6 @@ var Option = Ember.Object.extend({
   
   action : null,
   
-  setType : null,
-  
   decision : null,
   decisions : [],
   
@@ -109,12 +107,6 @@ var Option = Ember.Object.extend({
     this.doInsert();
     
     action.addDecision( this );
-    
-    if ( this.setType ) {
-      
-      action.setType( this.setType );
-      
-    }
     
     if ( this.child ) {
       

@@ -107,7 +107,7 @@ var GameModel = Ember.Object.extend({
         
           for ( j = 0; j < b.actions.length; j++ ) {
           
-            if ( b.actions[j].type === 'win' ) {
+            if ( b.actions[j].ID === 'gameWin' ) {
             
               return true;
             
