@@ -74,8 +74,10 @@ var Choice = Ember.Object.extend({
       case 'timeExact' : return 'after ' + a.time + '% of the game';
       case 'timeRandom' : return 'randomly after ' + a.time + '-' + a.time2 + '% of the game';
       
-      case 'gameWon' : return 'game was won';
-      case 'gameLost' : return 'game was lost';
+      case 'gameIsWon' : return 'game is won';
+      case 'gameWasWon' : return 'game was won';
+      case 'gameIsLost' : return 'game is lost';
+      case 'gameWasLost' : return 'game was lost';
       case 'gameStart' : return 'start';
       
       default : console.error( 'Unknow choice name: ' + this.ID );

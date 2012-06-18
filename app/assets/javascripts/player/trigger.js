@@ -176,6 +176,30 @@ TimeTrigger.prototype = {
   
 };
 
+var EndTrigger = function( type ) {
+  
+  this.triggered = false;
+  
+  this.check = function( game ) {
+    
+    if ( game[ type ] && !this.triggered ) {
+      
+      return this.triggered = true;
+      
+    }
+    
+    return false;
+    
+  };
+  
+  this.reset = function() {
+    
+    this.triggered = false;
+    
+  };
+  
+};
+
 var WonTrigger = {
   
   check : function( game ) {
