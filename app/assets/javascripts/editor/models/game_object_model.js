@@ -58,14 +58,14 @@ var GameObjectModel = Ember.Object.extend({
     
   },
   
-  getData : function( graphicIDs ) {
+  getData : function( graphics ) {
   
     var behaviours = [], 
       b, i;
   
-    graphicIDs.push( this.graphic.ID );
+    graphics.push( this.graphic );
     
-    b = this.startBehaviour.getData( graphicIDs );
+    b = this.startBehaviour.getData( graphics );
     
     if ( b ) {
     
@@ -75,7 +75,7 @@ var GameObjectModel = Ember.Object.extend({
       
     for ( i = 0; i < this.behaviours.length; i++ ) {
       
-      b = this.behaviours[i].getData( graphicIDs );
+      b = this.behaviours[i].getData( graphics );
       
       if ( b ) {
         

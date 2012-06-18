@@ -181,7 +181,7 @@ var ActionTriggerModel = Ember.Object.extend({
     
   },
   
-  getData : function( graphicIDs ) {
+  getData : function( graphics ) {
     
     var data = {
       ID : this.choice.ID
@@ -207,7 +207,7 @@ var ActionTriggerModel = Ember.Object.extend({
         case 'offset': data.offset = this.offset.getData(); break;
         
         case 'frame': data.frame = this.frame; if ( this.frame2 ) data.frame2 = this.frame2; break;
-        case 'art': data.graphicID = this.graphic.ID; graphicIDs.push( this.graphic.ID ); break;
+        case 'art': data.graphicID = this.graphic.ID; graphics.push( this.graphic ); break;
         
         case 'time': data.time = this.time; if ( this.time2 ) data.time2 = this.time2; break;
         

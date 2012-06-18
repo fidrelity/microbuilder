@@ -140,49 +140,52 @@ var GameController = Ember.Object.extend({
   
   publishGame : function() {    
    
-    var data = this.game.getData();
+    var game = this.game.getData(),
+      win = this.game.checkWin( game ),
+      graphicIDs = game.graphics.map( function(i){ return i.ID; } ),
+      thumb = this.getSelectedSnapshotData();
     
     console.log(
-      this.game.title,
-      this.game.instructions,
-      JSON.stringify( data.game ),
-      JSON.stringify( data.graphicIDs ),
-      data.win,
-      this.getSelectedSnapshotData()
+      game.title,
+      game.instructions,
+      JSON.stringify( game ),
+      JSON.stringify( graphicIDs ),
+      win,
+      thumb
     );
-
-    if ( !this.game.title ) {
-        
-        alert( 'insert title' );
-        return;
-        
-    } else if ( !this.game.instructions ) {
-        
-        alert( 'insert instructions' );
-        return;
-        
-    } else if ( !data.win ) {
-        
-        alert( 'game has no win action' );
-        return;
-        
+    
+    if ( !game.title.length ) {
+      
+      alert( 'insert title' );
+      return;
+      
+    } else if ( !game.instructions.length ) {
+      
+      alert( 'insert instructions' );
+      return;
+      
+    } else if ( !win ) {
+      
+      alert( 'game has no win action' );
+      return;
+      
     }
-        
+    
     Notifier.showLoader("Creating game! Please wait a few seconds ...");
-
+    
     $.ajax({
       url : 'games/',
       type : 'POST',
       data : {
         
         game: {
-          title : this.game.title || '',
-          instruction: this.game.instructions || '',
-          data : JSON.stringify( data.game ),
-          preview_image_data : this.getSelectedSnapshotData(),
+          title : game.title,
+          instruction: game.instructions,
+          data : JSON.stringify( game ),
+          preview_image_data : thumb,
         },
         
-        graphic_ids: data.graphicIDs
+        graphic_ids: graphicIDs
         
       },
       
@@ -294,8 +297,8 @@ var GameController = Ember.Object.extend({
     App.game.setProperties({
      gameObjects : [],
      gameObjectCounter : 1,
-     title : null,
-     instructions : null,
+     title : '',
+     instructions : '',
      duration : 5,
      background : null
     });

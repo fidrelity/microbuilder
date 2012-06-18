@@ -1,7 +1,7 @@
 var GameModel = Ember.Object.extend({
   
-  title : null,
-  instructions : null,
+  title : '',
+  instructions : '',
   
   background : null,
   
@@ -24,71 +24,46 @@ var GameModel = Ember.Object.extend({
   
   getData : function() {
     
-    var game = { version: 1, duration: this.duration, graphics : [] },
-        graphicIDs = [], i;
+    var game = { version : 1 }, graphics = [], i;
     
     game.title = this.title;
     game.instructions = this.instructions;
+    game.duration = this.duration;
     
     if ( this.background ) {
       
       game.backgroundID = this.background.ID;
-      graphicIDs.push( this.background.ID );
+      graphics.push( this.background );
       
     }
     
     if ( this.gameObjects.length ) {
       
       game.gameObjects = [];
-    
+      
       for ( i = this.gameObjects.length - 1; i >= 0; i-- ) {
-    
-        game.gameObjects.push( this.gameObjects[i].getData( graphicIDs ) );
-    
+        
+        game.gameObjects.push( this.gameObjects[i].getData( graphics ) );
+        
       }
-    
-    }
-    
-    graphicIDs = graphicIDs.uniq();
-    
-    for ( i = 0; i < graphicIDs.length; i++ ) {
-      
-      game.graphics.push( App.libraryController.getGraphic( graphicIDs[i] ).getData() );
       
     }
     
-    return {
-      game : game,
-      graphicIDs : graphicIDs,
-      win : this.checkWin( game )
-    };
+    if ( graphics.length ) {
+      
+      graphics = graphics.uniq();
+      game.graphics = [];
+      
+      for ( i = 0; i < graphics.length; i++ ) {
+        
+        game.graphics.push( graphics[i].getData() );
+        
+      }
+      
+    }
     
-  },
-  
-  getGameObjectsData : function() {
-  
-    return this.getData().game;
-  
-    // var game = { graphics : [], gameObjects : [] }, i;
-    // 
-    // if ( this.background ) {
-    //   
-    //   game.background = this.background.imagePath;
-    //   
-    // }
-    // 
-    // if ( this.gameObjects.length ) {
-    // 
-    //   for ( i = this.gameObjects.length - 1; i >= 0; i-- ) {
-    // 
-    //     game.gameObjects.push( this.gameObjects[i].getData( game.graphics ) );
-    // 
-    //   }
-    // 
-    // }
-    // 
-    // return game;
-  
+    return game;
+    
   },
   
   checkWin : function( game ) {
