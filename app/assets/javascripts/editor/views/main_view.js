@@ -211,6 +211,16 @@ var BehaviourView = SelectView.extend({
     App.behaviourController.duplicateBehaviour( this.content );
     App.mainView.updatePlayer();
     
-  }
+  },
+  
+  remove : function() {
+    
+    if ( confirm( 'Throw the behaviour away?' ) ) {
+      
+      this._super();
+      
+    }
+    
+  },
   
 });
