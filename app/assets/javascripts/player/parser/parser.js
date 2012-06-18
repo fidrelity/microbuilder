@@ -229,9 +229,9 @@ var Parser = {
     // 'counterGreaterNumber', 'counterGreaterObject',
     // 'counterSmallerNumber', 'counterSmallerObject',
     
-    gameStart : function() { return 'start'; }
-    
-    // 'gameWon', 'gameLost'
+    gameWon : function() { return WonTrigger; },
+    gameLost : function() { return LostTrigger; },
+    gameStart : function() { return 'start'; },
     
   },
   

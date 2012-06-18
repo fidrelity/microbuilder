@@ -175,3 +175,27 @@ TimeTrigger.prototype = {
   }
   
 };
+
+var WonTrigger = {
+  
+  check : function( game ) {
+    
+    return game.isWon;
+    
+  },
+  
+  reset : function() {}
+  
+};
+
+var LostTrigger = {
+  
+  check : function( game ) {
+    
+    return game.isLost;
+    
+  },
+  
+  reset : function() {}
+  
+};
