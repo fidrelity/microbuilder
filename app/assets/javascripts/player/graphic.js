@@ -15,15 +15,26 @@ Graphic.prototype = {
   
   draw : function( ctx, frame ) {
     
-    var img = this.image,
-      width = img.width / this.frameCount,
-      height = img.height;
+    var width = this.frameWidth,
+      height = this.frameHeight;
     
-    ctx.drawImage( img, ( frame - 1 ) * width, 0, width, height, 0, 0, width, height );
+    ctx.drawImage( this.image, ( frame - 1 ) * width, 0, width, height, 0, 0, width, height );
     
     if ( ctx.debug ) {
       
       ctx.dashedRect( 0, 0, width, height, 7 );
+      
+    }
+    
+  },
+  
+  checkSize : function() {
+    
+    var img = this.image;
+    
+    if ( this.frameWidth * this.frameCount !== img.width || this.frameHeight !== img.height ) {
+      
+      console.error( 'graphic size and image size is not the same', this, img.width, img.height );
       
     }
     

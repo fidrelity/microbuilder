@@ -334,7 +334,11 @@ var Parser = {
     graphic.frameHeight = data.frameHeight;
     
     graphic.frameCount = data.frameCount || 1;
-    graphic.image = this.loader.loadImage( data.url );
+    graphic.image = this.loader.loadImage( data.url, function() {
+      
+      graphic.checkSize();
+      
+    });
     
     return graphic;
     

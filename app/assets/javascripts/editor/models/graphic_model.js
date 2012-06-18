@@ -28,26 +28,19 @@ var GraphicModel = Ember.Object.extend({
   isOwn : false,
   
   frameCount : 1,
-  frameWidth : 32,
-  frameHeight : 32,
-  totalWidth : 0,
+  frameWidth : 0,
+  frameHeight : 0,
   
-  init : function() {
-    
-    this.computeStyle();
-    
-  },
-  
-  computeStyle : function() {
+  divStyle : function() {
     
     var g = this,
       zoom = 64 / Math.max( g.frameWidth, g.frameHeight ),
       width = g.frameWidth * zoom * g.frameCount,
       height = g.frameHeight * zoom;
     
-    this.set( 'divStyle', 'width:64px;height:64px;background-image:url("' + g.imagePath + '");background-size:' + width + "px " + height + "px;" );
+    return 'width:64px;height:64px;background-image:url("' + g.imagePath + '");background-size:' + width + "px " + height + "px;";
     
-  },
+  }.property( 'frameWidth', 'frameHeight' ),
   
   getData : function() {
     

@@ -331,8 +331,6 @@ var LibraryController = Ember.ArrayController.extend({
       frameHeight : d.frame_height
     });
     
-    graphic.computeStyle();
-    
   },
   
   showOwns : function() {
