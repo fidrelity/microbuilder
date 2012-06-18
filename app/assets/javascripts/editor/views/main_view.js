@@ -224,3 +224,40 @@ var BehaviourView = SelectView.extend({
   },
   
 });
+
+var GameObjectView = Ember.View.extend({
+  
+  content: null,
+  
+  remove: function() {
+    
+    if ( confirm( 'Delete the game object?' ) ) {
+      
+      App.gameObjectsController.removeGameObject( this.content );
+      App.gameObjectsController.set( 'current', null );
+      
+      this.set( 'content', null );
+      
+    }
+    
+  },
+  
+  duplicate : function() {
+    
+    App.gameObjectsController.duplicateObject( this.content );
+    
+  },
+  
+  changeArt: function() {
+    
+    App.gameController.searchChangeGraphic();
+    
+  },
+  
+  toTop: function() {
+    
+    App.gameObjectsController.moveToTop( this.content );
+    
+  }
+  
+});
