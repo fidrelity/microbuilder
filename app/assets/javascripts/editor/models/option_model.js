@@ -12,7 +12,7 @@ var Choice = Ember.Object.extend({
   
   getDecisions : function() {
     
-    return this.option ? this.option.getDecisions( [] ) : [];
+    return this.option.getDecisions( [] );
     
   },
   
