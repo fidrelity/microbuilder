@@ -4,6 +4,9 @@ var Graphic = function( ID ) {
   
   this.image = null;
   
+  this.frameWidth = 0;
+  this.frameHeight = 0;
+  
   this.frameCount = 1;
   
 };

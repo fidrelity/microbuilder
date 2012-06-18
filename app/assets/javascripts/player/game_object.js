@@ -54,27 +54,9 @@ GameObject.prototype = {
   
   setGraphic : function( graphic ) {
     
-    var img = graphic.image,
-      onload = img.onload,
-      self = this;
-    
-    if ( onload ) {
-    
-      img.onload = function() {
-      
-        self.movement.area.setSize( img.width / graphic.frameCount, img.height );
-      
-        onload();
-      
-      }
-    
-    } else {
-      
-      this.movement.area.setSize( img.width / graphic.frameCount, img.height );
-      
-    }
-    
     this.graphic = graphic;
+    
+    this.movement.area.setSize( graphic.frameWidth, graphic.frameHeight );
     
     this.animation.setFrame( 1 );
     

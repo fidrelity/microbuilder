@@ -53,6 +53,8 @@ var GraphicModel = Ember.Object.extend({
     
     return {
       ID : this.ID,
+      frameWidth : this.frameWidth,
+      frameHeight : this.frameHeight,
       frameCount : this.frameCount,
       url : this.imagePath
     }

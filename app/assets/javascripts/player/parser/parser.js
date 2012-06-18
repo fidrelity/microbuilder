@@ -330,8 +330,10 @@ var Parser = {
     
     var graphic = new Graphic( data.ID );
     
-    graphic.frameCount = data.frameCount || 1;
+    graphic.frameWidth = data.frameWidth;
+    graphic.frameHeight = data.frameHeight;
     
+    graphic.frameCount = data.frameCount || 1;
     graphic.image = this.loader.loadImage( data.url );
     
     return graphic;

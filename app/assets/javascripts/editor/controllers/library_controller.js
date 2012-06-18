@@ -272,18 +272,20 @@ var LibraryController = Ember.ArrayController.extend({
     
   },
   
-  loadGraphic : function( graphicID, imagePath, frameCount ) {
+  loadGraphic : function( data ) {
     
     var graphic = GraphicModel.create({
-      ID : graphicID,
-      imagePath : imagePath,
-      frameCount : frameCount
+      ID : data.ID,
+      imagePath : data.url,
+      frameWidth : data.frameWidth,
+      frameHeight : data.frameHeight,
+      frameCount : data.frameCount
     }), self = this;
     
     this.addObject( graphic );
     
     $.ajax({
-      url : '/graphics/' + graphicID,
+      url : '/graphics/' + data.ID,
       type : 'GET',
       
       success: function( data ) {

@@ -1,92 +1,91 @@
 == IMPORTANT NOTE
 == DO NOT WORK AT MASTER BRANCH - NEVER. thx.
 
-
-game : {
-  version : <int>
+  game : {
+    version : <int>
   
-  title : <string>
-  instructions : <string>
+    title : <string>
+    instructions : <string>
   
-  duration : <int, seconds>
+    duration : <int, seconds>
   
-  ( backgroundID: <int> )
+    ( backgroundID: <int> )
   
-  gameObjects: [
-    {
-      ID : <int>
-      name : <string>
-      graphicID : <int>
+    gameObjects: [
+      {
+        ID : <int>
+        name : <string>
+        graphicID : <int>
       
-      position : {
-        x : <int>
-        y : <int>
-      }
-      
-      behaviours : [
-        {
-          triggers : [
-            { ID : clickSelf }
-            { ID : clickObject, objectID : <int> }
-            { ID : clickArea, area : { x : <int>, y : <int>, width : <int>, height : <int> } }
-            
-            { ID : touchObject, objectID : <int> }
-            { ID : touchArea, area : { x : <int>, y : <int>, width : <int>, height : <int> } }
-            
-            { ID : overlapObject, objectID : <int> }
-            { ID : overlapArea, area : { x : <int>, y : <int>, width : <int>, height : <int> } }
-            
-            { ID : timeExact, time : <int, %> }
-            { ID : timeRandom, time : <int, %>, time2 : <int, %> }
-            
-            { ID : gameIsWon }
-            { ID : gameWasWon }
-            
-            { ID : gameIsLost }
-            { ID : gameWasLost }
-            
-            { ID : gameStart }
-          ]
-          
-          actions : [
-            { ID : moveInDirection, angle : <float, radians>, speed : <0-4> }
-            { ID : moveInRandom, speed : <0-4> }
-            { ID : moveInLocation, location : { x : <int>, y : <int> }, speed : <0-4> }
-            { ID : moveInObject, objectID : <int>, speed : <0-4> }
-            
-            { ID : moveToLocation, location : { x : <int>, y : <int> }, speed : <0-4> }
-            { ID : moveToObject, objectID : <int>, offset : { x : <int>, y : <int> }, speed : <0-4> }
-            
-            { ID : jumpToLocation, location : { x : <int>, y : <int> } }
-            { ID : jumpToObject, objectID : <int>, offset : { x : <int>, y : <int> } }
-            { ID : jumpToArea, area : { x : <int>, y : <int>, width : <int>, height : <int> } }
-            
-            { ID : moveRoam, mode : <wiggle, reflect, insect, bounce>, area : { x : <int>, y : <int>, width : <int>, height : <int> }, speed : <0-4> }
-            
-            { ID : moveSwap, objectID : <int> }
-            { ID : moveStop }
-            
-            { ID : artToFrame, frame : <int> }
-            { ID : artPlay, mode : <loop, ping-pong, once>, frame : <int>, frame2 : <int>, speed : <0-4> }
-            { ID : artStop }
-            { ID : artChange, graphicID : <int> }
-            
-            { ID : gameWin }
-            { ID : gameLose }
-            { ID : gameEnd }
-          ]
+        position : {
+          x : <int>
+          y : <int>
         }
-      ]
-    }
-  ]
+      
+        behaviours : [
+          {
+            triggers : [
+              { ID : clickSelf }
+              { ID : clickObject, objectID : <int> }
+              { ID : clickArea, area : { x : <int>, y : <int>, width : <int>, height : <int> } }
+            
+              { ID : touchObject, objectID : <int> }
+              { ID : touchArea, area : { x : <int>, y : <int>, width : <int>, height : <int> } }
+            
+              { ID : overlapObject, objectID : <int> }
+              { ID : overlapArea, area : { x : <int>, y : <int>, width : <int>, height : <int> } }
+            
+              { ID : timeExact, time : <int, %> }
+              { ID : timeRandom, time : <int, %>, time2 : <int, %> }
+            
+              { ID : gameIsWon }
+              { ID : gameWasWon }
+            
+              { ID : gameIsLost }
+              { ID : gameWasLost }
+            
+              { ID : gameStart }
+            ]
+          
+            actions : [
+              { ID : moveInDirection, angle : <float, radians>, speed : <0-4> }
+              { ID : moveInRandom, speed : <0-4> }
+              { ID : moveInLocation, location : { x : <int>, y : <int> }, speed : <0-4> }
+              { ID : moveInObject, objectID : <int>, speed : <0-4> }
+            
+              { ID : moveToLocation, location : { x : <int>, y : <int> }, speed : <0-4> }
+              { ID : moveToObject, objectID : <int>, offset : { x : <int>, y : <int> }, speed : <0-4> }
+            
+              { ID : jumpToLocation, location : { x : <int>, y : <int> } }
+              { ID : jumpToObject, objectID : <int>, offset : { x : <int>, y : <int> } }
+              { ID : jumpToArea, area : { x : <int>, y : <int>, width : <int>, height : <int> } }
+            
+              { ID : moveRoam, mode : <wiggle, reflect, insect, bounce>, area : { x : <int>, y : <int>, width : <int>, height : <int> }, speed : <0-4> }
+            
+              { ID : moveSwap, objectID : <int> }
+              { ID : moveStop }
+            
+              { ID : artToFrame, frame : <int> }
+              { ID : artPlay, mode : <loop, ping-pong, once>, frame : <int>, frame2 : <int>, speed : <0-4> }
+              { ID : artStop }
+              { ID : artChange, graphicID : <int> }
+            
+              { ID : gameWin }
+              { ID : gameLose }
+              { ID : gameEnd }
+            ]
+          }
+        ]
+      }
+    ]
   
-  graphics : [
-    { 
-      ID : <int>
-      frameWidth : <int>
-      frameHeight : <int>
-      frameCount : <int>
-      url : <string>
-    }
-  ]
-}
+    graphics : [
+      { 
+        ID : <int>
+        frameWidth : <int>
+        frameHeight : <int>
+        frameCount : <int>
+        url : <string>
+      }
+    ]
+  }
