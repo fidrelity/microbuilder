@@ -1,5 +1,3 @@
-<div id="actionContent"></div>
-
 {{view Ember.ContainerView currentViewBinding="App.actionController.optionViews"}}
 
 {{#if App.actionController.showSaveButton}}

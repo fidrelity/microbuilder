@@ -132,6 +132,13 @@ var GameController = Ember.Object.extend({
     
   },
   
+  setBoundingArea : function() {
+    
+    App.mainView.show( 'boundingView', true );
+    this.set( 'cancelView', 'objectsView' );
+    
+  },
+  
   finalize : function() {
     
     App.mainView.show( 'publishView', true ); 

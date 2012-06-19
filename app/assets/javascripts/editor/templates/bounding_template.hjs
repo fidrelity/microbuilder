@@ -1,0 +1,26 @@
+<div class="btn-group left" data-toggle="buttons-radio">
+  <button id="rectButton" class="btn" {{action "useBox"}}> box </button>
+  <button id="circleButton" class="btn" {{action "useCircle"}}> circle </button>
+</div>
+
+<div class="bounding clear">
+
+  {{view PlacementView 
+    observerBinding="this"
+    type="bounding" 
+    subtypeBinding="type" 
+    gameObjectBinding = "gameObject"
+  }}
+
+</div>
+
+<div>
+  <button class="btn" {{action "cancel" target="App.gameController"}}> 
+    <i class="icon-arrow-left"></i> cancel </button>
+  
+  {{#if showSaveButton}}
+    
+    <button class="btn btn-success right" {{action "save"}}><i class="icon-ok icon-white"></i> apply </button>
+    
+  {{/if}}
+</div>

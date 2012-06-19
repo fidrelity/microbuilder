@@ -16,6 +16,7 @@ var MainView = Ember.View.extend({
     this.objectsView = ObjectsView.create();
     this.actionView = ActionView.create();
     this.publishView = PublishView.create();
+    this.boundingView = BoundingView.create();
     
   },
   
@@ -216,6 +217,50 @@ var PublishView = Ember.View.extend({
   }
 });
 
+var BoundingView = Ember.View.extend({
+  heading : 'Bounding Area',
+  templateName : 'editor/templates/bounding_template',
+  
+  gameObjectBinding : 'App.gameObjectsController.current',
+  
+  type : 'rect', // rect, circle
+  
+  showSaveButton : true,
+  
+  didInsertElement : function() {
+    
+    if ( this.type === 'rect' ) {
+    
+      this.$( '#rectButton' ).addClass( 'active' );
+    
+    } else {
+      
+      this.$( '#circleButton' ).addClass( 'active' );
+      
+    }
+    
+  },
+  
+  useBox : function() {
+    
+    this.set( 'type', 'rect' );
+    
+  },
+  
+  useCircle : function() {
+    
+    this.set( 'type', 'circle' );
+    
+  },
+  
+  save : function() {
+    
+    
+    
+  }
+  
+});
+
 var RemoveView = Ember.View.extend({
 
   content : null,
@@ -321,6 +366,12 @@ var GameObjectView = Ember.View.extend({
   toTop: function() {
     
     App.gameObjectsController.moveToTop( this.content );
+    
+  },
+  
+  bounding: function() {
+    
+    App.gameController.setBoundingArea();
     
   }
   

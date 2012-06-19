@@ -8,11 +8,11 @@ Area.prototype = {
   
   set : function( x, y, width, height ) {
     
-    this.x = x;
-    this.y = y;
+    this.x = x || 0;
+    this.y = y || 0;
   
-    this.width = width;
-    this.height = height;
+    this.width = width || 0;
+    this.height = height || 0;
     
     return this;
     
@@ -86,7 +86,6 @@ Area.prototype = {
   draw : function( ctx ) {
     
     ctx.strokeRect( this.x, this.y, this.width, this.height );
-    // ctx.dashedRect( this.x, this.y, this.width, this.height, 7 );
     
   },
   
@@ -99,8 +98,8 @@ Area.prototype = {
   
   resize : function( vec ) {
     
-    this.width += vec.x;
-    this.height += vec.y;
+    this.width = vec.x - this.x;
+    this.height = vec.y - this.y;
     
   },
   
