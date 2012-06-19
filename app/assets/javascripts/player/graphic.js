@@ -18,7 +18,11 @@ Graphic.prototype = {
     var width = this.frameWidth,
       height = this.frameHeight;
     
-    ctx.drawImage( this.image, ( frame - 1 ) * width, 0, width, height, 0, 0, width, height );
+    ctx.drawImage( 
+      this.image, 
+      ( frame - 1 ) * width, 0, width, height, 
+      -0.5 * width, -0.5 * height, width, height 
+    );
     
   },
   

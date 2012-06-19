@@ -124,7 +124,7 @@ Game.prototype = {
     
     for ( var i = this.gameObjects.length - 1; i >= 0 ; i-- ) {
       
-      if ( this.gameObjects[i].getArea().contains( pos ) ) {
+      if ( this.gameObjects[i].getGraphicArea().contains( pos ) ) {
         
         return this.gameObjects[i];
         

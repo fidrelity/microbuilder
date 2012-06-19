@@ -78,7 +78,7 @@ var RoamAction = function( gameObject, mode, area, speed ) {
   
   this.execute = function() {
     
-    gameObject.roam( mode, area, speed );
+    gameObject.movement.roam( mode, area, speed );
     
   };
   
@@ -151,13 +151,13 @@ ArtAction.prototype = {
   
   executeFrame : function() {
     
-    this.gameObject.setFrame( this.frame );
+    this.gameObject.animation.setFrame( this.frame );
     
   },
   
   executePlay : function() {
     
-    this.gameObject.playAnimation( this.frame, this.frame2, this.mode, this.speed );
+    this.gameObject.animation.play( this.frame, this.frame2, this.mode, this.speed );
     
   },
   
@@ -169,7 +169,7 @@ ArtAction.prototype = {
   
   executeStop : function() {
     
-    this.gameObject.stopAnimation();
+    this.gameObject.animation.stop();
     
   }
   

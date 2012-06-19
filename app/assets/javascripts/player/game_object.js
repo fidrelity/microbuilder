@@ -8,8 +8,6 @@ var GameObject = function( ID ) {
   this.movement = new Movement();
   this.animation = new Animation();
   
-  this.boundingArea = null;
-  
 };
 
 GameObject.prototype = {
@@ -31,7 +29,7 @@ GameObject.prototype = {
   
   draw : function( ctx ) {
     
-    var pos = this.movement.getArea();
+    var pos = this.movement.position;
     
     ctx.save();
     ctx.translate( pos.x, pos.y );
@@ -42,32 +40,9 @@ GameObject.prototype = {
     
     if ( ctx.debug ) {
       
-      if ( this.boundingArea ) {
-        
-        pos = this.movement.position;
-        
-        ctx.save();
-        ctx.translate( pos.x, pos.y );
-        
-        this.boundingArea.draw( ctx );
-        
-        ctx.restore();
-        
-      } else {
-        
-        ctx.strokeRect( pos.x, pos.y, this.graphic.frameWidth, this.graphic.frameHeight );
-        
-      }
-      
       this.movement.draw( ctx );
       
     }
-    
-  },
-  
-  roam : function( mode, area, speed ) {
-    
-    this.movement.roam( this, mode, area, speed );
     
   },
   
@@ -75,7 +50,7 @@ GameObject.prototype = {
     
     this.graphic = graphic;
     
-    this.movement.area.setSize( graphic.frameWidth, graphic.frameHeight );
+    this.movement.setGraphicSize( graphic.frameWidth, graphic.frameHeight );
     
     this.animation.setFrame( 1 );
     
@@ -89,27 +64,20 @@ GameObject.prototype = {
     
   },
   
-  setFrame : function( frame ) {
-    
-    this.animation.setFrame( frame );
-    
-  },
-  
-  playAnimation : function( start, end, mode, speed ) {
-    
-    this.animation.play( start, end, mode, speed );
-    
-  },
-  
-  stopAnimation : function() {
-    
-    this.animation.stop();
-    
-  },
-  
   getArea : function() {
     
     return this.movement.getArea();
+    
+  },
+  
+  getGraphicArea : function() {
+    
+    var pos = this.movement.position,
+      g = this.graphic,
+      width = g.frameWidth,
+      height = g.frameHeight;
+    
+    return new Area( pos.x - width * 0.5, pos.y - height * 0.5, width, height );
     
   },
   

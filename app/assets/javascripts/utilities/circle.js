@@ -84,12 +84,22 @@ extend( Circle.prototype, {
   
   overlapsArea : function( area ) {
     
-    var t = this,
-      a = area;
+    var dist = area.center().subSelf( this );
     
-    return ( a.overlapsArea( new Area( t.x - t.radius, t.y - t.radius, 2 * t.radius, 2 * t.radius ) ) &&
-      ( t.contains( a ) || t.contains( { x: a.x + a.width, y: a.y + a.height } ) ||
-        t.contains( { x: a.x, y: a.y + a.height } ) || t.contains( { x: a.x + a.width, y: a.y } ) ) );
+    dist.x = Math.abs( dist.x ) - area.width * 0.5;
+    dist.y = Math.abs( dist.y ) - area.height * 0.5;
+    
+    if ( dist.x > this.radius || dist.y > this.radius ) {
+      
+      return false;
+      
+    } else if ( dist.x <= 0 || dist.y <= 0 ) {
+      
+      return true;
+      
+    }
+    
+    return dist.normSquared() < this.radius * this.radius;
     
   },
   
@@ -112,6 +122,18 @@ extend( Circle.prototype, {
   },
   
   leavesArea : function( area ) {
+    
+    var center = area.center();
+    
+    if ( !area.contains( { x: this.x - this.radius, y: this.y - this.radius } ) ) {
+      
+      return this.x - this.radius < area.x ? 'x' : 'y';
+      
+    } else if ( !area.contains( { x: this.x + this.radius, y: this.y + this.radius } ) ) {
+      
+      return this.x + this.radius > area.x + area.width ? 'width' : 'height';
+      
+    }
     
     return false;
     

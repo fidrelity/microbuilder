@@ -129,19 +129,17 @@ extend( Area.prototype, {
   
   leavesArea : function( area ) {
     
-    if ( !this.contains( area ) ) {
+    if ( !area.contains( this ) ) {
       
-      return this.x > area.x ? 'x' : 'y';
+      return this.x < area.x ? 'x' : 'y';
       
-    } else if ( !this.contains( { x : area.x + area.width, y : area.y + area.height } ) ) {
+    } else if ( !area.contains( { x : this.x + this.width, y : this.y + this.height } ) ) {
       
-      return this.x + this.width < area.x + area.width ? 'width' : 'height';
-      
-    } else {
-      
-      return false;
+      return this.x + this.width > area.x + area.width ? 'width' : 'height';
       
     }
+    
+    return false;
     
   },
   
