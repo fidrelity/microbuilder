@@ -16,12 +16,25 @@
         ID : <int>
         name : <string>
         graphicID : <int>
-      
+        
         position : {
           x : <int>
           y : <int>
         }
-      
+        
+        ( boundingArea: <
+          {
+            x : <int>
+            y : <int>
+            width : <int>
+            height : <int>
+          },{
+            x : <int>
+            y : <int>
+            radius : <int>
+          }
+        >)
+        
         behaviours : [
           {
             triggers : [

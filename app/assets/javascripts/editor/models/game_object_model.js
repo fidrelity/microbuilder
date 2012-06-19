@@ -39,7 +39,8 @@ var GameObjectModel = Ember.Object.extend({
       
       name : incrementString( this.name ),
       graphic : this.graphic,
-      position : new Vector( 30, 30 ).addSelf( this.position )
+      position : new Vector( 30, 30 ).addSelf( this.position ),
+      boundingArea : this.boundingArea ? this.boundingArea.clone() : null
       
     });
     

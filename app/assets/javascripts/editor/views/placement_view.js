@@ -79,6 +79,12 @@ var PlacementView = Ember.View.extend({
         
       });
       
+      if ( this.subtype === 'circle' ) {
+        
+        this.area = new Circle;
+        
+      }
+      
     }
     
     this.ctx = ctx;
@@ -178,7 +184,7 @@ var PlacementView = Ember.View.extend({
         
         this.area.done = true;
         
-        this.observer.setArea( this.area.clone() );
+        this.sendArea();
         
       }
       
@@ -218,9 +224,32 @@ var PlacementView = Ember.View.extend({
       
     }
     
-    this.observer.setArea( this.area.clone() );
+    this.sendArea();
     
     this.doDraw();
+    
+  },
+  
+  sendArea : function() {
+    
+    var area = this.area.clone(),
+      obj = this.object;
+    
+    area.x = Math.floor( area.x - obj.pos.x );
+    area.y = Math.floor( area.y - obj.pos.y );
+    
+    if ( area.radius ) {
+      
+      area.radius = Math.floor( area.radius );
+      
+    } else {
+      
+      area.width = Math.floor( area.width );
+      area.height = Math.floor( area.height );
+      
+    }
+    
+    this.observer.setArea( area );
     
   },
   
@@ -402,23 +431,7 @@ var PlacementView = Ember.View.extend({
         
       } else {
         
-        area = area.clone();
-        
-        area.x = Math.floor( area.x - obj.pos.x );
-        area.y = Math.floor( area.y - obj.pos.y );
-        
-        if ( area.radius ) {
-          
-          area.radius = Math.floor( area.radius );
-          
-        } else {
-          
-          area.width = Math.floor( area.width );
-          area.height = Math.floor( area.height );
-          
-        }
-        
-        this.observer.setArea( area.clone() );
+        this.sendArea();
         
       }
       

@@ -20,12 +20,6 @@ Graphic.prototype = {
     
     ctx.drawImage( this.image, ( frame - 1 ) * width, 0, width, height, 0, 0, width, height );
     
-    if ( ctx.debug ) {
-      
-      ctx.dashedRect( 0, 0, width, height, 7 );
-      
-    }
-    
   },
   
   checkSize : function() {

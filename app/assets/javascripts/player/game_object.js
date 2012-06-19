@@ -8,6 +8,8 @@ var GameObject = function( ID ) {
   this.movement = new Movement();
   this.animation = new Animation();
   
+  this.boundingArea = null;
+  
 };
 
 GameObject.prototype = {
@@ -34,11 +36,28 @@ GameObject.prototype = {
     ctx.save();
     ctx.translate( pos.x, pos.y );
     
-    this.graphic.draw( ctx, this.animation.frame );
+    this.graphic.draw( ctx, this.animation.getFrame() );
     
     ctx.restore();
     
     if ( ctx.debug ) {
+      
+      if ( this.boundingArea ) {
+        
+        pos = this.movement.position;
+        
+        ctx.save();
+        ctx.translate( pos.x, pos.y );
+        
+        this.boundingArea.draw( ctx );
+        
+        ctx.restore();
+        
+      } else {
+        
+        ctx.strokeRect( pos.x, pos.y, this.graphic.frameWidth, this.graphic.frameHeight );
+        
+      }
       
       this.movement.draw( ctx );
       

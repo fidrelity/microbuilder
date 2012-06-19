@@ -14,6 +14,12 @@ Animation.prototype = {
   
   speeds : [400, 250, 150, 90, 40],
   
+  getFrame : function() {
+    
+    return this.frame;
+    
+  },
+  
   setFrame : function( frame ) {
     
     this.frame = frame;

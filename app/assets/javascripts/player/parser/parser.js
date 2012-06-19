@@ -352,6 +352,20 @@ var Parser = {
     
     gameObject.setStartGraphic( this.game.getGraphicWithID( data.graphicID ) );
     
+    if ( data.boundingArea ) {
+      
+      if ( data.boundingArea.width ) {
+        
+        gameObject.boundingArea = new Area().copy( data.boundingArea );
+        
+      } else if ( data.boundingArea.radius ) {
+        
+        gameObject.boundingArea = new Circle().copy( data.boundingArea );
+        
+      }
+      
+    }
+    
     return gameObject;
     
   },
