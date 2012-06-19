@@ -166,24 +166,18 @@ var PlacementView = Ember.View.extend({
         
         this.gameObjects.push( img );
         
-      } else if ( type === 'bounding' ) {
+      } else if ( type === 'bounding' && this.gameObject.boundingArea ) {
         
-        // var g = this.gameObject.graphic;
-        // 
-        // if ( this.subtype === 'circle' ) {
-        //   
-        //   this.area = new Circle( this.object.pos.x, this.object.pos.y, ( g.frameWidth + g.frameHeight ) * 0.25 );
-        //   
-        // } else {
-        // 
-        //   this.area.set( 
-        //     this.object.pos.x - g.frameWidth / 2, this.object.pos.y - g.frameHeight / 2, 
-        //     g.frameWidth, g.frameHeight
-        //   );
-        //   
-        // }
-        // 
-        // this.area.done = true;
+        this.area = this.gameObject.boundingArea.clone();
+        
+        this.area.x += this.object.pos.x;
+        this.area.y += this.object.pos.y;
+        
+        this.area.done = true;
+        
+        this.observer.setArea( this.area.clone() );
+        
+        this.area.log();
         
       }
       
@@ -213,15 +207,17 @@ var PlacementView = Ember.View.extend({
   
   setBoundingType : function() {
     
-    if ( this.subtype === 'circle' ) {
+    if ( this.subtype === 'circle' && !this.area.radius ) {
       
       this.area = new Circle();
       
-    } else if ( this.subtype === 'rect' ) {
+    } else if ( this.subtype === 'rect' && !this.area.width ) {
       
       this.area = new Area();
       
     }
+    
+    this.observer.setArea( this.area.clone() );
     
     this.doDraw();
     
@@ -402,6 +398,26 @@ var PlacementView = Ember.View.extend({
       if ( this.type === 'area' ) {
         
         this.observer.decide( area.clone() );
+        
+      } else {
+        
+        area = area.clone();
+        
+        area.x = Math.floor( area.x - obj.pos.x );
+        area.y = Math.floor( area.y - obj.pos.y );
+        
+        if ( area.radius ) {
+          
+          area.radius = Math.floor( area.radius );
+          
+        } else {
+          
+          area.width = Math.floor( area.width );
+          area.height = Math.floor( area.height );
+          
+        }
+        
+        this.observer.setArea( area.clone() );
         
       }
       

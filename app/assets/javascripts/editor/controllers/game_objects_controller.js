@@ -63,12 +63,29 @@ var GameObjectsController = Ember.ArrayController.extend({
   
   parseObject : function( object ) {
     
+    var bounding = object.boundingArea;
+    
+    if ( bounding ) {
+      
+      if ( bounding.radius ) {
+        
+        bounding = new Circle().copy( bounding );
+        
+      } else {
+        
+        bounding = new Area().copy( bounding );
+        
+      }
+      
+    }
+    
     this.addObject( GameObjectModel.create({
       
       ID : object.ID,
       name : object.name,
       graphic : App.libraryController.getGraphic( object.graphicID ),
-      position : new Vector( object.position.x, object.position.y )
+      position : new Vector( object.position.x, object.position.y ),
+      boundingArea : bounding
     
     }));
     

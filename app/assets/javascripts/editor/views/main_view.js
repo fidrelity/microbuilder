@@ -218,18 +218,32 @@ var PublishView = Ember.View.extend({
 });
 
 var BoundingView = Ember.View.extend({
+  
   heading : 'Bounding Area',
   templateName : 'editor/templates/bounding_template',
   
   gameObjectBinding : 'App.gameObjectsController.current',
   
   type : 'rect', // rect, circle
-  
-  showSaveButton : true,
+  area : null,
   
   didInsertElement : function() {
     
-    if ( this.type === 'rect' ) {
+    if ( this.gameObject.boundingArea ) {
+      
+      if ( this.gameObject.boundingArea.radius ) {
+        
+        this.$( '#circleButton' ).addClass( 'active' );
+        this.useCircle();
+        
+      } else {
+        
+        this.$( '#rectButton' ).addClass( 'active' );
+        this.useBox();
+        
+      }
+      
+    } else if ( this.type === 'rect' ) {
     
       this.$( '#rectButton' ).addClass( 'active' );
     
@@ -253,9 +267,35 @@ var BoundingView = Ember.View.extend({
     
   },
   
+  setArea : function( area ) {
+    
+    this.set( 'area', ( area.width || area.radius ) ? area : null );
+    
+  },
+  
+  message : function() {
+    
+    if ( this.area ) {
+      
+      if ( this.area.radius ) {
+        
+        return 'circle: ' + this.area.string();
+        
+      }
+      
+      return 'box: ' + this.area.string();
+      
+    }
+    
+    return 'use area of graphic';
+    
+  }.property( 'area' ),
+  
   save : function() {
     
+    this.gameObject.setBoundingArea( this.area );
     
+    App.gameController.cancel();
     
   }
   
