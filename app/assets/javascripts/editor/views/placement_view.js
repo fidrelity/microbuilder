@@ -60,8 +60,11 @@ var PlacementView = Ember.View.extend({
       
     } else if ( type === 'bounding' ) {
       
-      canvas.width = canvas.height = 540;
-      this.width = this.height = 270;
+      this.width = this.gameObject.graphic.frameWidth + 50;
+      this.height = this.gameObject.graphic.frameHeight + 50;
+      
+      canvas.width = this.width * 2;
+      canvas.height = this.height * 2;
       
       ctx.scale( 2, 2 );
       
@@ -176,8 +179,6 @@ var PlacementView = Ember.View.extend({
         this.area.done = true;
         
         this.observer.setArea( this.area.clone() );
-        
-        this.area.log();
         
       }
       

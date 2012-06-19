@@ -9,12 +9,12 @@
     observerBinding="this"
     type="bounding" 
     subtypeBinding="type" 
-    gameObjectBinding = "gameObject"
+    gameObjectBinding="gameObject"
   }}
 
 </div>
 
-<div class="form-actions">
+<div class="form-actions" style="margin:0;">
   <button class="btn" {{action "cancel" target="App.gameController"}}> 
     <i class="icon-arrow-left"></i> cancel </button>
   <button class="btn btn-success right" {{action "save"}}><i class="icon-ok icon-white"></i> apply </button>
