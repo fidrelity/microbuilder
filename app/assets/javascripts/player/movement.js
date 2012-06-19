@@ -11,7 +11,7 @@ var Movement = function() {
   
   this.roamArea;
   this.roamMode;
-  this.roamStart = new Vector();
+  this.bounceStart;
   
   this.time;
   this.speed;
@@ -99,7 +99,7 @@ Movement.prototype = {
   roam : function( mode, area, speed ) {
     
     var objArea = this.getArea(),
-      width, height,
+      width, height, bounding = this.boundingArea,
       increase, v, h, y, g = 9.81;
     
     this.stop();
@@ -149,19 +149,22 @@ Movement.prototype = {
       objArea = this.getArea();
       
       h = ( area.height - height );
-      y = h - objArea.y + ( objArea.radius || 0 );
+      y = h - objArea.y;
       v = Math.sqrt( 2 * h * g );
+      
+      if ( bounding ) {
+        
+        y += bounding.radius || 0;
+        this.bounceStart = area.y + area.height - ( bounding.radius || bounding.height ) - bounding.y;
+        
+      } else {
+        
+        this.bounceStart = area.y + area.height - height * 0.5;
+        
+      }
       
       this.direction = new Vector( this.speed * randSign(), v );
       this.time = ( v - Math.sqrt( v * v - 2 * y * g ) ) / g * 100;
-      
-      this.roamStart.set( 0, area.y + area.height - height * 0.5 );
-      
-      if ( this.boundingArea && this.boundingArea.width ) {
-        
-        this.roamStart.y = area.y + area.height - ( this.boundingArea.height + this.boundingArea.y );
-        
-      }
       
     }
     
@@ -272,7 +275,7 @@ Movement.prototype = {
     time *= 10 * this.speed;
     
     this.position.x += this.direction.x;
-    this.position.y = this.roamStart.y - this.direction.y * time + 9.81 / 2 * time * time;
+    this.position.y = this.bounceStart - this.direction.y * time + 4.905 * time * time;
     
     breakout = this.getArea().leavesArea( this.roamArea );
     
@@ -286,7 +289,7 @@ Movement.prototype = {
       } else {
       
         this.time = 0;
-        this.position.y = this.roamStart.y;
+        this.position.y = this.bounceStart;
       
       }
       
@@ -325,13 +328,12 @@ Movement.prototype = {
     
     if ( bounding ) {
       
+      pos.subSelf( bounding );
+      
       if ( bounding.radius) {
         
-        pos.subSelf( new Vector( bounding.x - bounding.radius, bounding.y - bounding.radius ) );
-        
-      } else {
-        
-        pos.subSelf( bounding );
+        pos.x += bounding.radius;
+        pos.y += bounding.radius;
         
       }
       
