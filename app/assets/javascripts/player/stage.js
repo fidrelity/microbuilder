@@ -1,4 +1,5 @@
 //= require ./../utilities/utilities
+//= require ./player
 
 var Stage = function() {
 

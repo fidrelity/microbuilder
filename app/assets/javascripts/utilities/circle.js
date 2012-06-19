@@ -1,17 +1,27 @@
+//= require ./../utilities/utilities
+//= require ./vector
+
 var Circle = function( x, y, radius ) {
   
-  this.set( x, y, radius );
+  this.set(
+    x || 0,
+    y || 0,
+    radius || 0
+  );
   
 };
 
-Circle.prototype = {
+Circle.prototype = new Vector();
+Circle.prototype.constructor = Vector;
+
+extend( Circle.prototype, {
   
   set : function( x, y, radius ) {
     
-    this.x = x || 0;
-    this.y = y || 0;
-  
-    this.radius = radius || 0;
+    this.x = x;
+    this.y = y;
+    
+    this.radius = radius;
     
     return this;
     
@@ -48,13 +58,38 @@ Circle.prototype = {
   
   contains : function( point ) {
     
-    return new Vector( this.x, this.y ).subSelf( point ).norm() <= this.radius;
+    return this.sub( point ).norm() <= this.radius;
     
   },
   
-  overlaps : function( area ) {
+  overlaps : function( other ) {
     
-    return false;
+    if ( other instanceof Circle ) {
+      
+      return this.overlapsCircle( other );
+      
+    } else {
+      
+      return this.overlapsArea( other );
+      
+    }
+    
+  },
+  
+  overlapsCircle : function( circle ) {
+    
+    return this.sub( circle ).norm() <= this.radius + circle.radius;
+    
+  },
+  
+  overlapsArea : function( area ) {
+    
+    var t = this,
+      a = area;
+    
+    return ( a.overlapsArea( new Area( t.x - t.radius, t.y - t.radius, 2 * t.radius, 2 * t.radius ) ) &&
+      ( t.contains( a ) || t.contains( { x: a.x + a.width, y: a.y + a.height } ) ||
+        t.contains( { x: a.x, y: a.y + a.height } ) || t.contains( { x: a.x + a.width, y: a.y } ) ) );
     
   },
   
@@ -66,14 +101,13 @@ Circle.prototype = {
   
   move : function( vec ) {
     
-    this.x += vec.x;
-    this.y += vec.y;
+    return this.addSelf( vec );
     
   },
   
   resize : function( vec ) {
     
-    this.radius = new Vector( this.x, this.y ).subSelf( vec ).norm();
+    this.radius = this.sub( vec ).norm();
     
   },
   
@@ -91,12 +125,6 @@ Circle.prototype = {
     
   },
   
-  log: function() {
-    
-    console.log( this.string() );
-    
-  },
-  
   getData : function() {
     
     return {
@@ -107,4 +135,4 @@ Circle.prototype = {
     
   }
   
-};
+});

@@ -1,18 +1,29 @@
+//= require ./../utilities/utilities
+//= require ./vector
+
 var Area = function( x, y, width, height ) {
   
-  this.set( x, y, width, height );
+  return this.set(
+    x || 0,
+    y || 0,
+    width || 0,
+    height || 0
+  );
   
 };
 
-Area.prototype = {
+Area.prototype = new Vector();
+Area.prototype.constructor = Vector;
+
+extend( Area.prototype, {
   
   set : function( x, y, width, height ) {
     
-    this.x = x || 0;
-    this.y = y || 0;
-  
-    this.width = width || 0;
-    this.height = height || 0;
+    this.x = x;
+    this.y = y;
+    
+    this.width = width;
+    this.height = height;
     
     return this;
     
@@ -72,7 +83,21 @@ Area.prototype = {
     
   },
   
-  overlaps : function( area ) {
+  overlaps : function( other ) {
+    
+    if ( other instanceof Area ) {
+      
+      return this.overlapsArea( other );
+      
+    } else {
+      
+      return other.overlapsArea( this );
+      
+    }
+    
+  },
+  
+  overlapsArea : function( area ) {
     
     return (
       this.x + this.width > area.x &&
@@ -91,8 +116,7 @@ Area.prototype = {
   
   move : function( vec ) {
     
-    this.x += vec.x;
-    this.y += vec.y;
+    return this.addSelf( vec );
     
   },
   
@@ -143,12 +167,6 @@ Area.prototype = {
     
   },
   
-  log: function() {
-    
-    console.log( this.string() );
-    
-  },
-  
   getData : function() {
     
     return {
@@ -160,4 +178,4 @@ Area.prototype = {
     
   }
   
-};
+});
