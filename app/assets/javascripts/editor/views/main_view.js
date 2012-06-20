@@ -297,6 +297,8 @@ var BoundingView = Ember.View.extend({
     
     App.gameController.cancel();
     
+    this.set( 'area', null );
+    
   }
   
 });

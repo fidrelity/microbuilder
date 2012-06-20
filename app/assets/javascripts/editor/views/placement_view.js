@@ -235,19 +235,10 @@ var PlacementView = Ember.View.extend({
     var area = this.area.clone(),
       obj = this.object;
     
-    area.x = Math.floor( area.x - obj.pos.x );
-    area.y = Math.floor( area.y - obj.pos.y );
+    area.x -= obj.pos.x;
+    area.y -= obj.pos.y;
     
-    if ( area.radius ) {
-      
-      area.radius = Math.floor( area.radius );
-      
-    } else {
-      
-      area.width = Math.floor( area.width );
-      area.height = Math.floor( area.height );
-      
-    }
+    area.adjust();
     
     this.observer.setArea( area );
     

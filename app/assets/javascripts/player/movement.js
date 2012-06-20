@@ -114,7 +114,7 @@ Movement.prototype = {
     
     if ( area.width < width ) {
       
-      increase = width * 1.2 - area.width;
+      increase = width - area.width + 10;
       
       area.width += increase;
       area.x -= increase * 0.5;
@@ -123,7 +123,7 @@ Movement.prototype = {
     
     if ( area.height < height ) {
       
-      increase = height * 1.2 - area.height;
+      increase = height - area.height + 10;
       
       area.height += increase;
       area.y -= increase * 0.5;

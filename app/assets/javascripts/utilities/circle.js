@@ -139,7 +139,14 @@ extend( Circle.prototype, {
     
   },
   
-  adjust : function() {},
+  adjust : function() {
+    
+    this.x = Math.floor( this.x );
+    this.y = Math.floor( this.y );
+    
+    this.radius = Math.floor( this.radius );
+    
+  },
   
   string : function() {
     

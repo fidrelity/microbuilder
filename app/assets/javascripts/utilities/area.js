@@ -157,6 +157,12 @@ extend( Area.prototype, {
       
     }
     
+    this.x = Math.floor( this.x );
+    this.y = Math.floor( this.y );
+    
+    this.width = Math.floor( this.width );
+    this.height = Math.floor( this.height );
+    
   },
   
   string : function() {
