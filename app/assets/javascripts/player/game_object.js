@@ -72,6 +72,8 @@ GameObject.prototype = {
   
   getGraphicArea : function() {
     
+    return this.getArea();
+    
     var pos = this.movement.position,
       g = this.graphic,
       width = g.frameWidth,

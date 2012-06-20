@@ -43,17 +43,6 @@ var LibraryController = Ember.ArrayController.extend({
   perPage : 12,
 
   init : function() {
-
-    // load dummy graphics
-    // this.content.push(
-    //   GraphicModel.create({ ID : -1, name : 'Mario', imagePath : '/assets/mario.png', isPublic : true, frameWidth: 64, frameHeight: 64 }),
-    //   GraphicModel.create({ ID : -2, name : 'Luigi', imagePath : '/assets/luigi.png', isPublic : true, frameWidth: 96, frameHeight: 65 }),
-    //   GraphicModel.create({ ID : -3, name : 'Plant', imagePath : '/assets/plant.png', isPublic : true, frameWidth: 103, frameHeight: 128 }),
-    //   GraphicModel.create({ ID : -4, name : 'Sprite', imagePath : '/assets/marioSprite.png', isPublic : true, frameWidth: 128, frameHeight: 128, frameCount: 5 }),
-    //   
-    //   GraphicModel.create({ ID : -5, name : 'Preview', imagePath : '/assets/preview.png', isBackground : true, isPublic : true, frameWidth: 640, frameHeight: 390 }),
-    //   GraphicModel.create({ ID : -6, name : 'Paper', imagePath : '/assets/paper.png', isBackground : true, isPublic : true, frameWidth: 640, frameHeight: 390 })
-    // );
     
     var self = this;
     
@@ -87,7 +76,7 @@ var LibraryController = Ember.ArrayController.extend({
   
   thumbSizeHeight : function() {
     
-    return ( this.showBackground ? 130 : this.size.max ) + 25;
+    return ( this.showBackground ? 130 : this.size.max ) + 22;
     
   }.property( 'size', 'showBackground' ),
   
@@ -117,8 +106,11 @@ var LibraryController = Ember.ArrayController.extend({
     
     display = this.filterPage( display, page );
     
-    this.set( 'display', display );
-    
+    if ( display.length ) {
+      
+      this.set( 'display', display );
+      
+    }
     
     if ( load && ( display.length < this.perPage || page === 1 ) ) {
       

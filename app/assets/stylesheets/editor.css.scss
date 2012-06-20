@@ -27,18 +27,16 @@
 
 #editor ul.graphics li {
   float:left;
-  background:#ccc;
-  margin: 0 15px 15px 0;
-  border: 1px solid gray;
-  opacity:0.5;
+  margin: 0 13px 13px 0;
+  border: 2px solid #DDD;
 }
 
-#editor ul.graphics li.selected, #editor ul.graphics li:hover {
-  opacity:1.0;
+#editor ul.graphics li:hover {
+  border: 2px solid #888;
 }
 
-#editor .overlay .libaryGraphics {
-  margin-top : 15px;
+#editor ul.graphics li.selected {
+  border: 2px solid black;
 }
 
 #editor .overlayWrapper {
@@ -47,7 +45,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-/*  display: none;*/
 }
 
 #editor .overlay {
@@ -68,7 +65,7 @@
 
 #editor .overlay #objects {
   background-color: white;
-  padding: 15px 0 0 15px;
+  padding: 14px 0 0 14px;
   margin-bottom: 15px;
   width: 162px;
 }
@@ -147,10 +144,37 @@
   height:84px;
 }
 
-#editor .libraryGraphic {
+#editor .graphic {
   background-repeat:no-repeat;
+  background-color: #FFF;
   width:64px; 
   height:64px;
+}
+
+#editor #overlayRight .graphic {
+  border: 1px solid #888;
+}
+
+#editor .gameObject .name,  {
+  padding-top:2px;
+  font-size:0.8em;
+  text-align:center;
+  background-color: #DDD;
+}
+
+#editor .libraryGraphic {
+  background-repeat:no-repeat;
+  background-color: #FFF;
+}
+
+#editor .libraryGraphic .name {
+  position: absolute;
+  width:100%;
+  height: 18px;
+  padding-top: 4px;
+  bottom: 0;
+  text-align: center;
+  background-color: #DDD;
 }
 
 #editor .libraryControls > div {
@@ -160,12 +184,6 @@
 #editor .libraryPage {
   margin-top: 5px;
   font-size: 11pt;
-}
-
-#editor .libraryName {
-  padding-top:2px;
-  font-size:0.8em;
-  text-align:center;
 }
 
 #editor .noObject {
@@ -192,8 +210,8 @@
 #snapshots li.active {  background:#BBB;}
 
 #editor .overlay .actionstring {
+  margin: 7px 16px 3px;
   font-size: 12pt;
-  padding-top: 12px;
 }
 
 #editor .overlay .questionview {
@@ -247,13 +265,6 @@
 #editor .overlay .timeview .time {
   width: 30px;
   font-size : 12pt;
-}
-
-#editor .overlay .frame_name {
-  position: absolute;
-  width:100%;
-  bottom: 2px;
-  text-align: center;
 }
 
 #editor .overlay .bounding .placement {

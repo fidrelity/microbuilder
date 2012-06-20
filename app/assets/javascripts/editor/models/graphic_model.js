@@ -35,10 +35,12 @@ var GraphicModel = Ember.Object.extend({
     
     var g = this,
       zoom = 64 / Math.max( g.frameWidth, g.frameHeight ),
-      width = g.frameWidth * zoom * g.frameCount,
-      height = g.frameHeight * zoom;
+      width = g.frameWidth * zoom,
+      height = g.frameHeight * zoom,
+      offset = { x: Math.floor( ( 64 - g.frameWidth * zoom ) * 0.5 ), y: Math.floor( ( 64 - height ) * 0.5 ) };
     
-    return 'width:64px;height:64px;background-image:url("' + g.imagePath + '");background-size:' + width + "px " + height + "px;";
+    return 'width:' + width + 'px;height:' + height + 'px;position:relative;top:' + offset.y + 'px;left:' + offset.x + "px;" +
+      'background-image:url("' + g.imagePath + '");background-size:' + width * g.frameCount + "px " + height + "px;";
     
   }.property( 'frameWidth', 'frameHeight' ),
   

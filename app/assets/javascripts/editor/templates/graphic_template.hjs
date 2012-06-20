@@ -5,10 +5,10 @@
   position:relative;
 ">
 
-    <div  class="frame_graphic" data-frames="{{unbound "content.frameCount"}}"
+    <div  class="frame_graphic_element" data-frames="{{unbound "content.frameCount"}}"
         {{bindAttr style="divStyle"}}>
     </div>
 
-    <div class="frame_name"> {{content.name}} </div>
+    <div class="name"> {{content.name}} </div>
 
 </div>

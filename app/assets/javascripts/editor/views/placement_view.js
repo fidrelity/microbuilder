@@ -35,7 +35,7 @@ var PlacementView = Ember.View.extend({
     
     this.area = new Area;
     
-    $( canvas ).css({ 'border' : '2px solid black', 'background-color' : '#CCC' });
+    $( canvas ).css({ 'border' : '2px solid #AAA', 'background-color' : '#CCC' });
     
     if ( type === 'location' || type === 'area' ) {
       
