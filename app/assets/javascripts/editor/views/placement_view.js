@@ -2,6 +2,8 @@ var PlacementView = Ember.View.extend({
   
   template : Ember.Handlebars.compile('<canvas class="placement"></canvas>'),
   
+  classNames : ['placementview', 'optionview'],
+  
   type : 'location', // location, direction, area, offset, bounding
   subtype : 'rect', // rect, circle
   

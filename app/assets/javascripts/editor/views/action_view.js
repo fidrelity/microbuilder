@@ -18,7 +18,7 @@ var QuestionView = Ember.View.extend({
   
   tagName : 'p',
   
-  classNames : ['clear', 'questionview', 'optionview'],
+  classNames : ['clear', 'questionview'],
   
   template: Ember.Handlebars.compile("{{content}}")
   

@@ -1,6 +1,10 @@
-{{view Ember.ContainerView currentViewBinding="App.actionController.optionViews"}}
+<div class="actionContent">
 
-<div class="clear form-actions" style="margin-bottom:0">
+  {{view Ember.ContainerView currentViewBinding="App.actionController.optionViews"}}
+
+</div>
+
+<div class="clear form-actions" style="margin:0;padding:17px 15px 18px">
   <button class="btn" {{action "cancel" target="App.gameController"}}> 
     <i class="icon-arrow-left"></i> cancel </button>
   
