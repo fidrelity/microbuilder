@@ -6,11 +6,7 @@
 
     <button class="closeButton" {{action "hideOverlay" target="App.mainView"}}> &times; </button>
 
-    <div class="clear content">
-
-      {{view Ember.ContainerView currentViewBinding="showView"}}
-
-    </div>
+    {{view Ember.ContainerView currentViewBinding="showView"}}
 
     <div class="clear"></div>
 

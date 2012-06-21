@@ -60,7 +60,7 @@
 }
 
 #editor .overlay .head {
-  padding: 8px 13px 4px;
+  padding: 8px 16px 4px;
   background-color: #DDD;
 }
 
@@ -76,29 +76,22 @@
   font-weight: bold;
 }
 
-#editor .overlay .content {
-  padding: 15px;
-  overflow: hidden;
+#editor .overlay .closeButton:hover {
+  background-color: #333;
 }
 
-#editor .overlay #overlayLeft {
-  height : 100%;
-  float : left;
-}
-
-#editor .overlay #objects {
+#editor .overlay .objectsLeft {
   background-color: white;
-  padding: 15px 0 0 16px;
   width: 168px;
-  position: relative;
-  top: -15px;
-  left: -15px;
+  padding: 0 0 15px 15px;
 }
 
-#editor .overlay #overlayRight {
-  float: left;
-  margin-left: 2px;
-  width: 537px;
+#editor .overlay .objectsLeft .noObject {
+  margin-top: 15px;
+}
+
+#editor .overlay .objectsRight {
+  padding: 15px;
 }
 
 #editor .overlay #done {
@@ -176,7 +169,7 @@
   height:64px;
 }
 
-#editor #overlayRight .graphic {
+#editor .objectsRight .graphic {
   border: 2px solid #CCC;
 }
 

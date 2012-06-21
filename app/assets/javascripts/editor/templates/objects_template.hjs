@@ -1,187 +1,196 @@
-<div id="overlayLeft">
-
-  <div id="objects">
-
-    {{view GameObjectsView
-      contentBinding = "App.gameObjectsController.content"
-      observerBinding = "App.gameObjectsController"
-    }}
-
-    <div class="clear"></div>
-
-  </div>
+<table>
   
-  <button class="btn" {{action "searchGraphic" target="App.gameController"}}><i class="icon-plus"></i> object </button>
+  <tr>
+    
+    <td class="objectsLeft" valign="top">
 
-</div>
+      <div id="objects">
 
-<div id="overlayRight">
-  
-  {{#if App.gameObjectsController.current}}
+        {{view GameObjectsView
+          contentBinding = "App.gameObjectsController.content"
+          observerBinding = "App.gameObjectsController"
+        }}
 
-    {{#view GameObjectView contentBinding = "App.gameObjectsController.current"}}
+        <div class="clear"></div>
 
-      <div class="graphic left">
-        <div {{bindAttr style="content.graphic.divStyle"}}></div>
       </div>
-
-      <div class="left" style="margin-left:15px">
-
-        {{view Ember.TextField valueBinding="content.name" maxlength="10"}}
-        
-        <div class="btn-group">
-
-          <button class="btn" {{action "changeArt"}}><i class="icon-picture"></i> change art </button>
-          <button class="btn" {{action "toTop"}}><i class="icon-arrow-up"></i> to top </button>
-          <button class="btn" {{action "bounding"}}><i class="icon-fullscreen"></i> area </button>
-          <button class="btn" {{action "duplicate"}}><i class="icon-retweet"></i> duplicate </button>
-          <button class="btn" {{action "remove"}}><i class="icon-trash"></i> delete </button>
-
-        </div>
-      
-      </div>
-      
-      <div class="clear"></div>
-
-    {{/view}}
   
-    <h4 style="margin: 15px 0"> Behaviours </h4>
+      <button class="btn" {{action "searchGraphic" target="App.gameController"}}>
+        <i class="icon-plus"></i> object </button>
 
-    <ul id="behaviours">
-      {{#view BehaviourView 
-        contentBinding = "App.behaviourController.startBehaviour"
-        controllerBinding = "App.behaviourController"
-      }}
-        <li>
-      
-          <div class="left title"> on start </div>
-      
-          <div class="left">
-      
-            <ul class="actions">
+    </td>
 
-              {{#each content.actions}}
-
-                {{#view ActionSummaryView 
-                  contentBinding = "this"
-                  controllerBinding = "parent.actions"
-                }}
-
-                  <li>
-                    <button class="btn right" {{action "remove"}}><i class="icon-trash"></i></button>
-                    <button class="btn right" {{action "edit"}}><i class="icon-wrench"></i></button>
-                    <div class="text">{{content.string}}</div>
-                  </li>
+    <td class="objectsRight" valign="top">
   
-                {{/view}}
+      {{#if App.gameObjectsController.current}}
 
-              {{/each}}
-              
-              <li>
-                <button class="btn" {{action "addAction"}}><i class="icon-plus"></i> action </button>
-              </li>
-              
-            </ul>
+        {{#view GameObjectView contentBinding = "App.gameObjectsController.current"}}
+
+          <div class="graphic left">
+            <div {{bindAttr style="content.graphic.divStyle"}}></div>
+          </div>
+
+          <div class="left" style="margin-left:15px">
+
+            {{view Ember.TextField valueBinding="content.name" maxlength="10"}}
         
+            <div class="btn-group">
+
+              <button class="btn" {{action "changeArt"}}><i class="icon-picture"></i> change art </button>
+              <button class="btn" {{action "toTop"}}><i class="icon-arrow-up"></i> to top </button>
+              <button class="btn" {{action "bounding"}}><i class="icon-fullscreen"></i> area </button>
+              <button class="btn" {{action "duplicate"}}><i class="icon-retweet"></i> duplicate </button>
+              <button class="btn" {{action "remove"}}><i class="icon-trash"></i> delete </button>
+
+            </div>
+      
           </div>
       
           <div class="clear"></div>
-        
-        </li>
-      {{/view}}
 
-      {{#each App.behaviourController}}
-        {{#view BehaviourView 
-          contentBinding = "this"
-          controllerBinding = "App.behaviourController"
-        }}
-          <li>
-        
-            <div class="left title"> if </div>
-        
-            <div class="left">
-              
-              <ul class="triggers">
-    
-                {{#each content.triggers}}
-    
-                  {{#view ActionSummaryView 
-                    contentBinding = "this"
-                    controllerBinding = "parent.triggers"
-                  }}
-      
-                    <li>
-                      <button class="btn right" {{action "remove"}}><i class="icon-trash"></i></button>
-                      <button class="btn right" {{action "edit"}}><i class="icon-wrench"></i></button>
-                      <div class="text">{{content.string}}</div>
-                    </li>
-        
-                  {{/view}}
-      
-                {{/each}}
-                
-                <li>
-                  <button class="btn" {{action "addTrigger"}}><i class="icon-plus"></i> trigger </button>
-                </li>
-    
-              </ul>
-        
-            </div>
-  
-            <div class="left title"> then </div>
-  
-            <div class="left">
-        
-              <ul class="actions">
-    
-                {{#each content.actions}}
-    
-                  {{#view ActionSummaryView 
-                    contentBinding = "this"
-                    controllerBinding = "parent.actions"
-                  }}
-      
-                    <li>
-                      <button class="btn right" {{action "remove"}}><i class="icon-trash"></i></button>
-                      <button class="btn right" {{action "edit"}}><i class="icon-wrench"></i></button>
-                      <div class="text">{{content.string}}</div>
-                    </li>
-        
-                  {{/view}}
-      
-                {{/each}}
-                
-                <li>
-                  <button class="btn" {{action "addAction"}}><i class="icon-plus"></i> action </button>
-                </li>
-    
-              </ul>
-        
-            </div>
-            
-            <div class="btn-group right">
-              <button class="btn" {{action "duplicate"}}><i class="icon-retweet"></i> duplicate </button>
-              <button class="btn" {{action "remove"}}><i class="icon-trash"></i> delete </button>
-            </div>
-            
-            <div class="clear"></div>
-        
-          </li>
         {{/view}}
-      {{/each}}
-    </ul>
-
-    <div class="clear"></div>
-
-    <button class="btn" {{action "createBehaviour" target="App.behaviourController"}}>
-      <i class="icon-plus"></i> behaviour </button>
   
-  {{else}}
+        <h4 style="margin: 15px 0"> Behaviours </h4>
 
-    <p>Select an Object on the left.</p>
+        <ul id="behaviours">
+          {{#view BehaviourView 
+            contentBinding = "App.behaviourController.startBehaviour"
+            controllerBinding = "App.behaviourController"
+          }}
+            <li>
+      
+              <div class="left title"> on start </div>
+      
+              <div class="left">
+      
+                <ul class="actions">
+
+                  {{#each content.actions}}
+
+                    {{#view ActionSummaryView 
+                      contentBinding = "this"
+                      controllerBinding = "parent.actions"
+                    }}
+
+                      <li>
+                        <button class="btn right" {{action "remove"}}><i class="icon-trash"></i></button>
+                        <button class="btn right" {{action "edit"}}><i class="icon-wrench"></i></button>
+                        <div class="text">{{content.string}}</div>
+                      </li>
   
-  {{/if}}
+                    {{/view}}
 
-</div>
+                  {{/each}}
+              
+                  <li>
+                    <button class="btn" {{action "addAction"}}><i class="icon-plus"></i> action </button>
+                  </li>
+              
+                </ul>
+        
+              </div>
+      
+              <div class="clear"></div>
+        
+            </li>
+          {{/view}}
+
+          {{#each App.behaviourController}}
+            {{#view BehaviourView 
+              contentBinding = "this"
+              controllerBinding = "App.behaviourController"
+            }}
+              <li>
+        
+                <div class="left title"> if </div>
+        
+                <div class="left">
+              
+                  <ul class="triggers">
+    
+                    {{#each content.triggers}}
+    
+                      {{#view ActionSummaryView 
+                        contentBinding = "this"
+                        controllerBinding = "parent.triggers"
+                      }}
+      
+                        <li>
+                          <button class="btn right" {{action "remove"}}><i class="icon-trash"></i></button>
+                          <button class="btn right" {{action "edit"}}><i class="icon-wrench"></i></button>
+                          <div class="text">{{content.string}}</div>
+                        </li>
+        
+                      {{/view}}
+      
+                    {{/each}}
+                
+                    <li>
+                      <button class="btn" {{action "addTrigger"}}><i class="icon-plus"></i> trigger </button>
+                    </li>
+    
+                  </ul>
+        
+                </div>
+  
+                <div class="left title"> then </div>
+  
+                <div class="left">
+        
+                  <ul class="actions">
+    
+                    {{#each content.actions}}
+    
+                      {{#view ActionSummaryView 
+                        contentBinding = "this"
+                        controllerBinding = "parent.actions"
+                      }}
+      
+                        <li>
+                          <button class="btn right" {{action "remove"}}><i class="icon-trash"></i></button>
+                          <button class="btn right" {{action "edit"}}><i class="icon-wrench"></i></button>
+                          <div class="text">{{content.string}}</div>
+                        </li>
+        
+                      {{/view}}
+      
+                    {{/each}}
+                
+                    <li>
+                      <button class="btn" {{action "addAction"}}><i class="icon-plus"></i> action </button>
+                    </li>
+    
+                  </ul>
+        
+                </div>
+            
+                <div class="btn-group right">
+                  <button class="btn" {{action "duplicate"}}><i class="icon-retweet"></i> duplicate </button>
+                  <button class="btn" {{action "remove"}}><i class="icon-trash"></i> delete </button>
+                </div>
+            
+                <div class="clear"></div>
+        
+              </li>
+            {{/view}}
+          {{/each}}
+        </ul>
+
+        <div class="clear"></div>
+
+        <button class="btn" {{action "createBehaviour" target="App.behaviourController"}}>
+          <i class="icon-plus"></i> behaviour </button>
+  
+      {{else}}
+
+        <p>Select an Object on the left.</p>
+  
+      {{/if}}
+
+    </td>
+
+  </tr>
+  
+</table>
 
 <button id="done" class="btn btn-success" {{action "hideOverlay" target="App.mainView"}}> done </button>
