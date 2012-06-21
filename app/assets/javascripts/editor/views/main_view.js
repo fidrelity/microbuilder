@@ -15,7 +15,7 @@ var MainView = Ember.View.extend({
     this.libraryView = LibraryView.create({ heading: 'Library', widthBinding: 'App.libraryController.width' });
     this.objectsView = ObjectsView.create({ heading : 'Objects & Behaviour', width: 750 });
     this.actionView = ActionView.create({ width: 520 });
-    this.publishView = PublishView.create({ heading : 'Publish', width: 900 });
+    this.publishView = PublishView.create({ heading : 'Publish', width: 910 });
     this.boundingView = BoundingView.create({ heading : 'Bounding Area', width: 645 });
     
   },

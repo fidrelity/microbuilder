@@ -225,16 +225,27 @@
   overflow:hidden;
 }
 
-/* Publish */
-#publishView label {
+#editor .overlay label {
   font-size:1.2em;
   font-weight:bold;
 }
 
-/* Snapshot */
-#snapshots {  margin-top:3em;}
-#snapshots li {  cursor:pointer;}
-#snapshots li.active {  background:#BBB;}
+#editor .overlay .titlePanel {
+  width: 240px;
+}
+
+#editor .overlay #snapshots {
+  margin: 0;
+  padding: 0;
+}
+
+#editor #snapshots li { cursor:pointer; }
+#editor #snapshots li.active {  background:#BBB; }
+
+#editor .overlay #snapshots .thumbnail {
+  margin: 6px 0 0 6px;
+}
+
 
 #editor .overlay .actionContent .optionview {
   margin: 10px 0 15px 15px;
