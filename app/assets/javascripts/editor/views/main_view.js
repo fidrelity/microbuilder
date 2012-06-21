@@ -12,11 +12,11 @@ var MainView = Ember.View.extend({
     
     this._super();
     
-    this.libraryView = LibraryView.create();
-    this.objectsView = ObjectsView.create();
-    this.actionView = ActionView.create();
-    this.publishView = PublishView.create();
-    this.boundingView = BoundingView.create();
+    this.libraryView = LibraryView.create({ heading: 'Library', widthBinding: 'App.libraryController.width' });
+    this.objectsView = ObjectsView.create({ heading : 'Objects & Behaviour', width: 750 });
+    this.actionView = ActionView.create({ width: 520 });
+    this.publishView = PublishView.create({ heading : 'Publish', width: 900 });
+    this.boundingView = BoundingView.create({ heading : 'Bounding Area', width: 645 });
     
   },
   
@@ -49,6 +49,7 @@ var MainView = Ember.View.extend({
     
     var view = this.get( name );
     
+    this.overlayView.setWidth( view.width );
     this.overlayView.set( 'showView', view );
     
     if ( push ) {
@@ -146,7 +147,17 @@ var OverlayView = Ember.View.extend({
   
   headings : [],
   
+  showView : null,
+  
   didInsertElement : function() {
+    
+    var self = this;
+    
+    this.addObserver( 'showView.width', function() {
+      
+      self.setWidth( self.showView.width );
+      
+    });
     
     App.mainView.set( 'overlayView', this );
     
@@ -174,12 +185,18 @@ var OverlayView = Ember.View.extend({
     
     return this.headings.objectAt( this.headings.length - 1 );
     
-  }.property( 'headings.length' )
+  }.property( 'headings.length' ),
+  
+  setWidth : function( width ) {
+    
+    this.$( '.overlay' ).css({ width : width + 'px' });
+    
+  }
   
 });
     
 var ObjectsView = Ember.View.extend({
-  heading : 'Objects & Behaviour',
+  
   templateName : 'editor/templates/objects_template',
   
   // didInsertElement : function() {
@@ -205,7 +222,7 @@ var ObjectsView = Ember.View.extend({
 });
 
 var PublishView = Ember.View.extend({
-  heading : 'Publish',
+
   templateName : 'editor/templates/publish_template',
 
   didInsertElement : function() {
@@ -219,7 +236,6 @@ var PublishView = Ember.View.extend({
 
 var BoundingView = Ember.View.extend({
   
-  heading : 'Bounding Area',
   templateName : 'editor/templates/bounding_template',
   
   gameObjectBinding : 'App.gameObjectsController.current',

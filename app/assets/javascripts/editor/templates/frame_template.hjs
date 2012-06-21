@@ -1,7 +1,5 @@
 <div style="
-  width: 720px;
   height: {{unbound wrapperHeight}}px;
-  overflow : auto;
 ">
 
 <ul class="frames" style="

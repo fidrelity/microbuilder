@@ -1,7 +1,5 @@
 var LibraryView = Ember.View.extend({
   
-  heading : 'Library',
-  
   templateName : 'editor/templates/library_template',
   
   didInsertElement : function() {

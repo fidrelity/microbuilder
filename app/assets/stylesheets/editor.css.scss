@@ -237,7 +237,7 @@
 #snapshots li.active {  background:#BBB;}
 
 #editor .overlay .actionContent .optionview {
-  margin: 10px 15px 15px;
+  margin: 10px 0 15px 15px;
 }
 
 #editor .overlay .actionstring {
@@ -291,6 +291,12 @@
 #editor .overlay .timeview .time {
   width: 30px;
   font-size : 12pt;
+}
+
+#editor .overlay .frameview {
+  width: 490px;
+  margin-left: 15px;
+  overflow : auto;
 }
 
 #editor .overlay .boundingMessage {
