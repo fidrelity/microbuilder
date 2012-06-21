@@ -25,35 +25,35 @@ var Choice = Ember.Object.extend({
       // actions
       
       case 'moveInDirection' : 
-        n += ' moves in direction ' + Math.floor( a.angle() * -1 / Math.PI * 180 ) + '˚';
+        n = 'move in direction ' + Math.floor( a.angle() * -1 / Math.PI * 180 ) + '˚';
         return n + ' - ' + a.getSpeedName();
-      case 'moveInRandom' : return n + ' moves in random direction' + ' - ' + a.getSpeedName();
-      case 'moveInObject' : return n + ' moves in direction of ' + a.gameObject.name + ' - ' + a.getSpeedName();
-      case 'moveInLocation' : return n + ' moves in direction of location ' + a.location.string() + ' - ' + a.getSpeedName();
+      case 'moveInRandom' : return 'move in random direction' + ' - ' + a.getSpeedName();
+      case 'moveInObject' : return 'move in direction of ' + a.gameObject.name + ' - ' + a.getSpeedName();
+      case 'moveInLocation' : return 'move in direction of location ' + a.location.string() + ' - ' + a.getSpeedName();
       
-      case 'moveToLocation' : return n + ' moves to location ' + a.location.string() + ' - ' + a.getSpeedName();
+      case 'moveToLocation' : return 'move to location ' + a.location.string() + ' - ' + a.getSpeedName();
       case 'moveToObject' : 
-        n += ' moves to ' + a.gameObject.name + ' - ' + a.getSpeedName();
+        n = 'move to ' + a.gameObject.name + ' - ' + a.getSpeedName();
         return n + ( a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
       
-      case 'jumpToLocation' : return n + ' jumps to location ' + a.location.string();
+      case 'jumpToLocation' : return 'jump to location ' + a.location.string();
       case 'jumpToObject' : 
-        n += ' jumps to ' + a.gameObject.name;
+        n = 'jump to ' + a.gameObject.name;
         return n + ( a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
-      case 'jumpToArea' : return n + ' jumps to area ' + a.area.string();
+      case 'jumpToArea' : return 'jump to area ' + a.area.string();
       
       case 'moveRoam' : 
-        n += ' roams in ' + a.mode + ' mode within area ' + a.area.string();
+        n = 'roam in ' + a.mode + ' mode within area ' + a.area.string();
         return n + ' - ' + a.getSpeedName();
-      case 'moveSwap' : return n + ' swaps position with ' + a.gameObject.name;
-      case 'moveStop' : return n + ' stops moving';
+      case 'moveSwap' : return 'swap position with ' + a.gameObject.name;
+      case 'moveStop' : return 'stop moving';
       
-      case 'artToFrame' : return n + ' displays frame ' + a.frame;
+      case 'artToFrame' : return 'display frame ' + a.frame;
       case 'artPlay' : 
-        n += ( a.mode === 'loop' ? ' loops ' : ( a.mode === 'once' ? ' plays once ' : ' plays ping-pong ' ) );
+        n = ( a.mode === 'loop' ? ' loop ' : ( a.mode === 'once' ? ' play once ' : ' play ping-pong ' ) );
         return n + ' from frame ' + a.frame + ' to ' + a.frame2 + ' - ' + a.getSpeedName();
-      case 'artStop' : return n + ' stops the animation';
-      case 'artChange' : return n + ' changes art to ' + a.graphic.name;
+      case 'artStop' : return 'stop the animation';
+      case 'artChange' : return 'change art to ' + a.graphic.name;
       
       case 'gameWin' : return 'win the game';
       case 'gameLose' : return 'lose the game';
@@ -433,21 +433,31 @@ var FrameOption = Option.extend({
   
   mode : 'frame',
   
-  doInsert : function() {
+  doInsert : function( reinsert ) {
     
     App.actionController.addOption( this.question, FrameView.create({
       observer : this,
       graphic : App.gameObjectsController.current.graphic
     }));
     
+    if ( !reinsert ) {
+      
+      this.action.setFrame( this.mode, null );
+      
+    }
+    
   },
   
   decide : function( frame ) {
     
+    if ( !this.action[this.mode] ) {
+      
+      this.decision.insert( this.action );
+      
+    }
+    
     this.set( 'frame', frame.number );
     this.action.setFrame( this.mode, frame.number );
-    
-    this.decision.insert( this.action );
     
   }
   
