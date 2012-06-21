@@ -86,6 +86,10 @@
   padding: 15px 0 15px 15px;
 }
 
+#editor .overlay .objectsLeft .noObject {
+  margin-bottom: 15px;
+}
+
 #editor .overlay .objectsRight {
   padding: 15px;
 }
@@ -115,25 +119,48 @@
   background-color: white;
   margin-bottom: 15px;
   padding: 5px;
+  position: relative;
+  border-radius: 5px;
 }
 
-#editor #behaviours li li {
-  margin: 3px 0;
+#editor #behaviours .list {
+  width: 293px;
+}
+
+#editor #behaviours .triggers li, #editor #behaviours .actions li {
+  margin: 3px 0 5px;
   padding: 0;
-  background: #EEE;
-  width: 200px;
   overflow: hidden;
+  border-radius: 5px;
+  border: 1px solid;
+  height: 28px;
 }
 
-#editor #behaviours li li .text {
+#editor #behaviours .triggers li {
+  background: #EFF9FF;
+  border-color: #5E9EE4;
+}
+
+#editor #behaviours .actions li {
+  background: #FFF2F2;
+  border-color: #E76F6F;
+}
+
+#editor #behaviours .text {
   padding: 6px;
 }
 
-#editor #behaviours li .title {
-  padding: 6px;
-  width: 45px;
-  margin: 3px;
+#editor #behaviours .title {
+  width: 47px;
+  margin: 9px 9px 0px;
   text-align: right;
+  font-weight: bold;
+}
+
+#editor #behaviours .panel {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 }
 
 #editor #fog {

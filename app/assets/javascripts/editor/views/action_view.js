@@ -47,10 +47,14 @@ var ButtonView = Ember.CollectionView.extend({
     
     didInsertElement : function() {
       
-      if ( this._parentView.observer.name === 'action' || this._parentView.observer.name === 'trigger' ) {
+      if ( this._parentView.observer.name === 'trigger' ) {
       
         this.$().addClass( 'btn-primary' );
       
+      } else if ( this._parentView.observer.name === 'action' ) {
+        
+        this.$().addClass( 'btn-danger' );
+        
       }
       
       if ( this.content.select ) {
@@ -81,6 +85,8 @@ var GameObjectsView = Ember.CollectionView.extend({
   emptyView: Ember.View.extend({
     
     tagName : 'div',
+    
+    classNames : ['noObject'],
     
     template: Ember.Handlebars.compile("No objects to select")
     

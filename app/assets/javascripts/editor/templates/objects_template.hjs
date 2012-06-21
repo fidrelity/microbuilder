@@ -50,7 +50,7 @@
 
         {{/view}}
   
-        <h4 style="margin: 15px 0"> Behaviours </h4>
+        <h4 style="margin: 15px 0"> Behaviour </h4>
 
         <ul id="behaviours">
           {{#view BehaviourView 
@@ -61,7 +61,7 @@
       
               <div class="left title"> on start </div>
       
-              <div class="left">
+              <div class="left list">
       
                 <ul class="actions">
 
@@ -81,12 +81,11 @@
                     {{/view}}
 
                   {{/each}}
-              
-                  <li>
-                    <button class="btn" {{action "addAction"}}><i class="icon-plus"></i> action </button>
-                  </li>
-              
+                  
                 </ul>
+                
+                <button class="btn addButton" {{action "addAction"}}>
+                  <i class="icon-plus"></i> action </button>
         
               </div>
       
@@ -104,7 +103,7 @@
         
                 <div class="left title"> if </div>
         
-                <div class="left">
+                <div class="left list">
               
                   <ul class="triggers">
     
@@ -124,18 +123,17 @@
                       {{/view}}
       
                     {{/each}}
-                
-                    <li>
-                      <button class="btn" {{action "addTrigger"}}><i class="icon-plus"></i> trigger </button>
-                    </li>
     
                   </ul>
+                  
+                  <button class="btn addButton" {{action "addTrigger"}}>
+                    <i class="icon-plus"></i> trigger </button>
         
                 </div>
   
                 <div class="left title"> then </div>
   
-                <div class="left">
+                <div class="left list">
         
                   <ul class="actions">
     
@@ -155,16 +153,15 @@
                       {{/view}}
       
                     {{/each}}
-                
-                    <li>
-                      <button class="btn" {{action "addAction"}}><i class="icon-plus"></i> action </button>
-                    </li>
     
                   </ul>
+                  
+                  <button class="btn addButton" {{action "addAction"}}>
+                    <i class="icon-plus"></i> action </button>
         
                 </div>
             
-                <div class="btn-group right">
+                <div class="btn-group panel">
                   <button class="btn" {{action "duplicate"}}><i class="icon-retweet"></i> duplicate </button>
                   <button class="btn" {{action "remove"}}><i class="icon-trash"></i> delete </button>
                 </div>
@@ -179,7 +176,7 @@
         <div class="clear"></div>
 
         <button class="btn" {{action "createBehaviour" target="App.behaviourController"}}>
-          <i class="icon-plus"></i> behaviour </button>
+          <i class="icon-plus"></i> condition </button>
   
       {{else}}
 
