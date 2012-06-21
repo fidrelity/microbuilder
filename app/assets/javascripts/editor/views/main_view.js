@@ -446,12 +446,6 @@ var GameObjectView = Ember.View.extend({
     
   },
   
-  toTop: function() {
-    
-    App.gameObjectsController.moveToTop( this.content );
-    
-  },
-  
   bounding: function() {
     
     App.gameController.setBoundingArea();

@@ -37,7 +37,6 @@
             <div class="btn-group">
 
               <button class="btn" {{action "changeArt"}}><i class="icon-picture"></i> change art </button>
-              <button class="btn" {{action "toTop"}}><i class="icon-arrow-up"></i> to top </button>
               <button class="btn" {{action "bounding"}}><i class="icon-fullscreen"></i> area </button>
               <button class="btn" {{action "duplicate"}}><i class="icon-retweet"></i> duplicate </button>
               <button class="btn" {{action "remove"}}><i class="icon-trash"></i> delete </button>
