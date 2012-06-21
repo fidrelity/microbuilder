@@ -14,7 +14,7 @@ function editor_main( data ) {
   App.actionController.start();
 
   App.mainView = MainView.create();
-  App.mainView.appendTo('#content');
+  App.mainView.appendTo('#editor');
   
   if ( !data && window.localStorage ) {
     

@@ -82,8 +82,6 @@ var GameObjectsView = Ember.CollectionView.extend({
     
     tagName : 'div',
     
-    classNames : ['noObject'],
-    
     template: Ember.Handlebars.compile("No objects to select")
     
   }),

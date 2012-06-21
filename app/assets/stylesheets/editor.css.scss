@@ -86,10 +86,6 @@
   padding: 15px 0 15px 15px;
 }
 
-#editor .overlay .objectsLeft .noObject {
-  margin-top: 15px;
-}
-
 #editor .overlay .objectsRight {
   padding: 15px;
 }
@@ -318,24 +314,28 @@
 #editor .stageControls {
   margin: 0 auto;
   overflow: hidden;
-  padding: 6px 32px;
+  padding: 6px 52px;
 }
 
 #editor .stageControls #trash {
-  margin: 10px 0 0 100px;
+  margin: 12px 0 0;
 }
 
 #editor .duration {
   font-size: 11pt;
-  margin-top: 15px;
+  border: 1px solid #CCC;
+  padding: 11px 10px 9px;
+  background-color: whiteSmoke;
+  border-radius: 5px;
+  margin-left: 5px;
 }
 
 #editor .duration #slider {
   width: 200px;
+  margin: 2px 20px 0;
 }
 
 #editor .duration > div {
-  margin-left: 20px;
   width: 80px;
   text-align: right;
 }

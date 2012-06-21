@@ -1,6 +1,6 @@
 <div class="editor_content">
 
-  <div class="form-actions">
+  <div>
     <div class="stageControls">
       <div class="btn-group left">
         <button class="btn-large btn-primary" {{action "showObjects" target="App.gameController"}}> 
@@ -11,7 +11,7 @@
       
       <button id="trash" class="btn right" {{action "trash"}}><i class="icon-trash"></i> trash </button>
       
-      <div class="duration right">
+      <div class="duration left">
         <div class="right">{{App.game.duration}} seconds</div>
         <div id="slider" class="right"></div>
         <div class="right"><i class="icon-time"></i> duration:</div>
