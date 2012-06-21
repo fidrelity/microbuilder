@@ -199,25 +199,49 @@ var ObjectsView = Ember.View.extend({
   
   templateName : 'editor/templates/objects_template',
   
-  // didInsertElement : function() {
-  //   
-  //   $( '.actions' ).sortable({
-  //     connectWith: '.actions',
-  //     placeholder: 'ui-state-highlight',
-  //     stop: function(event, ui) {
-  //       console.log( event, ui );
-  //     }
-  //   }).disableSelection();
-  //   
-  //   $( '.triggers' ).sortable({
-  //     connectWith: '.triggers',
-  //     placeholder: 'ui-state-highlight',
-  //     stop: function(event, ui) {
-  //       console.log( event, ui );
-  //     }
-  //   }).disableSelection();
-  //   
-  // }
+  didInsertElement : function() {
+    
+    var pos, pos2;
+    
+    // $( '.actions' ).sortable({
+    //   connectWith: '.actions',
+    //   placeholder: 'ui-state-highlight',
+    //   stop: function(event, ui) {
+    //     console.log( event, ui );
+    //   }
+    // }).disableSelection();
+    // 
+    // $( '.triggers' ).sortable({
+    //   connectWith: '.triggers',
+    //   placeholder: 'ui-state-highlight',
+    //   stop: function(event, ui) {
+    //     console.log( event, ui );
+    //   }
+    // }).disableSelection();
+    
+    this.$( '.graphics' ).sortable({
+      
+      start : function(e, ui) {
+        
+        pos = $( this ).sortable( 'toArray' ).indexOf( ui.item[0].id );
+        
+      },
+      
+      stop : function(e, ui) {
+        
+        pos2 = $( this ).sortable( 'toArray' ).indexOf( ui.item[0].id );
+        
+        if ( pos !== pos2 ) {
+          
+          App.gameObjectsController.moveObject( pos, pos2 );
+          
+        }
+        
+      }
+      
+    }).disableSelection();
+    
+  }
   
 });
 
@@ -382,7 +406,8 @@ var BehaviourView = SelectView.extend({
   
   remove : function() {
     
-    if ( confirm( 'Throw the behaviour away?' ) ) {
+    if ( ( !this.content.actions.length && !this.content.triggers.length ) || 
+      confirm( 'Throw the condition away?' ) ) {
       
       this._super();
       

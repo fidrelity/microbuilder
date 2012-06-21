@@ -151,6 +151,15 @@ var GameObjectsController = Ember.ArrayController.extend({
     
   }.property( 'current' ),
   
+  moveObject : function( pos, pos2 ) {
+    
+    var object = this.content[pos];
+    
+    this.content.removeAt( pos );
+    this.content.insertAt( pos2, object );
+    
+  },
+  
   moveToTop : function( gameObject ) {
     
     this.removeObject( gameObject );

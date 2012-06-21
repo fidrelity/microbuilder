@@ -29,10 +29,23 @@
   float:left;
   margin: 0 16px 16px 0;
   border: 2px solid #DDD;
+  position: relative;
 }
 
 #editor ul.graphics li:hover {
   border: 2px solid #888;
+}
+
+#editor .objectsLeft li .icon-move {
+  display: none;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#editor .objectsLeft li:hover .icon-move {
+  display: block;
 }
 
 #editor ul.graphics li.selected {
