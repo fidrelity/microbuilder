@@ -64,22 +64,9 @@
       
                 <ul class="actions">
 
-                  {{#each content.actions}}
-
-                    {{#view ActionSummaryView 
-                      contentBinding = "this"
-                      controllerBinding = "parent.actions"
-                    }}
-
-                      <li>
-                        <button class="btn right" {{action "remove"}}><i class="icon-trash"></i></button>
-                        <button class="btn right" {{action "edit"}}><i class="icon-wrench"></i></button>
-                        <div class="text">{{content.string}}</div>
-                      </li>
-  
-                    {{/view}}
-
-                  {{/each}}
+                  {{view UiActionView
+                    contentBinding= "content.actions"
+                  }}
                   
                 </ul>
                 
@@ -106,22 +93,9 @@
               
                   <ul class="triggers">
     
-                    {{#each content.triggers}}
-    
-                      {{#view ActionSummaryView 
-                        contentBinding = "this"
-                        controllerBinding = "parent.triggers"
-                      }}
-      
-                        <li>
-                          <button class="btn right" {{action "remove"}}><i class="icon-trash"></i></button>
-                          <button class="btn right" {{action "edit"}}><i class="icon-wrench"></i></button>
-                          <div class="text">{{content.string}}</div>
-                        </li>
-        
-                      {{/view}}
-      
-                    {{/each}}
+                    {{view UiTriggerView
+                      contentBinding= "content.triggers"
+                    }}
     
                   </ul>
                   
@@ -136,22 +110,9 @@
         
                   <ul class="actions">
     
-                    {{#each content.actions}}
-    
-                      {{#view ActionSummaryView 
-                        contentBinding = "this"
-                        controllerBinding = "parent.actions"
-                      }}
-      
-                        <li>
-                          <button class="btn right" {{action "remove"}}><i class="icon-trash"></i></button>
-                          <button class="btn right" {{action "edit"}}><i class="icon-wrench"></i></button>
-                          <div class="text">{{content.string}}</div>
-                        </li>
-        
-                      {{/view}}
-      
-                    {{/each}}
+                    {{view UiActionView
+                      contentBinding= "content.actions"
+                    }}
     
                   </ul>
                   

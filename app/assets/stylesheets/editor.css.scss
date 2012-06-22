@@ -140,7 +140,12 @@
   width: 293px;
 }
 
-#editor #behaviours .triggers li, #editor #behaviours .actions li {
+#editor #behaviours .triggers, #editor #behaviours .actions {
+  border: 1px solid #DDD;
+  min-height: 28px;
+}
+
+#editor #behaviours .triggers .element, #editor #behaviours .actions .element {
   margin: 3px 0 5px;
   padding: 0;
   overflow: hidden;
@@ -149,12 +154,12 @@
   height: 28px;
 }
 
-#editor #behaviours .triggers li {
+#editor #behaviours .triggers .element {
   background: #EFF9FF;
   border-color: #5E9EE4;
 }
 
-#editor #behaviours .actions li {
+#editor #behaviours .actions .element {
   background: #FFF2F2;
   border-color: #E76F6F;
 }
