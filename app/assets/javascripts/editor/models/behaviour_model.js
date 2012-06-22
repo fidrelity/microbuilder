@@ -1,9 +1,13 @@
 var BehaviourModel = Ember.Object.extend({
   
+  ID : null,
+  
   triggers : null,
   actions : null,
   
   init : function() {
+    
+    this.ID = App.game.behaviourCounter++;
     
     this.set( 'triggers', [] );
     this.set( 'actions', [] );
@@ -49,7 +53,7 @@ var BehaviourModel = Ember.Object.extend({
       
     }
     
-    action.parent = this;
+    action.set( 'parent', this );
     
   },
   
@@ -102,6 +106,42 @@ var BehaviourModel = Ember.Object.extend({
       this.triggers.removeObject( triggers[i] );
       
     }
+    
+  },
+  
+  insertAction : function( pos, action ) {
+    
+    action.set( 'parent', this );
+    
+    this.actions.insertAt( pos, action );
+    
+  },
+  
+  removeAction : function( pos ) {
+    
+    var action = this.actions[pos];
+    
+    this.actions.removeAt( pos );
+    
+    return action;
+    
+  },
+  
+  insertTrigger : function( pos, trigger ) {
+    
+    trigger.set( 'parent', this );
+    
+    this.triggers.insertAt( pos, trigger );
+    
+  },
+  
+  removeTrigger : function( pos ) {
+    
+    var trigger = this.triggers[pos];
+    
+    this.triggers.removeAt( pos );
+    
+    return trigger;
     
   }
   

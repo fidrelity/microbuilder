@@ -56,6 +56,44 @@ var BehaviourController = Ember.ArrayController.extend({
     
     gameObject.behaviours.addObject( behaviour );
     
+  },
+  
+  getBehaviour : function( ID ) {
+    
+    var behaviour;
+    
+    if ( this.startBehaviour.ID === ID ) {
+      
+      behaviour = this.startBehaviour;
+      
+    } else {
+      
+      behaviour = this.content.findProperty( 'ID', ID );
+      
+    }
+    
+    if ( !behaviour ) {
+      
+      console.error( 'no behaviour with ID: ' + ID );
+      
+    }
+    
+    return behaviour;
+    
+  },
+  
+  moveAction : function( ID, pos, ID2, pos2 ) {
+    
+    console.log( this.getBehaviour( ID ).actions.length, pos, this.getBehaviour( ID2 ).actions.length, pos2 );
+    
+    this.getBehaviour( ID2 ).insertAction( pos2, this.getBehaviour( ID ).removeAction( pos ) );
+    
+  },
+  
+  moveTrigger : function( ID, pos, ID2, pos2 ) {
+    
+    this.getBehaviour( ID2 ).insertTrigger( pos2, this.getBehaviour( ID ).removeTrigger( pos ) );
+    
   }
 
 });

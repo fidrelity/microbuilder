@@ -7,6 +7,7 @@ var GameModel = Ember.Object.extend({
   
   gameObjects : [],
   gameObjectCounter : 1,
+  behaviourCounter : 1,
   
   duration : 5,
   

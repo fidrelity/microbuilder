@@ -61,14 +61,11 @@
               <div class="left title"> on start </div>
       
               <div class="left list">
-      
-                <ul class="actions">
 
-                  {{view UiActionView
-                    contentBinding= "content.actions"
-                  }}
-                  
-                </ul>
+                {{view UiActionView
+                  contentBinding= "content.actions"
+                  behaviourIDBinding= "content.ID"
+                }}
                 
                 <button class="btn addButton" {{action "addAction"}}>
                   <i class="icon-plus"></i> action </button>
@@ -90,14 +87,11 @@
                 <div class="left title"> if </div>
         
                 <div class="left list">
-              
-                  <ul class="triggers">
     
-                    {{view UiTriggerView
-                      contentBinding= "content.triggers"
-                    }}
-    
-                  </ul>
+                  {{view UiTriggerView
+                    contentBinding= "content.triggers"
+                    behaviourIDBinding= "content.ID"
+                  }}
                   
                   <button class="btn addButton" {{action "addTrigger"}}>
                     <i class="icon-plus"></i> trigger </button>
@@ -107,14 +101,11 @@
                 <div class="left title"> then </div>
   
                 <div class="left list">
-        
-                  <ul class="actions">
     
-                    {{view UiActionView
-                      contentBinding= "content.actions"
-                    }}
-    
-                  </ul>
+                  {{view UiActionView
+                    contentBinding= "content.actions"
+                    behaviourIDBinding= "content.ID"
+                  }}
                   
                   <button class="btn addButton" {{action "addAction"}}>
                     <i class="icon-plus"></i> action </button>

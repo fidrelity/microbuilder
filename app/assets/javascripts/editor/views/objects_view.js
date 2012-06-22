@@ -4,35 +4,56 @@ var ObjectsView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    var pos, pos2;
+    var pos, pos2, pos3, ID, ID2;
     
-    // this.$( '.actions' ).sortable({
-    //   
-    //   connectWith: '.actions',
-    //   placeholder: 'element',
-    //   
-    //   start: function(event, ui) {
-    //     
-    //     console.log( 'start', event, ui, $( this ).sortable( 'toArray' ) );
-    //     
-    //   },
-    //   
-    //   stop: function(event, ui) {
-    //     
-    //     console.log( 'stop', event, ui, $( this ).sortable( 'toArray' ) );
-    //     
-    //   },
-    //   
-    //   receive: function(event, ui) {
-    //     
-    //     console.log( ui.sender, $( ui.sender ).sortable( 'toArray' ) );
-    //     
-    //     console.log( 'stop', event, ui, $( this ).sortable( 'toArray' ) );
-    //     
-    //   }
-    //   
-    // }).disableSelection();
-    // 
+    this.$( '.actions' ).sortable({
+      
+      connectWith: '.actions',
+      placeholder: 'element',
+      
+      start: function( e, ui ) {
+        
+        pos = $( this ).sortable( 'toArray' ).indexOf( ui.item[0].id );
+        ID = parseInt( $( this ).attr( 'behaviourID' ) );
+        
+        console.log( 'start', ID, pos );
+        
+      },
+      
+      stop: function( e, ui ) {
+        
+        pos2 = $( this ).sortable( 'toArray' ).indexOf( ui.item[0].id );
+        
+        if ( pos2 >= 0 && pos !== pos2 ) {
+          
+          console.log( 'stop', ID, pos, ID, pos2 );
+          
+          App.behaviourController.moveAction( ID, pos, ID, pos2 );
+          
+        }
+        
+      },
+      
+      receive: function( e, ui ) {
+        
+        pos3 = $( this ).sortable( 'toArray' ).indexOf( ui.item[0].id );
+        ID2 = parseInt( $( this ).attr( 'behaviourID' ) );
+        
+        console.log( 'receive', ID, pos, ID2, pos3 );
+        
+        $( this ).sortable( 'cancel' );
+        $( ui.sender ).sortable( 'cancel' );
+        
+        Ember.run.later( function() {
+          
+          App.behaviourController.moveAction( ID, pos, ID2, pos3 );
+          
+        }, 1000);
+        
+      }
+      
+    }).disableSelection();
+    
     // this.$( '.triggers' ).sortable({
     //   
     //   connectWith: '.triggers',
@@ -58,15 +79,11 @@ var ObjectsView = Ember.View.extend({
       
       start : function(e, ui) {
         
-        console.log( 'start', event, ui, $( this ).sortable( 'toArray' ) );
-        
         pos = $( this ).sortable( 'toArray' ).indexOf( ui.item[0].id );
         
       },
       
       stop : function(e, ui) {
-        
-        console.log( 'stop', event, ui, $( this ).sortable( 'toArray' ) );
         
         pos2 = $( this ).sortable( 'toArray' ).indexOf( ui.item[0].id );
         
@@ -84,11 +101,15 @@ var ObjectsView = Ember.View.extend({
   
 });
 
-var UiActionView = Ember.CollectionView.extend({
+var UiActionTriggerView = Ember.CollectionView.extend({
   
   content : [],
   
-  type : 'actions',
+  type : null,
+  
+  tagName: 'ul',
+  
+  attributeBindings: ['behaviourID'],
   
   itemViewClass: Ember.View.extend({
     
@@ -115,7 +136,17 @@ var UiActionView = Ember.CollectionView.extend({
   
 });
 
-var UiTriggerView = UiActionView.extend({
+var UiActionView = UiActionTriggerView.extend({
+  
+  classNames: ['actions'],
+  
+  type : 'actions'
+  
+});
+
+var UiTriggerView = UiActionTriggerView.extend({
+  
+  classNames: ['triggers'],
   
   type : 'triggers'
   
