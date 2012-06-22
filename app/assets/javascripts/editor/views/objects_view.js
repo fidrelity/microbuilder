@@ -4,7 +4,13 @@ var ObjectsView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    var pos, pos2, pos3, ID, ID2;
+    this.makeSortable();
+    
+  },
+  
+  makeSortable : function() {
+    
+    var pos, pos2, pos3, ID, ID2, self = this;
     
     function params( className, funcName ) {
       
@@ -48,6 +54,9 @@ var ObjectsView = Ember.View.extend({
       
     };
     
+    this.$( '.actions' ).sortable( 'destroy' );
+    this.$( '.triggers' ).sortable( 'destroy' );
+    
     this.$( '.actions' ).sortable( params( '.actions', 'moveAction' ) ).disableSelection();
     this.$( '.triggers' ).sortable( params( '.triggers', 'moveTrigger' ) ).disableSelection();
     
@@ -75,7 +84,15 @@ var ObjectsView = Ember.View.extend({
       
     }).disableSelection();
     
-  }
+  },
+  
+  refreshObserver : function() {
+    
+    var self = this;
+    
+    Ember.run.later( function(){ self.makeSortable(); }, 100 );
+    
+  }.observes( 'App.behaviourController.content', 'App.behaviourController.content.length' )
   
 });
 
