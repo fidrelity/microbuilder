@@ -84,8 +84,6 @@ var BehaviourController = Ember.ArrayController.extend({
   
   moveAction : function( ID, pos, ID2, pos2 ) {
     
-    console.log( this.getBehaviour( ID ).actions.length, pos, this.getBehaviour( ID2 ).actions.length, pos2 );
-    
     this.getBehaviour( ID2 ).insertAction( pos2, this.getBehaviour( ID ).removeAction( pos ) );
     
   },
