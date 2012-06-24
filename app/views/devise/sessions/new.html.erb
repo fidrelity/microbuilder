@@ -12,17 +12,17 @@
         <div><%= f.label :password %>
         <%= f.password_field :password %></div>
         
-        <p><button type="submit" class="btn">Sign In</button></p>
+        <p><button type="submit" class="btn">sign in</button></p>
         
         <p class="checkbox">
           <% if devise_mapping.rememberable? -%>
-            <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+            <%= f.check_box :remember_me %> <%= f.label :remember_me %>
           <% end -%>
         </p>
-        
+        <div class="clear"></div>
       <% end %>
-    
-      <%= render "links" %>
+      <p class="misc">
+        <%= render "links" %>
     </div>
   </div>
 </div>

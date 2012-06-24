@@ -6,6 +6,10 @@ $lightgray: #dedede;
 $white: #FFFFFF;
 $yellow: #fdc702;
 
+html {
+  min-height:100%;
+}
+
 body {
     font-family: 'Arimo', sans-serif;
     background:url(bg2.png) no-repeat;
@@ -103,14 +107,15 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
 }
 
 #feedbackSideButton {
-  padding:8px;
-  border:1px solid #CCC;
-  background:#FFF;
+  height:135px;
+  width:30px;
+  background:url('/assets/feedback.png');
   position:absolute;
-  left:0; top:30%;
+  left:0px;
+  top:30%;
   cursor:pointer;
 }
-#feedbackSideButton:hover {background:#F6F6F6;}
+
 .errorForm { border:1px solid #B94A48;}
 
 /* game/id/play */
@@ -153,18 +158,17 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
   position:absolute;
   top:-15px;
   z-index:1;
-  width:91px;
+  width:96px;
   height:49px;
   font: 18px 'LaconicBold', Arial, sans-serif;
   color:$white;
-  padding:15px 0 0 13px;
+  padding:15px 0 0 20px;
 }
 
 .banner img {
   position:absolute;
   top:0px;
   left:0px;
-  width:91px;
   height:49px;
   z-index:-1;
 }
@@ -214,7 +218,6 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
   min-height:269px;
   background:#fff;
   list-style:none;
-  margin:0px 0px 30px 0px;
 }
 
 .collection_container .bar {
@@ -227,7 +230,7 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
 
 .collection_container .bar .description {
   height:30px;
-  width:624px;
+  width:87%;
   float:left;
   margin:6px 0 0 38px;
 }
@@ -255,7 +258,7 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
   position:relative;
   width:210px;
   height:135px;
-  margin:0 20px 20px 0;
+  margin:0 11px 20px 0;
   overflow:hidden;
 }
 
@@ -360,9 +363,9 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
 
 .sortables {
   position:absolute;
-  right:30px;
+  left:30px;
   top:65px;
-  width:589px;
+  width:890px;
 }
 
 .sortables a {
@@ -427,7 +430,6 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
 }
 
 .landing_page .banner {
-  padding:15px 0 0 8px;
   width:100px;
   text-transform:uppercase;
 }
@@ -471,7 +473,7 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
 }
 
 .latest_games .banner, .latest_games .banner img {
-  width:150px;
+  width:155px;
 }
 
 .latest_games .banner {
@@ -490,11 +492,11 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
   width:280px;
   border-radius:0px;
   background:$white;
-  padding:60px 0 0 0;
+  padding:50px 0 20px 0;
 }
 
-.latest_games .login .banner, .latest_games .login .banner img {
-  width:80px;
+.latest_games .login .banner {
+  width:70px;
 }
 
 .latest_games .login .form {
@@ -505,15 +507,68 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
   border-radius:0px;
 }
 
+.latest_games .login .checkbox {
+  position:relative;
+  top:7px;
+  left:30px;
+}
+
+.latest_games .login .checkbox input[type=checkbox] {
+  display: inline-block;
+  border:1px solid #F00;
+  border-radius:none;
+  -webkit-border-radius:none;
+}
+
 .latest_games .login .btn {
   float:left;
   border-radius:0px;
+  padding:5px 10px 5px 10px;
   margin:0 25px 0 0;
+  font-weight:bold;
+  background-image: linear-gradient(bottom, rgb(230,230,230) 4%, rgb(255,255,255) 100%);
+  background-image: -o-linear-gradient(bottom, rgb(230,230,230) 4%, rgb(255,255,255) 100%);
+  background-image: -moz-linear-gradient(bottom, rgb(230,230,230) 4%, rgb(255,255,255) 100%);
+  background-image: -webkit-linear-gradient(bottom, rgb(230,230,230) 4%, rgb(255,255,255) 100%);
+  background-image: -ms-linear-gradient(bottom, rgb(230,230,230) 4%, rgb(255,255,255) 100%);
+
+  background-image: -webkit-gradient(
+  	linear,
+  	left bottom,
+  	left top,
+  	color-stop(0.04, rgb(230,230,230)),
+  	color-stop(1, rgb(255,255,255))
+  );
 }
 
-.latest_games .login .checkbox,  .latest_games .login input[type=checkbox]{
+.latest_games .login input[type=text], .latest_games .login input[type=password]{
   float:left;
-  padding:0 3px 0 0;
+  padding:0 3px 0 5px;
+  margin:0px 0px 15px 0px;
+  width:205px;
+  height:30px;
+}
+
+.latest_games .login input[type=text]:focus, .latest_games .login input[type=password]:focus{
+  background-image: linear-gradient(bottom, rgb(255,255,255) 68%, rgb(225,225,225) 100%);
+  background-image: -o-linear-gradient(bottom, rgb(255,255,255) 68%, rgb(225,225,225) 100%);
+  background-image: -moz-linear-gradient(bottom, rgb(255,255,255) 68%, rgb(225,225,225) 100%);
+  background-image: -webkit-linear-gradient(bottom, rgb(255,255,255) 68%, rgb(225,225,225) 100%);
+  background-image: -ms-linear-gradient(bottom, rgb(255,255,255) 68%, rgb(225,225,225) 100%);
+
+  background-image: -webkit-gradient(
+  	linear,
+  	left bottom,
+  	left top,
+  	color-stop(0.68, rgb(255,255,255)),
+  	color-stop(1, rgb(225,225,225))
+  );
+}
+
+.latest_games .login p.misc a {
+  position:relative;
+  top:10px;
+  color:$gray;
 }
 
 .latest_games .login a img {
@@ -604,22 +659,24 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
 #gallery {
   position:relative;
   background:$white;
-  width:960px;
+  width:945px;
 }
 
 #gallery .banner {
   margin: 0 0 0 40px;
+  width:78px;
 }
 
 #gallery .collection_container {
   position:relative;
-  width:945px;
+  margin:0px;
   top:50px;
-  margin:0 0 0 15px;
+  width:100%;
 }
 
 #gallery .games {
-  margin:85px 0 0 15px;
+  margin:85px 0 0 30px;
+  width:885px;
 }
 
 .share_button { display: inline;}
