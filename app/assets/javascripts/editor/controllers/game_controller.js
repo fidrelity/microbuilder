@@ -132,6 +132,13 @@ var GameController = Ember.Object.extend({
     
   },
   
+  setBoundingArea : function() {
+    
+    App.mainView.show( 'boundingView', true );
+    this.set( 'cancelView', 'objectsView' );
+    
+  },
+  
   finalize : function() {
     
     App.mainView.show( 'publishView', true ); 
@@ -150,8 +157,8 @@ var GameController = Ember.Object.extend({
       game.instructions,
       JSON.stringify( game ),
       JSON.stringify( graphicIDs ),
-      win,
-      thumb
+      win
+      // thumb
     );
     
     if ( !game.title.length ) {
@@ -240,7 +247,7 @@ var GameController = Ember.Object.extend({
   
   loadGame : function( data ) {
     
-    var game = App.game, i, g;
+    var game = App.game, i;
     
     game.set( 'title', data.title );
     game.set( 'instructions', data.instructions );
@@ -255,9 +262,7 @@ var GameController = Ember.Object.extend({
       
       for ( i = 0; i < data.graphics.length; i++ ) {
         
-        g = data.graphics[i];
-        
-        App.libraryController.loadGraphic( g.ID, g.url, g.frameCount );
+        App.libraryController.loadGraphic( data.graphics[i] );
         
       }
       

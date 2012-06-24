@@ -127,14 +127,13 @@ Player.prototype = {
   
   parse : function( data, callback, corsSave ) {
     
-    var parser = data.version ? Parser : OldParser,
-      self = this;
+    var self = this;
     
     this.fsm.parse();
     
     this.game = new Game( this, this.mouse );
     
-    parser.parseData( data, this.game, function() {
+    Parser.parseData( data, this.game, function() {
       
       self.fsm.loaded();
       

@@ -91,28 +91,39 @@ function randBool() {
 
 function incrementString( str ) {
   
+  var num, val = 0, i = 0;
+  
   if ( !str || !str.length ) {
     
     return '2';
     
   }
   
-  var num = parseInt( str.charAt( str.length - 1 ) );
+  do {
+    
+    num = parseInt( str.charAt( str.length - 1 ) );
+    
+    if ( isNaN( num ) ) {
+      
+      break;
+      
+    }
+    
+    str = str.slice( 0, -1 );
+    
+    val += num * Math.pow( 10, i++ );
+    
+  } while ( num === 9 );
   
-  if ( isNaN( num ) ) {
+  if ( val ) {
     
-    str += '2';
-    
-  } else {
-    
-    str = str.slice(0, -1)
-    str += num + 1;
+    return str + ( val + 1 );
     
   }
   
-  return str;
+  return str + '2';
   
-}
+};
 
 extend( CanvasRenderingContext2D.prototype, {
   

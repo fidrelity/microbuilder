@@ -4,13 +4,14 @@ var Movement = function() {
   this.startPosition = new Vector();
   
   this.area = new Area();
+  this.boundingArea = null;
   
   this.target;
   this.direction;
   
   this.roamArea;
   this.roamMode;
-  this.roamStart = new Vector();
+  this.bounceStart;
   
   this.time;
   this.speed;
@@ -75,13 +76,30 @@ Movement.prototype = {
     
     var pos = this.position;
     
+    if ( this.boundingArea ) {
+      
+      return this.area.copy( this.boundingArea ).addSelf( pos );
+      
+    }
+    
     return this.area.setCenter( pos.x, pos.y );
     
   },
   
-  roam : function( object, mode, area, speed ) {
+  setGraphicSize : function( width, height ) {
+    
+    if ( !this.boundingArea ) {
+      
+      this.area.setSize( width, height );
+      
+    }
+    
+  },
+  
+  roam : function( mode, area, speed ) {
     
     var objArea = this.getArea(),
+      width, height, bounding = this.boundingArea,
       increase, v, h, y, g = 9.81;
     
     this.stop();
@@ -91,25 +109,28 @@ Movement.prototype = {
     
     this.setSpeed( speed );
     
-    if ( area.width < objArea.width ) {
+    width = objArea.width || ( 2 * objArea.radius );
+    height = objArea.height || ( 2 * objArea.radius );
+    
+    if ( area.width < width ) {
       
-      increase = objArea.width * 1.2 - area.width;
+      increase = width - area.width + 10;
       
       area.width += increase;
       area.x -= increase * 0.5;
       
     }
     
-    if ( area.height < objArea.height ) {
+    if ( area.height < height ) {
       
-      increase = objArea.height * 1.2 - area.height;
+      increase = height - area.height + 10;
       
       area.height += increase;
       area.y -= increase * 0.5;
       
     }
     
-    if ( area.leavesArea( objArea ) ) {
+    if ( objArea.leavesArea( area ) ) {
       
       this.insertObject( area );
       
@@ -127,14 +148,23 @@ Movement.prototype = {
       
       objArea = this.getArea();
       
-      h = ( area.height - objArea.height );
+      h = ( area.height - height );
       y = h - objArea.y;
       v = Math.sqrt( 2 * h * g );
       
+      if ( bounding ) {
+        
+        y += bounding.radius || 0;
+        this.bounceStart = area.y + area.height - ( bounding.radius || bounding.height ) - bounding.y;
+        
+      } else {
+        
+        this.bounceStart = area.y + area.height - height * 0.5;
+        
+      }
+      
       this.direction = new Vector( this.speed * randSign(), v );
       this.time = ( v - Math.sqrt( v * v - 2 * y * g ) ) / g * 100;
-      
-      this.roamStart.set( 0, area.y + ( area.height - objArea.height / 2 ) );
       
     }
     
@@ -206,7 +236,6 @@ Movement.prototype = {
     
     var vector = this.vector,
       mode = this.roamMode,
-      roamArea = this.roamArea,
       breakout;
     
     vector.set( distance, 0 ).rotateSelf( this.direction );
@@ -225,7 +254,7 @@ Movement.prototype = {
       
       }
       
-      breakout = roamArea.leavesArea( this.getArea() );
+      breakout = this.getArea().leavesArea( this.roamArea );
       
       if ( breakout ) {
         
@@ -246,9 +275,9 @@ Movement.prototype = {
     time *= 10 * this.speed;
     
     this.position.x += this.direction.x;
-    this.position.y = this.roamStart.y - this.direction.y * time + 9.81 / 2 * time * time;
+    this.position.y = this.bounceStart - this.direction.y * time + 4.905 * time * time;
     
-    breakout = this.roamArea.leavesArea( this.getArea() );
+    breakout = this.getArea().leavesArea( this.roamArea );
     
     if ( breakout ) {
       
@@ -260,7 +289,7 @@ Movement.prototype = {
       } else {
       
         this.time = 0;
-        this.position.y = this.roamStart.y;
+        this.position.y = this.bounceStart;
       
       }
       
@@ -288,31 +317,38 @@ Movement.prototype = {
   
   insertObject : function( area ) {
     
-    var objArea = this.getArea();
+    var objArea = this.getArea(),
+      bounding = this.boundingArea,
+      pos = this.position;
     
-    objArea.setPosition(
-      area.x + Math.random() * ( area.width - objArea.width ),
-      area.y + Math.random() * ( area.height - objArea.height )
+    pos.set(
+      area.x + Math.random() * ( area.width - ( objArea.width || 2 * objArea.radius ) ),
+      area.y + Math.random() * ( area.height - ( objArea.height || 2 * objArea.radius ) )
     );
     
-    this.position.copy( objArea.center() );
-    
-  },
-  
-  insertObjectAtBottom : function( area ) {
-    
-    var objArea = this.getArea();
-    
-    objArea.setPosition(
-      area.x + Math.random() * ( area.width - objArea.width ),
-      area.y + ( area.height - objArea.height )
-    );
-    
-    this.position.copy( objArea.center() );
+    if ( bounding ) {
+      
+      pos.subSelf( bounding );
+      
+      if ( bounding.radius) {
+        
+        pos.x += bounding.radius;
+        pos.y += bounding.radius;
+        
+      }
+      
+    } else {
+      
+      pos.x += objArea.width * 0.5;
+      pos.y += objArea.height * 0.5;
+      
+    }
     
   },
   
   draw : function( ctx ) {
+    
+    this.getArea().draw( ctx );
     
     if ( this.target ) {
       
@@ -337,6 +373,6 @@ Movement.prototype = {
     
   },
   
-  vector : new Vector,
+  vector : new Vector
   
 };

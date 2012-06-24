@@ -1,4 +1,5 @@
 //= require ./../utilities/utilities
+//= require ./player
 
 var Stage = function() {
 
@@ -56,7 +57,7 @@ extend( Stage.prototype, {
         
         ctx.strokeStyle = '#000';
         
-        this.selectObject.getArea().draw( ctx );
+        this.selectObject.getGraphicArea().draw( ctx );
       
       }
       
@@ -145,7 +146,7 @@ extend( Stage.prototype, {
     var object = this.selectObject,
       mousePos = mouse.pos.sub( this.stageOffset );
     
-    if ( !object || !object.getArea().contains( mousePos ) ) {
+    if ( !object || !object.getGraphicArea().contains( mousePos ) ) {
       
       object = this.game.getGameObjectAt( mousePos );
       

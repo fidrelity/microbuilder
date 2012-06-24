@@ -330,9 +330,15 @@ var Parser = {
     
     var graphic = new Graphic( data.ID );
     
-    graphic.frameCount = data.frameCount || 1;
+    graphic.frameWidth = data.frameWidth;
+    graphic.frameHeight = data.frameHeight;
     
-    graphic.image = this.loader.loadImage( data.url );
+    graphic.frameCount = data.frameCount || 1;
+    graphic.image = this.loader.loadImage( data.url, function() {
+      
+      graphic.checkSize();
+      
+    });
     
     return graphic;
     
@@ -345,6 +351,21 @@ var Parser = {
     gameObject.movement.startPosition.copy( data.position );
     
     gameObject.setStartGraphic( this.game.getGraphicWithID( data.graphicID ) );
+    
+    if ( data.boundingArea ) {
+      
+      if ( data.boundingArea.width ) {
+        
+        gameObject.movement.boundingArea = new Area().copy( data.boundingArea );
+        
+      } else if ( data.boundingArea.radius ) {
+        
+        gameObject.movement.boundingArea = new Circle().copy( data.boundingArea );
+        gameObject.movement.area = new Circle();
+        
+      }
+      
+    }
     
     return gameObject;
     

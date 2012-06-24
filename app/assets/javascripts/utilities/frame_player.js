@@ -12,9 +12,9 @@ var FramePlayer = {
     
     var self = this;
     
-    $('.graphic').live('mouseover', function() {
+    $('.frame_graphic').live('mouseover', function() {
       
-      self.initPlay($(this).find('.frame_graphic'));
+      self.initPlay($(this).find('.frame_graphic_element'));
       
     }).live('mouseout', function() { 
       

@@ -1,20 +1,18 @@
-<div id="actionContent"></div>
+<div class="actionContent">
 
-{{view Ember.ContainerView currentViewBinding="App.actionController.optionViews"}}
+  {{view Ember.ContainerView currentViewBinding="App.actionController.optionViews"}}
 
-{{#if App.actionController.showSaveButton}}
+</div>
 
-  <div class="questionview">Is your {{App.actionController.mode}} correct?</div>
-
-  <div class="optionview form-actions">
-    <button class="btn btn-success right btn-large" {{action "save" target="App.actionController"}}>
-      <i class="icon-ok icon-white"></i> apply </button>
-    <div class="actionstring"> {{App.actionController.action.string}} </div>
-  </div>
-
-{{/if}}
-
-<div class="clear">
+<div class="clear form-actions" style="margin:0;padding:17px 15px 18px">
   <button class="btn" {{action "cancel" target="App.gameController"}}> 
     <i class="icon-arrow-left"></i> cancel </button>
+  
+  {{#if App.actionController.showSaveButton}}
+    
+    <button class="btn btn-success right" {{action "save" target="App.actionController"}}>
+      <i class="icon-ok icon-white"></i> apply </button>
+    <div class="actionstring right"> {{App.actionController.action.string}} </div>
+    
+  {{/if}}
 </div>

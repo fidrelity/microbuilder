@@ -230,6 +230,10 @@ var ButtonOption = Option.extend({
       
       buttons[i].select = true;
       
+    } else if ( this.type === 'mode' ) {
+      
+      this.action.setMode( null );
+      
     }
     
     App.actionController.addOption( this.question, ButtonView.create({
