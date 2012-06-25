@@ -16,7 +16,7 @@
 #editor .editor_content {
    top:100px;
    /*width:1034px;*/
-   margin: 0 auto;
+   margin: 20px auto 0;
    z-index:3;
 }
 
@@ -63,7 +63,7 @@
 #editor .overlay {
   position: relative;
   margin: 0 auto;
-  top: 100px;
+  top: 0px;
   width: 754px;
   z-index: 10;
   background-color: #EEE;
@@ -384,9 +384,9 @@
 }
 
 #editor .stageControls {
-  margin: 0 auto;
+  margin: auto 0;
   overflow: hidden;
-  padding: 6px 52px;
+  padding: 6px 45px;
 }
 
 #editor .stageControls #trash {
