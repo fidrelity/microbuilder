@@ -115,12 +115,13 @@
     <button {{action "zoomIn"}} class="zoomin zoom"></button>
     <button {{action "zoomOut"}} class="zoomout zoom"></button>
     <button {{action "bgToggle"}} class="bgToggle"></button>
-    {{/view}} 
+    {{/view}}
+    <div class="clear"></div>
   </div>
-  <div class="clear"></div>
+  
 
 
-<div class="row control-group form-actions">
+<div class="submitPainting">
   <div class="span3 form-vertical">
     <label>Name of the image:</label> <input type="text" size="25" id="imageName">
     <label class="checkbox" id="labelMakePublic" title="Share image" data-content="Check, if you want to share your image with others"><input type="checkbox" id="makePublic" >set image public</label> 

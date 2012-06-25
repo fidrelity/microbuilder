@@ -1,11 +1,20 @@
 #paint-wrapper {
   width:900px;
+  position:relative;
+  top:30px;
   overflow:hidden;
 }
 
 #paint-wrapper #tool-bar {
   background:#CCC;
   overflow: hidden;
+}
+
+#paint-size-wrapper #startPainting {
+  border:none;
+  border-radius:0px;
+  position:relative;
+  margin:20px 0 20px 0;
 }
 
 #paint-wrapper #tool-bar .ember-view { float:left; }
@@ -73,7 +82,7 @@
   background:top left no-repeat;
   border:none;
   float:left;
-  margin:0 1px 0 0;
+  margin:27px 1px 0 0;
 }
 
 .zoomButtons button.zoomin {
@@ -167,6 +176,7 @@
   min-width:30px;
   height:30px;
   border:1px solid #666;
+  margin:27px 0 0 0;
 }
 
 .zoomButtons {
@@ -363,4 +373,15 @@
 
 .paintOverlay .paintOverlayMessage .message {
   padding-top:6px; font-size:18px;
+}
+
+.submitPainting {
+  height:80px;
+  width:900px;
+  margin:20px 0 20px 0;
+}
+
+.submitPainting button {
+  border-radius:0px;
+  border:none;
 }

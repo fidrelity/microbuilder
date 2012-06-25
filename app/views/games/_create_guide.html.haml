@@ -3,28 +3,35 @@
 %div{:class => "row"}
 
   %div{:class => "span11", :style => "margin-bottom:2em"}  
+    .container
+      %div{:class => "note"}
+        %b
+          Note: 
+        You have to be logged in to use the game editor
 
-    %div{:class => "alert alert-info"}
-      Note: You have to be logged in to use the game editor
+      This is the place where you can bring your paintings to life and build you own microgames!
+      Just 
+      =link_to "login with your facebook account", user_omniauth_authorize_path(:facebook)
+      or 
+      = link_to 'sign up', new_user_session_path
+      to create your first game!
 
-    This is the place where you can bring your paintings to life and build you own microgames!
-    Just login with your facebook account or sign up to create your first game!
-
-  %div{:class => "span4"}
-    &nbsp;
-
-%div{:class => "row"}
-  %div{:class => "span3"}
+%div{:class => "row container"}
+  .banner
+    =image_tag "banner_editor.png"
+    how it works
+  =image_tag "slider_left.png", :class => "slider_left"
+  %div{:class => "span3 guide"}
     This is how it works:
     %ol{:id => "guideSteps"}
       %li Place objects
       %li Assign behavior
       %li Set trigger and actions
       %li Preview your game
-
-  %div{:class => "span8"}
-    %div{:id => "guide-slide-container"}
   
+  %div{:class => "span7"}
+    %div{:id => "guide-slide-container"}
+
       %div{:class => "slide-wrapper"}
         %div{:class => "slide"}
           =image_tag "slide1.png"
@@ -45,8 +52,9 @@
           =image_tag "slide4.png"
           %div{:class => "foot-info"}
             Before you save, play your game and check it
-
-%div{:class => "row", :style => "margin-top:2em"}
-  %div{:class => "span12"}
-    %h3 Example games:
-    See what others have created with the game editor
+  =image_tag "slider_right.png", :class => "slider_right"
+  .clear
+.container
+  .banner
+    Example Games
+    =image_tag "banner_editor.png"

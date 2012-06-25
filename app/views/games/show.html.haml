@@ -1,21 +1,21 @@
-%div{:class=>"row"}
+%div
 
-  %div{:class=>"span2"}
-    &nbsp;
-
-  %div{:class=>"span8"}
-    %h2=@game.title
+  %div{:id=>"playGame"}
+    .banner
+      =image_tag "banner_welcome.png"
+      =@game.title
     =link_to "by #{@game.author.display_name}", user_path(@game.author)
     = render :partial => "player", :locals => {:game => @game}
     
-
-    %div{:class=>"btn-group"}
-      %button{:class=>"btn shareButton"}
-        <i class="icon-retweet"></i> Share
-      %button{:class=>"btn embedButton"}
-        <i class="icon-share"></i> Embed
-      %button{:class=>"btn reportButton"}
-        <i class="icon-flag"></i> Report      
+    
+    %div{:id => "ratingWrapper"}
+      = render :partial => "rating", :locals => {:game => @game}
+    
+    %div{:class=>"btn-group", :id=>"shareButtons"}
+      %button{:class=>"shareButton"}
+      %button{:class=>"embedButton"}
+      %button{:class=>"reportButton"}
+      .clear      
       %i{:class => "icon-eye-open"}
       %span{:id => "playedWrapper"}
         = render :partial => "played", :locals => {:played => @game.played}    
@@ -23,8 +23,7 @@
         | Difficulty: 
         %span{:class => @game.difficulty_in_words}= @game.difficulty_in_words
 
-    %div{:id => "ratingWrapper", :class=>"row"}
-      = render :partial => "rating", :locals => {:game => @game}
+    .clear
 
     = render :partial => "games/layers/share_layer", :locals => {:game => @game}
     = render :partial => "games/layers/embed_layer", :locals => {:game => @game}
