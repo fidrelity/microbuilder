@@ -1,6 +1,9 @@
-%h2 Editor
+#create
+  .banner
+    =image_tag "banner_editor.png"
+    Editor
 
--if user_signed_in?      
-  =render :partial => "create_tool"
--else
-  =render :partial => "create_guide"
+  -if user_signed_in?      
+    =render :partial => "create_tool"
+  -else
+    =render :partial => "create_guide"
