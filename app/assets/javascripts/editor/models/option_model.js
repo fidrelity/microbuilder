@@ -496,9 +496,13 @@ var TimeOption = Option.extend({
   
   mode : 'exact',
   
-  doInsert : function() {
+  doInsert : function( reinsert ) {
     
-    this.action.setTime( randInt( 20, 45 ), this.mode === 'random' ? randInt( 60, 85 ) : 0 );
+    if ( !reinsert ) {
+      
+      this.action.setTime( randInt( 20, 45 ), this.mode === 'random' ? randInt( 60, 85 ) : 0 );
+      
+    }
     
     App.actionController.addOption( this.question, TimeView.create({
       observer : this.action,
