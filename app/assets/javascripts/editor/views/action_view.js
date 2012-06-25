@@ -18,7 +18,7 @@ var QuestionView = Ember.View.extend({
   
   tagName : 'p',
   
-  classNames : ['clear', 'questionview', 'optionview'],
+  classNames : ['clear', 'questionview'],
   
   template: Ember.Handlebars.compile("{{content}}")
   
@@ -35,8 +35,7 @@ var ButtonView = Ember.CollectionView.extend({
   attributeBindings: ["data-toggle"],
   'data-toggle': 'buttons-radio',
   
-  disable : true,
-  disabled : false,
+  preSelect : -1,
   
   itemViewClass: Ember.View.extend({
     
@@ -44,37 +43,31 @@ var ButtonView = Ember.CollectionView.extend({
     
     classNames : ['btn'],
     
-    template: Ember.Handlebars.compile("{{content}}"),
+    template: Ember.Handlebars.compile("{{content.name}}"),
     
     didInsertElement : function() {
       
-      if ( !this._parentView.disable ) {
+      if ( this._parentView.observer.name === 'trigger' ) {
       
         this.$().addClass( 'btn-primary' );
       
+      } else if ( this._parentView.observer.name === 'action' ) {
+        
+        this.$().addClass( 'btn-danger' );
+        
+      }
+      
+      if ( this.content.select ) {
+        
+        this.$().addClass( 'active' );
+        
       }
       
     },
     
     click : function() {
       
-      if ( this._parentView.disabled ) {
-        
-        return;
-        
-      }
-      
-      if ( this._parentView.disable ) {
-      
-        this._parentView.$( '.btn' ).addClass( 'disabled' );
-        
-        this.$().removeClass( 'disabled' );
-        
-        this._parentView.set( 'disabled', true )
-      
-      }
-      
-      this._parentView.observer.choose( this.content );
+      this._parentView.observer.decide( this.content.name );
       
     }
     
@@ -109,11 +102,23 @@ var GameObjectsView = Ember.CollectionView.extend({
     
     didInsertElement : function() {
       
-      if ( this.content === App.gameObjectsController.current ) {
+      var self = this;
+      
+      this.addObserver( 'App.gameObjectsController.current', function() {
         
-        this.deselectAll();
+        if ( self.content === App.gameObjectsController.current ) {
+          
+          self.selectSelf();
+          
+        }
+      
+      });
+      
+      if ( this.content === App.gameObjectsController.current || this.content.active ) {
         
-        this.$().addClass( 'selected' );
+        this.selectSelf();
+        
+        this.content.set( 'active', false );
         
       }
       
@@ -121,15 +126,21 @@ var GameObjectsView = Ember.CollectionView.extend({
     
     click : function() {
       
-      this.deselectAll();
+      this.selectSelf();
       
-      this.$().addClass( 'selected' );
+      if ( this._parentView.observer.select ) {
+        
+        this._parentView.observer.select( this.content );
+        
+      } else {
       
-      this._parentView.observer.select( this.content );
+        this._parentView.observer.decide( this.content );
+      
+      }
       
     },
     
-    deselectAll : function() {
+    selectSelf : function() {
       
       var childs = this._parentView._childViews, i;
       
@@ -138,6 +149,8 @@ var GameObjectsView = Ember.CollectionView.extend({
         childs[i].$().removeClass( 'selected' );
       
       }
+      
+      this.$().addClass( 'selected' );
       
     }
     
@@ -156,11 +169,14 @@ var TimeView = Ember.View.extend({
   observer : null,
   type : null,
   
+  min : 0,
+  max : 0,
+  
   didInsertElement : function() {
     
     var self = this,
-      range = this.type === 'randomly',
-      values = range ? [30,70] : [30];
+      range = this.type === 'random',
+      values = range ? [this.min, this.max] : [this.min];
     
     this.setTime( values[0], values[1] );
     
@@ -199,7 +215,6 @@ var FrameView = Ember.View.extend({
   
   observer : null,
   graphic : null,
-  type : null,
   
   classNames : ['frameview', 'optionview'],
   
@@ -218,7 +233,6 @@ var FrameView = Ember.View.extend({
       this.frames.addObject({
         number : i,
         observer : this.observer,
-        type : this.type,
         frameWidth : this.graphic.frameWidth,
         frameHeight : this.graphic.frameHeight
       });
@@ -229,19 +243,19 @@ var FrameView = Ember.View.extend({
   
   selected : function() {
     
-    return this.observer[ this.type ];
+    return this.observer.frame;
     
-  }.property( 'observer.frame', 'observer.frame2' ),
+  }.property( 'observer.frame' ),
   
   divStyle : function() {
     
     var width = this.graphic.frameWidth,
       height = Math.floor( this.graphic.frameHeight * 0.1 ),
-      offset = ( this.observer[ this.type ] - 1 ) * width;
+      offset = ( this.observer.frame - 1 ) * width;
     
     return 'width:' + width + 'px;height:' + height + 'px;background-color:black;margin-left:' + offset + 'px;';
     
-  }.property( 'observer.frame', 'observer.frame2' ),
+  }.property( 'observer.frame' ),
   
   wrapperWidth : function() {
     
@@ -263,9 +277,11 @@ var SpeedView = Ember.View.extend({
   
   classNames : ['speedview', 'optionview'],
   
-  template: Ember.Handlebars.compile( '<div class="slider left"></div><div class="speed left">{{observer.speeed}}</div>' ),
+  template: Ember.Handlebars.compile( '<div class="slider left"></div><div class="speed left">{{observer.speedName}}</div>' ),
   
   observer : null,
+  
+  speed : 2,
   
   didInsertElement : function() {
     
@@ -273,7 +289,7 @@ var SpeedView = Ember.View.extend({
     
     this.$('.slider').slider({
       
-      value: 2,
+      value: this.speed,
       
       min: 0,
       max: 4,
@@ -318,7 +334,7 @@ var ArtView = Ember.View.extend({
   
   searchGraphic : function() {
     
-    this.observer.set( 'type', 'search' );
+    App.actionController.action.set( 'isSearching', true );
     
     App.gameController.searchArtGraphic();
     

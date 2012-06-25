@@ -28,21 +28,24 @@ var BehaviourController = Ember.ArrayController.extend({
   
   parseBehaviour : function( gameObject, data ) {
     
-    var behaviour = BehaviourModel.create(), i, trigger;
+    var behaviour = BehaviourModel.create(), 
+      action, trigger, i;
     
     for ( i = 0; i < data.actions.length; i++ ) {
       
-      behaviour.addAction( this.parseAction( data.actions[i] ) );
+      action = ActionTriggerModel.create().parse( data.actions[i] );
+      
+      behaviour.addAction( action );
       
     }
     
     for ( i = 0; i < data.triggers.length; i++ ) {
       
-      trigger = this.parseTrigger( data.triggers[i] );
+      trigger = ActionTriggerModel.create().parse( data.triggers[i] );
       
       behaviour.addTrigger( trigger );
       
-      if ( trigger.type === 'start' ) {
+      if ( data.triggers[i].ID === 'gameStart' ) {
         
         gameObject.set( 'startBehaviour', behaviour );
         return;
@@ -55,46 +58,39 @@ var BehaviourController = Ember.ArrayController.extend({
     
   },
   
-  parseAction : function( data ) {
+  getBehaviour : function( ID ) {
     
-    switch ( data.type ) {
+    var behaviour;
+    
+    if ( this.startBehaviour.ID === ID ) {
       
-      case 'jumpTo' : return MoveActionModel.create().parse( data );
-      case 'moveTo' : return MoveActionModel.create().parse( data );
-      case 'moveIn' : return MoveActionModel.create().parse( data );
+      behaviour = this.startBehaviour;
       
-      case 'roam' : return MoveActionModel.create().parse( data );
+    } else {
       
-      case 'swap' : return MoveActionModel.create().parse( data );
-      case 'stop' : return MoveActionModel.create({ type : 'stop' });
-      
-      case 'art' : return ArtActionModel.create().parse( data );
-      
-      case 'win' : return WinLoseActionModel.create({ type : 'win' });
-      case 'lose' : return WinLoseActionModel.create({ type : 'lose' });
-      
-      default : console.error( 'action type ' + data.type + ' not found' ); return null;
+      behaviour = this.content.findProperty( 'ID', ID );
       
     }
+    
+    if ( !behaviour ) {
+      
+      console.error( 'no behaviour with ID: ' + ID );
+      
+    }
+    
+    return behaviour;
     
   },
   
-  parseTrigger : function( data ) {
+  moveAction : function( ID, pos, ID2, pos2 ) {
     
-    switch ( data.type ) {
-      
-      case 'start' : return StartTriggerModel.create();
-      
-      case 'click' : return ClickTriggerModel.create().parse( data );
-      
-      case 'touch' : return ContactTriggerModel.create().parse( data );
-      case 'overlap' : return ContactTriggerModel.create().parse( data );
-      
-      case 'time' : return TimeTriggerModel.create().parse( data );
-      
-      default : console.error( 'trigger type ' + data.type + ' not found' ); return null;
-      
-    }
+    this.getBehaviour( ID2 ).insertAction( pos2, this.getBehaviour( ID ).removeAction( pos ) );
+    
+  },
+  
+  moveTrigger : function( ID, pos, ID2, pos2 ) {
+    
+    this.getBehaviour( ID2 ).insertTrigger( pos2, this.getBehaviour( ID ).removeTrigger( pos ) );
     
   }
 

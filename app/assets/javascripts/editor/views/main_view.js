@@ -7,69 +7,78 @@ var MainView = Ember.View.extend({
   player : null,
   
   overlayView : null,
-  overlayView2 : null,
   
-  show : function( viewClass ) {
+  init : function() {
     
-    var self = this, overlay;
+    this._super();
     
-    overlay = OverlayView.create({
-      heading: viewClass.create().heading,
-      viewClass : viewClass
+    this.libraryView = LibraryView.create({ heading: 'Library', widthBinding: 'App.libraryController.width' });
+    this.objectsView = ObjectsView.create({ heading : 'Objects & Behaviour', width: 940 });
+    this.actionView = ActionView.create({ width: 520 });
+    this.publishView = PublishView.create({ heading : 'Publish', width: 910 });
+    this.boundingView = BoundingView.create({ heading : 'Bounding Area', width: 645 });
+    
+  },
+  
+  didInsertElement : function() {
+    
+    this.$( '#slider' ).slider({
+      
+      min: 5,
+      max: 30,
+      step: 5,
+      value: App.game.duration,
+      
+      slide: function( event, ui ) {
+        
+        App.game.setDuration( ui.value );
+        
+      },
+      
+      change: function( event, ui ) {
+        
+        App.mainView.updatePlayer();
+        
+      }
+      
     });
     
-    overlay.appendTo( '#overlayView' );
+  },
+  
+  show : function( name, push ) {
     
-    if ( this.overlayView ) {
+    var view = this.get( name );
+    
+    this.overlayView.setWidth( view.width );
+    this.overlayView.set( 'showView', view );
+    
+    if ( push ) {
       
-      overlay.fadeIn = false;
-      self.set( 'overlayView2', overlay );
-      
-      this.hideOverlay();
+      this.overlayView.pushHeading( view.get( 'heading' ) );
       
     } else {
       
-      self.set( 'overlayView', overlay );
+      this.overlayView.popHeading();
       
     }
+    
+    this.overlayView.set( 'isVisible', true );
     
   },
   
   hideOverlay : function() {
     
-    var self = this;
+    this.overlayView.set( 'isVisible', false );
+    this.overlayView.set( 'headings', [] );
     
-    if ( this.overlayView ) {
-    
-      this.overlayView.$( '#overlayWrapper' ).fadeOut( 100, function() {
-        
-        self.overlayView.remove();
-        
-        if ( self.overlayView2 ) {
-          
-          self.set( 'overlayView', self.overlayView2 );
-          self.set( 'overlayView2', null );
-          
-          self.overlayView.$( '#overlayWrapper' ).fadeIn( 100 );
-          
-        } else {
-          
-          self.set( 'overlayView', null );
-          
-        }
-        
-      });
-      
-      this.updatePlayer();
-      
-    }
+    this.updatePlayer();
     
   },
   
   updatePlayer : function() {
     
     var player = this.player,
-      data = App.game.getData().game;
+      data = App.game.getData();
       
     if ( window.localStorage ) {
       
@@ -87,34 +96,107 @@ var MainView = Ember.View.extend({
     
     });
     
+  },
+  
+  play : function() {
+    
+    this.player.fsm.start();
+    
+  },
+  
+  stop : function() {
+    
+    this.player.fsm.reset();
+    
+  },
+  
+  trash : function() {
+    
+    if ( confirm( 'Throw the game away?' ) ) {
+      
+      App.gameController.clear();
+      
+      App.gameObjectsController.set( 'current', null );
+      App.behaviourController.set( 'current', null );
+      
+      this.$( '#slider' ).slider( 'value', [5] );
+      
+      if ( window.localStorage ) {
+      
+        window.localStorage.setItem( 'game', null );
+      
+      }
+      
+    }
+    
+  },
+  
+  debug : function() {
+    
+    this.player.debug();
+    
   }
   
 });
 
 var OverlayView = Ember.View.extend({
+  
   templateName : 'editor/templates/overlay_template',
-  viewClass : null,
-  heading : 'Overlay',
-  fadeIn : true,
+  
+  isVisible : false,
+  
+  headings : [],
+  
+  showView : null,
   
   didInsertElement : function() {
     
-    if ( this.fadeIn ) {
+    var self = this;
     
-      this.$( '#overlayWrapper' ).fadeIn( 100 );
+    this.addObserver( 'showView.width', function() {
+      
+      self.setWidth( self.showView.width );
+      
+    });
     
-    }
+    App.mainView.set( 'overlayView', this );
+    
+  },
+  
+  pushHeading : function( heading ) {
+    
+    this.headings.pushObject( heading );
+    
+  },
+  
+  popHeading : function() {
+    
+    this.headings.popObject();
+    
+  },
+  
+  heading : function() {
+    
+    return this.headings.join( ' > ' );
+    
+  }.property( 'headings.length' ),
+  
+  currentHeading : function() {
+    
+    return this.headings.objectAt( this.headings.length - 1 );
+    
+  }.property( 'headings.length' ),
+  
+  setWidth : function( width ) {
+    
+    this.$( '.overlay' ).css({ width : width + 'px' });
     
   }
-});
-    
-var ObjectsView = Ember.View.extend({
-  heading : 'Objects & Behaviour',
-  templateName : 'editor/templates/objects_template'
+  
 });
 
 var PublishView = Ember.View.extend({
-  heading : 'Publish',
+
   templateName : 'editor/templates/publish_template',
 
   didInsertElement : function() {
@@ -124,6 +206,91 @@ var PublishView = Ember.View.extend({
       App.gameController.setActiveSnapshot($(this));
     });
   }
+});
+
+var BoundingView = Ember.View.extend({
+  
+  templateName : 'editor/templates/bounding_template',
+  
+  gameObjectBinding : 'App.gameObjectsController.current',
+  
+  type : 'rect', // rect, circle
+  area : null,
+  
+  didInsertElement : function() {
+    
+    if ( this.gameObject.boundingArea ) {
+      
+      if ( this.gameObject.boundingArea.radius ) {
+        
+        this.$( '#circleButton' ).addClass( 'active' );
+        this.useCircle();
+        
+      } else {
+        
+        this.$( '#rectButton' ).addClass( 'active' );
+        this.useBox();
+        
+      }
+      
+    } else if ( this.type === 'rect' ) {
+    
+      this.$( '#rectButton' ).addClass( 'active' );
+    
+    } else {
+      
+      this.$( '#circleButton' ).addClass( 'active' );
+      
+    }
+    
+  },
+  
+  useBox : function() {
+    
+    this.set( 'type', 'rect' );
+    
+  },
+  
+  useCircle : function() {
+    
+    this.set( 'type', 'circle' );
+    
+  },
+  
+  setArea : function( area ) {
+    
+    this.set( 'area', ( area.width || area.radius ) ? area : null );
+    
+  },
+  
+  message : function() {
+    
+    if ( this.area ) {
+      
+      if ( this.area.radius ) {
+        
+        return 'circle: ' + this.area.string();
+        
+      }
+      
+      return 'box: ' + this.area.string();
+      
+    }
+    
+    return 'use area of graphic';
+    
+  }.property( 'area' ),
+  
+  save : function() {
+    
+    this.gameObject.setBoundingArea( this.area );
+    
+    App.gameController.cancel();
+    
+    this.set( 'area', null );
+    
+  }
+  
 });
 
 var RemoveView = Ember.View.extend({
@@ -148,31 +315,6 @@ var SelectView = RemoveView.extend({
   select : function() {
     
     this.selectFunction.call( this.controller, this.content );
-    
-  }
-  
-});
-
-var BehaviourView = SelectView.extend({
-  
-  addTrigger : function() {
-    
-    App.behaviourController.set( 'current', this.get( 'content' ) );
-    App.gameController.addTrigger();
-    
-  },
-  
-  addAction : function() {
-    
-    App.behaviourController.set( 'current', this.get( 'content' ) );
-    App.gameController.addAction();
-    
-  },
-  
-  duplicate : function() {
-    
-    App.behaviourController.duplicateBehaviour( this.content );
-    App.mainView.updatePlayer();
     
   }
   

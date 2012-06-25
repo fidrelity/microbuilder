@@ -14,6 +14,9 @@ var Game = function( player, mouse ) {
   
   this.startActions = [];
   
+  this.isWon = false;
+  this.isLost = false;
+  
 };
 
 Game.prototype = {
@@ -22,30 +25,25 @@ Game.prototype = {
   
   reset : function() {
     
+    this.isWon = false;
+    this.isLost = false;
+    
     this.gameObjects.forEachApply( 'reset' );
     this.behaviours.forEachApply( 'reset' );
     
   },
   
   start : function() {
-
+    
     this.startActions.forEachApply( 'execute', this );
     
   },
   
   update : function( dt ) {
     
-    for ( var i = 0; i < this.behaviours.length; i++ ) {
-      
-      this.behaviours[i].check( this );
-      
-    }
+    this.behaviours.forEachApply( 'check', this );
     
-    for ( var i = 0; i < this.gameObjects.length; i++ ) {
-      
-      this.gameObjects[i].update( dt );
-      
-    }
+    this.gameObjects.forEachApply( 'update', dt );
     
   },
   
@@ -67,26 +65,20 @@ Game.prototype = {
     
     if ( ctx.debug ) {
     
-      for ( i = 0; i < this.behaviours.length; i++ ) {
-      
-        this.behaviours[i].draw( ctx );
-      
-      }
+      this.behaviours.forEachApply( 'draw', ctx );
     
     }
     
     ctx.fillStyle = '#AAA';
     ctx.strokeStyle = '#AAA';
     
-    for ( i = 0; i < this.gameObjects.length; i++ ) {
-      
-      this.gameObjects[i].draw( ctx );
-      
-    }
+    this.gameObjects.forEachApply( 'draw', ctx );
     
     if ( ctx.debug ) {
       
-      ctx.fillCircle( this.mouse.pos.x, this.mouse.pos.y, 3 );
+      this.mouse._pos.copy( this.mouse.pos ).subSelf( this.player.stageOffset );
+      
+      ctx.fillCircle( this.mouse._pos.x, this.mouse._pos.y, 3 );
       
     }
     
@@ -122,7 +114,7 @@ Game.prototype = {
       
     }
     
-    console.error( "no gameObject with ID " + graphicID );
+    console.error( "no graphic with ID " + graphicID );
     
     return null;
     
@@ -132,7 +124,7 @@ Game.prototype = {
     
     for ( var i = this.gameObjects.length - 1; i >= 0 ; i-- ) {
       
-      if ( this.gameObjects[i].getArea().contains( pos ) ) {
+      if ( this.gameObjects[i].getGraphicArea().contains( pos ) ) {
         
         return this.gameObjects[i];
         

@@ -10,7 +10,7 @@ var Mouse = function( player, canvas ) {
   this.pos = new Vector();
   this.move = new Vector();
   
-  this.canvasArea = new Area( 0, 0, 640, 390 );
+  this.area = new Area( 0, 0, 640, 390 );
   
   this.mode;
   
@@ -28,11 +28,11 @@ Mouse.prototype = {
     
     this.mode = 'click';
     
-    $( this.canvas ).click( bind( this, this.click ) );
-    
     $( this.canvas ).unbind( 'mousedown' );
     $( this.canvas ).unbind( 'mousemove' );
     $( this.canvas ).unbind( 'mouseup' );
+    
+    $( this.canvas ).mousedown( bind( this, this.click ) );
     
   },
   
@@ -46,19 +46,21 @@ Mouse.prototype = {
     
     this.mode = 'drag';
     
+    $( this.canvas ).unbind( 'mousedown' );
+    
     $( this.canvas ).mousedown( bind( this, this.mousedown ) );
     $( this.canvas ).mousemove( bind( this, this.mousemove ) );
     $( this.canvas ).mouseup( bind( this, this.mouseup ) );
-    
-    $( this.canvas ).unbind( 'click' );
     
   },
   
   click : function( e ) {
     
-    this.setMouse( e, this.pos );
+    this.setMouse( e, this._pos );
     
-    if ( this.canvasArea.contains( this.pos ) ) {
+    if ( this.area.contains( this._pos ) ) {
+    
+      this.pos.copy( this._pos );
     
       this.clicked = true;
     
@@ -114,18 +116,14 @@ Mouse.prototype = {
   setMouse : function( e, mouse ) {
     
     var offset = $( this.canvas ).offset(),
-      i = this.player.edit ? this.player.increment : 0;
+      i = this.player.increment;
     
     mouse.set( e.pageX - offset.left, e.pageY - offset.top );
     
-    if ( this.player.half ) {
-      
-      mouse.mulSelf( 2 );
-      
-    }
+    mouse.mulSelf( this.player.scale );
     
-    mouse.x -= i;
-    mouse.y -= i;
+    mouse.x -= i.x + 1;
+    mouse.y -= i.y + 1;
     
   }
   

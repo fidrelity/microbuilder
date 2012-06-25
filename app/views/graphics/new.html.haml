@@ -1,6 +1,9 @@
-%h2 Paint
+#create
+  .banner
+    =image_tag "banner_editor.png"
+    Paint
 
--if user_signed_in?      
-  =render :partial => "paint_tool"
--else
-  =render :partial => "paint_guide"
+  -if user_signed_in?      
+    =render :partial => "paint_tool"
+  -else
+    =render :partial => "paint_guide"

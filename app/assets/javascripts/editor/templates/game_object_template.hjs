@@ -1,6 +1,7 @@
-<div 
-    {{bindAttr style="content.graphic.divStyle"}}
-    class="libraryGraphic">
+<div class="graphic">
+    <div {{bindAttr style="content.graphic.divStyle"}}></div>
 </div>
 
-<div class="libraryName"> {{content.name}} </div>
+<div class="name"> {{content.name}} </div>
+
+<i class="icon-move"></i>

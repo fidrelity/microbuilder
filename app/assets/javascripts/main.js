@@ -10,10 +10,11 @@ function editor_main( data ) {
   App.gameObjectsController = GameObjectsController.create();
   App.behaviourController = BehaviourController.create();
   
-  App.actionController = ActionController.create();
+  App.set( 'actionController', ActionController.create() );
+  App.actionController.start();
 
   App.mainView = MainView.create();
-  App.mainView.appendTo('#content');
+  App.mainView.appendTo('#editor');
   
   if ( !data && window.localStorage ) {
     
@@ -30,18 +31,6 @@ function editor_main( data ) {
     App.gameController.loadGame( data );
     
   }
-  
-  // setTimeout( function() {
-  // 
-  //   // App.gameController.selectGraphic( App.libraryController.get( 'content' )[0] );
-  //   App.gameController.selectGraphic( App.libraryController.get( 'content' )[1] );
-  //   App.gameController.selectGraphic( App.libraryController.get( 'content' )[3] );
-  //   
-  //   App.mainView.hideOverlay();
-  //   
-  //   App.mainView.stageView.player.parse( App.game.getData().game );
-  // 
-  // }, 100 );
 
 };
 
@@ -74,7 +63,9 @@ function player_main( data, game_id ) {
   
   if ( $( '#playerCanvas' ) && $( '#playerCanvas' )[0] ) {
   
-    player.setCanvas( $( '#playerCanvas' )[0] );
+    player.init( $( '#playerCanvas' )[0] );
+    player.startRunloop();
+    
     //player.debug();
   
     if ( data ) {

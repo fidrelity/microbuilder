@@ -1,7 +1,7 @@
 {{#if showHTML}}
 
   <div id="playerWrapper">
-    <canvas {{bindAttr id="canvasID"}}></canvas>
+    <canvas class="playerCanvas" id="testCanvas"></canvas>
   
     <div class="playerStartScreen">
       <div class="playButton"></div>
@@ -35,6 +35,6 @@
 
 {{else}}
 
-  <canvas {{bindAttr id="canvasID"}} style="background:#EEE;border:2px solid black;"></canvas>
+  <canvas class="playerCanvas" style="background:#EEE;border:2px solid #AAA;"></canvas>
 
 {{/if}}

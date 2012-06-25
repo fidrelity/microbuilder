@@ -1,7 +1,7 @@
-var ClickTrigger = function() {
+var ClickTrigger = function( gameObject, area ) {
   
-  this.gameObject = null;
-  this.area = null;
+  this.gameObject = gameObject;
+  this.area = area;
   
 };
 
@@ -36,19 +36,31 @@ ClickTrigger.prototype = {
       
     }
     
-  }
+  },
+  
+  reset : function() {}
   
 };
 
 
-var ContactTrigger = function() {
+var ContactTrigger = function( type, gameObject, gameObject2, area ) {
   
-  this.gameObject = null;
-  this.gameObject2 = null;
+  this.gameObject = gameObject;
+  this.gameObject2 = gameObject2;
   
-  this.area = null;
+  this.area = area;
   
   triggered = false;
+  
+  if ( type === 'touch' ) {
+    
+    this.check = this.checkTouch;
+    
+  } else if ( type === 'overlap' ) {
+    
+    this.check = this.checkOverlap;
+    
+  }
   
 };
 
@@ -147,19 +159,71 @@ TimeTrigger.prototype = {
   
   draw : function( ctx ) {
     
-    var time = this.randTime || this.time, i = Player.prototype.increment;
+    var time = this.randTime || this.time, i = Stage.prototype.increment;
     
     ctx.fillStyle = this.triggered ? '#AAA' : '#333';
     
     if ( this.randTime ) {
       
-      ctx.fillRect( ( 640 + i ) * this.time * 0.01 - i / 2 - 1, 390 + i / 2 - 4, 2, 16 );
-      ctx.fillRect( ( 640 + i ) * this.time2 * 0.01 - i / 2 - 1, 390 + i / 2 - 4, 2, 16 );
+      ctx.fillRect( 640 * this.time * 0.01 - 1, 390 + i.y / 2 - 8, 2, 16 );
+      ctx.fillRect( 640 * this.time2 * 0.01 - 1, 390 + i.y / 2 - 8, 2, 16 );
       
     }
     
-    ctx.fillRect( ( 640 + i ) * time * 0.01 - i / 2 - 2, 390 + i / 2 - 4, 4, 16 );
+    ctx.fillRect( 640 * time * 0.01 - 2, 390 + i.y / 2 - 8, 4, 16 );
     
   }
+  
+};
+
+var EndTrigger = function( type ) {
+  
+  this.triggered = false;
+  
+  this.check = function( game ) {
+    
+    if ( game[ type ] && !this.triggered ) {
+      
+      return this.triggered = true;
+      
+    }
+    
+    return false;
+    
+  };
+  
+  this.reset = function() {
+    
+    this.triggered = false;
+    
+  };
+  
+  this.draw = function() {};
+  
+};
+
+var WonTrigger = {
+  
+  check : function( game ) {
+    
+    return game.isWon;
+    
+  },
+  
+  reset : function() {},
+  draw : function() {}
+  
+};
+
+var LostTrigger = {
+  
+  check : function( game ) {
+    
+    return game.isLost;
+    
+  },
+  
+  reset : function() {},
+  draw : function() {}
   
 };

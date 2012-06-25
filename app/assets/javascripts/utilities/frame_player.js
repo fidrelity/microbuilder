@@ -1,62 +1,70 @@
 var FramePlayer = {
 
-  selector : '.graphic',
-  dataSelector : '.frame_graphic',
-  currentFrameIndex : 0,
-  currentObject : null,
-  totalFrames : 0,
-  frameWidth : 64,
+  frame : null,
+  index : 0,
+  width : 64,
+  totalFrames : 1,
+  
+  duration : 1000,
   playInterval : null,
-  frameDuration : 1000,
 
   init : function() {
-
-    //if($(this.selector).length) {
-      $(this.selector).live('mouseover', function() {
-        FramePlayer.initPlay($(this).find(FramePlayer.dataSelector));
-      });
-
-      $(this.selector).live('mouseout', function() {      
-        FramePlayer.stop();
-        FramePlayer.reset();
-      });
-    //}
+    
+    var self = this;
+    
+    $('.frame_graphic').live('mouseover', function() {
+      
+      self.initPlay($(this).find('.frame_graphic_element'));
+      
+    }).live('mouseout', function() { 
+      
+      self.stop();
+      
+    });
+    
   },
 
-  initPlay : function(_object) {
-    this.totalFrames = parseInt(_object.attr("data-frames"));
-    if(this.totalFrames <= 1) return false;
-
-    this.currentObject = _object;
-    this.frameWidth = _object.width();
-    this.currentFrameIndex = 1;
-    this.play();
-    this.playInterval = setInterval( function() { FramePlayer.play(); } , this.frameDuration)
+  initPlay : function(_frame) {
+    
+    if(this.frame) {
+      this.stop();
+    }
+    
+    this.frame = _frame;
+    this.totalFrames = parseInt(_frame.attr("data-frames"));
+    
+    if(this.totalFrames > 1) {
+      _frame.css({"background-position" : '0px' });
+    
+      this.index = 1;
+      this.width = _frame.width();
+    
+      this.playInterval = setInterval(bind(this, this.play), this.duration);
+    
+      this.play();
+    }
   },
 
   play : function() {
-    if(!this.currentObject) { this.stop(); return false; }
-    var newPosition = -(this.frameWidth * this.currentFrameIndex);
-    this.currentObject.css({"background-position" : newPosition });
-
-    if(this.currentFrameIndex === this.totalFrames - 1) {
-      this.currentFrameIndex = 0; // reset when last one
-    } else {
-      this.currentFrameIndex++;
+    if(!this.frame) { 
+      return stop();
     }
     
+    this.frame.css({"background-position" : -(this.width * this.index)});
+    this.index++;
+    
+    if(this.index === this.totalFrames) {
+      this.index = 0; // reset when last one
+    }
   },
 
   stop : function() {
     clearInterval(this.playInterval);
-    this.playInterval = null;
-    if(this.currentObject) this.currentObject.css({"background-position" : '0px' });
-  },
-
-  reset : function() {    
-    this.totalFrames = 0;
-    this.currentFrameIndex = 0;
-    this.currentObject = null;
-  },
-
+    
+    if(this.frame) {
+      this.frame.css({"background-position" : '0px'});
+      this.frame = null;
+    }
+  }
+  
 };

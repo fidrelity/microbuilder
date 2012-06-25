@@ -1,28 +1,34 @@
-<div id="publishView">
-  <label>Game title: </label>
-  {{view Ember.TextField valueBinding="App.game.title" size="10" placeholder="insert name" maxlength="42"}}
-  <br />
+<div class="content">
+  <div class="titlePanel left">
+    <label>Game title: </label>
+    {{view Ember.TextField valueBinding="App.game.title" size="10" placeholder="insert name" maxlength="42"}}
+    <br />
 
-  <label>Instructions: </label>
-  {{view Ember.TextField valueBinding="App.game.instructions" placeholder="(140 chars max)" maxlength="140"}}
-  <br />
-
-  {{view PlayerView 
-    type="test"
-    canvasID="testCanvas"
-    playerBinding="player"
-    showHTML="true"
-    corsSave="true"
-  }}
-
-  <div class="row" style="margin-top:2em">
-    <div class="span6">
-      <button {{action "takePreviewSnapshot" target="App.gameController"}} class="btn">Take snapshot</button>
-    </div>
-    <div class="span2">
-      <button {{action "publishGame" target="App.gameController"}} class="btn-large btn-success">Publish game</button>    
-    </div>  
+    <label>Instructions: </label>
+    {{view Ember.TextArea valueBinding="App.game.instructions" placeholder="(140 chars max)" maxlength="140"}}
+    <br />
   </div>
 
-  <ul id="snapshots" class="thumbnails"></ul>
+  <div class="element left">
+    {{view PlayerView
+      type="test"
+      playerBinding="player"
+      showHTML="true"
+      corsSave="true"
+    }}
+  </div>
 </div>
+
+<div class="clear form-actions" style="margin:0;padding:17px 15px 18px">
+  
+  <button class="btn" {{action "cancel" target="App.gameController"}} style="margin-top:6px"> 
+    <i class="icon-arrow-left"></i> cancel </button>
+  
+  <button {{action "takePreviewSnapshot" target="App.gameController"}} class="btn" style="margin-top:6px">
+    <i class="icon-camera"></i> Take snapshot</button>
+  
+  <button {{action "publishGame" target="App.gameController"}} class="btn-large btn-success right"> 
+    Publish game</button>
+</div>
+
+<ul id="snapshots" class="thumbnails"></ul>

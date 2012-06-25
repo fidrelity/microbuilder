@@ -16,7 +16,7 @@
 #editor .editor_content {
    top:100px;
    /*width:1034px;*/
-   margin: 0 auto;
+   margin: 20px auto 0;
    z-index:3;
 }
 
@@ -27,62 +27,99 @@
 
 #editor ul.graphics li {
   float:left;
-  background:#ccc;
-  margin: 0 15px 15px 0;
-  border: 1px solid gray;
-  opacity:0.5;
+  margin: 0 16px 16px 0;
+  border: 2px solid #DDD;
+  position: relative;
 }
 
-#editor ul.graphics li.selected, #editor ul.graphics li:hover {
-  opacity:1.0;
+#editor ul.graphics li:hover {
+  border: 2px solid #888;
 }
 
-#editor #overlay .libaryGraphics {
-  margin-top : 15px;
+#editor .objectsLeft li .icon-move {
+  display: none;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-#editor #overlayWrapper {
+#editor .objectsLeft li:hover .icon-move {
+  display: block;
+}
+
+#editor ul.graphics li.selected {
+  border: 2px solid black;
+}
+
+#editor .overlayWrapper {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  display: none;
 }
 
-#editor #overlay {
+#editor .overlay {
   position: relative;
   margin: 0 auto;
-  top: 20%;
-  width: 724px;
+  top: 0px;
+  width: 754px;
   z-index: 10;
   background-color: #EEE;
-  border: 2px solid gray;
-  padding: 20px;
+  box-shadow: 2px 2px 10px #888;
+  padding: 0;
+  overflow: hidden;
 }
 
-#editor #overlay #overlayLeft {
-  height : 100%;
-  float : left;
+#editor .overlay .head {
+  padding: 8px 16px 4px;
+  background-color: #DDD;
 }
 
-#editor #overlay #objects {
+#editor .overlay .closeButton {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: #444;
+  color: white;
+  border: 0;
+  font-size: 18pt;
+  padding: 4px 8px 8px;
+  font-weight: bold;
+}
+
+#editor .overlay .closeButton:hover {
+  background-color: #333;
+}
+
+#editor .overlay .objectsLeft {
   background-color: white;
-  padding: 15px 0 0 15px;
+  width: 168px;
+  padding: 15px 0 15px 15px;
+}
+
+#editor .overlay .objectsLeft .noObject {
   margin-bottom: 15px;
-  width: 162px;
 }
 
-#editor #overlay #overlayRight {
-  float: left;
-  margin-left: 32px;
-  width: 515px;
+#editor .overlay .objectsRight {
+  padding: 15px;
 }
 
-#editor #overlay #done {
+#editor .overlay .content {
+  padding: 15px 0 0 15px;
+}
+
+#editor .overlay .element {
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+#editor .overlay #done {
   position : absolute;
-  bottom : 20px;
-  right : 20px;
+  bottom : 15px;
+  right : 15px;
 }
 
 #editor #behaviours, #editor #behaviours ul {
@@ -95,25 +132,80 @@
   background-color: white;
   margin-bottom: 15px;
   padding: 5px;
+  position: relative;
+  border-radius: 5px;
 }
 
-#editor #behaviours li li {
-  margin: 3px 0;
+#editor #behaviours .list {
+  width: 293px;
+}
+
+#editor #behaviours .triggers, #editor #behaviours .actions {
+  border: 1px solid;
+  border-radius: 5px;
+  min-height: 28px;
+  margin-bottom: 5px;
+}
+
+#editor #behaviours .triggers {
+  border-color: #5E9EE4;
+  background: #8BC9EE;
+}
+
+#editor #behaviours .actions {
+  border-color: #E76F6F;
+  background: #FFA5A5;
+}
+
+#editor #behaviours .triggers .element, #editor #behaviours .actions .element {
+  margin: 2px;
   padding: 0;
-  background: #EEE;
-  width: 189px;
   overflow: hidden;
+  border-radius: 5px;
+  border: 1px solid;
+  min-height: 28px;
 }
 
-#editor #behaviours li li .text {
-  padding: 6px;
+#editor #behaviours .triggers .element {
+  background: #EFF9FF;
+  border-color: #5E9EE4;
 }
 
-#editor #behaviours li .title {
+#editor #behaviours .actions .element {
+  background: #FFF2F2;
+  border-color: #E76F6F;
+}
+
+#editor #behaviours .actions .element .icon-move, 
+#editor #behaviours .triggers .element .icon-move {
+  display: none;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#editor #behaviours .actions .element:hover .icon-move, 
+#editor #behaviours .triggers .element:hover .icon-move {
+  display: block;
+}
+
+#editor #behaviours .text {
   padding: 6px;
-  width: 45px;
-  margin: 3px;
+  padding-left: 12px;
+}
+
+#editor #behaviours .title {
+  width: 47px;
+  margin: 9px 9px 0px;
   text-align: right;
+  font-weight: bold;
+}
+
+#editor #behaviours .panel {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 }
 
 #editor #fog {
@@ -147,10 +239,37 @@
   height:84px;
 }
 
-#editor .libraryGraphic {
+#editor .graphic {
   background-repeat:no-repeat;
+  background-color: #FFF;
   width:64px; 
   height:64px;
+}
+
+#editor .objectsRight .graphic {
+  border: 2px solid #CCC;
+}
+
+#editor .gameObject .name,  {
+  padding-top:2px;
+  font-size:0.8em;
+  text-align:center;
+  background-color: #DDD;
+}
+
+#editor .libraryGraphic {
+  background-repeat:no-repeat;
+  background-color: #FFF;
+}
+
+#editor .libraryGraphic .name {
+  position: absolute;
+  width:100%;
+  height: 18px;
+  padding-top: 4px;
+  bottom: 0;
+  text-align: center;
+  background-color: #DDD;
 }
 
 #editor .libraryControls > div {
@@ -162,12 +281,6 @@
   font-size: 11pt;
 }
 
-#editor .libraryName {
-  padding-top:2px;
-  font-size:0.8em;
-  text-align:center;
-}
-
 #editor .noObject {
   padding-bottom: 15px;
 }
@@ -176,107 +289,125 @@
 #editor .player {
   margin:auto;
   width: 836px;
-  height: 586px;
+  height: 514px;
   overflow:hidden;
 }
 
-/* Publish */
-#publishView label {
+#editor .overlay label {
   font-size:1.2em;
   font-weight:bold;
 }
 
-/* Snapshot */
-#snapshots {  margin-top:3em;}
-#snapshots li {  cursor:pointer;}
-#snapshots li.active {  background:#BBB;}
-
-#editor #overlay .actionstring {
-  font-size: 12pt;
-  padding-top: 12px;
+#editor .overlay .titlePanel {
+  width: 240px;
 }
 
-#editor #overlay .questionview {
+#editor .overlay #snapshots {
+  margin: 0;
+  padding: 0;
+}
+
+#editor #snapshots li { cursor:pointer; }
+#editor #snapshots li.active {  background:#BBB; }
+
+#editor .overlay #snapshots .thumbnail {
+  margin: 6px 0 0 6px;
+}
+
+
+#editor .overlay .actionContent .optionview {
+  margin: 10px 0 15px 15px;
+}
+
+#editor .overlay .actionstring {
+  margin: 7px 16px 3px;
+  font-size: 12pt;
+}
+
+#editor .overlay .questionview {
   clear: both;
-  margin: 15px 0;
-  padding: 5px 0;
-  border-bottom: 1px solid gray;
+  margin: 10px 0 5px;
+  padding: 5px 15px;
+  border-bottom: 1px solid #CCC;
   font-size: 12pt;
-  
 }
 
-#editor #overlay .optionview {
-  margin-bottom: 15px;
-}
-
-#editor #overlay .buttonview .btn {
+#editor .overlay .buttonview .btn {
   margin-right: 5px;
 }
 
-#editor #overlay .speedview {
+#editor .overlay .speedview {
   overflow: hidden;
 }
 
-#editor #overlay .speedview .slider {
+#editor .overlay .speedview .slider {
   margin: 5px 7px;
   width: 300px;
 }
 
-#editor #overlay .speedview .speed {
+#editor .overlay .speedview .speed {
   font-size: 12pt;
   margin: 5px 15px;
 }
 
-#editor #overlay .artview .btn {
+#editor .overlay .artview .btn {
   margin-top: 10px;
 }
 
-#editor #overlay .timeview {
+#editor .overlay .timeview {
   overflow: hidden;
 }
 
-#editor #overlay .timeview .time, #editor #overlay .timeview .slider {
+#editor .overlay .timeview .time, #editor .overlay .timeview .slider {
   float : left;
   margin : 5px 20px 0 0;
 }
 
-#editor #overlay .timeview .slider {
+#editor .overlay .timeview .slider {
   width: 300px;
 }
 
-#editor #overlay .timeview .time {
+#editor .overlay .timeview .time {
   width: 30px;
   font-size : 12pt;
 }
 
-#editor #overlay .frame_name {
-  position: absolute;
-  width:100%;
-  bottom: 2px;
-  text-align: center;
+#editor .overlay .frameview {
+  width: 490px;
+  margin-left: 15px;
+  overflow : auto;
+}
+
+#editor .overlay .boundingMessage {
+  margin: 6px 16px;
+  font-size: 12pt;
 }
 
 #editor .stageControls {
-  margin: 0 auto;
+  margin: auto 0;
   overflow: hidden;
-  padding: 6px 32px;
+  padding: 6px 45px;
 }
 
 #editor .stageControls #trash {
-  margin: 10px 0 0 100px;
+  margin: 12px 0 0;
 }
 
 #editor .duration {
   font-size: 11pt;
-  margin-top: 15px;
+  border: 1px solid #CCC;
+  padding: 11px 10px 9px;
+  background-color: whiteSmoke;
+  border-radius: 5px;
+  margin-left: 5px;
 }
 
 #editor .duration #slider {
   width: 200px;
+  margin: 2px 20px 0;
 }
 
 #editor .duration > div {
-  margin-left: 20px;
   width: 80px;
   text-align: right;
 }

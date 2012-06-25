@@ -10,14 +10,14 @@ var Loader = function( callback ) {
 
 Loader.prototype = {
   
-  loadImage : function( path ) {
-
+  loadImage : function( path, callback ) {
+    
     if ( !path ) {
       
       return;
       
     }
-
+    
     if ( this.imageCount >= 100 ) {
       
       console.error( 'Loader does not load more than 100 images' );
@@ -30,11 +30,11 @@ Loader.prototype = {
     var self = this;
     
     image.onload = function () {
-    
-      image.onload = null;
-    
+      
+      callback();
+      
       self.imageLoaded();
-    
+      
     }
     
     var isLocal = document.location.hostname === 'localhost' ? true : false;

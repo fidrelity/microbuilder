@@ -1,7 +1,5 @@
 var LibraryView = Ember.View.extend({
   
-  heading : 'Library',
-  
   templateName : 'editor/templates/library_template',
   
   didInsertElement : function() {
@@ -22,12 +20,10 @@ var LibraryView = Ember.View.extend({
   
 });
 
-// <img {{bindAttr src="content.imagePath"}} />
-
 var GraphicsView = Ember.CollectionView.extend({
   
   tagName : 'ul',
-  classNames : ['graphics', 'libaryGraphics'],
+  classNames : ['graphics'],
   
   contentBinding : 'App.libraryController.display',
   
@@ -45,7 +41,7 @@ var GraphicsView = Ember.CollectionView.extend({
     
     tagName : 'li',
     
-    classNames : ['graphic'],
+    classNames : ['frame_graphic', 'libraryGraphic'],
     
     templateName : 'editor/templates/graphic_template',
     
@@ -56,21 +52,23 @@ var GraphicsView = Ember.CollectionView.extend({
     },
     
     divStyle : function() {
-  
-      var c = this.content;
-  
+      
+      var c = this.content,
+        max = App.libraryController.size.max,
+        offset = { x: Math.floor( ( max - c.frameWidth ) * 0.5 ), y: Math.floor( ( max - c.frameHeight ) * 0.5 ) };
+      
       if ( c.isBackground ) {
         
         return "background-image:url(" + c.imagePath + ");background-size:210px 130px;width:210px;height:130px;";
         
       } else {
         
-        return "background-image:url(" + c.imagePath + ");width:" + c.frameWidth + "px;height:" + c.frameHeight + "px;";
+        return "background-image:url(" + c.imagePath + ");" + 
+          "width:" + c.frameWidth + "px;height:" + c.frameHeight + "px;" +
+          "position:relative;top:" + offset.y + "px;left:" + offset.x + "px";
         
       }
-      
-      return 
-  
+    
     }.property()
     
   })

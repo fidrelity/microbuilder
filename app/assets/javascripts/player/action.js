@@ -1,13 +1,28 @@
-var MoveAction = function() {
+var MoveAction = function( type, gameObject, speed ) {
   
-  this.gameObject = null;
+  this.gameObject = gameObject;
+  this.speed = speed;
+  
   this.target = null;
+  this.offset = new Vector();
   this.area = null;
   
   this.random = false;
   this.direction = null;
   
-  this.speed;
+  if ( type === 'moveIn' ) {
+    
+    this.execute = this.executeMoveIn;
+    
+  } else if ( type === 'moveTo' ) {
+    
+    this.execute = this.executeMoveTo;
+    
+  } else if ( type === 'jumpTo' ) {
+    
+    this.execute = this.executeJumpTo;
+    
+  }
   
 };
 
@@ -17,13 +32,13 @@ MoveAction.prototype = {
   
   executeJumpTo : function() {
     
-    if ( this.area) {
+    if ( this.area ) {
       
       this.gameObject.movement.jump( this.area );
       
     } else {
     
-      this.gameObject.setPosition( this.target );
+      this.gameObject.movement.setPosition( this.target.add( this.offset ) );
       
     }
     
@@ -31,7 +46,7 @@ MoveAction.prototype = {
   
   executeMoveTo : function() {
     
-    this.gameObject.setTarget( this.target, this.speed );
+    this.gameObject.movement.setTarget( this.target, this.offset, this.speed );
     
   },
   
@@ -53,7 +68,7 @@ MoveAction.prototype = {
       
     }
     
-    this.gameObject.setDirection( dir, this.speed );
+    this.gameObject.movement.setDirection( dir, this.speed );
     
   }
   
@@ -63,17 +78,22 @@ var RoamAction = function( gameObject, mode, area, speed ) {
   
   this.execute = function() {
     
-    gameObject.roam( mode, area, speed );
+    gameObject.movement.roam( mode, area, speed );
     
   };
   
 };
 
-var SwapAction = function( one, two ) {
+var SwapAction = function( objectOne, objectTwo ) {
   
   this.execute = function() {
     
-    var swap = one.clone();
+    var one = objectOne.movement.position,
+      two = objectTwo.movement.position,
+      swap = one.clone();
+    
+    objectOne.movement.stop();
+    objectTwo.movement.stop();
     
     one.copy( two );
     two.copy( swap );
@@ -93,17 +113,35 @@ var StopAction = function( gameObject ) {
 };
 
 
-var ArtAction = function() {
+var ArtAction = function( type, gameObject, frame, frame2, mode, speed ) {
   
-  this.gameObject;
+  this.gameObject = gameObject;
   
-  this.frame;
-  this.frame2;
+  this.frame = frame;
+  this.frame2 = frame2;
   
-  this.mode; // ['loop', 'ping-pong', 'once']
-  this.speed;
+  this.mode = mode; // ['loop', 'ping-pong', 'once']
+  this.speed = speed;
   
-  this.graphic
+  this.graphic;
+  
+  if ( type === 'frame' ) {
+    
+    this.execute = this.executeFrame;
+    
+  } else if ( type === 'play' ) {
+    
+    this.execute = this.executePlay;
+    
+  } else if ( type === 'stop' ) {
+    
+    this.execute = this.executeStop;
+    
+  } else if ( type === 'change' ) {
+    
+    this.execute = this.executeChange;
+    
+  }
   
 };
 
@@ -113,13 +151,13 @@ ArtAction.prototype = {
   
   executeFrame : function() {
     
-    this.gameObject.setFrame( this.frame );
+    this.gameObject.animation.setFrame( this.frame );
     
   },
   
   executePlay : function() {
     
-    this.gameObject.playAnimation( this.frame, this.frame2, this.mode, this.speed );
+    this.gameObject.animation.play( this.frame, this.frame2, this.mode, this.speed );
     
   },
   
@@ -131,7 +169,7 @@ ArtAction.prototype = {
   
   executeStop : function() {
     
-    this.gameObject.stopAnimation();
+    this.gameObject.animation.stop();
     
   }
   
@@ -141,8 +179,11 @@ var WinAction = {
   
   execute : function( game ) {
     
-    game.player.fsm.win();
-    game.player.fsm.winTrial();
+    if ( !game.isLost ) {
+      
+      game.isWon = true;
+      
+    }
     
   }
   
@@ -152,8 +193,27 @@ var LoseAction = {
   
   execute : function( game ) {
     
-    game.player.fsm.lose();
-    game.player.fsm.loseTrial();
+    if ( !game.isWon ) {
+      
+      game.isLost = true;
+      
+    }
+    
+  }
+  
+};
+
+var EndAction = {
+  
+  execute : function( game ) {
+    
+    if ( !game.isWon ) {
+      
+      game.isLost = true;
+      
+    }
+    
+    game.player.fsm.end();
     
   }
   

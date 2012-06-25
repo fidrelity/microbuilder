@@ -1,42 +1,52 @@
-<div class="libraryControls">
-  <div class="btn-group left" data-toggle="buttons-radio">
+<div class="content">
+  <div class="libraryControls element">
+    <div class="btn-group left" data-toggle="buttons-radio">
 
-    <button id="ownButton" class="btn" {{action "showOwns" target="App.libraryController"}}>own</button>
-    <button id="publicButton" class="btn" {{action "showPublics" target="App.libraryController"}}>public</button>
+      <button id="ownButton" class="btn" {{action "showOwns" target="App.libraryController"}}>
+        <i class="icon-user"></i> own</button>
+      <button id="publicButton" class="btn" {{action "showPublics" target="App.libraryController"}}>
+        <i class="icon-globe"></i> public</button>
+
+    </div>
+
+    <div class="left">
+
+      {{#unless App.libraryController.showBackground}}
+
+        {{view Ember.Select 
+          viewName="select"
+          contentBinding="App.libraryController.sizes"
+          optionLabelPath="content.string"
+          optionValuePath="content.name"
+          selectionBinding="App.libraryController.size"
+        }}
+
+      {{/unless}}
+
+    </div>
+
+    <div class="left libraryPage">page {{App.libraryController.page}}</div>
+
+    <div class="btn-group left">
+
+      <button class="btn" {{action "previous" target="App.libraryController"}}>
+        <i class="icon-arrow-left"></i> previous</button>
+      <button class="btn" {{action "next" target="App.libraryController"}}>
+        next <i class="icon-arrow-right"></i></button>
+
+    </div>
 
   </div>
 
-  <div class="left">
+  <div class="clear"></div>
 
-    {{#unless App.libraryController.showBackground}}
+  {{view GraphicsView}}
 
-      {{view Ember.Select 
-        viewName="select"
-        contentBinding="App.libraryController.sizes"
-        optionLabelPath="content.string"
-        optionValuePath="content.name"
-        selectionBinding="App.libraryController.size"
-      }}
-
-    {{/unless}}
-
-  </div>
-
-  <div class="left libraryPage">page {{App.libraryController.page}}</div>
-
-  <div class="btn-group left">
-
-    <button class="btn" {{action "previous" target="App.libraryController"}}>previous</button>
-    <button class="btn" {{action "next" target="App.libraryController"}}>next</button>
-
-  </div>
+  <div class="clear"></div>
 
 </div>
 
-<div class="clear"></div>
-
-{{view GraphicsView}}
-
-<div class="clear"></div>
-
-<button class="btn" {{action "cancel" target="App.gameController"}}> cancel </button>
+<div class="form-actions" style="margin:0;padding:17px 15px 18px">
+  <button class="btn" {{action "cancel" target="App.gameController"}}> 
+    <i class="icon-arrow-left"></i> cancel </button>
+</div>

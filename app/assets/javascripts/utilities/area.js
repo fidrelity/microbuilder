@@ -1,16 +1,27 @@
+//= require ./../utilities/utilities
+//= require ./vector
+
 var Area = function( x, y, width, height ) {
   
-  this.set( x, y, width, height );
+  return this.set(
+    x || 0,
+    y || 0,
+    width || 0,
+    height || 0
+  );
   
 };
 
-Area.prototype = {
+Area.prototype = new Vector();
+Area.prototype.constructor = Vector;
+
+extend( Area.prototype, {
   
   set : function( x, y, width, height ) {
     
     this.x = x;
     this.y = y;
-  
+    
     this.width = width;
     this.height = height;
     
@@ -22,6 +33,15 @@ Area.prototype = {
     
     this.x = x;
     this.y = y;
+    
+    return this;
+    
+  },
+  
+  setCenter : function( x, y ) {
+    
+    this.x = x - this.width * 0.5;
+    this.y = y - this.height * 0.5;
     
     return this;
     
@@ -63,51 +83,63 @@ Area.prototype = {
     
   },
   
-  overlaps : function( area ) {
+  overlaps : function( other ) {
     
-    var x = this.x < area.x ? [this, area] : [area, this],
-      y = this.y < area.y ? [this, area] : [area, this];
+    if ( other instanceof Area ) {
+      
+      return this.overlapsArea( other );
+      
+    } else {
+      
+      return other.overlapsArea( this );
+      
+    }
     
-    return ( x[0].x + x[0].width > x[1].x && y[0].y + y[0].height > y[1].y );
+  },
+  
+  overlapsArea : function( area ) {
+    
+    return (
+      this.x + this.width > area.x &&
+      this.y + this.height > area.y &&
+      this.x < area.x + area.width &&
+      this.y < area.y + area.height
+    );
     
   },
   
   draw : function( ctx ) {
     
     ctx.strokeRect( this.x, this.y, this.width, this.height );
-    // ctx.dashedRect( this.x, this.y, this.width, this.height, 7 );
     
   },
   
   move : function( vec ) {
     
-    this.x += vec.x;
-    this.y += vec.y;
+    return this.addSelf( vec );
     
   },
   
   resize : function( vec ) {
     
-    this.width += vec.x;
-    this.height += vec.y;
+    this.width = vec.x - this.x;
+    this.height = vec.y - this.y;
     
   },
   
   leavesArea : function( area ) {
     
-    if ( !this.contains( area ) ) {
+    if ( !area.contains( this ) ) {
       
-      return this.x > area.x ? 'x' : 'y';
+      return this.x < area.x ? 'x' : 'y';
       
-    } else if ( !this.contains( { x : area.x + area.width, y : area.y + area.height } ) ) {
+    } else if ( !area.contains( { x : this.x + this.width, y : this.y + this.height } ) ) {
       
-      return this.x + this.width < area.x + area.width ? 'width' : 'height';
-      
-    } else {
-      
-      return false;
+      return this.x + this.width > area.x + area.width ? 'width' : 'height';
       
     }
+    
+    return false;
     
   },
   
@@ -125,17 +157,17 @@ Area.prototype = {
       
     }
     
+    this.x = Math.floor( this.x );
+    this.y = Math.floor( this.y );
+    
+    this.width = Math.floor( this.width );
+    this.height = Math.floor( this.height );
+    
   },
   
   string : function() {
     
     return '( ' + this.x + ' | ' + this.y + ' | ' + this.width + ' | ' + this.height + ' )';
-    
-  },
-  
-  log: function() {
-    
-    console.log( this.string() );
     
   },
   
@@ -150,4 +182,4 @@ Area.prototype = {
     
   }
   
-};
+});

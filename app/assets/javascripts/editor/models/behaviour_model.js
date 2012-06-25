@@ -1,9 +1,13 @@
 var BehaviourModel = Ember.Object.extend({
   
+  ID : null,
+  
   triggers : null,
   actions : null,
   
   init : function() {
+    
+    this.ID = App.game.behaviourCounter++;
     
     this.set( 'triggers', [] );
     this.set( 'actions', [] );
@@ -30,23 +34,36 @@ var BehaviourModel = Ember.Object.extend({
     
   },
   
-  addAction : function( action ) {
+  addAction : function( action, oldAction, actions ) {
     
-    action.parent = this;
+    var i;
     
-    this.actions.push( action );
+    actions = actions || this.actions;
+    
+    if ( oldAction ) {
+      
+      i = actions.indexOf( oldAction );
+      
+      actions.removeAt( i );
+      actions.insertAt( i, action );
+      
+    } else {
+      
+      actions.addObject( action );
+      
+    }
+    
+    action.set( 'parent', this );
     
   },
   
-  addTrigger : function( trigger ) {
+  addTrigger : function( trigger, oldTrigger ) {
     
-    trigger.parent = this;
-    
-    this.triggers.push( trigger );
+    this.addAction( trigger, oldTrigger, this.triggers );
     
   },
   
-  getData : function( graphicIDs ) {
+  getData : function( graphics ) {
     
     var data, i;
     
@@ -62,7 +79,7 @@ var BehaviourModel = Ember.Object.extend({
     
       for ( i = 0; i < this.actions.length; i++ ) {
       
-        data.actions.push( this.actions[i].getData( graphicIDs ) );
+        data.actions.push( this.actions[i].getData( graphics ) );
       
       }
     
@@ -89,6 +106,42 @@ var BehaviourModel = Ember.Object.extend({
       this.triggers.removeObject( triggers[i] );
       
     }
+    
+  },
+  
+  insertAction : function( pos, action ) {
+    
+    action.set( 'parent', this );
+    
+    this.actions.insertAt( pos, action );
+    
+  },
+  
+  removeAction : function( pos ) {
+    
+    var action = this.actions[pos];
+    
+    this.actions.removeAt( pos );
+    
+    return action;
+    
+  },
+  
+  insertTrigger : function( pos, trigger ) {
+    
+    trigger.set( 'parent', this );
+    
+    this.triggers.insertAt( pos, trigger );
+    
+  },
+  
+  removeTrigger : function( pos ) {
+    
+    var trigger = this.triggers[pos];
+    
+    this.triggers.removeAt( pos );
+    
+    return trigger;
     
   }
   

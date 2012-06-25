@@ -9,266 +9,630 @@ var ActionController = Ember.Object.extend({
   mode : 'Action',
 
   action : null,
+  actionCopy : null,
+  
+  actionIDs : [
+    
+    'moveInDirection', 'moveInRandom', 'moveInLocation', 'moveInObject', // 'moveInClick',
+    
+    'moveToLocation', 'moveToObject', // 'moveToClick',
+    
+    'jumpToLocation', 'jumpToObject', 'jumpToArea', // 'jumpToClick',
+    
+    'moveRoam', 'moveSwap', 'moveStop',
+    
+    'artToFrame', 'artPlay', 'artStop', 'artChange',
+    
+    // 'counterSet', 'counterUp', 'counterDown'
+    
+    'gameWin', 'gameLose', 'gameEnd',
+    
+  ],
+  
+  triggerIDs : [
+  
+    'clickSelf', 'clickObject', 'clickArea', // 'clickStage',
+    
+    'touchObject', 'touchArea',
+    'overlapObject', 'overlapArea',
+    
+    'timeExact', 'timeRandom',
+    
+    // 'artHasFrame', 'artGetsFrame',
+    // 'artHasGraphic', 'artGetsGraphic',
+    
+    // 'counterEqualsNumber', 'counterEqualsObject',
+    // 'counterGreaterNumber', 'counterGreaterObject',
+    // 'counterSmallerNumber', 'counterSmallerObject',
+    
+    'gameIsWon', 'gameWasWon',
+    'gameIsLost', 'gameWasLost',
+    'gameStart'
+  
+  ],
   
   behaviourBinding : 'App.behaviourController.current',
   
-  optionViews : [],
+  actionOption : null,
+  triggerOption : null,
+  
+  optionViews : null,
+  
+  choices : [],
   
   showSaveButton : false,
   
-  reset : function( mode ) {
+  init : function() {
     
-    var buttons, question;
+    var i;
     
-    this.set( 'action', null );
+    for ( i = 0; i < this.actionIDs.length; i++ ) {
+      
+      this.choices.addObject( Choice.create({ ID : this.actionIDs[i] }) );
+      
+    }
+    
+    for ( i = 0; i < this.triggerIDs.length; i++ ) {
+      
+      this.choices.addObject( Choice.create({ ID : this.triggerIDs[i] }) );
+      
+    }
+    
+    this.set( 'actionOption', ButtonOption.create({ 
+      name: 'action', 
+      question: 'Select the type of action',
+      buttons: ['move', 'art', 'game'], // 'counter'],
+      
+      decisions: [
+        
+        // move
+        
+        ButtonOption.create({ 
+          name: 'move', 
+          question: 'What type of movement?',
+          buttons: ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop'],
+          
+          decisions: [
+            
+            // moveIn
+            
+            ButtonOption.create({ 
+              name: 'moveIn', 
+              question: 'How should it move directional?',
+              buttons: ['in direction', 'random direction', 'to location', 'to object'], 
+              
+              decisions: [
+                
+                DirectionOption.create({ 
+                  name: 'moveInDirection',
+                  question: 'Drag it to set the direction',
+                  
+                  child: SpeedOption.create({ 
+                    name: 'moveInDirectionSpeed',
+                    question: 'Set the speed of the movement',
+                    child: SaveOption.create({ choiceID: 'moveInDirection' })
+                  })
+                }),
+                
+                SpeedOption.create({ 
+                  name: 'moveInRandomSpeed',
+                  question: 'Set the speed of the movement',
+                  child: SaveOption.create({ choiceID: 'moveInRandom' })
+                }),
+                
+                LocationOption.create({ 
+                  name: 'moveInLocation', 
+                  question: 'Drag it to the location in which direction it should move',
+                  
+                  child: SpeedOption.create({ 
+                    name: 'moveInLocationSpeed',
+                    question: 'Set the speed of the movement',
+                    child: SaveOption.create({ choiceID: 'moveInLocation' })
+                  })
+                }),
+                
+                ObjectOption.create({ 
+                  name: 'moveInObject',
+                  question: 'Choose the object in which direction it should move',
+                  
+                  decision: SpeedOption.create({ 
+                    name: 'moveInObjectSpeed',
+                    question: 'Set the speed of the movement',
+                    child: SaveOption.create({ choiceID: 'moveInObject' })
+                  })
+                })
+                
+              ]
+            }),
+            
+            // moveTo
+            
+            ButtonOption.create({ 
+              name: 'moveTo', 
+              question: 'Where should it move?',
+              buttons: ['to location', 'to object'],
+              
+              decisions: [
+                
+                LocationOption.create({ 
+                  name: 'moveToLocation', 
+                  question: 'Drag it to the location where it should move',
+                  
+                  child: SpeedOption.create({ 
+                    name: 'moveToLocationSpeed',
+                    question: 'Set the speed of the movement',
+                    child: SaveOption.create({ choiceID: 'moveToLocation' })
+                  })
+                }),
+                
+                ObjectOption.create({ 
+                  name: 'moveToObject', 
+                  question: 'Choose to which other object it should move',
+                  
+                  decision: OffsetOption.create({ 
+                    name: 'moveToOffset', 
+                    question: 'Drag the object to define the offset',
+                    
+                    child: SpeedOption.create({ 
+                      name: 'moveToObjectSpeed',
+                      question: 'Set the speed of the movement',
+                      child: SaveOption.create({ choiceID: 'moveToObject' })
+                    })
+                  })
+                })
+                
+              ]
+            }),
+            
+            // jumpTo
+            
+            ButtonOption.create({ 
+              name: 'jumpTo', 
+              question: 'Where should it jump?',
+              buttons: ['to location', 'to object', 'to area'],
+              
+              decisions: [
+                
+                LocationOption.create({ 
+                  name: 'jumpToLocation', 
+                  question: 'Drag it to the location where it should jump',
+                  child: SaveOption.create({ choiceID: 'jumpToLocation' })
+                }),
+                
+                ObjectOption.create({ 
+                  name: 'jumpToObject', 
+                  question: 'Choose to which other object it should jump',
+                  
+                  decision: OffsetOption.create({ 
+                    name: 'jumpToOffset', 
+                    question: 'Drag the object to define the offset',
+                    child: SaveOption.create({ choiceID: 'jumpToObject' })
+                  })
+                }),
+                
+                AreaOption.create({ 
+                  name: 'jumpToArea', 
+                  question: 'Select the area where it should randomly jump',
+                  decision: SaveOption.create({ choiceID: 'jumpToArea' })
+                })
+                
+              ]
+            }),
+            
+            // roam
+            
+            AreaOption.create({ 
+              name: 'roam', 
+              question: 'Select the area where it should roam in',
+              
+              decision: ModeOption.create({ 
+                name: 'roamMode', 
+                question: 'Which type of roaming?',
+                buttons: ['wiggle', 'reflect', 'insect', 'bounce'],
+                modes: ['wiggle', 'reflect', 'insect', 'bounce'],
+                
+                decision: SpeedOption.create({ 
+                  name: 'roamSpeed',
+                  question: 'Set the speed of the movement',
+                  child: SaveOption.create({ choiceID: 'moveRoam' })
+                })
+              })
+            }),
+            
+            // swap
+            
+            ObjectOption.create({ 
+              name: 'moveSwap', 
+              question: 'Choose the object to swap position',
+              decision: SaveOption.create({ choiceID: 'moveSwap' })
+            }),
+            
+            // stop
+            
+            SaveOption.create({ choiceID: 'moveStop' })
+            
+          ]
+        }),
+        
+        // art
+        
+        ButtonOption.create({ 
+          name: 'art', 
+          question: 'What should the art do?',
+          buttons: ['to frame', 'play', 'stop', 'change'],
+          
+          decisions: [
+            
+            // to frame
+            
+            FrameOption.create({
+              name: 'toFrame', 
+              question : 'Choose the frame it should display',
+              decision: SaveOption.create({ choiceID: 'artToFrame' })
+            }),
+            
+            // play
+            
+            FrameOption.create({ 
+              name: 'play', 
+              question : 'Choose the start frame of the animation',
+              
+              decision: FrameOption.create({ 
+                name: 'play2', 
+                mode: 'frame2', 
+                question : 'Choose the end frame of your animation',
+                
+                decision: ModeOption.create({ 
+                  name: 'playMode',                   
+                  question: 'Choose the animation mode',
+                  
+                  buttons:  ['loop', 'ping-pong', 'once'], 
+                  modes:  ['loop', 'ping-pong', 'once'], 
+                  
+                  decision: SpeedOption.create({ 
+                    name: 'playSpeed', 
+                    question: 'Set the speed of the animation',
+                    child: SaveOption.create({ choiceID: 'artPlay' })
+                  })
+                })
+              })
+            }),
+            
+            // stop
+            
+            SaveOption.create({ choiceID: 'artStop' }),
+            
+            // change
+            
+            ArtOption.create({ 
+              name: 'artChange', 
+              question: 'Search in the libray for your graphic',
+              decision: SaveOption.create({ choiceID: 'artChange' })
+            })
+          ]
+        }),
+        
+        // game
+        
+        ButtonOption.create({ 
+          name: 'game', 
+          question: 'Choose what should happen to the game',
+          buttons: ['win', 'lose', 'end'],
+          
+          decisions: [
+            SaveOption.create({ choiceID: 'gameWin' }),
+            SaveOption.create({ choiceID: 'gameLose' }),
+            SaveOption.create({ choiceID: 'gameEnd' })
+          ] 
+        })
+        
+      ]
+    }));
+    
+    this.set( 'triggerOption', ButtonOption.create({ 
+      name: 'trigger', 
+      question: 'Select the type of trigger',
+      buttons: ['click', 'contact', 'time', 'game'], // 'art', 'number'],
+      
+      decisions: [
+        
+        // click
+        
+        ButtonOption.create({
+          name: 'click',
+          question: 'Click on what?',
+          buttons: ['self', 'object', 'area'],
+          
+          decisions: [
+            
+            // self
+            
+            SaveOption.create({ choiceID: 'clickSelf' }),
+            
+            // object
+            
+            ObjectOption.create({
+              name: 'clickObject',
+              question: 'Choose the object to trigger the click',
+              
+              decision: SaveOption.create({ choiceID: 'clickObject' })
+            }),
+            
+            // area
+            
+            AreaOption.create({
+              name: 'clickArea',
+              question: 'Select the area to trigger the click',
+              
+              decision : SaveOption.create({ choiceID: 'clickArea' })
+            })
+            
+          ]
+          
+        }),
+        
+        // contact
+        
+        ButtonOption.create({
+          name: 'contact',
+          question: 'Trigger a touch or overlapping?', 
+          buttons: ['touch', 'overlap'], 
+          decisions: [
+            
+            // touch
+            
+            ButtonOption.create({
+              name: 'touch',
+              question: 'Touches what?',
+              buttons: ['object', 'area'],
+              
+              decisions: [
+                
+                // object
+                
+                ObjectOption.create({
+                  name: 'touchObject',
+                  question: 'Choose the object to trigger the touch',
+                  
+                  decision: SaveOption.create({ choiceID: 'touchObject' })
+                }),
+                
+                // area
+                
+                AreaOption.create({
+                  name: 'touchArea',
+                  question: 'Select the area to trigger the touch',
+                  
+                  decision : SaveOption.create({ choiceID: 'touchArea' })
+                })
+                
+              ]
+            }),
+            
+            // overlap
+            
+            ButtonOption.create({
+              name: 'overlap',
+              question: 'Overlaps what?',
+              buttons: ['object', 'area'],
+              
+              decisions: [
+                
+                // object
+                
+                ObjectOption.create({
+                  name: 'overlapObject',
+                  question: 'Choose the object to trigger the overlap',
+                  
+                  decision: SaveOption.create({ choiceID: 'overlapObject' })
+                }),
+                
+                // area
+                
+                AreaOption.create({
+                  name: 'overlapArea',
+                  question: 'Select the area to trigger the overlap',
+                  
+                  decision : SaveOption.create({ choiceID: 'overlapArea' })
+                })
+                
+              ]
+            })
+            
+          ]
+        }),
+        
+        // time
+        
+        ButtonOption.create({
+          name: 'time',
+          question: 'Trigger at an excact time or randomly in a range?', 
+          buttons: ['exactly', 'randomly'], 
+          
+          decisions: [
+            
+            // exact
+            
+            TimeOption.create({
+              name: 'timeExact',
+              question: 'Drag the handle to the time in the game',
+              child: SaveOption.create({ choiceID: 'timeExact' })
+            }),
+            
+            // random
+            
+            TimeOption.create({
+              name: 'timeRandom',
+              mode: 'random',
+              question: 'Drag the handles to set the time range',
+              child: SaveOption.create({ choiceID: 'timeRandom' })
+            })
+            
+          ]
+        }),
+        
+        // game
+        
+        ButtonOption.create({
+          name: 'game',
+          question: 'Trigger which game state?', 
+          buttons: ['won', 'lost'], 
+          
+          decisions: [
+            
+            // won
+            
+            ButtonOption.create({
+              name: 'gameWon',
+              question: 'Trigger which event?', 
+              buttons: ['is won', 'was won'], 
+              
+              decisions: [
+                
+                SaveOption.create({ choiceID: 'gameIsWon' }),
+                SaveOption.create({ choiceID: 'gameWasWon' })
+                
+              ]
+            }),
+            
+            // lost
+            
+            ButtonOption.create({
+              name: 'gameLost',
+              question: 'Trigger which event?', 
+              buttons: ['is lost', 'was lost'], 
+              
+              decisions: [
+                
+                SaveOption.create({ choiceID: 'gameIsLost' }),
+                SaveOption.create({ choiceID: 'gameWasLost' })
+                
+              ]
+            }),
+            
+            // start <hidden>
+            
+            SaveOption.create({ choiceID: 'gameStart' })
+            
+          ]
+        }),
+        
+      ]
+    }));
+  },
+  
+  start : function() {
+    
+    this.actionOption.setParents( null );
+    this.triggerOption.setParents( null );
+    
+    this.actionOption.setChoices();
+    this.triggerOption.setChoices();
+    
+  },
+  
+  reset : function( mode, action ) {
+    
+    mode = mode || ( action.decisions[0].name === 'action' ? 'Action' : 'Trigger' );
+    
+    this.set( 'action', action ? action.clone() : ActionTriggerModel.create() );
+    this.set( 'actionCopy', action );
     
     this.set( 'mode', mode );
     this.set( 'showSaveButton', false );
     
-    this.set( 'optionViews', [] );
+    this.set( 'optionViews', Ember.ContainerView.create({
+      destroy : function() {
+        if ( !App.actionController.action.isSearching ) {
+          this._super();
+        } else {
+          App.actionController.action.set( 'isSearching', false );
+        }
+      }
+    }));
     
-    if ( mode === 'Action' ) {
+    if ( action ) {
       
-      // buttons = ['move', 'art', 'number', 'win/lose'];
-      buttons = ['move', 'art', 'win/lose'];
-      question = 'Select the type of action';
-
-    
-    } else {
+      action.choice.option.reInsert( this.action );
       
-      // buttons = ['click', 'contact', 'time', 'art', 'number', 'win/loss'];
-      buttons = ['click', 'contact', 'time'];
-      question = 'Select the type of trigger';
-    
-    }
-    
-    this.addOption( question, ButtonView.create({
-      observer : this,
-      content : buttons,
-      disable : false
-    }), 0 );
-    
-  },
-  
-  choose : function( name ) {
-    
-    if ( this.get( name ) ) {
+    } else if ( mode === 'Action' ) {
       
-      this.get( name ).call( this );
+      this.actionOption.insert( this.action );
       
     } else {
       
-      console.log( 'unknown action/trigger name: ' + name );
+      this.triggerOption.insert( this.action );
       
     }
     
   },
   
-  updateDepth : function( depth ) {
+  updateDepth : function( parentOption ) {
     
-    if ( typeof depth === 'undefined' ) {
+    var childs = this.optionViews.get( 'childViews' ),
+      decisions = this.action.decisions,
+      depth = decisions.indexOf( parentOption ) + 1;
+    
+    if ( decisions.length === depth ) {
       
-      console.error( 'option has no depth' );
       return;
       
     }
     
-    while ( this.optionViews.length > depth * 2 ) {
+    this.action.set( 'decisions', decisions.splice( 0, depth ) );
+    
+    while ( childs.length > depth * 2 ) {
       
-      this.optionViews.pop().remove();
+      childs[childs.length - 1].removeFromParent();
+      
       this.set( 'showSaveButton', false );
       
     }
     
   },
   
-  addOption : function( question, optionView, depth ) {
+  addOption : function( question, optionView ) {
     
-    this.updateDepth( depth );
-    
-    var questionView = QuestionView.create({ content : question });
-    questionView.appendTo( '#actionContent' );
-    
-    optionView.appendTo( '#actionContent' );
-    
-    this.optionViews.push( questionView, optionView );
+    this.optionViews.get( 'childViews' ).pushObject( QuestionView.create({ content : question }) );
+    this.optionViews.get( 'childViews' ).pushObject( optionView );
     
   },
   
-  addButtonOption : function( question, buttons, observer, depth ) {
+  selectGraphic : function( graphic ) {
     
-    this.addOption( question, ButtonView.create({
-      observer : observer,
-      content : buttons
-    }), depth);
+    var childs = this.optionViews.get( 'childViews' );
     
-  },
-  
-  addPlayerOption : function( question, type, observer, depth ) {
-    
-    this.addOption( question, PlayerView.create({
-      observer : observer,
-      type : type,
-      gameObject : App.gameObjectsController.current
-    }), depth );
+    childs[childs.length - 1].observer.decide( graphic );
     
   },
   
-  addDirectionOption : function( question, observer, depth ) {
+  getChoice : function( choiceID ) {
     
-    this.addPlayerOption( question, 'direction', observer, depth );
+    var choice = this.choices.findProperty( 'ID', choiceID );
     
-  },
-  
-  addLocationOption : function( question, observer, depth ) {
+    if ( !choice ) {
+      
+      console.error( 'Unknow choice name: ' + choiceID );
+      
+    }
     
-    this.addPlayerOption( question, 'location', observer, depth );
-    
-  },
-  
-  addAreaOption : function( question, observer, depth ) {
-    
-    this.addPlayerOption( question, 'area', observer, depth );
+    return choice;
     
   },
   
-  addObjectsOption : function( question, observer, depth ) {
-    
-    this.addOption( question, GameObjectsView.create({
-      observer : observer,
-      contentBinding : 'App.gameObjectsController.others',
-    }), depth );
-    
-  },
-  
-  addTimeOption : function( question, type, observer, depth ) {
-    
-    this.addOption( question, TimeView.create({
-      observer : observer,
-      type : type
-    }), depth );
-    
-  },
-  
-  addFrameOption : function( question, type, observer, depth ) {
-    
-    this.addOption( question, FrameView.create({
-      observer : observer,
-      type : type,
-      graphic : App.gameObjectsController.current.graphic
-    }), depth );
-    
-  },
-  
-  addSpeedOption : function( question, observer, depth ) {
-    
-    this.addOption( question, SpeedView.create({
-      observer : observer
-    }), depth );
-    
-  },
-  
-  addArtOption : function( question, observer, depth ) {
-    
-    this.addOption( question, ArtView.create({
-      observer : observer
-    }), depth );
-    
-  },
-  
-  move : function() {
-  
-    this.set( 'action', MoveActionModel.create() );
-    
-    this.addButtonOption( 
-      'What type of movement?', 
-      ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop'],
-      this.action,
-      1
-    );
-  
-  },
-  
-  art : function() {
-    
-    this.set( 'action', ArtActionModel.create() );
-    
-    this.addButtonOption( 
-      'What should the art do?', 
-      ['to frame', 'play', 'stop', 'change' ],
-      this.action,
-      1
-    );
-    
-  },
-
-  'win/lose' : function() {
-    
-    this.set( 'action', WinLoseActionModel.create() );
-    
-    this.addButtonOption( 
-      'Win or lose?', 
-      ['win', 'lose'], 
-      this.action,
-      1
-    );
-    
-  },
-  
-  click : function() {
-    
-    this.set( 'action', ClickTriggerModel.create() );
-    
-    this.addButtonOption( 
-      'Click on what?', 
-      ['self', 'object', 'area'], 
-      this.action,
-      1
-    );
-    
-  },
-
-  contact : function() {
-    
-    this.set( 'action', ContactTriggerModel.create() );
-    
-    this.addButtonOption( 
-      'Trigger a touch or overlapping?', 
-      ['touch', 'overlap'], 
-      this.action,
-      1
-    );
-    
-  },
-  
-  time : function() {
-    
-    this.set( 'action', TimeTriggerModel.create() );
-    
-    this.addButtonOption( 
-      'Trigger at an excact time or randomly in a range?', 
-      ['exactly', 'randomly'], 
-      this.action,
-      1
-    );
-    
-  },
-
   save : function() {
-    
-    var action = this.get( 'action' );
     
     if ( this.mode === 'Action' ) {
     
-      this.get( 'behaviour' ).addAction( action );
+      this.behaviour.addAction( this.action, this.actionCopy );
     
     } else {
     
-      this.get( 'behaviour' ).addTrigger( action );
+      this.behaviour.addTrigger( this.action, this.actionCopy );
     
     }
     
-    App.mainView.show( ObjectsView );
+    App.mainView.show( 'objectsView' );
     
   }
 

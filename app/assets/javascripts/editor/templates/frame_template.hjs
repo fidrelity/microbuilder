@@ -1,7 +1,5 @@
 <div style="
-  width: 720px;
   height: {{unbound wrapperHeight}}px;
-  overflow : auto;
 ">
 
 <ul class="frames" style="
@@ -16,7 +14,7 @@
     {{#view SelectView
       contentBinding = "this"
       controllerBinding = "observer"
-      selectFunctionBinding = "observer.setFrame"
+      selectFunctionBinding = "observer.decide"
     }}
     
       <li class="frame" {{action "select"}} style="

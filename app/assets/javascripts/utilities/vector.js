@@ -126,8 +126,6 @@ Vector.prototype = {
   
   normSquared: function() {
     
-    // return this.dot(this);
-    
     return (this.x * this.x + this.y * this.y);
     
   },

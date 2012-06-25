@@ -25,11 +25,7 @@ Behaviour.prototype = {
     
     if ( triggers ) {
       
-      for ( var i = 0; i < this.actions.length; i++ ) {
-      
-        this.actions[i].execute( game );
-      
-      }
+      this.actions.forEachApply( 'execute', game );
       
     }
     
@@ -37,25 +33,13 @@ Behaviour.prototype = {
   
   reset : function() {
     
-    for ( var i = 0; i < this.triggers.length; i++ ) {
-      
-      if ( this.triggers[i].reset ) {
-        
-        this.triggers[i].reset();
-        
-      }
-      
-    }
+    this.triggers.forEachApply( 'reset' );
     
   },
   
   draw : function( ctx ) {
     
-    for ( var i = 0; i < this.triggers.length; i++ ) {
-      
-      this.triggers[i].draw( ctx );
-      
-    }
+    this.triggers.forEachApply( 'draw', ctx );
     
   }
   

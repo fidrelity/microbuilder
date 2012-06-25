@@ -16,9 +16,21 @@ var GameObjectsController = Ember.ArrayController.extend({
     
   },
   
-  selectID : function( gameObjectID ) {
+  selectID : function( gameObjectID, newPosition ) {
     
-    this.set( 'current', this.getObject( gameObjectID ) );
+    var object = this.getObject( gameObjectID );
+    
+    if ( object ) {
+    
+      this.set( 'current', object );
+      
+      if ( newPosition ) {
+        
+        object.position.copy( newPosition );
+        
+      }
+    
+    }
     
   },
   
@@ -28,7 +40,10 @@ var GameObjectsController = Ember.ArrayController.extend({
     
       name : graphic.name,
       graphic : graphic,
-      position : new Vector( Math.floor( Math.random() * 540 ), Math.floor( Math.random() * 290 ) )
+      position : new Vector( 
+        Math.floor( ( 640 - graphic.frameWidth ) * Math.random() + graphic.frameWidth / 2 ), 
+        Math.floor( ( 390 - graphic.frameHeight ) * Math.random() + graphic.frameHeight / 2 )
+      )
     
     });
   
@@ -48,12 +63,29 @@ var GameObjectsController = Ember.ArrayController.extend({
   
   parseObject : function( object ) {
     
+    var bounding = object.boundingArea;
+    
+    if ( bounding ) {
+      
+      if ( bounding.radius ) {
+        
+        bounding = new Circle().copy( bounding );
+        
+      } else {
+        
+        bounding = new Area().copy( bounding );
+        
+      }
+      
+    }
+    
     this.addObject( GameObjectModel.create({
       
       ID : object.ID,
       name : object.name,
       graphic : App.libraryController.getGraphic( object.graphicID ),
-      position : new Vector( object.position.x, object.position.y )
+      position : new Vector( object.position.x, object.position.y ),
+      boundingArea : bounding
     
     }));
     
@@ -64,6 +96,8 @@ var GameObjectsController = Ember.ArrayController.extend({
     var i, gameObject = this.getObject( object.ID );
     
     this.select( gameObject );
+    
+    gameObject.set( 'behaviours', [] );
     
     for ( i = 0; i < object.behaviours.length; i++ ) {
       
@@ -111,22 +145,18 @@ var GameObjectsController = Ember.ArrayController.extend({
     
   },
   
-  positionChanged : function( gameObjectID, pos ) {
-    
-    this.getObject( gameObjectID ).position.copy( pos );
-    
-  },
-  
   others : function() {
     
     return this.content.without( this.current );
     
   }.property( 'current' ),
   
-  moveToTop : function( gameObject ) {
+  moveObject : function( pos, pos2 ) {
     
-    this.removeObject( gameObject );
-    this.unshiftObject( gameObject );
+    var object = this.content[pos];
+    
+    this.content.removeAt( pos );
+    this.content.insertAt( pos2, object );
     
   }
   

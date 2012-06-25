@@ -4,20 +4,23 @@ var Movement = function() {
   this.startPosition = new Vector();
   
   this.area = new Area();
+  this.boundingArea = null;
   
   this.target;
   this.direction;
   
   this.roamArea;
   this.roamMode;
+  this.bounceStart;
   
+  this.time;
   this.speed;
   
 };
 
 Movement.prototype = {
   
-  speeds : [0.01, 0.03, 0.08, 0.2, 0.5],
+  speeds : [0.125, 0.375, 1, 2.5, 6.25],
   
   reset : function() {
     
@@ -43,12 +46,14 @@ Movement.prototype = {
     
   },
   
-  setTarget : function( pos, speed ) {
+  setTarget : function( pos, offset, speed ) {
     
     this.stop();
     
     this.target = pos;
-    this.speed = speed;
+    this.offset = offset;
+    
+    this.setSpeed( speed );
     
   },
   
@@ -57,7 +62,13 @@ Movement.prototype = {
     this.stop();
     
     this.direction = dir;
-    this.speed = speed;
+    this.setSpeed( speed );
+    
+  },
+  
+  setSpeed : function( speed ) {
+    
+    this.speed = this.speeds[speed];
     
   },
   
@@ -65,41 +76,61 @@ Movement.prototype = {
     
     var pos = this.position;
     
-    return this.area.setPosition( pos.x, pos.y );
+    if ( this.boundingArea ) {
+      
+      return this.area.copy( this.boundingArea ).addSelf( pos );
+      
+    }
+    
+    return this.area.setCenter( pos.x, pos.y );
     
   },
   
-  roam : function( object, mode, area, speed ) {
+  setGraphicSize : function( width, height ) {
+    
+    if ( !this.boundingArea ) {
+      
+      this.area.setSize( width, height );
+      
+    }
+    
+  },
+  
+  roam : function( mode, area, speed ) {
     
     var objArea = this.getArea(),
-      increase;
+      width, height, bounding = this.boundingArea,
+      increase, v, h, y, g = 9.81;
     
     this.stop();
     
     this.roamMode = mode;
     this.roamArea = area;
     
-    this.speed = speed;
+    this.setSpeed( speed );
     
-    if ( area.width < objArea.width ) {
+    width = objArea.width || ( 2 * objArea.radius );
+    height = objArea.height || ( 2 * objArea.radius );
+    
+    if ( area.width < width ) {
       
-      increase = objArea.width * 0.1;
+      increase = width - area.width + 10;
       
-      area.width = objArea.width + increase * 2;
-      area.x -= increase;
+      area.width += increase;
+      area.x -= increase * 0.5;
       
     }
     
-    if ( area.height < objArea.height ) {
+    if ( area.height < height ) {
       
-      increase = objArea.height * 0.1;
+      increase = height - area.height + 10;
       
-      area.height = objArea.height + increase * 2;
-      area.y -= increase;
+      area.height += increase;
+      area.y -= increase * 0.5;
       
     }
     
-    if ( area.leavesArea( objArea ) ) {
+    if ( objArea.leavesArea( area ) ) {
       
       this.insertObject( area );
       
@@ -114,6 +145,26 @@ Movement.prototype = {
       this.direction = Math.PI * ( 0.25 + 0.5 * ( Math.floor( Math.random() * 100 ) % 4 ) );
       
     } else if ( mode === 'bounce' ) {
+      
+      objArea = this.getArea();
+      
+      h = ( area.height - height );
+      y = h - objArea.y;
+      v = Math.sqrt( 2 * h * g );
+      
+      if ( bounding ) {
+        
+        y += bounding.radius || 0;
+        this.bounceStart = area.y + area.height - ( bounding.radius || bounding.height ) - bounding.y;
+        
+      } else {
+        
+        this.bounceStart = area.y + area.height - height * 0.5;
+        
+      }
+      
+      this.direction = new Vector( this.speed * randSign(), v );
+      this.time = ( v - Math.sqrt( v * v - 2 * y * g ) ) / g * 100;
       
     }
     
@@ -137,16 +188,22 @@ Movement.prototype = {
   
   update : function( dt ) {
     
-    var speed = this.speeds[ this.speed ];
+    var distance = this.speed * 0.08 * dt;
     
     if ( this.target ) {
       
-      this.updateTarget( dt * speed );
+      this.updateTarget( distance );
+      
+    } else if ( this.roamMode === 'bounce' ) {
+      
+      this.time += dt;
+      
+      this.updateBounce( this.time * 0.001 );
       
     } else if ( this.direction !== null ) {
       
-      this.updateDirection( dt * speed );
-    
+      this.updateDirection( distance );
+      
     }
     
   },
@@ -157,11 +214,11 @@ Movement.prototype = {
       target = this.target,
       pos = this.position;
     
-    vector.copy( target ).subSelf( pos );
+    vector.copy( target ).addSelf( this.offset ).subSelf( pos );
     
     if ( vector.norm() < distance ) {
     
-      pos.copy( target );
+      pos.copy( target ).addSelf( this.offset );
       
       this.target = null;
     
@@ -179,7 +236,6 @@ Movement.prototype = {
     
     var vector = this.vector,
       mode = this.roamMode,
-      roamArea = this.roamArea,
       breakout;
     
     vector.set( distance, 0 ).rotateSelf( this.direction );
@@ -196,12 +252,9 @@ Movement.prototype = {
       
         this.direction = Math.random() * Math.PI * 2;
       
-      } else if ( mode === 'bounce' ) {
-      
       }
       
-      
-      breakout = roamArea.leavesArea( this.getArea() );
+      breakout = this.getArea().leavesArea( this.roamArea );
       
       if ( breakout ) {
         
@@ -211,6 +264,35 @@ Movement.prototype = {
         
       }
     
+    }
+    
+  },
+  
+  updateBounce : function( time ) {
+    
+    var breakout;
+    
+    time *= 10 * this.speed;
+    
+    this.position.x += this.direction.x;
+    this.position.y = this.bounceStart - this.direction.y * time + 4.905 * time * time;
+    
+    breakout = this.getArea().leavesArea( this.roamArea );
+    
+    if ( breakout ) {
+      
+      if ( breakout === 'x' || breakout === 'width' ) {
+      
+        this.direction.x *= -1;
+        this.position.x += this.direction.x;
+      
+      } else {
+      
+        this.time = 0;
+        this.position.y = this.bounceStart;
+      
+      }
+      
     }
     
   },
@@ -235,20 +317,42 @@ Movement.prototype = {
   
   insertObject : function( area ) {
     
-    this.position.set(
-      area.x + Math.random() * ( area.width - this.area.width ),
-      area.y + Math.random() * ( area.height - this.area.height )
+    var objArea = this.getArea(),
+      bounding = this.boundingArea,
+      pos = this.position;
+    
+    pos.set(
+      area.x + Math.random() * ( area.width - ( objArea.width || 2 * objArea.radius ) ),
+      area.y + Math.random() * ( area.height - ( objArea.height || 2 * objArea.radius ) )
     );
+    
+    if ( bounding ) {
+      
+      pos.subSelf( bounding );
+      
+      if ( bounding.radius) {
+        
+        pos.x += bounding.radius;
+        pos.y += bounding.radius;
+        
+      }
+      
+    } else {
+      
+      pos.x += objArea.width * 0.5;
+      pos.y += objArea.height * 0.5;
+      
+    }
     
   },
   
   draw : function( ctx ) {
     
-    var center;
+    this.getArea().draw( ctx );
     
     if ( this.target ) {
       
-      ctx.line( this.position.x, this.position.y, this.target.x, this.target.y );
+      ctx.line( this.position.x, this.position.y, this.target.x + this.offset.x, this.target.y + this.offset.y );
       
     } else if ( this.roamMode ) {
       
@@ -256,11 +360,9 @@ Movement.prototype = {
       
     } else if ( this.direction ) {
       
-      center = this.getArea().center();
-      
       ctx.save();
       
-      ctx.translate( center.x, center.y );
+      ctx.translate( this.position.x, this.position.y );
       ctx.rotate( this.direction );
       
       ctx.line( 0, 0, 1000, 0 );
@@ -271,6 +373,6 @@ Movement.prototype = {
     
   },
   
-  vector : new Vector,
+  vector : new Vector
   
 };

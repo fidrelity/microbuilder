@@ -2,85 +2,34 @@ var PlayerView = Ember.View.extend({
 
   templateName : 'editor/templates/player_template',
   
-  canvasID : 'playerCanvas',
-  
   player : null,
   type : 'stage',
-  
-  observer : null,
-  gameObject : null,
   
   showHTML : false,
   
   didInsertElement : function() {
     
-    var player, callback, type = this.type;
+    var player;
     
-    player = new Player();
-    player.edit = true;
-    
-    this.set( 'player', player );
-    
-    if ( type === 'stage' ) {
+    if ( this.type === 'stage' ) {
       
-      player.objectsMoveable = true;
-      player.showTimeline = true;
+      player = new Stage();
       
       player.selectedObjectCallback = bind( App.gameObjectsController, App.gameObjectsController.selectID );
-      player.selectedObjectDragCallback = bind( App.gameObjectsController, App.gameObjectsController.positionChanged );
-      
-    } else if ( type === 'location' || type === 'direction' ) {
-      
-      callback = this.locationCallback;
-      
-    } else if ( type === 'area' ) {
-      
-      callback = this.areaCallback;
-      
-      player.areaSelectable = true;
       
     } else {
       
-      player.edit = false;
+      player = new Player();
       
     }
     
-    player.half = !!callback;
-    player.setCanvas( $('#' + this.canvasID)[0] );
+    player.init( this.$( '.playerCanvas' )[0] );
+    player.startRunloop();
     
-    if ( callback ) {
-      
-      player.parse( App.game.getGameObjectsData(), bind( this, callback ) );
-      
-    } else {
-      
-      player.parse( App.game.getData().game, null, this.corsSave );
-      
-    }   
+    player.parse( App.game.getData(), null, this.corsSave );
     
-  },
-  
-  locationCallback : function() {
+    this.set( 'player', player );
     
-    this.player.setSelectObjectID( this.gameObject.ID, bind( this, function( ID, pos ) {
-      
-      this.observer.locate( pos );
-      
-    }), this.type === 'direction');
-  
-  },
-  
-  areaCallback : function() {
-    
-    this.player.selectedAreaCallback = bind( this, function( area ) {
-      
-      this.observer.contain( area );
-      
-    });
-    
-    this.player.selectObject = null;
-    this.player.reset();
-  
   },
   
   destroy : function() {
