@@ -43,8 +43,9 @@
       %div{:class => "form"}
         = form_tag user_session_path do
           = text_field_tag 'user[email]', '', :placeholder => "Email"
+          .clear
           = password_field_tag 'user[password]', '', :placeholder => "Password"
-        
+          .clear
           %p
             %button{:class=>"btn"}
               sign in

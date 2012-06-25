@@ -508,12 +508,15 @@ h1 {  margin:0;  padding:0; font-size:2.2em; font-family: 'LaconicRegular', Aria
 }
 
 .latest_games .login .checkbox {
-  position:relative;
-  top:7px;
-  left:30px;
+  float:left;
+}
+
+.latest_games .login form {
+  display:block;
 }
 
 .latest_games .login .checkbox input[type=checkbox] {
+  position:relative;
   display: inline-block;
   border:1px solid #F00;
   border-radius:none;
@@ -695,3 +698,168 @@ canvas {
 
 .hard { color: #FF0000; }
 
+/* CREATE  - Editor Page when user !logged_in */
+#create {
+  position:relative;
+  width:925px;
+  background:$white;
+  padding:20px 0 0 20px;
+}
+
+#create .container {
+  position:relative;
+  width:905px;
+  background:$white;
+  padding:20px;
+  margin:0 0 30px 0;
+}
+
+#create .banner {
+  margin: 0 0 0 20px;
+  width:70px;
+}
+
+#create .container .banner {
+  margin:0;
+  padding-right:20px;
+  width:auto;
+}
+
+#create .note {
+  margin:40px 0 20px 0;
+  width:860px;
+  background:$lightgray;
+  padding:20px;
+  border-radius:15px;
+}
+
+#create img.slider_left {
+  float:left;
+  top:135px;
+  position:relative;
+  left:-20px;
+}
+
+#create img.slider_right {
+  float:left;
+  top:135px;
+  position:relative;
+  left:65px;
+}
+
+#create .guide {
+  position:relative;
+  top:50px;
+}
+
+/* PLAY site */
+#playGame {
+  position:relative;
+  left:100px;
+  width:660px;
+  background:$white;
+  padding:35px 0 0 20px;
+}
+
+#playGame a {
+  color:$gray;
+}
+
+#playGame .banner {
+  width:auto;
+  padding-right:20px;
+}
+
+#playGame #ratingWrapper {
+  width:290px;
+  height:50px;
+  float:left;
+}
+
+#playGame #ratingWrapper form {
+  float:left;
+  margin:0px;
+}  
+
+#playGame #shareButtons {
+  float:right;
+  position:relative;
+  right: 20px;
+  width: 293px;
+  direction: rtl;
+}
+
+#playGame #shareButtons button {
+  height:30px;
+  width:30px;
+  border-radius:none;
+  border:none;
+  margin:0 0 8px 0;
+}
+
+#playGame #shareButtons button.shareButton {
+  background:url('/assets/share.png') top left;
+}
+
+#playGame #shareButtons button.reportButton {
+  background:url('/assets/report.png') top left;
+}
+
+#playGame #shareButtons button.embedButton {
+  background:url('/assets/embed.png') top left;
+}
+
+#playGame .layer {
+  width:600px;
+  margin:20px 0 0 0;
+}
+
+#playGame .progress-success {
+  background-image: linear-gradient(bottom, rgb(135,18,26) 91%, rgb(187,24,35) 74%);
+  background-image: -o-linear-gradient(bottom, rgb(135,18,26) 91%, rgb(187,24,35) 74%);
+  background-image: -moz-linear-gradient(bottom, rgb(135,18,26) 91%, rgb(187,24,35) 74%);
+  background-image: -webkit-linear-gradient(bottom, rgb(135,18,26) 91%, rgb(187,24,35) 74%);
+  background-image: -ms-linear-gradient(bottom, rgb(135,18,26) 91%, rgb(187,24,35) 74%);
+
+  background-image: -webkit-gradient(
+  	linear,
+  	left bottom,
+  	left top,
+  	color-stop(0.91, rgb(135,18,26)),
+  	color-stop(0.74, rgb(187,24,35))
+  );
+  border-radius:0px;
+  height:10px;
+  width:164px;
+  top:4px;
+  position:relative;
+}
+
+#playGame .bar {
+  background:#fdc703;
+}
+
+#playGame .likeButton {
+  display:block;
+  width:83px;
+  height:30px;
+  background:url('/assets/like.png') top left;
+  border-radius:0px;
+  border:none;
+  float:left;
+}
+
+#playGame .dislikeButton {
+  display:block;
+  width:90px;
+  height:30px;
+  background:url('/assets/dislike.png') top left;
+  border-radius:0px;
+  border:none;
+  float:left;
+}
+
+#playGame .rating .likes, #playGame .rating .progress, #playGame .rating .dislikes {
+  float:left;
+  margin:0 5px 0 0;
+}
