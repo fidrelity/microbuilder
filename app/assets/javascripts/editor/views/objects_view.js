@@ -10,9 +10,11 @@ var ObjectsView = Ember.View.extend({
   
   makeSortable : function() {
     
-    var pos, pos2, pos3, ID, ID2, self = this;
+    var self = this;
     
     function params( className, funcName ) {
+      
+      var pos, pos2, pos3, ID, ID2;
       
       return {
       
@@ -31,13 +33,13 @@ var ObjectsView = Ember.View.extend({
           pos2 = $( this ).sortable( 'toArray' ).indexOf( ui.item[0].id );
         
           if ( pos2 >= 0 && pos !== pos2 ) {
-          
+            
             App.behaviourController[funcName]( ID, pos, ID, pos2 );
           
           }
         
         },
-      
+        
         receive: function( e, ui ) {
         
           pos3 = $( this ).sortable( 'toArray' ).indexOf( ui.item[0].id );
@@ -45,8 +47,14 @@ var ObjectsView = Ember.View.extend({
         
           $( this ).sortable( 'cancel' );
           $( ui.sender ).sortable( 'cancel' );
-        
-          App.behaviourController[funcName]( ID, pos, ID2, pos3 );
+          
+          Ember.run.later( function() {
+          
+            App.behaviourController[funcName]( ID, pos, ID2, pos3 );
+          
+          }, 100);
+          
+          self.makeSortable();
         
         }
       
@@ -128,6 +136,14 @@ var UiActionTriggerView = Ember.CollectionView.extend({
     }
     
   })
+  
+  // emptyView: Ember.View.extend({
+  //   
+  //   tagName : 'li',
+  //   
+  //   classNames : ['element']
+  //   
+  // })
   
 });
 

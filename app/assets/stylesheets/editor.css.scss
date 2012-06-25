@@ -141,8 +141,17 @@
 }
 
 #editor #behaviours .triggers, #editor #behaviours .actions {
-  border: 1px solid #DDD;
+  border: 1px solid;
+  border-radius: 5px;
   min-height: 28px;
+}
+
+#editor #behaviours .triggers {
+  border-color: #5E9EE4;
+}
+
+#editor #behaviours .actions {
+  border-color: #E76F6F;
 }
 
 #editor #behaviours .triggers .element, #editor #behaviours .actions .element {
@@ -164,8 +173,23 @@
   border-color: #E76F6F;
 }
 
+#editor #behaviours .actions .element .icon-move, 
+#editor #behaviours .triggers .element .icon-move {
+  display: none;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#editor #behaviours .actions .element:hover .icon-move, 
+#editor #behaviours .triggers .element:hover .icon-move {
+  display: block;
+}
+
 #editor #behaviours .text {
   padding: 6px;
+  padding-left: 12px;
 }
 
 #editor #behaviours .title {
