@@ -198,6 +198,8 @@ var EndTrigger = function( type ) {
     
   };
   
+  this.draw = function() {};
+  
 };
 
 var WonTrigger = {
@@ -208,7 +210,8 @@ var WonTrigger = {
     
   },
   
-  reset : function() {}
+  reset : function() {},
+  draw : function() {}
   
 };
 
@@ -220,6 +223,7 @@ var LostTrigger = {
     
   },
   
-  reset : function() {}
+  reset : function() {},
+  draw : function() {}
   
 };
