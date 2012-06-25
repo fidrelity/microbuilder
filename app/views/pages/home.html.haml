@@ -33,6 +33,8 @@
     =image_tag "banner_welcome.png"
     LATEST GAMES
   = render :partial => 'games/list_games', :locals => {:games => @games}
+  
+  
   - if !user_signed_in?
     %div{ :class => "login"}
       .banner
@@ -40,26 +42,23 @@
         LOGIN
       %div{:class => "form"}
         = form_tag user_session_path do
-          %label
-            E-Mail:
-          = text_field_tag 'user[email]', '', :placeholder => "email"
-          %label
-            Password:
-          = password_field_tag 'user[password]', '', :placeholder => "password"
+          = text_field_tag 'user[email]', '', :placeholder => "Email"
+          = password_field_tag 'user[password]', '', :placeholder => "Password"
         
           %p
             %button{:class=>"btn"}
-              Sign in
+              sign in
             
           %p{:class => "checkbox"}
             = check_box_tag 'user[remember_me]'
-            = label_tag 'user[remember_me]', 'Remember me'
+            = label_tag 'user[remember_me]', 'remember me'
         
           .clear
         
-          =link_to "Forgot your password?", new_password_path('user')
+          %p{:class => "misc"}
+            =link_to "> Forgot your password?", new_password_path('user')
 
-          =link_to(image_tag("facebook_login.png"), user_omniauth_authorize_path(:facebook))
+            =link_to(image_tag("facebook_login.png"), user_omniauth_authorize_path(:facebook))
   .clear
 
 %div{:style=>"height:50px"}
