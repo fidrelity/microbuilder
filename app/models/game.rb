@@ -12,7 +12,7 @@ class Game < ActiveRecord::Base
   before_destroy :destroy_unreferenced_graphics
   before_create :check_graphics
   
-  validate :win_condition_in_data
+  #validate :win_condition_in_data
   validates_presence_of :title, :instruction, :data
   
   scope :all_by_played, order("played DESC")
