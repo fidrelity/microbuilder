@@ -41,7 +41,7 @@
   opacity: 0.5;
   position: absolute;
   top: 0;
-  right: 0;
+  left: 0;
 }
 
 #editor .objectsLeft li:hover .icon-move {
@@ -144,18 +144,21 @@
   border: 1px solid;
   border-radius: 5px;
   min-height: 28px;
+  margin-bottom: 5px;
 }
 
 #editor #behaviours .triggers {
   border-color: #5E9EE4;
+  background: #8BC9EE;
 }
 
 #editor #behaviours .actions {
   border-color: #E76F6F;
+  background: #FFA5A5;
 }
 
 #editor #behaviours .triggers .element, #editor #behaviours .actions .element {
-  margin: 3px 0 5px;
+  margin: 2px;
   padding: 0;
   overflow: hidden;
   border-radius: 5px;

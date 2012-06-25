@@ -127,7 +127,7 @@
         <div class="clear"></div>
 
         <button class="btn" {{action "createBehaviour" target="App.behaviourController"}}>
-          <i class="icon-plus"></i> condition </button>
+          <i class="icon-plus"></i> behaviour </button>
   
       {{else}}
 

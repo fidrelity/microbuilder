@@ -61,7 +61,7 @@ var Choice = Ember.Object.extend({
       
       // triggers
       
-      case 'clickSelf' : return 'click on ' + n;
+      case 'clickSelf' : return 'click on self';
       case 'clickObject' : return 'click on ' + a.gameObject.name;
       case 'clickArea' : return 'click in area ' + a.area.string();
       
@@ -71,8 +71,8 @@ var Choice = Ember.Object.extend({
       case 'overlapObject' : return n + ' overlaps ' + a.gameObject.name;
       case 'overlapArea' : return n + ' overlaps area ' + a.area.string();
       
-      case 'timeExact' : return 'after ' + a.time + '% of the game';
-      case 'timeRandom' : return 'randomly after ' + a.time + '-' + a.time2 + '% of the game';
+      case 'timeExact' : return 'after ' + a.time + '%';
+      case 'timeRandom' : return 'sometime between ' + a.time + '-' + a.time2 + '%';
       
       case 'gameIsWon' : return 'game is won';
       case 'gameWasWon' : return 'game was won';
