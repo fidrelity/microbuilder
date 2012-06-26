@@ -3,11 +3,13 @@
   position:relative;
   top:30px;
   overflow:hidden;
+  padding:20px;
 }
 
 #paint-wrapper #tool-bar {
   background:#CCC;
   overflow: hidden;
+  height:30px;
 }
 
 #paint-size-wrapper #startPainting {
@@ -82,7 +84,7 @@
   background:top left no-repeat;
   border:none;
   float:left;
-  margin:27px 1px 0 0;
+  margin:0 1px 0 0;
 }
 
 .zoomButtons button.zoomin {
@@ -119,8 +121,8 @@
 }
 
 #paint-wrapper #player {
-  float:left;
-  width:180px;
+  float:right;
+  width:150px;
 }
 
 #paint-wrapper #sizeWrapper {
@@ -176,7 +178,6 @@
   min-width:30px;
   height:30px;
   border:1px solid #666;
-  margin:27px 0 0 0;
 }
 
 .zoomButtons {
@@ -184,7 +185,7 @@
   position:relative;
 }
 
-#paint-size-wrapper { margin:2em 0 2em 0;}
+#paint-size-wrapper { padding:40px 20px 40px 20px;}
 
 #palette {
   background:#222;
@@ -378,7 +379,7 @@
 .submitPainting {
   height:80px;
   width:900px;
-  margin:20px 0 20px 0;
+  padding:20px 0 20px 0;
 }
 
 .submitPainting button {

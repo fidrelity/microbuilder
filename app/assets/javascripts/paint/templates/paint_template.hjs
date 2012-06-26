@@ -1,7 +1,7 @@
 <div id="paint-wrapper">
   <!-- Toolbar -->
-  <div id="tool-bar" class="row">
-    <div class="span9 form-horizontal">
+  <div id="tool-bar">
+    <div>
       {{#view ToolView
         toolBinding = "App.pencilTool"
       }}
@@ -44,7 +44,7 @@
   
     </div>
 
-    <div class=" span2 form-horizontal" id="player">
+    <div class="" id="player">
       {{#view ToolView
         toolBinding = "this"
       }}
@@ -107,16 +107,16 @@
     </div>
 
     </div>
-  </div>
-  <div class="zoomButtons">
-    {{#view ToolView
-          toolBinding = "this"
-    }}
-    <button {{action "zoomIn"}} class="zoomin zoom"></button>
-    <button {{action "zoomOut"}} class="zoomout zoom"></button>
-    <button {{action "bgToggle"}} class="bgToggle"></button>
-    {{/view}}
-    <div class="clear"></div>
+    <div class="zoomButtons">
+      {{#view ToolView
+            toolBinding = "this"
+      }}
+      <button {{action "zoomIn"}} class="zoomin zoom"></button>
+      <button {{action "zoomOut"}} class="zoomout zoom"></button>
+      <button {{action "bgToggle"}} class="bgToggle"></button>
+      <div class="clear"></div>
+      {{/view}}
+    </div>
   </div>
   
 
