@@ -77,6 +77,7 @@ var PaintController =  Ember.ArrayController.extend({
       App.spritePlayer.hide();
 
       areaWrapper.find('#sprites-area').hide();
+      areaWrapper.find('.spriteButtons').hide();
       $('#copySpriteButton').hide();
       $('#clearSpritesButton').remove();
       $('#removeSpriteButton').remove();
@@ -112,27 +113,20 @@ var PaintController =  Ember.ArrayController.extend({
       App.paintController.setCurrentSpriteModel(spriteModel);
     });
     
-    /* $('#colorPicker').ColorPicker({
-      onShow: function (colpkr) {
-        $(colpkr).fadeIn(500);
-        return false;
-      },
-      onHide: function (colpkr) {
-        $(colpkr).fadeOut(500);
-        return false;
-      },
+    $('#colorPicker').ColorPicker({
+      flat: true,
       onChange : function(hsb, hex, rgb){
         App.paintController.colorPicked(hsb, hex, rgb);
       }
     });
-    $('#colorPicker').ColorPickerSetColor('FF0000'); */
+    $('#colorPicker').ColorPickerSetColor('FF0000');
     
     $('#color').hoverIntent(function() {
-      $('#color').stop().animate({height: 256}, 250);
+      $('#color').stop().animate({height: 160, width:550}, 250);
       
       $('#color #container').stop().animate({top:0}, 250);
     }, function() {
-      $('#color').stop().animate({height: 30}, 250);
+      $('#color').stop().animate({height: 30, width:220}, 250);
       
       $('#color #container').stop().animate({top:-30}, 250);
     });
@@ -425,7 +419,7 @@ var PaintController =  Ember.ArrayController.extend({
   
   colorPicked : function (hsb, hex, rgb) {
 
-      $('#colorPicker').css('background-color', '#'+hex);
+      //$('#colorPicker').css('background-color', '#'+hex);
       $('#colorPicker').css('background-image', 'none');
       $('#colorPicker').ColorPickerSetColor(hex);
       
@@ -485,6 +479,7 @@ var PaintController =  Ember.ArrayController.extend({
     this.setZoomCanvasSize();
     if(clear) this.clearZoomCanvas();
     this.zoomContext.drawImage(this.getCurrentSpriteModel().canvas, 0, 0);
+    $('#zoomCount').html(this.zoom);
   },
 
   toogleZoomCanvasBg : function() {

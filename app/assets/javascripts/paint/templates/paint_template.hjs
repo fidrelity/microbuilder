@@ -65,21 +65,21 @@
 
     <div class="span8 form-horizontal">
       <div id="color">
-        <div id="container"></div>
-        
+        <div id="colorPicker"></div>
+        {{#view ToolView
+          toolBinding = "App.pipetteTool"
+        }}
+          <button {{action "pipette"}} class="pipette selectable" rel="tooltip" data-original-title="Select a color from the Original">Pipette</button>
+        {{/view}}
       </div>
-      {{#view ToolView
-        toolBinding = "App.pipetteTool"
-      }}
-        <button {{action "pipette"}} class="pipette selectable">Pipette</button>
-      {{/view}} 
     </div>
   </div>
 
   <div id="area-wrapper">
 
     <div id="zoom-canvas-area">
-      <h4>Zoomed view:</h4>
+      <b>Original </b>(<span id="zoomCount">1</span>x zoom)
+      <div class="clear"></div>
       <!-- Zoomed Canvas -->
       <canvas id="zoomCanvas" class="bgTransparent" width="128" height="128"></canvas>
       <!--  -->
@@ -89,30 +89,32 @@
 
 
     <div id="sprites-area">
+      <b>Sprites</b>
       <!-- Canvas to save -->
-      {{#view ToolView
-        toolBinding = "this"
-      }}
-        <b>Sprites</b>
-        <button {{action "addSprite"}} class="addSpriteButton">Add</button>
-        <button {{action "copySprite"}} id="copySpriteButton">Duplicate</button>
-        <button {{action "removeCurrent" target="App.paintController"}} id="removeSpriteButton">Remove</button>
-      {{/view}}
       <canvas id="canvas-merged" width="64" height="64"></canvas>
       
-        <!-- Sprite Canvas (preview) -->
-        <div id="sprites-area-scroll"></div>
+      <!-- Sprite Canvas (preview) -->
+      <div id="sprites-area-scroll"></div>
     </div>
+    
+    <div class="clear"></div>
 
-    </div>
     <div class="zoomButtons">
       {{#view ToolView
             toolBinding = "this"
       }}
-      <button {{action "zoomIn"}} class="zoomin zoom"></button>
-      <button {{action "zoomOut"}} class="zoomout zoom"></button>
-      <button {{action "bgToggle"}} class="bgToggle"></button>
+      <button {{action "zoomIn"}} class="zoomin zoom" rel="tooltip" data-original-title="Zoom In"></button>
+      <button {{action "zoomOut"}} class="zoomout zoom" rel="tooltip" data-original-title="Zoom Out"></button>
+      <button {{action "bgToggle"}} class="bgToggle" rel="tooltip" data-original-title="Toggle background"></button>
       <div class="clear"></div>
+      {{/view}}
+    </div>
+    
+    <div class="spriteButtons">
+      {{#view ToolView toolBinding = "this" }}
+      <button {{action "addSprite"}} class="addSpriteButton" rel="tooltip" data-original-title="add a frame (sprite)">Add</button>
+      <button {{action "copySprite"}} id="copySpriteButton" rel="tooltip" data-original-title="duplicate the selected sprite">Duplicate</button>
+      <button {{action "removeCurrent" target="App.paintController"}} id="removeSpriteButton" rel="tooltip" data-original-title="remove the current sprite">Remove</button>
       {{/view}}
     </div>
   </div>
@@ -120,9 +122,9 @@
 
 
 <div class="submitPainting">
-  <div class="span3 form-vertical">
+  <div class="name">
     <label>Name of the image:</label> <input type="text" size="25" id="imageName">
-    <label class="checkbox" id="labelMakePublic" title="Share image" data-content="Check, if you want to share your image with others"><input type="checkbox" id="makePublic" >set image public</label> 
+    <label class="checkbox" id="labelMakePublic" title="Share image" data-content="Check, if you want to share your image with others"><input type="checkbox" id="makePublic" rel="tooltip" data-original-title="set your drawing pubilc</br> so others can use it in their games">set image public</label> 
   </div>
   <div class="span2 offset6">
     {{#view ToolView

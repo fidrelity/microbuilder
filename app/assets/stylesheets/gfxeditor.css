@@ -4,6 +4,10 @@
   top:30px;
   overflow:hidden;
   padding:20px;
+  -moz-user-select:none;
+  -webkit-user-select:none;
+  user-select:none;
+  -ms-user-select:none;
 }
 
 #paint-wrapper #tool-bar {
@@ -165,28 +169,30 @@
 }
 
 #paint-wrapper #area-wrapper {
-  margin-top:1.5em;
+  margin-top:34px;
   overflow:hidden;
   width:100%;
-  height:300px;
 }
 
 #paint-wrapper #area-wrapper #zoom-canvas-area {
   position:relative;
   width:401px;
-  max-height:300px;
+  height:300px;
   max-width:401px;
   overflow:auto;
   float:left;
 }
 
 #paint-wrapper #area-wrapper #sprites-area {
-  float:right;
+  float:left;
   width:425px;
+  height:288px;
+  position:relative;
+  left:52px;
 }
 
 #paint-wrapper #area-wrapper #sprites-area-scroll {      
-  max-height:270px;  
+  height:270px;
   overflow:auto;
 }
 
@@ -205,8 +211,14 @@
 }
 
 .zoomButtons {
-  z-index:999;
+  float:left;
   position:relative;
+}
+
+.spriteButtons {
+  float:left;
+  position:relative;
+  left:360px;
 }
 
 #paint-size-wrapper { padding:40px 20px 40px 20px;}
@@ -228,7 +240,7 @@
 #zoomCanvas, #canvas-temp {
  /*background:#FFF;
  background:url(bg_transparent.png);*/
- border:1px solid #000000; 
+ border:1px solid #858585; 
  cursor:crosshair;
  image-rendering: optimizeSpeed;             // Older versions of FF
  image-rendering: -moz-crisp-edges;          // FF 6.0+
@@ -298,7 +310,7 @@
   float:left;
 }
 
-#colorPicker {
+/*#colorPicker {
   float:left;
   margin-left: 5px;
   position:relative;
@@ -320,7 +332,7 @@
           color-stop(0.51, rgb(55,245,17)),
           color-stop(1, rgb(43,65,255))
   );                                    
-}
+} */
 
 .colorBlock {
     width:15px; height:15px; border:1px solid #000000;
@@ -417,11 +429,10 @@
 }
 
 #color {
-  width:400px;
   height:30px;
+  width:220px;
   overflow:hidden;
   position:absolute;
-  background:#f0f0f0;
   z-index:9999;
   float:left;
 }
@@ -429,7 +440,13 @@
 #color #container {
   position:relative;
   top:-30px;
-  width:256px;
-  height:256px;
-  background:url('/assets/color_picker.png');
+}
+
+#color .ember-view {
+  position:absolute;
+  top:125px;
+}
+
+.name {
+  float:left;
 }
