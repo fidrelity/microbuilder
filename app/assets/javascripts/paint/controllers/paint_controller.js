@@ -62,6 +62,7 @@ var PaintController =  Ember.ArrayController.extend({
 
     var areaWrapper = $('#area-wrapper');
     
+    
     // *** Type is background ***
     if(this.type === 'background') {
       this.zoom = 1;   
@@ -90,6 +91,19 @@ var PaintController =  Ember.ArrayController.extend({
   // Init DOM events
   initEvents : function() {
     // OnMouse on zoomed canvas
+    
+    // Touch Based Events
+    document.addEventListener('touchstart', function(e) {App.paintController.mousedown(e);}, false);
+    document.addEventListener('touchmove', function(e) {App.paintController.mousemove(e);}, false);
+    document.addEventListener('touchend', function(e) {App.paintController.mouseup(e);}, false);
+    document.addEventListener('touchcancel', function(e) {App.paintController.mouseup(e);}, false);
+    
+    // Site Scrolling prohibit on iPad
+    document.body.addEventListener('touchmove', function(event) {
+      event.preventDefault();
+    }, false);
+    
+    // Click Events
     $('#zoomCanvas').mousedown(function(e){
       App.paintController.mousedown(e);
     });
@@ -119,16 +133,16 @@ var PaintController =  Ember.ArrayController.extend({
         App.paintController.colorPicked(hsb, hex, rgb);
       }
     });
-    $('#colorPicker').ColorPickerSetColor('FF0000');
+    $('#colorPicker').ColorPickerSetColor('ff0f37');
     
     $('#color').hoverIntent(function() {
       $('#color').stop().animate({height: 160, width:550}, 250);
-      
-      $('#color #container').stop().animate({top:0}, 250);
     }, function() {
       $('#color').stop().animate({height: 30, width:220}, 250);
-      
-      $('#color #container').stop().animate({top:-30}, 250);
+    });
+    
+    $('#area-wrapper').click(function() {
+      $('#color').animate({height: 30, width:220}, 250);
     });
     
     // Slider for pencil size

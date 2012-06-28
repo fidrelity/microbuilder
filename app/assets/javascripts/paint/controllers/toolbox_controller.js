@@ -125,7 +125,7 @@ var DrawToolModel = Ember.Object.extend({
   setDrawFunction : function(_fnc) {    
     var drawFnc = null;
     switch (_fnc) {
-
+      
       case("rect") : this.drawFunction = this.pixelDrawer.drawRect.bind(this.pixelDrawer); break;
 
       case("fillrect") : this.drawFunction = this.pixelDrawer.fillRect.bind(this.pixelDrawer); break;

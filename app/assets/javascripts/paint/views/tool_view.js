@@ -17,8 +17,10 @@ var ToolView = Ember.View.extend({
     App.toolBoxController.setCurrentTool(this.get("tool"));
   },
 
-  drawRect : function() {    
+  drawRect : function() {
+    console.log('break1');    
     App.drawTool.setDrawFunction("rect");
+    console.log('break2');
     App.drawTool.click();
     this.setCurrentTool();
   },

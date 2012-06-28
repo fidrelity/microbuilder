@@ -395,6 +395,10 @@
   font-weight:bold;
 }
 
+.ui-resizable-se {
+  width:15px !important;
+  height:15px !important;
+}
 
 .paintOverlay {
   z-index:9001;

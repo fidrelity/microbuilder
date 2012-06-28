@@ -49,7 +49,6 @@ PixelDrawer.prototype.fillRect = function(_x1,_y1, _x2, _y2, _color) {
 
 PixelDrawer.prototype.drawRect = function(_x1,_y1, _x2, _y2, _color, _width) {
   var color = this.checkIfParsedColor(_color);
-    
   this.drawLine(_x1,_y1, _x1, _y2, color, _width);
   this.drawLine(_x1,_y2, _x2, _y2, color, _width);
   this.drawLine(_x2,_y2, _x2, _y1, color, _width);
