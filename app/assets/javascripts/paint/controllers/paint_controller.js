@@ -112,7 +112,7 @@ var PaintController =  Ember.ArrayController.extend({
       App.paintController.setCurrentSpriteModel(spriteModel);
     });
     
-    $('#colorPicker').ColorPicker({
+    /* $('#colorPicker').ColorPicker({
       onShow: function (colpkr) {
         $(colpkr).fadeIn(500);
         return false;
@@ -125,7 +125,17 @@ var PaintController =  Ember.ArrayController.extend({
         App.paintController.colorPicked(hsb, hex, rgb);
       }
     });
-    $('#colorPicker').ColorPickerSetColor('FF0000');
+    $('#colorPicker').ColorPickerSetColor('FF0000'); */
+    
+    $('#color').hoverIntent(function() {
+      $('#color').stop().animate({height: 256}, 250);
+      
+      $('#color #container').stop().animate({top:0}, 250);
+    }, function() {
+      $('#color').stop().animate({height: 30}, 250);
+      
+      $('#color #container').stop().animate({top:-30}, 250);
+    });
     
     // Slider for pencil size
     $("#sizeSlider").slider({
@@ -140,6 +150,8 @@ var PaintController =  Ember.ArrayController.extend({
         $('#slidervalue').html(ui.value);
       }
     });
+    
+    $("#[rel=tooltip]").tooltip({delay:{show:500, hide:25}});
 
     // Init file load
     if (!window.File && !window.FileReader && !window.FileList && !window.Blob) {

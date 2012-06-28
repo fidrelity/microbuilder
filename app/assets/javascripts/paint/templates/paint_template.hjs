@@ -5,35 +5,35 @@
       {{#view ToolView
         toolBinding = "App.pencilTool"
       }}
-        <button {{action "pencil"}} class="pencil selectable"></button>     
-        <button {{action "erase"}} class="eraser selectable"></button>       
+        <button {{action "pencil"}} class="pencil selectable" rel="tooltip" data-original-title="Pencil"></button>     
+        <button {{action "erase"}} class="eraser selectable" rel="tooltip" data-original-title="Eraser"></button>       
       {{/view}}
 
       {{#view ToolView
         toolBinding = "App.drawTool"
       }}
-        <button {{action "drawRect"}} class="rectangle selectable"></button>
-        <button {{action "drawCircle"}} class="circle selectable"></button>
-        <button {{action "drawRectFill"}} class="rectanglefill selectable"></button>
-        <button {{action "drawCircleFill"}} class="circlefill selectable"></button>
-        <button {{action "drawLine"}}  class="line selectable"></button>
+        <button {{action "drawRect"}} class="rectangle selectable" rel="tooltip" data-original-title="Rectangle Empty"></button>
+        <button {{action "drawCircle"}} class="circle selectable" rel="tooltip" data-original-title="Circle Empty"></button>
+        <button {{action "drawRectFill"}} class="rectanglefill selectable" rel="tooltip" data-original-title="Rectangle Filled"></button>
+        <button {{action "drawCircleFill"}} class="circlefill selectable" rel="tooltip" data-original-title="Circle Filled"></button>
+        <button {{action "drawLine"}}  class="line selectable" rel="tooltip" data-original-title="Line"></button>
       {{/view}}
 
       {{#view ToolView
         toolBinding = "App.fillTool"
       }}
-        <button {{action "fill"}} class="fill selectable"></button>
+        <button {{action "fill"}} class="fill selectable" rel="tooltip" data-original-title="Fill"></button>
       {{/view}} 
     
-      <button id="loadFileButton" class="loadfile"></button>
+      <button id="loadFileButton" class="loadfile" rel="tooltip" data-original-title="Load file..."></button>
       <input type="file" id="file" size="1" style="display:none;">
 
       {{#view ToolView
         toolBinding = "this"
       }}     
-        <button {{action "clear"}} class="clear"></button>
-        <button {{action "undo"}} class="undo"></button>       
-        <button {{action "reset"}} id="clearSpritesButton" class="clearall">Clear All</button>     
+        <button {{action "clear"}} class="clear" rel="tooltip" data-original-title="Clear Painting"></button>
+        <button {{action "undo"}} class="undo" rel="tooltip" data-original-title="Undo Changes"></button>       
+        <button {{action "reset"}} id="clearSpritesButton" class="clearall" rel="tooltip" data-original-title="Clear all Sprites"></button>     
       {{/view}}   
       
       <!-- SIZE -->
@@ -48,10 +48,10 @@
       {{#view ToolView
         toolBinding = "this"
       }}
-        <button {{action "play"}} id="playButton">Play</button>
-        <button {{action "stop"}} id="stopButton">Stop</button>
-        <input type="text" id="playDelay" value="100" size="2" class="span1">
-        <input type="checkbox" value="1" id="replayLoop"> Loop
+        <button {{action "play"}} id="playButton" rel="tooltip" data-original-title="Play Sprites"></button>
+        <button {{action "stop"}} id="stopButton" rel="tooltip" data-original-title="Stop Playing"></button>
+        <input type="text" id="playDelay" value="100" size="2" class="span1" rel="tooltip" data-original-title="(ms) delay between frames">
+        <input type="checkbox" value="1" id="replayLoop" rel="tooltip" data-original-title="loop the animation"> Loop
       {{/view}}
     </div> 
   </div>
@@ -64,10 +64,10 @@
     </div>
 
     <div class="span8 form-horizontal">
-      <div id ="colorWrapper">
-        Color:
+      <div id="color">
+        <div id="container"></div>
+        
       </div>
-      <div id="colorPicker"></div>
       {{#view ToolView
         toolBinding = "App.pipetteTool"
       }}
@@ -89,20 +89,18 @@
 
 
     <div id="sprites-area">
-
-      <h4>Original</h4>
       <!-- Canvas to save -->
+      {{#view ToolView
+        toolBinding = "this"
+      }}
+        <b>Sprites</b>
+        <button {{action "addSprite"}} class="addSpriteButton">Add</button>
+        <button {{action "copySprite"}} id="copySpriteButton">Duplicate</button>
+        <button {{action "removeCurrent" target="App.paintController"}} id="removeSpriteButton">Remove</button>
+      {{/view}}
       <canvas id="canvas-merged" width="64" height="64"></canvas>
       
         <!-- Sprite Canvas (preview) -->
-
-        {{#view ToolView
-          toolBinding = "this"
-        }}
-          <button {{action "addSprite"}} class="addSpriteButton">Add</button>
-          <button {{action "copySprite"}} id="copySpriteButton">Copy</button>
-          <button {{action "removeCurrent" target="App.paintController"}} id="removeSpriteButton">Remove</button>
-        {{/view}} 
         <div id="sprites-area-scroll"></div>
     </div>
 

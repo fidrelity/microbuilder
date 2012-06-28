@@ -78,6 +78,18 @@
   background:url('/assets/undo_icon.png');
 }
 
+#paint-wrapper #tool-bar button.clearall {
+  background:url('/assets/icon_delete.png');
+}
+
+#paint-wrapper #tool-bar button#playButton {
+  background:url('/assets/play_icon.png');
+}
+
+#paint-wrapper #tool-bar button#stopButton {
+  background:url('/assets/stop_icon.png');
+}
+
 .zoomButtons button.zoom {
   min-width:30px;
   height:30px;
@@ -126,12 +138,13 @@
 }
 
 #paint-wrapper #sizeWrapper {
-  padding:4px 0 0 0;
+  margin:0 0 0 80px;
+  padding:6px 0 0 0;
   height:26px;
 }
 
 #paint-wrapper #sizeWrapper #sizeSlider {
-  margin:1px 0 0 0;
+  margin:0px 0 0 0;
 }
 
 #paint-wrapper #sizeWrapper #sizeSlider, #paint-wrapper #sizeWrapper #slidervalue {
@@ -140,9 +153,12 @@
 
 #paint-wrapper #sizeWrapper span {
   float:left;
-  margin: 0 2px 0 0;
+  margin: 0 6px 0 0;
 }
 
+#paint-wrapper #sizeWrapper #sizeSlider {
+  margin: 0 10px 0 0;
+}
 
 #paint-wrapper #tool-bar-second {
   margin-top:0.5em;
@@ -152,26 +168,34 @@
   margin-top:1.5em;
   overflow:hidden;
   width:100%;
+  height:300px;
 }
 
 #paint-wrapper #area-wrapper #zoom-canvas-area {
   position:relative;
-  width:400px;
+  width:401px;
   max-height:300px;
-  max-width:400px;
+  max-width:401px;
   overflow:auto;
   float:left;
 }
 
 #paint-wrapper #area-wrapper #sprites-area {
   float:right;
-  width:400px;
-  margin-left:100px;
+  width:425px;
 }
 
 #paint-wrapper #area-wrapper #sprites-area-scroll {      
-  max-height:260px;  
+  max-height:270px;  
   overflow:auto;
+}
+
+#paint-wrapper #area-wrapper #sprites-area-scroll canvas {      
+  border:solid 1px #fff;
+}
+
+#paint-wrapper #area-wrapper #sprites-area-scroll canvas.active-sprite {      
+  border:solid 1px #000;
 }
 
 .bgToggle {
@@ -243,10 +267,10 @@
   background:url(bg_transparent.png);  
 }
 
-/* Tools */
+/* Tools 
 .addSpriteButton {
   width:64px; height:64px; float:left; margin-right:10px; background:#FFF;border:2px solid #666;
-}
+} */
 
 #stopButton { display:none; }
 
@@ -308,12 +332,17 @@
 
 .active-sprite { border:1px solid #000000; }
 
+.paint-type {
+  border:3px dotted #fff;
+  cursor:pointer;
+}
+
 .type-selected {
   border:3px dotted #666;
 }
 
-.paint-type {
-  cursor:pointer;
+.span6 input {
+  width:30px;
 }
 
 /* Game guide */
@@ -385,4 +414,22 @@
 .submitPainting button {
   border-radius:0px;
   border:none;
+}
+
+#color {
+  width:400px;
+  height:30px;
+  overflow:hidden;
+  position:absolute;
+  background:#f0f0f0;
+  z-index:9999;
+  float:left;
+}
+
+#color #container {
+  position:relative;
+  top:-30px;
+  width:256px;
+  height:256px;
+  background:url('/assets/color_picker.png');
 }
