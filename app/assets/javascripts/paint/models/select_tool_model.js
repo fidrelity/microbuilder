@@ -47,6 +47,16 @@ var SelectToolModel = Ember.Object.extend({
       }
     });
 
+    $(document).keydown(function(e) {
+        if(!App.selectTool.selectDiv.is(":visible")) return false;
+        console.log(e.keyCode);
+
+        switch(e.keyCode) {
+          case(46) : App.selectTool.clearSelected(); break;
+        }
+
+    });
+
   },
   
   click : function() {
@@ -76,12 +86,12 @@ var SelectToolModel = Ember.Object.extend({
     var w = this.endX - this.startX;
     var h = this.endY - this.startY;
 
-    this.selectDiv.css({ width: w, height: h }); 
+    this.selectDiv.css({ width: w, height: h });
   },
 
   mouseup : function(_options) {
     if(!this.isActive) return false;
-    this.isActive = false;    
+    this.isActive = false;
     this.copyToCanvas(this.startX + 1, this.startY + 1, this.endX, this.endY);
   },
 
@@ -107,12 +117,18 @@ var SelectToolModel = Ember.Object.extend({
     var img_data = this.tempCanvas[0].toDataURL("image/png");
     var img = new Image();
     img.src = img_data;
-    img.width = (endX - startX);
-    img.height = (endY - startY);
+    img.width = (endX - startX) - 1;
+    img.height = (endY - startY) -1;
 
     img.onload = function() {
       App.selectTool.selectDiv.html(img);
     };
+  },
+
+  clearSelected : function() {
+    App.paintController.erase(this.finalX, this.finalY, this.finalWidth, this.finalHeight);
+    App.paintController.updateZoom();
+    this.reset();
   },
 
   reset : function() {
@@ -120,7 +136,7 @@ var SelectToolModel = Ember.Object.extend({
     this.startY = 0;
     this.endX = 0;
     this.endY = 0;
-    this.selectDiv.hide().html("");     
+    this.selectDiv.hide().html("");
     this.tempCanvas[0].width = App.paintController.spriteSize.width;
     this.tempCanvas[0].height = App.paintController.spriteSize.height;
   },
