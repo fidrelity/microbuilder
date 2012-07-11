@@ -14,10 +14,6 @@ var SelectToolModel = Ember.Object.extend({
 
     this.tempCanvas = App.paintController.finalCanvas;
     this.tempCtx = this.tempCanvas[0].getContext("2d");
-    console.log(this.tempCanvas[0]);
-
-
-    var canvas = this.tempCanvas[0];
 
     this.wrapper = $("#zoom-canvas-area"); // to know the offset coord
 
@@ -28,12 +24,7 @@ var SelectToolModel = Ember.Object.extend({
         dragWidth =that.endX - that.startX;
         dragHeight = that.endY - that.startY;
 
-        var coord = that.getCoord(that.startX, that.startY);
-
-        //App.paintController.zoomContext.clearRect(coord.x, coord.y, dragWidth, dragHeight);
-        //App.paintController.zoomContext.clearRect(that.finalX, that.finalY, that.finalWidth, that.finalHeight);
         App.paintController.erase(that.finalX, that.finalY, that.finalWidth, that.finalHeight);
-
         App.paintController.updateZoom();
       },
 
@@ -68,27 +59,19 @@ var SelectToolModel = Ember.Object.extend({
     this.isActive = true;
     this.selectDiv.show();
 
-    console.log(_options.x, _options.y);
-
     var coord = this.getCoord(_options.x, _options.y);
-    this.startX = coord.x - 2; //(_options.x * App.paintController.zoom ) + offset.x - 2;
-    this.startY = coord.y - 2; //(_options.y * App.paintController.zoom ) + offset.y - 2;
-
-    App.paintController.zoomContext.fillStyle = '#3ac6e5';
-    App.paintController.zoomContext.fillRect(_options.x, _options.y, 1, 1);
-
-    var w = 0;
-    var h = 0;
-
-    this.selectDiv.css({ left: this.startX, top: this.startY, width: w, height: h });
+    this.startX = coord.x - 2;
+    this.startY = coord.y - 2;
+   
+    this.selectDiv.css({ left: this.startX, top: this.startY, width: 0, height: 0 });
   },
 
   mousemove : function(_options) {
     if(!this.isActive) return false;
 
     var coord = this.getCoord(_options.x, _options.y);
-    this.endX = coord.x - 2; //(_options.x * App.paintController.zoom ) + offset.x - 2;
-    this.endY = coord.y - 2 ; //(_options.y * App.paintController.zoom ) + offset.y - 2;
+    this.endX = coord.x - 2;
+    this.endY = coord.y - 2;
 
     var w = this.endX - this.startX;
     var h = this.endY - this.startY;
@@ -120,7 +103,7 @@ var SelectToolModel = Ember.Object.extend({
     var imageData = App.paintController.zoomContext.getImageData(this.finalX, this.finalY, this.finalWidth, this.finalHeight);
     this.tempCtx.putImageData(imageData, 0, 0);
 
-    // Draw temp image
+    // Draw temp image into selectToolDiv
     var img_data = this.tempCanvas[0].toDataURL("image/png");
     var img = new Image();
     img.src = img_data;
@@ -128,7 +111,7 @@ var SelectToolModel = Ember.Object.extend({
     img.height = (endY - startY);
 
     img.onload = function() {
-      $('#selectToolDiv').html(img);
+      App.selectTool.selectDiv.html(img);
     };
   },
 
@@ -137,16 +120,15 @@ var SelectToolModel = Ember.Object.extend({
     this.startY = 0;
     this.endX = 0;
     this.endY = 0;
-    this.selectDiv.hide();
-    $('#selectToolDiv').html("");    
+    this.selectDiv.hide().html("");     
     this.tempCanvas[0].width = App.paintController.spriteSize.width;
     this.tempCanvas[0].height = App.paintController.spriteSize.height;
   },
 
   getOffset : function() {
 
-    var canvasObject = $("#zoomCanvas");  
-    var scrollArea = $("#zoom-canvas-area")[0];
+    var canvasObject = $("#" + App.paintController.zoomCanvas.id); //"#zoomCanvas"
+    var scrollArea = this.wrapper[0];
  
     var newLeft = scrollArea.scrollLeft + canvasObject.position().left,
         newTop  = scrollArea.scrollTop + canvasObject.position().top;
