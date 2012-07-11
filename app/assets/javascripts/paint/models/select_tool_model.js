@@ -8,6 +8,7 @@ var SelectToolModel = Ember.Object.extend({
   isActive : false,
   pixelDrawer : null,
   tempCanvas : null,
+  marginToMouse : 2,
 
   initAfter : function () {
     this.pixelDrawer = App.paintController.pixelDrawer;
@@ -54,7 +55,6 @@ var SelectToolModel = Ember.Object.extend({
         switch(e.keyCode) {
           case(46) : App.selectTool.clearSelected(); break;
         }
-
     });
 
   },
@@ -70,8 +70,8 @@ var SelectToolModel = Ember.Object.extend({
     this.selectDiv.show();
 
     var coord = this.getCoord(_options.x, _options.y);
-    this.startX = coord.x - 2;
-    this.startY = coord.y - 2;
+    this.startX = coord.x - this.marginToMouse;
+    this.startY = coord.y - this.marginToMouse;
    
     this.selectDiv.css({ left: this.startX, top: this.startY, width: 0, height: 0 });
   },
@@ -80,8 +80,8 @@ var SelectToolModel = Ember.Object.extend({
     if(!this.isActive) return false;
 
     var coord = this.getCoord(_options.x, _options.y);
-    this.endX = coord.x - 2;
-    this.endY = coord.y - 2;
+    this.endX = coord.x - this.marginToMouse;
+    this.endY = coord.y - this.marginToMouse;
 
     var w = this.endX - this.startX;
     var h = this.endY - this.startY;
@@ -98,11 +98,11 @@ var SelectToolModel = Ember.Object.extend({
   copyToCanvas : function(startX, startY, endX, endY) {
     var offset = this.getOffset();
 
-    this.finalWidth = (endX - startX) / App.paintController.zoom;
+    this.finalWidth = (endX  - startX) / App.paintController.zoom;
     this.finalHeight = (endY - startY) / App.paintController.zoom;
 
-    this.finalX = (startX- offset.x) / App.paintController.zoom ;
-    this.finalY = (startY- offset.y) / App.paintController.zoom ;
+    this.finalX = (startX - offset.x) / App.paintController.zoom ;
+    this.finalY = (startY - offset.y) / App.paintController.zoom ;
 
     this.tempCanvas[0].width = this.finalWidth;
     this.tempCanvas[0].height = this.finalHeight;

@@ -388,7 +388,7 @@
 }
 
 #selectToolDiv {
-  border:1px dotted #FF00FF;
+  border:1px dashed #FF00FF;
   position:absolute;
   z-index:222;
   display:none;

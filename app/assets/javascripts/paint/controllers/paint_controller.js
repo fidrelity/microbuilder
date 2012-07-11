@@ -88,6 +88,23 @@ var PaintController =  Ember.ArrayController.extend({
 
   // Init DOM events
   initEvents : function() {
+
+    // Key Events
+    $(document).keyup(function(e) {
+      if(e.keyCode === 17) this.isCtrl=true;
+    });
+
+    $(document).keydown(function(e) {
+
+        if(e.keyCode === 17) this.isCtrl = true;
+
+        // Ctrl + Z
+        if(e.keyCode === 90 && this.isCtrl) {
+          App.paintController.undo();
+        }        
+
+    });
+
     // OnMouse on zoomed canvas
     $('#zoomCanvas').mousedown(function(e){
       App.paintController.mousedown(e);
