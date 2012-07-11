@@ -60,6 +60,12 @@
   <!-- Second Toolbar -->
   <div id="tool-bar-second" class="form-horizontal row">
     <div class="span3 form-horizontal">
+
+      {{#view ToolView
+        toolBinding = "App.selectTool"
+      }}
+        <button {{action "selecttool"}} class="select selectable">Select</button>     
+      {{/view}}
       
     </div>
 
@@ -79,12 +85,15 @@
   <div id="area-wrapper">
 
     <div id="zoom-canvas-area">
+      <!-- Div for selection tool -->
+      <div id="selectToolDiv"></div>
+      
       <h4>Zoomed view:</h4>
       <!-- Zoomed Canvas -->
-      <canvas id="zoomCanvas" class="bgTransparent" width="128" height="128"></canvas>
-      <!--  -->
-      <!-- Temporary Canvas -->
+      <canvas id="zoomCanvas" class="bgTransparent" width="128" height="128"></canvas>      
+      <!-- Temporary Canvas -->      
       <canvas id="canvas-temp" width="64" height="64"></canvas>
+
     </div>
 
 

@@ -257,18 +257,21 @@ var PaintController =  Ember.ArrayController.extend({
     this.clearZoomCanvas();
   },
 
-  erase : function(_x, _y) {        
+  erase : function(_x, _y, _w, _h) {        
+
+    var w = _w || this.size;
+    var h = _h || this.size;
     
     if(!this.isBackground) {
-      this.zoomContext.clearRect(_x, _y, this.size, this.size);
+      this.zoomContext.clearRect(_x, _y, w, h);
     } else {
       // Draw white rect if background
       this.pixelDrawer.popImageData();
-      this.pixelDrawer.fillRect(_x, _y, _x + this.size, _y + this.size, "#FFFFFF");
+      this.pixelDrawer.fillRect(_x, _y, _x + w, _y + h, "#FFFFFF");
       this.pixelDrawer.pushImageData();
     }
 
-    this.getCurrentSpriteModel().erase(Math.floor(_x), Math.floor(_y), this.size);
+    this.getCurrentSpriteModel().erase(Math.floor(_x), Math.floor(_y), w, h);
   },
 
   // ---------------------------------------

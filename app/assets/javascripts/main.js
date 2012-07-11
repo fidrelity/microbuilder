@@ -43,6 +43,7 @@ function paint_main() {
   
   App.toolBoxController = ToolBoxController.create();
   App.drawTool = DrawToolModel.create();
+  App.selectTool = SelectToolModel.create();
   App.fillTool = FillToolModel.create();
   App.pipetteTool = ColorPipetteModel.create();
   App.spritePlayer = SpritePlayerController.create();

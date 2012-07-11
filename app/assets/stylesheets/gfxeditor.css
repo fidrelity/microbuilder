@@ -386,3 +386,11 @@
   border-radius:0px;
   border:none;
 }
+
+#selectToolDiv {
+  border:1px dotted #FF00FF;
+  position:absolute;
+  z-index:222;
+  display:none;
+  cursor: move;
+}

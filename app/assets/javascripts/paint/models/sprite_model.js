@@ -66,8 +66,9 @@ var SpriteModel = Ember.Object.extend({
     this.canvas.width = this.canvas.width;
   },
 
-  erase : function(_x, _y, _size) {
-    this.context.clearRect(_x, _y, _size, _size);
+  erase : function(_x, _y, _w, _h) {
+    var h = _h || _w;
+    this.context.clearRect(_x, _y, _w, h);
   },
 
   flipV: function() {
