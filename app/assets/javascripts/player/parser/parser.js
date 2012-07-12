@@ -63,6 +63,7 @@ var Parser = {
 
       var action = new MoveAction( 'moveTo', gameObject, data.speed );
       action.target = new Vector().copy( data.pathPoints[0] );
+      action.pathPoints = data.pathPoints;
       
       return action;
 

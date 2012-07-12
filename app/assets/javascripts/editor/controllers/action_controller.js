@@ -282,27 +282,27 @@ var ActionController = Ember.Object.extend({
             // to frame
             
             FrameOption.create({
-              name: 'toFrame', 
+              name: 'toFrame',
               question : 'Choose the frame it should display',
               decision: SaveOption.create({ choiceID: 'artToFrame' })
             }),
             
             // play
             
-            FrameOption.create({ 
-              name: 'play', 
+            FrameOption.create({
+              name: 'play',
               question : 'Choose the start frame of the animation',
               
-              decision: FrameOption.create({ 
-                name: 'play2', 
-                mode: 'frame2', 
+              decision: FrameOption.create({
+                name: 'play2',
+                mode: 'frame2',
                 question : 'Choose the end frame of your animation',
                 
-                decision: ModeOption.create({ 
+                decision: ModeOption.create({
                   name: 'playMode',                   
                   question: 'Choose the animation mode',
                   
-                  buttons:  ['loop', 'ping-pong', 'once'], 
+                  buttons:  ['loop', 'ping-pong', 'once'],
                   modes:  ['loop', 'ping-pong', 'once'], 
                   
                   decision: SpeedOption.create({ 

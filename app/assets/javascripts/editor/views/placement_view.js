@@ -173,7 +173,6 @@ var PlacementView = Ember.View.extend({
 
       } else if ( type === 'path' ) {
 
-        console.log("I am here");
         this.object.pos.addSelf( obs.location );
       
       } else if ( type === 'offset' ) {

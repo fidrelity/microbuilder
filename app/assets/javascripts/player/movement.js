@@ -15,6 +15,9 @@ var Movement = function() {
   
   this.time;
   this.speed;
+
+  this.pathPoints = [];
+  this.pathCounter = 0;
   
 };
 
@@ -179,7 +182,7 @@ Movement.prototype = {
   },
   
   stop : function() {
-    
+
     this.target = null;
     this.direction = null;
     this.roamMode = null;
@@ -191,7 +194,7 @@ Movement.prototype = {
     var distance = this.speed * 0.08 * dt;
     
     if ( this.target ) {
-      
+
       this.updateTarget( distance );
       
     } else if ( this.roamMode === 'bounce' ) {
@@ -220,7 +223,17 @@ Movement.prototype = {
     
       pos.copy( target ).addSelf( this.offset );
       
-      this.target = null;
+      // Path points in queue left
+      if(this.pathCounter <= this.pathPoints.length) {
+          
+          this.pathCounter++;
+          this.target = this.pathPoints[this.pathCounter];
+
+      } else {
+
+        this.target = null;
+        
+      }
     
     } else {
     

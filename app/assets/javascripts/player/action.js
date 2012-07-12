@@ -9,6 +9,8 @@ var MoveAction = function( type, gameObject, speed ) {
   
   this.random = false;
   this.direction = null;
+
+  this.pathPoints = [];
   
   if ( type === 'moveIn' ) {
     
@@ -47,6 +49,7 @@ MoveAction.prototype = {
   executeMoveTo : function() {
     
     this.gameObject.movement.setTarget( this.target, this.offset, this.speed );
+    this.gameObject.movement.pathPoints = this.pathPoints;
     
   },
   
