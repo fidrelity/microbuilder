@@ -30,6 +30,8 @@ var Choice = Ember.Object.extend({
       case 'moveInRandom' : return 'move in random direction' + ' - ' + a.getSpeedName();
       case 'moveInObject' : return 'move in direction of ' + a.gameObject.name + ' - ' + a.getSpeedName();
       case 'moveInLocation' : return 'move in direction of location ' + a.location.string() + ' - ' + a.getSpeedName();
+      // Zeus
+      case 'moveAlongPath' : return 'move along path - ' + a.getSpeedName();
       
       case 'moveToLocation' : return 'move to location ' + a.location.string() + ' - ' + a.getSpeedName();
       case 'moveToObject' : 
@@ -376,6 +378,30 @@ var AreaOption = Option.extend({
     }
     
     this.action.setArea( area );
+    
+  }
+  
+});
+
+
+
+var PathOption = Option.extend({
+  
+  type : 'path',
+  
+  doInsert : function( reinsert ) {
+    
+    App.actionController.addOption( this.question, PlacementView.create({
+      observer : this.action,
+      type : 'path',
+      object : App.gameObjectsController.current
+    }));
+    
+    if ( !reinsert ) {
+    
+      this.action.setLocation( new Vector( 100, 0 ) );
+    
+    }
     
   }
   

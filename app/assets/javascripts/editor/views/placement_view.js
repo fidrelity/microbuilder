@@ -4,7 +4,7 @@ var PlacementView = Ember.View.extend({
   
   classNames : ['placementview', 'optionview'],
   
-  type : 'location', // location, direction, area, offset, bounding
+  type : 'location', // location, direction, area, offset, bounding, path
   subtype : 'rect', // rect, circle
   
   observer : null,
@@ -23,6 +23,8 @@ var PlacementView = Ember.View.extend({
   object2 : null,
   
   area : null,
+
+  pathPoints : [],
   
   increment : { x : 96, y : 60 },
   scale : 2,
@@ -49,7 +51,7 @@ var PlacementView = Ember.View.extend({
       
       ctx.lineWidth = 3;
       
-    } else if ( type === 'direction' || type === 'offset' ) {
+    } else if ( type === 'direction' || type === 'offset' || type === 'path') {
       
       canvas.width = canvas.height = 200;
       this.width = this.height = 400;
@@ -166,6 +168,11 @@ var PlacementView = Ember.View.extend({
       
       if ( type === 'direction' ) {
       
+        this.object.pos.addSelf( obs.location );
+
+      } else if ( type === 'path' ) {
+
+        console.log("I am here");
         this.object.pos.addSelf( obs.location );
       
       } else if ( type === 'offset' ) {
@@ -300,7 +307,18 @@ var PlacementView = Ember.View.extend({
       if ( this.type === 'direction' ) {
         
         this.drawArrow( ctx );
-        
+      
+      // Draw paths
+      } else if ( this.type === 'path' ) {
+
+        for (var i = 0; i < this.pathPoints.length; i++) {
+
+           var targetPoint = this.pathPoints[i];
+           var startPoint = i === 0 ? this.object.pos : this.pathPoints[i - 1];
+
+           this.drawPath(ctx, startPoint, targetPoint);
+
+         };
       }
       
     } else {
@@ -310,9 +328,47 @@ var PlacementView = Ember.View.extend({
     }
     
   },
+
+  // Draws arrow path
+  drawPath : function(ctx, startPoint, targetPoint ) {
+    
+    // Calculate angle
+    var angle = Math.atan2(targetPoint.y - startPoint.y, targetPoint.x - startPoint.x);
+
+    // Calculate arrow length
+    var xd = targetPoint.x - startPoint.x;
+    var yd = targetPoint.y - startPoint.y;
+    var distance = Math.sqrt( xd * xd + yd * yd);
+
+    // Draw path arrow
+    ctx.save();
+
+    ctx.translate(startPoint.x , startPoint.y);
+    
+    ctx.rotate( angle );
+
+    ctx.line( 0, 0, distance, 0 );
+
+    // Arrow peak
+    ctx.translate( distance, 0 );
+    
+    ctx.beginPath();
+    
+    ctx.moveTo( -5, 0 );
+    ctx.lineTo( -10, -12 );
+    ctx.lineTo( 15, 0 );
+    ctx.lineTo( -10, 12 );
+    
+    ctx.closePath();
+    
+    ctx.fillStyle = '#000';
+    ctx.fill();
+    
+    ctx.restore();
+  },
   
   drawArrow : function( ctx ) {
-    
+
     var i = new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( this.object.pos ).angle();
     
     ctx.save();
@@ -340,10 +396,10 @@ var PlacementView = Ember.View.extend({
   },
   
   mousedown : function( mouse ) {
-    
+ 
     var obj = this.object,
       area = this.area;
-    
+   
     if ( obj && this.type !== 'bounding' ) {
       
       area.set( obj.pos.x - obj.frameWidth * 0.5, obj.pos.y - obj.height * 0.5, obj.frameWidth, obj.height );
@@ -352,6 +408,15 @@ var PlacementView = Ember.View.extend({
         
         mouse.dragging = false;
         
+      }  
+
+      // Insert Path point
+      if ( this.type === 'path' ) {
+
+        console.log("Path point", mouse.pos.x, mouse.pos.y);
+        this.pathPoints.push({x: mouse.pos.x, y: mouse.pos.y});
+
+        this.doDraw();
       }
       
     } else if ( !area.contains( mouse.pos ) ) {
@@ -399,7 +464,7 @@ var PlacementView = Ember.View.extend({
     
     if ( obj && this.type !== 'bounding' ) {
       
-      if ( this.type === 'direction' ) {
+      if ( this.type === 'direction' || this.type === "path" ) {
         
         this.observer.setLocation( new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( obj.pos ) );
         

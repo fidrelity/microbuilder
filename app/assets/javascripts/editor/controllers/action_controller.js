@@ -19,7 +19,7 @@ var ActionController = Ember.Object.extend({
     
     'jumpToLocation', 'jumpToObject', 'jumpToArea', // 'jumpToClick',
     
-    'moveRoam', 'moveSwap', 'moveStop',
+    'moveRoam', 'moveSwap', 'moveStop', 'moveAlongPath',
     
     'artToFrame', 'artPlay', 'artStop', 'artChange',
     
@@ -90,7 +90,7 @@ var ActionController = Ember.Object.extend({
         ButtonOption.create({ 
           name: 'move', 
           question: 'What type of movement?',
-          buttons: ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop'],
+          buttons: ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop', 'follow path'],
           
           decisions: [
             
@@ -237,7 +237,8 @@ var ActionController = Ember.Object.extend({
                   child: SaveOption.create({ choiceID: 'moveRoam' })
                 })
               })
-            }),
+            }), 
+
             
             // swap
             
@@ -249,8 +250,23 @@ var ActionController = Ember.Object.extend({
             
             // stop
             
-            SaveOption.create({ choiceID: 'moveStop' })
-            
+            SaveOption.create({ choiceID: 'moveStop' }),
+
+
+            // moveAlongPath            
+
+            PathOption.create({ 
+              name: 'moveAlongPath', 
+              question: 'Build the path the object should follow',
+              
+              child: SpeedOption.create({ 
+                  name: 'moveAlongPathSpeed',
+                  question: 'Set the speed of the movement',
+                  child: SaveOption.create({ choiceID: 'moveAlongPath' })
+              })              
+            })
+
+           
           ]
         }),
         
