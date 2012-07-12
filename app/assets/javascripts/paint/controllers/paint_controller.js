@@ -96,13 +96,23 @@ var PaintController =  Ember.ArrayController.extend({
 
     $(document).keydown(function(e) {
 
+        var that = App.paintController;
+
         if(e.keyCode === 17) this.isCtrl = true;
 
         // Ctrl + Z
         if(e.keyCode === 90 && this.isCtrl) {
-          App.paintController.undo();
+          that.undo();
         }        
 
+        // Escape
+        if(e.keyCode === 27) {
+          try {
+            that.getCurrentTool().reset();
+          } catch(e) {
+            //console.log("Method does not exists");
+          }
+        }
     });
 
     // OnMouse on zoomed canvas
@@ -348,12 +358,14 @@ var PaintController =  Ember.ArrayController.extend({
   remove : function(_spriteModel) {
     if(this.content.length === 0) return false;
     var spriteModel = _spriteModel || this.getCurrentSpriteModel();
+    this.removeObject(spriteModel);
     $("#" + spriteModel.id).remove();
-    this.removeObject(_spriteModel);
+    console.log("after del", this.content.length, spriteModel);
     // set currentSpriteModel
   },
 
   removeCurrent : function() {
+    console.log(this.content.length);
     if(this.content.length === 1) {
       this.clearCurrentSprite();
     } else {
