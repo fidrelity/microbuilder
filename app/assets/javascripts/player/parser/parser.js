@@ -57,6 +57,16 @@ var Parser = {
       return action;
       
     },
+
+    // Move along path
+    moveAlongPath: function( data, gameObject, game ) {
+
+      var action = new MoveAction( 'moveTo', gameObject, data.speed );
+      action.target = new Vector().copy( data.pathPoints[0] );
+      
+      return action;
+
+    },
     
     moveToObject : function( data, gameObject, game ) { 
       

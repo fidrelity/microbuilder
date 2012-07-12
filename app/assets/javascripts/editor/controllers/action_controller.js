@@ -257,7 +257,7 @@ var ActionController = Ember.Object.extend({
 
             PathOption.create({ 
               name: 'moveAlongPath', 
-              question: 'Build the path the object should follow',
+              question: 'Click to set the path the object should follow',
               
               child: SpeedOption.create({ 
                   name: 'moveAlongPathSpeed',

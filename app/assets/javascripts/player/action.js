@@ -14,7 +14,7 @@ var MoveAction = function( type, gameObject, speed ) {
     
     this.execute = this.executeMoveIn;
     
-  } else if ( type === 'moveTo' ) {
+  } else if ( type === 'moveTo' || type == "moveAlongPath" ) {
     
     this.execute = this.executeMoveTo;
     

@@ -10,6 +10,7 @@ var ActionTriggerModel = Ember.Object.extend({
     
     this.set( 'decisions', this.decisions || [] );
     this.set( 'parentGameObject', App.gameObjectsController.current );
+    this.set( 'pathPoints', []);
     
   },
   
@@ -40,6 +41,12 @@ var ActionTriggerModel = Ember.Object.extend({
   setLocation : function( location ) {
     
     this.set( 'location', location );
+    
+  },
+
+  addPathPoint : function( point ) {
+    console.log("added", point);
+    this.pathPoints.addObject(point);
     
   },
   
@@ -103,6 +110,10 @@ var ActionTriggerModel = Ember.Object.extend({
     return this.location.angle().toFixed( 2 );
     
   },
+
+  getPathPoints : function() {
+    return this.pathPoints;
+  },
   
   
   // string : function() {
@@ -115,7 +126,7 @@ var ActionTriggerModel = Ember.Object.extend({
     
     return this.choice ? this.choice.string( this.parentGameObject.name, this ) : 'no choice';
     
-  }.property( 'choice', 'gameObject', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2' ),
+  }.property( 'choice', 'gameObject', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2', 'pathPoints' ),
   
   
   clone : function() {
@@ -201,6 +212,8 @@ var ActionTriggerModel = Ember.Object.extend({
         
         case 'location': data.location = this.location.getData(); break;
         case 'direction': data.angle = this.angle(); break;
+
+        case 'path': data.pathPoints = this.getPathPoints(); break;
         
         case 'area': data.area = this.area.getData(); break;
         

@@ -241,7 +241,7 @@ Movement.prototype = {
     vector.set( distance, 0 ).rotateSelf( this.direction );
     
     this.position.addSelf( vector );
-    
+   
     if ( mode ) {
     
       if ( mode === 'wiggle' ) {

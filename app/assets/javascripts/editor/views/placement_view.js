@@ -38,7 +38,7 @@ var PlacementView = Ember.View.extend({
       self = this;
     
     this.area = new Area;
-    
+
     $( canvas ).css({ 'border' : '2px solid #AAA', 'background-color' : '#CCC' });
     
     if ( type === 'location' || type === 'area' ) {
@@ -124,6 +124,7 @@ var PlacementView = Ember.View.extend({
       type = this.type, 
       obs = this.observer, 
       img, i;
+
     
     if ( type === 'location' || type === 'area' ) {
     
@@ -408,15 +409,13 @@ var PlacementView = Ember.View.extend({
         
         mouse.dragging = false;
         
-      }  
+        // Insert Path point if mouse not in obj
+        if ( this.type === 'path' ) {          
+          this.pathPoints.push({x: mouse.pos.x, y: mouse.pos.y});
+          this.observer.addPathPoint({x: mouse.pos.x, y: mouse.pos.y});
+          this.doDraw();
+        }
 
-      // Insert Path point
-      if ( this.type === 'path' ) {
-
-        console.log("Path point", mouse.pos.x, mouse.pos.y);
-        this.pathPoints.push({x: mouse.pos.x, y: mouse.pos.y});
-
-        this.doDraw();
       }
       
     } else if ( !area.contains( mouse.pos ) ) {
