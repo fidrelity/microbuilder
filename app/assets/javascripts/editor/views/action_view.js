@@ -344,13 +344,18 @@ var ArtView = Ember.View.extend({
 
 
 // Displays input txtfield
+
+/*
+  Todo: on edit -> show value of counter in textfield
+*/
+
 var TextfieldView = Ember.View.extend({
   
   tagName : 'div',
   
   classNames : ['textfieldview', 'optionview', 'form-horizontal'],
   
-  template: Ember.Handlebars.compile( '<input class="textfieldElement span1" type="text" value="{{observer.value}}" maxlength="4"> <button class="acceptElement btn btn-success">Set</button>' ),
+  template: Ember.Handlebars.compile( '<input class="textfieldElement span1" type="text" value="" maxlength="4"> <button class="acceptElement btn btn-success">Set</button>' ),
   
   observer : null,
   
@@ -360,10 +365,13 @@ var TextfieldView = Ember.View.extend({
 
     var observer = this.observer;
     observer.setCounter(this.value);
+
+    var textField = $(".textfieldElement");
+    textField.focus();
     
     this.$('.acceptElement').live("click", function() {
 
-      observer.setCounter( $(".textfieldElement").val() );
+      observer.setCounter( textField.val() );
 
     });
   

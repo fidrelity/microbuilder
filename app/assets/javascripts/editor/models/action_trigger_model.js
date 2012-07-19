@@ -115,7 +115,7 @@ var ActionTriggerModel = Ember.Object.extend({
     return this.pathPoints;
   },
   
-
+  counter : 0,
   setCounter : function(value) {
 
     this.set( "counter", Math.round( parseInt(value) ) );

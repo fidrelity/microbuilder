@@ -60,6 +60,10 @@ var Choice = Ember.Object.extend({
       case 'gameWin' : return 'win the game';
       case 'gameLose' : return 'lose the game';
       case 'gameEnd' : return 'end the game';
+
+      case 'counterUp' : return 'counter increases';
+      case 'counterDown' : return 'counter decreases';
+      case 'counterSet' : return 'counter is set to ' + a.counter;
       
       // triggers
       
@@ -82,9 +86,13 @@ var Choice = Ember.Object.extend({
       case 'gameWasLost' : return 'game was lost';
       case 'gameStart' : return 'start';
 
-      case 'counterUp' : return 'counter increases';
-      case 'counterDown' : return 'counter decreases';
-      case 'counterSet' : return 'counter is set to ' + a.counter;
+      case 'counterGreaterNumber' : return 'objects counter greater than';
+      case 'counterSmallerNumber' : return 'objects counter smaller than';
+      case 'counterEqualsNumber' : return 'objects counter equal to';
+
+      case 'counterGreaterObject' : return 'counter greater than ' + a.gameObject.name + '\'s number ' + a.gameObject.counter;
+      case 'counterSmallerObject' : return 'counter smaller than ' + a.gameObject.name + '\'s number ' + a.gameObject.counter;
+      case 'counterEqualsObject' : return 'counter equal to ' + a.gameObject.name + '\'s number ' + a.gameObject.counter;
       
       default : console.error( 'Unknow choice name: ' + this.ID );
       

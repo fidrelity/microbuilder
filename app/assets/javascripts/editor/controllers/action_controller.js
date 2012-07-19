@@ -41,9 +41,9 @@ var ActionController = Ember.Object.extend({
     // 'artHasFrame', 'artGetsFrame',
     // 'artHasGraphic', 'artGetsGraphic',
     
-    // 'counterEqualsNumber', 'counterEqualsObject',
-    // 'counterGreaterNumber', 'counterGreaterObject',
-    // 'counterSmallerNumber', 'counterSmallerObject',
+    'counterEqualsNumber', 'counterEqualsObject',
+    'counterGreaterNumber', 'counterGreaterObject',
+    'counterSmallerNumber', 'counterSmallerObject',
     
     'gameIsWon', 'gameWasWon',
     'gameIsLost', 'gameWasLost',
@@ -380,7 +380,7 @@ var ActionController = Ember.Object.extend({
     this.set( 'triggerOption', ButtonOption.create({ 
       name: 'trigger', 
       question: 'Select the type of trigger',
-      buttons: ['click', 'contact', 'time', 'game'], // 'art', 'number'],
+      buttons: ['click', 'contact', 'time', 'game', 'counter'], // 'art'],
       
       decisions: [
         
@@ -563,6 +563,80 @@ var ActionController = Ember.Object.extend({
             SaveOption.create({ choiceID: 'gameStart' })
             
           ]
+        }),
+
+
+
+        // counter
+        
+        ButtonOption.create({
+          name: 'counter',
+          question: 'Compare objects number to what?',
+          buttons: ['a number', 'other object counter'],
+          
+          decisions: [
+
+            // number
+
+            ButtonOption.create({
+              name: 'counterCompareToNumber',
+              question: 'Objects number should be ...?',
+              buttons: ['greater', 'smaller', 'equal'],
+              
+              decisions: [
+            
+                // greater textfield
+                
+                CounterOption.create({
+                  name: 'counterGreaterNumber',
+                  question: 'Greater to which number?', 
+                  child: SaveOption.create({ choiceID: 'counterGreaterNumber' })                  
+                }),
+
+                // smaller textfield
+                
+                CounterOption.create({
+                  name: 'counterSmallerNumber',
+                  question: 'Smaller to which number?', 
+                  child: SaveOption.create({ choiceID: 'counterSmallerNumber' })                  
+                }),
+
+                // smaller textfield
+                
+                CounterOption.create({
+                  name: 'counterEqualsNumber',
+                  question: 'Equal to which number?', 
+                  child: SaveOption.create({ choiceID: 'counterEqualsNumber' })                  
+                })
+              ]
+            }),
+
+
+             // Compare to other Object number
+
+            ObjectOption.create({
+              name: 'counterCompareToObject',
+              question: 'Choose the object to compare with:',
+
+              decision: 
+
+                ButtonOption.create({
+                  name: 'counterCompareToObjectType',
+                  question: 'Trigger, when objects number is ...?',
+                  buttons: ['greater', 'smaller', 'equal'],
+                  
+                  decisions: [                  
+                    SaveOption.create({ choiceID: 'counterGreaterObject' }),
+                    SaveOption.create({ choiceID: 'counterSmallerObject' }),
+                    SaveOption.create({ choiceID: 'counterEqualsObject' })
+                  ]
+                })             
+
+            }),
+
+           
+           ]
+          
         }),
 
         

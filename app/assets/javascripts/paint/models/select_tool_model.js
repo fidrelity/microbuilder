@@ -49,12 +49,14 @@ var SelectToolModel = Ember.Object.extend({
     });
 
     $(document).keydown(function(e) {
+        /*
         if(!App.selectTool.selectDiv.is(":visible")) return false;
         console.log(e.keyCode);
 
         switch(e.keyCode) {
           case(46) : App.selectTool.clearSelected(); break;
         }
+        */
     });
 
   },
