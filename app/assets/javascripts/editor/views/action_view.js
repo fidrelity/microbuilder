@@ -286,7 +286,7 @@ var SpeedView = Ember.View.extend({
   didInsertElement : function() {
     
     var observer = this.observer;
-    
+   
     this.$('.slider').slider({
       
       value: this.speed,
@@ -338,6 +338,35 @@ var ArtView = Ember.View.extend({
     
     App.gameController.searchArtGraphic();
     
+  }
+  
+});
+
+
+// Displays input txtfield
+var TextfieldView = Ember.View.extend({
+  
+  tagName : 'div',
+  
+  classNames : ['textfieldview', 'optionview', 'form-horizontal'],
+  
+  template: Ember.Handlebars.compile( '<input class="textfieldElement span1" type="text" value="{{observer.value}}" maxlength="4"> <button class="acceptElement btn btn-success">Set</button>' ),
+  
+  observer : null,
+  
+  value : null,
+  
+  didInsertElement : function() {
+
+    var observer = this.observer;
+    observer.setCounter(this.value);
+    
+    this.$('.acceptElement').live("click", function() {
+
+      observer.setCounter( $(".textfieldElement").val() );
+
+    });
+  
   }
   
 });

@@ -115,6 +115,12 @@ var ActionTriggerModel = Ember.Object.extend({
     return this.pathPoints;
   },
   
+
+  setCounter : function(value) {
+
+    this.set( "counter", Math.round( parseInt(value) ) );
+    
+  },
   
   // string : function() {
   //   
@@ -126,7 +132,7 @@ var ActionTriggerModel = Ember.Object.extend({
     
     return this.choice ? this.choice.string( this.parentGameObject.name, this ) : 'no choice';
     
-  }.property( 'choice', 'gameObject', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2', 'pathPoints' ),
+  }.property( 'choice', 'gameObject', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2', 'pathPoints', 'counter' ),
   
   
   clone : function() {
@@ -152,7 +158,9 @@ var ActionTriggerModel = Ember.Object.extend({
       time2 : this.time2,
       
       mode : this.mode,
-      speed : this.speed
+      speed : this.speed,
+
+      counter : this.counter
       
     });
     
@@ -182,7 +190,9 @@ var ActionTriggerModel = Ember.Object.extend({
       time2 : d.time2,
       
       mode : d.mode,
-      speed : d.speed
+      speed : d.speed,
+
+      counter : d.counter
       
     });
     
@@ -226,6 +236,8 @@ var ActionTriggerModel = Ember.Object.extend({
         
         case 'speed': data.speed = this.speed; break;
         case 'mode': data.mode = this.mode; break;
+
+        case 'counter': data.counter = this.counter; break;
         
         default : console.error( 'unknown optionType: ' + optionType );
         

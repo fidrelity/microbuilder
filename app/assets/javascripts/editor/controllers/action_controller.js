@@ -362,15 +362,12 @@ var ActionController = Ember.Object.extend({
 
             // set
 
-            ButtonOption.create({
+            CounterOption.create({
               name: 'counterSet',
               question: 'Set counter to which value?', 
 
-              decision: SpeedOption.create({ 
-                name: 'moveInObjectSpeed',
-                question: 'Set the new value of the counter',
-                child: SaveOption.create({ choiceID: 'counterSet' })
-              })
+              child: SaveOption.create({ choiceID: 'counterSet' })
+              
             })
 
            

@@ -84,7 +84,7 @@ var Choice = Ember.Object.extend({
 
       case 'counterUp' : return 'counter increases';
       case 'counterDown' : return 'counter decreases';
-      case 'counterSet' : return 'counter is set to';
+      case 'counterSet' : return 'counter is set to ' + a.counter;
       
       default : console.error( 'Unknow choice name: ' + this.ID );
       
@@ -388,7 +388,8 @@ var AreaOption = Option.extend({
 });
 
 
-
+// PathOption
+// used for moveAlongPath action
 var PathOption = Option.extend({
   
   type : 'path',
@@ -563,6 +564,28 @@ var SaveOption = Option.extend({
     
     var choice = App.actionController.getChoice( this.choiceID );
     choice.setOption( this );
+    
+  }
+  
+});
+
+
+var CounterOption = Option.extend({
+  
+  type : 'counter',
+  
+  doInsert : function( reinsert ) {
+    
+    App.actionController.addOption( this.question, TextfieldView.create({
+      observer : this.action,
+      value : reinsert ? this.action.counter : 0
+    }));
+    
+    if ( !reinsert ) {
+    
+      this.action.setCounter( 0 );
+    
+    }
     
   }
   
