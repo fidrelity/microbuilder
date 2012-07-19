@@ -81,6 +81,10 @@ var Choice = Ember.Object.extend({
       case 'gameIsLost' : return 'game is lost';
       case 'gameWasLost' : return 'game was lost';
       case 'gameStart' : return 'start';
+
+      case 'counterUp' : return 'counter increases';
+      case 'counterDown' : return 'counter decreases';
+      case 'counterSet' : return 'counter is set to';
       
       default : console.error( 'Unknow choice name: ' + this.ID );
       

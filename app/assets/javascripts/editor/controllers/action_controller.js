@@ -22,13 +22,13 @@ var ActionController = Ember.Object.extend({
     'moveRoam', 'moveSwap', 'moveStop', 'moveAlongPath',
     
     'artToFrame', 'artPlay', 'artStop', 'artChange',
-    
-    // 'counterSet', 'counterUp', 'counterDown'
-    
+       
     'gameWin', 'gameLose', 'gameEnd',
+
+    'counterSet', 'counterUp', 'counterDown'
     
   ],
-  
+   
   triggerIDs : [
   
     'clickSelf', 'clickObject', 'clickArea', // 'clickStage',
@@ -81,7 +81,7 @@ var ActionController = Ember.Object.extend({
     this.set( 'actionOption', ButtonOption.create({ 
       name: 'action', 
       question: 'Select the type of action',
-      buttons: ['move', 'art', 'game'], // 'counter'],
+      buttons: ['move', 'art', 'game', 'counter'],
       
       decisions: [
         
@@ -339,8 +339,44 @@ var ActionController = Ember.Object.extend({
             SaveOption.create({ choiceID: 'gameLose' }),
             SaveOption.create({ choiceID: 'gameEnd' })
           ] 
-        })
+        }),
+
+
+
+        // counter action
         
+        ButtonOption.create({
+          name: 'counter',
+          question: 'Which actions should the counter perform?', 
+          buttons: ['count up', 'count down', 'set to value'],
+          
+          decisions: [
+            
+            // up
+                          
+            SaveOption.create({ choiceID: 'counterUp' }),
+
+            // down
+
+            SaveOption.create({ choiceID: 'counterDown' }),
+
+            // set
+
+            ButtonOption.create({
+              name: 'counterSet',
+              question: 'Set counter to which value?', 
+
+              decision: SpeedOption.create({ 
+                name: 'moveInObjectSpeed',
+                question: 'Set the new value of the counter',
+                child: SaveOption.create({ choiceID: 'counterSet' })
+              })
+            })
+
+           
+          ]
+        }) // end counter option
+
       ]
     }));
     
@@ -531,6 +567,7 @@ var ActionController = Ember.Object.extend({
             
           ]
         }),
+
         
       ]
     }));
