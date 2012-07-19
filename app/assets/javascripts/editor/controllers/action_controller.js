@@ -90,7 +90,7 @@ var ActionController = Ember.Object.extend({
         ButtonOption.create({ 
           name: 'move', 
           question: 'What type of movement?',
-          buttons: ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop', 'follow path'],
+          buttons: ['directional', 'move to', 'jump to', 'roam', 'swap', 'follow path', 'stop'],
           
           decisions: [
             
@@ -247,26 +247,25 @@ var ActionController = Ember.Object.extend({
               question: 'Choose the object to swap position',
               decision: SaveOption.create({ choiceID: 'moveSwap' })
             }),
-            
-            // stop
-            
-            SaveOption.create({ choiceID: 'moveStop' }),
 
-
-            // moveAlongPath            
+             // moveAlongPath            
 
             PathOption.create({ 
               name: 'moveAlongPath', 
-              question: 'Click to set the path the object should follow',
-              
-              child: SpeedOption.create({ 
-                  name: 'moveAlongPathSpeed',
-                  question: 'Set the speed of the movement',
-                  child: SaveOption.create({ choiceID: 'moveAlongPath' })
-              })              
-            })
+              question: 'Click on the area to set the path, which the object should follow',
 
-           
+              child: SpeedOption.create({ 
+                name: 'moveAlongPathSpeed',
+                question: 'Set the speed of the movement',
+                child: SaveOption.create({ choiceID: 'moveAlongPath' })
+              })
+            }),
+
+            
+            // stop
+            
+            SaveOption.create({ choiceID: 'moveStop' })
+
           ]
         }),
         
