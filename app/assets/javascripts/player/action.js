@@ -10,7 +10,7 @@ var MoveAction = function( type, gameObject, speed, rotateInDirection ) {
   this.random = false;
   this.direction = null;
 
-  this.pathPoints = [];
+  this.pathPoints = this.gameObject.movement.pathPoints;
   this.rotateToTarget = rotateInDirection || false;
 
   this.gameObject.movement.rotateToTarget = this.rotateToTarget; 
@@ -53,7 +53,19 @@ MoveAction.prototype = {
   executeMoveTo : function() {
     
     this.gameObject.movement.setTarget( this.target, this.offset, this.speed );
-    this.gameObject.movement.pathPoints = this.pathPoints;
+
+    // If PathPoints are available
+    if(this.pathPoints.length) {
+
+      // Add start position to pathPoints as first point
+      this.pathPoints.unshift(this.gameObject.movement.startPosition);
+     
+      this.gameObject.movement.pathPoints = this.pathPoints;
+
+      this.gameObject.movement.pathMode = this.mode;
+
+
+    }
 
   },
   

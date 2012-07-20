@@ -252,19 +252,28 @@ var ActionController = Ember.Object.extend({
               decision: SaveOption.create({ choiceID: 'moveSwap' })
             }),
 
-             // moveAlongPath            
 
-            PathOption.create({ 
+            // moveAlongPath            
+
+            PathOption.create({
               name: 'moveAlongPath', 
               question: 'Click on the area to set the path, which the object should follow',
 
-              child: SpeedOption.create({ 
-                name: 'moveAlongPathSpeed',
-                question: 'Set the speed of the movement',
-                child: SaveOption.create({ choiceID: 'moveAlongPath' })
+              child: ModeOption.create({
+                  name: 'pathPlayMode',                
+                  question: 'Choose the play mode',                  
+                  buttons:  ['once', 'circular', 'ping-pong'],
+                  modes:  ['once', 'circular', 'ping-pong'],
+                  
+                  decision: SpeedOption.create({ 
+                    name: 'moveAlongPathSpeed', 
+                    question: 'Set the speed of the animation',
+                    hasRotateToCheckbox: true,
+                    child: SaveOption.create({ choiceID: 'moveAlongPath' })
+                  })
               })
-            }),
 
+            }),
             
             // stop
             

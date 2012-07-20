@@ -43,12 +43,6 @@ var ActionTriggerModel = Ember.Object.extend({
     this.set( 'location', location );
     
   },
-
-  addPathPoint : function( point ) {
-    console.log("added", point);
-    this.pathPoints.addObject(point);
-    
-  },
   
   setArea : function( area ) {
     
@@ -111,8 +105,18 @@ var ActionTriggerModel = Ember.Object.extend({
     
   },
 
+
+  addPathPoint : function( point ) {
+
+    console.log("added", point);
+    this.pathPoints.addObject(point);    
+
+  },
+
   getPathPoints : function() {
+
     return this.pathPoints;
+    
   },
   
   counter : 0,
@@ -171,7 +175,9 @@ var ActionTriggerModel = Ember.Object.extend({
       speed : this.speed,
       rotateOnMove : this.rotateOnMove,
 
-      counter : this.counter
+      counter : this.counter,
+
+      pathPoints : this.pathPoints
       
     });
     
@@ -203,6 +209,8 @@ var ActionTriggerModel = Ember.Object.extend({
       mode : d.mode,
       speed : d.speed,
       rotateOnMove : d.rotateOnMove,
+
+      pathPoints : d.pathPoints,
 
       counter : d.counter
       

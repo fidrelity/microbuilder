@@ -21,6 +21,8 @@ var Movement = function() {
 
   this.rotateToTarget = false; // indicates whether the object turns to its target
   this.angle = 0;
+
+  this.pathMode = null // loop, ping-pong, once
   
 };
 
@@ -32,7 +34,7 @@ Movement.prototype = {
     
     this.position.copy( this.startPosition );
     
-    this.stop();
+    this.stop();    
     
   },
   
@@ -60,7 +62,7 @@ Movement.prototype = {
     this.offset = offset;
     
     this.setSpeed( speed );
-    
+
   },
   
   setDirection : function( dir, speed ) {
@@ -190,6 +192,8 @@ Movement.prototype = {
     this.target = null;
     this.direction = null;
     this.roamMode = null;
+
+    this.pathCounter = 0;
     
   },
   
@@ -214,6 +218,8 @@ Movement.prototype = {
     }
     
   },
+
+  followPath : true,
   
   updateTarget : function( distance ) {
     
@@ -228,9 +234,53 @@ Movement.prototype = {
       pos.copy( target ).addSelf( this.offset );
       
       // Path points in queue left
-      if(this.pathCounter <= this.pathPoints.length) {
+      if(this.followPath) {
           
-          this.pathCounter++;
+          if(this.rotateToTarget) { // Todo: fix
+
+            this.angle = new Vector(0, 0).addSelf({x: this.target.x, y: this.target.y}).angle();
+
+          }
+
+          var lastPoint = this.pathPoints.length - 1;
+          
+          // loop
+          if(this.pathMode === 'circular') {
+            
+            if(this.pathCounter === lastPoint) {
+              this.pathCounter = 0;
+            } else {
+              this.pathCounter++;
+            }
+
+          // ping-pong
+          } else if(this.pathMode === 'ping-pong') {
+
+            if(this.pathCounter >= lastPoint) {
+              this.pathDirection = "backward";
+            }
+
+            if(this.pathCounter == 0) {
+              this.pathDirection = "forward";
+            }
+
+            if(this.pathDirection === "backward") {
+              this.pathCounter--;
+            } else {
+              this.pathCounter++;              
+            }
+
+
+          // once
+          } else {
+
+            if(this.pathCounter === lastPoint)
+              this.followPath = false;
+
+            this.pathCounter++;
+
+          }
+          
           this.target = this.pathPoints[this.pathCounter];
 
       } else {

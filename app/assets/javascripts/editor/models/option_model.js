@@ -405,6 +405,7 @@ var PathOption = Option.extend({
   doInsert : function( reinsert ) {
     
     App.actionController.addOption( this.question, PlacementView.create({
+
       observer : this.action,
       type : 'path',
       object : App.gameObjectsController.current

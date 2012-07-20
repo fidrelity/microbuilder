@@ -30,6 +30,10 @@ var PlacementView = Ember.View.extend({
   scale : 2,
   
   didInsertElement : function() {
+
+    console.log("didInsertElement", this.observer.pathPoints, this.observer);
+    
+    //this.pathPoints = this.observer.pathPoints;
     
     var canvas = this.$( '.placement' )[0],
       ctx = canvas.getContext( '2d' ),
@@ -41,7 +45,7 @@ var PlacementView = Ember.View.extend({
 
     $( canvas ).css({ 'border' : '2px solid #AAA', 'background-color' : '#CCC' });
     
-    if ( type === 'location' || type === 'area' ) {
+    if ( type === 'location' || type === 'area' || type === 'path' ) {
       
       canvas.width = ( 640 + inc.x * 2 ) * 0.5;
       canvas.height = ( 390 + inc.y * 2 ) * 0.5;
@@ -51,7 +55,7 @@ var PlacementView = Ember.View.extend({
       
       ctx.lineWidth = 3;
       
-    } else if ( type === 'direction' || type === 'offset' || type === 'path') {
+    } else if ( type === 'direction' || type === 'offset') {
       
       canvas.width = canvas.height = 200;
       this.width = this.height = 400;
@@ -119,6 +123,8 @@ var PlacementView = Ember.View.extend({
   },
   
   load : function() {
+
+
     
     var objs = App.gameObjectsController.content, 
       type = this.type, 
@@ -165,7 +171,8 @@ var PlacementView = Ember.View.extend({
       this.object = this.getImage( this.object || this.gameObject );
       this.gameObjects = [this.object];
       
-      this.object.pos.set( this.width * 0.5, this.height * 0.5 );
+      if ( type !== 'path' )
+        this.object.pos.set( this.width * 0.5, this.height * 0.5 );
       
       if ( type === 'direction' ) {
       
@@ -173,7 +180,7 @@ var PlacementView = Ember.View.extend({
 
       } else if ( type === 'path' ) {
 
-        this.object.pos.addSelf( obs.location );
+        //this.object.pos.addSelf( obs.location );
       
       } else if ( type === 'offset' ) {
         
@@ -311,10 +318,10 @@ var PlacementView = Ember.View.extend({
       // Draw paths
       } else if ( this.type === 'path' ) {
 
-        for (var i = 0; i < this.pathPoints.length; i++) {
+        for (var i = 0; i < this.observer.pathPoints.length; i++) {
 
-           var targetPoint = this.pathPoints[i];
-           var startPoint = i === 0 ? this.object.pos : this.pathPoints[i - 1];
+           var targetPoint = this.observer.pathPoints[i];
+           var startPoint = i === 0 ? this.object.pos : this.observer.pathPoints[i - 1];
 
            this.drawPath(ctx, startPoint, targetPoint);
 
@@ -410,7 +417,6 @@ var PlacementView = Ember.View.extend({
         
         // Insert Path point if mouse not in obj
         if ( this.type === 'path' ) {          
-          this.pathPoints.push({x: mouse.pos.x, y: mouse.pos.y});
           this.observer.addPathPoint({x: mouse.pos.x, y: mouse.pos.y});
           this.doDraw();
         }
