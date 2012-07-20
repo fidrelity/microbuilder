@@ -277,13 +277,15 @@ var SpeedView = Ember.View.extend({
   
   classNames : ['speedview', 'optionview'],
   
-  template: Ember.Handlebars.compile( '<div class="slider left"></div><div class="speed left">{{observer.speedName}}</div><br><input type="checkbox" class="setRotateTo"> RotateTo' ),
+  template: Ember.Handlebars.compile( '<div class="slider left"></div><div class="speed left">{{observer.speedName}}</div><div class="setRotateToWrapper"><input type="checkbox" class="setRotateTo"> RotateTo</div>' ),
   
   observer : null,
   
   speed : 2,
 
   rotateTo : false,
+
+  hasRotateToCheckbox : false,
   
   didInsertElement : function() {
     
@@ -304,15 +306,28 @@ var SpeedView = Ember.View.extend({
       
     });
 
-    console.log("r", this.rotateTo, observer.rotateOnMove);
 
-    this.$('.setRotateTo').prop("checked", this.rotateTo);
+    // RotateToCheckBox Events
+    
+    var rotateToCheckboxWrapper =  this.$('.setRotateToWrapper');
+    var rotateToCheckbox =  rotateToCheckboxWrapper.find('.setRotateTo');
 
-    this.$('.setRotateTo').live("click", function(){
+    if(this.hasRotateToCheckbox) {
 
-      observer.setRotateOnMove( $(this).is(":checked") );
+      rotateToCheckbox.prop("checked", this.rotateTo);
 
-    });
+      // Click Event
+      rotateToCheckbox.live("click", function(){
+
+        observer.setRotateOnMove( $(this).is(":checked") );
+
+      });
+
+    } else {
+
+      rotateToCheckboxWrapper.remove();
+
+    }
     
   }
   
@@ -357,7 +372,7 @@ var ArtView = Ember.View.extend({
 
 // Displays input txtfield
 
-var TextfieldView = Ember.View.extend({
+var CounterFieldView = Ember.View.extend({
   
   tagName : 'div',
   

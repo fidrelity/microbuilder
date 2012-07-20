@@ -8,7 +8,7 @@ var GameObject = function( ID ) {
   this.movement = new Movement();
   this.animation = new Animation();
 
-  //this.angle = new Vector(this.movement.position.x, this.movement.position.y).angle();  
+  this.counter = 0;
 };
 
 GameObject.prototype = {
@@ -18,6 +18,8 @@ GameObject.prototype = {
     this.setGraphic( this.startGraphic );
     
     this.movement.reset();
+
+    this.counter = 0;
     
   },
   

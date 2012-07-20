@@ -86,9 +86,9 @@ var Choice = Ember.Object.extend({
       case 'gameWasLost' : return 'game was lost';
       case 'gameStart' : return 'start';
 
-      case 'counterGreaterNumber' : return 'objects counter greater than';
-      case 'counterSmallerNumber' : return 'objects counter smaller than';
-      case 'counterEqualsNumber' : return 'objects counter equal to';
+      case 'counterGreaterNumber' : return 'objects counter greater than ' + action.counter;
+      case 'counterSmallerNumber' : return 'objects counter smaller than ' + action.counter;
+      case 'counterEqualsNumber' : return 'objects counter equal to ' + action.counter;
 
       case 'counterGreaterObject' : return 'counter greater than ' + a.gameObject.name + '\'s number ' + a.gameObject.counter;
       case 'counterSmallerObject' : return 'counter smaller than ' + a.gameObject.name + '\'s number ' + a.gameObject.counter;
@@ -446,13 +446,15 @@ var OffsetOption = Option.extend({
 var SpeedOption = Option.extend({
   
   type : 'speed',
+  hasRotateToCheckbox : false,
   
   doInsert : function( reinsert ) {
-   
+
     App.actionController.addOption( this.question, SpeedView.create({
       observer : this.action,
-      speed : reinsert ? this.action.speed : 2,
-      rotateTo : reinsert ? this.action.rotateOnMove : false
+      speed : reinsert ? this.action.speed : 2,      
+      rotateTo : reinsert ? this.action.rotateOnMove : false,
+      hasRotateToCheckbox : this.hasRotateToCheckbox
     }));
     
     if ( !reinsert ) {
@@ -585,7 +587,7 @@ var CounterOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this.question, TextfieldView.create({
+    App.actionController.addOption( this.question, CounterFieldView.create({
       observer : this.action,
       value : reinsert ? this.action.counter : 0
     }));

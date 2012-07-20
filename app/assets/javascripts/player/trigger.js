@@ -227,3 +227,86 @@ var LostTrigger = {
   draw : function() {}
   
 };
+
+
+
+var CounterTrigger = function( type, gameObject, numberToCompare, gameObject2 ) {
+  
+  this.gameObject = gameObject;
+  this.gameObject2 = gameObject2 || null;
+
+  this.numberToCompare = numberToCompare || null;
+
+  this.triggered = false;
+    
+  if ( type === 'equal' ) {
+    
+    this.check = this.checkEqual;
+    
+  } else if ( type === 'greater' ) {
+    
+    this.check = this.checkGreater;
+    
+  } else if ( type === 'smaller' ) {
+    
+    this.check = this.checkSmaller;
+  
+  }
+  
+};
+
+CounterTrigger.prototype = {
+  
+  check : null,
+  
+  checkEqual : function() {
+    
+    if(this.triggered) return false;
+    if(this.gameObject.counter === this.getNumber()) {
+      this.triggered = true;
+      return true;
+    }
+
+    return false;
+
+  },
+  
+  checkGreater : function() {
+    
+    if(this.triggered) return false;
+    
+    if(this.gameObject.counter > this.getNumber()) {
+      this.triggered = true;
+      return true;
+    }
+
+    return false;
+    
+  },
+
+  checkSmaller : function() {
+   
+    if(this.triggered) return false;
+
+    if(this.gameObject.counter < this.getNumber()) {
+      this.triggered = true;
+      return true;
+    }
+
+    return false;
+    
+  },
+
+  getNumber : function() {
+    return this.numberToCompare !== null ? this.numberToCompare : this.gameObject2.counter;
+  },
+  
+  reset : function() {
+    
+  },
+  
+  draw : function( ctx ) {
+        
+  }
+  
+};
