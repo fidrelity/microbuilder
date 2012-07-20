@@ -65,7 +65,14 @@
   <!-- Second Toolbar -->
   <div id="tool-bar-second" class="form-horizontal row">
     <div class="span3 form-horizontal">
-
+      {{#view ToolView
+        toolBinding = "this"
+      }}
+        <button {{action "flipV"}}>FlipV</button>
+        <button {{action "flipH"}}>FlipH</button>
+        <button {{action "rotateLeft"}}>Rotate 90° left</button>
+        <button {{action "rotateRight"}}>Rotate 90° right</button>
+      {{/view}}
     </div>
 
     <div class="span8 form-horizontal">

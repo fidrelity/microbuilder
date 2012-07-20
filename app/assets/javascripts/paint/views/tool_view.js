@@ -116,6 +116,22 @@ var ToolView = Ember.View.extend({
 
   stop : function() {
     App.spritePlayer.stop();
+  },
+
+  flipV : function() {
+    App.paintController.flipV();
+  },
+
+  flipH : function() {
+    App.paintController.flipH();
+  },
+
+  rotateRight : function() {
+    App.paintController.rotate(90);
+  },
+
+  rotateLeft : function() {
+    App.paintController.rotate(-90);
   }
 
 });

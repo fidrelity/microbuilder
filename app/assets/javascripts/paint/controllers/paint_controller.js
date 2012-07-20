@@ -271,6 +271,7 @@ var PaintController =  Ember.ArrayController.extend({
 
   // Undo current SpriteModel
   undo : function() {
+
     this.getCurrentSpriteModel().popState();
 
     if(this.isBackground)
@@ -278,6 +279,93 @@ var PaintController =  Ember.ArrayController.extend({
     else
       this.updateZoom(true);
   },
+
+  flipH : function() {
+    var scale = 1;
+    var width = this.spriteSize.width;
+    var height = this.spriteSize.height;
+
+    var imageData = this.zoomContext.getImageData(0, 0, width, width);
+    
+    var copiedCanvas = $("<canvas>").attr("width", width).attr("height", width)[0];
+    copiedCanvas.getContext("2d").putImageData(imageData, 0, 0);
+
+    var newWidth = width * scale;
+    var newHeight = height * scale;
+
+    this.zoomContext.save();
+      this.zoomContext.translate(width, 0);
+      this.zoomContext.scale(-scale, scale);
+
+      this.zoomContext.clearRect(0, 0, width, height);
+      this.clearCurrentSprite();
+
+      this.zoomContext.drawImage(copiedCanvas, 0, 0);
+      this.drawToSprite();
+    this.zoomContext.restore();
+  },
+
+  flipV : function() {
+
+    var scale = 1;
+    var width = this.spriteSize.width;
+    var height = this.spriteSize.height;
+
+    var imageData = this.zoomContext.getImageData(0, 0, width, width);
+    
+    var copiedCanvas = $("<canvas>").attr("width", width).attr("height", width)[0];
+    copiedCanvas.getContext("2d").putImageData(imageData, 0, 0);
+
+    var newWidth = width * scale;
+    var newHeight = height * scale;
+
+
+    this.zoomContext.save();
+      
+      this.zoomContext.translate(0, height/2);
+      this.zoomContext.scale(scale, -scale);   
+
+      this.zoomContext.clearRect(0, 0, width, height);
+      this.clearCurrentSprite();
+
+      this.zoomContext.drawImage(copiedCanvas, 0, 0);
+
+      this.drawToSprite();
+    this.zoomContext.restore();
+
+  },
+
+  rotate : function(_angle) {
+
+    var angle = _angle || 90;
+    var scale = 1;
+    var width = this.spriteSize.width;
+    var height = this.spriteSize.height;
+
+    var imageData = this.zoomContext.getImageData(0, 0, width, width);
+    
+    var copiedCanvas = $("<canvas>").attr("width", width).attr("height", width)[0];
+    copiedCanvas.getContext("2d").putImageData(imageData, 0, 0);
+
+    var newWidth = width * scale;
+    var newHeight = height * scale;
+
+    this.zoomContext.save();
+      
+      this.zoomContext.translate(width/2, height/2);
+      this.zoomContext.rotate(angle * Math.PI / 180);      
+
+      this.zoomContext.clearRect(0, 0, width, height);
+      this.clearCurrentSprite();
+
+      this.zoomContext.translate(-width/2, -height/2);
+      this.zoomContext.drawImage(copiedCanvas, 0, 0);
+
+      this.drawToSprite();
+    this.zoomContext.restore();
+
+  },
+  
 
   // Clear current SpriteModel
   clearCurrentSprite : function() {

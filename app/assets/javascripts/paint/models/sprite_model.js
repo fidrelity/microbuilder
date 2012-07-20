@@ -72,11 +72,30 @@ var SpriteModel = Ember.Object.extend({
   },
 
   flipV: function() {
-    this.context.translate(-1,1);
+    this.context.scale(-1,1);
   },
 
   flipH: function() {
-    this.context.translate(1,-1);
+    console.log("here")
+
+    var scale = 1;
+
+    var imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.width);
+    
+    var copiedCanvas = $("<canvas>").attr("width", this.canvas.width).attr("height", this.canvas.width)[0];
+    copiedCanvas.getContext("2d").putImageData(imageData, 0, 0);
+
+    var newWidth = this.canvas.width * scale;
+    var newHeight = this.canvas.height * scale;
+
+    this.context.save();
+      //this.context.translate(-((newWidth-this.canvas.width)/2), -((newHeight-this.canvas.height)/2));
+      this.context.translate(this.canvas.width, 0);
+      this.context.scale(-scale, scale);      
+      //this.context.rotate();
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.context.drawImage(copiedCanvas, 0, 0);
+    this.context.restore();
   },
 
   pushState : function() {
