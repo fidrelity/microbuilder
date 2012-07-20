@@ -88,7 +88,7 @@ var PaintController =  Ember.ArrayController.extend({
 
   // Init DOM events
   initEvents : function() {
-    /*
+    
 
     // Key Events
     $(document).keyup(function(e) {
@@ -111,11 +111,11 @@ var PaintController =  Ember.ArrayController.extend({
           try {
             that.getCurrentTool().reset();
           } catch(e) {
-            //console.log("Method does not exists");
+            console.log("Reset method does not exists for current tool");
           }
         } 
     });
-*/
+
     // OnMouse on zoomed canvas
     $('#zoomCanvas').mousedown(function(e){
       App.paintController.mousedown(e);

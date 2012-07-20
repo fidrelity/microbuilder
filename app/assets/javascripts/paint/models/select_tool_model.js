@@ -48,15 +48,21 @@ var SelectToolModel = Ember.Object.extend({
       }
     });
 
-    $(document).keydown(function(e) {
-        /*
-        if(!App.selectTool.selectDiv.is(":visible")) return false;
-        console.log(e.keyCode);
 
-        switch(e.keyCode) {
-          case(46) : App.selectTool.clearSelected(); break;
-        }
-        */
+    // Register Key Events:
+    $(document).keydown(function(e) {
+        
+      if(App.selectTool.selectDiv.is(":visible") && !$("input").is(":focus") ) {
+
+          switch(e.keyCode) { 
+            
+            // del key - erases selected area
+            case(46) : App.selectTool.clearSelected(); break;
+
+          }
+
+      }
+        
     });
 
   },
@@ -111,7 +117,7 @@ var SelectToolModel = Ember.Object.extend({
     this.tempCanvas[0].style.width = this.finalWidth;
     this.tempCanvas[0].style.height = this.finalHeight;
 
-    // copy
+    // copy to tempCanvas
     var imageData = App.paintController.zoomContext.getImageData(this.finalX, this.finalY, this.finalWidth, this.finalHeight);
     this.tempCtx.putImageData(imageData, 0, 0);
 
@@ -120,11 +126,12 @@ var SelectToolModel = Ember.Object.extend({
     var img = new Image();
     img.src = img_data;
     img.width = (endX - startX) - 1;
-    img.height = (endY - startY) -1;
+    img.height = (endY - startY) - 1;
 
     img.onload = function() {
       App.selectTool.selectDiv.html(img);
     };
+
   },
 
   clearSelected : function() {
@@ -134,6 +141,9 @@ var SelectToolModel = Ember.Object.extend({
   },
 
   reset : function() {
+    
+    App.paintController.updateZoom();
+
     this.startX = 0;
     this.startY = 0;
     this.endX = 0;
