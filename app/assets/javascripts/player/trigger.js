@@ -302,7 +302,7 @@ CounterTrigger.prototype = {
   },
   
   reset : function() {
-    
+    this.triggered = false;
   },
   
   draw : function( ctx ) {

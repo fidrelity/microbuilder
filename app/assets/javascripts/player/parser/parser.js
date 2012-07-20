@@ -2,6 +2,13 @@ var Parser = {
   
   game : null,
   loader : null,
+
+
+  // ------------------------
+
+  //      ACTIONS
+
+  // ------------------------
   
   actionIDs : {
     
@@ -170,7 +177,8 @@ var Parser = {
     gameEnd : function() { return EndAction; },
 
 
-    // 'counterSet', 'counterUp', 'counterDown'
+    // -- Counter Action --
+
     counterSet : function(data, gameObject, game) { 
 
       return action = new CounterAction( 'set', data, gameObject );
@@ -191,6 +199,14 @@ var Parser = {
     }
     
   },
+
+
+
+  // ------------------------
+
+  //      TRIGGERS
+
+  // ------------------------
   
   triggerIDs : {
     
