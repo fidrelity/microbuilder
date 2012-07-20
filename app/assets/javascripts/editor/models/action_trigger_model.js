@@ -244,6 +244,8 @@ var ActionTriggerModel = Ember.Object.extend({
       }
       
     }
+
+    data.rotateToTarget = true;
     
     return data;
     

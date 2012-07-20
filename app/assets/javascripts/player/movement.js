@@ -18,6 +18,9 @@ var Movement = function() {
 
   this.pathPoints = [];
   this.pathCounter = 0;
+
+  this.rotateToTarget = false; // indicates whether the object turns to its target
+  this.angle = 0;
   
 };
 
@@ -66,7 +69,8 @@ Movement.prototype = {
     
     this.direction = dir;
     this.setSpeed( speed );
-    
+
+    if(this.rotateToTarget) this.angle = dir;
   },
   
   setSpeed : function( speed ) {
@@ -377,6 +381,7 @@ Movement.prototype = {
       
       ctx.translate( this.position.x, this.position.y );
       ctx.rotate( this.direction );
+      console.log("draw")
       
       ctx.line( 0, 0, 1000, 0 );
       

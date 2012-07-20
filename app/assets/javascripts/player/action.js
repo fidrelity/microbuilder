@@ -1,4 +1,4 @@
-var MoveAction = function( type, gameObject, speed ) {
+var MoveAction = function( type, gameObject, speed, rotateInDirection ) {
   
   this.gameObject = gameObject;
   this.speed = speed;
@@ -11,7 +11,10 @@ var MoveAction = function( type, gameObject, speed ) {
   this.direction = null;
 
   this.pathPoints = [];
-  
+  this.rotateToTarget = rotateInDirection || false;
+
+  this.gameObject.movement.rotateToTarget = this.rotateToTarget; 
+
   if ( type === 'moveIn' ) {
     
     this.execute = this.executeMoveIn;
@@ -19,6 +22,7 @@ var MoveAction = function( type, gameObject, speed ) {
   } else if ( type === 'moveTo' || type == "moveAlongPath" ) {
     
     this.execute = this.executeMoveTo;
+    
     
   } else if ( type === 'jumpTo' ) {
     
@@ -50,10 +54,10 @@ MoveAction.prototype = {
     
     this.gameObject.movement.setTarget( this.target, this.offset, this.speed );
     this.gameObject.movement.pathPoints = this.pathPoints;
-    
+
   },
   
-  executeMoveIn : function() {
+  executeMoveIn : function() { 
     
     var dir;
     

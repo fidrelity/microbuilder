@@ -7,17 +7,17 @@ var Parser = {
     
     moveInDirection : function( data, gameObject ) { 
       
-      var action = new MoveAction( 'moveIn', gameObject, data.speed );
+      var action = new MoveAction( 'moveIn', gameObject, data.speed, data.rotateToTarget);
       
       action.direction = data.angle;
-      
+          
       return action;
       
     },
       
     moveInRandom : function( data, gameObject ) { 
       
-      var action = new MoveAction( 'moveIn', gameObject, data.speed );
+      var action = new MoveAction( 'moveIn', gameObject, data.speed, data.rotateToTarget );
       
       action.random = true;
       
@@ -27,7 +27,7 @@ var Parser = {
     
     moveInLocation : function( data, gameObject ) { 
       
-      var action = new MoveAction( 'moveIn', gameObject, data.speed );
+      var action = new MoveAction( 'moveIn', gameObject, data.speed, data.rotateToTarget );
       
       action.target = new Vector().copy( data.location );
       
@@ -50,7 +50,7 @@ var Parser = {
     
     moveToLocation : function( data, gameObject ) { 
       
-      var action = new MoveAction( 'moveTo', gameObject, data.speed );
+      var action = new MoveAction( 'moveTo', gameObject, data.speed, data.rotateToTarget );
       
       action.target = new Vector().copy( data.location );
       
@@ -61,7 +61,7 @@ var Parser = {
     // Move along path
     moveAlongPath: function( data, gameObject, game ) {
 
-      var action = new MoveAction( 'moveTo', gameObject, data.speed );
+      var action = new MoveAction( 'moveTo', gameObject, data.speed, data.rotateToTarget );
       action.target = new Vector().copy( data.pathPoints[0] );
       action.pathPoints = data.pathPoints;
       
@@ -71,7 +71,7 @@ var Parser = {
     
     moveToObject : function( data, gameObject, game ) { 
       
-      var action = new MoveAction( 'moveTo', gameObject, data.speed );
+      var action = new MoveAction( 'moveTo', gameObject, data.speed, data.rotateToTarget );
       
       action.target = game.getGameObjectWithID( data.objectID ).movement.position;
       action.offset = new Vector().copy( data.offset );

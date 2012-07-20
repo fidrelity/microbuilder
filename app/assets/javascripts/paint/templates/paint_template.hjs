@@ -2,6 +2,11 @@
   <!-- Toolbar -->
   <div id="tool-bar">
     <div>
+     {{#view ToolView
+        toolBinding = "App.selectTool"
+      }}
+        <button {{action "selecttool"}} class="select selectable"></button>   
+      {{/view}}
       {{#view ToolView
         toolBinding = "App.pencilTool"
       }}
@@ -33,7 +38,7 @@
       }}     
         <button {{action "clear"}} class="clear"></button>
         <button {{action "undo"}} class="undo"></button>       
-        <button {{action "reset"}} id="clearSpritesButton" class="clearall">Clear All</button>     
+        <button {{action "reset"}} id="clearSpritesButton" class="clearall"></button>     
       {{/view}}   
       
       <!-- SIZE -->
@@ -61,12 +66,6 @@
   <div id="tool-bar-second" class="form-horizontal row">
     <div class="span3 form-horizontal">
 
-      {{#view ToolView
-        toolBinding = "App.selectTool"
-      }}
-        <button {{action "selecttool"}} class="select selectable">Select</button>     
-      {{/view}}
-      
     </div>
 
     <div class="span8 form-horizontal">

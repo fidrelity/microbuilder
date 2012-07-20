@@ -7,7 +7,8 @@ var GameObject = function( ID ) {
   
   this.movement = new Movement();
   this.animation = new Animation();
-  
+
+  //this.angle = new Vector(this.movement.position.x, this.movement.position.y).angle();  
 };
 
 GameObject.prototype = {
@@ -34,6 +35,9 @@ GameObject.prototype = {
     ctx.save();
     ctx.translate( pos.x, pos.y );
     
+    if(this.movement.rotateToTarget)
+      ctx.rotate(this.movement.angle);
+        
     this.graphic.draw( ctx, this.animation.getFrame() );
     
     ctx.restore();
