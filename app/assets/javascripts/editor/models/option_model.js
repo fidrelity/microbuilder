@@ -448,10 +448,11 @@ var SpeedOption = Option.extend({
   type : 'speed',
   
   doInsert : function( reinsert ) {
-    
+   
     App.actionController.addOption( this.question, SpeedView.create({
       observer : this.action,
-      speed : reinsert ? this.action.speed : 2
+      speed : reinsert ? this.action.speed : 2,
+      rotateTo : reinsert ? this.action.rotateOnMove : false
     }));
     
     if ( !reinsert ) {

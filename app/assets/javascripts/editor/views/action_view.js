@@ -277,11 +277,13 @@ var SpeedView = Ember.View.extend({
   
   classNames : ['speedview', 'optionview'],
   
-  template: Ember.Handlebars.compile( '<div class="slider left"></div><div class="speed left">{{observer.speedName}}</div>' ),
+  template: Ember.Handlebars.compile( '<div class="slider left"></div><div class="speed left">{{observer.speedName}}</div><br><input type="checkbox" class="setRotateTo"> RotateTo' ),
   
   observer : null,
   
   speed : 2,
+
+  rotateTo : false,
   
   didInsertElement : function() {
     
@@ -300,6 +302,16 @@ var SpeedView = Ember.View.extend({
         
       }
       
+    });
+
+    console.log("r", this.rotateTo, observer.rotateOnMove);
+
+    this.$('.setRotateTo').prop("checked", this.rotateTo);
+
+    this.$('.setRotateTo').live("click", function(){
+
+      observer.setRotateOnMove( $(this).is(":checked") );
+
     });
     
   }
@@ -345,10 +357,6 @@ var ArtView = Ember.View.extend({
 
 // Displays input txtfield
 
-/*
-  Todo: on edit -> show value of counter in textfield
-*/
-
 var TextfieldView = Ember.View.extend({
   
   tagName : 'div',
@@ -367,6 +375,7 @@ var TextfieldView = Ember.View.extend({
     observer.setCounter(this.value);
 
     var textField = $(".textfieldElement");
+    textField.val(observer.counter);
     textField.focus();
     
     this.$('.acceptElement').live("click", function() {

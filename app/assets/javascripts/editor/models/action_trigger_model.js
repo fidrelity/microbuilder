@@ -116,10 +116,20 @@ var ActionTriggerModel = Ember.Object.extend({
   },
   
   counter : 0,
+
   setCounter : function(value) {
 
     this.set( "counter", Math.round( parseInt(value) ) );
     
+  },
+
+  rotateOnMove : false,
+
+  setRotateOnMove : function(state) {
+
+    state = state || false;
+    this.set("rotateOnMove", state);
+
   },
   
   // string : function() {
@@ -132,7 +142,7 @@ var ActionTriggerModel = Ember.Object.extend({
     
     return this.choice ? this.choice.string( this.parentGameObject.name, this ) : 'no choice';
     
-  }.property( 'choice', 'gameObject', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2', 'pathPoints', 'counter' ),
+  }.property( 'choice', 'gameObject', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2', 'pathPoints', 'counter', 'rotateOnMove' ),
   
   
   clone : function() {
@@ -159,6 +169,7 @@ var ActionTriggerModel = Ember.Object.extend({
       
       mode : this.mode,
       speed : this.speed,
+      rotateOnMove : this.rotateOnMove,
 
       counter : this.counter
       
@@ -191,6 +202,7 @@ var ActionTriggerModel = Ember.Object.extend({
       
       mode : d.mode,
       speed : d.speed,
+      rotateOnMove : d.rotateOnMove,
 
       counter : d.counter
       
@@ -245,7 +257,7 @@ var ActionTriggerModel = Ember.Object.extend({
       
     }
 
-    data.rotateToTarget = true;
+    data.rotateToTarget = this.rotateOnMove;
     
     return data;
     
