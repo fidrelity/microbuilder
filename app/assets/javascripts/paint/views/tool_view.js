@@ -3,13 +3,31 @@ var ToolView = Ember.View.extend({
   tool : null,
   
   didInsertElement : function() {
+
     $('.pencil').addClass("activeTool");
 
-    // Highlight active tool
+    // Highlight active tool on click
     $(".selectable").click(function() {
+
       $(".selectable").removeClass("activeTool");
       $(this).addClass("activeTool");
+
     });
+
+
+    // Init file load
+    if (!window.File && !window.FileReader && !window.FileList && !window.Blob) {
+
+      $('#file').remove();
+
+    } else {
+      
+      $("#loadFileButton").click(function() { 
+        $('#file').trigger("click"); // trigger hidden file field
+      });
+      
+      $('#file').change(function(e) { App.paintController.handleFile(e) });
+    }
 
   },
 
@@ -17,7 +35,7 @@ var ToolView = Ember.View.extend({
     App.toolBoxController.setCurrentTool(this.get("tool"));
   },
 
-  drawRect : function() {    
+  drawRect : function() {
     App.drawTool.setDrawFunction("rect");
     App.drawTool.click();
     this.setCurrentTool();
@@ -95,11 +113,11 @@ var ToolView = Ember.View.extend({
   },
 
   zoomIn : function() {
-    App.paintController.zoomIn();
+    App.paintController.zoomModel.zoomIn();
   },
 
   zoomOut : function() {
-    App.paintController.zoomOut();
+    App.paintController.zoomModel.zoomOut();
   },
 
   bgToggle : function() {

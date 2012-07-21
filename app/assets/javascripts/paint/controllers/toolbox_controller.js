@@ -44,24 +44,40 @@ var DrawToolModel = Ember.Object.extend({
   tempCanvas : null,
 
   init : function () {
+
     this.pixelDrawer = App.paintController.pixelDrawer;
+
   },
 
   initAfter : function () {
+
+    /*
     this.tempCanvas = App.paintController.tempCanvas;
     this.tempContext = App.paintController.tempContext;
 
     this.zoomCanvas = App.paintController.zoomCanvas;
     this.zoomContext = App.paintController.zoomContext;
+    */
+    this.tempCanvasModel = TempCanvasModel.create();    
+
+    this.tempCanvas = this.tempCanvasModel.canvas;
+    this.tempContext = this.tempCanvasModel.tempContext;
+
+    this.zoomCanvas = App.paintController.zoomModel.canvas;
+    this.zoomContext = App.paintController.zoomModel.context;
+
+    this.colorPicker = App.paintController.colorPicker;
+    
   },
   
   click : function(_options) {
+
     this.setTempCanvas();
-    App.paintController.toggleColorPalette(true);
+    //App.paintController.toggleColorPalette(true);
   },
 
   mousedown : function(_options, _pixelDrawer) {
-    //this.sprite = _options.sprite;
+
     this.isActive = true;
     //
     this.startX = _options.x;
@@ -69,9 +85,11 @@ var DrawToolModel = Ember.Object.extend({
 
     // Draw on pixelDrawer current canvas => tempCanvas
     this.draw(_options.x, _options.y, _options.x, _options.y);
+
   },
 
   mousemove : function(_options) {
+
     if(!this.isActive) return false;
 
     this.endX = _options.x;
@@ -82,9 +100,11 @@ var DrawToolModel = Ember.Object.extend({
 
     // Draw on pixelDrawer current canvas => tempCanvas
     this.draw(this.startX, this.startY, _options.x, _options.y);
+
   },
 
   mouseup : function(_options) {
+
     if(!this.isActive) return false;
     this.isActive = false;
       
@@ -102,27 +122,34 @@ var DrawToolModel = Ember.Object.extend({
 
     this.endX = this.startX;
     this.endY = this.startY;
+    
   },
 
   draw : function(_x, _y, _endX, _endY) {
+
     var x = _x || this.startX;
     var y = _y || this.startY;
     var endX = _endX || this.endX;
     var endY = _endY || this.endY;
 
     this.pixelDrawer.popImageData();
-    this.drawFunction(x, y, endX, endY, App.paintController.color, App.paintController.size);
+    this.drawFunction(x, y, endX, endY, this.colorPicker.color, App.paintController.toolSize);
     this.pixelDrawer.pushImageData();
+
   },
 
   // Show temp canvas over current canvas (sprite)
   setTempCanvas : function() {
+
     // Set temp canvas as canvas to draw in pixelDrawer
-    this.pixelDrawer.setCanvasContext(App.paintController.tempCanvas[0]);    
-    App.paintController.showTempCanvas();
+    this.pixelDrawer.setCanvasContext(App.paintController.tempCanvas.canvas);    
+    
+    App.paintController.tempCanvas.showTempCanvas();
+
   },
 
-  setDrawFunction : function(_fnc) {    
+  setDrawFunction : function(_fnc) {
+
     var drawFnc = null;
     switch (_fnc) {
 
@@ -147,14 +174,17 @@ var DrawToolModel = Ember.Object.extend({
 var FillToolModel = Ember.Object.extend({
 
   initAfter : function () {
-    this.zoomCanvas = App.paintController.zoomCanvas;
-    this.zoomContext = App.paintController.zoomContext;
+
+    this.zoomCanvas = App.paintController.zoomModel.canvas;
+    this.zoomContext = App.paintController.zoomModel.context;
     this.pixelDrawer = App.paintController.pixelDrawer;
+
   },
   
   click : function(_options) {
+
     App.paintController.hideTempCanvas();
-    App.paintController.toggleColorPalette(true);
+
   },
 
   mousedown : function(_options, _pixelDrawer) {
@@ -163,19 +193,20 @@ var FillToolModel = Ember.Object.extend({
   },
 
   mousemove : function(_options) {
-
   },
 
-  mouseup : function(_options) {
-   
+  mouseup : function(_options) {   
   },
 
   draw : function(_x, _y) {
+
     this.pixelDrawer.popImageData();
     var oldColor = this.pixelDrawer.getPixelColor(_x, _y);
-    this.pixelDrawer.floodFill(_x, _y, App.paintController.color, oldColor);
+    this.pixelDrawer.floodFill(_x, _y, App.paintController.getColor(), oldColor);
     this.pixelDrawer.pushImageData();
+    
     App.paintController.drawToSprite();
+
   }
 
 });

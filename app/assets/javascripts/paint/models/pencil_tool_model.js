@@ -43,20 +43,20 @@ var PencilToolModel = Ember.Object.extend({
   draw : function(_x, _y, _endX, _endY) {
     // Eraser    
     if(this.get('isErasing') == true) {
-      var centered = App.paintController.size > 4 ? App.paintController.size / 2 : 0;
+      var centered = App.paintController.toolSize > 4 ? App.paintController.toolSize / 2 : 0;
       App.paintController.erase(_x, _y);
 
     // Paint
     } else {
       this.pixelDrawer.popImageData();
-      this.pixelDrawer.drawLine(_x, _y, _endX, _endY, App.paintController.color, App.paintController.size);
+      this.pixelDrawer.drawLine(_x, _y, _endX, _endY, App.paintController.getColor(), App.paintController.toolSize);
       this.pixelDrawer.pushImageData();
     }   
   },
 
   setEraser : function(_state) {
     this.set('isErasing', _state);
-    App.paintController.toggleColorPalette(!_state);
+    //App.paintController.toggleColorPalette(!_state);
   }
 
 });

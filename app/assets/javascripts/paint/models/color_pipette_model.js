@@ -5,25 +5,33 @@ var ColorPipetteModel = Ember.Object.extend({
   pixelDrawer : null,
   
   init : function () {
+
     this.pixelDrawer = App.paintController.pixelDrawer;
+    this.colorPicker = App.paintController.colorPicker;
+
   },
   
   click : function() {
+
     App.paintController.hideTempCanvas();
+
   },
 
   mousedown : function(_options) {
+
     this.isActive = true;
     var rgbColor = this.pixelDrawer.getPixelColor(_options.x, _options.y);    
-    App.paintController.colorPicked(null, this.RGBtoHex(rgbColor), null);
+    this.colorPicker.colorPicked(null, this.RGBtoHex(rgbColor), null);
+
   },
 
   mousemove : function(_options) {
-
   },
 
   mouseup : function(_options) {
 
+    this.isActive = false;
+    
   },
 
   RGBtoHex : function(rgb) {
@@ -41,5 +49,7 @@ var ColorPipetteModel = Ember.Object.extend({
     });
 
     return hex.join('');
+
   }
+
 });

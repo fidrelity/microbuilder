@@ -3,7 +3,7 @@ var ColorPaletteView = Ember.View.extend({
   color : null,
   
   didInsertElement : function() {
-    $('#colorChooser').css("background-color", App.paintController.color);
+    $('#colorChooser').css("background-color", App.paintController.getColor());
     $('#colorChooser').click(function() {
       var palette = $("#palette");
       if(palette.is(':visible')) {
@@ -18,7 +18,7 @@ var ColorPaletteView = Ember.View.extend({
 
     $('.colorBlock').click(function() {
       var color = $(this).attr('data-color');
-      App.paintController.setColor(color);
+      App.paintController.colorPicker.setColor(color);
 
       $('.colorBlock').removeClass('activeColor');
       $(this).addClass('activeColor');
