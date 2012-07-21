@@ -238,7 +238,7 @@ Movement.prototype = {
           
           if(this.rotateToTarget) { // Todo: fix
 
-            this.angle = new Vector(0, 0).addSelf({x: this.target.x, y: this.target.y}).angle();
+            this.angle = vector.angle();
 
           }
 

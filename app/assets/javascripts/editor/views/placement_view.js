@@ -31,7 +31,7 @@ var PlacementView = Ember.View.extend({
   
   didInsertElement : function() {
 
-    console.log("didInsertElement", this.observer.pathPoints, this.observer);
+    console.log("didInsertElement", this.observer.pathPoints);
     
     //this.pathPoints = this.observer.pathPoints;
     
