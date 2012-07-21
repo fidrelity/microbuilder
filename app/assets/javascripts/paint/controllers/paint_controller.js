@@ -319,10 +319,9 @@ var PaintController =  Ember.ArrayController.extend({
     var newWidth = width * scale;
     var newHeight = height * scale;
 
-
     this.zoomContext.save();
       
-      this.zoomContext.translate(0, height/2);
+      this.zoomContext.translate(0, height);
       this.zoomContext.scale(scale, -scale);   
 
       this.zoomContext.clearRect(0, 0, width, height);
@@ -449,7 +448,8 @@ var PaintController =  Ember.ArrayController.extend({
     var spriteModel = _spriteModel || this.getCurrentSpriteModel();
     this.removeObject(spriteModel);
     $("#" + spriteModel.id).remove();
-    console.log("after del", this.content.length, spriteModel);
+    //this.content.splice(spriteModel.index, 1);
+    //console.log("after del", this.content.length, spriteModel);
     // set currentSpriteModel
   },
 
