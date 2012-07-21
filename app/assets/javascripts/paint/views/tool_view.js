@@ -14,21 +14,6 @@ var ToolView = Ember.View.extend({
 
     });
 
-
-    // Init file load
-    if (!window.File && !window.FileReader && !window.FileList && !window.Blob) {
-
-      $('#file').remove();
-
-    } else {
-      
-      $("#loadFileButton").click(function() { 
-        $('#file').trigger("click"); // trigger hidden file field
-      });
-      
-      $('#file').change(function(e) { App.paintController.handleFile(e) });
-    }
-
   },
 
   setCurrentTool : function() {
@@ -121,7 +106,7 @@ var ToolView = Ember.View.extend({
   },
 
   bgToggle : function() {
-    App.paintController.toogleZoomCanvasBg();
+    App.paintController.zoomModel.toogleZoomCanvasBg();
   },
 
   save : function() {

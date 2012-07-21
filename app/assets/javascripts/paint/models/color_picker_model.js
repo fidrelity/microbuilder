@@ -31,7 +31,7 @@ var ColorPickerModel = Ember.Object.extend({
 
       onChange : function(hsb, hex, rgb){
 
-        App.paintController.colorPicked(hsb, hex, rgb);
+        App.paintController.colorPicker.colorPicked(hsb, hex, rgb);
 
       }
 

@@ -7,6 +7,11 @@ var ColorPipetteModel = Ember.Object.extend({
   init : function () {
 
     this.pixelDrawer = App.paintController.pixelDrawer;
+    
+  },
+
+  initDomReady : function() {
+
     this.colorPicker = App.paintController.colorPicker;
 
   },

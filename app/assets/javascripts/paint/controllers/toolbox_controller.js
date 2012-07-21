@@ -58,10 +58,11 @@ var DrawToolModel = Ember.Object.extend({
     this.zoomCanvas = App.paintController.zoomCanvas;
     this.zoomContext = App.paintController.zoomContext;
     */
-    this.tempCanvasModel = TempCanvasModel.create();    
+    this.tempCanvasModel = TempCanvasModel.create();  
+    this.tempCanvasModel.initDomReady();  
 
     this.tempCanvas = this.tempCanvasModel.canvas;
-    this.tempContext = this.tempCanvasModel.tempContext;
+    this.tempContext = this.tempCanvasModel.context;
 
     this.zoomCanvas = App.paintController.zoomModel.canvas;
     this.zoomContext = App.paintController.zoomModel.context;
@@ -73,10 +74,10 @@ var DrawToolModel = Ember.Object.extend({
   click : function(_options) {
 
     this.setTempCanvas();
-    //App.paintController.toggleColorPalette(true);
+
   },
 
-  mousedown : function(_options, _pixelDrawer) {
+  mousedown : function(_options) {
 
     this.isActive = true;
     //
@@ -110,6 +111,7 @@ var DrawToolModel = Ember.Object.extend({
       
     // Set pixelDrawer canvas to zoom canvas
     this.pixelDrawer.setCanvasContext(this.zoomCanvas);
+
     // Draw on zoom canvas
     this.draw();
 
@@ -117,7 +119,7 @@ var DrawToolModel = Ember.Object.extend({
     App.paintController.drawToSprite();
 
     // Change back to tempCanvas
-    this.pixelDrawer.setCanvasContext(this.tempCanvas[0]);
+    this.pixelDrawer.setCanvasContext(this.tempCanvas);
     this.pixelDrawer.context.clearRect(0, 0, this.zoomCanvas.width, this.zoomCanvas.height);
 
     this.endX = this.startX;
@@ -142,9 +144,9 @@ var DrawToolModel = Ember.Object.extend({
   setTempCanvas : function() {
 
     // Set temp canvas as canvas to draw in pixelDrawer
-    this.pixelDrawer.setCanvasContext(App.paintController.tempCanvas.canvas);    
+    this.pixelDrawer.setCanvasContext(this.tempCanvas);    
     
-    App.paintController.tempCanvas.showTempCanvas();
+    this.tempCanvasModel.showTempCanvas();
 
   },
 
@@ -204,7 +206,7 @@ var FillToolModel = Ember.Object.extend({
     var oldColor = this.pixelDrawer.getPixelColor(_x, _y);
     this.pixelDrawer.floodFill(_x, _y, App.paintController.getColor(), oldColor);
     this.pixelDrawer.pushImageData();
-    
+
     App.paintController.drawToSprite();
 
   }

@@ -11,12 +11,14 @@ var SelectToolModel = Ember.Object.extend({
   marginToMouse : 2,
 
   initAfter : function () {
+
     this.pixelDrawer = App.paintController.pixelDrawer;
 
     this.tempCanvas = App.paintController.finalCanvas;
     this.tempCtx = this.tempCanvas[0].getContext("2d");
 
     this.zoomModel = App.paintController.zoomModel;
+    console.log(this.zoomModel);
 
     this.wrapper = $("#zoom-canvas-area"); // to know the offset coord
 
@@ -31,7 +33,7 @@ var SelectToolModel = Ember.Object.extend({
         dragHeight = that.endY - that.startY;
 
         App.paintController.erase(that.finalX, that.finalY, that.finalWidth, that.finalHeight);
-        this.zoomModel.updateZoom();
+        that.zoomModel.updateZoom();
 
       },
 
@@ -46,10 +48,10 @@ var SelectToolModel = Ember.Object.extend({
         var coord = App.selectTool.getCoord(ui.position.left, ui.position.top);
         var offset = App.selectTool.getOffset();
 
-        var x = (ui.position.left - offset.x) / this.zoomModel.zoom;
-        var y = (ui.position.top - offset.y) / this.zoomModel.zoom;
+        var x = (ui.position.left - offset.x) / App.selectTool.zoomModel.zoom;
+        var y = (ui.position.top - offset.y) / App.selectTool.zoomModel.zoom;
 
-        this.zoomModel.context.putImageData(data, x, y);
+        App.selectTool.zoomModel.context.putImageData(data, x, y);
         App.paintController.drawToSprite();
 
         App.selectTool.reset();

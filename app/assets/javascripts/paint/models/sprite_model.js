@@ -116,9 +116,11 @@ var SpriteModel = Ember.Object.extend({
     img.width = w;
     img.height = h;
 
+    var that = this;
+    
     img.onload = function() {
-      spriteModel.context.drawImage(img, 0, 0, w, h);
-      spriteModel.pushState();
+      that.context.drawImage(img, 0, 0, w, h);
+      that.pushState();
     };
   }
 });

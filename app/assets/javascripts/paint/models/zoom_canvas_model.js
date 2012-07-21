@@ -17,6 +17,8 @@ var ZoomCanvasModel = Ember.Object.extend({
 
   isBackground : false,
 
+  bgCounter : 0,
+
   // Constr: width, height = spriteSize.width/height, isBackground
   init : function() {
 
@@ -25,7 +27,7 @@ var ZoomCanvasModel = Ember.Object.extend({
   initDomReady : function() {
 
     this.canvas  = document.getElementById(this.id);
-    this.context = this.zoomCanvas.getContext("2d");
+    this.context = this.canvas.getContext("2d");
 
     this.domObj = $('#' + this.id);
 
@@ -44,10 +46,7 @@ var ZoomCanvasModel = Ember.Object.extend({
 
     this.domObj.mouseout(function(e){
       App.paintController.mouseup(e);
-    });
-
-    // Set Size of zoomCanvas wrapper
-   
+    });  
 
   },
 
@@ -89,7 +88,7 @@ var ZoomCanvasModel = Ember.Object.extend({
 
   zoomOut : function() {
 
-    if(this.zoomCanvas.style.width === this.spriteSize.width+"px") return false;
+    //if(this.canvas.style.width === this.spriteSize.width+"px") return false;
     
     this.zoom--;
 
@@ -112,14 +111,8 @@ var ZoomCanvasModel = Ember.Object.extend({
   },
 
   // Copy zoomCanvas data to current sprite
+  /* Deprecated???
   drawToSprite : function(spriteModel) {
-
-    /*
-      Deprecated:
-      do better in paintController:
-        spriteModel.drawFromCanvas(this.zoomCanvas.canvas);
-    
-    */
 
     var img_data = this.canvas.toDataURL("image/png");
     var w = this.spriteModel.width;
@@ -135,29 +128,27 @@ var ZoomCanvasModel = Ember.Object.extend({
       spriteModel.pushState();
     };
     
-  },
+  },*/
 
   setZoomCanvasSize : function () {
 
     var width  = this.zoom * this.width;
     var height = this.zoom * this.height;
+
     this.canvas.style.width     = width +"px";
     this.canvas.style.height    = height +"px";  
+
+    App.paintController.tempCanvas.updateToZoomCanvasSize(this.width, this.height, width, height);
     
-    // **Move To temp canvas model**
-    /*
-    this.tempCanvas[0].style.width  = width + "px";
-    this.tempCanvas[0].style.height = height + "px";
-    */
   },
 
-  updateZoom : function(spriteModel, clear) {
+  updateZoom : function(clear) {
 
     this.setZoomCanvasSize();
 
     if(clear) this.clear();
     
-    this.context.drawImage(spriteModel().canvas, 0, 0);
+    this.context.drawImage(App.paintController.getCurrentSpriteModel().canvas, 0, 0);
 
   },
 
@@ -171,9 +162,13 @@ var ZoomCanvasModel = Ember.Object.extend({
 
     var bgToggleButton = $('.bgToggle');
 
+    var that = this;
+
     $.each(bgClasses, function(k,v) {
+
       bgToggleButton.removeClass(v);
-      this.domObj.removeClass(v);
+      that.domObj.removeClass(v);
+
     });
     
     bgToggleButton.addClass(addClass);

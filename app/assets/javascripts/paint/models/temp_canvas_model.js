@@ -3,7 +3,7 @@ var TempCanvasModel = Ember.Object.extend({
   canvas : null,
   context : null,
   domObj : null,
-  id : 'zoomCanvas',
+  id : 'canvas-temp',
 
   height : 0,
   width : 0,
@@ -16,10 +16,10 @@ var TempCanvasModel = Ember.Object.extend({
   initDomReady : function() {
 
     this.canvas  = document.getElementById(this.id);
-    this.context = this.zoomCanvas.getContext("2d");
+    this.context = this.canvas.getContext("2d");
 
     this.domObj = $('#' + this.id);
-
+    
   },
 
   clear : function() {
@@ -29,17 +29,20 @@ var TempCanvasModel = Ember.Object.extend({
   },
 
 
-  updateToZoomCanvasSize : function () {
+  updateToZoomCanvasSize : function (canvasW, canvasH, styleW, styleH) {
+
+    this.canvas.width = canvasW;
+    this.canvas.height = canvasH;
     
-    this.canvas.style.width  = width + "px";
-    this.canvas.style.height = height + "px";
+    this.canvas.style.width  = styleW + "px";
+    this.canvas.style.height = styleH + "px";
 
   },
 
   // Set position of temp canvas and display it over zoomCanvas
   showTempCanvas : function() { 
     
-    var canvasObject = $("#zoomCanvas");    
+    var canvasObject = $("#zoomCanvas");
  
     var newLeft = $("#zoom-canvas-area")[0].scrollLeft + canvasObject.position().left,
         newTop = $("#zoom-canvas-area")[0].scrollTop + canvasObject.position().top;
