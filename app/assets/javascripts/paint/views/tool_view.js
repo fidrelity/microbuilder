@@ -84,7 +84,7 @@ var ToolView = Ember.View.extend({
 
   selecttool : function() {
     this.setCurrentTool();
-    //App.paintController.click();
+    App.paintController.click();
   },
 
   pipette : function() {

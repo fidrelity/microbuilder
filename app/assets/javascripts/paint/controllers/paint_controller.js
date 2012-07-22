@@ -29,7 +29,7 @@ var PaintController =  Ember.ArrayController.extend({
   isBackground : false,
   
   //
-  strokeSize : 2,          // init Paint stroke size
+  strokeSize : 2,          // init stroke size (thickness for draw tools)
 
   init : function() {
 
@@ -512,21 +512,6 @@ var PaintController =  Ember.ArrayController.extend({
 
   // ---------------------------------------
   // View changing
-
-  // Necessary??
-  showPaintView : function() {
-
-    this.set( 'tabState', 'paint' );
-
-  },
-
-  // Necessary??
-  showSizeView : function() {
-
-    this.set( 'tabState', 'setSize' );
-
-  },
-
 
   getColor : function() {
 

@@ -18,7 +18,6 @@ var SelectToolModel = Ember.Object.extend({
     this.tempCtx = this.tempCanvas[0].getContext("2d");
 
     this.zoomModel = App.paintController.zoomModel;
-    console.log(this.zoomModel);
 
     this.wrapper = $("#zoom-canvas-area"); // to know the offset coord
 
