@@ -1,7 +1,7 @@
 var ColorPickerModel = Ember.Object.extend({
 
   domObj : null,
-  color : "FF0000",
+  color : "54b3b8",
   
   init : function () {
    
@@ -43,7 +43,7 @@ var ColorPickerModel = Ember.Object.extend({
 
   reset : function() {
 
-    this.color = "#FF0000";
+    this.color = "#54b3b8";
 
   },
 

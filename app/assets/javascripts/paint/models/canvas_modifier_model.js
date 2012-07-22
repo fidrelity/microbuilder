@@ -8,7 +8,7 @@ var CanvasModifierModel = Ember.Object.extend({
   },
 
 
-  flipHorizontal : function(context, width, height) { 
+  flipHorizontal : function(context, width, height) {     
 
     this.flip(context, width, height, -1, 1, height, 0);
 

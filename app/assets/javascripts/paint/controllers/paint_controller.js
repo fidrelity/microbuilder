@@ -2,12 +2,12 @@
   PaintController
 
   Fix:
-    - Remove sprite
-    - Test save
+    - Fix: SelectTool in BG
+    - Fix: FlipVH in BG
+    - Fix: Remove sprite
 
   Refactor:
-    - Save image to savemodel
-    - strokeSize to model
+    - Save image to savemodel    
 
 */
 var PaintController =  Ember.ArrayController.extend({
@@ -92,7 +92,10 @@ var PaintController =  Ember.ArrayController.extend({
     this.zoomModel.handleType();
 
     // *** Type is background ***
-    if(this.type === 'background') {  
+    if(this.type === 'background') {
+
+      this.spriteSize.width = this.zoomModel.width;
+      this.spriteSize.height = this.zoomModel.height;
       
       // Hide unnecessary buttons and divs
       App.spritePlayer.hide();
