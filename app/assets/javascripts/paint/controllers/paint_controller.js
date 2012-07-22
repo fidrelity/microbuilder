@@ -515,7 +515,7 @@ var PaintController =  Ember.ArrayController.extend({
 
   getColor : function() {
 
-    return this.colorPicker.color; //this.color;
+    return this.colorPicker.color;
 
   },
 

@@ -89,13 +89,12 @@ var SelectToolModel = Ember.Object.extend({
     this.reset();
 
     this.isActive = true;
-    this.selectDiv.show();
 
     var coord = this.getCoord(_options.x, _options.y);
     this.startX = coord.x - this.marginToMouse;
     this.startY = coord.y - this.marginToMouse;
    
-    this.selectDiv.css({ left: this.startX, top: this.startY, width: 0, height: 0 });
+    this.selectDiv.css({ left: this.startX, top: this.startY, width: 0, height: 0 }).show();
 
   },
 
@@ -176,6 +175,7 @@ var SelectToolModel = Ember.Object.extend({
     this.endX = 0;
     this.endY = 0;
     this.selectDiv.hide().html("");
+
     this.tempCanvas[0].width = App.paintController.spriteSize.width;
     this.tempCanvas[0].height = App.paintController.spriteSize.height;
 
@@ -188,6 +188,7 @@ var SelectToolModel = Ember.Object.extend({
  
     var newLeft = scrollArea.scrollLeft + canvasObject.position().left,
         newTop  = scrollArea.scrollTop + canvasObject.position().top;
+
     return {x: newLeft, y: newTop};
 
   },
@@ -195,8 +196,8 @@ var SelectToolModel = Ember.Object.extend({
   getCoord : function(_x, _y) {
 
     var offset = this.getOffset();
-    var coordX = (_x * App.paintController.zoom ) + offset.x;
-    var coordY = (_y * App.paintController.zoom ) + offset.y;
+    var coordX = (_x * this.zoomModel.zoom ) + offset.x;
+    var coordY = (_y * this.zoomModel.zoom ) + offset.y;
 
     return {x: coordX, y: coordY };
     
