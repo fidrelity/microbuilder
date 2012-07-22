@@ -2,6 +2,7 @@
   PaintController
 
   Fix:
+    - Different Sizes: Draw and Pencil tool bug
     - Remove sprite
     - Test save
 

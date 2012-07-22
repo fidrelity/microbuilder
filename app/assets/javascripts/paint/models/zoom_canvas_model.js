@@ -48,6 +48,9 @@ var ZoomCanvasModel = Ember.Object.extend({
       App.paintController.mouseup(e);
     });  
 
+    this.canvas.width = this.width;
+    this.canvas.height = this.height; 
+
   },
 
   reset : function () {
