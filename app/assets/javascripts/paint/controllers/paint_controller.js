@@ -2,13 +2,12 @@
   PaintController
 
   Fix:
-    - Different Sizes: Draw and Pencil tool bug
     - Remove sprite
     - Test save
 
   Refactor:
     - Save image to savemodel
-    - toolSize to model
+    - strokeSize to model
 
 */
 var PaintController =  Ember.ArrayController.extend({
@@ -30,10 +29,7 @@ var PaintController =  Ember.ArrayController.extend({
   isBackground : false,
   
   //
-  bgCounter : 0,
-  color : "FF0000",    // init Paint color
-  toolSize : 2,             // init Paint stroke size
-  zoom : 2,             // init Zoom size (background has 1)
+  strokeSize : 2,          // init Paint stroke size
 
   init : function() {
 
@@ -162,7 +158,7 @@ var PaintController =  Ember.ArrayController.extend({
       step: 1,
 
       change: function( event, ui ) {
-        App.paintController.setToolSize(ui.value);
+        App.paintController.setStrokeSize(ui.value);
       },
 
       slide: function( event, ui) {
@@ -339,8 +335,8 @@ var PaintController =  Ember.ArrayController.extend({
 
   erase : function(_x, _y, _w, _h) {        
 
-    var w = _w || this.toolSize;
-    var h = _h || this.toolSize;
+    var w = _w || this.strokeSize;
+    var h = _h || this.strokeSize;
     
     if(!this.isBackground) {
 
@@ -494,11 +490,16 @@ var PaintController =  Ember.ArrayController.extend({
     return App.toolBoxController.getCurrentTool();
 
   },
-
  
-  setToolSize : function(_size) {
+  setStrokeSize : function(_size) {
 
-    this.toolSize = _size || 1;
+    this.strokeSize = _size || 1;
+
+  },
+
+  getStrokeSize : function() {
+
+    return this.strokeSize;
 
   },
 

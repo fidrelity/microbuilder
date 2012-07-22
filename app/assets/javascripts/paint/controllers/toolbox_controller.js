@@ -135,7 +135,7 @@ var DrawToolModel = Ember.Object.extend({
     var endY = _endY || this.endY;
 
     this.pixelDrawer.popImageData();
-    this.drawFunction(x, y, endX, endY, this.colorPicker.color, App.paintController.toolSize);
+    this.drawFunction(x, y, endX, endY, this.colorPicker.color, App.paintController.getStrokeSize());
     this.pixelDrawer.pushImageData();
 
   },
