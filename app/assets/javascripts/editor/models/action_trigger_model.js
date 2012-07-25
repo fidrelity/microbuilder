@@ -10,7 +10,6 @@ var ActionTriggerModel = Ember.Object.extend({
     
     this.set( 'decisions', this.decisions || [] );
     this.set( 'parentGameObject', App.gameObjectsController.current );
-    this.set( 'pathPoints', []);
     
   },
   
@@ -104,18 +103,11 @@ var ActionTriggerModel = Ember.Object.extend({
     return this.location.angle().toFixed( 2 );
     
   },
+  
 
+  setPath : function( path ) {
 
-  addPathPoint : function( point ) {
-
-    console.log("added", point);
-    this.pathPoints.addObject(point);    
-
-  },
-
-  getPathPoints : function() {
-
-    return this.pathPoints;
+    this.set("path", path);
     
   },
   
@@ -146,7 +138,7 @@ var ActionTriggerModel = Ember.Object.extend({
     
     return this.choice ? this.choice.string( this.parentGameObject.name, this ) : 'no choice';
     
-  }.property( 'choice', 'gameObject', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2', 'pathPoints', 'counter', 'rotateOnMove' ),
+  }.property( 'choice', 'gameObject', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2', 'path', 'counter', 'rotateOnMove' ),
   
   
   clone : function() {
@@ -177,9 +169,10 @@ var ActionTriggerModel = Ember.Object.extend({
 
       counter : this.counter,
 
-      pathPoints : this.pathPoints
+      path : this.path.clone()
       
     });
+
     
   },
   
@@ -210,7 +203,7 @@ var ActionTriggerModel = Ember.Object.extend({
       speed : d.speed,
       rotateOnMove : d.rotateOnMove,
 
-      pathPoints : d.pathPoints,
+      path : d.path ? new Path().copy({ points: d.path }) : null,
 
       counter : d.counter
       
@@ -243,7 +236,7 @@ var ActionTriggerModel = Ember.Object.extend({
         case 'location': data.location = this.location.getData(); break;
         case 'direction': data.angle = this.angle(); break;
 
-        case 'path': data.pathPoints = this.getPathPoints(); break;
+        case 'path': data.path = this.path.getData(); break;
         
         case 'area': data.area = this.area.getData(); break;
         

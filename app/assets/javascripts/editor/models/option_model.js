@@ -90,9 +90,9 @@ var Choice = Ember.Object.extend({
       case 'counterSmallerNumber' : return 'objects counter smaller than ' + action.counter;
       case 'counterEqualsNumber' : return 'objects counter equal to ' + action.counter;
 
-      case 'counterGreaterObject' : return 'counter greater than ' + a.gameObject.name + '\'s number ' + a.gameObject.counter;
-      case 'counterSmallerObject' : return 'counter smaller than ' + a.gameObject.name + '\'s number ' + a.gameObject.counter;
-      case 'counterEqualsObject' : return 'counter equal to ' + a.gameObject.name + '\'s number ' + a.gameObject.counter;
+      case 'counterGreaterObject' : return 'counter greater than ' + a.gameObject.name + '\'s counter';
+      case 'counterSmallerObject' : return 'counter smaller than ' + a.gameObject.name + '\'s counter';
+      case 'counterEqualsObject' : return 'counter equal to ' + a.gameObject.name + '\'s counter';
       
       default : console.error( 'Unknow choice name: ' + this.ID );
       
@@ -403,19 +403,14 @@ var PathOption = Option.extend({
   type : 'path',
   
   doInsert : function( reinsert ) {
-    
+
     App.actionController.addOption( this.question, PlacementView.create({
 
       observer : this.action,
       type : 'path',
       object : App.gameObjectsController.current
-    }));
     
-    if ( !reinsert ) {
-    
-      this.action.setLocation( new Vector( 100, 0 ) );
-    
-    }
+    }));  
     
   }
   

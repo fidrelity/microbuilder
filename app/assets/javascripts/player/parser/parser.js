@@ -68,10 +68,9 @@ var Parser = {
     // Move along path action
     moveAlongPath: function( data, gameObject, game ) {
       
-      var action = new MoveAction( 'moveTo', gameObject, data.speed, data.rotateToTarget );
+      var action = new MoveAction( 'moveAlongPath', gameObject, data.speed, data.rotateToTarget );
 
-      action.target = new Vector().copy( data.pathPoints[0] );
-      action.pathPoints = data.pathPoints;
+      action.path = data.path;
       action.mode = data.mode;
 
       return action;

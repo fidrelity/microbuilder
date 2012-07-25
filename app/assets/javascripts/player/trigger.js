@@ -265,7 +265,7 @@ CounterTrigger.prototype = {
     if(this.gameObject.counter === this.getNumber()) {
       this.triggered = true;
       return true;
-    }
+    } 
 
     return false;
 

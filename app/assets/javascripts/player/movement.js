@@ -8,6 +8,7 @@ var Movement = function() {
   
   this.target;
   this.direction;
+  this.offset = new Vector();
   
   this.roamArea;
   this.roamMode;
@@ -16,14 +17,13 @@ var Movement = function() {
   this.time;
   this.speed;
 
-  this.pathPoints = [];
+  this.path = [];
   this.pathCounter = 0;
+  this.pathMode = null // loop, ping-pong, once
 
   this.rotateToTarget = false; // indicates whether the object turns to its target
   this.angle = 0;
 
-  this.pathMode = null // loop, ping-pong, once
-  
 };
 
 Movement.prototype = {
@@ -186,6 +186,20 @@ Movement.prototype = {
     this.insertObject( area );
     
   },
+
+  followPath : function ( path, mode, speed ) {
+
+    this.stop();
+
+    path[0] = this.position;    
+    this.target = new Vector(path[1].x, path[1].y );
+
+    this.path = path;
+    this.pathMode = mode;
+    this.setSpeed(speed);
+    this.pathCounter = 1;
+
+  },
   
   stop : function() {
 
@@ -194,13 +208,14 @@ Movement.prototype = {
     this.roamMode = null;
 
     this.pathCounter = 0;
+    this.pathMode = null;
     
   },
   
   update : function( dt ) {
     
     var distance = this.speed * 0.08 * dt;
-    
+
     if ( this.target ) {
 
       this.updateTarget( distance );
@@ -218,8 +233,6 @@ Movement.prototype = {
     }
     
   },
-
-  followPath : true,
   
   updateTarget : function( distance ) {
     
@@ -232,63 +245,17 @@ Movement.prototype = {
     if ( vector.norm() < distance ) {
     
       pos.copy( target ).addSelf( this.offset );
-      
-      // Path points in queue left
-      if(this.followPath) {
-          
-          if(this.rotateToTarget) { // Todo: fix
 
-            this.angle = vector.angle();
+      if(this.pathMode) {
 
-          }
-
-          var lastPoint = this.pathPoints.length - 1;
-          
-          // loop
-          if(this.pathMode === 'circular') {
-            
-            if(this.pathCounter === lastPoint) {
-              this.pathCounter = 0;
-            } else {
-              this.pathCounter++;
-            }
-
-          // ping-pong
-          } else if(this.pathMode === 'ping-pong') {
-
-            if(this.pathCounter >= lastPoint) {
-              this.pathDirection = "backward";
-            }
-
-            if(this.pathCounter == 0) {
-              this.pathDirection = "forward";
-            }
-
-            if(this.pathDirection === "backward") {
-              this.pathCounter--;
-            } else {
-              this.pathCounter++;              
-            }
-
-
-          // once
-          } else {
-
-            if(this.pathCounter === lastPoint)
-              this.followPath = false;
-
-            this.pathCounter++;
-
-          }
-          
-          this.target = this.pathPoints[this.pathCounter];
+        this.updatePath();
 
       } else {
-
+      
         this.target = null;
-        
+
       }
-    
+        
     } else {
     
       vector.normalizeSelf().mulSelf( distance );
@@ -297,6 +264,54 @@ Movement.prototype = {
     
     }
     
+  },
+
+
+  updatePath : function() {
+
+    var lastPoint = this.path.length - 1;
+    
+    // loop
+    if(this.pathMode === 'circular') {
+      
+      if(this.pathCounter === lastPoint) {
+        this.pathCounter = 0;
+      } else {
+        this.pathCounter++;
+      }
+
+    // ping-pong
+    } else if(this.pathMode === 'ping-pong') {
+
+      if (this.pathCounter === lastPoint) {
+
+        this.pathDirection = "backward";
+      
+      } else if (this.pathCounter === 0) {
+      
+        this.pathDirection = "forward";
+      
+      }
+
+      if(this.pathDirection === "backward") {
+        this.pathCounter--;
+      } else {
+        this.pathCounter++;              
+      }
+
+
+    // once
+    } else {
+
+      if(this.pathCounter === lastPoint)
+        this.stop();
+      else
+        this.pathCounter++;
+
+    }
+        
+    this.target = new Vector( this.path[this.pathCounter].x, this.path[this.pathCounter].y );
+
   },
   
   updateDirection : function( distance ) {

@@ -199,6 +199,30 @@ extend( CanvasRenderingContext2D.prototype, {
     
     this.stroke();
     
+  },
+
+  drawArrow : function( x, y, x2, y2 ) {
+
+    this.line(x, y, x2, y2);        
+
+    this.save();
+    this.translate( x2, y2 );
+
+    this.rotate( new Vector( x2 - x, y2 - y).angle() );
+          
+    this.beginPath();
+    
+    this.moveTo( -5, 0 );
+    this.lineTo( -10, -12 );
+    this.lineTo( 15, 0 );
+    this.lineTo( -10, 12 );
+    
+    this.closePath();
+    
+    this.fill();
+    
+    this.restore();
+
   }
   
 });
