@@ -121,48 +121,16 @@ var PlacementView = Ember.View.extend({
   },
   
   load : function() {
-
-
-    
+  
     var objs = App.gameObjectsController.content, 
       type = this.type, 
       obs = this.observer, 
       img, i;
 
     
-    if ( type === 'location' || type === 'area' ) {
-    
-      if ( App.game.background ) {
+    if ( type === 'location' || type === 'area') {
       
-        img = new Image();
-        img.src = App.game.background.imagePath;
-        img.onload = this.doDraw;
-      
-        this.background = img;
-      
-      }
-      
-      if ( objs ) {
-      
-        this.gameObjects = [];
-      
-        for ( i = 0; i < objs.length; i++ ) {
-        
-          img = this.getImage( objs[i] );
-        
-          this.gameObjects.push( img );
-          
-          if ( this.object === objs[i] ) {
-            
-            this.object = img;
-            
-            this.object.pos.copy( obs.location );
-            
-          }
-        
-        }
-      
-      }
+      this.drawCurrentStage();
       
     } else {
       
@@ -177,6 +145,8 @@ var PlacementView = Ember.View.extend({
         this.object.pos.addSelf( obs.location );
 
       } else if ( type === 'path' ) {
+
+        this.drawCurrentStage();
 
         if(this.observer.path) {
 
@@ -219,6 +189,49 @@ var PlacementView = Ember.View.extend({
       
     }
     
+  },
+
+
+  drawCurrentStage : function() {
+
+   var objs = App.gameObjectsController.content, 
+        type = this.type, 
+        obs = this.observer, 
+        img, i;
+
+            
+    if ( App.game.background ) {
+    
+      img = new Image();
+      img.src = App.game.background.imagePath;
+      img.onload = this.doDraw;
+    
+      this.background = img;
+    
+    }
+    
+    if ( objs ) {
+    
+      this.gameObjects = [];
+    
+      for ( i = 0; i < objs.length; i++ ) {
+      
+        img = this.getImage( objs[i] );
+      
+        this.gameObjects.push( img );
+        
+        if ( this.object === objs[i] ) {
+          
+          this.object = img;
+          
+          this.object.pos.copy( obs.location );
+          
+        }
+      
+      }
+    
+    }
+
   },
   
   getImage : function( obj ) {

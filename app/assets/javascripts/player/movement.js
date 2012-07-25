@@ -209,7 +209,7 @@ Movement.prototype = {
 
     this.pathCounter = 0;
     this.pathMode = null;
-    
+   
   },
   
   update : function( dt ) {
@@ -271,17 +271,21 @@ Movement.prototype = {
 
     var lastPoint = this.path.length - 1;
     
-    // loop
-    if(this.pathMode === 'circular') {
+    // circular
+    if (this.pathMode === 'circular') {
       
-      if(this.pathCounter === lastPoint) {
+      if (this.pathCounter === lastPoint) {
+
         this.pathCounter = 0;
+
       } else {
+
         this.pathCounter++;
+
       }
 
     // ping-pong
-    } else if(this.pathMode === 'ping-pong') {
+    } else if (this.pathMode === 'ping-pong') {
 
       if (this.pathCounter === lastPoint) {
 
@@ -293,20 +297,29 @@ Movement.prototype = {
       
       }
 
-      if(this.pathDirection === "backward") {
-        this.pathCounter--;
-      } else {
-        this.pathCounter++;              
-      }
+      if (this.pathDirection === "backward") {
 
+        this.pathCounter--;
+
+      } else {
+
+        this.pathCounter++;  
+
+      }
 
     // once
     } else {
 
-      if(this.pathCounter === lastPoint)
+      if(this.pathCounter === lastPoint) {
+
         this.stop();
-      else
+        return false;
+
+      } else {
+
         this.pathCounter++;
+
+      }
 
     }
         

@@ -19,7 +19,8 @@ var Choice = Ember.Object.extend({
   string : function( name, action ) {
     
     var n = name, a = action;
-    
+
+   
     switch ( this.ID ) {
       
       // actions
@@ -30,8 +31,8 @@ var Choice = Ember.Object.extend({
       case 'moveInRandom' : return 'move in random direction' + ' - ' + a.getSpeedName();
       case 'moveInObject' : return 'move in direction of ' + a.gameObject.name + ' - ' + a.getSpeedName();
       case 'moveInLocation' : return 'move in direction of location ' + a.location.string() + ' - ' + a.getSpeedName();
-      // Zeus
-      case 'moveAlongPath' : return 'move along path - ' + a.getSpeedName();
+
+      case 'moveAlongPath' : return 'move ' + a.mode + ' along path - ' + a.getSpeedName();
       
       case 'moveToLocation' : return 'move to location ' + a.location.string() + ' - ' + a.getSpeedName();
       case 'moveToObject' : 
