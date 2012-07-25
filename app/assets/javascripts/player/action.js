@@ -10,7 +10,7 @@ var MoveAction = function( type, gameObject, speed, rotateInDirection ) {
   this.random = false;
   this.direction = null;
 
-  this.pathPoints = this.gameObject.movement.pathPoints;
+  this.path = [];
   this.rotateToTarget = rotateInDirection || false;
 
   this.gameObject.movement.rotateToTarget = this.rotateToTarget; 
@@ -19,10 +19,13 @@ var MoveAction = function( type, gameObject, speed, rotateInDirection ) {
     
     this.execute = this.executeMoveIn;
     
-  } else if ( type === 'moveTo' || type == "moveAlongPath" ) {
+  } else if ( type === 'moveTo') {
     
     this.execute = this.executeMoveTo;
     
+  } else if (type == "moveAlongPath" ) {
+
+    this.execute = this.executePath;
     
   } else if ( type === 'jumpTo' ) {
     
@@ -54,18 +57,11 @@ MoveAction.prototype = {
     
     this.gameObject.movement.setTarget( this.target, this.offset, this.speed );
 
-    // If PathPoints are available
-    if(this.pathPoints.length) {
+  },
 
-      // Add start position to pathPoints as first point
-      this.pathPoints.unshift(this.gameObject.movement.startPosition);
-     
-      this.gameObject.movement.pathPoints = this.pathPoints;
+  executePath : function() {
 
-      this.gameObject.movement.pathMode = this.mode;
-
-
-    }
+    this.gameObject.movement.followPath( this.path, this.mode, this.speed );
 
   },
   

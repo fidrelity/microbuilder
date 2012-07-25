@@ -1,7 +1,7 @@
 var PlacementView = Ember.View.extend({
   
-  template : Ember.Handlebars.compile('<canvas class="placement"></canvas>'),
-  
+  templateName : 'editor/templates/placement_template',
+
   classNames : ['placementview', 'optionview'],
   
   type : 'location', // location, direction, area, offset, bounding, path
@@ -24,16 +24,12 @@ var PlacementView = Ember.View.extend({
   
   area : null,
 
-  pathPoints : [],
+  path : null,  
   
   increment : { x : 96, y : 60 },
   scale : 2,
   
   didInsertElement : function() {
-
-    console.log("didInsertElement", this.observer.pathPoints);
-    
-    //this.pathPoints = this.observer.pathPoints;
     
     var canvas = this.$( '.placement' )[0],
       ctx = canvas.getContext( '2d' ),
@@ -42,6 +38,8 @@ var PlacementView = Ember.View.extend({
       self = this;
     
     this.area = new Area;
+
+    this.path = new Path;
 
     $( canvas ).css({ 'border' : '2px solid #AAA', 'background-color' : '#CCC' });
     
@@ -180,7 +178,15 @@ var PlacementView = Ember.View.extend({
 
       } else if ( type === 'path' ) {
 
-        //this.object.pos.addSelf( obs.location );
+        if(this.observer.path) {
+
+          this.path.copy( this.observer.path );
+
+        } else {
+
+          this.path.add( this.object.pos.getData() );
+
+        }
       
       } else if ( type === 'offset' ) {
         
@@ -318,14 +324,17 @@ var PlacementView = Ember.View.extend({
       // Draw paths
       } else if ( this.type === 'path' ) {
 
-        for (var i = 0; i < this.observer.pathPoints.length; i++) {
+        this.path.draw( ctx );
 
-           var targetPoint = this.observer.pathPoints[i];
-           var startPoint = i === 0 ? this.object.pos : this.observer.pathPoints[i - 1];
+        // console.log(this.pathPoints);
+        // for (var i = 0; i < this.pathPoints.length; i++) {
 
-           this.drawPath(ctx, startPoint, targetPoint);
+        //    var targetPoint = this.pathPoints[i];
+        //    var startPoint = i === 0 ? this.object.pos : this.pathPoints[i - 1];
 
-         };
+        //    this.drawPath(ctx, startPoint, targetPoint);
+
+        //  };
       }
       
     } else {
@@ -417,7 +426,8 @@ var PlacementView = Ember.View.extend({
         
         // Insert Path point if mouse not in obj
         if ( this.type === 'path' ) {          
-          this.observer.addPathPoint({x: mouse.pos.x, y: mouse.pos.y});
+          this.path.add({x: mouse.pos.x, y: mouse.pos.y});
+          this.observer.setPath(this.path);
           this.doDraw();
         }
 
@@ -499,6 +509,22 @@ var PlacementView = Ember.View.extend({
       
     }
     
+  },
+
+  isPath : function() {
+
+    return this.type === "path";
+
+  }.property("type"),
+
+
+  clearPath : function() {
+
+    this.path = new Path();
+    this.path.add( this.object.pos.getData() );
+    this.doDraw();
+
   }
+
   
 });
