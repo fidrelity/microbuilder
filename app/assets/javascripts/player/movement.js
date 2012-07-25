@@ -191,7 +191,7 @@ Movement.prototype = {
 
     this.stop();
 
-    path[0] = this.position;    
+    path[0] = this.position.clone();    
     this.target = new Vector(path[1].x, path[1].y );
 
     this.path = path;
