@@ -382,6 +382,11 @@
   overflow : auto;
 }
 
+#editor .overlay .counterview {
+  width: 50px;
+  text-align: right;
+}
+
 #editor .overlay .boundingMessage {
   margin: 6px 16px;
   font-size: 12pt;
@@ -390,7 +395,7 @@
 #editor .stageControls {
   margin: auto 0;
   overflow: hidden;
-  padding: 6px 45px;
+  padding: 6px 52px;
 }
 
 #editor .stageControls #trash {

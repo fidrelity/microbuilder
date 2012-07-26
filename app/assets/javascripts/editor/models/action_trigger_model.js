@@ -104,42 +104,32 @@ var ActionTriggerModel = Ember.Object.extend({
     
   },
   
-
   setPath : function( path ) {
-
+    
     this.set("path", path);
     
   },
   
-  counter : 0,
-
-  setCounter : function(value) {
-
-    this.set( "counter", Math.round( parseInt(value) ) );
+  setCounter : function( value ) {
+    
+    this.set( "counter", value );
     
   },
-
+  
   rotateOnMove : false,
-
+  
   setRotateOnMove : function(state) {
-
+    
     state = state || false;
     this.set("rotateOnMove", state);
-
+    
   },
-  
-  // string : function() {
-  //   
-  //   return this.decisions.map( function(i){ return i.name; }).join( ' > ' );
-  //   
-  // }.property( 'decisions.length' ),
   
   string : function() {
     
     return this.choice ? this.choice.string( this.parentGameObject.name, this ) : 'no choice';
     
   }.property( 'choice', 'gameObject', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2', 'path', 'counter', 'rotateOnMove' ),
-  
   
   clone : function() {
     

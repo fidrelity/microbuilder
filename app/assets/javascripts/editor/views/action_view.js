@@ -369,36 +369,24 @@ var ArtView = Ember.View.extend({
   
 });
 
-
-// Displays input txtfield
-
-var CounterFieldView = Ember.View.extend({
+var CounterView = Ember.TextField.extend({
   
-  tagName : 'div',
+  classNames : ['counterview', 'optionview'],
   
-  classNames : ['textfieldview', 'optionview', 'form-horizontal'],
-  
-  template: Ember.Handlebars.compile( '<input class="textfieldElement span1" type="text" value="" maxlength="4"> <button class="acceptElement btn btn-success">Set</button>' ),
+  placeholder : 'number',
   
   observer : null,
   
-  value : null,
-  
   didInsertElement : function() {
-
-    var observer = this.observer;
-    observer.setCounter(this.value);
-
-    var textField = $(".textfieldElement");
-    textField.val(observer.counter);
-    textField.focus();
     
-    this.$('.acceptElement').live("click", function() {
-
-      observer.setCounter( textField.val() );
-
+    var self = this;
+    
+    this.addObserver( 'value', function() {
+      
+      self.observer.setCounter( parseInt( self.get( 'value' ) ) || 0 );
+      
     });
-  
+    
   }
   
 });

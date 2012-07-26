@@ -81,7 +81,7 @@ var ActionController = Ember.Object.extend({
     this.set( 'actionOption', ButtonOption.create({ 
       name: 'action', 
       question: 'Select the type of action',
-      buttons: ['move', 'art', 'game', 'counter'],
+      buttons: ['move', 'art', 'counter', 'game'],
       
       decisions: [
         
@@ -340,6 +340,35 @@ var ActionController = Ember.Object.extend({
           ]
         }),
         
+        // counter
+        
+        ButtonOption.create({
+          name: 'counter',
+          question: 'Which actions should the counter perform?', 
+          buttons: ['count up', 'count down', 'set to value'],
+          
+          decisions: [
+            
+            // up
+            
+            SaveOption.create({ choiceID: 'counterUp' }),
+            
+            // down
+            
+            SaveOption.create({ choiceID: 'counterDown' }),
+            
+            // set
+            
+            CounterOption.create({
+              name: 'counterSet',
+              question: 'Set counter to which value?', 
+              
+              child: SaveOption.create({ choiceID: 'counterSet' })
+            })
+           
+          ]
+        }),
+        
         // game
         
         ButtonOption.create({ 
@@ -352,48 +381,15 @@ var ActionController = Ember.Object.extend({
             SaveOption.create({ choiceID: 'gameLose' }),
             SaveOption.create({ choiceID: 'gameEnd' })
           ] 
-        }),
-
-
-
-        // counter action
+        })
         
-        ButtonOption.create({
-          name: 'counter',
-          question: 'Which actions should the counter perform?', 
-          buttons: ['count up', 'count down', 'set to value'],
-          
-          decisions: [
-            
-            // up
-                          
-            SaveOption.create({ choiceID: 'counterUp' }),
-
-            // down
-
-            SaveOption.create({ choiceID: 'counterDown' }),
-
-            // set
-
-            CounterOption.create({
-              name: 'counterSet',
-              question: 'Set counter to which value?', 
-
-              child: SaveOption.create({ choiceID: 'counterSet' })
-              
-            })
-
-           
-          ]
-        }) // end counter option
-
       ]
     }));
     
     this.set( 'triggerOption', ButtonOption.create({ 
       name: 'trigger', 
       question: 'Select the type of trigger',
-      buttons: ['click', 'contact', 'time', 'game', 'counter'], // 'art'],
+      buttons: ['click', 'contact', 'time', 'counter', 'game'], // 'art'],
       
       decisions: [
         
@@ -532,6 +528,76 @@ var ActionController = Ember.Object.extend({
           ]
         }),
         
+        // counter
+        
+        ButtonOption.create({
+          name: 'counter',
+          question: 'Compare objects number to what?',
+          buttons: ['a number', 'other object counter'],
+          
+          decisions: [
+          
+            // number
+            
+            ButtonOption.create({
+              name: 'counterCompareToNumber',
+              question: 'Objects number should be ...?',
+              buttons: ['greater', 'smaller', 'equal'],
+              
+              decisions: [
+                
+                // greater textfield
+                
+                CounterOption.create({
+                  name: 'counterGreaterNumber',
+                  question: 'Greater to which number?', 
+                  child: SaveOption.create({ choiceID: 'counterGreaterNumber' })                  
+                }),
+
+                // smaller textfield
+                
+                CounterOption.create({
+                  name: 'counterSmallerNumber',
+                  question: 'Smaller to which number?', 
+                  child: SaveOption.create({ choiceID: 'counterSmallerNumber' })                  
+                }),
+
+                // smaller textfield
+                
+                CounterOption.create({
+                  name: 'counterEqualsNumber',
+                  question: 'Equal to which number?', 
+                  child: SaveOption.create({ choiceID: 'counterEqualsNumber' })                  
+                })
+              ]
+            }),
+            
+             // Compare to other Object number
+            
+            ObjectOption.create({
+              name: 'counterCompareToObject',
+              question: 'Choose the object to compare with:',
+              
+              decision: 
+              
+                ButtonOption.create({
+                  name: 'counterCompareToObjectType',
+                  question: 'Trigger, when objects number is ...?',
+                  buttons: ['greater', 'smaller', 'equal'],
+                  
+                  decisions: [                  
+                    SaveOption.create({ choiceID: 'counterGreaterObject' }),
+                    SaveOption.create({ choiceID: 'counterSmallerObject' }),
+                    SaveOption.create({ choiceID: 'counterEqualsObject' })
+                  ]
+                })             
+                
+            }),
+            
+           ]
+          
+        }),
+        
         // game
         
         ButtonOption.create({
@@ -576,82 +642,8 @@ var ActionController = Ember.Object.extend({
             SaveOption.create({ choiceID: 'gameStart' })
             
           ]
-        }),
-
-
-
-        // counter
-        
-        ButtonOption.create({
-          name: 'counter',
-          question: 'Compare objects number to what?',
-          buttons: ['a number', 'other object counter'],
           
-          decisions: [
-
-            // number
-
-            ButtonOption.create({
-              name: 'counterCompareToNumber',
-              question: 'Objects number should be ...?',
-              buttons: ['greater', 'smaller', 'equal'],
-              
-              decisions: [
-            
-                // greater textfield
-                
-                CounterOption.create({
-                  name: 'counterGreaterNumber',
-                  question: 'Greater to which number?', 
-                  child: SaveOption.create({ choiceID: 'counterGreaterNumber' })                  
-                }),
-
-                // smaller textfield
-                
-                CounterOption.create({
-                  name: 'counterSmallerNumber',
-                  question: 'Smaller to which number?', 
-                  child: SaveOption.create({ choiceID: 'counterSmallerNumber' })                  
-                }),
-
-                // smaller textfield
-                
-                CounterOption.create({
-                  name: 'counterEqualsNumber',
-                  question: 'Equal to which number?', 
-                  child: SaveOption.create({ choiceID: 'counterEqualsNumber' })                  
-                })
-              ]
-            }),
-
-
-             // Compare to other Object number
-
-            ObjectOption.create({
-              name: 'counterCompareToObject',
-              question: 'Choose the object to compare with:',
-
-              decision: 
-
-                ButtonOption.create({
-                  name: 'counterCompareToObjectType',
-                  question: 'Trigger, when objects number is ...?',
-                  buttons: ['greater', 'smaller', 'equal'],
-                  
-                  decisions: [                  
-                    SaveOption.create({ choiceID: 'counterGreaterObject' }),
-                    SaveOption.create({ choiceID: 'counterSmallerObject' }),
-                    SaveOption.create({ choiceID: 'counterEqualsObject' })
-                  ]
-                })             
-
-            }),
-
-           
-           ]
-          
-        }),
-
+        })
         
       ]
     }));

@@ -241,19 +241,9 @@ var CounterAction = function( type, count, gameObject ) {
   this.count = count;
   this.type = type;
   
-  if ( type === 'up' ) {
-    
-    this.execute = this.executeUp;
-    
-  } else if ( type === "down" ) {
-    
-    this.execute = this.executeDown;
-    
-  } else if ( type === 'set' ) {
-    
-    this.execute = this.executeSet;
-    
-  } else {
+  this.execute = this[type]; // up, down, set
+  
+  if ( !this[type] ) {
     
     throw "Counter type is unknown: " + type;
     
@@ -265,19 +255,19 @@ CounterAction.prototype = {
   
   execute : null,
   
-  executeUp : function() {
+  up : function() {
     
     this.gameObject.counter++;
     
   },
   
-  executeDown : function() {
+  down : function() {
     
     this.gameObject.counter--;
     
   },
   
-  executeSet : function() {
+  set : function() {
     
     this.gameObject.counter = this.count;
     

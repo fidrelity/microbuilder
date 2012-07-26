@@ -19,7 +19,6 @@ var Choice = Ember.Object.extend({
   string : function( name, action ) {
     
     var n = name, a = action;
-
    
     switch ( this.ID ) {
       
@@ -62,9 +61,9 @@ var Choice = Ember.Object.extend({
       case 'gameLose' : return 'lose the game';
       case 'gameEnd' : return 'end the game';
 
-      case 'counterUp' : return 'counter increases';
-      case 'counterDown' : return 'counter decreases';
-      case 'counterSet' : return 'counter is set to ' + a.counter;
+      case 'counterUp' : return 'increase counter';
+      case 'counterDown' : return 'decrease counter';
+      case 'counterSet' : return 'set counter to ' + a.counter;
       
       // triggers
       
@@ -87,9 +86,9 @@ var Choice = Ember.Object.extend({
       case 'gameWasLost' : return 'game was lost';
       case 'gameStart' : return 'start';
 
-      case 'counterGreaterNumber' : return 'objects counter greater than ' + action.counter;
-      case 'counterSmallerNumber' : return 'objects counter smaller than ' + action.counter;
-      case 'counterEqualsNumber' : return 'objects counter equal to ' + action.counter;
+      case 'counterGreaterNumber' : return 'counter greater than ' + action.counter;
+      case 'counterSmallerNumber' : return 'counter smaller than ' + action.counter;
+      case 'counterEqualsNumber' : return 'counter equal to ' + action.counter;
 
       case 'counterGreaterObject' : return 'counter greater than ' + a.gameObject.name + '\'s counter';
       case 'counterSmallerObject' : return 'counter smaller than ' + a.gameObject.name + '\'s counter';
@@ -108,7 +107,7 @@ var Option = Ember.Object.extend({
   name : null,
   question : null,
   
-  type : 'empty', // ['button', 'mode', 'direction', 'location', 'area', 'offset', 'object', 'time', 'frame', 'speed', 'art']
+  type : 'empty', // ['button', 'mode', 'direction', 'location', 'area', 'offset', 'object', 'time', 'frame', 'speed', 'art', 'counter']
   
   action : null,
   
@@ -579,9 +578,9 @@ var CounterOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this.question, CounterFieldView.create({
+    App.actionController.addOption( this.question, CounterView.create({
       observer : this.action,
-      value : reinsert ? this.action.counter : 0
+      value : reinsert ? this.action.counter : '',
     }));
     
     if ( !reinsert ) {
