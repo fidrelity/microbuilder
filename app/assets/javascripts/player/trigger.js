@@ -235,7 +235,7 @@ var CounterTrigger = function( type, gameObject, count, gameObject2 ) {
   
   this.triggered = false;
   
-  this.compareFunction = this[type];
+  this.compareFunction = this[type]; // equal, greater, smaller
   
   if ( !this[type] ) {
     

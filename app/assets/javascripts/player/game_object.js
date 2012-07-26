@@ -33,7 +33,8 @@ GameObject.prototype = {
   
   draw : function( ctx ) {
     
-    var pos = this.movement.position;
+    var pos = this.movement.position,
+      area;
     
     ctx.save();
     ctx.translate( pos.x, pos.y );
@@ -48,6 +49,9 @@ GameObject.prototype = {
     if ( ctx.debug ) {
       
       this.movement.draw( ctx );
+      
+      area = this.movement.getArea();
+      ctx.fillText( this.counter, area.x + 2, area.y + 17 );
       
     }
     
