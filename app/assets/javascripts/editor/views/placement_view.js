@@ -126,38 +126,56 @@ var PlacementView = Ember.View.extend({
       type = this.type, 
       obs = this.observer, 
       img, i;
-
     
-    if ( type === 'location' || type === 'area') {
+    if ( type === 'location' || type === 'area' || type === 'path' ) {
       
-      this.drawCurrentStage();
+      if ( App.game.background ) {
+        
+        img = new Image();
+        img.src = App.game.background.imagePath;
+        img.onload = this.doDraw;
+        
+        this.background = img;
+        
+      }
+      
+      if ( objs ) {
+      
+        this.gameObjects = [];
+        
+        for ( i = 0; i < objs.length; i++ ) {
+          
+          img = this.getImage( objs[i] );
+          
+          this.gameObjects.push( img );
+          
+          if ( this.object === objs[i] ) {
+            
+            this.object = img;
+            
+            if ( obs.location ) {
+              
+              this.object.pos.copy( obs.location );
+              
+            }
+            
+          }
+        
+        }
+      
+      }
       
     } else {
       
       this.object = this.getImage( this.object || this.gameObject );
       this.gameObjects = [this.object];
       
-      if ( type !== 'path' )
-        this.object.pos.set( this.width * 0.5, this.height * 0.5 );
+      this.object.pos.set( this.width * 0.5, this.height * 0.5 );
       
       if ( type === 'direction' ) {
       
         this.object.pos.addSelf( obs.location );
 
-      } else if ( type === 'path' ) {
-
-        this.drawCurrentStage();
-
-        if(this.observer.path) {
-
-          this.path.copy( this.observer.path );
-
-        } else {
-
-          this.path.add( this.object.pos.getData() );
-
-        }
-      
       } else if ( type === 'offset' ) {
         
         this.object.pos.addSelf( obs.offset );
@@ -184,54 +202,23 @@ var PlacementView = Ember.View.extend({
     
     if ( type === 'area' && obs.action && obs.action.area ) {
       
-      this.area = obs.action.area.clone();
+      this.area.copy( obs.action.area );
       this.area.done = true;
       
     }
     
-  },
-
-
-  drawCurrentStage : function() {
-
-   var objs = App.gameObjectsController.content, 
-        type = this.type, 
-        obs = this.observer, 
-        img, i;
-
-            
-    if ( App.game.background ) {
-    
-      img = new Image();
-      img.src = App.game.background.imagePath;
-      img.onload = this.doDraw;
-    
-      this.background = img;
-    
-    }
-    
-    if ( objs ) {
-    
-      this.gameObjects = [];
-    
-      for ( i = 0; i < objs.length; i++ ) {
+    if ( type === 'path' ) {
       
-        img = this.getImage( objs[i] );
-      
-        this.gameObjects.push( img );
+      if ( obs.path ) {
         
-        if ( this.object === objs[i] ) {
-          
-          this.object = img;
-          
-          this.object.pos.copy( obs.location );
-          
-        }
-      
+        this.path.copy( obs.path );
+        
       }
-    
+      
+      this.path.points[0] = this.object.pos.getData();
+      
     }
-
+    
   },
   
   getImage : function( obj ) {
@@ -336,9 +323,7 @@ var PlacementView = Ember.View.extend({
         
       } else if ( this.type === 'path' ) {
         
-        ctx.fillStyle = '#000';
-        ctx.strokeStyle = '#000';
-        
+        ctx.fillStyle = ctx.strokeStyle = '#000';
         this.path.draw( ctx );
         
       }
@@ -370,8 +355,14 @@ var PlacementView = Ember.View.extend({
  
     var obj = this.object,
       area = this.area;
-   
-    if ( obj && this.type !== 'bounding' ) {
+    
+    if ( this.type === 'path' ) {
+      
+      this.path.add( {x: mouse.pos.x, y: mouse.pos.y} );
+      this.observer.setPath( this.path );
+      this.doDraw();
+      
+    } else if ( obj && this.type !== 'bounding' ) {
       
       area.set( obj.pos.x - obj.frameWidth * 0.5, obj.pos.y - obj.height * 0.5, obj.frameWidth, obj.height );
       
@@ -379,13 +370,6 @@ var PlacementView = Ember.View.extend({
         
         mouse.dragging = false;
         
-        // Insert Path point if mouse not in obj
-        if ( this.type === 'path' ) {          
-          this.path.add({x: mouse.pos.x, y: mouse.pos.y});
-          this.observer.setPath(this.path);
-          this.doDraw();
-        }
-
       }
       
     } else if ( !area.contains( mouse.pos ) ) {
@@ -404,7 +388,11 @@ var PlacementView = Ember.View.extend({
     var obj = this.object,
       area = this.area;
     
-    if ( obj && this.type !== 'bounding' ) {
+    if ( this.type === 'path' ) {
+      
+      return;
+      
+    } else if ( obj && this.type !== 'bounding' ) {
       
       obj.pos.addSelf( mouse.move );
       
@@ -433,7 +421,7 @@ var PlacementView = Ember.View.extend({
     
     if ( obj && this.type !== 'bounding' ) {
       
-      if ( this.type === 'direction' || this.type === "path" ) {
+      if ( this.type === 'direction' ) {
         
         this.observer.setLocation( new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( obj.pos ) );
         
