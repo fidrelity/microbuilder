@@ -235,55 +235,52 @@ var EndAction = {
   
 };
 
-
-// -------------------------
-// Counter action
-
-var CounterAction = function(type, data, gameObject) {
+var CounterAction = function( type, count, gameObject ) {
 
   this.gameObject = gameObject;
-  this.data = data;
+  this.count = count;
   this.type = type;
   
-  this.availableTypes = [ 'up', 'down', 'set'];
-  if(this.availableTypes.indexOf(this.type) < 0) {
-    throw "Counter type is unknown";
-  }
-
-
-  if ( this.type === 'up' ) {
+  if ( type === 'up' ) {
     
     this.execute = this.executeUp;
     
-  } else if ( this.type === "down" ) {
+  } else if ( type === "down" ) {
     
     this.execute = this.executeDown;
     
-    
-  } else if ( this.type === 'set' ) {
+  } else if ( type === 'set' ) {
     
     this.execute = this.executeSet;
     
+  } else {
+    
+    throw "Counter type is unknown: " + type;
+    
   }
 
-}
-  
+};
+
 CounterAction.prototype = {
-
+  
   execute : null,
-
-  executeUp : function() {    
+  
+  executeUp : function() {
+    
     this.gameObject.counter++;
-    //console.log("count up", this.gameObject.counter);
+    
   },
-
+  
   executeDown : function() {
-    this.gameObject.counter--;    
-    //console.log("count down", this.gameObject.counter);
+    
+    this.gameObject.counter--;
+    
   },
-
+  
   executeSet : function() {
-    this.gameObject.counter = this.data.counter;
-    //console.log("counter set", this.gameObject.counter, this.data.counter);
+    
+    this.gameObject.counter = this.count;
+    
   }
+  
 };

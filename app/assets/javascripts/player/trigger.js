@@ -228,85 +228,51 @@ var LostTrigger = {
   
 };
 
-
-
-var CounterTrigger = function( type, gameObject, numberToCompare, gameObject2 ) {
+var CounterTrigger = function( type, gameObject, count, gameObject2 ) {
   
   this.gameObject = gameObject;
-  this.gameObject2 = gameObject2 || null;
-
-  this.numberToCompare = numberToCompare || null;
-
-  this.triggered = false;
-    
-  if ( type === 'equal' ) {
-    
-    this.check = this.checkEqual;
-    
-  } else if ( type === 'greater' ) {
-    
-    this.check = this.checkGreater;
-    
-  } else if ( type === 'smaller' ) {
-    
-    this.check = this.checkSmaller;
+  this.gameObject2 = gameObject2 || { counter : count };
   
+  this.triggered = false;
+  
+  this.compareFunction = this[type];
+  
+  if ( !this[type] ) {
+    
+    throw "Counter type is unknown: " + type;
+    
   }
   
 };
 
 CounterTrigger.prototype = {
   
-  check : null,
-  
-  checkEqual : function() {
+  check : function() {
     
-    if(this.triggered) return false;
-    if(this.gameObject.counter === this.getNumber()) {
-      this.triggered = true;
-      return true;
-    } 
-
-    return false;
-
-  },
-  
-  checkGreater : function() {
+    // if ( this.triggered ) return false;
     
-    if(this.triggered) return false;
-    
-    if(this.gameObject.counter > this.getNumber()) {
-      this.triggered = true;
-      return true;
+    if ( this.compareFunction( this.gameObject.counter, this.gameObject2.counter ) ) {
+      
+      return this.triggered = true;
+      
     }
-
+    
     return false;
     
   },
-
-  checkSmaller : function() {
-   
-    if(this.triggered) return false;
-
-    if(this.gameObject.counter < this.getNumber()) {
-      this.triggered = true;
-      return true;
-    }
-
-    return false;
-    
-  },
-
-  getNumber : function() {
-    return this.numberToCompare !== null ? this.numberToCompare : this.gameObject2.counter;
-  },
+  
+  compareFunction : null,
+  
+  equal : function( a, b ) { return a === b; },
+  greater : function( a, b ) { return a > b; },
+  smaller : function( a, b ) { return a < b; },
   
   reset : function() {
+    
     this.triggered = false;
+    
   },
   
-  draw : function( ctx ) {
-        
-  }
+  draw : function( ctx ) {}
   
 };

@@ -7,8 +7,9 @@ var GameObject = function( ID ) {
   
   this.movement = new Movement();
   this.animation = new Animation();
-
+  
   this.counter = 0;
+  
 };
 
 GameObject.prototype = {
@@ -18,7 +19,7 @@ GameObject.prototype = {
     this.setGraphic( this.startGraphic );
     
     this.movement.reset();
-
+    
     this.counter = 0;
     
   },
