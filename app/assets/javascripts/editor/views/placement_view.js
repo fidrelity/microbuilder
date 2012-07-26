@@ -453,16 +453,17 @@ var PlacementView = Ember.View.extend({
     }
     
   },
-
+  
   isPath : function() {
-
+    
     return this.type === "path";
-
+    
   }.property("type"),
-
+  
   clearPath : function() {
     
     this.path = new Path( [this.object.pos.getData()] );
+    this.observer.setPath( this.path );
     this.doDraw();
     
   }

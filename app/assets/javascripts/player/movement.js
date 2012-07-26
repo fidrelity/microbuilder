@@ -19,7 +19,8 @@ var Movement = function() {
 
   this.path = [];
   this.pathCounter = 0;
-  this.pathMode = null // loop, ping-pong, once
+  this.pathMode = null; // loop, ping-pong, once
+  this.pathDirection = null;
 
   this.rotateToTarget = false; // indicates whether the object turns to its target
   this.angle = 0;
@@ -191,14 +192,19 @@ Movement.prototype = {
 
     this.stop();
 
-    path[0] = this.position.clone();    
-    this.target = new Vector(path[1].x, path[1].y );
-
-    this.path = path;
-    this.pathMode = mode;
-    this.setSpeed(speed);
-    this.pathCounter = 1;
-
+    if ( path.length > 1 ) {
+      
+      path[0] = this.position.clone();    
+      this.target = path[1];
+      
+      this.path = path;
+      this.pathMode = mode;
+      
+      this.setSpeed(speed);
+      this.pathCounter = 1;
+      
+    }
+    
   },
   
   stop : function() {
@@ -209,6 +215,7 @@ Movement.prototype = {
 
     this.pathCounter = 0;
     this.pathMode = null;
+    this.pathDirection = null;
    
   },
   
@@ -246,7 +253,7 @@ Movement.prototype = {
     
       pos.copy( target ).addSelf( this.offset );
 
-      if(this.pathMode) {
+      if ( this.pathMode ) {
 
         this.updatePath();
 
@@ -269,61 +276,51 @@ Movement.prototype = {
 
   updatePath : function() {
 
-    var lastPoint = this.path.length - 1;
+    var lastPoint = this.path.length - 1,
+      mode = this.pathMode,
+      counter = this.pathCounter;
     
-    // circular
-    if (this.pathMode === 'circular') {
+    if ( mode === 'circular' ) {
       
-      if (this.pathCounter === lastPoint) {
+      if ( counter === lastPoint ) {
 
-        this.pathCounter = 0;
+        counter = 0;
 
       } else {
 
-        this.pathCounter++;
+        counter++;
 
       }
-
-    // ping-pong
-    } else if (this.pathMode === 'ping-pong') {
-
-      if (this.pathCounter === lastPoint) {
-
+      
+    } else if ( mode === 'ping-pong' ) {
+      
+      if ( counter === lastPoint ) {
+        
         this.pathDirection = "backward";
       
-      } else if (this.pathCounter === 0) {
+      } else if ( counter === 0 ) {
       
         this.pathDirection = "forward";
       
       }
+      
+      counter += ( this.pathDirection === "backward" ? -1 : 1 );
 
-      if (this.pathDirection === "backward") {
+    } else if ( mode === 'once' ) {
 
-        this.pathCounter--;
-
-      } else {
-
-        this.pathCounter++;  
-
-      }
-
-    // once
-    } else {
-
-      if(this.pathCounter === lastPoint) {
+      if ( counter === lastPoint ) {
 
         this.stop();
-        return false;
-
-      } else {
-
-        this.pathCounter++;
+        return;
 
       }
 
+      counter++;
+
     }
-        
-    this.target = new Vector( this.path[this.pathCounter].x, this.path[this.pathCounter].y );
+    
+    this.target = this.path[counter];
+    this.pathCounter = counter;
 
   },
   
