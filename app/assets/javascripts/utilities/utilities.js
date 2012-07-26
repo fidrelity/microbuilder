@@ -201,21 +201,24 @@ extend( CanvasRenderingContext2D.prototype, {
     
   },
 
-  drawArrow : function( x, y, x2, y2 ) {
-
+  drawArrow : function( x, y, x2, y2, s ) {
+    
+    s = s || 1;
+    
     this.line(x, y, x2, y2);        
-
+    
     this.save();
     this.translate( x2, y2 );
-
+    
     this.rotate( new Vector( x2 - x, y2 - y).angle() );
-          
+    this.scale( s, s );
+    
     this.beginPath();
     
-    this.moveTo( -5, 0 );
-    this.lineTo( -10, -12 );
-    this.lineTo( 15, 0 );
-    this.lineTo( -10, 12 );
+    this.moveTo( -20, 0 );
+    this.lineTo( -25, -12 );
+    this.lineTo( 1, 0 );
+    this.lineTo( -25, 12 );
     
     this.closePath();
     

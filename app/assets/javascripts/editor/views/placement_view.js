@@ -333,21 +333,14 @@ var PlacementView = Ember.View.extend({
       if ( this.type === 'direction' ) {
         
         this.drawArrow( ctx );
-      
-      // Draw paths
+        
       } else if ( this.type === 'path' ) {
-
+        
+        ctx.fillStyle = '#000';
+        ctx.strokeStyle = '#000';
+        
         this.path.draw( ctx );
-
-        // console.log(this.pathPoints);
-        // for (var i = 0; i < this.pathPoints.length; i++) {
-
-        //    var targetPoint = this.pathPoints[i];
-        //    var startPoint = i === 0 ? this.object.pos : this.pathPoints[i - 1];
-
-        //    this.drawPath(ctx, startPoint, targetPoint);
-
-        //  };
+        
       }
       
     } else {
@@ -357,68 +350,17 @@ var PlacementView = Ember.View.extend({
     }
     
   },
-
-  // Draws arrow path
-  drawPath : function(ctx, startPoint, targetPoint ) {
-    
-    // Calculate angle
-    var angle = Math.atan2(targetPoint.y - startPoint.y, targetPoint.x - startPoint.x);
-
-    // Calculate arrow length
-    var xd = targetPoint.x - startPoint.x;
-    var yd = targetPoint.y - startPoint.y;
-    var distance = Math.sqrt( xd * xd + yd * yd);
-
-    // Draw path arrow
-    ctx.save();
-
-    ctx.translate(startPoint.x , startPoint.y);
-    
-    ctx.rotate( angle );
-
-    ctx.line( 0, 0, distance, 0 );
-
-    // Arrow peak
-    ctx.translate( distance, 0 );
-    
-    ctx.beginPath();
-    
-    ctx.moveTo( -5, 0 );
-    ctx.lineTo( -10, -12 );
-    ctx.lineTo( 15, 0 );
-    ctx.lineTo( -10, 12 );
-    
-    ctx.closePath();
-    
-    ctx.fillStyle = '#000';
-    ctx.fill();
-    
-    ctx.restore();
-  },
   
   drawArrow : function( ctx ) {
-
+    
     var i = new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( this.object.pos ).angle();
     
     ctx.save();
     ctx.translate( this.width * 0.5, this.height * 0.5 );
     ctx.rotate( i );
     
-    ctx.line( 0, 0, 130, 0 );
-    
-    ctx.translate( 130, 0 );
-    
-    ctx.beginPath();
-    
-    ctx.moveTo( -5, 0 );
-    ctx.lineTo( -10, -12 );
-    ctx.lineTo( 15, 0 );
-    ctx.lineTo( -10, 12 );
-    
-    ctx.closePath();
-    
-    ctx.fillStyle = '#000';
-    ctx.fill();
+    ctx.fillStyle = ctx.strokeStyle = '#000';
+    ctx.drawArrow( 0, 0, 130, 0 );
     
     ctx.restore();
     
@@ -530,14 +472,11 @@ var PlacementView = Ember.View.extend({
 
   }.property("type"),
 
-
   clearPath : function() {
-
-    this.path = new Path();
-    this.path.add( this.object.pos.getData() );
+    
+    this.path = new Path( [this.object.pos.getData()] );
     this.doDraw();
-
+    
   }
-
   
 });

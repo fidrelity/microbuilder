@@ -447,7 +447,13 @@ Movement.prototype = {
     
     if ( this.target ) {
       
-      ctx.line( this.position.x, this.position.y, this.target.x + this.offset.x, this.target.y + this.offset.y );
+      if ( this.pathMode ) {
+        
+        new Path( this.path ).draw( ctx, 0.5 );
+        
+      }
+      
+      ctx.drawArrow( this.position.x, this.position.y, this.target.x + this.offset.x, this.target.y + this.offset.y, 0.7 );
       
     } else if ( this.roamMode ) {
       
@@ -459,9 +465,8 @@ Movement.prototype = {
       
       ctx.translate( this.position.x, this.position.y );
       ctx.rotate( this.direction );
-      console.log("draw")
       
-      ctx.line( 0, 0, 1000, 0 );
+      ctx.drawArrow( 0, 0, 70, 0, 0.5 );
       
       ctx.restore();
       

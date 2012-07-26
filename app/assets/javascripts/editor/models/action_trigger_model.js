@@ -166,10 +166,10 @@ var ActionTriggerModel = Ember.Object.extend({
       mode : this.mode,
       speed : this.speed,
       rotateOnMove : this.rotateOnMove,
-
+      
       counter : this.counter,
-
-      path : this.path.clone()
+      
+      path : this.path ? this.path.clone() : null
       
     });
 
