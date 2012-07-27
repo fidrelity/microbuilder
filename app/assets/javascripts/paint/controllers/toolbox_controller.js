@@ -66,8 +66,6 @@ var DrawToolModel = Ember.Object.extend({
 
     this.zoomCanvas = App.paintController.zoomModel.canvas;
     this.zoomContext = App.paintController.zoomModel.context;
-
-    this.colorPicker = App.paintController.colorPicker;
     
   },
   
@@ -135,7 +133,7 @@ var DrawToolModel = Ember.Object.extend({
     var endY = _endY || this.endY;
 
     this.pixelDrawer.popImageData();
-    this.drawFunction(x, y, endX, endY, this.colorPicker.color, App.paintController.getStrokeSize());
+    this.drawFunction(x, y, endX, endY, App.paintController.getColor(), App.paintController.getStrokeSize());
     this.pixelDrawer.pushImageData();
 
   },

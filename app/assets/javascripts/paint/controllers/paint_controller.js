@@ -65,8 +65,8 @@ var PaintController =  Ember.ArrayController.extend({
     this.zoomModel.initDomReady();
 
     // 
-    this.colorPicker = ColorPickerModel.create();
-    this.colorPicker.initDomReady();
+    // this.colorPicker = ColorPickerModel.create();
+    // this.colorPicker.initDomReady();
 
     //
     this.tempCanvas = TempCanvasModel.create({
@@ -518,7 +518,7 @@ var PaintController =  Ember.ArrayController.extend({
 
   getColor : function() {
 
-    return this.colorPicker.color;
+    return '#000'; //this.colorPicker.color;
 
   },
 

@@ -12,7 +12,7 @@ var ColorPipetteModel = Ember.Object.extend({
 
   initDomReady : function() {
 
-    this.colorPicker = App.paintController.colorPicker;
+    // this.colorPicker = App.paintController.colorPicker;
 
   },
   
@@ -26,7 +26,7 @@ var ColorPipetteModel = Ember.Object.extend({
 
     this.isActive = true;
     var rgbColor = this.pixelDrawer.getPixelColor(_options.x, _options.y);    
-    this.colorPicker.colorPicked(null, this.RGBtoHex(rgbColor), null);
+    //this.colorPicker.colorPicked(null, this.RGBtoHex(rgbColor), null);
 
   },
 

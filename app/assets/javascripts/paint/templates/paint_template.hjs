@@ -76,10 +76,6 @@
     </div>
 
     <div class="span8 form-horizontal">
-      <div id ="colorWrapper">
-        Color:
-      </div>
-      <div id="colorPicker"></div>
       {{#view ToolView
         toolBinding = "App.pipetteTool"
       }}
