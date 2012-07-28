@@ -125,6 +125,12 @@ function incrementString( str ) {
   
 };
 
+function rgbToHex( r, g, b ) {
+  
+  return '#' + ( ( 1 << 24 ) + ( r << 16 ) + ( g << 8 ) + b ).toString( 16 ).slice( 1 ).toUpperCase();
+  
+};
+
 extend( CanvasRenderingContext2D.prototype, {
   
   line : function( x, y, x2, y2 ) {

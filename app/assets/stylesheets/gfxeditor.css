@@ -357,3 +357,19 @@
   display:none;
   cursor: move;
 }
+
+#colorpicker #colorfield {
+  width : 26px;
+  height : 26px;
+  border : 1px solid #333;
+  margin-right: 5px;
+}
+
+#colorpicker #colortext {
+  width : 64px;
+  margin-right: 5px;
+}
+
+#colorpicker #colorselect {
+  border : 1px solid #333;
+}

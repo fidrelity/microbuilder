@@ -1,0 +1,9 @@
+<div id="colorpicker">
+
+  <div id="colorfield" class="left"></div>
+  
+  {{view Ember.TextField valueBinding="color" id="colortext" class="left"}}
+  
+  <canvas id="colorselect" class="left"></canvas>
+
+</div>

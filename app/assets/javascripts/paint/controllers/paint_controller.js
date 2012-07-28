@@ -30,6 +30,8 @@ var PaintController =  Ember.ArrayController.extend({
   
   //
   strokeSize : 2,          // init stroke size (thickness for draw tools)
+  
+  color : null,
 
   init : function() {
 
@@ -51,6 +53,8 @@ var PaintController =  Ember.ArrayController.extend({
 
   // Called when Paint_View init (after dom ready)
   initView : function() {
+
+    this.set( 'color', '#000000' );
 
     this.isBackground = this.type === 'background' ? true : false; 
 
@@ -518,7 +522,7 @@ var PaintController =  Ember.ArrayController.extend({
 
   getColor : function() {
 
-    return '#000'; //this.colorPicker.color;
+    return this.color;
 
   },
 

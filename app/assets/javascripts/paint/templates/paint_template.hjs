@@ -76,11 +76,15 @@
     </div>
 
     <div class="span8 form-horizontal">
+      {{view ColorPickerView}}
+      
       {{#view ToolView
         toolBinding = "App.pipetteTool"
       }}
-        <button {{action "pipette"}} class="pipette selectable">Pipette</button>
-      {{/view}} 
+        <button {{action "pipette"}} class="left pipette selectable">Pipette</button>
+      {{/view}}
+      
+      <div class="clear"></div>
     </div>
   </div>
 
