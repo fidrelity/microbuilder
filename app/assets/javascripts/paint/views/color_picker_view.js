@@ -22,6 +22,8 @@ var ColorPickerView = Ember.View.extend({
     canvas.width = this.width;
     canvas.height = this.height;
     
+    canvas.onselectstart = function() { return false; };
+    
     colors.onload = function () {
       
       ctx.drawImage( colors, 0, 0, self.width, self.height );

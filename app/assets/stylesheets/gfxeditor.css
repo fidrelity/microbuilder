@@ -371,5 +371,10 @@
 }
 
 #colorpicker #colorselect {
-  border : 1px solid #333;
+  border: 1px solid #333;
+  cursor: crosshair;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -ms-user-select: none;
 }
