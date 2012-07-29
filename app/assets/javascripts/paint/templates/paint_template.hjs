@@ -7,83 +7,52 @@
       <canvas id="canvas-merged" width="64" height="64"></canvas>
     
       <div>
-        {{#view ToolView
-          toolBinding = "this"
-        }}
-          <button {{action "play"}} id="playButton">Play</button>
-          <button {{action "stop"}} id="stopButton">Stop</button>
-          <input type="text" id="playDelay" value="1000" size="2" class="span1">
-          <input type="checkbox" value="1" id="replayLoop"> Loop
-        {{/view}}
+        <button {{action "play" target="App.spritePlayer"}} id="playButton">Play</button>
+        <button {{action "stop" target="App.spritePlayer"}} id="stopButton">Stop</button>
+        <input type="text" id="playDelay" value="1000" size="2" class="span1">
+        <input type="checkbox" value="1" id="replayLoop"> Loop
       </div>
     
       <div id="sprites-area-scroll"></div>
     
-      {{#view ToolView
-        toolBinding = "this"
-        class = "tool-bar-bottom"
-      }}
-        <button {{action "addSprite"}}>add</button>
-        <button {{action "copySprite"}}>duplicate</button>
+      <div class="tool-bar-bottom">
+        <button {{action "addSprite" target="App.paintController"}}>add</button>
+        <button {{action "copySprite" target="App.paintController"}}>duplicate</button>
         <button {{action "removeCurrent" target="App.paintController"}}>remove</button>
-      {{/view}}
+      </div>
     
     </div>
   
     <div id="area-wrapper">
   
       <div class="tool-bar">
-        {{#view ToolView
-          toolBinding = "App.selectTool"
-        }}
-          <button {{action "selecttool"}} class="select selectable"></button>
-        {{/view}}
-        {{#view ToolView
-          toolBinding = "App.pencilTool"
-        }}
-          <button {{action "pencil"}} class="pencil selectable"></button>
-          <button {{action "erase"}} class="eraser selectable"></button>
-        {{/view}}
+        
+        <button {{action "selectTool" target="App.paintController"}} class="select selectable"></button>
+        <button {{action "pencilTool" target="App.paintController"}} class="pencil selectable"></button>
+        <button {{action "eraseTool" target="App.paintController"}} class="eraser selectable"></button>
 
-        {{#view ToolView
-          toolBinding = "App.drawTool"
-        }}
-          <button {{action "drawRect"}} class="rectangle selectable"></button>
-          <button {{action "drawCircle"}} class="circle selectable"></button>
-          <button {{action "drawRectFill"}} class="rectanglefill selectable"></button>
-          <button {{action "drawCircleFill"}} class="circlefill selectable"></button>
-          <button {{action "drawLine"}}  class="line selectable"></button>
-        {{/view}}
-
-        {{#view ToolView
-          toolBinding = "App.fillTool"
-        }}
-          <button {{action "fill"}} class="fill selectable"></button>
-        {{/view}} 
-  
+        <button {{action "drawRectTool" target="App.paintController"}} class="rectangle selectable"></button>
+        <button {{action "drawCircleTool" target="App.paintController"}} class="circle selectable"></button>
+        <button {{action "drawRectFillTool" target="App.paintController"}} class="rectanglefill selectable"></button>
+        <button {{action "drawCircleFillTool" target="App.paintController"}} class="circlefill selectable"></button>
+        <button {{action "drawLineTool" target="App.paintController"}}  class="line selectable"></button>
+        
+        <button {{action "fillTool" target="App.paintController"}} class="fill selectable"></button>
+        
         <button id="loadFileButton" class="loadfile"></button>
-        <input type="file" id="file" size="1" style="display:none;">
-    
-        {{#view ToolView
-          toolBinding = "this"
-          class = "left"
-        }}
-          <button {{action "clear"}} class="clear"></button>
-          <button {{action "undo"}} class="undo"></button>
-          <button {{action "reset"}} id="clearSpritesButton" class="clearall"></button>
-        {{/view}}
-    
-        {{#view ToolView
-          toolBinding = "this"
-        }}
-          <button {{action "flipV"}}>FlipV</button>
-          <button {{action "flipH"}}>FlipH</button>
-          <button {{action "rotateLeft"}}>turn left</button>
-          <button {{action "rotateRight"}}>turn right</button>
-        {{/view}}
-    
+        <input type="file" id="file" size="1" style="display:none;" />
+        
+        <button {{action "clearTool" target="App.paintController"}} class="clearTool"></button>
+        <button {{action "undoTool" target="App.paintController"}} class="undo"></button>
+        <button {{action "resetTool" target="App.paintController"}} class="clearall"></button>
+        
+        <button {{action "flipVTool" target="App.paintController"}}>FlipV</button>
+        <button {{action "flipHTool" target="App.paintController"}}>FlipH</button>
+        <button {{action "rotateLeftTool" target="App.paintController"}}>turn left</button>
+        <button {{action "rotateRightTool" target="App.paintController"}}>turn right</button>
+        
         <div class="clear"></div>
-    
+      
       </div>
     
       <div id="zoom-canvas-area">
@@ -101,27 +70,20 @@
       </div>
     
       <div class="tool-bar-bottom">
-        {{#view ToolView
-              toolBinding = "this"
-              class = "left"
-        }}
-          <button {{action "zoomIn"}} class="zoomin zoom"></button>
-          <button {{action "zoomOut"}} class="zoomout zoom"></button>
-          <button {{action "bgToggle"}} class="bgToggle"></button>
-        {{/view}}
-      
+        <div class="left">
+          <button {{action "zoomIn" target="App.paintController"}} class="zoomin zoom"></button>
+          <button {{action "zoomOut" target="App.paintController"}} class="zoomout zoom"></button>
+          <button {{action "bgToggle" target="App.paintController"}} class="bgToggle"></button>
+        </div>
+        
         <div class="left" id="sizeWrapper">
           <span>Size:</span>
           <div id="sizeSlider"></div>
           <div id="slidervalue">1</div>
           <span>px</span>
         </div>
-      
-        {{#view ToolView
-          toolBinding = "App.pipetteTool"
-        }}
-          <button {{action "pipette"}} class="right pipette selectable">Pipette</button>
-        {{/view}}
+        
+        <button {{action "pipetteTool" target="App.paintController"}} class="right pipette selectable">Pipette</button>
       
         {{view ColorPickerView class = "right"}}
       

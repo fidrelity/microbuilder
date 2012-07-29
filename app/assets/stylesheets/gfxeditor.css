@@ -80,7 +80,7 @@
   background:url('/assets/fill_icon.png');
 }
 
-#paint-wrapper .tool-bar button.clear {
+#paint-wrapper .tool-bar button.clearTool {
   background:url('/assets/clear_icon.png');
 }
 

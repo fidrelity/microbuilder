@@ -286,44 +286,6 @@ var PaintController =  Ember.ArrayController.extend({
 
   // ---------------------------------------
   // Sprite Actions
-
-  // Undo current SpriteModel
-  undo : function() {
-
-    this.getCurrentSpriteModel().popState();
-
-    if(this.isBackground)
-      this.zoomModel.context.drawImage(this.getCurrentSpriteModel().canvas, 0, 0);
-    else
-      this.zoomModel.updateZoom(true);
-  },
-
-  flipH : function() {
-
-    this.canvasModifier.flipHorizontal(this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
-
-    this.clearCurrentSprite(false);
-    this.drawToSprite();
-
-  },
-
-  flipV : function() {
-
-    this.canvasModifier.flipVertical(this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
-
-    this.clearCurrentSprite(false);
-    this.drawToSprite();
-   
-  },
-
-  rotate : function(_angle) {
-
-    this.canvasModifier.rotate(_angle, this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
-
-    this.clearCurrentSprite(false);
-    this.drawToSprite();
-
-  },
   
   // Clear current SpriteModel
   clearCurrentSprite : function(clearZoomToo) {
@@ -593,6 +555,181 @@ var PaintController =  Ember.ArrayController.extend({
       height: this.height * this.zoomModel.zoom,
       'margin-top': -this.height * this.zoomModel.zoom / 2
     });
+    
+  },
+  
+  setCurrentTool : function( tool ) {
+    
+    App.toolBoxController.setCurrentTool( tool );
+    
+  },
+  
+  selectTool : function() {
+    
+    this.setCurrentTool( App.selectTool );
+    this.click();
+    
+  },
+  
+  pencilTool : function() {
+    
+    this.setCurrentTool( App.pencilTool );
+    App.pencilTool.setEraser( false );
+    this.click();
+    
+  },
+  
+  eraseTool : function() {
+    
+    this.setCurrentTool( App.pencilTool );
+    App.pencilTool.setEraser( true );
+    
+  },
+  
+  drawRectTool : function() {
+    
+    App.drawTool.setDrawFunction("rect");
+    App.drawTool.click();
+    this.setCurrentTool( App.drawTool );
+    
+  },
+
+  drawRectFillTool : function() {
+    
+    App.drawTool.setDrawFunction("fillrect");
+    App.drawTool.click();
+    this.setCurrentTool( App.drawTool );
+    
+  },
+
+  drawCircleTool : function() {
+    
+    App.drawTool.setDrawFunction("circle");
+    App.drawTool.click();
+    this.setCurrentTool( App.drawTool );
+    
+  },
+
+  drawCircleFillTool : function() {
+    
+    App.drawTool.setDrawFunction("fillcircle");
+    App.drawTool.click();
+    this.setCurrentTool( App.drawTool );
+    
+  },
+
+  drawLineTool : function() {
+    
+    App.drawTool.setDrawFunction("line");
+    App.drawTool.click();
+    this.setCurrentTool( App.drawTool );
+    
+  },
+  
+  fillTool : function() {
+    
+    App.fillTool.click();
+    this.setCurrentTool( App.fillTool );
+    
+  },
+  
+  clearTool : function() {
+    
+    this.clearCurrentSprite();
+    
+  },
+  
+  undoTool : function() {
+
+    this.getCurrentSpriteModel().popState();
+
+    if(this.isBackground)
+      this.zoomModel.context.drawImage(this.getCurrentSpriteModel().canvas, 0, 0);
+    else
+      this.zoomModel.updateZoom(true);
+
+  },
+  
+  resetTool : function() {
+    
+    this.reset( true );
+    this.add();
+    
+  },
+  
+  flipVTool : function() {
+
+    this.canvasModifier.flipVertical(this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
+
+    this.clearCurrentSprite(false);
+    this.drawToSprite();
+   
+  },
+
+  flipHTool : function() {
+
+    this.canvasModifier.flipHorizontal(this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
+
+    this.clearCurrentSprite(false);
+    this.drawToSprite();
+
+  },
+
+  rotateRightTool : function() {
+    
+    this.rotate( 90 );
+    
+  },
+
+  rotateLeftTool : function() {
+    
+    this.rotate( -90 );
+    
+  },
+  
+  rotate : function(_angle) {
+
+    this.canvasModifier.rotate(_angle, this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
+
+    this.clearCurrentSprite(false);
+    this.drawToSprite();
+
+  },
+  
+  addSprite : function() {
+    
+    this.add();
+    
+  },
+
+  copySprite : function() {
+    
+    this.add(true);
+    
+  },
+  
+  pipetteTool : function() {
+    
+    this.setCurrentTool( App.pipetteTool );
+    this.click();
+    
+  },
+  
+  zoomIn : function() {
+    
+    this.zoomModel.zoomIn();
+    
+  },
+  
+  zoomOut : function() {
+    
+    this.zoomModel.zoomOut();
+    
+  },
+
+  bgToggle : function() {
+    
+    this.zoomModel.toogleZoomCanvasBg();
     
   }
 

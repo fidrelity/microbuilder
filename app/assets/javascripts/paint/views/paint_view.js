@@ -13,6 +13,15 @@ var PaintView = Ember.View.extend({
     App.selectTool.initAfter();
     
     App.paintController.centerCanvas();
+    
+    $('.pencil').addClass('activeTool');
+    
+    $('.selectable').click(function() {
+      
+      $('.selectable').removeClass('activeTool');
+      $(this).addClass('activeTool');
+      
+    });
 
   },
 
