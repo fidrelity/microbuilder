@@ -32,12 +32,12 @@ var PaintController =  Ember.ArrayController.extend({
   strokeSize : 2,          // init stroke size (thickness for draw tools)
   
   color : null,
+  width : 0,
+  height : 0,
 
   init : function() {
 
     this.spriteSize = { width: 64, height: 64 };
-
-    this.pixelDrawer = new PixelDrawer();
     this.canvasModifier = CanvasModifierModel.create();
 
   },
@@ -345,9 +345,9 @@ var PaintController =  Ember.ArrayController.extend({
     } else {
 
       // Draw white rect if background
-      this.pixelDrawer.popImageData();
-      this.pixelDrawer.fillRect(_x, _y, _x + w, _y + h, "#FFFFFF");
-      this.pixelDrawer.pushImageData();
+      App.pixelDrawer.popImageData();
+      App.pixelDrawer.fillRect(_x, _y, _x + w, _y + h, "#FFFFFF");
+      App.pixelDrawer.pushImageData();
 
     }
 
@@ -459,7 +459,7 @@ var PaintController =  Ember.ArrayController.extend({
     this.set('currentSprite', spriteModel);
     spriteModel.highlight();
 
-    this.pixelDrawer.setCanvasContext(this.zoomModel.canvas);
+    App.pixelDrawer.setCanvasContext(this.zoomModel.canvas);
     this.zoomModel.updateZoom(spriteModel, true);
     
   },
@@ -529,7 +529,7 @@ var PaintController =  Ember.ArrayController.extend({
   hideTempCanvas : function() {
 
     this.tempCanvas.hide();
-    this.pixelDrawer.setCanvasContext(this.zoomModel.canvas);
+    App.pixelDrawer.setCanvasContext(this.zoomModel.canvas);
 
   },
   

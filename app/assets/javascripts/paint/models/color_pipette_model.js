@@ -12,7 +12,7 @@ var ColorPipetteModel = Ember.Object.extend({
 
   mousedown : function( _options ) {
 
-    var rgbColor = App.paintController.pixelDrawer.getPixelColor(_options.x, _options.y);
+    var rgbColor = App.pixelDrawer.getPixelColor(_options.x, _options.y);
     App.paintController.set( 'color', rgbToHex( rgbColor[0], rgbColor[1], rgbColor[2] ) )
 
   },

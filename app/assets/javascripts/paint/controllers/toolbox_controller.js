@@ -43,11 +43,7 @@ var DrawToolModel = Ember.Object.extend({
   //
   tempCanvas : null,
 
-  init : function () {
-
-    this.pixelDrawer = App.paintController.pixelDrawer;
-
-  },
+  init : function () {},
 
   initAfter : function () {
 
@@ -101,7 +97,7 @@ var DrawToolModel = Ember.Object.extend({
     this.isActive = false;
       
     // Set pixelDrawer canvas to zoom canvas
-    this.pixelDrawer.setCanvasContext(this.zoomCanvas);
+    App.pixelDrawer.setCanvasContext(this.zoomCanvas);
 
     // Draw on zoom canvas
     this.draw();
@@ -110,8 +106,8 @@ var DrawToolModel = Ember.Object.extend({
     App.paintController.drawToSprite();
 
     // Change back to tempCanvas
-    this.pixelDrawer.setCanvasContext(this.tempCanvas);
-    this.pixelDrawer.context.clearRect(0, 0, this.zoomCanvas.width, this.zoomCanvas.height);
+    App.pixelDrawer.setCanvasContext(this.tempCanvas);
+    App.pixelDrawer.context.clearRect(0, 0, this.zoomCanvas.width, this.zoomCanvas.height);
 
     this.endX = this.startX;
     this.endY = this.startY;
@@ -125,9 +121,9 @@ var DrawToolModel = Ember.Object.extend({
     var endX = _endX || this.endX;
     var endY = _endY || this.endY;
 
-    this.pixelDrawer.popImageData();
+    App.pixelDrawer.popImageData();
     this.drawFunction(x, y, endX, endY, App.paintController.getColor(), App.paintController.getStrokeSize());
-    this.pixelDrawer.pushImageData();
+    App.pixelDrawer.pushImageData();
 
   },
 
@@ -135,7 +131,7 @@ var DrawToolModel = Ember.Object.extend({
   setTempCanvas : function() {
 
     // Set temp canvas as canvas to draw in pixelDrawer
-    this.pixelDrawer.setCanvasContext(this.tempCanvas);    
+    App.pixelDrawer.setCanvasContext(this.tempCanvas);    
     
     this.tempCanvasModel.showTempCanvas();
 
@@ -143,18 +139,17 @@ var DrawToolModel = Ember.Object.extend({
 
   setDrawFunction : function(_fnc) {
 
-    var drawFnc = null;
     switch (_fnc) {
 
-      case("rect") : this.drawFunction = this.pixelDrawer.drawRect.bind(this.pixelDrawer); break;
+      case("rect") : this.drawFunction = App.pixelDrawer.drawRect.bind( App.pixelDrawer ); break;
 
-      case("fillrect") : this.drawFunction = this.pixelDrawer.fillRect.bind(this.pixelDrawer); break;
+      case("fillrect") : this.drawFunction = App.pixelDrawer.fillRect.bind( App.pixelDrawer ); break;
 
-      case("circle") : this.drawFunction = this.pixelDrawer.drawCircle.bind(this.pixelDrawer); break;
+      case("circle") : this.drawFunction = App.pixelDrawer.drawCircle.bind( App.pixelDrawer ); break;
 
-      case("fillcircle") : this.drawFunction = this.pixelDrawer.fillCircle.bind(this.pixelDrawer); break;
+      case("fillcircle") : this.drawFunction = App.pixelDrawer.fillCircle.bind( App.pixelDrawer ); break;
 
-      case("line") : this.drawFunction = this.pixelDrawer.drawLine.bind(this.pixelDrawer); break;
+      case("line") : this.drawFunction = App.pixelDrawer.drawLine.bind( App.pixelDrawer ); break;
 
     }
 
@@ -170,7 +165,6 @@ var FillToolModel = Ember.Object.extend({
 
     this.zoomCanvas = App.paintController.zoomModel.canvas;
     this.zoomContext = App.paintController.zoomModel.context;
-    this.pixelDrawer = App.paintController.pixelDrawer;
 
   },
   
@@ -185,18 +179,15 @@ var FillToolModel = Ember.Object.extend({
     this.draw(_options.x, _options.y);
   },
 
-  mousemove : function(_options) {
-  },
+  mousemove : function(_options) {},
 
-  mouseup : function(_options) {   
-  },
+  mouseup : function(_options) {},
 
   draw : function(_x, _y) {
 
-    this.pixelDrawer.popImageData();
-    var oldColor = this.pixelDrawer.getPixelColor(_x, _y);
-    this.pixelDrawer.floodFill(_x, _y, App.paintController.getColor(), oldColor);
-    this.pixelDrawer.pushImageData();
+    App.pixelDrawer.popImageData();
+    App.pixelDrawer.floodFill( _x, _y, App.paintController.getColor(), App.pixelDrawer.getPixelColor(_x, _y) );
+    App.pixelDrawer.pushImageData();
 
     App.paintController.drawToSprite();
 

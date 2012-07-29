@@ -4,15 +4,10 @@ var PencilToolModel = Ember.Object.extend({
   oldX : 0,
   oldY : 0,
   isActive : false,
-  pixelDrawer : null,
   isErasing : false,
   sprite : null,
   
-  init : function () {
-
-    this.pixelDrawer = App.paintController.pixelDrawer;
-    
-  },
+  init : function () {},
   
   click : function() {
 
@@ -59,9 +54,9 @@ var PencilToolModel = Ember.Object.extend({
 
     // Paint
     } else {
-      this.pixelDrawer.popImageData();
-      this.pixelDrawer.drawLine(_x, _y, _endX, _endY, App.paintController.getColor(), App.paintController.getStrokeSize());
-      this.pixelDrawer.pushImageData();
+      App.pixelDrawer.popImageData();
+      App.pixelDrawer.drawLine(_x, _y, _endX, _endY, App.paintController.getColor(), App.paintController.getStrokeSize());
+      App.pixelDrawer.pushImageData();
     }   
 
   },

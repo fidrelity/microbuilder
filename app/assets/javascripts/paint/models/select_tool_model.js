@@ -6,13 +6,10 @@ var SelectToolModel = Ember.Object.extend({
   endX : 0,
   endY : 0,
   isActive : false,
-  pixelDrawer : null,
   tempCanvas : null,
   marginToMouse : 2,
 
   initAfter : function () {
-
-    this.pixelDrawer = App.paintController.pixelDrawer;
 
     this.tempCanvas = App.paintController.finalCanvas;
     this.tempCtx = this.tempCanvas[0].getContext("2d");
