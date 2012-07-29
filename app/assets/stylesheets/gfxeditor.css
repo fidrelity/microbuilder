@@ -20,13 +20,6 @@
   bottom: 0px;
 }
 
-#paint-size-wrapper #startPainting {
-  border:none;
-  border-radius:0px;
-  position:relative;
-  margin:20px 0 20px 0;
-}
-
 #paint-wrapper .tool-bar button {
   min-width:30px;
   height:30px;
@@ -163,9 +156,7 @@
   border:1px solid #666;
 }
 
-#paint-size-wrapper { 
-  padding:40px 20px 40px 20px;
-}
+
 
 /* Canvas Elements */
 #zoomCanvas, #canvas-temp {
@@ -212,14 +203,6 @@
 #stopButton { display:none; }
 
 .active-sprite { border:1px solid #000000; }
-
-.type-selected {
-  border:3px dotted #666;
-}
-
-.paint-type {
-  cursor:pointer;
-}
 
 /* Game guide */
 #slide-container, #guide-slide-container {
@@ -313,4 +296,51 @@
   -webkit-user-select: none;
   user-select: none;
   -ms-user-select: none;
+}
+
+#paint-size-wrapper { 
+  padding:40px 20px 40px 20px;
+}
+
+#paint-size-wrapper .type-selected {
+  border: 2px solid black !important;
+}
+
+#paint-size-wrapper .paint-type {
+  cursor:pointer;
+  border: 2px dashed #999;
+}
+
+#paint-size-wrapper .paint-type:hover {
+  border-color: black;
+}
+
+#paint-size-wrapper #object {
+  width: 256px;
+  height: 256px;
+  overflow: hidden;
+}
+
+#paint-size-wrapper #background {
+  width: 310px;
+  height: 45px;
+  background: #CCC;
+  color: #666;
+  text-align: center;
+  font-size: 1.8em;
+  padding: 90px 0 60px;
+}
+
+#paint-size-wrapper #canvas-size {
+  width:128px;
+  height:128px;
+  background: url("bg_transparent.png");
+}
+
+#paint-size-wrapper #startPainting {
+  display: none;
+  border: none;
+  border-radius: 0px;
+  position: relative;
+  margin:20px 0 20px 0;
 }

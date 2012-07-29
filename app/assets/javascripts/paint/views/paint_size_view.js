@@ -24,57 +24,61 @@ var PaintSizeView = Ember.View.extend({
 
     });
 
-    $('.sizeInput').change(function() {
+    $('.sizeInput').change( function() {
 
-        var w = Math.min( parseInt($(".objWidth").val()), 256);
-        var h = Math.min( parseInt($(".objHeight").val()), 256) ;
-        //
-        $('#canvas-size').css({ width: w  + "px", height: h + "px" });
-        //
-        $(".objWidth").val(w);
-        $(".objHeight").val(h);
+      var w = Math.min( parseInt($(".objWidth").val()), 256);
+      var h = Math.min( parseInt($(".objHeight").val()), 256) ;
+      
+      $('#canvas-size').css({ width: w  + "px", height: h + "px" });
+      
+      $(".objWidth").val(w);
+      $(".objHeight").val(h);
+        
     });
 
     // Click on object type
     $('.paint-type').click(function() {
 
-      App.paintSizeView.setPaintType($(this));
+      App.paintSizeView.setPaintType( $(this) );
 
     });
 
   },
-
-
+  
   setPaintType : function(_obj) {
-
-    $('.paint-type').removeClass('type-selected');
-
+    
+    var button = this.$("#startPainting"),
+      msg = "Start painting ";
+      
+    this.$('.paint-type').removeClass('type-selected');
+    
     _obj.addClass('type-selected');
-    var _type = _obj.attr('data-type');
-
-    var button = $("#startPainting");
-    var msg = "Start painting ";
-
-    if(_type === 'background') {
+    
+    if ( _obj.attr('data-type') === 'background' ) {
+      
       msg += "a background image";
+      
     } else {
+      
       msg += "a new object";
+      
     }
-
+    
     button.html(msg);
-
+    button.show();
+    
   },
 
   start : function() {
 
-    var type = $(".type-selected").attr('data-type') || 'object';
-    var w, h = 0;
+    var type = this.$(".type-selected").attr('data-type'),
+      w, h, size;
 
-    if(type === 'object') {
+    if(  === 'object' ) {
 
-      var size_sprite = $('#canvas-size');
-      w = size_sprite.width();
-      h = size_sprite.height();
+      size = $('#canvas-size');
+      w = size.width();
+      h = size.height();
 
     } else {
 
@@ -82,12 +86,13 @@ var PaintSizeView = Ember.View.extend({
       h = 390;
       
     }
- 
+    
     App.paintSizeView.remove();
-
-    App.paintController.initType(type, w, h);
-
-    App.paintView.appendTo('#content');
+    
+    App.paintController.initType( type, w, h );
+    
+    App.paintView.appendTo( '#content' );
+    
   }
   
 });

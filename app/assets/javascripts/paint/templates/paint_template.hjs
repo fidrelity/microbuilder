@@ -100,7 +100,7 @@
   
     <div class="form-inline right">
     
-      <input type="text" placeholder="image name">
+      <input type="text" id="imageName" placeholder="image name">
     
       <label class="checkbox">
         <input type="checkbox" id="makePublic"> make public
