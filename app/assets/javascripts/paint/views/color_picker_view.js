@@ -16,24 +16,42 @@ var ColorPickerView = Ember.View.extend({
     var canvas = this.$( '#colorselect' )[0],
       ctx = canvas.getContext( '2d' ),
       self = this,
-      colors = new Image(),
-      imageData;
+      width = this.width,
+      height = this.height,
+      grd;
     
-    canvas.width = this.width;
-    canvas.height = this.height;
+    canvas.width = width;
+    canvas.height = height;
     
     canvas.onselectstart = function() { return false; };
     
-    colors.onload = function () {
-      
-      ctx.drawImage( colors, 0, 0, self.width, self.height );
-      
-      self.set( 'imageData', ctx.getImageData( 0, 0, self.width, self.height ).data );
-      
-    }
+    grd = ctx.createLinearGradient( 0, 0, width / 12 * 11, 0 );
     
-    colors.src = '/assets/paint/color_picker.png';
+    grd.addColorStop( 0, '#F00' );
+    grd.addColorStop( 1 / 6, '#FF0' );
+    grd.addColorStop( 2 / 6, '#0F0' );
+    grd.addColorStop( 3 / 6, '#0FF' );
+    grd.addColorStop( 4 / 6, '#00F' );
+    grd.addColorStop( 5 / 6, '#F0F' );
+    grd.addColorStop( 1, '#F00' );
     
+    ctx.fillStyle = grd;
+    ctx.fillRect( 0, 0, width / 12 * 11, height );
+    
+    ctx.fillStyle = '#888';
+    ctx.fillRect( width / 12 * 11, 0, width / 12, height );
+    
+    grd = ctx.createLinearGradient( 0, 0, 0, height );
+    
+    grd.addColorStop( 0, '#FFF' );
+    grd.addColorStop( 0.6, 'rgba(255,255,255,0)' );
+    grd.addColorStop( 0.61, 'rgba(0,0,0,0)' );
+    grd.addColorStop( 1, '#000' );
+    
+    ctx.fillStyle = grd;
+    ctx.fillRect( 0, 0, width, height );
+    
+    this.set( 'imageData', ctx.getImageData( 0, 0, width, height ).data );
     
     this.addObserver( 'color', function() {
       
