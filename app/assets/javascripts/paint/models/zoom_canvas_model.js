@@ -12,7 +12,7 @@ var ZoomCanvasModel = Ember.Object.extend({
 
   zoom : 2,
   defaultZoom : 2,
-  maxZoom : 10,
+  maxZoom : 4,
   minZoom : 1,
 
   isBackground : false,
@@ -73,22 +73,24 @@ var ZoomCanvasModel = Ember.Object.extend({
 
   zoomIn : function() {
 
-    if(this.zoom > this.maxZoom) return false;
-
-    this.zoom++;
+    if ( this.zoom < this.maxZoom) {
+      
+      this.zoom++;
+      this.updateZoom();
     
-    this.updateZoom();
+    }
 
   },
 
   zoomOut : function() {
-
-    //if(this.canvas.style.width === this.spriteSize.width+"px") return false;
     
-    this.zoom--;
-
-    this.updateZoom();
-
+    if ( this.zoom > 1 ) {
+      
+      this.zoom--;
+      this.updateZoom();
+    
+    }
+    
   },
 
   clear : function() {
@@ -144,6 +146,8 @@ var ZoomCanvasModel = Ember.Object.extend({
     if(clear) this.clear();
     
     this.context.drawImage(App.paintController.getCurrentSpriteModel().canvas, 0, 0);
+    
+    App.paintController.centerCanvas();
 
   },
 

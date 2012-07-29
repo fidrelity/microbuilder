@@ -32,6 +32,8 @@ var PaintController =  Ember.ArrayController.extend({
   strokeSize : 2,          // init stroke size (thickness for draw tools)
   
   color : null,
+  zoom : 1,
+  
   width : 0,
   height : 0,
 
@@ -48,6 +50,9 @@ var PaintController =  Ember.ArrayController.extend({
     this.type = _type || 'object';
 
     this.setSpriteSize({ width: _width, height: _height });
+    
+    this.width = _width;
+    this.height = _height;
 
   },
 
@@ -579,6 +584,16 @@ var PaintController =  Ember.ArrayController.extend({
     };
 
     reader.readAsDataURL(e.target.files[0]);
+  },
+  
+  centerCanvas : function() {
+    
+    $( '#paint-area' ).css({ 
+      width: this.width * this.zoomModel.zoom, 
+      height: this.height * this.zoomModel.zoom,
+      'margin-top': -this.height * this.zoomModel.zoom / 2
+    });
+    
   }
 
 });
