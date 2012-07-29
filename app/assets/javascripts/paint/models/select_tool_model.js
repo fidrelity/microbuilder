@@ -19,7 +19,7 @@ var SelectToolModel = Ember.Object.extend({
 
     this.zoomModel = App.paintController.zoomModel;
 
-    this.wrapper = $("#zoom-canvas-area"); // to know the offset coord
+    this.wrapper = $("#paint-area"); // to know the offset coord
 
     this.selectDiv = $('#selectToolDiv');
 

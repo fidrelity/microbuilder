@@ -69,7 +69,6 @@ var PencilToolModel = Ember.Object.extend({
   setEraser : function(_state) {
 
     this.set('isErasing', _state);
-    //App.paintController.toggleColorPalette(!_state);
 
   }
 

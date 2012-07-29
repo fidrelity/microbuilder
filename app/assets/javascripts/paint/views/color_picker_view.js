@@ -6,7 +6,7 @@ var ColorPickerView = Ember.View.extend({
   
   imageData : null,
   
-  width : 256,
+  width : 200,
   height : 26,
   
   down : false,

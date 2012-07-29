@@ -11,7 +11,6 @@ var PaintView = Ember.View.extend({
     App.drawTool.initAfter();
     App.fillTool.initAfter();
     App.selectTool.initAfter();
-    App.pipetteTool.initDomReady();
 
   },
 

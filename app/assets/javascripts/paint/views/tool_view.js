@@ -108,11 +108,7 @@ var ToolView = Ember.View.extend({
   bgToggle : function() {
     App.paintController.zoomModel.toogleZoomCanvasBg();
   },
-
-  save : function() {
-    App.paintController.save();
-  },
-
+  
   play : function() {
     App.spritePlayer.play();
   },

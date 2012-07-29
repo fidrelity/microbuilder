@@ -68,10 +68,6 @@ var PaintController =  Ember.ArrayController.extend({
     });
     this.zoomModel.initDomReady();
 
-    // 
-    // this.colorPicker = ColorPickerModel.create();
-    // this.colorPicker.initDomReady();
-
     //
     this.tempCanvas = TempCanvasModel.create({
       width: this.spriteSize.width,
@@ -104,13 +100,9 @@ var PaintController =  Ember.ArrayController.extend({
       // Hide unnecessary buttons and divs
       App.spritePlayer.hide();
 
-      areaWrapper.find('#sprites-area').hide();
-      $('#copySpriteButton').hide();
-      $('#clearSpritesButton').remove();
-      $('#removeSpriteButton').remove();
+      $('#sprites-area').hide();
       $('.bgToggle').remove();
     }
-
 
   },
 

@@ -65,14 +65,6 @@ var ZoomCanvasModel = Ember.Object.extend({
 
     if(this.isBackground) {
 
-      // Adapat zoomCanvas wrapper
-      var _width = 700;
-      var _height = 420;
-
-      areaWrapper.find('#zoom-canvas-area')
-        .attr('width', _width).attr('height', _height)
-        .css({'max-width' : _width, 'max-height' : _height, 'width' : _width, 'height' : _height});
-
       this.zoom = 1;
 
     }

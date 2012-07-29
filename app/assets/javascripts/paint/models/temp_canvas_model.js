@@ -44,8 +44,8 @@ var TempCanvasModel = Ember.Object.extend({
     
     var canvasObject = $("#zoomCanvas");
  
-    var newLeft = $("#zoom-canvas-area")[0].scrollLeft + canvasObject.position().left,
-        newTop = $("#zoom-canvas-area")[0].scrollTop + canvasObject.position().top;
+    var newLeft = $("#paint-area")[0].scrollLeft + canvasObject.position().left,
+        newTop = $("#paint-area")[0].scrollTop + canvasObject.position().top;
 
     this.domObj.css({     
 

@@ -51,13 +51,6 @@ var DrawToolModel = Ember.Object.extend({
 
   initAfter : function () {
 
-    /*
-    this.tempCanvas = App.paintController.tempCanvas;
-    this.tempContext = App.paintController.tempContext;
-
-    this.zoomCanvas = App.paintController.zoomCanvas;
-    this.zoomContext = App.paintController.zoomContext;
-    */
     this.tempCanvasModel = TempCanvasModel.create();  
     this.tempCanvasModel.initDomReady();  
 

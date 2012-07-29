@@ -4,8 +4,6 @@ var ColorPipetteModel = Ember.Object.extend({
 
   init : function () {},
 
-  initDomReady : function() {},
-
   click : function() {
 
     App.paintController.hideTempCanvas();
