@@ -20,9 +20,7 @@ var ZoomCanvasModel = Ember.Object.extend({
   bgCounter : 0,
 
   // Constr: width, height = spriteSize.width/height, isBackground
-  init : function() {
-
-  },
+  init : function() {},
 
   initDomReady : function() {
 
@@ -31,22 +29,17 @@ var ZoomCanvasModel = Ember.Object.extend({
 
     this.domObj = $('#' + this.id);
 
-    // Mouse events on zoomed canvas
-    this.domObj.mousedown(function(e){
+    $( '#zoom-canvas-area' ).mousedown(function(e){
       App.paintController.mousedown(e);
     });
 
-    this.domObj.mousemove(function(e){
+    $( '#zoom-canvas-area' ).mousemove(function(e){
       App.paintController.mousemove(e);
     });
 
-    this.domObj.mouseup(function(e){
+    $( '#zoom-canvas-area' ).mouseup(function(e){
       App.paintController.mouseup(e);
     });
-
-    this.domObj.mouseout(function(e){
-      App.paintController.mouseup(e);
-    });  
 
     this.canvas.width = this.width;
     this.canvas.height = this.height; 
