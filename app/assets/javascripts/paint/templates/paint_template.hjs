@@ -6,7 +6,7 @@
     
       <canvas id="canvas-merged" width="64" height="64"></canvas>
     
-      <div>
+      <div class="tool-bar">
         <button {{action "play" target="App.spritePlayer"}} id="playButton">Play</button>
         <button {{action "stop" target="App.spritePlayer"}} id="stopButton">Stop</button>
         <input type="text" id="playDelay" value="1000" size="2" class="span1">
@@ -15,7 +15,7 @@
     
       <div id="sprites-area-scroll"></div>
     
-      <div class="tool-bar-bottom">
+      <div class="tool-bar tool-bar-bottom">
         <button {{action "addSprite" target="App.paintController"}}>add</button>
         <button {{action "copySprite" target="App.paintController"}}>duplicate</button>
         <button {{action "removeCurrent" target="App.paintController"}}>remove</button>
@@ -46,10 +46,12 @@
         <button {{action "undoTool" target="App.paintController"}} class="undo"></button>
         <button {{action "resetTool" target="App.paintController"}} class="clearall"></button>
         
-        <button {{action "flipVTool" target="App.paintController"}}>FlipV</button>
-        <button {{action "flipHTool" target="App.paintController"}}>FlipH</button>
-        <button {{action "rotateLeftTool" target="App.paintController"}}>turn left</button>
-        <button {{action "rotateRightTool" target="App.paintController"}}>turn right</button>
+        <button {{action "flipVTool" target="App.paintController"}}>flip v</button>
+        <button {{action "flipHTool" target="App.paintController"}}>flip h</button>
+        <button {{action "rotateLeftTool" target="App.paintController"}}>rot l</button>
+        <button {{action "rotateRightTool" target="App.paintController"}}>rot r</button>
+        
+        <button {{action "pipetteTool" target="App.paintController"}} class="pipette selectable">pip</button>
         
         <div class="clear"></div>
       
@@ -69,10 +71,10 @@
       
       </div>
     
-      <div class="tool-bar-bottom">
+      <div class="tool-bar tool-bar-bottom">
         <div class="left">
-          <button {{action "zoomIn" target="App.paintController"}} class="zoomin zoom"></button>
-          <button {{action "zoomOut" target="App.paintController"}} class="zoomout zoom"></button>
+          <button {{action "zoomIn" target="App.paintController"}} class="zoomin"></button>
+          <button {{action "zoomOut" target="App.paintController"}} class="zoomout"></button>
           <button {{action "bgToggle" target="App.paintController"}} class="bgToggle"></button>
         </div>
         
@@ -83,10 +85,8 @@
           <span>px</span>
         </div>
         
-        <button {{action "pipetteTool" target="App.paintController"}} class="right pipette selectable">Pipette</button>
-      
         {{view ColorPickerView class = "right"}}
-      
+        
         <div class="clear"></div>
       </div>
     
