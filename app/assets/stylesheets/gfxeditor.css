@@ -10,7 +10,7 @@
 
 #paint-wrapper .tool-bar {
   background: #555;
-  overflow: hidden;
+  /*overflow: hidden;*/
   height: 30px;
   color: #DDD;
 }
@@ -113,7 +113,7 @@
 }
 
 #paint-wrapper #area-wrapper {
-  overflow: hidden;
+  /*overflow: hidden;*/
   border: 1px solid #555;
 }
 
@@ -284,6 +284,7 @@
   height : 26px;
   border : 1px solid #333;
   margin-right: 5px;
+  position:relative;
 }
 
 #paint-wrapper #colorpicker #colortext {
@@ -301,15 +302,22 @@
 }
 
 #lastColorsWrapper {
-  float:left;width:45px;
+  background:#555555;
+  position:absolute; top:31px;
+  padding:4px;
 }
 
 #lastColorList {
-  margin:0;padding:2px 0 0 0;list-style-type:none;
+  width:98px;
+  margin:0; 
+  list-style-type:none;
 }
 
 #lastColorList li.lasColorItem {
-  height:10px;width:10px;background-color:#000000;float:left;margin:2px 5px 0 0;padding:0;
+  height:13px;width:13px; 
+  background-color:#000000;
+  float:left; margin:2px 4px 0 0;
+  padding:0;
 }
 
 #paint-size-wrapper { 
