@@ -17,12 +17,14 @@ var ColorPickerView = Ember.View.extend({
   isSelecting : false,
   
   didInsertElement : function() {
+
+    this.lastColors = [];
     
     var canvas = this.$( '#colorselect' )[0],
       ctx = canvas.getContext( '2d' ),
       self = this,
       width = this.width,
-      height = this.height,
+      height = this.height,      
       grd;
     
     canvas.width = width;
