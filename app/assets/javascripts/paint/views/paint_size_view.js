@@ -74,7 +74,7 @@ var PaintSizeView = Ember.View.extend({
     var type = this.$(".type-selected").attr('data-type'),
       w, h, size;
 
-    if(type  === 'object' ) {
+    if ( type === 'object' ) {
 
       size = $('#canvas-size');
       w = size.width();

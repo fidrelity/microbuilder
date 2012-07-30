@@ -9,16 +9,13 @@
 }
 
 #paint-wrapper .tool-bar {
-  background: #CCC;
+  background: #555;
   overflow: hidden;
   height: 30px;
-  margin-bottom: 10px;
+  color: #DDD;
 }
 
-#paint-wrapper .tool-bar-bottom {
-  position: relative;
-  bottom: 0px;
-}
+#paint-wrapper .tool-bar-bottom {}
 
 #paint-wrapper .tool-bar button {
   min-width:30px;
@@ -27,6 +24,7 @@
   border:none;
   margin:0 1px 0 0;
   float:left;
+  color: #DDD;
 }
 
 #paint-wrapper .tool-bar button.activeTool {
@@ -85,28 +83,20 @@
   background:url('/assets/undo_icon.png');
 }
 
-.zoom {
-  min-width:30px;
-  height:30px;
-  background:top left no-repeat;
-  border:none;
-  float:left;
-  margin:0 1px 0 0;
+#paint-wrapper .tool-bar button.pipette {}
+
+#paint-wrapper .tool-bar button.zoomin {
+  background-image: url('/assets/zoom_in.png') !important;
 }
 
-.zoomin {
-  background:url('/assets/zoom_in.png');
-}
-
-.zoomout {
-  background:url('/assets/zoom_out.png');
+#paint-wrapper .tool-bar button.zoomout {
+  background-image: url('/assets/zoom_out.png') !important;
 }
 
 #paint-wrapper #sizeWrapper {
   overflow: hidden;
   margin: 0 1px;
   padding: 7px 10px 3px;
-  border: 1px solid #CCC;
 }
 
 #paint-wrapper #sizeWrapper #sizeSlider {
@@ -124,36 +114,57 @@
 
 #paint-wrapper #area-wrapper {
   overflow: hidden;
-  height: 100%;
-  border: 1px solid green;
+  border: 1px solid #555;
 }
 
 #paint-wrapper #area-wrapper #zoom-canvas-area {
   height: 430px;
   overflow: auto;
+  background: #EEE;
+  box-shadow: inset 0px 0px 12px 0px #AAA;
 }
 
 #paint-wrapper #area-wrapper #zoom-canvas-area #paint-area {
   margin: auto;
   position: relative;
   top: 50%;
+  box-shadow: 0px 0px 12px 0px #AAA;
 }
 
 #paint-wrapper #sprites-area {
-  border: 1px solid red;
-  height: 100%;
+  border: 1px solid #555;
   margin-left: 10px;
 }
 
-#paint-wrapper #sprites-area-scroll {      
+#paint-wrapper #sprites-area-scroll {
   height: 430px;
+  padding: 0 10px;
   overflow: auto;
+  background: #EEE;
+  box-shadow: inset 0px 0px 12px 0px #AAA;
+}
+
+
+#paint-wrapper #sprites-area-scroll .canvas {
+  background: url("bg_transparent.png");
+  margin: 10px auto;
+  border: 1px dashed #000;
+  display: block;
+  box-shadow: 0px 0px 12px 0px #AAA;
+}
+
+#paint-wrapper #sprites-area-scroll .canvas-selected { 
+  border: 1px solid #000;
+}
+
+#paint-wrapper #sprites-area-scroll .active-sprite { 
+  border: 1px solid #000;
 }
 
 .bgToggle {
   min-width:30px;
   height:30px;
-  border:1px solid #666;
+  border:1px solid #FFF !important;
 }
 
 
@@ -172,37 +183,28 @@
  -ms-interpolation-mode: nearest-neighbor;   // IE
 }
 
-.canvas {
-  background: url("bg_transparent.png");
-  margin: 5px;
-  display: block;
-}
-
 .canvas-over  { position:absolute; background: rgba(255, 255, 255, 0.9); }
-.canvas-selected { border:1px solid #4096EE;}
 
 #canvas-template, #canvas-merged { display:none; }
 #canvas-temp { display:none; z-index:999; position:absolute; background:none;pointer-events:none;border:1px solid #000}
 
 .bgBlack {
-  background-image:none;
-  background-color:#000000;
+  background-image:none !important;
+  background-color:#000000 !important;
 }
 
 .bgWhite, #zoomCanvas .bgWhite {
-  background-image:none;
-  background-color:#FFFFFF;
+  background-image:none !important;
+  background-color:#FFFFFF !important;
 }
 
 .bgTransparent {
-  background:url(bg_transparent.png);  
+  background:url(bg_transparent.png) !important;
 }
 
 /* Tools */
 
 #stopButton { display:none; }
-
-.active-sprite { border:1px solid #000000; }
 
 /* Game guide */
 #slide-container, #guide-slide-container {
