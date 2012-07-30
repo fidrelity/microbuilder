@@ -10,6 +10,8 @@ var ColorPickerView = Ember.View.extend({
   height : 26,
   
   down : false,
+
+  lastColorCounter : 0,
   
   didInsertElement : function() {
     
@@ -56,6 +58,8 @@ var ColorPickerView = Ember.View.extend({
     this.addObserver( 'color', function() {
       
       self.$( '#colorfield' ).css( 'background-color', self.color );
+
+      
       
     });
     
@@ -83,6 +87,20 @@ var ColorPickerView = Ember.View.extend({
       
     });
     
+  },
+
+
+  addLastUsedColor : function(_color) {    
+
+    var colorBuckets = this.$('#lastColorList').find("li")
+    var num = colorBuckets.length-1;    
+
+    this.lastColorCounter = this.lastColorCounter < num ? this.lastColorCounter + 1 : 0;
+
+    colorBuckets.eq( this.lastColorCounter ).css("background-color", _color);    
+
+    console.log( this.lastColorCounter, num, colorBuckets.eq( this.lastColorCounter ));
+
   },
   
   getHexColor : function( e, el ) {
