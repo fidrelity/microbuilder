@@ -13,6 +13,8 @@ var ColorPickerView = Ember.View.extend({
 
   lastColors : [],
   lastColorCounter : 0,
+
+  isSelecting : false,
   
   didInsertElement : function() {
     
@@ -58,7 +60,7 @@ var ColorPickerView = Ember.View.extend({
     
     this.addObserver( 'color', function() {
       
-      self.$( '#colorfield' ).css( 'background-color', self.color );      
+      self.$( '#colorfield' ).css( 'background-color', self.color );  
       
     });
     
@@ -90,7 +92,11 @@ var ColorPickerView = Ember.View.extend({
 
     this.$('.lasColorItem').click(function() {
 
-      self.set( 'color', self.lastColors[ $(this).index() ] );
+      var c = self.lastColors[ $(this).index() ];
+
+      var color = c ? c : "#000000";
+
+      self.set( 'color', color );      
 
     });
     
