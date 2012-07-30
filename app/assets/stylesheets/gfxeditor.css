@@ -300,6 +300,18 @@
   -ms-user-select: none;
 }
 
+#lastColorsWrapper {
+  float:left;width:45px;
+}
+
+#lastColorList {
+  margin:0;padding:2px 0 0 0;list-style-type:none;
+}
+
+#lastColorList li.lasColorItem {
+  height:10px;width:10px;background-color:#000000;float:left;margin:2px 5px 0 0;padding:0;
+}
+
 #paint-size-wrapper { 
   padding:40px 20px 40px 20px;
 }

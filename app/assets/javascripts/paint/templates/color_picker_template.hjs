@@ -1,16 +1,16 @@
 <div id="colorpicker">
 
-<!--  <div id="lastcolors" style="float:left;width:45px">
-    <ul id="lastColorList" style="margin:0;padding:0;list-style-type:none;">
-      <li style="height:10px;width:10px;background-color:#000000;float:left;margin:5px 5px 0 0;padding:0;"></li>
-      <li style="height:10px;width:10px;background-color:#000000;float:left;margin:5px 5px 0 0;padding:0;"></li>
-      <li style="height:10px;width:10px;background-color:#000000;float:left;margin:5px 5px 0 0;padding:0;"></li>
-      <li style="height:10px;width:10px;background-color:#000000;float:left;margin:5px 5px 0 0;padding:0;"></li>
-      <li style="height:10px;width:10px;background-color:#000000;float:left;margin:5px 5px 0 0;padding:0;"></li>
-      <li style="height:10px;width:10px;background-color:#000000;float:left;margin:5px 5px 0 0;padding:0;"></li>
+  <div id="lastColorsWrapper">
+    <ul id="lastColorList">
+      <li class="lasColorItem"></li>
+      <li class="lasColorItem"></li>
+      <li class="lasColorItem"></li>
+      <li class="lasColorItem"></li>
+      <li class="lasColorItem"></li>
+      <li class="lasColorItem"></li>
     </ul>
   </div>
--->
+
   <div id="colorfield" class="left"></div>
   
   {{view Ember.TextField valueBinding="color" id="colortext" class="left"}}
