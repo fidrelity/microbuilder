@@ -88,15 +88,15 @@ var ColorPickerView = Ember.View.extend({
   getHexColor : function( e, el ) {
     
     var offset = $( el ).offset(),
-      i = this.width * 4 * ( e.pageY - offset.top ) + 4 * ( e.pageX - offset.left ),
+      i = this.width * 4 * Math.floor( e.pageY - offset.top ) + 4 * Math.floor( e.pageX - offset.left ),
       data = this.imageData;
-      
+    
     if ( i >= this.width * this.height * 4 ) {
       
       return '#000000';
       
     }
-      
+    
     return rgbToHex( data[i], data[i+1], data[i+2] );
     
   }
