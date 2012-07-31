@@ -10,14 +10,21 @@ var ColorPickerView = Ember.View.extend({
   height : 26,
   
   down : false,
+
+  lastColors : [],
+  lastColorCounter : 0,
+
+  isSelecting : false,
   
   didInsertElement : function() {
+
+    this.lastColors = [];
     
     var canvas = this.$( '#colorselect' )[0],
       ctx = canvas.getContext( '2d' ),
       self = this,
       width = this.width,
-      height = this.height,
+      height = this.height,      
       grd;
     
     canvas.width = width;
@@ -55,7 +62,7 @@ var ColorPickerView = Ember.View.extend({
     
     this.addObserver( 'color', function() {
       
-      self.$( '#colorfield' ).css( 'background-color', self.color );
+      self.$( '#colorfield' ).css( 'background-color', self.color );  
       
     });
     
@@ -80,9 +87,37 @@ var ColorPickerView = Ember.View.extend({
     this.$( '#colorselect' ).mouseup( function( e ) {
       
       self.set( 'down', false );
+
+      self.addLastUsedColor(self.color);
       
     });
+
+    this.$('.lasColorItem').click(function() {
+
+      var c = self.lastColors[ $(this).index() ];
+
+      var color = c ? c : "#000000";
+
+      self.set( 'color', color );      
+
+    });
     
+  },
+
+
+  addLastUsedColor : function(_color) {    
+
+    var colorBuckets = this.$('#lastColorList').find("li");
+    var numberOfBuckets = colorBuckets.last().index();     
+
+    this.lastColors.push(_color);
+
+    colorBuckets.eq( this.lastColorCounter ).css("background-color", _color);
+
+    this.lastColorCounter++;
+
+    this.lastColorCounter = this.lastColorCounter <= numberOfBuckets ? this.lastColorCounter : 0;
+
   },
   
   getHexColor : function( e, el ) {
