@@ -1,18 +1,55 @@
 var PaintView = Ember.View.extend({
   
-  templateName: 'paint/templates/paint_template',
-  canvas: null,
+  templateName : 'paint/templates/paint_template',
+  
+  widthBinding : 'App.paintController.width',
+  heightBinding : 'App.paintController.height',
+  
+  zoomBinding : 'App.paintController.zoom',
+  
+  screenCanvas : null,
+  toolCanvas : null,
+  
+  mouseDown : false,
   
   didInsertElement : function() {
-
-    App.paintController.initView();
-
-    App.toolBoxController.setCurrentTool(App.pencilTool);
-    App.drawTool.initAfter();
-    App.fillTool.initAfter();
-    App.selectTool.initAfter();
     
-    App.paintController.centerCanvas();
+    var area = this.$( '#zoom-canvas-area' ),
+      self = this;
+    
+    this.set( 'screenCanvas', this.$( '#screenCanvas' )[0] );
+    this.set( 'toolCanvas', this.$( '#toolCanvas' )[0] );
+    
+    App.paintController.initView( 
+      this.screenCanvas.getContext( '2d' ), 
+      this.toolCanvas.getContext( '2d' )
+    );
+    
+    area.mousedown( function( e ) {
+      
+      App.paintController.mousedown( self.getMouse( e ) );
+      
+      self.set( 'active', true );
+      
+    });
+    
+    area.mousemove( function( e ) {
+      
+      if ( self.active ) {
+        
+        App.paintController.mousemove( self.getMouse( e ) );
+        
+      }
+      
+    });
+    
+    area.mouseup( function( e ) {
+      
+      App.paintController.mouseup( self.getMouse( e ) );
+      
+      self.set( 'active', false );
+      
+    });
     
     $('.pencil').addClass('activeTool');
     
@@ -22,13 +59,38 @@ var PaintView = Ember.View.extend({
       $(this).addClass('activeTool');
       
     });
-
+    
+    this.addObserver( 'zoom', bind( this, this.resize ) );
+    
+    this.resize();
+    
   },
-
+  
   showTypeSelection : function() {
-
+    
     $("#paint-wrapper").hide();
     $("#paint-size-wrapper").show();
+    
+  },
+  
+  resize : function() {
+    
+    this.screenCanvas.width = this.toolCanvas.width = this.width * this.zoom;
+    this.screenCanvas.height = this.toolCanvas.height = this.height * this.zoom;
+    
+    this.$( '#paint-area' ).css({ 
+      width: this.width * this.zoom, 
+      height: this.height * this.zoom,
+      'margin-top': -this.height * this.zoom / 2
+    });
+    
+  },
+  
+  getMouse : function( e ) {
+    
+    var offset = $( this.toolCanvas ).offset();
+    
+    return { x : Math.floor( e.pageX - offset.left ), y : Math.floor( e.pageY - offset.top ) };
     
   }
 

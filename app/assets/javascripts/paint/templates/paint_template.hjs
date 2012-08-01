@@ -13,12 +13,12 @@
         <input type="checkbox" value="1" id="replayLoop"> Loop
       </div>
     
-      <div id="sprites-area-scroll"></div>
+      {{view SpritesView id = "sprites-area-scroll"}}
     
       <div class="tool-bar tool-bar-bottom">
         <button {{action "addSprite" target="App.paintController"}}>add</button>
         <button {{action "copySprite" target="App.paintController"}}>duplicate</button>
-        <button {{action "removeCurrent" target="App.paintController"}}>remove</button>
+        <button {{action "removeSprite" target="App.paintController"}}>remove</button>
       </div>
     
     </div>
@@ -59,14 +59,12 @@
     
       <div id="zoom-canvas-area">
       
-        <div id="paint-area">
+        <div id="paint-area" class="bgTransparent">
           
-          <div id="selectToolDiv"></div>
+          <canvas id="screenCanvas"></canvas>
           
-          <canvas id="zoomCanvas" class="bgTransparent" width="128" height="128"></canvas>      
+          <canvas id="toolCanvas"></canvas>
           
-          <canvas id="canvas-temp" width="64" height="64"></canvas>
-        
         </div>
       
       </div>

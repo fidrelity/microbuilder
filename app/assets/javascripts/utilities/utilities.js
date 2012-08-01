@@ -133,7 +133,7 @@ function rgbToHex( r, g, b ) {
 
 extend( CanvasRenderingContext2D.prototype, {
   
-  line : function( x, y, x2, y2 ) {
+  drawLine : function( x, y, x2, y2 ) {
     
     this.beginPath();
     this.moveTo( x, y );
@@ -211,7 +211,7 @@ extend( CanvasRenderingContext2D.prototype, {
     
     s = s || 1;
     
-    this.line(x, y, x2, y2);        
+    this.drawLine(x, y, x2, y2);
     
     this.save();
     this.translate( x2, y2 );

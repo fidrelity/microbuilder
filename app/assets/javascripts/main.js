@@ -37,10 +37,11 @@ function editor_main( data ) {
 function paint_main() {
   
   window.App = Ember.Application.create();
-
+  
   App.paintController = PaintController.create();
-  App.toolBoxController = ToolBoxController.create();
-  App.spritePlayer = SpritePlayerController.create();
+  
+  // App.toolBoxController = ToolBoxController.create();
+  // App.spritePlayer = SpritePlayerController.create();
   
   App.pencilTool = PencilToolModel.create();
   App.drawTool = DrawToolModel.create();

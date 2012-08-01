@@ -128,7 +128,16 @@
   margin: auto;
   position: relative;
   top: 50%;
+  border: 1px solid #000000;
   box-shadow: 0px 0px 12px 0px #AAA;
+}
+
+#paint-wrapper #area-wrapper #zoom-canvas-area #paint-area #screenCanvas, 
+#paint-wrapper #area-wrapper #zoom-canvas-area #paint-area #toolCanvas {
+  cursor: crosshair;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 #paint-wrapper #sprites-area {
@@ -145,7 +154,7 @@
 }
 
 
-#paint-wrapper #sprites-area-scroll .canvas {
+#paint-wrapper #sprites-area-scroll .spriteView {
   background: url("bg_transparent.png");
   margin: 10px auto;
   border: 1px dashed #000;
@@ -153,11 +162,7 @@
   box-shadow: 0px 0px 12px 0px #AAA;
 }
 
-#paint-wrapper #sprites-area-scroll .canvas-selected { 
-  border: 1px solid #000;
-}
-
-#paint-wrapper #sprites-area-scroll .active-sprite { 
+#paint-wrapper #sprites-area-scroll .selected { 
   border: 1px solid #000;
 }
 

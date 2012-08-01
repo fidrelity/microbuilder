@@ -11,107 +11,68 @@
 
 */
 var PaintController =  Ember.ArrayController.extend({
-
-  graphic : null,
-
-  //
-  content : [],         // contains sprite models
-  mode : null,          // [ 'graphic', 'background' ]
-  tabState : 'paint',   // Different views [ 'paint', 'setSize' ]
-
-  //
-  spriteSize : null,    // Object {width: , height: }
-  currentSprite : null, // type of spriteModel
-  spriteWrapper : 'sprites-area-scroll', // 'sprites-area',
-  spriteCounter : 0,    // spriteModel.index
-  LIMIT : 8,            // Limit of sprites
-  type : null,          // background or object
-  isBackground : false,
-  
-  //
-  strokeSize : 2,          // init stroke size (thickness for draw tools)
   
   color : null,
   zoom : 1,
   
   width : 0,
   height : 0,
-
+  
+  content : [],
+  sprite : null,
+  tool : null,
+  
+  isBackground : false,
+  
+  screenCtx : null,
+  toolCtx : null,
+  
   init : function() {
-
-    this.spriteSize = { width: 64, height: 64 };
-    this.canvasModifier = CanvasModifierModel.create();
-
-  },
-
-  // Loaded when type of sprite is selected
-  initType : function(_type, _width, _height) {
-
-    this.type = _type || 'object';
-
-    this.setSpriteSize({ width: _width, height: _height });
     
-    this.width = _width;
-    this.height = _height;
-
-  },
-
-  // Called when Paint_View init (after dom ready)
-  initView : function() {
-
-    this.set( 'color', '#000000' );
-
-    this.isBackground = this.type === 'background' ? true : false; 
-
-    // Create and init ZoomModel
-    this.zoomModel = ZoomCanvasModel.create({
-
-      width: this.spriteSize.width,
-      height: this.spriteSize.height,
-      isBackground: this.isBackground
-
-    });
-    this.zoomModel.initDomReady();
-
-    //
-    this.tempCanvas = TempCanvasModel.create({
-      width: this.spriteSize.width,
-      height: this.spriteSize.height
-    });
-    this.tempCanvas.initDomReady();
+    this.addSprite();
     
-    //
-    this.handleType();
-
-    this.add();
-    this.finalCanvas = $('#canvas-merged');
-    this.initEvents();
-
-  },
-
-  // React if type is background or sprite
-  handleType : function() {
-
-    var areaWrapper = $('#area-wrapper');
+    this.addObserver( 'color', bind( this, this.updateColor ) );
     
-    this.zoomModel.handleType();
-
-    // *** Type is background ***
-    if(this.type === 'background') {
-
-      this.spriteSize.width = this.zoomModel.width;
-      this.spriteSize.height = this.zoomModel.height;
+  },
+  
+  initType : function( _isBackground, _width, _height ) {
+    
+    this.setProperties({
       
-      // Hide unnecessary buttons and divs
-      App.spritePlayer.hide();
-
-      $('#sprites-area').hide();
-      $('.bgToggle').remove();
-    }
-
+      isBackground : _isBackground,
+      width : _width,
+      height : _height
+      
+    });
+    
   },
-
-  // Init DOM events
+  
+  initView : function( _screenCtx, _toolCtx ) {
+    
+    this.set( 'screenCtx', _screenCtx );
+    this.set( 'toolCtx', _toolCtx );
+    
+    if ( this.isBackground ) {
+      
+      $('#sprites-area').hide();
+      $('.bgToggle').hide();
+      
+    }
+    
+    this.set( 'color', '#000000' );
+    this.set( 'tool', App.pencilTool );
+    
+  },
+  
+  updateColor : function() {
+    
+    var sCtx = this.screenCtx,
+      tCtx = this.toolCtx;
+    
+    sCtx.fillStyle = tCtx.fillStyle = sCtx.strokeStyle = tCtx.fillStyle = this.color;
+    
+  },
+  
   initEvents : function() {
     
     // Key Events
@@ -329,31 +290,27 @@ var PaintController =  Ember.ArrayController.extend({
     var options = {sprite: this.getCurrentSpriteModel()};
     this.getCurrentTool().click(options);
   },
-
-  mousedown : function(e) { 
-    var coord = this.getMouseCoordinates(e);
-    var options = {x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel()};
-    this.getCurrentTool().mousedown(options);
+  
+  mousedown : function( mouse ) {
+    
+    this.tool.mousedown( mouse, this.screenCtx, this.toolCtx, null );
+    
   },
-
-  mousemove : function(e) {    
-    var coord = this.getMouseCoordinates(e);
-    var options = {x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel()};
-    this.getCurrentTool().mousemove(options);
+  
+  mousemove : function( mouse ) {
+    
+    this.tool.mousemove( mouse, this.screenCtx, this.toolCtx, null );
+    
   },
-
-  mouseup : function(e) {
-    var coord = this.getMouseCoordinates(e);
-    var options = {x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel()};
-    this.getCurrentTool().mouseup(options);
+  
+  mouseup : function( mouse ) {
+    
+    this.tool.mouseup( mouse, this.screenCtx, this.toolCtx, null );
+    
   },
-
-  // ---------------------------------------  
-  // SpriteModel
-
-  // Add new spriteModel
+  
   add : function(copy) {
-
+    
     if(this.content.length >= this.LIMIT) return false;
     var copyData = copy ? this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height) : null;
     
@@ -416,45 +373,29 @@ var PaintController =  Ember.ArrayController.extend({
     }
 
   },
-
-  // ---------------------------------------
-  // Getter And Setter
-  setCurrentSpriteModel : function(spriteModel) {
-
-    if(!spriteModel || typeof(spriteModel) !== 'object') return false;
-
-    this.set('currentSprite', spriteModel);
-    spriteModel.highlight();
-
-    App.pixelDrawer.setCanvasContext(this.zoomModel.canvas);
-    this.zoomModel.updateZoom(spriteModel, true);
+  
+  setSpriteModel : function( _sprite ) {
+    
+    this.set( 'sprite', _sprite );
     
   },
-
-  getCurrentSpriteModel : function() {
-
-    return this.get('currentSprite');
-
+  
+  getSpriteModel : function( i ) {
+    
+    if ( typeof i === 'number' && i < this.content.length ) {
+      
+      return this.content[i];
+      
+    }
+    
+    return this.sprite;
+    
   },
-
-  getCurrentSpriteModelByIndex : function(_index) {
-
-    for (var i = 0; i < this.content.length; i++) {
-
-      var spriteModel = this.content[i];
-      if(spriteModel.index === _index)
-        return spriteModel;
-
-    };
-
-    return null;
-
-  },
-
-  getCurrentTool : function() {
-
-    return App.toolBoxController.getCurrentTool();
-
+  
+  getTool : function() {
+    
+    return this.tool;
+    
   },
  
   setStrokeSize : function(_size) {
@@ -466,12 +407,6 @@ var PaintController =  Ember.ArrayController.extend({
   getStrokeSize : function() {
 
     return this.strokeSize;
-
-  },
-
-  setSpriteSize : function(_obj) {
-
-    this.spriteSize = _obj;
 
   },
 
@@ -497,23 +432,6 @@ var PaintController =  Ember.ArrayController.extend({
 
     this.tempCanvas.hide();
     App.pixelDrawer.setCanvasContext(this.zoomModel.canvas);
-
-  },
-  
-  // ---------------------------------------
-  // Helper
-
-  getMouseCoordinates : function(e) {
-
-    var zoomCanvas = this.zoomModel.domObj; //$('#zoomCanvas');
-      
-    var x = e.pageX - zoomCanvas.offset().left;
-    var y = e.pageY - zoomCanvas.offset().top;
- 
-    x = Math.floor(x / this.zoomModel.zoom);
-    y = Math.floor(y / this.zoomModel.zoom);
-
-    return {x: x, y: y};
 
   },
 
@@ -546,16 +464,6 @@ var PaintController =  Ember.ArrayController.extend({
     };
 
     reader.readAsDataURL(e.target.files[0]);
-  },
-  
-  centerCanvas : function() {
-    
-    $( '#paint-area' ).css({ 
-      width: this.width * this.zoomModel.zoom, 
-      height: this.height * this.zoomModel.zoom,
-      'margin-top': -this.height * this.zoomModel.zoom / 2
-    });
-    
   },
   
   setCurrentTool : function( tool ) {
@@ -698,13 +606,29 @@ var PaintController =  Ember.ArrayController.extend({
   
   addSprite : function() {
     
-    this.add();
+    if ( this.content.length < 8 ) {
+      
+      this.set( 'sprite', NewSpriteModel.create() );
+      this.content.addObject( this.sprite );
+      
+    }
     
   },
-
+  
   copySprite : function() {
     
-    this.add(true);
+    alert( 'TODO' );
+    
+  },
+  
+  removeSprite : function() {
+    
+    if ( this.content.length > 1 ) {
+    
+      this.content.removeObject( this.sprite );
+      this.set( 'sprite', this.content[0] );
+    
+    }
     
   },
   
@@ -715,21 +639,29 @@ var PaintController =  Ember.ArrayController.extend({
     
   },
   
+  bgToggle : function() {
+    
+    this.zoomModel.toogleZoomCanvasBg();
+    
+  },
+  
   zoomIn : function() {
     
-    this.zoomModel.zoomIn();
+    if ( this.zoom < 4 ) {
+      
+      this.set( 'zoom', this.zoom + 1 );
+      
+    }
     
   },
   
   zoomOut : function() {
     
-    this.zoomModel.zoomOut();
-    
-  },
-
-  bgToggle : function() {
-    
-    this.zoomModel.toogleZoomCanvasBg();
+    if ( this.zoom > 1 ) {
+      
+      this.set( 'zoom', this.zoom - 1 );
+      
+    }
     
   }
 

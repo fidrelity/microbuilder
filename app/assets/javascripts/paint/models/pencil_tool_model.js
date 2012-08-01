@@ -1,70 +1,24 @@
-var PencilToolModel = Ember.Object.extend({
+//= require ./tool_model
 
-  isSelectable : true,
+var PencilToolModel = ToolModel.extend({
+
   oldX : 0,
   oldY : 0,
-  isActive : false,
-  isErasing : false,
-  sprite : null,
   
-  init : function () {},
+  mousedown : function( _mouse, _screenCtx, _toolCtx, _size ) {
+    
+    this.oldX = _mouse.x;
+    this.oldY = _mouse.y;
+    
+  },
   
-  click : function() {
-
-    App.paintController.hideTempCanvas();
-
-  },
-
-  mousedown : function(_options) {
-
-    this.isActive = true;
-    this.sprite = _options.sprite;
-
-    this.draw(_options.x, _options.y, _options.x, _options.y);
-    //
-    this.oldX = _options.x;
-    this.oldY = _options.y;
-
-  },
-
-  mousemove : function(_options) {
-
-    if(!this.isActive) return false;
-    this.draw(this.oldX, this.oldY, _options.x, _options.y);
-
-    this.oldX = _options.x;
-    this.oldY = _options.y;
-
-  },
-
-  mouseup : function(_options) {
-
-    if(!this.isActive) return false;
-    this.isActive = false;
-    App.paintController.drawToSprite();
-
-  },
-
-  draw : function(_x, _y, _endX, _endY) {
-
-    // Eraser    
-    if(this.get('isErasing') == true) {
-      var centered = App.paintController.getStrokeSize() > 4 ? App.paintController.getStrokeSize() / 2 : 0;
-      App.paintController.erase(_x, _y);
-
-    // Paint
-    } else {
-      App.pixelDrawer.popImageData();
-      App.pixelDrawer.drawLine(_x, _y, _endX, _endY, App.paintController.getColor(), App.paintController.getStrokeSize());
-      App.pixelDrawer.pushImageData();
-    }   
-
-  },
-
-  setEraser : function(_state) {
-
-    this.set('isErasing', _state);
-
+  mousemove : function( _mouse, _screenCtx, _toolCtx, _size ) {
+    
+    _screenCtx.drawLine( _mouse.x, _mouse.y, this.oldX, this.oldY );
+    
+    this.oldX = _mouse.x;
+    this.oldY = _mouse.y;
+    
   }
 
 });
