@@ -1,4 +1,4 @@
-var MoveAction = function( type, gameObject, speed ) {
+var MoveAction = function( type, gameObject, speed, rotateInDirection ) {
   
   this.gameObject = gameObject;
   this.speed = speed;
@@ -9,14 +9,23 @@ var MoveAction = function( type, gameObject, speed ) {
   
   this.random = false;
   this.direction = null;
-  
+
+  this.path = [];
+  this.rotateToTarget = rotateInDirection || false;
+
+  this.gameObject.movement.rotateToTarget = this.rotateToTarget; 
+
   if ( type === 'moveIn' ) {
     
     this.execute = this.executeMoveIn;
     
-  } else if ( type === 'moveTo' ) {
+  } else if ( type === 'moveTo') {
     
     this.execute = this.executeMoveTo;
+    
+  } else if (type == "moveAlongPath" ) {
+
+    this.execute = this.executePath;
     
   } else if ( type === 'jumpTo' ) {
     
@@ -47,10 +56,16 @@ MoveAction.prototype = {
   executeMoveTo : function() {
     
     this.gameObject.movement.setTarget( this.target, this.offset, this.speed );
-    
+
+  },
+
+  executePath : function() {
+
+    this.gameObject.movement.followPath( this.path, this.mode, this.speed );
+
   },
   
-  executeMoveIn : function() {
+  executeMoveIn : function() { 
     
     var dir;
     
@@ -203,6 +218,7 @@ var LoseAction = {
   
 };
 
+
 var EndAction = {
   
   execute : function( game ) {
@@ -214,6 +230,46 @@ var EndAction = {
     }
     
     game.player.fsm.end();
+    
+  }
+  
+};
+
+var CounterAction = function( type, count, gameObject ) {
+
+  this.gameObject = gameObject;
+  this.count = count;
+  this.type = type;
+  
+  this.execute = this[type]; // up, down, set
+  
+  if ( !this[type] ) {
+    
+    throw "Counter type is unknown: " + type;
+    
+  }
+
+};
+
+CounterAction.prototype = {
+  
+  execute : null,
+  
+  up : function() {
+    
+    this.gameObject.counter++;
+    
+  },
+  
+  down : function() {
+    
+    this.gameObject.counter--;
+    
+  },
+  
+  set : function() {
+    
+    this.gameObject.counter = this.count;
     
   }
   

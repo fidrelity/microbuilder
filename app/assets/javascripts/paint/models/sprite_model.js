@@ -1,4 +1,5 @@
 var SpriteModel = Ember.Object.extend({
+  
   id : 0,
   index : 0,
   width : 0,
@@ -16,20 +17,23 @@ var SpriteModel = Ember.Object.extend({
   init : function() {    
     this.states = [];
     this.id = "sprite" + this.index;
-    //    
+    //
     this.appendToWrapper();
     //
   },
 
   initView : function() {
+
     this.canvas = document.getElementById(this.id);
     this.context = this.canvas.getContext("2d");
 
     if(this.imgData)
       this.context.putImageData(this.imgData, 0, 0);
+
   },
 
   appendToWrapper : function() {
+
     var canvasElement = document.createElement("canvas");
     // Set Attributes
     var canvasId = document.createAttribute("id");
@@ -50,49 +54,73 @@ var SpriteModel = Ember.Object.extend({
     canvasElement.setAttributeNode(dataIndex);
     //
     document.getElementById(this.wrapper).appendChild(canvasElement);
+
   },
 
   highlight : function() {
+
     $('.canvas').removeClass("active-sprite");
     $("#" + this.id).addClass("active-sprite");
+
   },
 
   reset : function() {
+
     this.states = [];
     this.clear();
+
   },
 
   clear : function() {
+
     this.canvas.width = this.canvas.width;
+
   },
 
-  erase : function(_x, _y, _size) {
-    this.context.clearRect(_x, _y, _size, _size);
-  },
+  erase : function(_x, _y, _w, _h) {
 
-  flipV: function() {
-    this.context.translate(-1,1);
-  },
+    var h = _h || _w;
+    this.context.clearRect(_x, _y, _w, h);
 
-  flipH: function() {
-    this.context.translate(1,-1);
   },
 
   pushState : function() {
+
     if(this.states.length > this.stateLimit) {
       this.states.splice(0,1);
     }
     
     var imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
     this.states.push(imageData);
+
   },
 
   popState : function() {
+
     if(!this.states.length) { this.states = []; return false; }
 
     if(this.states.length > 1) this.states.pop();
     var imageData = this.states[this.states.length - 1];
     this.context.putImageData(imageData, 0, 0);
         
+  },
+
+  drawTo : function(canvas) {
+
+    var img_data = canvas.toDataURL("image/png");
+    var w = this.width;
+    var h = this.height;
+    
+    var img = new Image();
+    img.src = img_data;
+    img.width = w;
+    img.height = h;
+
+    var that = this;
+    
+    img.onload = function() {
+      that.context.drawImage(img, 0, 0, w, h);
+      that.pushState();
+    };
   }
 });

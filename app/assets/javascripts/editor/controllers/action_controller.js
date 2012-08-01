@@ -19,16 +19,16 @@ var ActionController = Ember.Object.extend({
     
     'jumpToLocation', 'jumpToObject', 'jumpToArea', // 'jumpToClick',
     
-    'moveRoam', 'moveSwap', 'moveStop',
+    'moveRoam', 'moveSwap', 'moveStop', 'moveAlongPath',
     
     'artToFrame', 'artPlay', 'artStop', 'artChange',
-    
-    // 'counterSet', 'counterUp', 'counterDown'
-    
+       
     'gameWin', 'gameLose', 'gameEnd',
+
+    'counterSet', 'counterUp', 'counterDown'
     
   ],
-  
+   
   triggerIDs : [
   
     'clickSelf', 'clickObject', 'clickArea', // 'clickStage',
@@ -41,9 +41,9 @@ var ActionController = Ember.Object.extend({
     // 'artHasFrame', 'artGetsFrame',
     // 'artHasGraphic', 'artGetsGraphic',
     
-    // 'counterEqualsNumber', 'counterEqualsObject',
-    // 'counterGreaterNumber', 'counterGreaterObject',
-    // 'counterSmallerNumber', 'counterSmallerObject',
+    'counterEqualsNumber', 'counterEqualsObject',
+    'counterGreaterNumber', 'counterGreaterObject',
+    'counterSmallerNumber', 'counterSmallerObject',
     
     'gameIsWon', 'gameWasWon',
     'gameIsLost', 'gameWasLost',
@@ -81,7 +81,7 @@ var ActionController = Ember.Object.extend({
     this.set( 'actionOption', ButtonOption.create({ 
       name: 'action', 
       question: 'Select the type of action',
-      buttons: ['move', 'art', 'game'], // 'counter'],
+      buttons: ['move', 'art', 'counter', 'game'],
       
       decisions: [
         
@@ -90,7 +90,7 @@ var ActionController = Ember.Object.extend({
         ButtonOption.create({ 
           name: 'move', 
           question: 'What type of movement?',
-          buttons: ['directional', 'move to', 'jump to', 'roam', 'swap', 'stop'],
+          buttons: ['directional', 'move to', 'jump to', 'roam', 'swap', 'follow path', 'stop'],
           
           decisions: [
             
@@ -110,6 +110,7 @@ var ActionController = Ember.Object.extend({
                   child: SpeedOption.create({ 
                     name: 'moveInDirectionSpeed',
                     question: 'Set the speed of the movement',
+                    hasRotateToCheckbox: true,
                     child: SaveOption.create({ choiceID: 'moveInDirection' })
                   })
                 }),
@@ -117,6 +118,7 @@ var ActionController = Ember.Object.extend({
                 SpeedOption.create({ 
                   name: 'moveInRandomSpeed',
                   question: 'Set the speed of the movement',
+                  hasRotateToCheckbox: true,
                   child: SaveOption.create({ choiceID: 'moveInRandom' })
                 }),
                 
@@ -127,6 +129,7 @@ var ActionController = Ember.Object.extend({
                   child: SpeedOption.create({ 
                     name: 'moveInLocationSpeed',
                     question: 'Set the speed of the movement',
+                    hasRotateToCheckbox: true,
                     child: SaveOption.create({ choiceID: 'moveInLocation' })
                   })
                 }),
@@ -161,6 +164,7 @@ var ActionController = Ember.Object.extend({
                   child: SpeedOption.create({ 
                     name: 'moveToLocationSpeed',
                     question: 'Set the speed of the movement',
+                    hasRotateToCheckbox: true,
                     child: SaveOption.create({ choiceID: 'moveToLocation' })
                   })
                 }),
@@ -175,7 +179,7 @@ var ActionController = Ember.Object.extend({
                     
                     child: SpeedOption.create({ 
                       name: 'moveToObjectSpeed',
-                      question: 'Set the speed of the movement',
+                      question: 'Set the speed of the movement',                      
                       child: SaveOption.create({ choiceID: 'moveToObject' })
                     })
                   })
@@ -237,7 +241,8 @@ var ActionController = Ember.Object.extend({
                   child: SaveOption.create({ choiceID: 'moveRoam' })
                 })
               })
-            }),
+            }), 
+
             
             // swap
             
@@ -246,11 +251,34 @@ var ActionController = Ember.Object.extend({
               question: 'Choose the object to swap position',
               decision: SaveOption.create({ choiceID: 'moveSwap' })
             }),
+
+
+            // moveAlongPath            
+
+            PathOption.create({
+              name: 'moveAlongPath', 
+              question: 'Click on the area to set the path, which the object should follow',
+
+              child: ModeOption.create({
+                  name: 'pathPlayMode',                
+                  question: 'Choose the play mode',                  
+                  buttons:  ['once', 'circular', 'ping-pong'],
+                  modes:  ['once', 'circular', 'ping-pong'],
+                  
+                  decision: SpeedOption.create({ 
+                    name: 'moveAlongPathSpeed', 
+                    question: 'Set the speed of the animation',
+                    hasRotateToCheckbox: true,
+                    child: SaveOption.create({ choiceID: 'moveAlongPath' })
+                  })
+              })
+
+            }),
             
             // stop
             
             SaveOption.create({ choiceID: 'moveStop' })
-            
+
           ]
         }),
         
@@ -266,27 +294,27 @@ var ActionController = Ember.Object.extend({
             // to frame
             
             FrameOption.create({
-              name: 'toFrame', 
+              name: 'toFrame',
               question : 'Choose the frame it should display',
               decision: SaveOption.create({ choiceID: 'artToFrame' })
             }),
             
             // play
             
-            FrameOption.create({ 
-              name: 'play', 
+            FrameOption.create({
+              name: 'play',
               question : 'Choose the start frame of the animation',
               
-              decision: FrameOption.create({ 
-                name: 'play2', 
-                mode: 'frame2', 
+              decision: FrameOption.create({
+                name: 'play2',
+                mode: 'frame2',
                 question : 'Choose the end frame of your animation',
                 
-                decision: ModeOption.create({ 
+                decision: ModeOption.create({
                   name: 'playMode',                   
                   question: 'Choose the animation mode',
                   
-                  buttons:  ['loop', 'ping-pong', 'once'], 
+                  buttons:  ['loop', 'ping-pong', 'once'],
                   modes:  ['loop', 'ping-pong', 'once'], 
                   
                   decision: SpeedOption.create({ 
@@ -312,6 +340,35 @@ var ActionController = Ember.Object.extend({
           ]
         }),
         
+        // counter
+        
+        ButtonOption.create({
+          name: 'counter',
+          question: 'Which actions should the counter perform?', 
+          buttons: ['count up', 'count down', 'set to value'],
+          
+          decisions: [
+            
+            // up
+            
+            SaveOption.create({ choiceID: 'counterUp' }),
+            
+            // down
+            
+            SaveOption.create({ choiceID: 'counterDown' }),
+            
+            // set
+            
+            CounterOption.create({
+              name: 'counterSet',
+              question: 'Set counter to which value?', 
+              
+              child: SaveOption.create({ choiceID: 'counterSet' })
+            })
+           
+          ]
+        }),
+        
         // game
         
         ButtonOption.create({ 
@@ -332,7 +389,7 @@ var ActionController = Ember.Object.extend({
     this.set( 'triggerOption', ButtonOption.create({ 
       name: 'trigger', 
       question: 'Select the type of trigger',
-      buttons: ['click', 'contact', 'time', 'game'], // 'art', 'number'],
+      buttons: ['click', 'contact', 'time', 'counter', 'game'], // 'art'],
       
       decisions: [
         
@@ -471,6 +528,76 @@ var ActionController = Ember.Object.extend({
           ]
         }),
         
+        // counter
+        
+        ButtonOption.create({
+          name: 'counter',
+          question: 'Compare objects number to what?',
+          buttons: ['a number', 'other object counter'],
+          
+          decisions: [
+          
+            // number
+            
+            ButtonOption.create({
+              name: 'counterCompareToNumber',
+              question: 'Objects number should be ...?',
+              buttons: ['greater', 'smaller', 'equal'],
+              
+              decisions: [
+                
+                // greater textfield
+                
+                CounterOption.create({
+                  name: 'counterGreaterNumber',
+                  question: 'Greater to which number?', 
+                  child: SaveOption.create({ choiceID: 'counterGreaterNumber' })                  
+                }),
+
+                // smaller textfield
+                
+                CounterOption.create({
+                  name: 'counterSmallerNumber',
+                  question: 'Smaller to which number?', 
+                  child: SaveOption.create({ choiceID: 'counterSmallerNumber' })                  
+                }),
+
+                // smaller textfield
+                
+                CounterOption.create({
+                  name: 'counterEqualsNumber',
+                  question: 'Equal to which number?', 
+                  child: SaveOption.create({ choiceID: 'counterEqualsNumber' })                  
+                })
+              ]
+            }),
+            
+             // Compare to other Object number
+            
+            ObjectOption.create({
+              name: 'counterCompareToObject',
+              question: 'Choose the object to compare with:',
+              
+              decision: 
+              
+                ButtonOption.create({
+                  name: 'counterCompareToObjectType',
+                  question: 'Trigger, when objects number is ...?',
+                  buttons: ['greater', 'smaller', 'equal'],
+                  
+                  decisions: [                  
+                    SaveOption.create({ choiceID: 'counterGreaterObject' }),
+                    SaveOption.create({ choiceID: 'counterSmallerObject' }),
+                    SaveOption.create({ choiceID: 'counterEqualsObject' })
+                  ]
+                })             
+                
+            }),
+            
+           ]
+          
+        }),
+        
         // game
         
         ButtonOption.create({
@@ -515,7 +642,8 @@ var ActionController = Ember.Object.extend({
             SaveOption.create({ choiceID: 'gameStart' })
             
           ]
-        }),
+          
+        })
         
       ]
     }));

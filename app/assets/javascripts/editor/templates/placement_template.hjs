@@ -1,0 +1,7 @@
+<canvas class="placement"></canvas>
+
+{{#if isPath}}
+  <div>
+    <button class="btn" {{ action "clearPath" }}><i class="icon-trash"></i>clear</button>
+  </div>
+{{/if}}

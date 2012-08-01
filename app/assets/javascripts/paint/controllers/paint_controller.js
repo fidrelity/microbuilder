@@ -1,160 +1,196 @@
 /*
   PaintController
+
+  Fix:
+    - Fix: SelectTool in BG
+    - Fix: FlipVH in BG
+    - Fix: Remove sprite
+
+  Refactor:
+    - Save image to savemodel    
+
 */
 var PaintController =  Ember.ArrayController.extend({
 
   graphic : null,
+
   //
   content : [],         // contains sprite models
   mode : null,          // [ 'graphic', 'background' ]
   tabState : 'paint',   // Different views [ 'paint', 'setSize' ]
+
   //
   spriteSize : null,    // Object {width: , height: }
   currentSprite : null, // type of spriteModel
   spriteWrapper : 'sprites-area-scroll', // 'sprites-area',
-  showMarker : false,   // deprecated
   spriteCounter : 0,    // spriteModel.index
   LIMIT : 8,            // Limit of sprites
   type : null,          // background or object
   isBackground : false,
+  
   //
-  bgCounter : 0,
-  color : "FF0000",    // init Paint color
-  size : 2,             // init Paint stroke size
-  zoom : 2,             // init Zoom size (background has 1)
-  //  
-  playDelay : 200,
-  currentFrameIndex : 0,
+  strokeSize : 2,          // init stroke size (thickness for draw tools)
+  
+  color : null,
+  zoom : 1,
+  
+  width : 0,
+  height : 0,
 
   init : function() {
-    this.spriteSize = {width: 64, height: 64};
-    this.pixelDrawer = new PixelDrawer();
+
+    this.spriteSize = { width: 64, height: 64 };
+    this.canvasModifier = CanvasModifierModel.create();
+
   },
 
+  // Loaded when type of sprite is selected
   initType : function(_type, _width, _height) {
+
     this.type = _type || 'object';
-    this.setSpriteSize({width: _width, height: _height});
+
+    this.setSpriteSize({ width: _width, height: _height });
+    
+    this.width = _width;
+    this.height = _height;
+
   },
 
   // Called when Paint_View init (after dom ready)
   initView : function() {
+
+    this.set( 'color', '#000000' );
+
     this.isBackground = this.type === 'background' ? true : false; 
 
-    this.zoomCanvas  = document.getElementById("zoomCanvas");
-    this.zoomContext = this.zoomCanvas.getContext("2d");
-    this.zoomCanvas.width   = this.spriteSize.width;
-    this.zoomCanvas.height  = this.spriteSize.height;
+    // Create and init ZoomModel
+    this.zoomModel = ZoomCanvasModel.create({
 
-    this.tempCanvas   = $('#canvas-temp');
-    this.tempContext  = this.tempCanvas[0].getContext("2d");
-    this.tempCanvas[0].width  = this.spriteSize.width;
-    this.tempCanvas[0].height = this.spriteSize.height;    
+      width: this.spriteSize.width,
+      height: this.spriteSize.height,
+      isBackground: this.isBackground
+
+    });
+    this.zoomModel.initDomReady();
+
+    //
+    this.tempCanvas = TempCanvasModel.create({
+      width: this.spriteSize.width,
+      height: this.spriteSize.height
+    });
+    this.tempCanvas.initDomReady();
     
+    //
     this.handleType();
 
     this.add();
     this.finalCanvas = $('#canvas-merged');
     this.initEvents();
+
   },
 
-  // React if type is background
+  // React if type is background or sprite
   handleType : function() {
 
     var areaWrapper = $('#area-wrapper');
     
+    this.zoomModel.handleType();
+
     // *** Type is background ***
     if(this.type === 'background') {
-      this.zoom = 1;   
-      
-      // Set Size of zoomCanvas wrapper
-      var _width = 700;
-      var _height = 420;
-      areaWrapper.find('#zoom-canvas-area')
-        .attr('width', _width).attr('height', _height)
-        .css({'max-width' : _width, 'max-height' : _height, 'width' : _width, 'height' : _height});
+
+      this.spriteSize.width = this.zoomModel.width;
+      this.spriteSize.height = this.zoomModel.height;
       
       // Hide unnecessary buttons and divs
       App.spritePlayer.hide();
 
-      areaWrapper.find('#sprites-area').hide();
-      $('#copySpriteButton').hide();
-      $('#clearSpritesButton').remove();
-      $('#removeSpriteButton').remove();
+      $('#sprites-area').hide();
       $('.bgToggle').remove();
     }
-
 
   },
 
   // Init DOM events
   initEvents : function() {
-    // OnMouse on zoomed canvas
-    $('#zoomCanvas').mousedown(function(e){
-      App.paintController.mousedown(e);
+    
+    // Key Events
+    $(document).keyup(function(e) {
+      if(e.keyCode === 17) this.isCtrl=true;
     });
 
-    $('#zoomCanvas').mousemove(function(e){
-      App.paintController.mousemove(e);
+    $(document).keydown(function(e) {
+
+        var that = App.paintController;
+
+        if(e.keyCode === 17) this.isCtrl = true;
+
+        // Ctrl + Z
+        if(e.keyCode === 90 && this.isCtrl) {
+          that.undo();
+        }        
+
+        // Escape
+        if(e.keyCode === 27) {
+          try {
+            that.getCurrentTool().reset();
+          } catch(e) {
+            console.log("Reset method does not exists for current tool");
+          }
+        } 
     });
 
-    $('#zoomCanvas').mouseup(function(e){
-      App.paintController.mouseup(e);
-    });
-
-    $('#zoomCanvas').mouseout(function(e){
-      App.paintController.mouseup(e);
-    });
 
     // Onclick sprite area
+    /* Note: this should be exchanged in the future with emberJs stuff */
     $('.canvas').live('click', function(e) {
+
       var index = parseInt($(this).attr("data-index"));
       var spriteModel = App.paintController.getCurrentSpriteModelByIndex(index);      
+
       App.paintController.setCurrentSpriteModel(spriteModel);
+
     });
-    
-    $('#colorPicker').ColorPicker({
-      onShow: function (colpkr) {
-        $(colpkr).fadeIn(500);
-        return false;
-      },
-      onHide: function (colpkr) {
-        $(colpkr).fadeOut(500);
-        return false;
-      },
-      onChange : function(hsb, hex, rgb){
-        App.paintController.colorPicked(hsb, hex, rgb);
-      }
-    });
-    $('#colorPicker').ColorPickerSetColor('FF0000');
-    
+
+
     // Slider for pencil size
     $("#sizeSlider").slider({
+
       value: 2, 
       min: 1,
       max: 20, 
       step: 1,
+
       change: function( event, ui ) {
-        App.paintController.setSize(ui.value);
+        App.paintController.setStrokeSize(ui.value);
       },
+
       slide: function( event, ui) {
         $('#slidervalue').html(ui.value);
       }
+
     });
+
 
     // Init file load
     if (!window.File && !window.FileReader && !window.FileList && !window.Blob) {
+
       $('#file').remove();
+
     } else {
+
       $("#loadFileButton").click(function() { 
         $('#file').trigger("click"); // trigger hidden file field
       });
       
       $('#file').change(function(e) {App.paintController.handleFile(e)});
     }
+
   },
 
   // ---------------------------------------
-  save : function() {    
+  // Save
+  save : function() {
 
     var imageTitle = $("#imageName").val();
     var makePublic = $("#makePublic").is(":checked") ? 1 : 0;
@@ -214,6 +250,7 @@ var PaintController =  Ember.ArrayController.extend({
 
   // ---------------------------------------
   reset : function(_ask) {
+
     if(_ask) {
       var ok = confirm("Remove all sprites and reset paint editor?");
       if(!ok) return false;
@@ -224,14 +261,18 @@ var PaintController =  Ember.ArrayController.extend({
     };
 
     this.spriteCounter = 0;
-    this.zoom = this.isBackground ? 1 : 2;
+    //this.zoom = this.isBackground ? 1 : 2; /* MovedTo: zoomCanvasModel.reset()*/
     this.set('content', []);
+
+    this.zoomModel.reset();
+
   },
 
   // Resets paint and shows paintSizeView
   goToTypeSelection : function (_ask) {   
+
     if(_ask === true || typeof(_ask) === "object") {
-      var ok = confirm("Erase all and go back to type selection?");
+      var ok = confirm("Delete all and go back to type selection?");
       if(!ok) return false;
     }
         
@@ -239,40 +280,51 @@ var PaintController =  Ember.ArrayController.extend({
 
     App.paintView.remove();
     App.paintSizeView.appendTo('#content');
+
   },
 
-  // Undo current SpriteModel
-  undo : function() {
-    this.getCurrentSpriteModel().popState();
 
-    if(this.isBackground)
-      this.zoomContext.drawImage(this.getCurrentSpriteModel().canvas, 0, 0);
-    else
-      this.updateZoom(true);
-  },
-
+  // ---------------------------------------
+  // Sprite Actions
+  
   // Clear current SpriteModel
-  clearCurrentSprite : function() {
+  clearCurrentSprite : function(clearZoomToo) {
+
+    var clearZoom = clearZoomToo === undefined ? true : false;
+
     this.getCurrentSpriteModel().clear();
-    this.clearZoomCanvas();
+
+    if(clearZoom)
+      this.zoomModel.clear();
+
   },
 
-  erase : function(_x, _y) {        
+  erase : function(_x, _y, _w, _h) {        
+
+    var w = _w || this.strokeSize;
+    var h = _h || this.strokeSize;
     
     if(!this.isBackground) {
-      this.zoomContext.clearRect(_x, _y, this.size, this.size);
+
+      this.zoomModel.eraseArea(_x, _y, w, h);
+      //Moved: this.zoomContext.clearRect(_x, _y, w, h);
+
     } else {
+
       // Draw white rect if background
-      this.pixelDrawer.popImageData();
-      this.pixelDrawer.fillRect(_x, _y, _x + this.size, _y + this.size, "#FFFFFF");
-      this.pixelDrawer.pushImageData();
+      App.pixelDrawer.popImageData();
+      App.pixelDrawer.fillRect(_x, _y, _x + w, _y + h, "#FFFFFF");
+      App.pixelDrawer.pushImageData();
+
     }
 
-    this.getCurrentSpriteModel().erase(Math.floor(_x), Math.floor(_y), this.size);
+    // Erase on current SpriteModel
+    this.getCurrentSpriteModel().erase(Math.floor(_x), Math.floor(_y), w, h);
   },
 
   // ---------------------------------------
   // onMouseZoomCanvas Delegate events to current Tool
+
   click : function() {
     var options = {sprite: this.getCurrentSpriteModel()};
     this.getCurrentTool().click(options);
@@ -281,7 +333,7 @@ var PaintController =  Ember.ArrayController.extend({
   mousedown : function(e) { 
     var coord = this.getMouseCoordinates(e);
     var options = {x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel()};
-    this.getCurrentTool().mousedown(options, this.pixelDrawer);
+    this.getCurrentTool().mousedown(options);
   },
 
   mousemove : function(e) {    
@@ -297,17 +349,22 @@ var PaintController =  Ember.ArrayController.extend({
   },
 
   // ---------------------------------------  
-  // Add new SpriteModel
+  // SpriteModel
+
+  // Add new spriteModel
   add : function(copy) {
+
     if(this.content.length >= this.LIMIT) return false;
     var copyData = copy ? this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height) : null;
     
     var spriteModel = SpriteModel.create({
+
       index:    this.spriteCounter++,
       width:    this.spriteSize.width,
       height:   this.spriteSize.height,
       wrapper:  this.spriteWrapper,
       imgData : copyData
+
     });
 
     this.addObject(spriteModel);
@@ -317,215 +374,147 @@ var PaintController =  Ember.ArrayController.extend({
     this.setCurrentSpriteModel(spriteModel);
 
     // Draw white background
-    if(this.isBackground) this.fillBackground("#FFFFFF");
+    if(this.isBackground) this.zoomModel.fillBackground("#FFFFFF");
 
     if(copy) this.getCurrentSpriteModel().pushState();
 
-    this.updateZoom(true);
+    //this.updateZoom(true);
+    this.zoomModel.updateZoom(spriteModel, true);
+
   },
 
-  // ---------------------------------------  
   remove : function(_spriteModel) {
+
     if(this.content.length === 0) return false;
+
     var spriteModel = _spriteModel || this.getCurrentSpriteModel();
+
+    this.removeObject(spriteModel);
+
     $("#" + spriteModel.id).remove();
-    this.removeObject(_spriteModel);
+    //this.content.splice(spriteModel.index, 1);
+    //console.log("after del", this.content.length, spriteModel);
     // set currentSpriteModel
+
   },
 
+  // Removes current sprite
   removeCurrent : function() {
+
+    if(this.isBackground) return false;
+
+    
     if(this.content.length === 1) {
+
       this.clearCurrentSprite();
+
     } else {
+
       this.remove(this.getCurrentSpriteModel());
       this.setCurrentSpriteModel(this.content[this.content.length - 1]);
+
     }
+
   },
 
   // ---------------------------------------
   // Getter And Setter
   setCurrentSpriteModel : function(spriteModel) {
+
     if(!spriteModel || typeof(spriteModel) !== 'object') return false;
+
     this.set('currentSprite', spriteModel);
     spriteModel.highlight();
-    this.pixelDrawer.setCanvasContext(this.zoomCanvas);
-    this.updateZoom(true);
+
+    App.pixelDrawer.setCanvasContext(this.zoomModel.canvas);
+    this.zoomModel.updateZoom(spriteModel, true);
     
   },
 
   getCurrentSpriteModel : function() {
+
     return this.get('currentSprite');
+
   },
 
-  getCurrentSpriteModelByIndex : function(_id) {
+  getCurrentSpriteModelByIndex : function(_index) {
+
     for (var i = 0; i < this.content.length; i++) {
+
       var spriteModel = this.content[i];
-      if(spriteModel.index === _id)
+      if(spriteModel.index === _index)
         return spriteModel;
+
     };
+
     return null;
+
   },
 
   getCurrentTool : function() {
+
     return App.toolBoxController.getCurrentTool();
+
+  },
+ 
+  setStrokeSize : function(_size) {
+
+    this.strokeSize = _size || 1;
+
   },
 
-  setColor : function(_color) {
-    var color = _color || "#000000";
-    this.color = color.substr(0,1) != '#' ? '#' + color : color;
-  },
+  getStrokeSize : function() {
 
-  setSize : function(_size) {
-    this.size = _size || 1;
+    return this.strokeSize;
+
   },
 
   setSpriteSize : function(_obj) {
+
     this.spriteSize = _obj;
+
   },
 
-  fillBackground : function(_color) {
-    if(_color) {
-      this.zoomContext.fillStyle = _color;
-      this.zoomContext.fillRect(0, 0, this.spriteSize.width, this.spriteSize.height);
-
-      //this.getCurrentSpriteModel().context.fillStyle = _color;
-      //this.getCurrentSpriteModel().context.fillRect(0, 0, this.spriteSize.width, this.spriteSize.height);
-
-      $('#zoomCanvas').css({'background-image' : 'none'});
-    }
-  },  
 
   // ---------------------------------------
-  showPaintView : function() {
-    this.set( 'tabState', 'paint' );
-  },
+  // View changing
 
-  showSizeView : function() {
-    this.set( 'tabState', 'setSize' );
-  },
+  getColor : function() {
 
-  toggleColorPalette : function(_visible) {
-    if(_visible)
-      $('#colorChooser').show(); //palette
-    else
-      $('#colorChooser').hide();
-  },
-  
-  colorPicked : function (hsb, hex, rgb) {
+    return this.color;
 
-      $('#colorPicker').css('background-color', '#'+hex);
-      $('#colorPicker').css('background-image', 'none');
-      $('#colorPicker').ColorPickerSetColor(hex);
-      
-      this.color = hex;
   },
 
   // ---------------------------------------
-  // Zoom Canvas
-  zoomIn : function() {
-    if(this.zoom > 10) return false;
-    this.zoom++;    
-    this.updateZoom();
-  },
 
-  zoomOut : function() {
-    if(this.zoomCanvas.style.width === this.spriteSize.width+"px") return false;
-    this.zoom--;
-    this.updateZoom();
-  },
+  drawToSprite : function(canvas) {
 
-  clearZoomCanvas : function() {    
-    this.zoomContext.clearRect(0, 0, this.zoomCanvas.width, this.zoomCanvas.height);
-    if(this.isBackground) this.fillBackground("#FFFFFF");
-  },
+    this.getCurrentSpriteModel().drawTo(this.zoomModel.canvas);
 
-  // Copy zoomCanvas data to current sprite
-  drawToSprite : function() {
-
-    var img_data = this.zoomCanvas.toDataURL("image/png");
-    var w = this.spriteSize.width;
-    var h = this.spriteSize.height;
-    
-    var img = new Image();
-    img.src = img_data;
-    img.width = w;
-    img.height = h;
-
-    var currentSpriteModel = this.getCurrentSpriteModel();
-    img.onload = function() {
-      currentSpriteModel.context.drawImage(img, 0, 0, w, h);
-      currentSpriteModel.pushState();
-    };
-    
-  },
-
-  setZoomCanvasSize : function () {
-    var width  = this.zoom * this.spriteSize.width;
-    var height = this.zoom * this.spriteSize.height;
-    this.zoomCanvas.style.width     = width +"px";
-    this.zoomCanvas.style.height    = height +"px";    
-    
-    this.tempCanvas[0].style.width  = width + "px";
-    this.tempCanvas[0].style.height = height + "px";
-  },
-
-  updateZoom : function(clear) {
-    this.setZoomCanvasSize();
-    if(clear) this.clearZoomCanvas();
-    this.zoomContext.drawImage(this.getCurrentSpriteModel().canvas, 0, 0);
-  },
-
-  toogleZoomCanvasBg : function() {
-    var bgClasses = ['bgTransparent', 'bgWhite', 'bgBlack'];
-    this.bgCounter++;
-    this.bgCounter = (this.bgCounter > bgClasses.length - 1) ? 0 : this.bgCounter;
-    
-    var addClass = bgClasses[this.bgCounter];
-
-    $.each(bgClasses, function(k,v) {
-      $('.bgToggle').removeClass(v);
-      $("#zoomCanvas").removeClass(v);
-    });
-    
-    $('.bgToggle').addClass(addClass);
-    $("#zoomCanvas").addClass(addClass);   
-  },
-
-  // ---------------------------------------
-  // Temp canvas
-
-  // Set position of temp canvas and display it over zoomCanvas
-  showTempCanvas : function() { 
-    
-    var canvasObject = $("#zoomCanvas");    
- 
-    var newLeft = $("#zoom-canvas-area")[0].scrollLeft + canvasObject.position().left,
-        newTop = $("#zoom-canvas-area")[0].scrollTop + canvasObject.position().top;
-
-    this.tempCanvas.css({     
-                            left: newLeft,
-                            top: newTop,
-                            width: canvasObject.width(),
-                            height: canvasObject.height()
-                        }).show();
   },
 
   hideTempCanvas : function() {
+
     this.tempCanvas.hide();
-    this.pixelDrawer.setCanvasContext(this.zoomCanvas);
+    App.pixelDrawer.setCanvasContext(this.zoomModel.canvas);
+
   },
   
   // ---------------------------------------
   // Helper
+
   getMouseCoordinates : function(e) {
-    var zoomCanvas = $('#zoomCanvas');
+
+    var zoomCanvas = this.zoomModel.domObj; //$('#zoomCanvas');
+      
     var x = e.pageX - zoomCanvas.offset().left;
     var y = e.pageY - zoomCanvas.offset().top;
-  
-    x = Math.floor(x / this.zoom);
-    y = Math.floor(y / this.zoom);
+ 
+    x = Math.floor(x / this.zoomModel.zoom);
+    y = Math.floor(y / this.zoomModel.zoom);
 
     return {x: x, y: y};
+
   },
 
   // Loads file from hard drive to canvas
@@ -537,22 +526,211 @@ var PaintController =  Ember.ArrayController.extend({
     reader = new FileReader;
 
     reader.onload = function(event) {
-        var w = App.paintController.zoomCanvas.width;
-        var h = App.paintController.zoomCanvas.height;
-        var img = new Image;
+
+      var w = App.paintController.spriteSize.width;
+      var h = App.paintController.spriteSize.height;
+      var img = new Image;
+      
+      img.width = w;
+      img.height = h;
+
+      img.onload = function() {
         
-        img.width = w;
-        img.height = h;
+        App.paintController.zoomModel.context.drawImage(img, 0,0, w, h);      
+        App.paintController.getCurrentSpriteModel().drawTo(App.paintController.zoomModel.canvas);
 
-        img.onload = function() {
-          App.paintController.zoomContext.drawImage(img, 0,0, w, h);      
-          App.paintController.drawToSprite();
-        };
+      };
 
-        img.src = event.target.result;
+      img.src = event.target.result;
+
     };
 
     reader.readAsDataURL(e.target.files[0]);
+  },
+  
+  centerCanvas : function() {
+    
+    $( '#paint-area' ).css({ 
+      width: this.width * this.zoomModel.zoom, 
+      height: this.height * this.zoomModel.zoom,
+      'margin-top': -this.height * this.zoomModel.zoom / 2
+    });
+    
+  },
+  
+  setCurrentTool : function( tool ) {
+    
+    App.toolBoxController.setCurrentTool( tool );
+    
+  },
+  
+  selectTool : function() {
+    
+    this.setCurrentTool( App.selectTool );
+    this.click();
+    
+  },
+  
+  pencilTool : function() {
+    
+    this.setCurrentTool( App.pencilTool );
+    App.pencilTool.setEraser( false );
+    this.click();
+    
+  },
+  
+  eraseTool : function() {
+    
+    this.setCurrentTool( App.pencilTool );
+    App.pencilTool.setEraser( true );
+    
+  },
+  
+  drawRectTool : function() {
+    
+    App.drawTool.setDrawFunction("rect");
+    App.drawTool.click();
+    this.setCurrentTool( App.drawTool );
+    
+  },
+
+  drawRectFillTool : function() {
+    
+    App.drawTool.setDrawFunction("fillrect");
+    App.drawTool.click();
+    this.setCurrentTool( App.drawTool );
+    
+  },
+
+  drawCircleTool : function() {
+    
+    App.drawTool.setDrawFunction("circle");
+    App.drawTool.click();
+    this.setCurrentTool( App.drawTool );
+    
+  },
+
+  drawCircleFillTool : function() {
+    
+    App.drawTool.setDrawFunction("fillcircle");
+    App.drawTool.click();
+    this.setCurrentTool( App.drawTool );
+    
+  },
+
+  drawLineTool : function() {
+    
+    App.drawTool.setDrawFunction("line");
+    App.drawTool.click();
+    this.setCurrentTool( App.drawTool );
+    
+  },
+  
+  fillTool : function() {
+    
+    App.fillTool.click();
+    this.setCurrentTool( App.fillTool );
+    
+  },
+  
+  clearTool : function() {
+    
+    this.clearCurrentSprite();
+    
+  },
+  
+  undoTool : function() {
+
+    this.getCurrentSpriteModel().popState();
+
+    if(this.isBackground)
+      this.zoomModel.context.drawImage(this.getCurrentSpriteModel().canvas, 0, 0);
+    else
+      this.zoomModel.updateZoom(true);
+
+  },
+  
+  resetTool : function() {
+    
+    this.reset( true );
+    this.add();
+    
+  },
+  
+  flipVTool : function() {
+
+    this.canvasModifier.flipVertical(this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
+
+    this.clearCurrentSprite(false);
+    this.drawToSprite();
+   
+  },
+
+  flipHTool : function() {
+
+    this.canvasModifier.flipHorizontal(this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
+
+    this.clearCurrentSprite(false);
+    this.drawToSprite();
+
+  },
+
+  rotateRightTool : function() {
+    
+    this.rotate( 90 );
+    
+  },
+
+  rotateLeftTool : function() {
+    
+    this.rotate( -90 );
+    
+  },
+  
+  rotate : function(_angle) {
+
+    this.canvasModifier.rotate(_angle, this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
+
+    this.clearCurrentSprite(false);
+    this.drawToSprite();
+
+  },
+  
+  addSprite : function() {
+    
+    this.add();
+    
+  },
+
+  copySprite : function() {
+    
+    this.add(true);
+    
+  },
+  
+  pipetteTool : function() {
+    
+    this.setCurrentTool( App.pipetteTool );
+    this.click();
+    
+  },
+  
+  zoomIn : function() {
+    
+    this.zoomModel.zoomIn();
+    
+  },
+  
+  zoomOut : function() {
+    
+    this.zoomModel.zoomOut();
+    
+  },
+
+  bgToggle : function() {
+    
+    this.zoomModel.toogleZoomCanvasBg();
+    
   }
 
 });

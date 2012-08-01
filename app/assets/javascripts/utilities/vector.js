@@ -223,6 +223,10 @@ Vector.prototype = {
     
     return { x : this.x, y : this.y };
     
+  },
+
+  length : function() {
+    return Math.sqrt( this.x * this.x + this.y * this.y);
   }
 
 };

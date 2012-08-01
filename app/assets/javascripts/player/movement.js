@@ -8,6 +8,7 @@ var Movement = function() {
   
   this.target;
   this.direction;
+  this.offset = new Vector();
   
   this.roamArea;
   this.roamMode;
@@ -15,7 +16,15 @@ var Movement = function() {
   
   this.time;
   this.speed;
-  
+
+  this.path = [];
+  this.pathCounter = 0;
+  this.pathMode = null; // loop, ping-pong, once
+  this.pathDirection = null;
+
+  this.rotateToTarget = false; // indicates whether the object turns to its target
+  this.angle = 0;
+
 };
 
 Movement.prototype = {
@@ -26,7 +35,7 @@ Movement.prototype = {
     
     this.position.copy( this.startPosition );
     
-    this.stop();
+    this.stop();    
     
   },
   
@@ -54,7 +63,7 @@ Movement.prototype = {
     this.offset = offset;
     
     this.setSpeed( speed );
-    
+
   },
   
   setDirection : function( dir, speed ) {
@@ -63,7 +72,8 @@ Movement.prototype = {
     
     this.direction = dir;
     this.setSpeed( speed );
-    
+
+    if(this.rotateToTarget) this.angle = dir;
   },
   
   setSpeed : function( speed ) {
@@ -177,21 +187,44 @@ Movement.prototype = {
     this.insertObject( area );
     
   },
+
+  followPath : function ( path, mode, speed ) {
+
+    this.stop();
+
+    if ( path.length > 1 ) {
+      
+      path[0] = this.position.clone();    
+      this.target = path[1];
+      
+      this.path = path;
+      this.pathMode = mode;
+      
+      this.setSpeed(speed);
+      this.pathCounter = 1;
+      
+    }
+    
+  },
   
   stop : function() {
-    
+
     this.target = null;
     this.direction = null;
     this.roamMode = null;
-    
+
+    this.pathCounter = 0;
+    this.pathMode = null;
+    this.pathDirection = null;
+   
   },
   
   update : function( dt ) {
     
     var distance = this.speed * 0.08 * dt;
-    
+
     if ( this.target ) {
-      
+
       this.updateTarget( distance );
       
     } else if ( this.roamMode === 'bounce' ) {
@@ -219,9 +252,17 @@ Movement.prototype = {
     if ( vector.norm() < distance ) {
     
       pos.copy( target ).addSelf( this.offset );
+
+      if ( this.pathMode ) {
+
+        this.updatePath();
+
+      } else {
       
-      this.target = null;
-    
+        this.target = null;
+
+      }
+        
     } else {
     
       vector.normalizeSelf().mulSelf( distance );
@@ -230,6 +271,57 @@ Movement.prototype = {
     
     }
     
+  },
+
+
+  updatePath : function() {
+
+    var lastPoint = this.path.length - 1,
+      mode = this.pathMode,
+      counter = this.pathCounter;
+    
+    if ( mode === 'circular' ) {
+      
+      if ( counter === lastPoint ) {
+
+        counter = 0;
+
+      } else {
+
+        counter++;
+
+      }
+      
+    } else if ( mode === 'ping-pong' ) {
+      
+      if ( counter === lastPoint ) {
+        
+        this.pathDirection = "backward";
+      
+      } else if ( counter === 0 ) {
+      
+        this.pathDirection = "forward";
+      
+      }
+      
+      counter += ( this.pathDirection === "backward" ? -1 : 1 );
+
+    } else if ( mode === 'once' ) {
+
+      if ( counter === lastPoint ) {
+
+        this.stop();
+        return;
+
+      }
+
+      counter++;
+
+    }
+    
+    this.target = this.path[counter];
+    this.pathCounter = counter;
+
   },
   
   updateDirection : function( distance ) {
@@ -241,7 +333,7 @@ Movement.prototype = {
     vector.set( distance, 0 ).rotateSelf( this.direction );
     
     this.position.addSelf( vector );
-    
+   
     if ( mode ) {
     
       if ( mode === 'wiggle' ) {
@@ -352,7 +444,13 @@ Movement.prototype = {
     
     if ( this.target ) {
       
-      ctx.line( this.position.x, this.position.y, this.target.x + this.offset.x, this.target.y + this.offset.y );
+      if ( this.pathMode ) {
+        
+        new Path( this.path ).draw( ctx, 0.5 );
+        
+      }
+      
+      ctx.drawArrow( this.position.x, this.position.y, this.target.x + this.offset.x, this.target.y + this.offset.y, 0.7 );
       
     } else if ( this.roamMode ) {
       
@@ -365,7 +463,7 @@ Movement.prototype = {
       ctx.translate( this.position.x, this.position.y );
       ctx.rotate( this.direction );
       
-      ctx.line( 0, 0, 1000, 0 );
+      ctx.drawArrow( 0, 0, 70, 0, 0.5 );
       
       ctx.restore();
       

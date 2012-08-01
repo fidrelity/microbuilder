@@ -4,19 +4,19 @@ var PencilToolModel = Ember.Object.extend({
   oldX : 0,
   oldY : 0,
   isActive : false,
-  pixelDrawer : null,
   isErasing : false,
   sprite : null,
   
-  init : function () {
-    this.pixelDrawer = App.paintController.pixelDrawer;
-  },
+  init : function () {},
   
   click : function() {
+
     App.paintController.hideTempCanvas();
+
   },
 
   mousedown : function(_options) {
+
     this.isActive = true;
     this.sprite = _options.sprite;
 
@@ -24,39 +24,47 @@ var PencilToolModel = Ember.Object.extend({
     //
     this.oldX = _options.x;
     this.oldY = _options.y;
+
   },
 
   mousemove : function(_options) {
+
     if(!this.isActive) return false;
     this.draw(this.oldX, this.oldY, _options.x, _options.y);
 
     this.oldX = _options.x;
     this.oldY = _options.y;
+
   },
 
   mouseup : function(_options) {
+
     if(!this.isActive) return false;
     this.isActive = false;
     App.paintController.drawToSprite();
+
   },
 
   draw : function(_x, _y, _endX, _endY) {
+
     // Eraser    
     if(this.get('isErasing') == true) {
-      var centered = App.paintController.size > 4 ? App.paintController.size / 2 : 0;
+      var centered = App.paintController.getStrokeSize() > 4 ? App.paintController.getStrokeSize() / 2 : 0;
       App.paintController.erase(_x, _y);
 
     // Paint
     } else {
-      this.pixelDrawer.popImageData();
-      this.pixelDrawer.drawLine(_x, _y, _endX, _endY, App.paintController.color, App.paintController.size);
-      this.pixelDrawer.pushImageData();
+      App.pixelDrawer.popImageData();
+      App.pixelDrawer.drawLine(_x, _y, _endX, _endY, App.paintController.getColor(), App.paintController.getStrokeSize());
+      App.pixelDrawer.pushImageData();
     }   
+
   },
 
   setEraser : function(_state) {
+
     this.set('isErasing', _state);
-    App.paintController.toggleColorPalette(!_state);
+
   }
 
 });

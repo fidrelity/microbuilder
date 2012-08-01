@@ -1,27 +1,46 @@
-%h2
-  Comments (
-  =comments.size
-  ):
-=form_for GameComment.new, :url => comment_game_path, :html => {:class => "form-vertical well"}, :remote => true do |t|
-  =t.hidden_field :game_id, :value => game.id
-  =t.label :comment
-  =t.text_area :comment, :disabled => !user_signed_in?, :id => "formComment", :cols => 120, :rows => 2, :class => "span6"
-  =t.submit "Save", :disabled => !user_signed_in?, :class => "btn btn-large"
+#comments
+  #bar
+    .left
+    =image_tag "comment.png"
+    Comments
+    .right
+      =comments.size
+      comments
+      =image_tag "pulldown.png"
+    .clear
+  
+  #comment  
+    .left
+      -if user_signed_in?
+        %img{:src => current_user.display_image}
+      -else
+        %img
+    .right
+    =form_for GameComment.new, :url => comment_game_path, :html => {:class => "test"}, :remote => true do |t|
+      =t.hidden_field :game_id, :value => game.id
+      =t.text_area :comment, :disabled => !user_signed_in?, :id => "formComment", :cols => 120, :rows => 2, :class => "span6"
+      %br
+      .right
+        =t.submit "", :disabled => !user_signed_in?, :class => "add"
+      .clear
+    .clear
 
+  %div{:class=>"comments"}
 
-%div{:class=>""}
-
-  %div{:class=>"row comment", :id => "tempComment"}
-    %div{:class=>"span1"}      
-    %div{:class=>"span6"}
-    
-  -comments.each do |comment|
-    %div{:class=>"row comment"}
-      %div{:class=>"span1"}
-        = link_to user_path(comment.user) do 
-          %img{:src => comment.user.display_image}
-          = comment.user.display_name
+    %div{:class=>"row comment", :id => "tempComment"}
+      %div{:class=>"span1"}      
       %div{:class=>"span6"}
-        =comment.comment
-        %br
-        = "#{distance_of_time_in_words(comment.created_at, Time.now)} ago"
+    
+    -comments.each do |comment|
+      %div{:class=>"comment"}
+        .left
+          = link_to user_path(comment.user) do 
+            %img{:src => comment.user.display_image}
+        .right
+          = comment.user.display_name
+          %br
+          =comment.comment
+          %br
+          = "#{distance_of_time_in_words(comment.created_at, Time.now)} ago"
+        .clear
+      .clear

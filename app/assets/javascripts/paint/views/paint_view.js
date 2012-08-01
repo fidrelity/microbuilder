@@ -4,17 +4,32 @@ var PaintView = Ember.View.extend({
   canvas: null,
   
   didInsertElement : function() {
+
     App.paintController.initView();
 
     App.toolBoxController.setCurrentTool(App.pencilTool);
     App.drawTool.initAfter();
     App.fillTool.initAfter();
+    App.selectTool.initAfter();
+    
+    App.paintController.centerCanvas();
+    
+    $('.pencil').addClass('activeTool');
+    
+    $('.selectable').click(function() {
+      
+      $('.selectable').removeClass('activeTool');
+      $(this).addClass('activeTool');
+      
+    });
 
   },
 
   showTypeSelection : function() {
+
     $("#paint-wrapper").hide();
     $("#paint-size-wrapper").show();
+    
   }
 
 });

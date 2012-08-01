@@ -1,45 +1,24 @@
 var ColorPipetteModel = Ember.Object.extend({
 
   isSelectable : true,
-  isActive : false,
-  pixelDrawer : null,
-  
-  init : function () {
-    this.pixelDrawer = App.paintController.pixelDrawer;
-  },
-  
+
+  init : function () {},
+
   click : function() {
+
     App.paintController.hideTempCanvas();
-  },
-
-  mousedown : function(_options) {
-    this.isActive = true;
-    var rgbColor = this.pixelDrawer.getPixelColor(_options.x, _options.y);    
-    App.paintController.colorPicked(null, this.RGBtoHex(rgbColor), null);
-  },
-
-  mousemove : function(_options) {
 
   },
 
-  mouseup : function(_options) {
+  mousedown : function( _options ) {
+
+    var rgbColor = App.pixelDrawer.getPixelColor(_options.x, _options.y);
+    App.paintController.set( 'color', rgbToHex( rgbColor[0], rgbColor[1], rgbColor[2] ) )
 
   },
 
-  RGBtoHex : function(rgb) {
+  mousemove : function( _options ) {},
 
-    var hex = [
-      rgb[0].toString(16),
-      rgb[1].toString(16),
-      rgb[2].toString(16)
-    ];
+  mouseup : function( _options ) {}
 
-    $.each(hex, function (nr, val) {
-      if (val.length == 1) {
-        hex[nr] = '0' + val;
-      }
-    });
-
-    return hex.join('');
-  }
 });

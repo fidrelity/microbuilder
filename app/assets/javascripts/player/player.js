@@ -66,6 +66,8 @@ Player.prototype = {
     ctx.save();
     ctx.translate( i.x, i.y );
     
+    ctx.font = '20px sans-serif';
+    
     this.ctx = ctx;
     this.canvas = canvas;
     this.mouse = mouse;

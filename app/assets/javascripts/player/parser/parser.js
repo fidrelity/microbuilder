@@ -2,22 +2,29 @@ var Parser = {
   
   game : null,
   loader : null,
+
+
+  // ------------------------
+
+  //      ACTIONS
+
+  // ------------------------
   
   actionIDs : {
     
     moveInDirection : function( data, gameObject ) { 
       
-      var action = new MoveAction( 'moveIn', gameObject, data.speed );
+      var action = new MoveAction( 'moveIn', gameObject, data.speed, data.rotateToTarget);
       
       action.direction = data.angle;
-      
+          
       return action;
       
     },
       
     moveInRandom : function( data, gameObject ) { 
       
-      var action = new MoveAction( 'moveIn', gameObject, data.speed );
+      var action = new MoveAction( 'moveIn', gameObject, data.speed, data.rotateToTarget );
       
       action.random = true;
       
@@ -27,7 +34,7 @@ var Parser = {
     
     moveInLocation : function( data, gameObject ) { 
       
-      var action = new MoveAction( 'moveIn', gameObject, data.speed );
+      var action = new MoveAction( 'moveIn', gameObject, data.speed, data.rotateToTarget );
       
       action.target = new Vector().copy( data.location );
       
@@ -50,17 +57,29 @@ var Parser = {
     
     moveToLocation : function( data, gameObject ) { 
       
-      var action = new MoveAction( 'moveTo', gameObject, data.speed );
+      var action = new MoveAction( 'moveTo', gameObject, data.speed, data.rotateToTarget );
       
       action.target = new Vector().copy( data.location );
       
       return action;
       
     },
+
+    // Move along path action
+    moveAlongPath: function( data, gameObject, game ) {
+      
+      var action = new MoveAction( 'moveAlongPath', gameObject, data.speed, data.rotateToTarget );
+
+      action.path = data.path;
+      action.mode = data.mode;
+
+      return action;
+
+    },
     
     moveToObject : function( data, gameObject, game ) { 
       
-      var action = new MoveAction( 'moveTo', gameObject, data.speed );
+      var action = new MoveAction( 'moveTo', gameObject, data.speed, data.rotateToTarget );
       
       action.target = game.getGameObjectWithID( data.objectID ).movement.position;
       action.offset = new Vector().copy( data.offset );
@@ -152,15 +171,41 @@ var Parser = {
       return action
       
     },
-    
-    
-    // 'counterSet', 'counterUp', 'counterDown'
+        
     
     gameWin : function() { return WinAction; },
     gameLose : function() { return LoseAction; },
-    gameEnd : function() { return EndAction; }
+    gameEnd : function() { return EndAction; },
+
+
+    // -- Counter Action --
+
+    counterSet : function( data, gameObject, game ) { 
+      
+      return action = new CounterAction( 'set', data.counter, gameObject );
+      
+    },
+    
+    counterUp : function( data, gameObject ) { 
+      
+      return action = new CounterAction( 'up',  data, gameObject );
+      
+    },
+    
+    counterDown : function( data, gameObject ) { 
+      
+      return action = new CounterAction( 'down', data, gameObject );
+      
+    }
     
   },
+
+
+  // ------------------------
+
+  //      TRIGGERS
+
+  // ------------------------
   
   triggerIDs : {
     
@@ -225,9 +270,45 @@ var Parser = {
     // 'artHasFrame', 'artGetsFrame',
     // 'artHasGraphic', 'artGetsGraphic',
     
-    // 'counterEqualsNumber', 'counterEqualsObject',
-    // 'counterGreaterNumber', 'counterGreaterObject',
-    // 'counterSmallerNumber', 'counterSmallerObject',
+    counterEqualsObject : function( data, gameObject, game ) { 
+      
+      return new CounterTrigger( "equal", gameObject, null, game.getGameObjectWithID( data.objectID ) );
+      
+    },
+    
+    counterGreaterObject : function( data, gameObject, game ) { 
+      
+      return new CounterTrigger( "greater", gameObject, null, game.getGameObjectWithID( data.objectID ) );
+      
+    },
+    
+    counterSmallerObject : function( data, gameObject, game ) { 
+      
+      return new CounterTrigger( "smaller", gameObject, null, game.getGameObjectWithID( data.objectID ) );
+      
+    },
+    
+    // -- Number --
+    
+    counterEqualsNumber : function( data, gameObject, game ) { 
+      
+      return new CounterTrigger( "equal", gameObject, data.counter, null );
+      
+    },
+    
+    counterGreaterNumber : function( data, gameObject, game ) { 
+      
+      return new CounterTrigger( "greater", gameObject, data.counter, null );
+      
+    },
+    
+    counterSmallerNumber : function( data, gameObject, game ) {
+      
+      return new CounterTrigger( "smaller", gameObject, data.counter, null );
+      
+    },
+    
+    // -- Game --
     
     gameIsWon : function() { return new EndTrigger( 'isWon' ); },
     gameWasWon : function() { return WonTrigger; },

@@ -1,203 +1,173 @@
-#paint-wrapper {
-  width:900px;
-  position:relative;
-  top:30px;
-  overflow:hidden;
-}
-
-#paint-wrapper #tool-bar {
-  background:#CCC;
+#paint-frame {
   overflow: hidden;
 }
 
-#paint-size-wrapper #startPainting {
-  border:none;
-  border-radius:0px;
-  position:relative;
-  margin:20px 0 20px 0;
+#paint-wrapper {
+  width: 900px;
+  height: 500px;
+  padding: 40px 20px 0;
 }
 
-#paint-wrapper #tool-bar .ember-view { float:left; }
+#paint-wrapper .tool-bar {
+  background: #555;
+  /*overflow: hidden;*/
+  height: 30px;
+  color: #DDD;
+}
 
-#paint-wrapper #tool-bar button {
+#paint-wrapper .tool-bar-bottom {}
+
+#paint-wrapper .tool-bar button {
   min-width:30px;
   height:30px;
   background:top left no-repeat;
   border:none;
   margin:0 1px 0 0;
   float:left;
+  color: #DDD;
 }
 
-#paint-wrapper #tool-bar button.activeTool, #paint-wrapper #tool-bar-second button.activeTool {
-  border-bottom:4px solid #55bd55;
+#paint-wrapper .tool-bar button.activeTool {
+  border-bottom: 4px solid #55bd55;
 }
 
-#paint-wrapper #tool-bar button.pencil {
+#paint-wrapper .tool-bar button.pencil {
   background:url('/assets/edit_button.png');
 }
 
-#paint-wrapper #tool-bar button.eraser {
+#paint-wrapper .tool-bar button.select {
+  background:url('/assets/select_icon.png');
+}
+
+#paint-wrapper .tool-bar button.eraser {
   background:url('/assets/eraser_icon.png');
 }
 
-#paint-wrapper #tool-bar button.rectangle {
+#paint-wrapper .tool-bar button.rectangle {
   background:url('/assets/rectangle_icon.png');
 }
 
-#paint-wrapper #tool-bar button.circle {
+#paint-wrapper .tool-bar button.circle {
   background:url('/assets/icon_circle.png');
 }
 
-#paint-wrapper #tool-bar button.rectanglefill {
+#paint-wrapper .tool-bar button.rectanglefill {
   background:url('/assets/rectangle_fill_icon.png');
 }
 
-#paint-wrapper #tool-bar button.circlefill {
+#paint-wrapper .tool-bar button.circlefill {
   background:url('/assets/circle_icon_fill.png');
 }
 
-#paint-wrapper #tool-bar button.line {
+#paint-wrapper .tool-bar button.line {
   background:url('/assets/icon_line.png');
 }
 
-#paint-wrapper #tool-bar button.loadfile {
+#paint-wrapper .tool-bar button.loadfile {
   background:url('/assets/load_image_icon.png');
 }
 
-#paint-wrapper #tool-bar button.fill {
+#paint-wrapper .tool-bar button.fill {
   background:url('/assets/fill_icon.png');
 }
 
-#paint-wrapper #tool-bar button.clear {
+#paint-wrapper .tool-bar button.clearTool {
   background:url('/assets/clear_icon.png');
 }
 
-#paint-wrapper #tool-bar button.undo {
+#paint-wrapper .tool-bar button.clearall {
+  background:url('/assets/icon_delete.png');
+}
+
+#paint-wrapper .tool-bar button.undo {
   background:url('/assets/undo_icon.png');
 }
 
-.zoomButtons button.zoom {
-  min-width:30px;
-  height:30px;
-  background:top left no-repeat;
-  border:none;
-  float:left;
-  margin:27px 1px 0 0;
+#paint-wrapper .tool-bar button.pipette {}
+
+#paint-wrapper .tool-bar button.zoomin {
+  background-image: url('/assets/zoom_in.png') !important;
 }
 
-.zoomButtons button.zoomin {
-  background:url('/assets/zoom_in.png');
-}
-
-.zoomButtons button.zoomout {
-  background:url('/assets/zoom_out.png');
-}
-
-/*#paint-wrapper #tool-bar button { 
-  background:#333;
-  color:#FFF;
-  border:1px solid #222;
-}
-
-#paint-wrapper #tool-bar button:hover {
-  background-color:#111;
-} */
-
-#paint-wrapper .ui-slider{
-  width:150px; 
-  height:30px; 
-  background:url('/assets/slider_bg.png') no-repeat;
-  border-style:none;
-}
-
-#paint-wrapper .ui-slider .ui-slider-handle{
-  width:10px;
-  height:18px;
-  margin:4px 0 0 0;
-  border-style:none;
-  background:url('/assets/slider_bg_knob.png') center no-repeat;
-}
-
-#paint-wrapper #player {
-  float:left;
-  width:180px;
+#paint-wrapper .tool-bar button.zoomout {
+  background-image: url('/assets/zoom_out.png') !important;
 }
 
 #paint-wrapper #sizeWrapper {
-  padding:4px 0 0 0;
-  height:26px;
+  overflow: hidden;
+  margin: 0 1px;
+  padding: 7px 10px 3px;
 }
 
 #paint-wrapper #sizeWrapper #sizeSlider {
-  margin:1px 0 0 0;
+  width: 100px;
 }
 
 #paint-wrapper #sizeWrapper #sizeSlider, #paint-wrapper #sizeWrapper #slidervalue {
   float:left;
+  margin-left: 20px;
 }
 
 #paint-wrapper #sizeWrapper span {
   float:left;
-  margin: 0 2px 0 0;
-}
-
-
-#paint-wrapper #tool-bar-second {
-  margin-top:0.5em;
 }
 
 #paint-wrapper #area-wrapper {
-  margin-top:1.5em;
-  overflow:hidden;
-  width:100%;
+  /*overflow: hidden;*/
+  border: 1px solid #555;
 }
 
 #paint-wrapper #area-wrapper #zoom-canvas-area {
-  position:relative;
-  width:400px;
-  max-height:300px;
-  max-width:400px;
-  overflow:auto;
-  float:left;
+  height: 430px;
+  overflow: auto;
+  background: #EEE;
+  box-shadow: inset 0px 0px 12px 0px #AAA;
 }
 
-#paint-wrapper #area-wrapper #sprites-area {
-  float:right;
-  width:400px;
-  margin-left:100px;
+#paint-wrapper #area-wrapper #zoom-canvas-area #paint-area {
+  margin: auto;
+  position: relative;
+  top: 50%;
+  box-shadow: 0px 0px 12px 0px #AAA;
 }
 
-#paint-wrapper #area-wrapper #sprites-area-scroll {      
-  max-height:260px;  
-  overflow:auto;
+#paint-wrapper #sprites-area {
+  border: 1px solid #555;
+  margin-left: 10px;
+}
+
+#paint-wrapper #sprites-area-scroll {
+  height: 430px;
+  padding: 0 10px;
+  overflow: auto;
+  background: #EEE;
+  box-shadow: inset 0px 0px 12px 0px #AAA;
+}
+
+
+#paint-wrapper #sprites-area-scroll .canvas {
+  background: url("bg_transparent.png");
+  margin: 10px auto;
+  border: 1px dashed #000;
+  display: block;
+  box-shadow: 0px 0px 12px 0px #AAA;
+}
+
+#paint-wrapper #sprites-area-scroll .canvas-selected { 
+  border: 1px solid #000;
+}
+
+#paint-wrapper #sprites-area-scroll .active-sprite { 
+  border: 1px solid #000;
 }
 
 .bgToggle {
   min-width:30px;
   height:30px;
-  border:1px solid #666;
-  margin:27px 0 0 0;
+  border:1px solid #FFF !important;
 }
 
-.zoomButtons {
-  z-index:999;
-  position:relative;
-}
 
-#paint-size-wrapper { margin:2em 0 2em 0;}
-
-#palette {
-  background:#222;
-  display: none;
-  position:absolute;
-  left:0px;
-  top:0px;
-  z-index:888;
-  width:100px;
-  list-style-type:none;
-  overflow:hidden;
-  padding:10px;
-}
 
 /* Canvas Elements */
 #zoomCanvas, #canvas-temp {
@@ -212,108 +182,29 @@
  image-rendering: optimize-contrast;         // Possible future browsers.
  -ms-interpolation-mode: nearest-neighbor;   // IE
 }
-.canvas {
-    width:64px;
-    height:64px;
-    background:url(bg_transparent.png);
-    margin-right:0.5em;
-}
-.canvas:hover, .canvas:active, .canvas:focus {
 
-}
 .canvas-over  { position:absolute; background: rgba(255, 255, 255, 0.9); }
-.canvas-float { position:relative; float:left; }
-.canvas-selected { border:1px solid #4096EE;}
 
 #canvas-template, #canvas-merged { display:none; }
 #canvas-temp { display:none; z-index:999; position:absolute; background:none;pointer-events:none;border:1px solid #000}
 
 .bgBlack {
-  background-image:none;
-  background-color:#000000;
+  background-image:none !important;
+  background-color:#000000 !important;
 }
 
 .bgWhite, #zoomCanvas .bgWhite {
-  background-image:none;
-  background-color:#FFFFFF;
+  background-image:none !important;
+  background-color:#FFFFFF !important;
 }
 
 .bgTransparent {
-  background:url(bg_transparent.png);  
+  background:url(bg_transparent.png) !important;
 }
 
 /* Tools */
-.addSpriteButton {
-  width:64px; height:64px; float:left; margin-right:10px; background:#FFF;border:2px solid #666;
-}
 
 #stopButton { display:none; }
-
-#sizeSlider {
-    width:100px;
-    margin:0.5em 0 0.5em 0;
-}
-
-#sizeWrapper {
-    overflow:hidden;
-    float:left;
-    margin-right:1em;
-}
-
-#colorChooser {
-  position:relative;
-  cursor:pointer;
-  width:20px; height:20px;
-  border:1px solid #111;  
-}
-
-
-  
-#colorWrapper {
-  float:left;
-}
-
-#colorPicker {
-  float:left;
-  margin-left: 5px;
-  position:relative;
-  cursor:pointer;
-  width:30px; height:30px;
-  border:1px solid #BBB;
-  
-  background-image: linear-gradient(right bottom, rgb(245,10,57) 0%, rgb(55,245,17) 51%, rgb(43,65,255) 100%);
-  background-image: -o-linear-gradient(right bottom, rgb(245,10,57) 0%, rgb(55,245,17) 51%, rgb(43,65,255) 100%);
-  background-image: -moz-linear-gradient(right bottom, rgb(245,10,57) 0%, rgb(55,245,17) 51%, rgb(43,65,255) 100%);
-  background-image: -webkit-linear-gradient(right bottom, rgb(245,10,57) 0%, rgb(55,245,17) 51%, rgb(43,65,255) 100%);
-  background-image: -ms-linear-gradient(right bottom, rgb(245,10,57) 0%, rgb(55,245,17) 51%, rgb(43,65,255) 100%);
-
-  background-image: -webkit-gradient(
-          linear,
-          right bottom,
-          left top,
-          color-stop(0, rgb(245,10,57)),
-          color-stop(0.51, rgb(55,245,17)),
-          color-stop(1, rgb(43,65,255))
-  );                                    
-}
-
-.colorBlock {
-    width:15px; height:15px; border:1px solid #000000;
-    text-align:center; cursor:pointer;
-    float:left; margin-right:0.2em;
-    border-radius:7px;
-}
-.activeColor { border:0px solid #000000; }
-
-.active-sprite { border:1px solid #000000; }
-
-.type-selected {
-  border:3px dotted #666;
-}
-
-.paint-type {
-  cursor:pointer;
-}
 
 /* Game guide */
 #slide-container, #guide-slide-container {
@@ -375,13 +266,103 @@
   padding-top:6px; font-size:18px;
 }
 
-.submitPainting {
-  height:80px;
-  width:900px;
-  margin:20px 0 20px 0;
+.submit {
+  overflow: hidden;
+  margin: 20px;
 }
 
-.submitPainting button {
-  border-radius:0px;
-  border:none;
+#selectToolDiv {
+  border:1px dashed #FF00FF;
+  position:absolute;
+  z-index:222;
+  display:none;
+  cursor: move;
+}
+
+#paint-wrapper #colorpicker #colorfield {
+  width : 26px;
+  height : 26px;
+  border : 1px solid #333;
+  margin-right: 5px;
+  position:relative;
+}
+
+#paint-wrapper #colorpicker #colortext {
+  width : 64px;
+  margin-right: 5px;
+}
+
+#paint-wrapper #colorpicker #colorselect {
+  border: 1px solid #333;
+  cursor: crosshair;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -ms-user-select: none;
+}
+
+#lastColorsWrapper {
+  background:#555555;
+  position:absolute; top:31px;
+  padding:4px;
+}
+
+#lastColorList {
+  width:98px;
+  margin:0; 
+  list-style-type:none;
+}
+
+#lastColorList li.lasColorItem {
+  height:13px;width:13px; 
+  background-color:#000000;
+  float:left; margin:2px 4px 0 0;
+  padding:0;
+}
+
+#paint-size-wrapper { 
+  padding:40px 20px 40px 20px;
+}
+
+#paint-size-wrapper .type-selected {
+  border: 2px solid black !important;
+}
+
+#paint-size-wrapper .paint-type {
+  cursor:pointer;
+  border: 2px dashed #999;
+}
+
+#paint-size-wrapper .paint-type:hover {
+  border-color: black;
+}
+
+#paint-size-wrapper #object {
+  width: 256px;
+  height: 256px;
+  overflow: hidden;
+}
+
+#paint-size-wrapper #background {
+  width: 310px;
+  height: 45px;
+  background: #CCC;
+  color: #666;
+  text-align: center;
+  font-size: 1.8em;
+  padding: 90px 0 60px;
+}
+
+#paint-size-wrapper #canvas-size {
+  width:128px;
+  height:128px;
+  background: url("bg_transparent.png");
+}
+
+#paint-size-wrapper #startPainting {
+  display: none;
+  border: none;
+  border-radius: 0px;
+  position: relative;
+  margin:20px 0 20px 0;
 }

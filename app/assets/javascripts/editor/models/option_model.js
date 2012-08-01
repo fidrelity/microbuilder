@@ -19,7 +19,7 @@ var Choice = Ember.Object.extend({
   string : function( name, action ) {
     
     var n = name, a = action;
-    
+   
     switch ( this.ID ) {
       
       // actions
@@ -30,6 +30,8 @@ var Choice = Ember.Object.extend({
       case 'moveInRandom' : return 'move in random direction' + ' - ' + a.getSpeedName();
       case 'moveInObject' : return 'move in direction of ' + a.gameObject.name + ' - ' + a.getSpeedName();
       case 'moveInLocation' : return 'move in direction of location ' + a.location.string() + ' - ' + a.getSpeedName();
+
+      case 'moveAlongPath' : return 'move ' + a.mode + ' along path - ' + a.getSpeedName();
       
       case 'moveToLocation' : return 'move to location ' + a.location.string() + ' - ' + a.getSpeedName();
       case 'moveToObject' : 
@@ -58,6 +60,10 @@ var Choice = Ember.Object.extend({
       case 'gameWin' : return 'win the game';
       case 'gameLose' : return 'lose the game';
       case 'gameEnd' : return 'end the game';
+
+      case 'counterUp' : return 'increase counter';
+      case 'counterDown' : return 'decrease counter';
+      case 'counterSet' : return 'set counter to ' + a.counter;
       
       // triggers
       
@@ -79,6 +85,14 @@ var Choice = Ember.Object.extend({
       case 'gameIsLost' : return 'game is lost';
       case 'gameWasLost' : return 'game was lost';
       case 'gameStart' : return 'start';
+
+      case 'counterGreaterNumber' : return 'counter greater than ' + action.counter;
+      case 'counterSmallerNumber' : return 'counter smaller than ' + action.counter;
+      case 'counterEqualsNumber' : return 'counter equal to ' + action.counter;
+
+      case 'counterGreaterObject' : return 'counter greater than ' + a.gameObject.name + '\'s counter';
+      case 'counterSmallerObject' : return 'counter smaller than ' + a.gameObject.name + '\'s counter';
+      case 'counterEqualsObject' : return 'counter equal to ' + a.gameObject.name + '\'s counter';
       
       default : console.error( 'Unknow choice name: ' + this.ID );
       
@@ -93,7 +107,7 @@ var Option = Ember.Object.extend({
   name : null,
   question : null,
   
-  type : 'empty', // ['button', 'mode', 'direction', 'location', 'area', 'offset', 'object', 'time', 'frame', 'speed', 'art']
+  type : 'empty', // ['button', 'mode', 'direction', 'location', 'area', 'offset', 'object', 'time', 'frame', 'speed', 'art', 'counter']
   
   action : null,
   
@@ -381,6 +395,22 @@ var AreaOption = Option.extend({
   
 });
 
+var PathOption = Option.extend({
+  
+  type : 'path',
+  
+  doInsert : function( reinsert ) {
+    
+    App.actionController.addOption( this.question, PlacementView.create({
+      observer : this.action,
+      type : 'path',
+      object : App.gameObjectsController.current
+    }));
+    
+  }
+  
+});
+
 var OffsetOption = Option.extend({
   
   type : 'offset',
@@ -407,12 +437,15 @@ var OffsetOption = Option.extend({
 var SpeedOption = Option.extend({
   
   type : 'speed',
+  hasRotateToCheckbox : false,
   
   doInsert : function( reinsert ) {
-    
+
     App.actionController.addOption( this.question, SpeedView.create({
       observer : this.action,
-      speed : reinsert ? this.action.speed : 2
+      speed : reinsert ? this.action.speed : 2,      
+      rotateTo : reinsert ? this.action.rotateOnMove : false,
+      hasRotateToCheckbox : this.hasRotateToCheckbox
     }));
     
     if ( !reinsert ) {
@@ -533,6 +566,28 @@ var SaveOption = Option.extend({
     
     var choice = App.actionController.getChoice( this.choiceID );
     choice.setOption( this );
+    
+  }
+  
+});
+
+
+var CounterOption = Option.extend({
+  
+  type : 'counter',
+  
+  doInsert : function( reinsert ) {
+    
+    App.actionController.addOption( this.question, CounterView.create({
+      observer : this.action,
+      value : reinsert ? this.action.counter : '',
+    }));
+    
+    if ( !reinsert ) {
+    
+      this.action.setCounter( 0 );
+    
+    }
     
   }
   

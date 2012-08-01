@@ -227,3 +227,52 @@ var LostTrigger = {
   draw : function() {}
   
 };
+
+var CounterTrigger = function( type, gameObject, count, gameObject2 ) {
+  
+  this.gameObject = gameObject;
+  this.gameObject2 = gameObject2 || { counter : count };
+  
+  this.triggered = false;
+  
+  this.compareFunction = this[type]; // equal, greater, smaller
+  
+  if ( !this[type] ) {
+    
+    throw "Counter type is unknown: " + type;
+    
+  }
+  
+};
+
+CounterTrigger.prototype = {
+  
+  check : function() {
+    
+    // if ( this.triggered ) return false;
+    
+    if ( this.compareFunction( this.gameObject.counter, this.gameObject2.counter ) ) {
+      
+      return this.triggered = true;
+      
+    }
+    
+    return false;
+    
+  },
+  
+  compareFunction : null,
+  
+  equal : function( a, b ) { return a === b; },
+  greater : function( a, b ) { return a > b; },
+  smaller : function( a, b ) { return a < b; },
+  
+  reset : function() {
+    
+    this.triggered = false;
+    
+  },
+  
+  draw : function( ctx ) {}
+  
+};

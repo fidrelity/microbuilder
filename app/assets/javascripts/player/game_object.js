@@ -8,6 +8,8 @@ var GameObject = function( ID ) {
   this.movement = new Movement();
   this.animation = new Animation();
   
+  this.counter = 0;
+  
 };
 
 GameObject.prototype = {
@@ -17,6 +19,8 @@ GameObject.prototype = {
     this.setGraphic( this.startGraphic );
     
     this.movement.reset();
+    
+    this.counter = 0;
     
   },
   
@@ -29,11 +33,15 @@ GameObject.prototype = {
   
   draw : function( ctx ) {
     
-    var pos = this.movement.position;
+    var pos = this.movement.position,
+      area;
     
     ctx.save();
     ctx.translate( pos.x, pos.y );
     
+    if(this.movement.rotateToTarget)
+      ctx.rotate(this.movement.angle);
+        
     this.graphic.draw( ctx, this.animation.getFrame() );
     
     ctx.restore();
@@ -41,6 +49,9 @@ GameObject.prototype = {
     if ( ctx.debug ) {
       
       this.movement.draw( ctx );
+      
+      area = this.movement.getArea();
+      ctx.fillText( this.counter, area.x + 2, area.y + 17 );
       
     }
     
