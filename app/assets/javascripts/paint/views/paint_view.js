@@ -60,8 +60,6 @@ var PaintView = Ember.View.extend({
       
     });
     
-    this.addObserver( 'zoom', bind( this, this.resize ) );
-    
     this.resize();
     
   },
@@ -84,13 +82,42 @@ var PaintView = Ember.View.extend({
       'margin-top': -this.height * this.zoom / 2
     });
     
+    App.paintController.updateZoom( this.zoom );
+    
+  },
+  
+  zoomIn : function() {
+    
+    if ( this.zoom < 4 ) {
+      
+      this.set( 'zoom', this.zoom + 1 );
+      
+      this.resize();
+      
+    }
+    
+  },
+  
+  zoomOut : function() {
+    
+    if ( this.zoom > 1 ) {
+      
+      this.set( 'zoom', this.zoom - 1 );
+      
+      this.resize();
+      
+    }
+    
   },
   
   getMouse : function( e ) {
     
     var offset = $( this.toolCanvas ).offset();
     
-    return { x : Math.floor( e.pageX - offset.left ), y : Math.floor( e.pageY - offset.top ) };
+    return { 
+      x : Math.floor( e.pageX - offset.left ) / this.zoom,
+      y : Math.floor( e.pageY - offset.top ) / this.zoom
+    };
     
   }
 

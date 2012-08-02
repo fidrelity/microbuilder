@@ -14,6 +14,7 @@ var PaintController =  Ember.ArrayController.extend({
   
   color : null,
   zoom : 1,
+  size : 1,
   
   width : 0,
   height : 0,
@@ -55,12 +56,13 @@ var PaintController =  Ember.ArrayController.extend({
     if ( this.isBackground ) {
       
       $('#sprites-area').hide();
-      $('.bgToggle').hide();
       
     }
     
     this.set( 'color', '#000000' );
     this.set( 'tool', App.pencilTool );
+    
+    this.initEvents();
     
   },
   
@@ -101,33 +103,19 @@ var PaintController =  Ember.ArrayController.extend({
         } 
     });
 
+    $( "#sizeSlider" ).slider({
 
-    // Onclick sprite area
-    /* Note: this should be exchanged in the future with emberJs stuff */
-    $('.canvas').live('click', function(e) {
-
-      var index = parseInt($(this).attr("data-index"));
-      var spriteModel = App.paintController.getCurrentSpriteModelByIndex(index);      
-
-      App.paintController.setCurrentSpriteModel(spriteModel);
-
-    });
-
-
-    // Slider for pencil size
-    $("#sizeSlider").slider({
-
-      value: 2, 
+      value: 1,
       min: 1,
-      max: 20, 
+      max: 20,
       step: 1,
 
       change: function( event, ui ) {
-        App.paintController.setStrokeSize(ui.value);
+        App.paintController.setSize( ui.value );
       },
 
-      slide: function( event, ui) {
-        $('#slidervalue').html(ui.value);
+      slide: function( event, ui ) {
+        $( '#slidervalue' ).html( ui.value );
       }
 
     });
@@ -398,9 +386,11 @@ var PaintController =  Ember.ArrayController.extend({
     
   },
  
-  setStrokeSize : function(_size) {
+  setSize : function( _size ) {
 
-    this.strokeSize = _size || 1;
+    this.set( 'size', _size );
+
+    this.screenCtx.lineWidth = this.toolCtx.lineWidth = _size;
 
   },
 
@@ -639,29 +629,12 @@ var PaintController =  Ember.ArrayController.extend({
     
   },
   
-  bgToggle : function() {
+  updateZoom : function( _zoom ) {
     
-    this.zoomModel.toogleZoomCanvasBg();
+    this.screenCtx.scale( _zoom, _zoom );
+    this.toolCtx.scale( _zoom, _zoom );
     
-  },
-  
-  zoomIn : function() {
-    
-    if ( this.zoom < 4 ) {
-      
-      this.set( 'zoom', this.zoom + 1 );
-      
-    }
-    
-  },
-  
-  zoomOut : function() {
-    
-    if ( this.zoom > 1 ) {
-      
-      this.set( 'zoom', this.zoom - 1 );
-      
-    }
+    this.screenCtx.lineCap = this.toolCtx.lineCap = 'round';
     
   }
 

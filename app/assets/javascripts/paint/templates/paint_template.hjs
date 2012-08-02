@@ -71,9 +71,8 @@
     
       <div class="tool-bar tool-bar-bottom">
         <div class="left">
-          <button {{action "zoomIn" target="App.paintController"}} class="zoomin"></button>
-          <button {{action "zoomOut" target="App.paintController"}} class="zoomout"></button>
-          <button {{action "bgToggle" target="App.paintController"}} class="bgToggle"></button>
+          <button {{action "zoomIn"}} class="zoomin"></button>
+          <button {{action "zoomOut"}} class="zoomout"></button>
         </div>
         
         <div class="left" id="sizeWrapper">
