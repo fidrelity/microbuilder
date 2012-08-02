@@ -19,6 +19,7 @@ var ColorPickerView = Ember.View.extend({
   didInsertElement : function() {
 
     this.lastColors = [];
+    this.$('#lastColorList').find("li").css({ "background-color" : "#000000" });
     
     var canvas = this.$( '#colorselect' )[0],
       ctx = canvas.getContext( '2d' ),
@@ -110,7 +111,7 @@ var ColorPickerView = Ember.View.extend({
     var colorBuckets = this.$('#lastColorList').find("li");
     var numberOfBuckets = colorBuckets.last().index();     
 
-    this.lastColors.push(_color);
+    this.lastColors[this.lastColorCounter] = _color;
 
     colorBuckets.eq( this.lastColorCounter ).css("background-color", _color);
 
