@@ -643,7 +643,7 @@ var PaintController =  Ember.ArrayController.extend({
   rotateRightTool : function() {
     
     this.rotate( 90 );
-    
+        
   },
 
   rotateLeftTool : function() {
