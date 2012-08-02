@@ -53,9 +53,9 @@ var CanvasModifierModel = Ember.Object.extend({
       context.translate(width/2, height/2);
       context.rotate(angle * Math.PI / 180);      
 
-      context.clearRect(0, 0, width, height);
-
       context.translate(-width/2, -height/2);
+
+      context.clearRect(0, 0, width, height);
       context.drawImage(copiedCanvas, 0, 0);
 
     context.restore();
