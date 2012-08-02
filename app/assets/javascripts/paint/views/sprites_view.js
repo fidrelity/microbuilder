@@ -4,8 +4,6 @@ var SpritesView = Ember.CollectionView.extend({
   
   itemViewClass: Ember.View.extend({
     
-    ctx : null,
-    
     tagName : 'canvas',
     
     classNames : ['spriteView'],
@@ -15,19 +13,12 @@ var SpritesView = Ember.CollectionView.extend({
       if ( this.$().length ) {
       
         var canvas = this.$()[0],
-          ctx = canvas.getContext( '2d' ),
-          self = this, data;
+          self = this;
         
         canvas.width = App.paintController.width;
         canvas.height = App.paintController.height;
         
-        data = this.content.load();
-        
-        if ( data ) {
-          
-          ctx.putImageData( data, 0, 0 );
-          
-        }
+        this.content.initView( canvas.getContext( '2d' ) );
         
         this.addObserver( 'App.paintController.sprite', function() {
         
@@ -44,8 +35,6 @@ var SpritesView = Ember.CollectionView.extend({
           this.selectSelf();
         
         }
-        
-        this.ctx = ctx;
       
       }
       

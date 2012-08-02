@@ -1,5 +1,7 @@
 var NewSpriteModel = Ember.Object.extend({
   
+  ctx : null,
+  
   stack : null,
   iterator : 0,
   
@@ -7,6 +9,16 @@ var NewSpriteModel = Ember.Object.extend({
     
     this.stack = [];
     this.iterator = 0;
+    
+  },
+  
+  initView : function( _ctx ) {
+    
+    this.set( 'ctx', _ctx );
+    
+    this.save( _ctx.getImageData( 0, 0, App.paintController.width, App.paintController.height ) );
+    
+    this.draw();
     
   },
   
@@ -28,6 +40,8 @@ var NewSpriteModel = Ember.Object.extend({
     
     this.iterator++;
     
+    this.draw();
+    
   },
   
   undo : function() {
@@ -35,6 +49,8 @@ var NewSpriteModel = Ember.Object.extend({
     if ( this.iterator > 0 ) {
       
       this.iterator--;
+      
+      this.draw();
       
     }
     
@@ -45,6 +61,20 @@ var NewSpriteModel = Ember.Object.extend({
     if ( this.iterator < this.stack.length ) {
       
       this.iterator++;
+      
+      this.draw();
+      
+    }
+    
+  },
+  
+  draw : function() {
+    
+    var data = this.load();
+    
+    if ( data ) {
+      
+      this.ctx.putImageData( data, 0, 0 );
       
     }
     
