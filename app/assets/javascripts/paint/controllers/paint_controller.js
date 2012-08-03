@@ -14,7 +14,7 @@ var PaintController =  Ember.ArrayController.extend({
   
   color : null,
   zoom : 1,
-  size : 1,
+  size : 10,
   
   width : 0,
   height : 0,
@@ -105,7 +105,7 @@ var PaintController =  Ember.ArrayController.extend({
 
     $( "#sizeSlider" ).slider({
 
-      value: 1,
+      value: this.size,
       min: 1,
       max: 20,
       step: 1,
@@ -344,6 +344,8 @@ var PaintController =  Ember.ArrayController.extend({
       
     } else {
       
+      ctx.clearRect( 0, 0, width, height );
+      
       ctx.save();
       
       for ( r = 0; r < height; r++ ) {
@@ -366,74 +368,26 @@ var PaintController =  Ember.ArrayController.extend({
     
   },
   
-  add : function(copy) {
+  add : function( _sprite ) {
     
-    if(this.content.length >= this.LIMIT) return false;
-    var copyData = copy ? this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height) : null;
+    var i = this.content.indexOf( this.sprite );
     
-    var spriteModel = SpriteModel.create({
-
-      index:    this.spriteCounter++,
-      width:    this.spriteSize.width,
-      height:   this.spriteSize.height,
-      wrapper:  this.spriteWrapper,
-      imgData : copyData
-
-    });
-
-    this.addObject(spriteModel);
-
-    spriteModel.initView();
-    $('.canvas').css({width: this.spriteSize.width, height: this.spriteSize.height});
-    this.setCurrentSpriteModel(spriteModel);
-
-    // Draw white background
-    if(this.isBackground) this.zoomModel.fillBackground("#FFFFFF");
-
-    if(copy) this.getCurrentSpriteModel().pushState();
-
-    //this.updateZoom(true);
-    this.zoomModel.updateZoom(spriteModel, true);
-
-  },
-
-  remove : function(_spriteModel) {
-
-    if(this.content.length === 0) return false;
-
-    var spriteModel = _spriteModel || this.getCurrentSpriteModel();
-
-    this.removeObject(spriteModel);
-
-    $("#" + spriteModel.id).remove();
-    //this.content.splice(spriteModel.index, 1);
-    //console.log("after del", this.content.length, spriteModel);
-    // set currentSpriteModel
-
-  },
-
-  // Removes current sprite
-  removeCurrent : function() {
-
-    if(this.isBackground) return false;
-
-    
-    if(this.content.length === 1) {
-
-      this.clearCurrentSprite();
-
-    } else {
-
-      this.remove(this.getCurrentSpriteModel());
-      this.setCurrentSpriteModel(this.content[this.content.length - 1]);
-
+    if ( this.content.length < 8 ) {
+      
+      _sprite = _sprite || NewSpriteModel.create();
+      
+      this.set( 'sprite', _sprite );
+      this.content.insertAt( i + 1, _sprite );
+      
     }
-
+    
   },
   
   setSpriteModel : function( _sprite ) {
     
     this.set( 'sprite', _sprite );
+    
+    this.loadSprite();
     
   },
   
@@ -454,7 +408,13 @@ var PaintController =  Ember.ArrayController.extend({
     return this.tool;
     
   },
- 
+  
+  setTool : function( _tool ) {
+    
+    this.set( 'tool', _tool );
+    
+  },
+  
   setSize : function( _size ) {
     
     this.set( 'size', _size );
@@ -525,28 +485,22 @@ var PaintController =  Ember.ArrayController.extend({
     reader.readAsDataURL(e.target.files[0]);
   },
   
-  setCurrentTool : function( _tool ) {
-    
-    this.set( 'tool', _tool );
-    
-  },
-  
   selectTool : function() {
     
-    this.setCurrentTool( App.selectTool );
+    this.setTool( App.selectTool );
     this.click();
     
   },
   
   pencilTool : function() {
     
-    this.setCurrentTool( App.pencilTool );
+    this.setTool( App.pencilTool );
     
   },
   
   eraseTool : function() {
     
-    this.setCurrentTool( App.pencilTool );
+    this.setTool( App.pencilTool );
     
   },
   
@@ -554,7 +508,7 @@ var PaintController =  Ember.ArrayController.extend({
     
     App.drawTool.setDrawFunction("rect");
     App.drawTool.click();
-    this.setCurrentTool( App.drawTool );
+    this.setTool( App.drawTool );
     
   },
 
@@ -562,7 +516,7 @@ var PaintController =  Ember.ArrayController.extend({
     
     App.drawTool.setDrawFunction("fillrect");
     App.drawTool.click();
-    this.setCurrentTool( App.drawTool );
+    this.setTool( App.drawTool );
     
   },
 
@@ -570,7 +524,7 @@ var PaintController =  Ember.ArrayController.extend({
     
     App.drawTool.setDrawFunction("circle");
     App.drawTool.click();
-    this.setCurrentTool( App.drawTool );
+    this.setTool( App.drawTool );
     
   },
 
@@ -578,7 +532,7 @@ var PaintController =  Ember.ArrayController.extend({
     
     App.drawTool.setDrawFunction("fillcircle");
     App.drawTool.click();
-    this.setCurrentTool( App.drawTool );
+    this.setTool( App.drawTool );
     
   },
 
@@ -586,14 +540,14 @@ var PaintController =  Ember.ArrayController.extend({
     
     App.drawTool.setDrawFunction("line");
     App.drawTool.click();
-    this.setCurrentTool( App.drawTool );
+    this.setTool( App.drawTool );
     
   },
   
   fillTool : function() {
     
     App.fillTool.click();
-    this.setCurrentTool( App.fillTool );
+    this.setTool( App.fillTool );
     
   },
   
@@ -663,27 +617,24 @@ var PaintController =  Ember.ArrayController.extend({
   
   addSprite : function() {
     
-    if ( this.content.length < 8 ) {
-      
-      this.set( 'sprite', NewSpriteModel.create() );
-      this.content.addObject( this.sprite );
-      
-    }
+    this.add( null );
     
   },
   
   copySprite : function() {
     
-    alert( 'TODO' );
+    this.add( this.sprite.clone() );
     
   },
   
   removeSprite : function() {
     
-    if ( this.content.length > 1 ) {
+    var i = this.content.indexOf( this.sprite ) || 1;
     
+    if ( this.content.length > 1 ) {
+      
       this.content.removeObject( this.sprite );
-      this.set( 'sprite', this.content[0] );
+      this.setSpriteModel( this.content[i - 1] );
     
     }
     
@@ -691,8 +642,7 @@ var PaintController =  Ember.ArrayController.extend({
   
   pipetteTool : function() {
     
-    this.setCurrentTool( App.pipetteTool );
-    this.click();
+    this.setTool( App.pipetteTool );
     
   },
   
@@ -705,6 +655,8 @@ var PaintController =  Ember.ArrayController.extend({
     
     this.screenCtx.lineCap = this.toolCtx.lineCap = 'round';
     this.screenCtx.lineWidth = this.toolCtx.lineWidth = this.size;
+    
+    this.updateColor();
     
     this.loadSprite();
     

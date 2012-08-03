@@ -40,14 +40,11 @@ function paint_main() {
   
   App.paintController = PaintController.create();
   
-  // App.toolBoxController = ToolBoxController.create();
-  // App.spritePlayer = SpritePlayerController.create();
-  
   App.pencilTool = PencilToolModel.create();
   App.drawTool = DrawToolModel.create();
   App.selectTool = SelectToolModel.create();
   App.fillTool = FillToolModel.create();
-  App.pipetteTool = ColorPipetteModel.create();
+  App.pipetteTool = PipetteToolModel.create();
   
   App.paintView = PaintView.create();
   App.paintSizeView = PaintSizeView.create();

@@ -16,9 +16,25 @@ var NewSpriteModel = Ember.Object.extend({
     
     this.set( 'ctx', _ctx );
     
-    this.save( _ctx.getImageData( 0, 0, App.paintController.width, App.paintController.height ) );
+    if ( !this.stack.length ) {
+      
+      this.save( _ctx.getImageData( 0, 0, App.paintController.width, App.paintController.height ) );
+      
+    }
     
     this.draw();
+    
+    App.paintController.loadSprite();
+    
+  },
+  
+  clone : function() {
+    
+    var sprite = NewSpriteModel.create();
+    
+    sprite.save( this.load() );
+    
+    return sprite;
     
   },
   
@@ -72,7 +88,7 @@ var NewSpriteModel = Ember.Object.extend({
     
     var data = this.load();
     
-    if ( data ) {
+    if ( data && this.ctx ) {
       
       this.ctx.putImageData( data, 0, 0 );
       
