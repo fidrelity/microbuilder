@@ -115,8 +115,8 @@ var PaintView = Ember.View.extend({
     var offset = $( this.toolCanvas ).offset();
     
     return { 
-      x : Math.floor( e.pageX - offset.left ) / this.zoom,
-      y : Math.floor( e.pageY - offset.top ) / this.zoom
+      x : Math.floor( ( e.pageX - offset.left ) / this.zoom ),
+      y : Math.floor( ( e.pageY - offset.top ) / this.zoom )
     };
     
   }

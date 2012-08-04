@@ -131,6 +131,38 @@ function rgbToHex( r, g, b ) {
   
 };
 
+function bresenham( func, x1, y1, x2, y2 ) {
+  
+  var dx = Math.abs( x1 - x2 ),
+    dy = -Math.abs( y1 - y2 ),
+    sx = x1 < x2 ? 1 : -1,
+    sy = y1 < y2 ? 1 : -1,
+    e = dx + dy, e2;
+ 
+  while ( !( x1 === x2 && y1 === y2 ) ) {
+    
+    func( x1, y1 );
+    
+    e2 = 2 * e;
+    
+    if ( e2 >= dy ) {
+      
+      e += dy;
+      x1 += sx;
+      
+    }
+    
+    if ( e2 <= dx ) {
+      
+      e += dx;
+      y1 += sy;
+      
+    }
+    
+  }
+  
+};
+
 extend( CanvasRenderingContext2D.prototype, {
   
   drawLine : function( x, y, x2, y2 ) {

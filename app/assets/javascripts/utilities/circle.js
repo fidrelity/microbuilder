@@ -119,6 +119,8 @@ extend( Circle.prototype, {
     
     this.radius = this.sub( vec ).norm();
     
+    return this;
+    
   },
   
   leavesArea : function( area ) {

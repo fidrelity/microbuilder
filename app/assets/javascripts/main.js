@@ -41,6 +41,7 @@ function paint_main() {
   App.paintController = PaintController.create();
   
   App.pencilTool = PencilToolModel.create();
+  App.eraserTool = EraserToolModel.create();
   App.drawTool = DrawToolModel.create();
   App.selectTool = SelectToolModel.create();
   App.fillTool = FillToolModel.create();

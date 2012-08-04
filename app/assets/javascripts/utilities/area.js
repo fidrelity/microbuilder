@@ -125,6 +125,8 @@ extend( Area.prototype, {
     this.width = vec.x - this.x;
     this.height = vec.y - this.y;
     
+    return this;
+    
   },
   
   leavesArea : function( area ) {
@@ -162,6 +164,8 @@ extend( Area.prototype, {
     
     this.width = Math.floor( this.width );
     this.height = Math.floor( this.height );
+    
+    return this;
     
   },
   

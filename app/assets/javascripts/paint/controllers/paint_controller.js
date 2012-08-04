@@ -71,7 +71,7 @@ var PaintController =  Ember.ArrayController.extend({
     var sCtx = this.screenCtx,
       tCtx = this.toolCtx;
     
-    sCtx.fillStyle = tCtx.fillStyle = sCtx.strokeStyle = tCtx.fillStyle = this.color;
+    sCtx.fillStyle = tCtx.fillStyle = sCtx.strokeStyle = tCtx.strokeStyle = this.color;
     
   },
   
@@ -330,7 +330,8 @@ var PaintController =  Ember.ArrayController.extend({
       zoom = this.zoom,
       imageData = this.sprite.load(),
       ctx = this.screenCtx,
-      r, c, i;
+      data,
+      r, c, i, j, k, w, p, s;
     
     if ( !imageData ) {
       
@@ -348,17 +349,45 @@ var PaintController =  Ember.ArrayController.extend({
       
       ctx.save();
       
+      data = imageData.data;
+      
       for ( r = 0; r < height; r++ ) {
+        
+        w = 1;
+        p = 0;
+        j = r * width * 4;
         
         for ( c = 0; c < width; c++ ) {
           
           i = ( r * width + c ) * 4;
           
-          ctx.fillStyle = 'rgba(' + imageData.data[i] + ',' + imageData.data[i+1] + ',' + imageData.data[i+2] + ',' + imageData.data[i+3] + ')';
+          s = true;
           
-          ctx.fillRect( c, r, 1, 1 );
+          for ( k = 0; k < 4; k++ ) {
+            
+            if ( data[i + k] !== data[j + k] ) {
+              
+              s = false;
+              break;
+              
+            }
+            
+          }
+          
+          if ( !s ) {
+            
+            ctx.fillStyle = 'rgba(' + data[j] + ',' + data[j+1] + ',' + data[j+2] + ',' + data[j+3] + ')';
+            ctx.fillRect( p, r, c - p, 1 );
+            
+            p = c;
+            j = ( r * width + p ) * 4;
+            
+          }
           
         }
+        
+        ctx.fillStyle = 'rgba(' + data[j] + ',' + data[j+1] + ',' + data[j+2] + ',' + data[j+3] + ')';
+        ctx.fillRect( p, r, width - p, 1 );
         
       }
       
@@ -500,46 +529,41 @@ var PaintController =  Ember.ArrayController.extend({
   
   eraseTool : function() {
     
-    this.setTool( App.pencilTool );
+    this.setTool( App.eraserTool );
     
   },
   
   drawRectTool : function() {
     
-    App.drawTool.setDrawFunction("rect");
-    App.drawTool.click();
+    App.drawTool.setDrawFunction( "rect" );
     this.setTool( App.drawTool );
     
   },
-
+  
   drawRectFillTool : function() {
     
-    App.drawTool.setDrawFunction("fillrect");
-    App.drawTool.click();
+    App.drawTool.setDrawFunction( "fillrect" );
     this.setTool( App.drawTool );
     
   },
-
+  
   drawCircleTool : function() {
     
-    App.drawTool.setDrawFunction("circle");
-    App.drawTool.click();
+    App.drawTool.setDrawFunction( "circle" );
     this.setTool( App.drawTool );
     
   },
-
+  
   drawCircleFillTool : function() {
     
-    App.drawTool.setDrawFunction("fillcircle");
-    App.drawTool.click();
+    App.drawTool.setDrawFunction( "fillcircle" );
     this.setTool( App.drawTool );
     
   },
-
+  
   drawLineTool : function() {
     
-    App.drawTool.setDrawFunction("line");
-    App.drawTool.click();
+    App.drawTool.setDrawFunction( "line" );
     this.setTool( App.drawTool );
     
   },
