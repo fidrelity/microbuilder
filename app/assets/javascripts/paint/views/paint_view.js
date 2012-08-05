@@ -41,11 +41,7 @@ var PaintView = Ember.View.extend({
     
     area.mousemove( function( e ) {
       
-      if ( self.active ) {
-        
-        App.paintController.mousemove( self.getMouse( e ) );
-        
-      }
+      App.paintController.mousemove( self.getMouse( e ), self.active );
       
     });
     
@@ -103,9 +99,9 @@ var PaintView = Ember.View.extend({
     
     ctx.fillStyle = '#CCC';
     
-    for ( i = 0; i < Math.ceil( width / size ); i++ ) {
+    for ( i = Math.floor( width / size ); i >= 0; i-- ) {
       
-      for ( j = 0; j < Math.ceil( height / size ); j++ ) {
+      for ( j = Math.floor( height / size ); j >= 0; j-- ) {
         
         if ( ( i % 2 && !( j % 2 ) ) || ( j % 2 && !( i % 2 ) ) ) {
           

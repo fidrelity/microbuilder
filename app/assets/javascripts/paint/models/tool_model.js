@@ -14,7 +14,9 @@ var ToolModel = Ember.Object.extend({
     
   },
   
-  reset : function() {}
+  reset : function() {},
+  
+  preview : function( _mouse, _toolCtx, _size, _rect ) {}
   
 });
 
@@ -28,7 +30,7 @@ var PencilToolModel = ToolModel.extend({
     this.oldX = _mouse.x;
     this.oldY = _mouse.y;
     
-    _screenCtx.fillRect( _mouse.x - _size / 2, _mouse.y - _size / 2, _size, _size );
+    _screenCtx.fillRect( _mouse.x - Math.floor( _size / 2 ), _mouse.y - Math.floor( _size / 2 ), _size, _size );
     
   },
   
@@ -36,12 +38,21 @@ var PencilToolModel = ToolModel.extend({
     
     bresenham( function( _x, _y ) {
       
-      _screenCtx.fillRect( _x - _size / 2, _y - _size / 2, _size, _size );
+      _screenCtx.fillRect( _x - Math.floor( _size / 2 ), _y - Math.floor( _size / 2 ), _size, _size );
       
     }, _mouse.x, _mouse.y, this.oldX, this.oldY );
     
     this.oldX = _mouse.x;
     this.oldY = _mouse.y;
+    
+  },
+  
+  preview : function( _mouse, _toolCtx, _size, _rect ) {
+    
+    _rect.set( _mouse.x - Math.floor( _size / 2 ), _mouse.y - Math.floor( _size / 2 ), _size, _size );
+    _rect.dirty = true;
+    
+    _toolCtx.fillRect( _rect.x, _rect.y, _rect.width, _rect.height );
     
   }
 
@@ -57,7 +68,7 @@ var EraserToolModel = ToolModel.extend({
     this.oldX = _mouse.x;
     this.oldY = _mouse.y;
     
-    _screenCtx.clearRect( _mouse.x - _size / 2, _mouse.y - _size / 2, _size, _size );
+    _screenCtx.clearRect( _mouse.x - Math.floor( _size / 2 ), _mouse.y - Math.floor( _size / 2 ), _size, _size );
     
   },
   
@@ -65,12 +76,28 @@ var EraserToolModel = ToolModel.extend({
     
     bresenham( function( _x, _y ) {
       
-      _screenCtx.clearRect( _x - _size / 2, _y - _size / 2, _size, _size );
+      _screenCtx.clearRect( _x - Math.floor( _size / 2 ), _y - Math.floor( _size / 2 ), _size, _size );
       
     }, _mouse.x, _mouse.y, this.oldX, this.oldY );
     
     this.oldX = _mouse.x;
     this.oldY = _mouse.y;
+    
+  },
+  
+  preview : function( _mouse, _toolCtx, _size, _rect ) {
+    
+    var zoom = App.paintController.zoom;
+    
+    _rect.set( _mouse.x - Math.floor( _size / 2 ), _mouse.y - Math.floor( _size / 2 ), _size, _size );
+    _rect.dirty = true;
+    
+    _toolCtx.save();
+    _toolCtx.setTransform( 1, 0, 0, 1, 0.5, 0.5 );
+    
+    _toolCtx.strokeRect( _rect.x * zoom, _rect.y * zoom, _rect.width * zoom - 1, _rect.height * zoom - 1 );
+    
+    _toolCtx.restore();
     
   }
 
@@ -137,7 +164,7 @@ var DrawToolModel = ToolModel.extend({
     
     area.resize( _mouse ).adjust();
     
-    if ( this.fill ) {
+    if ( this.fill || this.area.width <= 2 * _size || this.area.height <= 2 * _size ) {
       
       _ctx.fillRect( area.x, area.y, area.width, area.height );
       
@@ -172,7 +199,7 @@ var DrawToolModel = ToolModel.extend({
     
     bresenham( function( _x, _y ) {
       
-      _ctx.fillRect( _x - _size / 2, _y - _size / 2, _size, _size );
+      _ctx.fillRect( _x - Math.floor( _size / 2 ), _y - Math.floor( _size / 2 ), _size, _size );
       
     }, _mouse.x, _mouse.y, this.oldX, this.oldY );
     
@@ -191,6 +218,19 @@ var DrawToolModel = ToolModel.extend({
       case "fillcircle" : this.draw = this.drawCircle; this.fill = true; break;
       
       case "line" : this.draw = this.drawLine; break;
+      
+    }
+    
+  },
+  
+  preview : function( _mouse, _toolCtx, _size, _rect ) {
+    
+    if ( this.draw === this.drawLine ) {
+      
+      _rect.set( _mouse.x - Math.floor( _size / 2 ), _mouse.y - Math.floor( _size / 2 ), _size, _size );
+      _rect.dirty = true;
+      
+      _toolCtx.fillRect( _rect.x, _rect.y, _rect.width, _rect.height );
       
     }
     
@@ -299,6 +339,8 @@ var FillToolModel = ToolModel.extend({
 var SelectToolModel = ToolModel.extend({
 
   area : null,
+  area2 : null,
+  
   mouse : null,
   
   imageData : null,
@@ -308,6 +350,7 @@ var SelectToolModel = ToolModel.extend({
   init : function() {
     
     this.area = new Area;
+    this.area2 = new Area;
     this.mouse = new Vector;
     
   },
@@ -330,21 +373,18 @@ var SelectToolModel = ToolModel.extend({
         _screenCtx.clearRect( area.x, area.y, area.width, area.height );
         
         this.clear( _toolCtx );
-        area.draw( _toolCtx );
-        _toolCtx.putImageData( this.imageData, area.x * zoom, area.y * zoom );
-      
+        this.drawArea( _toolCtx );
+        
       }
       
     } else {
       
       if ( this.imageData ) {
         
-        this.reset( _screenCtx );
+        this.reset( _screenCtx, _toolCtx );
         result = true;
         
       }
-      
-      this.clear( _toolCtx );
       
       area.set( _mouse.x, _mouse.y, 0, 0 );
       this.dragging = false;
@@ -365,14 +405,12 @@ var SelectToolModel = ToolModel.extend({
     if ( this.dragging ) {
       
       area.move( this.mouse.subSelf( _mouse ).mulSelf( -1 ) );
-      
-      area.draw( _toolCtx );
-      _toolCtx.putImageData( this.imageData, area.x * zoom, area.y * zoom );
+      this.drawArea( _toolCtx );
       
     } else {
       
       area.resize( _mouse );
-      area.draw( _toolCtx );
+      this.drawArea( _toolCtx );
       
     }
     
@@ -404,10 +442,33 @@ var SelectToolModel = ToolModel.extend({
       this.clear( _toolCtx );
       
       this.imageData = null;
+      this.area.set( 0, 0, 0, 0 );
       
       return true;
       
     }
+    
+  },
+  
+  drawArea : function( _ctx ) {
+    
+    var zoom = App.paintController.zoom,
+      rect = this.area2.copy( this.area ).adjust();
+    
+    _ctx.clearRect( rect.x, rect.y, rect.width, rect.height );
+    
+    if ( this.imageData ) {
+      
+      _ctx.putImageData( this.imageData, rect.x * zoom, rect.y * zoom );
+      
+    }
+    
+    _ctx.save();
+    _ctx.setTransform( 1, 0, 0, 1, 0.5, 0.5 );
+    
+    _ctx.strokeRect( rect.x * zoom, rect.y * zoom, rect.width * zoom - 1, rect.height * zoom - 1 );
+    
+    _ctx.restore();
     
   }
 

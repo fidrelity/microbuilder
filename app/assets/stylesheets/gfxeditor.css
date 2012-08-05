@@ -36,48 +36,52 @@
 }
 
 #paint-wrapper .tool-bar button.select {
-  background:url('/assets/select_icon.png');
+  background:url('/assets/paint/select_icon.png');
 }
 
 #paint-wrapper .tool-bar button.eraser {
-  background:url('/assets/eraser_icon.png');
+  background:url('/assets/paint/eraser_icon.png');
 }
 
 #paint-wrapper .tool-bar button.rectangle {
-  background:url('/assets/rectangle_icon.png');
+  background:url('/assets/paint/rectangle_icon.png');
 }
 
 #paint-wrapper .tool-bar button.circle {
-  background:url('/assets/icon_circle.png');
+  background:url('/assets/paint/icon_circle.png');
 }
 
 #paint-wrapper .tool-bar button.rectanglefill {
-  background:url('/assets/rectangle_fill_icon.png');
+  background:url('/assets/paint/rectangle_fill_icon.png');
 }
 
 #paint-wrapper .tool-bar button.circlefill {
-  background:url('/assets/circle_icon_fill.png');
+  background:url('/assets/paint/circle_icon_fill.png');
 }
 
 #paint-wrapper .tool-bar button.line {
-  background:url('/assets/icon_line.png');
+  background:url('/assets/paint/icon_line.png');
 }
 
 #paint-wrapper .tool-bar button.loadfile {
-  background:url('/assets/load_image_icon.png');
+  background:url('/assets/paint/load_image_icon.png');
 }
 
 #paint-wrapper .tool-bar button.fill {
-  background:url('/assets/fill_icon.png');
+  background:url('/assets/paint/fill_icon.png');
 }
 
 #paint-wrapper .tool-bar button.clearTool {
-  background:url('/assets/clear_icon.png');
-/*  background:url('/assets/icon_delete.png');*/
+  background:url('/assets/paint/clear_icon.png');
+/*  background:url('/assets/paint/icon_delete.png');*/
 }
 
 #paint-wrapper .tool-bar button.undo {
-  background:url('/assets/undo_icon.png');
+  background:url('/assets/paint/undo_icon.png');
+}
+
+#paint-wrapper .tool-bar button.redo {
+  background:url('/assets/paint/redo_icon.png');
 }
 
 #paint-wrapper .tool-bar button.pipette {}

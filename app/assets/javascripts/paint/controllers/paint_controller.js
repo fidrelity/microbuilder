@@ -20,9 +20,13 @@ var PaintController =  Ember.ArrayController.extend({
   screenCtx : null,
   toolCtx : null,
   
+  rect : null,
+  
   init : function() {
     
     this.addObserver( 'color', bind( this, this.updateColor ) );
+    
+    this.rect = new Area;
     
   },
   
@@ -123,9 +127,7 @@ var PaintController =  Ember.ArrayController.extend({
   
   mousedown : function( mouse ) {
     
-    var result = this.tool.mousedown( mouse, this.screenCtx, this.toolCtx, this.size );
-    
-    if ( result ) {
+    if ( this.tool.mousedown( mouse, this.screenCtx, this.toolCtx, this.size ) ) {
       
       this.saveSprite();
       
@@ -133,13 +135,28 @@ var PaintController =  Ember.ArrayController.extend({
     
   },
   
-  mousemove : function( mouse ) {
+  mousemove : function( mouse, isDown ) {
     
-    var result = this.tool.mousemove( mouse, this.screenCtx, this.toolCtx, this.size );
+    var rect = this.rect;
     
-    if ( result ) {
+    if ( rect.dirty ) {
       
-      this.saveSprite();
+      this.toolCtx.clearRect( rect.x, rect.y, rect.width, rect.height );
+      rect.dirty = false;
+      
+    }
+    
+    if ( isDown ) {
+      
+      if ( this.tool.mousemove( mouse, this.screenCtx, this.toolCtx, this.size ) ) {
+        
+        this.saveSprite();
+        
+      }
+      
+    } else if ( mouse.x >= 0 && mouse.y >= 0 && mouse.x <= this.width && mouse.y <= this.height ) {
+      
+      this.tool.preview( mouse, this.toolCtx, this.size, rect );
       
     }
     
@@ -147,9 +164,7 @@ var PaintController =  Ember.ArrayController.extend({
   
   mouseup : function( mouse ) {
     
-    var result = this.tool.mouseup( mouse, this.screenCtx, this.toolCtx, this.size );
-    
-    if ( result ) {
+    if ( this.tool.mouseup( mouse, this.screenCtx, this.toolCtx, this.size ) ) {
       
       this.saveSprite();
       

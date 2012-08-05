@@ -44,7 +44,7 @@
         
         <button {{action "clearTool" target="App.paintController"}} class="clearTool"></button>
         <button {{action "undoTool" target="App.paintController"}} class="undo"></button>
-        <button {{action "redoTool" target="App.paintController"}} class="undo"></button>
+        <button {{action "redoTool" target="App.paintController"}} class="redo"></button>
         
         <button {{action "flipVTool" target="App.paintController"}}>flip v</button>
         <button {{action "flipHTool" target="App.paintController"}}>flip h</button>
