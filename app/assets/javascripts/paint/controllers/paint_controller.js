@@ -59,7 +59,7 @@ var PaintController =  Ember.ArrayController.extend({
       
     }
     
-    this.set( 'color', '#000000' );
+    this.setColor( [0, 0, 0, 255] );
     this.set( 'tool', App.pencilTool );
     
     this.initEvents();
@@ -273,19 +273,19 @@ var PaintController =  Ember.ArrayController.extend({
   
   mousedown : function( mouse ) {
     
-    this.tool.mousedown( mouse, this.screenCtx, this.toolCtx, null );
+    this.tool.mousedown( mouse, this.screenCtx, this.toolCtx, this.size );
     
   },
   
   mousemove : function( mouse ) {
     
-    this.tool.mousemove( mouse, this.screenCtx, this.toolCtx, null );
+    this.tool.mousemove( mouse, this.screenCtx, this.toolCtx, this.size );
     
   },
   
   mouseup : function( mouse ) {
     
-    this.tool.mouseup( mouse, this.screenCtx, this.toolCtx, null );
+    this.tool.mouseup( mouse, this.screenCtx, this.toolCtx, this.size );
     
     this.saveSprite();
     
@@ -451,21 +451,12 @@ var PaintController =  Ember.ArrayController.extend({
     this.screenCtx.lineWidth = this.toolCtx.lineWidth = _size;
     
   },
-
-  getStrokeSize : function() {
-
-    return this.strokeSize;
-
-  },
-
-
-  // ---------------------------------------
-  // View changing
-
-  getColor : function() {
-
-    return this.color;
-
+  
+  setColor : function( _color ) {
+    
+    this.set( 'colorVals', _color );
+    this.set( 'color', rgbToHex( _color[0], _color[1], _color[2] ) );
+    
   },
 
   // ---------------------------------------
@@ -570,7 +561,6 @@ var PaintController =  Ember.ArrayController.extend({
   
   fillTool : function() {
     
-    App.fillTool.click();
     this.setTool( App.fillTool );
     
   },

@@ -52,7 +52,11 @@ function paint_main() {
   
   App.pixelDrawer = new PixelDrawer();
   
-  App.paintSizeView.appendTo('#content');
+  // App.paintSizeView.appendTo('#content');
+  
+  App.paintController.initType( true, 640, 390 );
+  
+  App.paintView.appendTo( '#content' );
   
 };
 

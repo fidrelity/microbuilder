@@ -19,22 +19,18 @@ var PencilToolModel = ToolModel.extend({
   
   mousedown : function( _mouse, _screenCtx, _toolCtx, _size ) {
     
-    var size = App.paintController.size;
-    
     this.oldX = _mouse.x;
     this.oldY = _mouse.y;
     
-    _screenCtx.fillRect( _mouse.x - size / 2, _mouse.y - size / 2, size, size );
+    _screenCtx.fillRect( _mouse.x - _size / 2, _mouse.y - _size / 2, _size, _size );
     
   },
   
   mousemove : function( _mouse, _screenCtx, _toolCtx, _size ) {
     
-    var size = App.paintController.size;
-    
     bresenham( function( _x, _y ) {
       
-      _screenCtx.fillRect( _x - size / 2, _y - size / 2, size, size );
+      _screenCtx.fillRect( _x - _size / 2, _y - _size / 2, _size, _size );
       
     }, _mouse.x, _mouse.y, this.oldX, this.oldY );
     
@@ -52,22 +48,18 @@ var EraserToolModel = ToolModel.extend({
   
   mousedown : function( _mouse, _screenCtx, _toolCtx, _size ) {
     
-    var size = App.paintController.size;
-    
     this.oldX = _mouse.x;
     this.oldY = _mouse.y;
     
-    _screenCtx.clearRect( _mouse.x - size / 2, _mouse.y - size / 2, size, size );
+    _screenCtx.clearRect( _mouse.x - _size / 2, _mouse.y - _size / 2, _size, _size );
     
   },
   
   mousemove : function( _mouse, _screenCtx, _toolCtx, _size ) {
     
-    var size = App.paintController.size;
-    
     bresenham( function( _x, _y ) {
       
-      _screenCtx.clearRect( _x - size / 2, _y - size / 2, size, size );
+      _screenCtx.clearRect( _x - _size / 2, _y - _size / 2, _size, _size );
       
     }, _mouse.x, _mouse.y, this.oldX, this.oldY );
     
@@ -82,8 +74,7 @@ var PipetteToolModel = ToolModel.extend({
   
   mouseup : function( _mouse, _screenCtx, _toolCtx, _size ) {
     
-    var p = _screenCtx.getImageData( _mouse.x, _mouse.y, 1, 1 ).data;
-    App.paintController.set( 'color', rgbToHex( p[0], p[1], p[2] ) )
+    App.paintController.setColor( _screenCtx.getImageData( _mouse.x, _mouse.y, 1, 1 ).data );
     
   }
   
@@ -109,44 +100,49 @@ var DrawToolModel = ToolModel.extend({
     this.oldX = _mouse.x;
     this.oldY = _mouse.y;
     
-    this.area.setPosition( _mouse.x, _mouse.y );
-    this.circle.setPosition( _mouse.x, _mouse.y );
+    this.area.set( _mouse.x, _mouse.y, 0, 0 );
+    this.circle.set( _mouse.x, _mouse.y, 0 );
     
   },
   
   mousemove : function( _mouse, _screenCtx, _toolCtx, _size ) {
     
     this.clear( _toolCtx );
-    this.draw( _toolCtx, _mouse );
+    this.draw( _toolCtx, _mouse, _size );
     
   },
   
   mouseup : function( _mouse, _screenCtx, _toolCtx, _size ) {
     
     this.clear( _toolCtx );
-    this.draw( _screenCtx, _mouse );
+    this.draw( _screenCtx, _mouse, _size );
     
   },
   
-  draw : function( _ctx, _mouse ) {},
+  draw : function( _ctx, _mouse, _size ) {},
   
-  drawRect : function( _ctx, _mouse ) {
+  drawRect : function( _ctx, _mouse, _size ) {
     
-    var area = this.area.resize( _mouse );
+    var area = this.area.setPosition( this.oldX, this.oldY );
+    
+    area.resize( _mouse ).adjust();
     
     if ( this.fill ) {
-    
+      
       _ctx.fillRect( area.x, area.y, area.width, area.height );
-    
+      
     } else {
       
-      _ctx.strokeRect( area.x, area.y, area.width, area.height );
+      _ctx.fillRect( area.x, area.y, area.width, _size );
+      _ctx.fillRect( area.x, area.y, _size, area.height );
+      _ctx.fillRect( area.x + area.width - _size, area.y, _size, area.height );
+      _ctx.fillRect( area.x, area.y + area.height - _size, area.width, _size );
       
     }
     
   },
   
-  drawCircle : function( _ctx, _mouse ) {
+  drawCircle : function( _ctx, _mouse, _size ) {
     
     var circle = this.circle.resize( _mouse );
     
@@ -162,9 +158,13 @@ var DrawToolModel = ToolModel.extend({
     
   },
   
-  drawLine : function( _ctx, _mouse ) {
+  drawLine : function( _ctx, _mouse, _size ) {
     
-    _ctx.drawLine( _mouse.x, _mouse.y, this.oldX, this.oldY );
+    bresenham( function( _x, _y ) {
+      
+      _ctx.fillRect( _x - _size / 2, _y - _size / 2, _size, _size );
+      
+    }, _mouse.x, _mouse.y, this.oldX, this.oldY );
     
   },
   
@@ -186,4 +186,100 @@ var DrawToolModel = ToolModel.extend({
     
   }
 
+});
+
+var FillToolModel = ToolModel.extend({
+  
+  mousedown : function( _mouse, _screenCtx, _toolCtx, _size ) {
+    
+    var zoom = App.paintController.zoom,
+      color = _screenCtx.getImageData( _mouse.x * zoom, _mouse.y * zoom, 1, 1 ).data,
+      newColor = App.paintController.colorVals,
+      tempColor = [ 0, 0, 0, 0 ],
+      imageData = App.paintController.sprite.load(),
+      width = imageData.width,
+      height = imageData.height,
+      stack = [],
+      x, y;
+    
+    if ( this.compare( color, newColor ) || 
+      _mouse.x < 0 || _mouse.x >= width || _mouse.y < 0 || _mouse.y >= height ) {
+      
+      return;
+      
+    }
+    
+    this.setPixel( imageData, _mouse.x, _mouse.y, newColor );
+    stack.push( _mouse.x, _mouse.y );
+    
+    while ( stack.length ) {
+      
+      x = stack.shift();
+      y = stack.shift();
+      
+      if ( x + 1 < width && this.compare( color, this.getPixel( imageData, x + 1, y, tempColor ) ) ) {
+        
+        this.setPixel( imageData, x + 1, y, newColor );
+        stack.push( x + 1, y );
+        
+      }
+      
+      if ( x - 1 >= 0 && this.compare( color, this.getPixel( imageData, x - 1, y, tempColor ) ) ) {
+        
+        this.setPixel( imageData, x - 1, y, newColor );
+        stack.push( x - 1, y );
+        
+      }
+      
+      if ( y + 1 < height && this.compare( color, this.getPixel( imageData, x, y + 1, tempColor ) ) ) {
+        
+        this.setPixel( imageData, x, y + 1, newColor );
+        stack.push( x, y + 1 );
+        
+      }
+      
+      if ( y - 1 >= 0 && this.compare( color, this.getPixel( imageData, x, y - 1, tempColor ) ) ) {
+        
+        this.setPixel( imageData, x, y - 1, newColor );
+        stack.push( x, y - 1 );
+        
+      }
+      
+    }
+    
+    App.paintController.sprite.save( imageData );
+    App.paintController.loadSprite();
+    
+  },
+  
+  compare : function( c, c2 ) {
+    
+    return c[0] === c2[0] && c[1] === c2[1] && c[2] === c2[2] && c[3] === c2[3];
+    
+  },
+  
+  getPixel : function( imageData, x, y, color ) {
+    
+    var i = ( y * imageData.width + x ) * 4;
+    
+    color[0] = imageData.data[i];
+    color[1] = imageData.data[i + 1];
+    color[2] = imageData.data[i + 2];
+    color[3] = imageData.data[i + 3];
+    
+    return color;
+    
+  },
+  
+  setPixel : function( imageData, x, y, color ) {
+    
+    var i = ( y * imageData.width + x ) * 4;
+    
+    imageData.data[i] = color[0];
+    imageData.data[i + 1] = color[1];
+    imageData.data[i + 2] = color[2];
+    imageData.data[i + 3] = color[3];
+    
+  }
+  
 });

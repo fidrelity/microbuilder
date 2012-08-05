@@ -71,7 +71,7 @@ var ColorPickerView = Ember.View.extend({
       
       self.set( 'down', true );
       
-      self.set( 'color', self.getHexColor( e, this ) );
+      App.paintController.setColor( self.getColor( e, this ) );
       
     });
     
@@ -79,7 +79,7 @@ var ColorPickerView = Ember.View.extend({
       
       if ( self.down ) {
       
-        self.set( 'color', self.getHexColor( e, this ) );
+        App.paintController.setColor( self.getColor( e, this ) );
       
       }
       
@@ -121,7 +121,7 @@ var ColorPickerView = Ember.View.extend({
 
   },
   
-  getHexColor : function( e, el ) {
+  getColor : function( e, el ) {
     
     var offset = $( el ).offset(),
       i = this.width * 4 * Math.floor( e.pageY - offset.top ) + 4 * Math.floor( e.pageX - offset.left ),
@@ -133,7 +133,7 @@ var ColorPickerView = Ember.View.extend({
       
     }
     
-    return rgbToHex( data[i], data[i+1], data[i+2] );
+    return [ data[i], data[i+1], data[i+2], data[i+3] ];
     
   }
   

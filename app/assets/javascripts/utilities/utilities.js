@@ -139,9 +139,15 @@ function bresenham( func, x1, y1, x2, y2 ) {
     sy = y1 < y2 ? 1 : -1,
     e = dx + dy, e2;
  
-  while ( !( x1 === x2 && y1 === y2 ) ) {
+  while ( true ) {
     
     func( x1, y1 );
+    
+    if ( x1 === x2 && y1 === y2 ) {
+      
+      break;
+      
+    }
     
     e2 = 2 * e;
     
@@ -158,6 +164,73 @@ function bresenham( func, x1, y1, x2, y2 ) {
       y1 += sy;
       
     }
+    
+  }
+  
+};
+
+function ellipse( func, x0, y0, x1, y1 ) {
+  
+  var a = Math.abs( x0 - x1 ), 
+    b = Math.abs( y0 - y1), 
+    b1 = b & 1,
+    dx = 4 * ( 1 - a ) * b * b, 
+    dy = 4 * ( b1 + 1 ) * a * a,
+    err = dx + dy + b1 * a * a,
+    e2;
+  
+  if ( x0 > x1 ) {
+  
+   x0 = x1;
+   x1 += a;
+  
+  }
+  
+  if (y0 > y1) {
+    
+    y0 = y1;
+    
+  }
+  
+  y0 += ( b + 1 ) / 2; 
+  y1 = y0 - b1;
+  
+  a *= 8 * a;
+  b1 = 8 * b * b;
+  
+  do {
+    
+    func( x1, y0 );
+    func( x0, y0 );
+    func( x0, y1 );
+    func( x1, y1 );
+    
+    e2 = 2 * err;
+    
+    if ( e2 <= dy ) {
+      
+      y0++;
+      y1--;
+      err += dy += a;
+      
+    }
+    
+    if ( e2 >= dx || 2 * err > dy ) {
+      
+      x0++;
+      x1--;
+      err += dx += b1;
+    
+    }
+    
+  } while ( x0 <= x1 );
+   
+  while ( y0 - y1 < b ) {
+    
+    func( x0 - 1, y0 );
+    func( x1 + 1, y0++ ); 
+    func( x0 - 1, y1 );
+    func( x1 + 1, y1-- );
     
   }
   
