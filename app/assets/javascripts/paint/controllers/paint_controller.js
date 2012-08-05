@@ -1,15 +1,7 @@
 /*
   PaintController
-
-  Fix:
-    - Fix: SelectTool in BG
-    - Fix: FlipVH in BG
-    - Fix: Remove sprite
-
-  Refactor:
-    - Save image to savemodel    
-
 */
+
 var PaintController =  Ember.ArrayController.extend({
   
   color : null,
@@ -67,16 +59,6 @@ var PaintController =  Ember.ArrayController.extend({
     this.set( 'tool', App.pencilTool );
     
     this.initEvents();
-    
-  },
-  
-  updateColor : function() {
-    
-    var sCtx = this.screenCtx,
-      tCtx = this.toolCtx;
-    
-    sCtx.fillStyle = tCtx.fillStyle = this.color;
-    sCtx.strokeStyle = tCtx.strokeStyle = '#555';
     
   },
   
@@ -138,83 +120,6 @@ var PaintController =  Ember.ArrayController.extend({
     }
 
   },
-
-  // ---------------------------------------
-  // Save
-  save : function() {
-
-    var imageTitle = $("#imageName").val();
-    var makePublic = $("#makePublic").is(":checked") ? 1 : 0;
-
-    var count = this.content.length;
-    var width = this.spriteSize.width;
-    var totalWidth = count * width;
-    var height = this.spriteSize.height;
-
-    var isBackground = this.type === 'background' ? true : false;
-    
-    if(!imageTitle || !count) {alert("Image has no name!");return false;}
-
-    Notifier.showLoader("Saving your image ...");
-
-    this.finalCanvas.attr('width', totalWidth).attr('height', height).show();
-    var canvas = this.finalCanvas[0];
-    var context = canvas.getContext('2d');
-
-    // Merge sprites into final canvas
-    for (var i = 0; i < this.content.length; i++) {
-      var area = this.content[i];
-      var xPos = i * width;
-      context.drawImage(area.canvas, xPos, 0);
-    };
-    
-    // Push to Server
-    var imgData = this.finalCanvas[0].toDataURL("image/png");
-
-    $.ajax({
-      url: "/graphics",
-      type: "post",
-      data: { 
-        graphic: {
-          name : imageTitle,
-          image_data: imgData,
-          frame_count: count,
-          frame_width: width,
-          frame_height: height,
-          public : makePublic,
-          background : isBackground,
-        },
-      },
-      
-      success : function( data ) {
-        App.paintController.goToTypeSelection(false);
-        Notifier.hideLoader();
-      },
-
-      error : function() {
-        Notifier.hideLoader();
-      }
-      
-    });    
-    //this.stop();
-  },
-  
-  goToTypeSelection : function (_ask) {
-    
-    if ( _ask || typeof( _ask ) === "object" ) {
-      
-      if ( !confirm( "Delete all and go back to type selection?" ) ) {
-        
-        return false;
-        
-      }
-      
-    }
-    
-    App.paintView.remove();
-    App.paintSizeView.appendTo( '#content' );
-    
-  },
   
   mousedown : function( mouse ) {
     
@@ -247,6 +152,54 @@ var PaintController =  Ember.ArrayController.extend({
     if ( result ) {
       
       this.saveSprite();
+      
+    }
+    
+  },
+  
+  setSpriteModel : function( _sprite ) {
+    
+    this.set( 'sprite', _sprite );
+    
+    this.loadSprite();
+    
+  },
+  
+  addSprite : function() {
+    
+    this.add( null );
+    
+  },
+  
+  copySprite : function() {
+    
+    this.add( this.sprite.clone() );
+    
+  },
+  
+  removeSprite : function() {
+    
+    var i = this.content.indexOf( this.sprite ) || 1;
+    
+    if ( this.content.length > 1 ) {
+      
+      this.content.removeObject( this.sprite );
+      this.setSpriteModel( this.content[i - 1] );
+    
+    }
+    
+  },
+  
+  add : function( _sprite ) {
+    
+    var i = this.content.indexOf( this.sprite );
+    
+    if ( this.content.length < 8 ) {
+      
+      _sprite = _sprite || NewSpriteModel.create();
+      
+      this.set( 'sprite', _sprite );
+      this.content.insertAt( i + 1, _sprite );
       
     }
     
@@ -309,41 +262,6 @@ var PaintController =  Ember.ArrayController.extend({
     
   },
   
-  add : function( _sprite ) {
-    
-    var i = this.content.indexOf( this.sprite );
-    
-    if ( this.content.length < 8 ) {
-      
-      _sprite = _sprite || NewSpriteModel.create();
-      
-      this.set( 'sprite', _sprite );
-      this.content.insertAt( i + 1, _sprite );
-      
-    }
-    
-  },
-  
-  setSpriteModel : function( _sprite ) {
-    
-    this.set( 'sprite', _sprite );
-    
-    this.loadSprite();
-    
-  },
-  
-  getSpriteModel : function( i ) {
-    
-    if ( typeof i === 'number' && i < this.content.length ) {
-      
-      return this.content[i];
-      
-    }
-    
-    return this.sprite;
-    
-  },
-  
   getTool : function() {
     
     return this.tool;
@@ -378,6 +296,32 @@ var PaintController =  Ember.ArrayController.extend({
     
     this.set( 'colorVals', _color );
     this.set( 'color', rgbToHex( _color[0], _color[1], _color[2] ) );
+    
+  },
+  
+  updateColor : function() {
+    
+    var sCtx = this.screenCtx,
+      tCtx = this.toolCtx;
+    
+    sCtx.fillStyle = tCtx.fillStyle = this.color;
+    sCtx.strokeStyle = tCtx.strokeStyle = '#555';
+    
+  },
+  
+  updateZoom : function( _zoom ) {
+    
+    this.set( 'zoom', _zoom );
+    
+    this.screenCtx.scale( _zoom, _zoom );
+    this.toolCtx.scale( _zoom, _zoom );
+    
+    this.screenCtx.lineCap = this.toolCtx.lineCap = 'round';
+    this.screenCtx.lineWidth = this.toolCtx.lineWidth = 1;
+    
+    this.updateColor();
+    
+    this.loadSprite();
     
   },
   
@@ -541,50 +485,92 @@ var PaintController =  Ember.ArrayController.extend({
 
   },
   
-  addSprite : function() {
-    
-    this.add( null );
-    
-  },
-  
-  copySprite : function() {
-    
-    this.add( this.sprite.clone() );
-    
-  },
-  
-  removeSprite : function() {
-    
-    var i = this.content.indexOf( this.sprite ) || 1;
-    
-    if ( this.content.length > 1 ) {
-      
-      this.content.removeObject( this.sprite );
-      this.setSpriteModel( this.content[i - 1] );
-    
-    }
-    
-  },
-  
   pipetteTool : function() {
     
     this.setTool( App.pipetteTool );
     
   },
   
-  updateZoom : function( _zoom ) {
+  save : function() {
     
-    this.set( 'zoom', _zoom );
+    var imageTitle = $( "#imageName" ).val(),
+      makePublic = $( "#makePublic" ).is( ":checked" ) ? 1 : 0,
+      count = this.content.length,
+      canvas, ctx,
+      imgData, i;
     
-    this.screenCtx.scale( _zoom, _zoom );
-    this.toolCtx.scale( _zoom, _zoom );
+    if ( !imageTitle ) {
+      
+      alert( "Image has no name!" );
+      return false;
+      
+    }
     
-    this.screenCtx.lineCap = this.toolCtx.lineCap = 'round';
-    this.screenCtx.lineWidth = this.toolCtx.lineWidth = 1;
+    Notifier.showLoader( "Saving your image ..." );
     
-    this.updateColor();
+    canvas = document.createElement( 'canvas' );
+    ctx = canvas.getContext( '2d' );
     
-    this.loadSprite();
+    canvas.width = this.width * count;
+    canvas.height = this.height;
+    
+    for ( i = 0; i < count; i++ ) {
+      
+      ctx.putImageData( this.content[i].load(), i * this.width, 0 );
+      
+    }
+    
+    imgData = canvas.toDataURL( "image/png" );
+    
+    $.ajax({
+      
+      url: "/graphics",
+      type: "post",
+      
+      data: { 
+        graphic: {
+          name : imageTitle,
+          image_data: imgData,
+          frame_count: count,
+          frame_width: this.width,
+          frame_height: this.height,
+          public : makePublic,
+          background : this.isBackground,
+        }
+      },
+      
+      success : function( data ) {
+        
+        App.paintController.goToTypeSelection( false );
+        Notifier.hideLoader();
+        
+      },
+      
+      error : function() {
+        
+        Notifier.hideLoader();
+        alert( 'there was an error saving your image' );
+        
+      }
+      
+    });
+    
+  },
+  
+  goToTypeSelection : function (_ask) {
+    
+    if ( _ask || typeof( _ask ) === "object" ) {
+      
+      if ( !confirm( "Delete all and go back to type selection?" ) ) {
+        
+        return false;
+        
+      }
+      
+    }
+    
+    App.paintView.remove();
+    App.paintSizeView.appendTo( '#content' );
     
   }
 

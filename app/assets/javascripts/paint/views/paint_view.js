@@ -9,6 +9,9 @@ var PaintView = Ember.View.extend({
   
   screenCanvas : null,
   toolCanvas : null,
+  patternCanvas : null,
+  
+  patternCtx : null,
   
   mouseDown : false,
   
@@ -19,6 +22,9 @@ var PaintView = Ember.View.extend({
     
     this.set( 'screenCanvas', this.$( '#screenCanvas' )[0] );
     this.set( 'toolCanvas', this.$( '#toolCanvas' )[0] );
+    this.set( 'patternCanvas', this.$( '#patternCanvas' )[0] );
+    
+    this.set( 'patternCtx', this.patternCanvas.getContext( '2d' ) );
     
     App.paintController.initView( 
       this.screenCanvas.getContext( '2d' ), 
@@ -73,16 +79,43 @@ var PaintView = Ember.View.extend({
   
   resize : function() {
     
+    var totalHeight = this.$( '#zoom-canvas-area' ).height(),
+      zoom = this.zoom,
+      height = this.height * zoom,
+      width = this.width * zoom,
+      ctx = this.patternCtx, 
+      size = 8 * zoom, i, j;
+    
     App.paintController.resetTool();
     
-    this.screenCanvas.width = this.toolCanvas.width = this.width * this.zoom;
-    this.screenCanvas.height = this.toolCanvas.height = this.height * this.zoom;
+    this.screenCanvas.width = this.toolCanvas.width = this.patternCanvas.width = width;
+    this.screenCanvas.height = this.toolCanvas.height = this.patternCanvas.height = height;
     
     this.$( '#paint-area' ).css({ 
-      width: this.width * this.zoom, 
-      height: this.height * this.zoom,
-      'margin-top': -this.height * this.zoom / 2
+      width: width,
+      height: height,
+      top: height >= totalHeight ? '0%' : '50%',
+      'margin-top': height >= totalHeight ? 0 : -height / 2
     });
+    
+    ctx.fillStyle = '#FFF';
+    ctx.fillRect( 0, 0, width, height );
+    
+    ctx.fillStyle = '#CCC';
+    
+    for ( i = 0; i < Math.ceil( width / size ); i++ ) {
+      
+      for ( j = 0; j < Math.ceil( height / size ); j++ ) {
+        
+        if ( ( i % 2 && !( j % 2 ) ) || ( j % 2 && !( i % 2 ) ) ) {
+          
+          ctx.fillRect( i * size, j * size, size, size );
+          
+        }
+        
+      }
+      
+    }
     
     App.paintController.updateZoom( this.zoom );
     

@@ -59,7 +59,9 @@
     
       <div id="zoom-canvas-area">
       
-        <div id="paint-area" class="bgTransparent">
+        <div id="paint-area">
+          
+          <canvas id="patternCanvas"></canvas>
           
           <canvas id="screenCanvas"></canvas>
           

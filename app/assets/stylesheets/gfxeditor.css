@@ -124,14 +124,12 @@
 #paint-wrapper #area-wrapper #zoom-canvas-area #paint-area {
   margin: auto;
   position: relative;
-  top: 50%;
   border: 1px solid #000000;
   box-shadow: 0px 0px 12px 0px #AAA;
+  cursor: crosshair;
 }
 
-#paint-wrapper #area-wrapper #zoom-canvas-area #paint-area #screenCanvas, 
-#paint-wrapper #area-wrapper #zoom-canvas-area #paint-area #toolCanvas {
-  cursor: crosshair;
+#paint-wrapper #area-wrapper #zoom-canvas-area #paint-area canvas {
   position: absolute;
   top: 0;
   left: 0;
@@ -152,7 +150,7 @@
 
 
 #paint-wrapper #sprites-area-scroll .spriteView {
-  background: url("bg_transparent.png");
+  background: url("/assets/paint/pattern.png");
   margin: 10px auto;
   border: 1px dashed #000;
   display: block;
@@ -193,7 +191,7 @@
 }
 
 .bgTransparent {
-  background:url(bg_transparent.png) !important;
+  background:url("paint/pattern.png");
 }
 
 /* Tools */
