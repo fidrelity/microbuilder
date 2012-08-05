@@ -129,6 +129,18 @@ extend( Area.prototype, {
     
   },
   
+  rasterize : function( value ) {
+    
+    this.x = Math.floor( this.x / value ) * value;
+    this.y = Math.floor( this.y / value ) * value;
+    
+    this.width = Math.floor( this.width / value ) * value;
+    this.height = Math.floor( this.height / value ) * value;
+    
+    return this;
+    
+  },
+  
   leavesArea : function( area ) {
     
     if ( !area.contains( this ) ) {

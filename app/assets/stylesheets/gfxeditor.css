@@ -72,8 +72,8 @@
 }
 
 #paint-wrapper .tool-bar button.clearTool {
-/*  background:url('/assets/clear_icon.png');*/
-  background:url('/assets/icon_delete.png');
+  background:url('/assets/clear_icon.png');
+/*  background:url('/assets/icon_delete.png');*/
 }
 
 #paint-wrapper .tool-bar button.undo {

@@ -73,6 +73,8 @@ var PaintView = Ember.View.extend({
   
   resize : function() {
     
+    App.paintController.resetTool();
+    
     this.screenCanvas.width = this.toolCanvas.width = this.width * this.zoom;
     this.screenCanvas.height = this.toolCanvas.height = this.height * this.zoom;
     

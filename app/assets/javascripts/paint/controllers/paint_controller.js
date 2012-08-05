@@ -30,8 +30,6 @@ var PaintController =  Ember.ArrayController.extend({
   
   init : function() {
     
-    this.addSprite();
-    
     this.addObserver( 'color', bind( this, this.updateColor ) );
     
   },
@@ -45,6 +43,12 @@ var PaintController =  Ember.ArrayController.extend({
       height : _height
       
     });
+    
+    this.content.clear();
+    
+    this.set( 'zoom', _isBackground ? 1 : 2 );
+    
+    this.addSprite();
     
   },
   
@@ -71,7 +75,8 @@ var PaintController =  Ember.ArrayController.extend({
     var sCtx = this.screenCtx,
       tCtx = this.toolCtx;
     
-    sCtx.fillStyle = tCtx.fillStyle = sCtx.strokeStyle = tCtx.strokeStyle = this.color;
+    sCtx.fillStyle = tCtx.fillStyle = this.color;
+    sCtx.strokeStyle = tCtx.strokeStyle = '#555';
     
   },
   
@@ -102,24 +107,21 @@ var PaintController =  Ember.ArrayController.extend({
           }
         } 
     });
-
+    
     $( "#sizeSlider" ).slider({
-
+      
       value: this.size,
       min: 1,
       max: 20,
       step: 1,
-
-      change: function( event, ui ) {
-        App.paintController.setSize( ui.value );
-      },
-
+      
       slide: function( event, ui ) {
-        $( '#slidervalue' ).html( ui.value );
+        
+        App.paintController.setSize( ui.value );
+        
       }
-
+      
     });
-
 
     // Init file load
     if (!window.File && !window.FileReader && !window.FileList && !window.Blob) {
@@ -196,98 +198,57 @@ var PaintController =  Ember.ArrayController.extend({
     });    
     //this.stop();
   },
-
-  // ---------------------------------------
-  reset : function(_ask) {
-
-    if(_ask) {
-      var ok = confirm("Remove all sprites and reset paint editor?");
-      if(!ok) return false;
-    }
-    
-    for (var i = this.content.length - 1; i >= 0; i--) {
-      this.remove(this.content[i]);
-    };
-
-    this.spriteCounter = 0;
-    //this.zoom = this.isBackground ? 1 : 2; /* MovedTo: zoomCanvasModel.reset()*/
-    this.set('content', []);
-
-    this.zoomModel.reset();
-
-  },
-
-  // Resets paint and shows paintSizeView
-  goToTypeSelection : function (_ask) {   
-
-    if(_ask === true || typeof(_ask) === "object") {
-      var ok = confirm("Delete all and go back to type selection?");
-      if(!ok) return false;
-    }
-        
-    this.reset();
-
-    App.paintView.remove();
-    App.paintSizeView.appendTo('#content');
-
-  },
-
-
-  // ---------------------------------------
-  // Sprite Actions
   
-  // Clear current SpriteModel
-  clearCurrentSprite : function(clearZoomToo) {
-
-    var clearZoom = clearZoomToo === undefined ? true : false;
-
-    this.getCurrentSpriteModel().clear();
-
-    if(clearZoom)
-      this.zoomModel.clear();
-
-  },
-
-  erase : function(_x, _y, _w, _h) {        
-
-    var w = _w || this.strokeSize;
-    var h = _h || this.strokeSize;
+  goToTypeSelection : function (_ask) {
     
-    if(!this.isBackground) {
-
-      this.zoomModel.eraseArea(_x, _y, w, h);
-      //Moved: this.zoomContext.clearRect(_x, _y, w, h);
-
-    } else {
-
-      // Draw white rect if background
-      App.pixelDrawer.popImageData();
-      App.pixelDrawer.fillRect(_x, _y, _x + w, _y + h, "#FFFFFF");
-      App.pixelDrawer.pushImageData();
-
+    if ( _ask || typeof( _ask ) === "object" ) {
+      
+      if ( !confirm( "Delete all and go back to type selection?" ) ) {
+        
+        return false;
+        
+      }
+      
     }
-
-    // Erase on current SpriteModel
-    this.getCurrentSpriteModel().erase(Math.floor(_x), Math.floor(_y), w, h);
+    
+    App.paintView.remove();
+    App.paintSizeView.appendTo( '#content' );
+    
   },
   
   mousedown : function( mouse ) {
     
-    this.tool.mousedown( mouse, this.screenCtx, this.toolCtx, this.size );
+    var result = this.tool.mousedown( mouse, this.screenCtx, this.toolCtx, this.size );
+    
+    if ( result ) {
+      
+      this.saveSprite();
+      
+    }
     
   },
   
   mousemove : function( mouse ) {
     
-    this.tool.mousemove( mouse, this.screenCtx, this.toolCtx, this.size );
+    var result = this.tool.mousemove( mouse, this.screenCtx, this.toolCtx, this.size );
+    
+    if ( result ) {
+      
+      this.saveSprite();
+      
+    }
     
   },
   
   mouseup : function( mouse ) {
     
-    this.tool.mouseup( mouse, this.screenCtx, this.toolCtx, this.size );
+    var result = this.tool.mouseup( mouse, this.screenCtx, this.toolCtx, this.size );
     
-    this.saveSprite();
+    if ( result ) {
+      
+      this.saveSprite();
+      
+    }
     
   },
   
@@ -325,13 +286,8 @@ var PaintController =  Ember.ArrayController.extend({
   
   loadSprite : function() {
     
-    var width = this.width,
-      height = this.height,
-      zoom = this.zoom,
-      imageData = this.sprite.load(),
-      ctx = this.screenCtx,
-      data,
-      r, c, i, j, k, w, p, s;
+    var imageData = this.sprite.load(),
+      ctx = this.screenCtx;
     
     if ( !imageData ) {
       
@@ -345,53 +301,9 @@ var PaintController =  Ember.ArrayController.extend({
       
     } else {
       
-      ctx.clearRect( 0, 0, width, height );
+      ctx.clearRect( 0, 0, this.width, this.height );
       
-      ctx.save();
-      
-      data = imageData.data;
-      
-      for ( r = 0; r < height; r++ ) {
-        
-        w = 1;
-        p = 0;
-        j = r * width * 4;
-        
-        for ( c = 0; c < width; c++ ) {
-          
-          i = ( r * width + c ) * 4;
-          
-          s = true;
-          
-          for ( k = 0; k < 4; k++ ) {
-            
-            if ( data[i + k] !== data[j + k] ) {
-              
-              s = false;
-              break;
-              
-            }
-            
-          }
-          
-          if ( !s ) {
-            
-            ctx.fillStyle = 'rgba(' + data[j] + ',' + data[j+1] + ',' + data[j+2] + ',' + data[j+3] + ')';
-            ctx.fillRect( p, r, c - p, 1 );
-            
-            p = c;
-            j = ( r * width + p ) * 4;
-            
-          }
-          
-        }
-        
-        ctx.fillStyle = 'rgba(' + data[j] + ',' + data[j+1] + ',' + data[j+2] + ',' + data[j+3] + ')';
-        ctx.fillRect( p, r, width - p, 1 );
-        
-      }
-      
-      ctx.restore();
+      ctx.putImageDataOverlap( imageData, 0, 0 );
       
     }
     
@@ -440,15 +352,25 @@ var PaintController =  Ember.ArrayController.extend({
   
   setTool : function( _tool ) {
     
+    this.resetTool();
+    
     this.set( 'tool', _tool );
+    
+  },
+  
+  resetTool : function() {
+    
+    if ( this.tool.reset( this.screenCtx, this.toolCtx ) ) {
+      
+      this.saveSprite();
+      
+    }
     
   },
   
   setSize : function( _size ) {
     
     this.set( 'size', _size );
-    
-    this.screenCtx.lineWidth = this.toolCtx.lineWidth = _size;
     
   },
   
@@ -458,22 +380,7 @@ var PaintController =  Ember.ArrayController.extend({
     this.set( 'color', rgbToHex( _color[0], _color[1], _color[2] ) );
     
   },
-
-  // ---------------------------------------
-
-  drawToSprite : function(canvas) {
-
-    this.getCurrentSpriteModel().drawTo(this.zoomModel.canvas);
-
-  },
-
-  hideTempCanvas : function() {
-
-    this.tempCanvas.hide();
-    App.pixelDrawer.setCanvasContext(this.zoomModel.canvas);
-
-  },
-
+  
   // Loads file from hard drive to canvas
   handleFile : function(e) {
 
@@ -508,7 +415,6 @@ var PaintController =  Ember.ArrayController.extend({
   selectTool : function() {
     
     this.setTool( App.selectTool );
-    this.click();
     
   },
   
@@ -567,6 +473,8 @@ var PaintController =  Ember.ArrayController.extend({
   
   clearTool : function() {
     
+    this.resetTool();
+    
     this.screenCtx.clearRect( 0, 0, this.width * this.zoom, this.height * this.zoom );
     this.toolCtx.clearRect( 0, 0, this.width * this.zoom, this.height * this.zoom );
     
@@ -576,6 +484,8 @@ var PaintController =  Ember.ArrayController.extend({
   
   undoTool : function() {
     
+    this.resetTool();
+    
     this.sprite.undo();
     
     this.loadSprite();
@@ -583,6 +493,8 @@ var PaintController =  Ember.ArrayController.extend({
   },
   
   redoTool : function() {
+    
+    this.resetTool();
     
     this.sprite.redo();
     
@@ -668,7 +580,7 @@ var PaintController =  Ember.ArrayController.extend({
     this.toolCtx.scale( _zoom, _zoom );
     
     this.screenCtx.lineCap = this.toolCtx.lineCap = 'round';
-    this.screenCtx.lineWidth = this.toolCtx.lineWidth = this.size;
+    this.screenCtx.lineWidth = this.toolCtx.lineWidth = 1;
     
     this.updateColor();
     

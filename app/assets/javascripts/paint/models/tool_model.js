@@ -2,13 +2,19 @@ var ToolModel = Ember.Object.extend({
   
   mousedown : function( _mouse, _screenCtx, _toolCtx, _size ) {},
   mousemove : function( _mouse, _screenCtx, _toolCtx, _size ) {},
-  mouseup : function( _mouse, _screenCtx, _toolCtx, _size ) {},
+  mouseup : function( _mouse, _screenCtx, _toolCtx, _size ) {
+    
+    return true;
+    
+  },
   
   clear : function( _ctx ) {
     
     _ctx.clearRect( 0, 0, App.paintController.width, App.paintController.height );
     
-  }
+  },
+  
+  reset : function() {}
   
 });
 
@@ -74,7 +80,9 @@ var PipetteToolModel = ToolModel.extend({
   
   mouseup : function( _mouse, _screenCtx, _toolCtx, _size ) {
     
-    App.paintController.setColor( _screenCtx.getImageData( _mouse.x, _mouse.y, 1, 1 ).data );
+    var zoom = App.paintController.zoom;
+    
+    App.paintController.setColor( _screenCtx.getImageData( _mouse.x * zoom, _mouse.y * zoom, 1, 1 ).data );
     
   }
   
@@ -116,6 +124,8 @@ var DrawToolModel = ToolModel.extend({
     
     this.clear( _toolCtx );
     this.draw( _screenCtx, _mouse, _size );
+    
+    return true;
     
   },
   
@@ -205,7 +215,7 @@ var FillToolModel = ToolModel.extend({
     if ( this.compare( color, newColor ) || 
       _mouse.x < 0 || _mouse.x >= width || _mouse.y < 0 || _mouse.y >= height ) {
       
-      return;
+      return false;
       
     }
     
@@ -250,6 +260,8 @@ var FillToolModel = ToolModel.extend({
     App.paintController.sprite.save( imageData );
     App.paintController.loadSprite();
     
+    return true;
+    
   },
   
   compare : function( c, c2 ) {
@@ -282,4 +294,121 @@ var FillToolModel = ToolModel.extend({
     
   }
   
+});
+
+var SelectToolModel = ToolModel.extend({
+
+  area : null,
+  mouse : null,
+  
+  imageData : null,
+  
+  dragging : false,
+  
+  init : function() {
+    
+    this.area = new Area;
+    this.mouse = new Vector;
+    
+  },
+  
+  mousedown : function( _mouse, _screenCtx, _toolCtx, _size ) {
+    
+    var area = this.area,
+      zoom = App.paintController.zoom,
+      result = false;
+    
+    this.mouse.copy( _mouse );
+    
+    if ( area.contains( _mouse ) ) {
+      
+      this.dragging = true;
+      
+      if ( !this.imageData ) {
+      
+        this.imageData = _screenCtx.getImageData( area.x * zoom, area.y * zoom, area.width * zoom, area.height * zoom );
+        _screenCtx.clearRect( area.x, area.y, area.width, area.height );
+        
+        this.clear( _toolCtx );
+        area.draw( _toolCtx );
+        _toolCtx.putImageData( this.imageData, area.x * zoom, area.y * zoom );
+      
+      }
+      
+    } else {
+      
+      if ( this.imageData ) {
+        
+        this.reset( _screenCtx );
+        result = true;
+        
+      }
+      
+      this.clear( _toolCtx );
+      
+      area.set( _mouse.x, _mouse.y, 0, 0 );
+      this.dragging = false;
+      
+    }
+    
+    return result;
+    
+  },
+  
+  mousemove : function( _mouse, _screenCtx, _toolCtx, _size ) {
+    
+    var area = this.area,
+      zoom = App.paintController.zoom;
+    
+    this.clear( _toolCtx );
+    
+    if ( this.dragging ) {
+      
+      area.move( this.mouse.subSelf( _mouse ).mulSelf( -1 ) );
+      
+      area.draw( _toolCtx );
+      _toolCtx.putImageData( this.imageData, area.x * zoom, area.y * zoom );
+      
+    } else {
+      
+      area.resize( _mouse );
+      area.draw( _toolCtx );
+      
+    }
+    
+    this.mouse.copy( _mouse );
+    
+  },
+  
+  mouseup : function( _mouse, _screenCtx, _toolCtx, _size ) {
+    
+    this.dragging = false;
+    
+    this.area.adjust();
+    
+  },
+  
+  reset : function( _screenCtx, _toolCtx ) {
+    
+    var zoom = App.paintController.zoom;
+    
+    if ( this.imageData ) {
+      
+      _screenCtx.save();
+      _screenCtx.setTransform( 1, 0, 0, 1, 0, 0 );
+      
+      _screenCtx.putImageDataOverlap( this.imageData, this.area.x * zoom, this.area.y * zoom );
+      
+      _screenCtx.restore();
+      
+      this.clear( _toolCtx );
+      
+      this.imageData = null;
+      
+      return true;
+      
+    }
+    
+  }
+
 });

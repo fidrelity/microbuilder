@@ -78,7 +78,7 @@
         <div class="left" id="sizeWrapper">
           <span>Size:</span>
           <div id="sizeSlider"></div>
-          <div id="slidervalue">1</div>
+          <div id="slidervalue"> {{App.paintController.size}} </div>
           <span>px</span>
         </div>
         

@@ -336,7 +336,62 @@ extend( CanvasRenderingContext2D.prototype, {
     this.fill();
     
     this.restore();
-
+    
+  },
+  
+  putImageDataOverlap : function( imageData, x, y ) {
+    
+    var i, j, k, w, p, a, b, s,
+      data = imageData.data,
+      width = imageData.width,
+      height = imageData.height;
+    
+    this.save();
+    
+    this.translate( x, y );
+    
+    for ( i = 0; i < height; i++ ) {
+      
+      w = 1;
+      p = 0;
+      a = i * width * 4;
+      
+      for ( j = 0; j < width; j++ ) {
+        
+        b = ( i * width + j ) * 4;
+        
+        s = true;
+        
+        for ( k = 0; k < 4; k++ ) {
+          
+          if ( data[a + k] !== data[b + k] ) {
+            
+            s = false;
+            break;
+            
+          }
+          
+        }
+        
+        if ( !s ) {
+          
+          this.fillStyle = 'rgba(' + data[a] + ',' + data[a+1] + ',' + data[a+2] + ',' + data[a+3] + ')';
+          this.fillRect( p, i, j - p, 1 );
+          
+          p = j;
+          a = ( i * width + p ) * 4;
+          
+        }
+        
+      }
+      
+      this.fillStyle = 'rgba(' + data[a] + ',' + data[a+1] + ',' + data[a+2] + ',' + data[a+3] + ')';
+      this.fillRect( p, i, width - p, 1 );
+      
+    }
+    
+    this.restore();
+    
   }
   
 });

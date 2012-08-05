@@ -54,7 +54,8 @@ function paint_main() {
   
   // App.paintSizeView.appendTo('#content');
   
-  App.paintController.initType( true, 640, 390 );
+  // App.paintController.initType( true, 640, 390 );
+  App.paintController.initType( false, 128, 128 );
   
   App.paintView.appendTo( '#content' );
   

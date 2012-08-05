@@ -1,4 +1,4 @@
-var SelectToolModel = Ember.Object.extend({
+var _SelectToolModel = Ember.Object.extend({
 
   isSelectable : true,
 
