@@ -211,7 +211,7 @@ var PaintController =  Ember.ArrayController.extend({
     
     if ( this.content.length < 8 ) {
       
-      _sprite = _sprite || NewSpriteModel.create();
+      _sprite = _sprite || SpriteModel.create();
       
       this.set( 'sprite', _sprite );
       this.content.insertAt( i + 1, _sprite );
