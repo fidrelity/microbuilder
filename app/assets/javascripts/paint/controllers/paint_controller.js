@@ -64,29 +64,47 @@ var PaintController =  Ember.ArrayController.extend({
   
   initEvents : function() {
     
-    $( document ).keyup( function( e ) {
+    $( document ).keydown( function( e ) {
       
-      if ( e.keyCode === 17 ) {
+      // console.log( e.keyCode );
+      
+      if ( e.keyCode === 17 || e.keyCode === 91 ) { // Ctrl || Cmd
         
         this.isCtrl = true;
+        
+      } else if ( e.keyCode === 16 ) { // Shift
+        
+        this.isShift = true;
+        
+      } else if ( e.keyCode === 90 && this.isCtrl && this.isShift ) { // Z -> redo
+        
+        App.paintController.redoTool();
+        
+      } else if ( e.keyCode === 90 && this.isCtrl ) { // Z -> undo
+        
+        App.paintController.undoTool();
+        
+      } else if ( e.keyCode === 46 ) { // DEL
+        
+        App.paintController.clearTool();
+        
+      } else if ( e.keyCode === 27 ) { // ESC
+        
+        App.paintController.resetTool();
         
       }
       
     });
     
-    $( document ).keydown( function( e ) {
+    $( document ).keyup( function( e ) {
       
-      if ( e.keyCode === 17 ) { // Ctrl
+      if ( e.keyCode === 17 || e.keyCode === 91 ) { // Ctrl || Cmd
         
-        this.isCtrl = true;
+        this.isCtrl = false;
         
-      } else if ( e.keyCode === 90 && this.isCtrl ) { // Z
+      } else if ( e.keyCode === 16 ) { // Shift
         
-        App.paintController.undo();
-        
-      } else if ( e.keyCode === 27 ) { // ESC
-        
-        
+        this.isShift = false;
         
       }
       
