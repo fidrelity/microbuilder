@@ -46,10 +46,10 @@
         <button {{action "undoTool" target="App.paintController"}} class="undo"></button>
         <button {{action "redoTool" target="App.paintController"}} class="redo"></button>
         
-        <button {{action "flipVTool" target="App.paintController"}}>flip v</button>
-        <button {{action "flipHTool" target="App.paintController"}}>flip h</button>
-        <button {{action "rotateLeftTool" target="App.paintController"}}>rot l</button>
-        <button {{action "rotateRightTool" target="App.paintController"}}>rot r</button>
+        <button {{action "flipVertical" target="App.paintController"}}>flip v</button>
+        <button {{action "flipHorizontal" target="App.paintController"}}>flip h</button>
+        <button {{action "rotateLeft" target="App.paintController"}}>rot l</button>
+        <button {{action "rotateRight" target="App.paintController"}}>rot r</button>
         
         <button {{action "pipetteTool" target="App.paintController"}} class="pipette selectable">pip</button>
         

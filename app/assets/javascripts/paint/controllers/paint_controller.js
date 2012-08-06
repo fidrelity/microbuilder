@@ -432,10 +432,18 @@ var PaintController =  Ember.ArrayController.extend({
   
   clearTool : function() {
     
-    this.resetTool();
-    
-    this.screenCtx.clearRect( 0, 0, this.width * this.zoom, this.height * this.zoom );
-    this.toolCtx.clearRect( 0, 0, this.width * this.zoom, this.height * this.zoom );
+    if ( this.tool.imageData ) {
+      
+      this.tool.clearRect( this.toolCtx );
+      
+    } else {
+      
+      this.resetTool();
+      
+      this.clear( this.screenCtx );
+      this.clear( this.toolCtx );
+      
+    }
     
     this.saveSprite();
     
@@ -461,35 +469,91 @@ var PaintController =  Ember.ArrayController.extend({
     
   },
   
-  flipVTool : function() {
+  flipVertical : function() { 
     
-    CanvasModifierModel.flipVertical( this.screenCtx, this.sprite.load(), this.width, this.height );
+    if ( this.tool.imageData ) {
+      
+      this.tool.flipVertical( this.toolCtx );
+      
+    } else {
+      
+      this.transpose( 1, -1, 0, this.height, 0 );
+      
+    }
+    
+  },
+  
+  flipHorizontal : function() {     
+    
+    if ( this.tool.imageData ) {
+      
+      this.tool.flipHorizontal( this.toolCtx );
+      
+    } else {
+      
+      this.transpose( -1, 1, this.width, 0, 0 );
+      
+    }
+    
+  },
+  
+  rotateLeft : function() {
+    
+    if ( this.tool.imageData ) {
+      
+      this.tool.rotate( this.toolCtx, true );
+      
+    } else {
+      
+      this.transpose( 1, 1, 0, 0, -Math.PI / 2 );
+      
+    }
+    
+  },
+  
+  rotateRight : function() {
+    
+    if ( this.tool.imageData ) {
+      
+      this.tool.rotate( this.toolCtx, false );
+      
+    } else {
+      
+      this.transpose( 1, 1, 0, 0, Math.PI / 2 );
+      
+    }
+    
+  },
+  
+  transpose : function( _scaleX, _scaleY, _transX, _transY, _rotation ) { 
+    
+    var ctx = this.screenCtx,
+      imageData = this.sprite.load(),
+      width = this.width,
+      height = this.height;
+    
+    this.clear( ctx );
+    
+    ctx.save();
+    
+    ctx.translate( _transX, _transY );
+    ctx.scale( _scaleX, _scaleY );
+    
+    ctx.translate( Math.floor( width / 2 ), Math.floor( height / 2 ) );
+    ctx.rotate( _rotation );
+    ctx.translate( -Math.floor( width / 2 ), -Math.floor( height / 2 ) );
+    
+    ctx.putImageDataOverlap( imageData, 0, 0 );
+    
+    ctx.restore();
     
     this.saveSprite();
     
   },
   
-  flipHTool : function() {
+  clear : function( _ctx ) {
     
-    CanvasModifierModel.flipHorizontal( this.screenCtx, this.sprite.load(), this.width, this.height );
-    
-    this.saveSprite();
-    
-  },
-  
-  rotateRightTool : function() {
-    
-    CanvasModifierModel.rotateRight( this.screenCtx, this.sprite.load(), this.width, this.height );
-    
-    this.saveSprite();
-    
-  },
-  
-  rotateLeftTool : function() {
-    
-    CanvasModifierModel.rotateLeft( this.screenCtx, this.sprite.load(), this.width, this.height );
-    
-    this.saveSprite();
+    _ctx.clearRect( 0, 0, this.width, this.height );
     
   },
   

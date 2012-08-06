@@ -14,7 +14,7 @@ var ToolModel = Ember.Object.extend({
     
   },
   
-  reset : function() {},
+  reset : function( _screenCtx, _toolCtx ) {},
   
   preview : function( _mouse, _toolCtx, _size, _rect ) {}
   
@@ -391,7 +391,6 @@ var SelectToolModel = ToolModel.extend({
   mousedown : function( _mouse, _screenCtx, _toolCtx, _size ) {
     
     var area = this.area,
-      zoom = App.paintController.zoom,
       result = false;
     
     this.mouse.copy( _mouse );
@@ -400,24 +399,9 @@ var SelectToolModel = ToolModel.extend({
       
       this.dragging = true;
       
-      if ( !this.imageData ) {
-      
-        this.imageData = _screenCtx.getImageData( area.x * zoom, area.y * zoom, area.width * zoom, area.height * zoom );
-        _screenCtx.clearRect( area.x, area.y, area.width, area.height );
-        
-        this.clear( _toolCtx );
-        this.drawArea( _toolCtx );
-        
-      }
-      
     } else {
       
-      if ( this.imageData ) {
-        
-        this.reset( _screenCtx, _toolCtx );
-        result = true;
-        
-      }
+      result = this.reset( _screenCtx, _toolCtx );
       
       area.set( _mouse.x, _mouse.y, 0, 0 );
       this.dragging = false;
@@ -453,15 +437,29 @@ var SelectToolModel = ToolModel.extend({
   
   mouseup : function( _mouse, _screenCtx, _toolCtx, _size ) {
     
+    var area = this.area,
+      zoom = App.paintController.zoom;
+    
     this.dragging = false;
     
-    this.area.adjust();
+    area.adjust();
+    
+    if ( !this.imageData && area.width && area.height ) {
+    
+      this.imageData = _screenCtx.getImageData( area.x * zoom, area.y * zoom, area.width * zoom, area.height * zoom );
+      _screenCtx.clearRect( area.x, area.y, area.width, area.height );
+      
+      this.drawArea( _toolCtx );
+      
+    }
     
   },
   
   reset : function( _screenCtx, _toolCtx ) {
     
     var zoom = App.paintController.zoom;
+    
+    this.clear( _toolCtx );
     
     if ( this.imageData ) {
       
@@ -471,8 +469,6 @@ var SelectToolModel = ToolModel.extend({
       _screenCtx.putImageDataOverlap( this.imageData, this.area.x * zoom, this.area.y * zoom );
       
       _screenCtx.restore();
-      
-      this.clear( _toolCtx );
       
       this.imageData = null;
       this.area.set( 0, 0, 0, 0 );
@@ -502,6 +498,90 @@ var SelectToolModel = ToolModel.extend({
     _ctx.strokeRect( rect.x * zoom, rect.y * zoom, rect.width * zoom - 1, rect.height * zoom - 1 );
     
     _ctx.restore();
+    
+  },
+  
+  flipVertical : function( _ctx ) { 
+    
+    this.flip( _ctx, 1, -1, 0, this.area.height );
+    
+  },
+  
+  flipHorizontal : function( _ctx ) {
+    
+    this.flip( _ctx, -1, 1, this.area.width, 0 );
+    
+  },
+  
+  flip : function( _ctx, _scaleX, _scaleY, _transX, _transY ) { 
+    
+    var rect = this.area,
+      zoom = App.paintController.zoom;
+    
+    _ctx.clearRect( rect.x, rect.y, rect.width, rect.height );
+    
+    _ctx.save();
+    
+    _ctx.setTransform( 1, 0, 0, 1, 0, 0 );
+    
+    _ctx.translate( _transX * zoom, _transY * zoom );
+    _ctx.scale( _scaleX, _scaleY );
+    
+    _ctx.putImageDataOverlap( this.imageData, 0, 0 );
+    
+    _ctx.restore();
+    
+    this.imageData = _ctx.getImageData( 0, 0, rect.width * zoom, rect.height * zoom );
+    
+    _ctx.clearRect( 0, 0, rect.width, rect.height );
+    
+    this.drawArea( _ctx );
+    
+  },
+  
+  rotate : function( _ctx, _left ) {
+    
+    var canvas = document.createElement( 'canvas' ),
+      ctx = canvas.getContext( '2d' ),
+      rect = this.area,
+      data = this.imageData,
+      swap;
+    
+    canvas.width = data.height;
+    canvas.height = data.width;
+    
+    if ( _left ) {
+      
+      ctx.rotate( -Math.PI / 2 );
+      ctx.translate( -data.width, 0 );
+      
+    } else {
+      
+      ctx.rotate( Math.PI / 2 );
+      ctx.translate( 0, -data.height );
+      
+    }
+    
+    ctx.putImageDataOverlap( this.imageData, 0, 0 );
+    
+    this.imageData = ctx.getImageData( 0, 0, data.height, data.width );
+    
+    _ctx.clearRect( rect.x, rect.y, rect.width, rect.height );
+    
+    swap = rect.width;
+    rect.width = rect.height;
+    rect.height = swap;
+    
+    this.drawArea( _ctx );
+    
+  },
+  
+  clearRect : function( _ctx ) {
+    
+    this.imageData = null;
+    this.area.set( 0, 0, 0, 0 );
+    
+    this.clear( _ctx );
     
   }
 
