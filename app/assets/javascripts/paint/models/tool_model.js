@@ -185,6 +185,7 @@ var DrawToolModel = ToolModel.extend({
       line = function( _x, _y, _x2, _y2 ) {
         
         _x = Math.floor( _x );
+        _x2 = Math.floor( _x2 );
         _y = Math.floor( _y );
         
         _ctx.fillRect( _x, _y, _x2 - _x, 1 );
@@ -195,13 +196,32 @@ var DrawToolModel = ToolModel.extend({
       
       ellipse( line, _mouse.x, _mouse.y, this.oldX, this.oldY );
       
+    } else if ( _size === 1 ) {
+      
+      ellipse( function( _x, _y, _x2, _y2 ) {
+        
+        _x = Math.floor( _x );
+        _x2 = Math.floor( _x2 );
+        _y = Math.floor( _y );
+        _y2 = Math.floor( _y2 );
+        
+        _ctx.fillRect( _x, _y, 1, 1 );
+        _ctx.fillRect( _x2, _y2, 1, 1 );
+        
+      }, _mouse.x, _mouse.y, this.oldX, this.oldY );
+      
     } else {
       
       ellipse( function( _x, _y, _x2, _y2 ) {
         
+        _x = Math.floor( _x );
+        _x2 = Math.floor( _x2 );
+        _y = Math.floor( _y );
+        _y2 = Math.floor( _y2 );
+        
         ellipse( line, _x - s, _y - s, _x - s + _size, _y - s + _size );
         ellipse( line, _x2 - s, _y2 - s, _x2 - s + _size, _y2 - s + _size );
-      
+        
       }, _mouse.x, _mouse.y, this.oldX, this.oldY );
       
     }
