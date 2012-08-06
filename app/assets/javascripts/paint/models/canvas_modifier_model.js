@@ -1,68 +1,48 @@
-var CanvasModifierModel = Ember.Object.extend({
-
-
-  flipVertical : function(context, width, height) { 
-
-    this.flip(context, width, height, 1, -1, 0, width);
+var CanvasModifierModel = {
+  
+  flipVertical : function( _ctx, _imageData, _width, _height ) { 
+    
+    return this.transpose( _ctx, _imageData, _width, _height, 1, -1, 0, _height, 0 );
     
   },
-
-
-  flipHorizontal : function(context, width, height) {     
-
-    this.flip(context, width, height, -1, 1, height, 0);
-
-  },
-
-  flip : function(context, width, height, scaleW, scaleH, translateX, translateY) {
-
-    var scale = 1;
-    var imageData = context.getImageData(0, 0, width, height);
+  
+  flipHorizontal : function( _ctx, _imageData, _width, _height ) {     
     
-    // Copy to temp canvas
-    var copiedCanvas = $("<canvas>").attr("width", width).attr("height", height)[0];
-    copiedCanvas.getContext("2d").putImageData(imageData, 0, 0);
-
-    context.save();
-      
-      context.translate(translateX, translateY);
-
-      // Do Flip
-      context.scale(scaleW, scaleH);
-
-      context.clearRect(0, 0, width, height);      
-
-      context.drawImage(copiedCanvas, 0, 0);
-
-    context.restore();
-
-  },
-
-
-  rotate : function(_angle, context, width, height) {
-
-    var angle = _angle || 90;
-
-    var imageData = context.getImageData(0, 0, width, height);
+    return this.transpose( _ctx, _imageData, _width, _height, -1, 1, _width, 0, 0 );
     
-    var copiedCanvas = $("<canvas>").attr("width", width).attr("height", height)[0];
-    copiedCanvas.getContext("2d").putImageData(imageData, 0, 0);
-
-    context.save();
-      
-      context.translate(width/2, height/2);
-      context.rotate(angle * Math.PI / 180);      
-
-      context.translate(-width/2, -height/2);
-
-      context.clearRect(0, 0, width, height);
-      context.drawImage(copiedCanvas, 0, 0);
-
-    context.restore();
-
   },
-
-
-
-
-});
+  
+  rotateLeft : function( _ctx, _imageData, _width, _height ) {     
+    
+    return this.transpose( _ctx, _imageData, _width, _height, 1, 1, 0, 0, -Math.PI / 2 );
+    
+  },
+  
+  rotateRight : function( _ctx, _imageData, _width, _height ) {     
+    
+    return this.transpose( _ctx, _imageData, _width, _height, 1, 1, 0, 0, Math.PI / 2 );
+    
+  },
+  
+  transpose : function( _ctx, _imageData, _width, _height, _scaleX, _scaleY, _transX, _transY, _rotation ) { 
+    
+    _ctx.clearRect( 0, 0, _width, _height );
+    
+    _ctx.save();
+    
+    _ctx.translate( _transX, _transY );
+    _ctx.scale( _scaleX, _scaleY );
+    
+    _ctx.translate( Math.floor( _width / 2 ), Math.floor( _height / 2 ) );
+    _ctx.rotate( _rotation );
+    _ctx.translate( -Math.floor( _width / 2 ), -Math.floor( _height / 2 ) );
+    
+    _ctx.putImageDataOverlap( _imageData, 0, 0 );
+    
+    _ctx.restore();
+    
+    return _ctx.getImageData( 0, 0, _width, _height );
+    
+  }
+  
+};

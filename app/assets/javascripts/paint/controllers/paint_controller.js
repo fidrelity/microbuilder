@@ -462,42 +462,35 @@ var PaintController =  Ember.ArrayController.extend({
   },
   
   flipVTool : function() {
-
-    this.canvasModifier.flipVertical(this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
-
-    this.clearCurrentSprite(false);
-    this.drawToSprite();
-   
-  },
-
-  flipHTool : function() {
-
-    this.canvasModifier.flipHorizontal(this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
-
-    this.clearCurrentSprite(false);
-    this.drawToSprite();
-
-  },
-
-  rotateRightTool : function() {
     
-    this.rotate( 90 );
-        
-  },
-
-  rotateLeftTool : function() {
+    CanvasModifierModel.flipVertical( this.screenCtx, this.sprite.load(), this.width, this.height );
     
-    this.rotate( -90 );
+    this.saveSprite();
     
   },
   
-  rotate : function(_angle) {
-
-    this.canvasModifier.rotate(_angle, this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
-
-    this.clearCurrentSprite(false);
-    this.drawToSprite();
-
+  flipHTool : function() {
+    
+    CanvasModifierModel.flipHorizontal( this.screenCtx, this.sprite.load(), this.width, this.height );
+    
+    this.saveSprite();
+    
+  },
+  
+  rotateRightTool : function() {
+    
+    CanvasModifierModel.rotateRight( this.screenCtx, this.sprite.load(), this.width, this.height );
+    
+    this.saveSprite();
+    
+  },
+  
+  rotateLeftTool : function() {
+    
+    CanvasModifierModel.rotateLeft( this.screenCtx, this.sprite.load(), this.width, this.height );
+    
+    this.saveSprite();
+    
   },
   
   pipetteTool : function() {
