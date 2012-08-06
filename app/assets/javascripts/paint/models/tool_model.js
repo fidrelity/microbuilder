@@ -503,37 +503,31 @@ var SelectToolModel = ToolModel.extend({
   
   flipVertical : function( _ctx ) { 
     
-    this.flip( _ctx, 1, -1, 0, this.area.height );
+    this.flip( _ctx, 1, -1, 0, this.imageData.height );
     
   },
   
   flipHorizontal : function( _ctx ) {
     
-    this.flip( _ctx, -1, 1, this.area.width, 0 );
+    this.flip( _ctx, -1, 1, this.imageData.width, 0 );
     
   },
   
   flip : function( _ctx, _scaleX, _scaleY, _transX, _transY ) { 
     
-    var rect = this.area,
-      zoom = App.paintController.zoom;
+    var canvas = document.createElement( 'canvas' ),
+      ctx = canvas.getContext( '2d' ),
+      data = this.imageData;
     
-    _ctx.clearRect( rect.x, rect.y, rect.width, rect.height );
+    canvas.width = data.width;
+    canvas.height = data.height;
     
-    _ctx.save();
+    ctx.translate( _transX, _transY );
+    ctx.scale( _scaleX, _scaleY );
     
-    _ctx.setTransform( 1, 0, 0, 1, 0, 0 );
+    ctx.putImageDataOverlap( this.imageData, 0, 0 );
     
-    _ctx.translate( _transX * zoom, _transY * zoom );
-    _ctx.scale( _scaleX, _scaleY );
-    
-    _ctx.putImageDataOverlap( this.imageData, 0, 0 );
-    
-    _ctx.restore();
-    
-    this.imageData = _ctx.getImageData( 0, 0, rect.width * zoom, rect.height * zoom );
-    
-    _ctx.clearRect( 0, 0, rect.width, rect.height );
+    this.imageData = ctx.getImageData( 0, 0, data.width, data.height );
     
     this.drawArea( _ctx );
     
@@ -582,6 +576,35 @@ var SelectToolModel = ToolModel.extend({
     this.area.set( 0, 0, 0, 0 );
     
     this.clear( _ctx );
+    
+  },
+  
+  loadImage : function( _ctx, _img, _zoom ) {
+    
+    var canvas = document.createElement( 'canvas' ),
+      ctx = canvas.getContext( '2d' ),
+      rect = this.area.copy( this.area2 ),
+      size = _img;
+    
+    if ( rect.width && rect.height ) {
+      
+      size = rect;
+      
+    } else {
+      
+      rect.set( 0, 0, size.width, size.height );
+      
+    }
+    
+    canvas.width = size.width * _zoom;
+    canvas.height = size.height * _zoom;
+    
+    ctx.scale( _zoom * size.width / _img.width, _zoom * size.height / _img.height );
+    ctx.drawImage( _img, 0, 0 );
+    
+    this.imageData = ctx.getImageData( 0, 0, size.width * _zoom, size.height * _zoom );
+    
+    this.drawArea( _ctx );
     
   }
 

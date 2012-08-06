@@ -1,7 +1,3 @@
-/*
-  PaintController
-*/
-
 var PaintController =  Ember.ArrayController.extend({
   
   color : null,
@@ -68,30 +64,32 @@ var PaintController =  Ember.ArrayController.extend({
   
   initEvents : function() {
     
-    // Key Events
-    $(document).keyup(function(e) {
-      if(e.keyCode === 17) this.isCtrl=true;
+    $( document ).keyup( function( e ) {
+      
+      if ( e.keyCode === 17 ) {
+        
+        this.isCtrl = true;
+        
+      }
+      
     });
-
-    $(document).keydown(function(e) {
-
-        var that = App.paintController;
-
-        if(e.keyCode === 17) this.isCtrl = true;
-
-        // Ctrl + Z
-        if(e.keyCode === 90 && this.isCtrl) {
-          that.undo();
-        }        
-
-        // Escape
-        if(e.keyCode === 27) {
-          try {
-            that.getCurrentTool().reset();
-          } catch(e) {
-            console.log("Reset method does not exists for current tool");
-          }
-        } 
+    
+    $( document ).keydown( function( e ) {
+      
+      if ( e.keyCode === 17 ) { // Ctrl
+        
+        this.isCtrl = true;
+        
+      } else if ( e.keyCode === 90 && this.isCtrl ) { // Z
+        
+        App.paintController.undo();
+        
+      } else if ( e.keyCode === 27 ) { // ESC
+        
+        
+        
+      }
+      
     });
     
     $( "#sizeSlider" ).slider({
@@ -108,21 +106,30 @@ var PaintController =  Ember.ArrayController.extend({
       }
       
     });
-
-    // Init file load
-    if (!window.File && !window.FileReader && !window.FileList && !window.Blob) {
-
+    
+    
+    if ( !window.File && !window.FileReader && !window.FileList && !window.Blob ) {
+      
       $('#file').remove();
-
+      
     } else {
-
-      $("#loadFileButton").click(function() { 
-        $('#file').trigger("click"); // trigger hidden file field
+      
+      $( '#loadFileButton' ).click( function() {
+        
+        $( '#file' ).trigger( 'click' );
+        
       });
       
-      $('#file').change(function(e) {App.paintController.handleFile(e)});
+      $( '#file' ).change( function( e ) {
+        
+        App.paintController.handleFile( e );
+        
+        $( '#reset' ).trigger( 'click' );
+        
+      });
+      
     }
-
+    
   },
   
   mousedown : function( mouse ) {
@@ -340,35 +347,42 @@ var PaintController =  Ember.ArrayController.extend({
     
   },
   
-  // Loads file from hard drive to canvas
-  handleFile : function(e) {
-
-    var goon = confirm("This will overwrite your current canvas. Proceed?");
-    if(!goon) return false;
-
-    reader = new FileReader;
-
-    reader.onload = function(event) {
-
-      var w = App.paintController.spriteSize.width;
-      var h = App.paintController.spriteSize.height;
+  handleFile : function( e ) {
+    
+    var reader = new FileReader,
+      file = e.target.files[0];
+    
+    if ( !file || !file.type.match( 'image.*' ) ) {
+      
+      alert( "You must select a valid image file!" );
+      return;
+      
+    }
+    
+    reader.onload = function( e ) {
+      
       var img = new Image;
       
-      img.width = w;
-      img.height = h;
-
       img.onload = function() {
         
-        App.paintController.zoomModel.context.drawImage(img, 0,0, w, h);      
-        App.paintController.getCurrentSpriteModel().drawTo(App.paintController.zoomModel.canvas);
-
+        App.paintController.handleImage( img );
+        
       };
-
-      img.src = event.target.result;
-
+      
+      img.src = e.target.result;
+      
     };
-
-    reader.readAsDataURL(e.target.files[0]);
+    
+    reader.readAsDataURL( file );
+    
+  },
+  
+  handleImage : function( _img ) {
+    
+    $( '.select' ).trigger( 'click' );
+    
+    App.selectTool.loadImage( this.toolCtx, _img, this.zoom );
+    
   },
   
   selectTool : function() {

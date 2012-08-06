@@ -40,7 +40,10 @@
         <button {{action "fillTool" target="App.paintController"}} class="fill selectable"></button>
         
         <button id="loadFileButton" class="loadfile"></button>
-        <input type="file" id="file" size="1" style="display:none;" />
+        <form style="display:none;">
+          <input type="file" id="file" accept="image/*" />
+          <input type="reset" id="reset" />
+        </form>
         
         <button {{action "clearTool" target="App.paintController"}} class="clearTool"></button>
         <button {{action "undoTool" target="App.paintController"}} class="undo"></button>

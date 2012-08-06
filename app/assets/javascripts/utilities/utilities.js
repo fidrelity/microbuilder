@@ -307,7 +307,7 @@ extend( CanvasRenderingContext2D.prototype, {
     this.stroke();
     
   },
-
+  
   drawArrow : function( x, y, x2, y2, s ) {
     
     s = s || 1;
@@ -337,7 +337,7 @@ extend( CanvasRenderingContext2D.prototype, {
   
   putImageDataOverlap : function( imageData, x, y ) {
     
-    var i, j, k, w, p, a, b, s,
+    var i, j, p, a, b,
       data = imageData.data,
       width = imageData.width,
       height = imageData.height;
@@ -348,7 +348,6 @@ extend( CanvasRenderingContext2D.prototype, {
     
     for ( i = 0; i < height; i++ ) {
       
-      w = 1;
       p = 0;
       a = i * width * 4;
       
@@ -356,22 +355,10 @@ extend( CanvasRenderingContext2D.prototype, {
         
         b = ( i * width + j ) * 4;
         
-        s = true;
-        
-        for ( k = 0; k < 4; k++ ) {
+        if ( data[a] !== data[b] || data[a + 1] !== data[b + 1] || 
+          data[a + 2] !== data[b + 2] || data[a + 3] !== data[b + 3] ) {
           
-          if ( data[a + k] !== data[b + k] ) {
-            
-            s = false;
-            break;
-            
-          }
-          
-        }
-        
-        if ( !s ) {
-          
-          this.fillStyle = 'rgba(' + data[a] + ',' + data[a+1] + ',' + data[a+2] + ',' + data[a+3] + ')';
+          this.fillStyle = 'rgba(' + data[a] + ',' + data[a+1] + ',' + data[a+2] + ',' + data[a+3] / 255 + ')';
           this.fillRect( p, i, j - p, 1 );
           
           p = j;
@@ -381,7 +368,7 @@ extend( CanvasRenderingContext2D.prototype, {
         
       }
       
-      this.fillStyle = 'rgba(' + data[a] + ',' + data[a+1] + ',' + data[a+2] + ',' + data[a+3] + ')';
+      this.fillStyle = 'rgba(' + data[a] + ',' + data[a+1] + ',' + data[a+2] + ',' + data[a+3] / 255 + ')';
       this.fillRect( p, i, width - p, 1 );
       
     }
