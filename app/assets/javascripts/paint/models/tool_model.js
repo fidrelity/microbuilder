@@ -181,15 +181,28 @@ var DrawToolModel = ToolModel.extend({
   
   drawCircle : function( _ctx, _mouse, _size ) {
     
-    var circle = this.circle.resize( _mouse );
+    var s = Math.floor( _size / 2 ),
+      line = function( _x, _y, _x2, _y2 ) {
+        
+        _x = Math.floor( _x );
+        _y = Math.floor( _y );
+        
+        _ctx.fillRect( _x, _y, _x2 - _x, 1 );
+        
+      };
     
     if ( this.fill ) {
-    
-      _ctx.fillCircle( circle.x, circle.y, circle.radius );
-    
+      
+      ellipse( line, _mouse.x, _mouse.y, this.oldX, this.oldY );
+      
     } else {
       
-      _ctx.strokeCircle( circle.x, circle.y, circle.radius );
+      ellipse( function( _x, _y, _x2, _y2 ) {
+        
+        ellipse( line, _x - s, _y - s, _x - s + _size, _y - s + _size );
+        ellipse( line, _x2 - s, _y2 - s, _x2 - s + _size, _y2 - s + _size );
+      
+      }, _mouse.x, _mouse.y, this.oldX, this.oldY );
       
     }
     

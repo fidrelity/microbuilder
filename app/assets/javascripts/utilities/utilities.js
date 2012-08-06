@@ -200,10 +200,8 @@ function ellipse( func, x0, y0, x1, y1 ) {
   
   do {
     
-    func( x1, y0 );
-    func( x0, y0 );
-    func( x0, y1 );
-    func( x1, y1 );
+    func( x1, y0, x0, y0 );
+    func( x0, y1, x1, y1 );
     
     e2 = 2 * err;
     
@@ -227,10 +225,8 @@ function ellipse( func, x0, y0, x1, y1 ) {
    
   while ( y0 - y1 < b ) {
     
-    func( x0 - 1, y0 );
-    func( x1 + 1, y0++ ); 
-    func( x0 - 1, y1 );
-    func( x1 + 1, y1-- );
+    func( x0 - 1, y0, x1 + 1, y0++ );
+    func( x0 - 1, y1, x1 + 1, y1-- );
     
   }
   
