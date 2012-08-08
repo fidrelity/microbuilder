@@ -56,7 +56,9 @@ var PaintController =  Ember.ArrayController.extend({
     }
     
     this.setColor( [0, 0, 0, 255] );
-    this.set( 'tool', App.pencilTool );
+    
+    this.tool = App.pencilTool;
+    $( '.pencil' ).trigger( 'click' );
     
     this.initEvents();
     
@@ -312,6 +314,8 @@ var PaintController =  Ember.ArrayController.extend({
     
     this.resetTool();
     
+    $( '#paint-area' ).css({ cursor: 'crosshair' });
+    
     this.set( 'tool', _tool );
     
   },
@@ -413,11 +417,15 @@ var PaintController =  Ember.ArrayController.extend({
     
     this.setTool( App.pencilTool );
     
+    $( '#paint-area' ).css({ cursor: 'none' });
+    
   },
   
   eraseTool : function() {
     
     this.setTool( App.eraserTool );
+    
+    $( '#paint-area' ).css({ cursor: 'none' });
     
   },
   
@@ -453,6 +461,8 @@ var PaintController =  Ember.ArrayController.extend({
     
     App.drawTool.setDrawFunction( "line" );
     this.setTool( App.drawTool );
+    
+    $( '#paint-area' ).css({ cursor: 'none' });
     
   },
   

@@ -26,11 +26,6 @@ var PaintView = Ember.View.extend({
     
     this.set( 'patternCtx', this.patternCanvas.getContext( '2d' ) );
     
-    App.paintController.initView( 
-      this.screenCanvas.getContext( '2d' ), 
-      this.toolCanvas.getContext( '2d' )
-    );
-    
     area.mousedown( function( e ) {
       
       App.paintController.mousedown( self.getMouse( e ) );
@@ -53,14 +48,17 @@ var PaintView = Ember.View.extend({
       
     });
     
-    $('.pencil').addClass('activeTool');
-    
     $('.selectable').click(function() {
       
       $('.selectable').removeClass('activeTool');
       $(this).addClass('activeTool');
       
     });
+    
+    App.paintController.initView( 
+      this.screenCanvas.getContext( '2d' ), 
+      this.toolCanvas.getContext( '2d' )
+    );
     
     this.resize();
     
