@@ -43,6 +43,12 @@ var PaintSizeView = Ember.View.extend({
 
     });
 
+    // Init tooltips
+    $('.ttip').tooltip();
+    $('.ttipBottom').tooltip({ placement: 'bottom' });
+    $('.pop').popover();
+    $('.popBottom').popover({ placement: 'bottom' });
+
   },
   
   setPaintType : function(_obj) {
