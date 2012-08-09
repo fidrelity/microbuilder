@@ -1,735 +1,690 @@
-/*
-  PaintController
-
-  Fix:
-    - Fix: SelectTool in BG
-    - Fix: FlipVH in BG
-    - Fix: Remove sprite
-
-  Refactor:
-    - Save image to savemodel    
-
-*/
 var PaintController =  Ember.ArrayController.extend({
-
-  graphic : null,
-
-  //
-  content : [],         // contains sprite models
-  mode : null,          // [ 'graphic', 'background' ]
-  tabState : 'paint',   // Different views [ 'paint', 'setSize' ]
-
-  //
-  spriteSize : null,    // Object {width: , height: }
-  currentSprite : null, // type of spriteModel
-  spriteWrapper : 'sprites-area-scroll', // 'sprites-area',
-  spriteCounter : 0,    // spriteModel.index
-  LIMIT : 8,            // Limit of sprites
-  type : null,          // background or object
-  isBackground : false,
-  
-  //
-  strokeSize : 2,          // init stroke size (thickness for draw tools)
   
   color : null,
   zoom : 1,
+  size : 10,
   
   width : 0,
   height : 0,
-
+  
+  content : [],
+  sprite : null,
+  tool : null,
+  
+  isBackground : false,
+  
+  screenCtx : null,
+  toolCtx : null,
+  
+  rect : null,
+  
   init : function() {
-
-    this.spriteSize = { width: 64, height: 64 };
-    this.canvasModifier = CanvasModifierModel.create();
-
-  },
-
-  // Loaded when type of sprite is selected
-  initType : function(_type, _width, _height) {
-
-    this.type = _type || 'object';
-
-    this.setSpriteSize({ width: _width, height: _height });
     
-    this.width = _width;
-    this.height = _height;
-
-  },
-
-  // Called when Paint_View init (after dom ready)
-  initView : function() {
-
-    this.set( 'color', '#000000' );
-
-    this.isBackground = this.type === 'background' ? true : false; 
-
-    // Create and init ZoomModel
-    this.zoomModel = ZoomCanvasModel.create({
-
-      width: this.spriteSize.width,
-      height: this.spriteSize.height,
-      isBackground: this.isBackground
-
-    });
-    this.zoomModel.initDomReady();
-
-    //
-    this.tempCanvas = TempCanvasModel.create({
-      width: this.spriteSize.width,
-      height: this.spriteSize.height
-    });
-    this.tempCanvas.initDomReady();
+    this.addObserver( 'color', bind( this, this.updateColor ) );
     
-    //
-    this.handleType();
-
-    this.add();
-    this.finalCanvas = $('#canvas-merged');
-    this.initEvents();
-
-  },
-
-  // React if type is background or sprite
-  handleType : function() {
-
-    var areaWrapper = $('#area-wrapper');
+    this.rect = new Area;
     
-    this.zoomModel.handleType();
-
-    // *** Type is background ***
-    if(this.type === 'background') {
-
-      this.spriteSize.width = this.zoomModel.width;
-      this.spriteSize.height = this.zoomModel.height;
+  },
+  
+  initType : function( _isBackground, _width, _height ) {
+    
+    this.setProperties({
       
-      // Hide unnecessary buttons and divs
-      App.spritePlayer.hide();
-
-      $('#sprites-area').hide();
-      $('.bgToggle').remove();
-    }
-
+      isBackground : _isBackground,
+      width : _width,
+      height : _height
+      
+    });
+    
+    this.content.clear();
+    
+    this.set( 'zoom', _isBackground ? 1 : 2 );
+    
+    this.addSprite();
+    
   },
-
-  // Init DOM events
+  
+  initView : function( _screenCtx, _toolCtx ) {
+    
+    this.set( 'screenCtx', _screenCtx );
+    this.set( 'toolCtx', _toolCtx );
+    
+    if ( this.isBackground ) {
+      
+      $('#sprites-area').hide();
+      
+    }
+    
+    this.setColor( [0, 0, 0, 255] );
+    
+    this.tool = App.pencilTool;
+    $( '.pencil' ).trigger( 'click' );
+    
+    this.initEvents();
+    
+  },
+  
   initEvents : function() {
     
-    // Key Events
-    $(document).keyup(function(e) {
-      if(e.keyCode === 17) this.isCtrl=true;
-    });
-
-    $(document).keydown(function(e) {
-
-        var that = App.paintController;
-
-        if(e.keyCode === 17) this.isCtrl = true;
-
-        // Ctrl + Z
-        if(e.keyCode === 90 && this.isCtrl) {
-          that.undo();
-        }        
-
-        // Escape
-        if(e.keyCode === 27) {
-          try {
-            that.getCurrentTool().reset();
-          } catch(e) {
-            console.log("Reset method does not exists for current tool");
-          }
-        } 
-    });
-
-
-    // Onclick sprite area
-    /* Note: this should be exchanged in the future with emberJs stuff */
-    $('.canvas').live('click', function(e) {
-
-      var index = parseInt($(this).attr("data-index"));
-      var spriteModel = App.paintController.getCurrentSpriteModelByIndex(index);      
-
-      App.paintController.setCurrentSpriteModel(spriteModel);
-
-    });
-
-
-    // Slider for pencil size
-    $("#sizeSlider").slider({
-
-      value: 2, 
-      min: 1,
-      max: 20, 
-      step: 1,
-
-      change: function( event, ui ) {
-        App.paintController.setStrokeSize(ui.value);
-      },
-
-      slide: function( event, ui) {
-        $('#slidervalue').html(ui.value);
+    $( document ).keydown( function( e ) {
+      
+      // console.log( e.keyCode );
+      
+      if ( e.keyCode === 17 || e.keyCode === 91 ) { // Ctrl || Cmd
+        
+        this.isCtrl = true;
+        
+      } else if ( e.keyCode === 16 ) { // Shift
+        
+        this.isShift = true;
+        
+      } else if ( e.keyCode === 90 && this.isCtrl && this.isShift ) { // Z -> redo
+        
+        App.paintController.redoTool();
+        
+      } else if ( e.keyCode === 90 && this.isCtrl ) { // Z -> undo
+        
+        App.paintController.undoTool();
+        
+      } else if ( e.keyCode === 46 ) { // DEL
+        
+        App.paintController.clearTool();
+        
+      } else if ( e.keyCode === 27 ) { // ESC
+        
+        App.paintController.resetTool();
+        
       }
-
+      
     });
-
-
-    // Init file load
-    if (!window.File && !window.FileReader && !window.FileList && !window.Blob) {
-
+    
+    $( document ).keyup( function( e ) {
+      
+      if ( e.keyCode === 17 || e.keyCode === 91 ) { // Ctrl || Cmd
+        
+        this.isCtrl = false;
+        
+      } else if ( e.keyCode === 16 ) { // Shift
+        
+        this.isShift = false;
+        
+      }
+      
+    });
+    
+    $( "#sizeSlider" ).slider({
+      
+      value: this.size,
+      min: 1,
+      max: 20,
+      step: 1,
+      
+      slide: function( event, ui ) {
+        
+        App.paintController.setSize( ui.value );
+        
+      }
+      
+    });
+    
+    
+    if ( !window.File && !window.FileReader && !window.FileList && !window.Blob ) {
+      
       $('#file').remove();
-
+      
     } else {
-
-      $("#loadFileButton").click(function() { 
-        $('#file').trigger("click"); // trigger hidden file field
+      
+      $( '#loadFileButton' ).click( function() {
+        
+        $( '#file' ).trigger( 'click' );
+        
       });
       
-      $('#file').change(function(e) {App.paintController.handleFile(e)});
-    }
-
-  },
-
-  // ---------------------------------------
-  // Save
-  save : function() {
-
-    var imageTitle = $("#imageName").val();
-    var makePublic = $("#makePublic").is(":checked") ? 1 : 0;
-
-    var count = this.content.length;
-    var width = this.spriteSize.width;
-    var totalWidth = count * width;
-    var height = this.spriteSize.height;
-
-    var isBackground = this.type === 'background' ? true : false;
-    
-    if(!imageTitle || !count) {alert("Image has no name!");return false;}
-
-    Notifier.showLoader("Saving your image ...");
-
-    this.finalCanvas.attr('width', totalWidth).attr('height', height).show();
-    var canvas = this.finalCanvas[0];
-    var context = canvas.getContext('2d');
-
-    // Merge sprites into final canvas
-    for (var i = 0; i < this.content.length; i++) {
-      var area = this.content[i];
-      var xPos = i * width;
-      context.drawImage(area.canvas, xPos, 0);
-    };
-    
-    // Push to Server
-    var imgData = this.finalCanvas[0].toDataURL("image/png");
-
-    $.ajax({
-      url: "/graphics",
-      type: "post",
-      data: { 
-        graphic: {
-          name : imageTitle,
-          image_data: imgData,
-          frame_count: count,
-          frame_width: width,
-          frame_height: height,
-          public : makePublic,
-          background : isBackground,
-        },
-      },
+      $( '#file' ).change( function( e ) {
+        
+        App.paintController.handleFile( e );
+        
+        $( '#reset' ).trigger( 'click' );
+        
+      });
       
-      success : function( data ) {
-        App.paintController.goToTypeSelection(false);
-        Notifier.hideLoader();
-      },
-
-      error : function() {
-        Notifier.hideLoader();
+    }
+    
+  },
+  
+  mousedown : function( mouse ) {
+    
+    if ( this.tool.mousedown( mouse, this.screenCtx, this.toolCtx, this.size ) ) {
+      
+      this.saveSprite();
+      
+    }
+    
+  },
+  
+  mousemove : function( mouse, isDown ) {
+    
+    var rect = this.rect;
+    
+    if ( rect.dirty ) {
+      
+      this.toolCtx.clearRect( rect.x, rect.y, rect.width, rect.height );
+      rect.dirty = false;
+      
+    }
+    
+    if ( isDown ) {
+      
+      if ( this.tool.mousemove( mouse, this.screenCtx, this.toolCtx, this.size ) ) {
+        
+        this.saveSprite();
+        
       }
       
-    });    
-    //this.stop();
-  },
-
-  // ---------------------------------------
-  reset : function(_ask) {
-
-    if(_ask) {
-      var ok = confirm("Remove all sprites and reset paint editor?");
-      if(!ok) return false;
-    }
-    
-    for (var i = this.content.length - 1; i >= 0; i--) {
-      this.remove(this.content[i]);
-    };
-
-    this.spriteCounter = 0;
-    //this.zoom = this.isBackground ? 1 : 2; /* MovedTo: zoomCanvasModel.reset()*/
-    this.set('content', []);
-
-    this.zoomModel.reset();
-
-  },
-
-  // Resets paint and shows paintSizeView
-  goToTypeSelection : function (_ask) {   
-
-    if(_ask === true || typeof(_ask) === "object") {
-      var ok = confirm("Delete all and go back to type selection?");
-      if(!ok) return false;
-    }
-        
-    this.reset();
-
-    App.paintView.remove();
-    App.paintSizeView.appendTo('#content');
-
-  },
-
-
-  // ---------------------------------------
-  // Sprite Actions
-  
-  // Clear current SpriteModel
-  clearCurrentSprite : function(clearZoomToo) {
-
-    var clearZoom = clearZoomToo === undefined ? true : false;
-
-    this.getCurrentSpriteModel().clear();
-
-    if(clearZoom)
-      this.zoomModel.clear();
-
-  },
-
-  erase : function(_x, _y, _w, _h) {        
-
-    var w = _w || this.strokeSize;
-    var h = _h || this.strokeSize;
-    
-    if(!this.isBackground) {
-
-      this.zoomModel.eraseArea(_x, _y, w, h);
-      //Moved: this.zoomContext.clearRect(_x, _y, w, h);
-
-    } else {
-
-      // Draw white rect if background
-      App.pixelDrawer.popImageData();
-      App.pixelDrawer.fillRect(_x, _y, _x + w, _y + h, "#FFFFFF");
-      App.pixelDrawer.pushImageData();
-
-    }
-
-    // Erase on current SpriteModel
-    this.getCurrentSpriteModel().erase(Math.floor(_x), Math.floor(_y), w, h);
-  },
-
-  // ---------------------------------------
-  // onMouseZoomCanvas Delegate events to current Tool
-
-  click : function() {
-    var options = {sprite: this.getCurrentSpriteModel()};
-    this.getCurrentTool().click(options);
-  },
-
-  mousedown : function(e) { 
-    var coord = this.getMouseCoordinates(e);
-    var options = {x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel()};
-    this.getCurrentTool().mousedown(options);
-  },
-
-  mousemove : function(e) {    
-    var coord = this.getMouseCoordinates(e);
-    var options = {x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel()};
-    this.getCurrentTool().mousemove(options);
-  },
-
-  mouseup : function(e) {
-    var coord = this.getMouseCoordinates(e);
-    var options = {x: coord.x, y: coord.y, sprite: this.getCurrentSpriteModel()};
-    this.getCurrentTool().mouseup(options);
-  },
-
-  // ---------------------------------------  
-  // SpriteModel
-
-  // Add new spriteModel
-  add : function(copy) {
-
-    if(this.content.length >= this.LIMIT) return false;
-    var copyData = copy ? this.getCurrentSpriteModel().context.getImageData(0, 0, this.spriteSize.width, this.spriteSize.height) : null;
-    
-    var spriteModel = SpriteModel.create({
-
-      index:    this.spriteCounter++,
-      width:    this.spriteSize.width,
-      height:   this.spriteSize.height,
-      wrapper:  this.spriteWrapper,
-      imgData : copyData
-
-    });
-
-    this.addObject(spriteModel);
-
-    spriteModel.initView();
-    $('.canvas').css({width: this.spriteSize.width, height: this.spriteSize.height});
-    this.setCurrentSpriteModel(spriteModel);
-
-    // Draw white background
-    if(this.isBackground) this.zoomModel.fillBackground("#FFFFFF");
-
-    if(copy) this.getCurrentSpriteModel().pushState();
-
-    //this.updateZoom(true);
-    this.zoomModel.updateZoom(spriteModel, true);
-
-  },
-
-  remove : function(_spriteModel) {
-
-    if(this.content.length === 0) return false;
-
-    var spriteModel = _spriteModel || this.getCurrentSpriteModel();
-
-    this.removeObject(spriteModel);
-
-    $("#" + spriteModel.id).remove();
-    //this.content.splice(spriteModel.index, 1);
-    //console.log("after del", this.content.length, spriteModel);
-    // set currentSpriteModel
-
-  },
-
-  // Removes current sprite
-  removeCurrent : function() {
-
-    if(this.isBackground) return false;
-
-    
-    if(this.content.length === 1) {
-
-      this.clearCurrentSprite();
-
-    } else {
-
-      this.remove(this.getCurrentSpriteModel());
-      this.setCurrentSpriteModel(this.content[this.content.length - 1]);
-
-    }
-
-  },
-
-  // ---------------------------------------
-  // Getter And Setter
-  setCurrentSpriteModel : function(spriteModel) {
-
-    if(!spriteModel || typeof(spriteModel) !== 'object') return false;
-
-    this.set('currentSprite', spriteModel);
-    spriteModel.highlight();
-
-    App.pixelDrawer.setCanvasContext(this.zoomModel.canvas);
-    this.zoomModel.updateZoom(spriteModel, true);
-    
-  },
-
-  getCurrentSpriteModel : function() {
-
-    return this.get('currentSprite');
-
-  },
-
-  getCurrentSpriteModelByIndex : function(_index) {
-
-    for (var i = 0; i < this.content.length; i++) {
-
-      var spriteModel = this.content[i];
-      if(spriteModel.index === _index)
-        return spriteModel;
-
-    };
-
-    return null;
-
-  },
-
-  getCurrentTool : function() {
-
-    return App.toolBoxController.getCurrentTool();
-
-  },
- 
-  setStrokeSize : function(_size) {
-
-    this.strokeSize = _size || 1;
-
-  },
-
-  getStrokeSize : function() {
-
-    return this.strokeSize;
-
-  },
-
-  setSpriteSize : function(_obj) {
-
-    this.spriteSize = _obj;
-
-  },
-
-
-  // ---------------------------------------
-  // View changing
-
-  getColor : function() {
-
-    return this.color;
-
-  },
-
-  // ---------------------------------------
-
-  drawToSprite : function(canvas) {
-
-    this.getCurrentSpriteModel().drawTo(this.zoomModel.canvas);
-
-  },
-
-  hideTempCanvas : function() {
-
-    this.tempCanvas.hide();
-    App.pixelDrawer.setCanvasContext(this.zoomModel.canvas);
-
-  },
-  
-  // ---------------------------------------
-  // Helper
-
-  getMouseCoordinates : function(e) {
-
-    var zoomCanvas = this.zoomModel.domObj; //$('#zoomCanvas');
+    } else if ( mouse.x >= 0 && mouse.y >= 0 && mouse.x <= this.width && mouse.y <= this.height ) {
       
-    var x = e.pageX - zoomCanvas.offset().left;
-    var y = e.pageY - zoomCanvas.offset().top;
- 
-    x = Math.floor(x / this.zoomModel.zoom);
-    y = Math.floor(y / this.zoomModel.zoom);
-
-    return {x: x, y: y};
-
+      this.tool.preview( mouse, this.toolCtx, this.size, rect );
+      
+    }
+    
   },
-
-  // Loads file from hard drive to canvas
-  handleFile : function(e) {
-
-    var goon = confirm("This will overwrite your current canvas. Proceed?");
-    if(!goon) return false;
-
-    reader = new FileReader;
-
-    reader.onload = function(event) {
-
-      var w = App.paintController.spriteSize.width;
-      var h = App.paintController.spriteSize.height;
+  
+  mouseup : function( mouse ) {
+    
+    if ( this.tool.mouseup( mouse, this.screenCtx, this.toolCtx, this.size ) ) {
+      
+      this.saveSprite();
+      
+    }
+    
+  },
+  
+  setSpriteModel : function( _sprite ) {
+    
+    this.set( 'sprite', _sprite );
+    
+    this.loadSprite();
+    
+  },
+  
+  addSprite : function() {
+    
+    this.add( null );
+    
+  },
+  
+  copySprite : function() {
+    
+    this.add( this.sprite.clone() );
+    
+  },
+  
+  removeSprite : function() {
+    
+    var i = this.content.indexOf( this.sprite ) || 1;
+    
+    if ( this.content.length > 1 ) {
+      
+      this.content.removeObject( this.sprite );
+      this.setSpriteModel( this.content[i - 1] );
+    
+    }
+    
+  },
+  
+  add : function( _sprite ) {
+    
+    var i = this.content.indexOf( this.sprite );
+    
+    if ( this.content.length < 8 ) {
+      
+      _sprite = _sprite || SpriteModel.create();
+      
+      this.set( 'sprite', _sprite );
+      this.content.insertAt( i + 1, _sprite );
+      
+    }
+    
+  },
+  
+  saveSprite : function() {
+    
+    var width = this.width,
+      height = this.height,
+      zoom = this.zoom,
+      imageData = this.screenCtx.getImageData( 0, 0, width, height ),
+      zoomData, r, c, j;
+    
+    if ( this.zoom !== 1 ) {
+      
+      zoomData = this.screenCtx.getImageData( 0, 0, width * zoom, height * zoom );
+      
+      for ( r = 0; r < height; r++ ) {
+        
+        for ( c = 0; c < width; c++ ) {
+          
+          for ( j = 0; j < 4; j++ ) {
+            
+            imageData.data[ ( r * width + c ) * 4 + j ] = zoomData.data[ ( r * width * zoom + c ) * zoom * 4 + j ];
+            
+          }
+          
+        }
+        
+      }
+      
+    }
+    
+    this.sprite.save( imageData );
+    
+  },
+  
+  loadSprite : function() {
+    
+    var imageData = this.sprite.load(),
+      ctx = this.screenCtx;
+    
+    if ( !imageData ) {
+      
+      return;
+      
+    }
+    
+    if ( this.zoom === 1 ) {
+      
+      ctx.putImageData( imageData, 0, 0 );
+      
+    } else {
+      
+      ctx.clearRect( 0, 0, this.width, this.height );
+      
+      ctx.putImageDataOverlap( imageData, 0, 0 );
+      
+    }
+    
+  },
+  
+  getTool : function() {
+    
+    return this.tool;
+    
+  },
+  
+  setTool : function( _tool ) {
+    
+    this.resetTool();
+    
+    $( '#paint-area' ).css({ cursor: 'crosshair' });
+    
+    this.set( 'tool', _tool );
+    
+  },
+  
+  resetTool : function() {
+    
+    if ( this.tool.reset( this.screenCtx, this.toolCtx ) ) {
+      
+      this.saveSprite();
+      
+    }
+    
+  },
+  
+  setSize : function( _size ) {
+    
+    this.set( 'size', _size );
+    
+  },
+  
+  setColor : function( _color ) {
+    
+    this.set( 'colorVals', _color );
+    this.set( 'color', rgbToHex( _color[0], _color[1], _color[2] ) );
+    
+  },
+  
+  updateColor : function() {
+    
+    var sCtx = this.screenCtx,
+      tCtx = this.toolCtx;
+    
+    sCtx.fillStyle = tCtx.fillStyle = this.color;
+    sCtx.strokeStyle = tCtx.strokeStyle = '#555';
+    
+  },
+  
+  updateZoom : function( _zoom ) {
+    
+    this.set( 'zoom', _zoom );
+    
+    this.screenCtx.scale( _zoom, _zoom );
+    this.toolCtx.scale( _zoom, _zoom );
+    
+    this.screenCtx.lineCap = this.toolCtx.lineCap = 'round';
+    this.screenCtx.lineWidth = this.toolCtx.lineWidth = 1;
+    
+    this.updateColor();
+    
+    this.loadSprite();
+    
+  },
+  
+  handleFile : function( e ) {
+    
+    var reader = new FileReader,
+      file = e.target.files[0];
+    
+    if ( !file || !file.type.match( 'image.*' ) ) {
+      
+      alert( "You must select a valid image file!" );
+      return;
+      
+    }
+    
+    reader.onload = function( e ) {
+      
       var img = new Image;
       
-      img.width = w;
-      img.height = h;
-
       img.onload = function() {
         
-        App.paintController.zoomModel.context.drawImage(img, 0,0, w, h);      
-        App.paintController.getCurrentSpriteModel().drawTo(App.paintController.zoomModel.canvas);
-
+        App.paintController.handleImage( img );
+        
       };
-
-      img.src = event.target.result;
-
+      
+      img.src = e.target.result;
+      
     };
-
-    reader.readAsDataURL(e.target.files[0]);
-  },
-  
-  centerCanvas : function() {
     
-    $( '#paint-area' ).css({ 
-      width: this.width * this.zoomModel.zoom, 
-      height: this.height * this.zoomModel.zoom,
-      'margin-top': -this.height * this.zoomModel.zoom / 2
-    });
+    reader.readAsDataURL( file );
     
   },
   
-  setCurrentTool : function( tool ) {
+  handleImage : function( _img ) {
     
-    App.toolBoxController.setCurrentTool( tool );
+    $( '.select' ).trigger( 'click' );
+    
+    App.selectTool.loadImage( this.toolCtx, _img, this.zoom );
     
   },
   
   selectTool : function() {
     
-    this.setCurrentTool( App.selectTool );
-    this.click();
+    this.setTool( App.selectTool );
     
   },
   
   pencilTool : function() {
     
-    this.setCurrentTool( App.pencilTool );
-    App.pencilTool.setEraser( false );
-    this.click();
+    this.setTool( App.pencilTool );
+    
+    $( '#paint-area' ).css({ cursor: 'none' });
     
   },
   
   eraseTool : function() {
     
-    this.setCurrentTool( App.pencilTool );
-    App.pencilTool.setEraser( true );
+    this.setTool( App.eraserTool );
+    
+    $( '#paint-area' ).css({ cursor: 'none' });
     
   },
   
   drawRectTool : function() {
     
-    App.drawTool.setDrawFunction("rect");
-    App.drawTool.click();
-    this.setCurrentTool( App.drawTool );
+    App.drawTool.setDrawFunction( "rect" );
+    this.setTool( App.drawTool );
     
   },
-
+  
   drawRectFillTool : function() {
     
-    App.drawTool.setDrawFunction("fillrect");
-    App.drawTool.click();
-    this.setCurrentTool( App.drawTool );
+    App.drawTool.setDrawFunction( "fillrect" );
+    this.setTool( App.drawTool );
     
   },
-
+  
   drawCircleTool : function() {
     
-    App.drawTool.setDrawFunction("circle");
-    App.drawTool.click();
-    this.setCurrentTool( App.drawTool );
+    App.drawTool.setDrawFunction( "circle" );
+    this.setTool( App.drawTool );
     
   },
-
+  
   drawCircleFillTool : function() {
     
-    App.drawTool.setDrawFunction("fillcircle");
-    App.drawTool.click();
-    this.setCurrentTool( App.drawTool );
+    App.drawTool.setDrawFunction( "fillcircle" );
+    this.setTool( App.drawTool );
     
   },
-
+  
   drawLineTool : function() {
     
-    App.drawTool.setDrawFunction("line");
-    App.drawTool.click();
-    this.setCurrentTool( App.drawTool );
+    App.drawTool.setDrawFunction( "line" );
+    this.setTool( App.drawTool );
+    
+    $( '#paint-area' ).css({ cursor: 'none' });
     
   },
   
   fillTool : function() {
     
-    App.fillTool.click();
-    this.setCurrentTool( App.fillTool );
+    this.setTool( App.fillTool );
     
   },
   
   clearTool : function() {
     
-    this.clearCurrentSprite();
+    if ( this.tool.imageData ) {
+      
+      this.tool.clearRect( this.toolCtx );
+      
+    } else {
+      
+      this.resetTool();
+      
+      this.clear( this.screenCtx );
+      this.clear( this.toolCtx );
+      
+    }
+    
+    this.saveSprite();
     
   },
   
   undoTool : function() {
-
-    this.getCurrentSpriteModel().popState();
-
-    if(this.isBackground)
-      this.zoomModel.context.drawImage(this.getCurrentSpriteModel().canvas, 0, 0);
-    else
-      this.zoomModel.updateZoom(true);
-
-  },
-  
-  resetTool : function() {
     
-    this.reset( true );
-    this.add();
+    this.resetTool();
+    
+    this.sprite.undo();
+    
+    this.loadSprite();
     
   },
   
-  flipVTool : function() {
-
-    this.canvasModifier.flipVertical(this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
-
-    this.clearCurrentSprite(false);
-    this.drawToSprite();
-   
-  },
-
-  flipHTool : function() {
-
-    this.canvasModifier.flipHorizontal(this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
-
-    this.clearCurrentSprite(false);
-    this.drawToSprite();
-
-  },
-
-  rotateRightTool : function() {
+  redoTool : function() {
     
-    this.rotate( 90 );
+    this.resetTool();
     
-  },
-
-  rotateLeftTool : function() {
+    this.sprite.redo();
     
-    this.rotate( -90 );
+    this.loadSprite();
     
   },
   
-  rotate : function(_angle) {
-
-    this.canvasModifier.rotate(_angle, this.zoomModel.context, this.spriteSize.width, this.spriteSize.height);
-
-    this.clearCurrentSprite(false);
-    this.drawToSprite();
-
+  flipVertical : function() { 
+    
+    if ( this.tool.imageData ) {
+      
+      this.tool.flipVertical( this.toolCtx );
+      
+    } else {
+      
+      this.transpose( 1, -1, 0, this.height, 0 );
+      
+    }
+    
   },
   
-  addSprite : function() {
+  flipHorizontal : function() {     
     
-    this.add();
+    if ( this.tool.imageData ) {
+      
+      this.tool.flipHorizontal( this.toolCtx );
+      
+    } else {
+      
+      this.transpose( -1, 1, this.width, 0, 0 );
+      
+    }
     
   },
-
-  copySprite : function() {
+  
+  rotateLeft : function() {
     
-    this.add(true);
+    if ( this.tool.imageData ) {
+      
+      this.tool.rotate( this.toolCtx, true );
+      
+    } else {
+      
+      this.transpose( 1, 1, 0, 0, -Math.PI / 2 );
+      
+    }
+    
+  },
+  
+  rotateRight : function() {
+    
+    if ( this.tool.imageData ) {
+      
+      this.tool.rotate( this.toolCtx, false );
+      
+    } else {
+      
+      this.transpose( 1, 1, 0, 0, Math.PI / 2 );
+      
+    }
+    
+  },
+  
+  transpose : function( _scaleX, _scaleY, _transX, _transY, _rotation ) { 
+    
+    var ctx = this.screenCtx,
+      imageData = this.sprite.load(),
+      width = this.width,
+      height = this.height;
+    
+    this.clear( ctx );
+    
+    ctx.save();
+    
+    ctx.translate( _transX, _transY );
+    ctx.scale( _scaleX, _scaleY );
+    
+    ctx.translate( Math.floor( width / 2 ), Math.floor( height / 2 ) );
+    ctx.rotate( _rotation );
+    ctx.translate( -Math.floor( width / 2 ), -Math.floor( height / 2 ) );
+    
+    ctx.putImageDataOverlap( imageData, 0, 0 );
+    
+    ctx.restore();
+    
+    this.saveSprite();
+    
+  },
+  
+  clear : function( _ctx ) {
+    
+    _ctx.clearRect( 0, 0, this.width, this.height );
     
   },
   
   pipetteTool : function() {
     
-    this.setCurrentTool( App.pipetteTool );
-    this.click();
+    this.setTool( App.pipetteTool );
     
   },
   
-  zoomIn : function() {
+  save : function() {
     
-    this.zoomModel.zoomIn();
+    var imageTitle = $( "#imageName" ).val(),
+      makePublic = $( "#makePublic" ).is( ":checked" ) ? 1 : 0,
+      count = this.content.length,
+      canvas, ctx,
+      imgData, i;
+    
+    if ( !imageTitle ) {
+      
+      alert( "Image has no name!" );
+      return false;
+      
+    }
+    
+    Notifier.showLoader( "Saving your image ..." );
+    
+    canvas = document.createElement( 'canvas' );
+    ctx = canvas.getContext( '2d' );
+    
+    canvas.width = this.width * count;
+    canvas.height = this.height;
+    
+    for ( i = 0; i < count; i++ ) {
+      
+      ctx.putImageData( this.content[i].load(), i * this.width, 0 );
+      
+    }
+    
+    imgData = canvas.toDataURL( "image/png" );
+    
+    $.ajax({
+      
+      url: "/graphics",
+      type: "post",
+      
+      data: { 
+        graphic: {
+          name : imageTitle,
+          image_data: imgData,
+          frame_count: count,
+          frame_width: this.width,
+          frame_height: this.height,
+          public : makePublic,
+          background : this.isBackground,
+        }
+      },
+      
+      success : function( data ) {
+        
+        App.paintController.goToTypeSelection( false );
+        Notifier.hideLoader();
+        
+      },
+      
+      error : function() {
+        
+        Notifier.hideLoader();
+        alert( 'there was an error saving your image' );
+        
+      }
+      
+    });
     
   },
   
-  zoomOut : function() {
+  goToTypeSelection : function (_ask) {
     
-    this.zoomModel.zoomOut();
+    if ( _ask || typeof( _ask ) === "object" ) {
+      
+      if ( !confirm( "Delete all and go back to type selection?" ) ) {
+        
+        return false;
+        
+      }
+      
+    }
     
-  },
-
-  bgToggle : function() {
-    
-    this.zoomModel.toogleZoomCanvasBg();
+    App.paintView.remove();
+    App.paintSizeView.appendTo( '#content' );
     
   }
 

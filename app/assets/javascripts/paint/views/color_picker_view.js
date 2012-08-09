@@ -19,6 +19,7 @@ var ColorPickerView = Ember.View.extend({
   didInsertElement : function() {
 
     this.lastColors = [];
+    this.$('#lastColorList').find("li").css({ "background-color" : "#000000" });
     
     var canvas = this.$( '#colorselect' )[0],
       ctx = canvas.getContext( '2d' ),
@@ -34,13 +35,13 @@ var ColorPickerView = Ember.View.extend({
     
     grd = ctx.createLinearGradient( 0, 0, width / 12 * 11, 0 );
     
-    grd.addColorStop( 0, '#F00' );
-    grd.addColorStop( 1 / 6, '#FF0' );
-    grd.addColorStop( 2 / 6, '#0F0' );
-    grd.addColorStop( 3 / 6, '#0FF' );
-    grd.addColorStop( 4 / 6, '#00F' );
-    grd.addColorStop( 5 / 6, '#F0F' );
-    grd.addColorStop( 1, '#F00' );
+    grd.addColorStop( 0, '#C33' );
+    grd.addColorStop( 1 / 6, '#DD2' );
+    grd.addColorStop( 2 / 6, '#3C3' );
+    grd.addColorStop( 3 / 6, '#3CC' );
+    grd.addColorStop( 4 / 6, '#33C' );
+    grd.addColorStop( 5 / 6, '#B4B' );
+    grd.addColorStop( 1, '#C33' );
     
     ctx.fillStyle = grd;
     ctx.fillRect( 0, 0, width / 12 * 11, height );
@@ -50,7 +51,7 @@ var ColorPickerView = Ember.View.extend({
     
     grd = ctx.createLinearGradient( 0, 0, 0, height );
     
-    grd.addColorStop( 0, '#FFF' );
+    grd.addColorStop( 0.02, '#FFF' );
     grd.addColorStop( 0.6, 'rgba(255,255,255,0)' );
     grd.addColorStop( 0.61, 'rgba(0,0,0,0)' );
     grd.addColorStop( 1, '#000' );
@@ -70,7 +71,7 @@ var ColorPickerView = Ember.View.extend({
       
       self.set( 'down', true );
       
-      self.set( 'color', self.getHexColor( e, this ) );
+      App.paintController.setColor( self.getColor( e, this ) );
       
     });
     
@@ -78,7 +79,7 @@ var ColorPickerView = Ember.View.extend({
       
       if ( self.down ) {
       
-        self.set( 'color', self.getHexColor( e, this ) );
+        App.paintController.setColor( self.getColor( e, this ) );
       
       }
       
@@ -110,7 +111,7 @@ var ColorPickerView = Ember.View.extend({
     var colorBuckets = this.$('#lastColorList').find("li");
     var numberOfBuckets = colorBuckets.last().index();     
 
-    this.lastColors.push(_color);
+    this.lastColors[this.lastColorCounter] = _color;
 
     colorBuckets.eq( this.lastColorCounter ).css("background-color", _color);
 
@@ -120,7 +121,7 @@ var ColorPickerView = Ember.View.extend({
 
   },
   
-  getHexColor : function( e, el ) {
+  getColor : function( e, el ) {
     
     var offset = $( el ).offset(),
       i = this.width * 4 * Math.floor( e.pageY - offset.top ) + 4 * Math.floor( e.pageX - offset.left ),
@@ -132,7 +133,7 @@ var ColorPickerView = Ember.View.extend({
       
     }
     
-    return rgbToHex( data[i], data[i+1], data[i+2] );
+    return [ data[i], data[i+1], data[i+2], data[i+3] ];
     
   }
   

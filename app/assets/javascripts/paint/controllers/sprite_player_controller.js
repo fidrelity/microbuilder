@@ -10,9 +10,7 @@ var SpritePlayerController = Ember.Object.extend({
   currentFrameIndex : 0,
   playInterval : null,
 
-  init : function () {
-    this.paintController = App.paintController;
-  },
+  init : function () {},
 
   hide : function() {
     $('#player').hide();
@@ -53,14 +51,16 @@ var SpritePlayerController = Ember.Object.extend({
   },
 
   stop : function() {
+
     clearTimeout(this.playInterval);
 
     this.getSpritesObjects().show();
     this.floatSprites();
+
     $('#playButton').show();
     $('#stopButton').hide();
 
-    this.paintController.setCurrentSpriteModel( this.paintController.getCurrentSpriteModel() );
+    App.paintController.setCurrentSpriteModel( App.paintController.getCurrentSpriteModel() );
   },
 
   floatSprites : function() {

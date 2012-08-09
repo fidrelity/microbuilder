@@ -125,6 +125,20 @@ extend( Area.prototype, {
     this.width = vec.x - this.x;
     this.height = vec.y - this.y;
     
+    return this;
+    
+  },
+  
+  rasterize : function( value ) {
+    
+    this.x = Math.floor( this.x / value ) * value;
+    this.y = Math.floor( this.y / value ) * value;
+    
+    this.width = Math.floor( this.width / value ) * value;
+    this.height = Math.floor( this.height / value ) * value;
+    
+    return this;
+    
   },
   
   leavesArea : function( area ) {
@@ -162,6 +176,8 @@ extend( Area.prototype, {
     
     this.width = Math.floor( this.width );
     this.height = Math.floor( this.height );
+    
+    return this;
     
   },
   

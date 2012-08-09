@@ -43,6 +43,12 @@ var PaintSizeView = Ember.View.extend({
 
     });
 
+    // Init tooltips
+    $('.ttip').tooltip();
+    $('.ttipBottom').tooltip({ placement: 'bottom' });
+    $('.pop').popover();
+    $('.popBottom').popover({ placement: 'bottom' });
+
   },
   
   setPaintType : function(_obj) {
@@ -72,7 +78,7 @@ var PaintSizeView = Ember.View.extend({
   start : function() {
 
     var type = this.$(".type-selected").attr('data-type'),
-      w, h, size;
+      w, h, size, isBackground = false;
 
     if ( type === 'object' ) {
 
@@ -85,11 +91,13 @@ var PaintSizeView = Ember.View.extend({
       w = 640;
       h = 390;
       
+      isBackground = true;
+      
     }
     
     App.paintSizeView.remove();
     
-    App.paintController.initType( type, w, h );
+    App.paintController.initType( isBackground, w, h );
     
     App.paintView.appendTo( '#content' );
     

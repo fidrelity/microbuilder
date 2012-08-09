@@ -2,7 +2,7 @@
 
   <div id="colorfield" class="left">
 
-    <div id="lastColorsWrapper">
+    <div id="lastColorsWrapper" class="ttipBottom" title="Last used colors">
       <ul id="lastColorList">
         <li class="lasColorItem"></li>
         <li class="lasColorItem"></li>

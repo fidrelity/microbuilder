@@ -131,9 +131,110 @@ function rgbToHex( r, g, b ) {
   
 };
 
+function bresenham( func, x1, y1, x2, y2 ) {
+  
+  var dx = Math.abs( x1 - x2 ),
+    dy = -Math.abs( y1 - y2 ),
+    sx = x1 < x2 ? 1 : -1,
+    sy = y1 < y2 ? 1 : -1,
+    e = dx + dy, e2;
+ 
+  while ( true ) {
+    
+    func( x1, y1 );
+    
+    if ( x1 === x2 && y1 === y2 ) {
+      
+      break;
+      
+    }
+    
+    e2 = 2 * e;
+    
+    if ( e2 >= dy ) {
+      
+      e += dy;
+      x1 += sx;
+      
+    }
+    
+    if ( e2 <= dx ) {
+      
+      e += dx;
+      y1 += sy;
+      
+    }
+    
+  }
+  
+};
+
+function ellipse( func, x0, y0, x1, y1 ) {
+  
+  var a = Math.abs( x0 - x1 ), 
+    b = Math.abs( y0 - y1), 
+    b1 = b & 1,
+    dx = 4 * ( 1 - a ) * b * b, 
+    dy = 4 * ( b1 + 1 ) * a * a,
+    err = dx + dy + b1 * a * a,
+    e2;
+  
+  if ( x0 > x1 ) {
+  
+   x0 = x1;
+   x1 += a;
+  
+  }
+  
+  if (y0 > y1) {
+    
+    y0 = y1;
+    
+  }
+  
+  y0 += ( b + 1 ) / 2; 
+  y1 = y0 - b1;
+  
+  a *= 8 * a;
+  b1 = 8 * b * b;
+  
+  do {
+    
+    func( x1, y0, x0, y0 );
+    func( x0, y1, x1, y1 );
+    
+    e2 = 2 * err;
+    
+    if ( e2 <= dy ) {
+      
+      y0++;
+      y1--;
+      err += dy += a;
+      
+    }
+    
+    if ( e2 >= dx || 2 * err > dy ) {
+      
+      x0++;
+      x1--;
+      err += dx += b1;
+    
+    }
+    
+  } while ( x0 <= x1 );
+   
+  while ( y0 - y1 < b ) {
+    
+    func( x0 - 1, y0, x1 + 1, y0++ );
+    func( x0 - 1, y1, x1 + 1, y1-- );
+    
+  }
+  
+};
+
 extend( CanvasRenderingContext2D.prototype, {
   
-  line : function( x, y, x2, y2 ) {
+  drawLine : function( x, y, x2, y2 ) {
     
     this.beginPath();
     this.moveTo( x, y );
@@ -206,12 +307,12 @@ extend( CanvasRenderingContext2D.prototype, {
     this.stroke();
     
   },
-
+  
   drawArrow : function( x, y, x2, y2, s ) {
     
     s = s || 1;
     
-    this.line(x, y, x2, y2);        
+    this.drawLine(x, y, x2, y2);
     
     this.save();
     this.translate( x2, y2 );
@@ -231,7 +332,49 @@ extend( CanvasRenderingContext2D.prototype, {
     this.fill();
     
     this.restore();
-
+    
+  },
+  
+  putImageDataOverlap : function( imageData, x, y ) {
+    
+    var i, j, p, a, b,
+      data = imageData.data,
+      width = imageData.width,
+      height = imageData.height;
+    
+    this.save();
+    
+    this.translate( x, y );
+    
+    for ( i = 0; i < height; i++ ) {
+      
+      p = 0;
+      a = i * width * 4;
+      
+      for ( j = 0; j < width; j++ ) {
+        
+        b = ( i * width + j ) * 4;
+        
+        if ( data[a] !== data[b] || data[a + 1] !== data[b + 1] || 
+          data[a + 2] !== data[b + 2] || data[a + 3] !== data[b + 3] ) {
+          
+          this.fillStyle = 'rgba(' + data[a] + ',' + data[a+1] + ',' + data[a+2] + ',' + data[a+3] / 255 + ')';
+          this.fillRect( p, i, j - p, 1 );
+          
+          p = j;
+          a = ( i * width + p ) * 4;
+          
+        }
+        
+      }
+      
+      this.fillStyle = 'rgba(' + data[a] + ',' + data[a+1] + ',' + data[a+2] + ',' + data[a+3] / 255 + ')';
+      this.fillRect( p, i, width - p, 1 );
+      
+    }
+    
+    this.restore();
+    
   }
   
 });

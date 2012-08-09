@@ -37,16 +37,15 @@ function editor_main( data ) {
 function paint_main() {
   
   window.App = Ember.Application.create();
-
+  
   App.paintController = PaintController.create();
-  App.toolBoxController = ToolBoxController.create();
-  App.spritePlayer = SpritePlayerController.create();
   
   App.pencilTool = PencilToolModel.create();
+  App.eraserTool = EraserToolModel.create();
   App.drawTool = DrawToolModel.create();
   App.selectTool = SelectToolModel.create();
   App.fillTool = FillToolModel.create();
-  App.pipetteTool = ColorPipetteModel.create();
+  App.pipetteTool = PipetteToolModel.create();
   
   App.paintView = PaintView.create();
   App.paintSizeView = PaintSizeView.create();
@@ -54,6 +53,11 @@ function paint_main() {
   App.pixelDrawer = new PixelDrawer();
   
   App.paintSizeView.appendTo('#content');
+  
+  // App.paintController.initType( true, 640, 390 );
+  // App.paintController.initType( false, 128, 128 );
+  
+  // App.paintView.appendTo( '#content' );
   
 };
 

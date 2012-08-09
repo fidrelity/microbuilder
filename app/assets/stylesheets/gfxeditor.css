@@ -36,51 +36,52 @@
 }
 
 #paint-wrapper .tool-bar button.select {
-  background:url('/assets/select_icon.png');
+  background:url('/assets/paint/select_icon.png');
 }
 
 #paint-wrapper .tool-bar button.eraser {
-  background:url('/assets/eraser_icon.png');
+  background:url('/assets/paint/eraser_icon.png');
 }
 
 #paint-wrapper .tool-bar button.rectangle {
-  background:url('/assets/rectangle_icon.png');
+  background:url('/assets/paint/rectangle_icon.png');
 }
 
 #paint-wrapper .tool-bar button.circle {
-  background:url('/assets/icon_circle.png');
+  background:url('/assets/paint/icon_circle.png');
 }
 
 #paint-wrapper .tool-bar button.rectanglefill {
-  background:url('/assets/rectangle_fill_icon.png');
+  background:url('/assets/paint/rectangle_fill_icon.png');
 }
 
 #paint-wrapper .tool-bar button.circlefill {
-  background:url('/assets/circle_icon_fill.png');
+  background:url('/assets/paint/circle_icon_fill.png');
 }
 
 #paint-wrapper .tool-bar button.line {
-  background:url('/assets/icon_line.png');
+  background:url('/assets/paint/icon_line.png');
 }
 
 #paint-wrapper .tool-bar button.loadfile {
-  background:url('/assets/load_image_icon.png');
+  background:url('/assets/paint/load_image_icon.png');
 }
 
 #paint-wrapper .tool-bar button.fill {
-  background:url('/assets/fill_icon.png');
+  background:url('/assets/paint/fill_icon.png');
 }
 
 #paint-wrapper .tool-bar button.clearTool {
-  background:url('/assets/clear_icon.png');
-}
-
-#paint-wrapper .tool-bar button.clearall {
-  background:url('/assets/icon_delete.png');
+  background:url('/assets/paint/clear_icon.png');
+/*  background:url('/assets/paint/icon_delete.png');*/
 }
 
 #paint-wrapper .tool-bar button.undo {
-  background:url('/assets/undo_icon.png');
+  background:url('/assets/paint/undo_icon.png');
+}
+
+#paint-wrapper .tool-bar button.redo {
+  background:url('/assets/paint/redo_icon.png');
 }
 
 #paint-wrapper .tool-bar button.pipette {}
@@ -127,8 +128,15 @@
 #paint-wrapper #area-wrapper #zoom-canvas-area #paint-area {
   margin: auto;
   position: relative;
-  top: 50%;
+  border: 1px solid #000000;
   box-shadow: 0px 0px 12px 0px #AAA;
+  cursor: crosshair;
+}
+
+#paint-wrapper #area-wrapper #zoom-canvas-area #paint-area canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 #paint-wrapper #sprites-area {
@@ -145,29 +153,17 @@
 }
 
 
-#paint-wrapper #sprites-area-scroll .canvas {
-  background: url("bg_transparent.png");
+#paint-wrapper #sprites-area-scroll .spriteView {
+  background: url("/assets/paint/pattern.png");
   margin: 10px auto;
   border: 1px dashed #000;
   display: block;
   box-shadow: 0px 0px 12px 0px #AAA;
 }
 
-#paint-wrapper #sprites-area-scroll .canvas-selected { 
+#paint-wrapper #sprites-area-scroll .selected { 
   border: 1px solid #000;
 }
-
-#paint-wrapper #sprites-area-scroll .active-sprite { 
-  border: 1px solid #000;
-}
-
-.bgToggle {
-  min-width:30px;
-  height:30px;
-  border:1px solid #FFF !important;
-}
-
-
 
 /* Canvas Elements */
 #zoomCanvas, #canvas-temp {
@@ -199,7 +195,7 @@
 }
 
 .bgTransparent {
-  background:url(bg_transparent.png) !important;
+  background:url("paint/pattern.png");
 }
 
 /* Tools */
