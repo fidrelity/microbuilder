@@ -96,19 +96,31 @@
   
   </div>
 
-  <div class="submit well">
+  <div class="submit well row">
+
+    <div class="span4">
   
-    <button class="btn btn-warning left ttipBottom" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}>Cancel</button>
+      <button class="btn btn-warning left ttipBottom" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}>Cancel</button>
+
+    </div>
   
-    <div class="form-inline right">
+    <!-- <div class="form-inline right"> -->
     
+    <div class="span4">
+
       <input type="text" id="imageName" placeholder="image name" class="ttipBottom" title="Name of the image">
-    
+
       <label class="checkbox">
-        <input type="checkbox" id="makePublic" class="pop" title="Publish your work" data-content="Check if you want to share this drawing with others"> make public
+        <input type="checkbox" id="makePublic"  class="pop" title="Publish your work" data-content="Check if you want to share this drawing with others"> make public
       </label>
     
-      <button class="btn btn-large btn-success" {{action "save" target="App.paintController"}}>Save image</button>
+      <small>{{App.paintController.width}} x {{App.paintController.height}} px</small>
+
+    </div>
+
+    <div class="span2">
+
+      <button class="btn btn-large btn-success span2" {{action "save" target="App.paintController"}}>Save image</button>
     
     </div>
 
@@ -116,10 +128,3 @@
 
 </div>
 
-
-<div class="paintOverlay">
-  <div class="paintOverlayMessage row">
-    <div class="span1"><img src="/assets/loader_circle.gif"></div>
-    <div class="span6 message"></div>
-  </div>
-</div>
