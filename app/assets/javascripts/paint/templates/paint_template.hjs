@@ -9,16 +9,16 @@
       <div class="tool-bar">
         <button {{action "play" target="App.spritePlayer"}} id="playButton">Play</button>
         <button {{action "stop" target="App.spritePlayer"}} id="stopButton">Stop</button>
-        <input type="text" id="playDelay" value="1000" size="2" class="span1">
-        <input type="checkbox" value="1" id="replayLoop"> Loop
+        <input type="text" id="playDelay" value="1000" size="2" class="span1 ttip" title="Set animation speed (miliseconds)">
+        <input type="checkbox" value="1" id="replayLoop" class="ttip" checked="checked" title="Loop the animation"> Loop
       </div>
     
       {{view SpritesView id = "sprites-area-scroll"}}
     
       <div class="tool-bar tool-bar-bottom">
-        <button {{action "addSprite" target="App.paintController"}}>add</button>
-        <button {{action "copySprite" target="App.paintController"}}>duplicate</button>
-        <button {{action "removeSprite" target="App.paintController"}}>remove</button>
+        <button {{action "addSprite" target="App.paintController"}} class="ttipBottom" title="Add new sprite">add</button>
+        <button {{action "copySprite" target="App.paintController"}} class="ttipBottom" title="Copy current selected sprite">duplicate</button>
+        <button {{action "removeSprite" target="App.paintController"}} class="ttipBottom" title="Remove current sprite">remove</button>
       </div>
     
     </div>
@@ -27,34 +27,34 @@
   
       <div class="tool-bar">
         
-        <button {{action "selectTool" target="App.paintController"}} class="select selectable"></button>
-        <button {{action "pencilTool" target="App.paintController"}} class="pencil selectable"></button>
-        <button {{action "eraseTool" target="App.paintController"}} class="eraser selectable"></button>
+        <button {{action "selectTool" target="App.paintController"}} class="select selectable ttip" title="select area"></button>
+        <button {{action "pencilTool" target="App.paintController"}} class="pencil selectable ttip" title="Draw with pencil"></button>
+        <button {{action "eraseTool" target="App.paintController"}} class="eraser selectable ttip" title="Erase area"></button>
 
-        <button {{action "drawRectTool" target="App.paintController"}} class="rectangle selectable"></button>
-        <button {{action "drawCircleTool" target="App.paintController"}} class="circle selectable"></button>
-        <button {{action "drawRectFillTool" target="App.paintController"}} class="rectanglefill selectable"></button>
-        <button {{action "drawCircleFillTool" target="App.paintController"}} class="circlefill selectable"></button>
-        <button {{action "drawLineTool" target="App.paintController"}}  class="line selectable"></button>
+        <button {{action "drawRectTool" target="App.paintController"}} class="rectangle selectable ttip" title="Draw rectangle"></button>
+        <button {{action "drawCircleTool" target="App.paintController"}} class="circle selectable ttip" title="Draw circle"></button>
+        <button {{action "drawRectFillTool" target="App.paintController"}} class="rectanglefill selectable ttip" title="Draw filled rectangle"></button>
+        <button {{action "drawCircleFillTool" target="App.paintController"}} class="circlefill selectable ttip" title="Draw filled circle"></button>
+        <button {{action "drawLineTool" target="App.paintController"}}  class="line selectable ttip" title="Draw line"></button>
         
-        <button {{action "fillTool" target="App.paintController"}} class="fill selectable"></button>
+        <button {{action "fillTool" target="App.paintController"}} class="fill selectable ttip" title="Fill area"></button>
         
-        <button id="loadFileButton" class="loadfile"></button>
+        <button id="loadFileButton" class="loadfile ttip" title="Load file from hard drive"></button>
         <form style="display:none;">
           <input type="file" id="file" accept="image/*" />
           <input type="reset" id="reset" />
         </form>
         
-        <button {{action "clearTool" target="App.paintController"}} class="clearTool"></button>
-        <button {{action "undoTool" target="App.paintController"}} class="undo"></button>
-        <button {{action "redoTool" target="App.paintController"}} class="redo"></button>
+        <button {{action "clearTool" target="App.paintController"}} class="clearTool ttip" title="Clear current sprite"></button>
+        <button {{action "undoTool" target="App.paintController"}} class="undo ttip" title="Undo"></button>
+        <button {{action "redoTool" target="App.paintController"}} class="redo ttip" title="Redo"></button>
         
-        <button {{action "flipVertical" target="App.paintController"}}>flip v</button>
-        <button {{action "flipHorizontal" target="App.paintController"}}>flip h</button>
-        <button {{action "rotateLeft" target="App.paintController"}}>rot l</button>
-        <button {{action "rotateRight" target="App.paintController"}}>rot r</button>
+        <button {{action "flipVertical" target="App.paintController"}} class="ttip" title="Flip sprite vertically">flip v</button>
+        <button {{action "flipHorizontal" target="App.paintController"}} class="ttip" title="Flip sprite horizontally">flip h</button>
+        <button {{action "rotateLeft" target="App.paintController"}} class="ttip" title="Rotate sprite left">rot l</button>
+        <button {{action "rotateRight" target="App.paintController"}} class="ttip" title="Rotate sprite right">rot r</button>
         
-        <button {{action "pipetteTool" target="App.paintController"}} class="pipette selectable">pip</button>
+        <button {{action "pipetteTool" target="App.paintController"}} class="pipette selectable ttip" title="Pick color">pip</button>
         
         <div class="clear"></div>
       
@@ -76,8 +76,8 @@
     
       <div class="tool-bar tool-bar-bottom">
         <div class="left">
-          <button {{action "zoomIn"}} class="zoomin"></button>
-          <button {{action "zoomOut"}} class="zoomout"></button>
+          <button {{action "zoomIn"}} class="zoomin ttipBottom" title="Zoom In"></button>
+          <button {{action "zoomOut"}} class="zoomout ttipBottom" title="Zoom Out"></button>
         </div>
         
         <div class="left" id="sizeWrapper">
@@ -98,14 +98,14 @@
 
   <div class="submit well">
   
-    <button class="btn btn-warning left" {{action "goToTypeSelection" target="App.paintController"}}>Cancel</button>
+    <button class="btn btn-warning left ttipBottom" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}>Cancel</button>
   
     <div class="form-inline right">
     
-      <input type="text" id="imageName" placeholder="image name">
+      <input type="text" id="imageName" placeholder="image name" class="ttipBottom" title="Name of the image">
     
       <label class="checkbox">
-        <input type="checkbox" id="makePublic"> make public
+        <input type="checkbox" id="makePublic" class="pop" title="Publish your work" data-content="Check if you want to share this drawing with others"> make public
       </label>
     
       <button class="btn btn-large btn-success" {{action "save" target="App.paintController"}}>Save image</button>
@@ -115,6 +115,7 @@
   </div>
 
 </div>
+
 
 <div class="paintOverlay">
   <div class="paintOverlayMessage row">

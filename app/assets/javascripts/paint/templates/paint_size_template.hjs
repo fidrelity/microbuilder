@@ -7,7 +7,7 @@
     
       <h3>Object
         <small><input type="text" class="objWidth span1 sizeInput" value="128"> x 
-        <input type="text" class="objHeight span1 sizeInput" value="128" size="2"></small>
+        <input type="text" class="objHeight span1 sizeInput" value="128" size="2"> px</small>
       </h3>
     
       Select game object, if you want to draw for example a car, which has actions in the game (i.e. move) and different states.
