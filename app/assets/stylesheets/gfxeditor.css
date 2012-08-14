@@ -5,7 +5,7 @@
 #paint-wrapper {
   width: 900px;
   height: 500px;
-  padding: 40px 20px 0;
+  padding: 0px 0px 0;
 }
 
 #paint-wrapper .tool-bar {
@@ -317,7 +317,7 @@
 }
 
 #paint-size-wrapper { 
-  padding:40px 20px 40px 20px;
+  /*padding:40px 20px 40px 20px;*/
 }
 
 #paint-size-wrapper .type-selected {

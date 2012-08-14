@@ -1,35 +1,51 @@
-%div{:id => "logo"}
-  =link_to image_tag("playtin_logo.png"), root_path
-
 %div{ :class => "row", :id => "header"}
-  .row
-    #toplevel
-    
-      =link_to 'Imprint', imprint_path
-    
-      |
-    
-      -if user_signed_in?
-    
-        =link_to "Profile", user_path(current_user.id)
-      
-        =link_to(image_tag(current_user.display_image), user_path(current_user.id))
-      
-        =link_to('Logout', destroy_user_session_path, :method => :delete)
-      -else
-        = link_to 'Login', new_user_session_path
   
-  .row
+  .span3
+    
+    %h1
+      Play
+      %span{ :class => "label label-warning titleSmall"}
+        tin
+  
+  .span4
+
+    = form_tag search_games_path, :method => 'get', :class=>"form-inline navbar-search pull-left" do
+      = text_field_tag "query", "", :class => "searchbox", :placeholder => "Search game"
+      = submit_tag "", :class => "btn icon-search"
+
+
+  .span4
   
     %ul{:id => "menu", :class => "nav nav-pills"}
-      %li{:class => "paint", :id =>"paint"}
-        =link_to "", new_graphic_path
-      %li{:class => "editor", :id =>"build"}
-        =link_to "", build_path
       %li{:class => "gallery", :id =>"play"}
-        =link_to "", gallery_path
-      %li{:class => "home", :id =>"home"}
-        =link_to '', root_path
+        =link_to "Play", root_path
+
+      %li{:class => "editor", :id =>"build"}      
+        =link_to "Build", build_path
+
+      %li{:class => "paint", :id =>"paint"}
+        =link_to "Paint", new_graphic_path
+
+  .span1
+
+    %div{ :class => "btn-group"}
+
+      %button{ :class => "btn"}
+        L
+      %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
+        %span{ :class => "caret"}
+
+      %ul{:class => "dropdown-menu"}
+
+        %li{:class => ""}
+          =link_to "Edit profile", root_path
+
+        %li{:class => ""}      
+          =link_to "Support", root_path
+
+        %li{:class => ""}
+          =link_to "Logout", root_path
+
         
 %div{:id => 'flash-messages', :class => "row"}
   %ul
@@ -39,4 +55,3 @@
   =render :partial => 'layouts/flash', :locals => {:flash => flash}
 
 =render :partial => "layouts/feedback"
-

@@ -1,65 +1,39 @@
--if !user_signed_in?
-  %div{ :class => "main_banner landing_page"}
-    .banner
-      =image_tag "banner_welcome.png"
-      welcome
-    %h2
-      Create or Play Microgames*
-    %p
-      Ever wanted to build your own games and share it with your friends? Here you can! Paint you own graphics, make your game and release it!
-      All you need is your browser and imagination!
-  
-    %br
-  
-    %p
-      %b
-        How to play:
-    %p{:class => "how"}
-      =image_tag "icon_mouse_how_to_1.png", :class => "howto"
-      Use your mouse to play the games.
-      %br
-    
-      =image_tag "icon_mouse_how_to_2.png", :class => "howto"
-      Each game comes with its own instructions.
-    
-    %span
-      * no programming skills required.
+%div{ :class => "row"}
 
-    %p
-      =link_to(image_tag("login_and_start.png"), build_path, :id => "start_button")
+  .span8
+    %div{ :class => "hero-unit heroExt"}
 
-%div{ :class => "row latest_games"}   
-  .banner
-    =image_tag "banner_welcome.png"
-    LATEST GAMES
-  = render :partial => 'games/list_games', :locals => {:games => @games}
-  
-  
-  - if !user_signed_in?
-    %div{ :class => "login"}
-      .banner
-        =image_tag "banner_welcome.png"
-        LOGIN
-      %div{:class => "form"}
-        = form_tag user_session_path do
-          = text_field_tag 'user[email]', '', :placeholder => "Email"
-          .clear
-          = password_field_tag 'user[password]', '', :placeholder => "Password"
-          .clear
-          %p
-            %button{:class=>"btn"}
-              sign in
-            
-          %p{:class => "checkbox"}
-            = check_box_tag 'user[remember_me]'
-            = label_tag 'user[remember_me]', 'remember me'
+      %h2
+        Play and Build Microgames*
+        %p
+          Ever wanted to build your own games and share it with your friends? Here you can! Paint you own graphics, make your game and release it!
+          All you need is your browser and imagination!
         
-          .clear
-        
-          %p{:class => "misc"}
-            =link_to "> Forgot your password?", new_password_path('user')
+        %p
+          %a{ :href => "#", :class => "btn btn-primary btn-large", :style=> "font-family:'Press Start 2P';padding:1em" }
+            Start building now
+          
+        %small
+          * no programming skills required.
 
-            =link_to(image_tag("facebook_login.png"), user_omniauth_authorize_path(:facebook))
-  .clear
+  .span4
+    %div{ :class => "well"}
+      = form_tag user_session_path do
 
-%div{:style=>"height:50px"}
+        %label E-Mail
+        = text_field_tag 'user[email]', '', :placeholder => "Email", :class=>"span3"
+
+        %label Password
+        = password_field_tag 'user[password]', '', :placeholder => "Password", :class=>"span3"
+
+        %button{ :type=>"submit", :class=>"btn"}
+          Login
+
+        =link_to(image_tag("facebook_login.png"), user_omniauth_authorize_path(:facebook))
+
+    %button{ :class=>"btn-success btn-large", :style => "width:100%"}
+      Create a new Account
+
+
+
+= render :partial => 'games/list_games', :locals => {:games => @games}

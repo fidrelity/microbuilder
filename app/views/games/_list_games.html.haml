@@ -1,73 +1,50 @@
-%ul{:id => 'gallerygames', :class => "collection_container"}
-  .bar
-    =image_tag "slider_left.png", :class => "slider_left"
-    =image_tag "slider_right.png", :class => "slider_right"
-    = will_paginate @games, :param_name => :page, :container => false,  :page_links => false, :show_always => true, :previous_label => '<img src="/assets/slider_left.png" alt="Prev page" class="slider_left" />', :next_label => '<img src="/assets/slider_right.png" alt="Next page" class="slider_right" />'
-    .description
-      Latest Games
-    .counter
-      =@games.count
-  .clear
+.row
+  .span12
+    %h2{ :class => "page-header"}
+      Games
+
+.row
+  .span10
+    %div{ :class => "btn-group"}
+
+      %button{ :class => "btn"}
+        Sort by date
+      %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
+        %span{ :class => "caret"}
+
+      %ul{:class => "dropdown-menu"}
+
+        %li{:class => ""}
+          =link_to "Rating", gallery_path({:type => "rating"})
+
+        %li{:class => ""}      
+          =link_to "Most played", gallery_path({:type => "played"}) 
+
+        %li{:class => ""}
+          =link_to "Difficulty", gallery_path({:type => "difficulty"})
+
+  .span2
+    Next
+
+.row{:style => "margin-top:1em;"}
   
-  -if false
-    = link_to '', gallery_path, :class => "add viewall"
-    = link_to 'new game', build_path, :class => "add addgame"
-    .clear
-  
-  .sortables
-    .sort
-      =link_to "Latest", gallery_path
-      |
-      =link_to "Rating", gallery_path({:type => "rating"})
-      |
-      =link_to "Most played", gallery_path({:type => "played"})    
-      |
-      =link_to "Difficulty", gallery_path({:type => "difficulty"})
-    
-    .search
-      = form_tag search_games_path, :method => 'get', :class=>"form-horizontal" do
-        = text_field_tag "query", "", :class => "searchbox", :placeholder => "Search game"
-        = submit_tag "", :class => "btn"
-  .clear
-  
-  -if false
-    %li{:class => "span3", :id => "game-li-template"}
-      %div{:class => "thumbnail"}
-        =link_to image_tag(game.preview_image), play_path(game)
-        %h4
-          =game.title
-        =link_to "by #{game.author.display_name}", user_path(game.author)
-        %br
-        %i{:class => "icon-eye-open"}
-        0
-        %i{:class => "icon-thumbs-up"}
-        0
-        %i{:class => "icon-thumbs-down"}
-        0
-  .games
+  %ul{:id => 'gamesList', :class => "thumbnails"}
     - games.each do |game|                                                                                                      
-      %li{:id => game.id, :class => "span3 game"}                                                                                            
-        =link_to image_tag(game.preview_image), play_path(game)
+      %li{:id => game.id, :class => "span3"}
         
-        .overlay
-          =link_to image_tag("overlay_game_play.png"), play_path(game), :class => "overlay_game_play"
-          %p
-            = link_to game.title, play_path(game)
-            %br
-            %span
-              = game.played
+        .thumnail                                                  
+          = link_to image_tag(game.preview_image), play_path(game)
         
-          -if false  
-            .info                                                                                                              
-            =link_to(game.title, play_path(game))
-                                                                                           
-            %i{:class => "icon-comment"}                                                                                          
-            =game.game_comments.size                                                                                              
-            %i{:class => "icon-eye-open"}                                                                                         
-            =game.played                                                                                                          
-            %i{:class => "icon-thumbs-up"}                                                                                        
-            =game.likes                                                                                                           
-            %i{:class => "icon-thumbs-down"}                                                                                      
-            =game.dislikes
-    .clear
-  .clear
+        %div{ :class => "gameAuthor" }
+        
+        %h5
+          = game.title
+        
+        %span{:class=>"label label-important"}
+          = game.difficulty_in_words
+        
+        %i{:class=>"icon-play"}
+        = game.played
+
+
+
