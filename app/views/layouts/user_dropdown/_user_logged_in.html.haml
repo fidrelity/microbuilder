@@ -1,0 +1,19 @@
+%div{ :class => "btn-group"}
+
+
+  = link_to( user_path(current_user), :class => "btn", :style => "padding:0;") do
+    = image_tag current_user.display_image, {:height => "26"}
+    
+  %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
+    %span{ :class => "caret"}
+
+  %ul{:class => "dropdown-menu"}
+
+    %li{:class => ""}
+      =link_to "Edit profile", root_path
+
+    %li{:class => ""}      
+      =link_to "Support", root_path
+
+    %li{:class => ""}
+      =link_to "Logout", destroy_user_session_path, :method => :delete

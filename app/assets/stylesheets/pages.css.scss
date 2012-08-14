@@ -8,7 +8,7 @@ $yellow: #fdc702;
 
 body {
   background:#F6F6F6;
-  color:#222;
+  color:#333;
   font-family: 'Droid Sans', sans-serif;
   margin-bottom:1em;
 }
@@ -20,7 +20,7 @@ body {
   margin-top:2em; margin-bottom:2em; border-bottom:1px solid #CCC;
 }
 
-#flash-messages{
+#flash-template{
   display: none;
 }
 
@@ -42,6 +42,9 @@ h1 {
   color:#222;
 }
 
+.profile_thumb {
+  width:15px; height:15px;
+}
 
 /* Home */
 
@@ -267,66 +270,26 @@ canvas {
 }
 
 /* PLAY site */
+
 #playGame {
-  position:relative;
-  left:100px;
-  width:660px;
-  background:$white;
-  padding:35px 0 0 20px;
+  background:#EEE;border:1px solid #CCC;padding:10px;
 }
 
-#playGame a {
-  color:$gray;
+#playGame .gameDetailAuthor {
+  font-size: 1.8em;
+  border-bottom:1px solid #CCC;
 }
 
-#playGame .banner {
-  width:auto;
-  padding-right:20px;
+#playGame .authorImage {
+  height:40px;
 }
 
 #playGame #ratingWrapper {
-  width:290px;
-  height:50px;
-  float:left;
 }
 
 #playGame #ratingWrapper form {
-  float:left;
   margin:0px;
 }  
-
-#playGame #shareButtons {
-  float:right;
-  position:relative;
-  right: 20px;
-  width: 293px;
-  direction: rtl;
-}
-
-#playGame #shareButtons button {
-  height:30px;
-  width:30px;
-  border-radius:none;
-  border:none;
-  margin:0 0 8px 0;
-}
-
-#playGame #shareButtons button.shareButton {
-  background:url('/assets/share.png') top left;
-}
-
-#playGame #shareButtons button.reportButton {
-  background:url('/assets/report.png') top left;
-}
-
-#playGame #shareButtons button.embedButton {
-  background:url('/assets/embed.png') top left;
-}
-
-#playGame .layer {
-  width:600px;
-  margin:20px 0 0 0;
-}
 
 #playGame .progress-success {
   background-image: linear-gradient(bottom, rgb(135,18,26) 91%, rgb(187,24,35) 74%);
@@ -344,42 +307,22 @@ canvas {
   );
   border-radius:0px;
   height:10px;
-  width:164px;
   top:4px;
   position:relative;
 }
 
 #playGame .bar {
-  background:#fdc703;
+  background:#4C804A;
 }
 
 #playGame .likeButton {
-  display:block;
-  width:83px;
-  height:30px;
-  background:url('/assets/like.png') top left;
-  border-radius:0px;
-  border:none;
-  float:left;
+
 }
 
 #playGame .dislikeButton {
-  display:block;
-  width:90px;
-  height:30px;
-  background:url('/assets/dislike.png') top left;
-  border-radius:0px;
-  border:none;
-  float:left;
+
 }
 
-#playGame .rating .likes, #playGame .rating .progress, #playGame .rating .dislikes {
-  float:left;
-  margin:0 5px 0 0;
-}
-
-#playGame #commentsWrapper {
-}
 
 #playGame #comments {
   position:relative;

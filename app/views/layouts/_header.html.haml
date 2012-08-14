@@ -11,14 +11,13 @@
 
     = form_tag search_games_path, :method => 'get', :class=>"form-inline navbar-search pull-left" do
       = text_field_tag "query", "", :class => "searchbox", :placeholder => "Search game"
-      = submit_tag "", :class => "btn icon-search"
-
+      = submit_tag "Ok", :class => "btn"
 
   .span4
   
     %ul{:id => "menu", :class => "nav nav-pills"}
       %li{:class => "gallery", :id =>"play"}
-        =link_to "Play", root_path
+        =link_to "Play", gallery_path
 
       %li{:class => "editor", :id =>"build"}      
         =link_to "Build", build_path
@@ -27,24 +26,8 @@
         =link_to "Paint", new_graphic_path
 
   .span1
+    = get_user_dropdown_content(current_user)
 
-    %div{ :class => "btn-group"}
-
-      %button{ :class => "btn"}
-        L
-      %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
-        %span{ :class => "caret"}
-
-      %ul{:class => "dropdown-menu"}
-
-        %li{:class => ""}
-          =link_to "Edit profile", root_path
-
-        %li{:class => ""}      
-          =link_to "Support", root_path
-
-        %li{:class => ""}
-          =link_to "Logout", root_path
 
         
 %div{:id => 'flash-messages', :class => "row"}

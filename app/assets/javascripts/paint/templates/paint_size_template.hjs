@@ -6,30 +6,42 @@
     <div class="span6">
     
       <h3>Object
-        <small><input type="text" class="objWidth span1 sizeInput ttip" value="128" title="width"> x 
-        <input type="text" class="objHeight span1 sizeInput ttip" value="128" size="2" title="height"> px</small>
+        <small>
+          <input type="text" class="objWidth span1 sizeInput ttip" value="128" title="width"> x 
+          <input type="text" class="objHeight span1 sizeInput ttip" value="128" size="2" title="height"> px
+        </small>
       </h3>
     
-      <p>Select game object, if you want to draw for example a car, which has actions in the game (i.e. move) and different states.</p>
-    
-      <div id="object" class="paint-type pop" data-type="object" title="Sprite size" data-content="Resize the desired image size with the mouse. Maximum is 256 x 256 pixel.">
-      
-        <div id="canvas-size"></div>
-      
-      </div>
+      <p>Select game object, if you want to draw for example a car, which<br>has actions in the game (i.e. move) and different states.</p>
     
     </div>
 
-    <div class="span5">
+    <div class="span6">
     
       <h3>Background</h3>
     
       <p>The game background can't move and is as big as the game canvas.</p>
     
-      <div id="background" class="paint-type" data-type="background">640x390</div>
-    
     </div>
   
+  </div>
+
+  <div class="row">
+
+    <div class="span6">
+
+      <div id="object" class="paint-type pop" data-type="object" title="Sprite size" data-content="Resize the desired image size with the mouse. Maximum is 256 x 256 pixel.">
+      
+        <div id="canvas-size"></div>
+      
+      </div>
+
+    </div>
+
+    <div class="span6">
+      <div id="background" class="paint-type" data-type="background">640x390</div>
+    </div>
+
   </div>
 
   <button {{action "start"}} id="startPainting" class="btn-large btn-success right">Start painting a new object</button>
@@ -37,3 +49,4 @@
   <div class="clear"></div>
   
 </div>
+

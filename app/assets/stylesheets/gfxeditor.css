@@ -324,6 +324,10 @@
   border: 2px solid black !important;
 }
 
+#paint-size-wrapper .sizeInput {
+  font-size:0.8em; padding:1px;
+}
+
 #paint-size-wrapper .paint-type {
   cursor:pointer;
   border: 2px dashed #999;

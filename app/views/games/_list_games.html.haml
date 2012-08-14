@@ -27,24 +27,29 @@
     Next
 
 .row{:style => "margin-top:1em;"}
+
+  .span12
   
-  %ul{:id => 'gamesList', :class => "thumbnails"}
-    - games.each do |game|                                                                                                      
-      %li{:id => game.id, :class => "span3"}
-        
-        .thumnail                                                  
-          = link_to image_tag(game.preview_image), play_path(game)
-        
-        %div{ :class => "gameAuthor" }
-        
-        %h5
-          = game.title
-        
-        %span{:class=>"label label-important"}
-          = game.difficulty_in_words
-        
-        %i{:class=>"icon-play"}
-        = game.played
+    %ul{:id => 'gamesList', :class => "thumbnails"}
+      - games.each do |game|                                                                                                      
+        %li{:id => game.id, :class => "span3"}
+          
+          .thumbnail                                                  
+            = link_to image_tag(game.preview_image), play_path(game)
+          
+            %div{ :class => "gameAuthor" }
+            
+            %h4{:style => "margin-top:3px;"}
+              = game.title
+            
+            .row{:style => "margin-top:3px;"}
+              .span1
+                %span{:class=>"label label-important"}
+                  = game.difficulty_in_words
+              
+              .span1
+                %i{:class=>"icon-eye-open"}
+                = game.played
 
 
 
