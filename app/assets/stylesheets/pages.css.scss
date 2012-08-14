@@ -26,8 +26,12 @@ body {
 
 h1 {
   display:inline;
-  font-size:1.6em;
+  font-size:1.8em;
   font-family:'Press Start 2P';
+}
+
+h1 a, h1 a:visited {
+  color:#222; text-decoration: none;
 }
 
 .titleSmall {
@@ -46,10 +50,18 @@ h1 {
   width:15px; height:15px;
 }
 
+#fb_login a, #facebook_login a:visited {
+  background:#3B5998; color:#FFF;
+}
+
 /* Home */
 
 .heroExt {
-  background:#333;color:#FFF;padding:1.5em;
+  background:#333;color:#FFF;padding:1.7em;
+}
+
+#createAccountButton {
+  width:100%;
 }
 
 /* Paint */
@@ -264,11 +276,6 @@ canvas {
   left:60px;
 }
 
-#create .guide {
-  position:relative;
-  top:50px;
-}
-
 /* PLAY site */
 
 #playGame {
@@ -380,3 +387,4 @@ canvas {
 #playGame #comments .comment .right {
   width:560px;
 }
+

@@ -3,15 +3,14 @@
   .span3
     
     %h1
-      Play
-      %span{ :class => "label label-warning titleSmall"}
-        tin
+      = link_to page_title, root_path
   
   .span4
 
     = form_tag search_games_path, :method => 'get', :class=>"form-inline navbar-search pull-left" do
       = text_field_tag "query", "", :class => "searchbox", :placeholder => "Search game"
-      = submit_tag "Ok", :class => "btn"
+      %button{:type => "submit", :class => "btn"}
+        %i{:class => "icon-search"}      
 
   .span4
   

@@ -10,4 +10,11 @@ module ApplicationHelper
 
   end
 
+
+  def page_title
+
+    return raw('Play<span class="label label-warning titleSmall">tin</span>')        
+
+  end
+
 end

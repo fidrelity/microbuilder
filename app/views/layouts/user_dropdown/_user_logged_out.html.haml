@@ -7,8 +7,11 @@
 
   %ul{:class => "dropdown-menu"}
 
+    %li{ :id => "fb_login"}
+      =link_to "facebook login", user_omniauth_authorize_path(:facebook)
+
     %li{:class => ""}
-      =link_to "Create account", root_path
+      =link_to "Create account", new_user_registration_path
 
     %li{:class => ""}
       =link_to "Support", root_path

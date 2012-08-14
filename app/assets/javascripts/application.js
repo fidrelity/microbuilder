@@ -35,20 +35,26 @@ $(document).ready(function() {
   // ---------------------------------------
   // Init slides in guide pages
   if($('#guide-slide-container').length) {
+
     var slider = new SliderDiv({ containerSelector : '#guide-slide-container'});
     slider.autoPlay(5000);
+    
     var elements = $('#guideSteps').find('li');
     elements.first().addClass('activeElement');
 
     elements.click(function() {
+
       var pos = $(this).index();
       slider.moveTo(pos).stopPlay();
+
     });
 
     slider.afterMove = function() {
-      var index = this.currentSlide;
+
+      var index = this.currentSlideIndex;
       elements.removeClass('activeElement');
       elements.eq(index).addClass('activeElement');
+
     };
   }
   // ---------------------------------------
