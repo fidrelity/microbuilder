@@ -1,6 +1,7 @@
 %div{ :class => "btn-group"}
     
-  = link_to "L", new_user_session_path, {:class => "btn"}
+  = link_to( new_user_session_path, :class => "btn", :style => "") do
+    %i{:class => "icon-search"}
     
   %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
     %span{ :class => "caret"}
