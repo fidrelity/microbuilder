@@ -28,9 +28,11 @@
 
         .span1
           %i{:class => "icon-eye-open"}
-          = render :partial => "played", :locals => {:played => @game.played}
+          %span{ :id => "playedWrapper"}
+            = render :partial => "played", :locals => {:played => @game.played}
       
-      = render :partial => "rating", :locals => {:game => @game}
+      %div{:id => "ratingWrapper"}
+        = render :partial => "rating", :locals => {:game => @game}
 
 
 .row{:style => "margin-top:1em;"}

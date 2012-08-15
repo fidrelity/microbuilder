@@ -1,6 +1,6 @@
 - disable = !!cookies["voted_game_#{@game.id}"]
 
-.row{:style => "margin-top:1em;", :id => "ratingWrapper"}
+.row{:style => "margin-top:1em;"}
 
   .span1{:style => "width:40px"}
     = button_to "#{@game.likes}", {:action => "like", :id => game.id}, :method => :put, :remote => true, :disabled => disable, :class => "likeButton btn btn-mini"
