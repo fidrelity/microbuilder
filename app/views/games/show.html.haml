@@ -34,6 +34,11 @@
       %div{:id => "ratingWrapper"}
         = render :partial => "rating", :locals => {:game => @game}
 
+    .row
+      .span4
+        %div{:style => "margin-top:2em", :id => "commentsWrapper"}
+          = render :partial => 'comments', :locals => {:comments => @comments, :game => @game}  
+
 
 .row{:style => "margin-top:1em;"}
 
