@@ -173,6 +173,8 @@ var TimeView = Ember.View.extend({
   max : 0,
   
   didInsertElement : function() {
+
+    console.log("didInser");
     
     var self = this,
       range = this.type === 'random',
@@ -186,18 +188,24 @@ var TimeView = Ember.View.extend({
       values: values,
       
       slide: function( event, ui ) {
+        console.log("slide");
         
         self.setTime( ui.values[0], ui.values[1] );
         
       }
       
     });
+
+
     
   },
   
   setTime : function( time, time2 ) {
+    console.log("setTime");
+
+    timeInSeconds = time * 1000 / 5;
     
-    this.set( 'time', time + '%' );
+    this.set( 'time', time + '% (' + timeInSeconds + ')' );
     
     if ( time2 ) {
     
