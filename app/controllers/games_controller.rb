@@ -40,7 +40,7 @@
   end
   
   def search
-    @games = Game.search(params[:query])
+    @games = Game.search(params[:query]).paginate(:page => params[:page], :per_page => 12)
     render 'index'
   end
   
