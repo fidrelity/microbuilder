@@ -199,21 +199,27 @@ var TimeView = Ember.View.extend({
 
   
   setTime : function( time, time2 ) {
-
-    this.set('timeInSeconds', time * App.game.get("duration") / 100 +  " Sec." );    
     
     this.set( 'time', time + '%' );
+
+    this.set('timeInSeconds', this.getTimeInSeconds(time) );    
     
     if ( time2 ) {
     
       this.set( 'time2', time2 + '%' );
 
-      this.set('time2InSeconds', time2 * App.game.get("duration") / 100 + " Sec." );
+      this.set('time2InSeconds', this.getTimeInSeconds(time2) );
     
     }
     
     this.observer.setTime( time, time2 );
     
+  },
+
+  getTimeInSeconds : function( time ) {
+
+    return time * App.game.get("duration") / 100 + " Sec.";
+
   }
   
 });
