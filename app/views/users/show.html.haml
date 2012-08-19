@@ -4,21 +4,15 @@
     
     #profilewrap
       %img{:src => @user.display_image, :id => "profileimage"}
-    .name
-      =@user.first_name
-    .clear
-    
-    .metaprofile
+      
+      %h3
+        =@user.first_name
+      
       %p
         member since:
         %br
         %span
           =@user.created_at.to_date
-      %p
-        last login:
-        %br
-        %span
-          =@user.last_sign_in_at.to_date
 
   %div{ :class => "span9"}        
     = render :partial => 'games', :locals => {:games => @games, :user => @user}

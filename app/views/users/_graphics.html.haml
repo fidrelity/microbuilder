@@ -1,7 +1,5 @@
 %h3{:class => "page-header" }
-  Graphics (
-  = user.graphics.size
-  )
+  Graphics
 
 %div{:id => 'user_graphics', :class => ""}
   
@@ -9,9 +7,11 @@
 
     %button{:class => "btn graphicsButton tabButton btn-info"}
       Graphics
+      = "(#{graphics.size})"
 
     %button{:class => "btn backgroundButton tabButton"}
       Backgrounds
+      = "(#{backgrounds.size})"
 
   %ul{:id => 'graphicLayer', :class => "thumbnails span10 layer"}
     - graphics.each do |graphic|
