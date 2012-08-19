@@ -68,8 +68,6 @@ var ActionTriggerModel = Ember.Object.extend({
   },
   
   setTime : function( time, time2 ) {
-
-    console.log("settime")
     
     this.set( 'time', time );
     this.set( 'time2', time2 );

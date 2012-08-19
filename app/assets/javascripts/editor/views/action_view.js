@@ -164,17 +164,17 @@ var TimeView = Ember.View.extend({
   
   classNames : ['timeview', 'optionview'],
   
-  template: Ember.Handlebars.compile( '<div class="time">{{time}}</div><div class="slider"></div><div class="time">{{time2}}</div>' ),
+  template: Ember.Handlebars.compile( '<div class="time">{{time}}<span class="smallInfo">{{timeInSeconds}}</span></div><div class="slider"></div><div class="time">{{time2}}<span class="smallInfo">{{time2InSeconds}}</span></div>' ),
   
   observer : null,
   type : null,
   
   min : 0,
   max : 0,
+
+  timeInSeconds : 0,
   
   didInsertElement : function() {
-
-    console.log("didInser");
     
     var self = this,
       range = this.type === 'random',
@@ -188,28 +188,27 @@ var TimeView = Ember.View.extend({
       values: values,
       
       slide: function( event, ui ) {
-        console.log("slide");
         
         self.setTime( ui.values[0], ui.values[1] );
         
       }
       
     });
-
-
     
   },
+
   
   setTime : function( time, time2 ) {
-    console.log("setTime");
 
-    timeInSeconds = time * 1000 / 5;
+    this.set('timeInSeconds', time * App.game.get("duration") / 100 +  " Sec." );    
     
-    this.set( 'time', time + '% (' + timeInSeconds + ')' );
+    this.set( 'time', time + '%' );
     
     if ( time2 ) {
     
       this.set( 'time2', time2 + '%' );
+
+      this.set('time2InSeconds', time2 * App.game.get("duration") / 100 + " Sec." );
     
     }
     
