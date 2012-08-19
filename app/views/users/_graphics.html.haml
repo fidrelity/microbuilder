@@ -7,28 +7,29 @@
   
   %div{:class => "btn-group", :style => "margin-bottom:1em"}
 
-    %button{:class => "btn graphicsButton"}
+    %button{:class => "btn graphicsButton tabButton btn-info"}
       Graphics
 
-    %button{:class => "btn backgroundButton"}
+    %button{:class => "btn backgroundButton tabButton"}
       Backgrounds
 
   %ul{:id => 'graphicLayer', :class => "thumbnails span10 layer"}
     - graphics.each do |graphic|
 
-      %li{:id => "graphic#{graphic.id}", :class => "span2 frame_graphic graphic"}
+      %li{:id => "graphic#{graphic.id}", :class => "span2 "}
         
         .thumbnail
+
+          %div{:class => "frame_graphic graphic"}
           
-          %div{:class => "frame_graphic_element", "data-frames" => "#{graphic.frame_count}", :style => "background-image:url(#{graphic.image});width:#{graphic.frame_width}px;height:#{graphic.frame_height}px;"}
+            %div{:class => "frame_graphic_element", "data-frames" => "#{graphic.frame_count}", :style => "background-image:url(#{graphic.image});width:#{graphic.frame_width}px;height:#{graphic.frame_height}px;"}
             
           %h4
-            = graphic.name
-            %br
-            %span
-              =graphic.frame_width
-              x
-              =graphic.frame_height
+            = graphic.name            
+          %span
+            =graphic.frame_width
+            x
+            =graphic.frame_height
 
           -if current_user == graphic.user
 

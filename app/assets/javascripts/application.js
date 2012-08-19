@@ -68,6 +68,12 @@ $(document).ready(function() {
     }
   }
 
+  function highlightTab(_obj) {
+    var activeClass = 'btn-info';
+    $(".tabButton").removeClass(activeClass);
+    _obj.addClass(activeClass);
+  }
+
   /* Share Button */
   $('.shareButton').click(function() {
     toggleLayer($('#shareLayer'));
@@ -92,10 +98,12 @@ $(document).ready(function() {
   // Profile - Graphic tabs
   $('.graphicsButton').click(function() {
     toggleLayer($('#graphicLayer')); 
+    highlightTab( $(this) );
   });  
 
   $('.backgroundButton').click(function() {
     toggleLayer($('#backgroundLayer')); 
+    highlightTab( $(this) );
   });  
 
 
