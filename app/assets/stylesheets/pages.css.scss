@@ -101,69 +101,6 @@ h1 a, h1 a:visited {
 /* Profile */
 /* ---------------------------------- */
 
-#profile {
-  position:relative;
-}
-
-#profile .banner {
-  padding-right:20px;
-  width:auto;
-}
-
-#profilewrap {
-  height: 180px;
-  width:180px;
-  overflow: hidden;
-  background:$white;
-}
-
-#profileimage {
-  position:relative;
-  left:0px;
-  width:180px;
-}
-
-#profile .name {
-  font: 14px 'LaconicBold', Arial, sans-serif;
-  height:21px;
-  width:135px;
-  float:left;
-  background:#fff;
-  padding:9px 0 0 15px;
-}
-
-#profile .edit {
-  width:30px;
-  height:30px;
-  float:left;
-}
-
-#profile .metaprofile {
-  height:82px;
-  width:180px;
-  background:#fff;
-}
-
-#profile .metaprofile p {
-  font-family: 'Arimo', sans-serif;
-  font-weight:bold;
-  font-size:12px;
-  color:$gray;
-  margin: 0 0 0 15px;
-}
-
-#profile .metaprofile p span {
-  font-family: 'Arimo', sans-serif;
-  font-weight:normal;
-  font-size:12px;
-  color:$gray;
-}
-
-#profile .sort {
-  float:left;
-  margin: 30px 0 0 0;
-}
-
 #profile #user_graphics #graphics {
   margin:0 0 0 30px;
 }
@@ -179,6 +116,25 @@ h1 a, h1 a:visited {
 
 #profile #user_graphics .graphic:hover {
   border: 1px solid $gray;
+}
+
+#profile .settings {
+  border-top:1px solid #EEE;
+  background:#222;
+  margin-top:5px;
+}
+
+#profile .settings .wrapper {
+  padding:3px;font-size:0.9em
+}
+
+#backgroundLayer {
+  display:none;
+}
+
+.backgroundImage {
+  width:320px; height:195px;
+  background-size:cover;
 }
 
 /* Gallery */

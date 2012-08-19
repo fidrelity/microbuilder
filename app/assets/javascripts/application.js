@@ -88,6 +88,19 @@ $(document).ready(function() {
     $('.layer').hide();
   });
 
+
+  // Profile - Graphic tabs
+  $('.graphicsButton').click(function() {
+    toggleLayer($('#graphicLayer')); 
+  });  
+
+  $('.backgroundButton').click(function() {
+    toggleLayer($('#backgroundLayer')); 
+  });  
+
+
+
+
   $('.likeButton').click(function() {
     $(this).attr('disabled', 'disabled');
   });

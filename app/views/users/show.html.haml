@@ -1,4 +1,5 @@
 %div{ :class => "row", :id => "profile"}
+  
   %div{ :class => "span3"}
     
     #profilewrap
@@ -19,7 +20,7 @@
         %span
           =@user.last_sign_in_at.to_date
 
-  %div{ :class => "span8"}        
+  %div{ :class => "span9"}        
     = render :partial => 'games', :locals => {:games => @games, :user => @user}
-    = render :partial => 'graphics', :locals => {:graphics => @graphics, :user => @user}
+    = render :partial => 'graphics', :locals => {:graphics => @graphics, :user => @user, :backgrounds => @backgrounds}
     

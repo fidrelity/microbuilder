@@ -1,28 +1,46 @@
-%div{:id => 'user_games', :class => "collection_container"}
+%div{:id => 'user_games', :class => ""}
   
-  %h3
+  %h3{:class => "page-header" }
     Games (
     = @user.games.size
     )
 
-  %ul{:id => 'gamesList', :class => "thumbnails span8"}
+  %ul{:id => 'gamesList', :class => "thumbnails span10"}
     - games.each do |game|
 
-      %li{:id => game.id, :class => "span2"}
+      %li{:id => game.id, :class => "span3"}
             
         .thumbnail                                                  
           = link_to image_tag(game.preview_image), play_path(game)
         
-          %div{ :class => "gameAuthor" }
-          
           %h4{:style => "margin-top:3px;"}
             = game.title
           
           .row{:style => "margin-top:3px;"}
-            .span1
+            
+            .span1{:style => "width:45px;"}
               %span{:class=>"label label-important"}
                 = game.difficulty_in_words
-            
-            .span1
+
+            .span1{:style => "width:40px;"}
               %i{:class=>"icon-eye-open"}
               = game.played
+
+            .span1{:style => "width:80px;text-align:right;"}
+
+              %i{:class=>"icon-thumbs-up"}
+              = game.likes
+              &nbsp;
+              %i{:class=>"icon-thumbs-down"}
+              = game.dislikes
+
+          -if current_user == game.author
+
+            %div{ :class => "settings" }
+
+              .row
+                .span3{:class => "wrapper"}
+                
+                  =link_to(game_path(game), :method => :delete, :remote => true, :confirm => "Permanently delete this game?") do
+                    %i{:class => "icon-trash icon-white"}
+                    delete

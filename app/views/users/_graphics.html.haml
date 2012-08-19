@@ -1,22 +1,70 @@
-%ul{:id => 'user_graphics', :class => "collection_container"}
-  
-  %h3
-    Graphics (
-    = user.graphics.size
-    )
+%h3{:class => "page-header" }
+  Graphics (
+  = user.graphics.size
+  )
 
-  %ul{:id => 'gamesList', :class => "thumbnails"}
+%div{:id => 'user_graphics', :class => ""}
+  
+  %div{:class => "btn-group", :style => "margin-bottom:1em"}
+
+    %button{:class => "btn graphicsButton"}
+      Graphics
+
+    %button{:class => "btn backgroundButton"}
+      Backgrounds
+
+  %ul{:id => 'graphicLayer', :class => "thumbnails span10 layer"}
     - graphics.each do |graphic|
 
-      %li{:id => graphic.id, :class => "span2 frame_graphic graphic"}
+      %li{:id => "graphic#{graphic.id}", :class => "span2 frame_graphic graphic"}
+        
         .thumbnail
           
           %div{:class => "frame_graphic_element", "data-frames" => "#{graphic.frame_count}", :style => "background-image:url(#{graphic.image});width:#{graphic.frame_width}px;height:#{graphic.frame_height}px;"}
             
           %h4
-            graphic.name
+            = graphic.name
             %br
             %span
               =graphic.frame_width
               x
               =graphic.frame_height
+
+          -if current_user == graphic.user
+
+            %div{ :class => "settings" }
+
+              .row
+                .span3{:class => "wrapper"}
+                
+                  =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
+                    %i{:class => "icon-trash icon-white"}
+                    delete
+
+  %ul{:id => 'backgroundLayer', :class => "thumbnails span10 layer"}
+    - backgrounds.each do |graphic|
+
+      %li{:id => "graphic#{graphic.id}", :class => "span5", :style => "width:330px"}
+        
+        .thumbnail
+          
+          %div{ :style => "background-image:url(#{graphic.image});", :class => "backgroundImage"}
+            
+          %h4
+            = graphic.name
+          
+          %span
+            =graphic.frame_width
+            x
+            =graphic.frame_height
+
+          -if current_user == graphic.user
+
+            %div{ :class => "settings" }
+
+              .row
+                .span3{:class => "wrapper"}
+                
+                  =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
+                    %i{:class => "icon-trash icon-white"}
+                    delete
