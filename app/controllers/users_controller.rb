@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @graphics = current_user == @user ? @user.graphics.without_backgrounds : @user.graphics.with_public.without_backgrounds
     @graphics = @graphics.paginate(:page => params[:graphics_page], :per_page => 12)
    
-    @backgrounds = @user.graphics.backgrounds
+    @backgrounds = @user.graphics.backgrounds.with_public
     @backgrounds = @backgrounds.paginate(:page => params[:graphics_page], :per_page => 12)
 
     @games = @user.games.paginate(:page => params[:games_page], :per_page => 6)
