@@ -36,6 +36,13 @@ var PlacementView = Ember.View.extend({
       type = this.type,
       inc = this.increment,
       self = this;
+
+
+    this.addObserver( 'directionAngle', function() {
+      
+      self.set("directionAngle", 90);
+      
+    });
     
     this.area = new Area;
 
@@ -320,6 +327,9 @@ var PlacementView = Ember.View.extend({
       if ( this.type === 'direction' ) {
         
         this.drawArrow( ctx );
+
+        var angle = new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( this.object.pos ).angle();
+        this.set("directionAngle", Math.round( angle / Math.PI * 180) );
         
       } else if ( this.type === 'path' ) {
         
@@ -460,6 +470,12 @@ var PlacementView = Ember.View.extend({
     
   }.property("type"),
   
+  isDirection : function() {
+    
+    return this.type === "direction";
+    
+  }.property("direction"),
+
   clearPath : function() {
     
     this.path = new Path( [this.object.pos.getData()] );
