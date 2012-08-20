@@ -1,33 +1,64 @@
-%div
-
-  %div{:id=>"playGame"}
-    .banner
-      =image_tag "banner_welcome.png"
+.row
+  .span12
+    %h2
       =@game.title
-    =link_to "by #{@game.author.display_name}", user_path(@game.author)
+
+.row
+
+  .span8{:style => "margin-right:20px;"}
+  
     = render :partial => "player", :locals => {:game => @game}
-    
-    
-    %div{:id => "ratingWrapper"}
-      = render :partial => "rating", :locals => {:game => @game}
-    
+
+  .span4{:style => "width:280px;"}
+
+    %div{:id => "playGame" }
+
+      %div{:class => "gameDetailAuthor" }
+        %img{:src => @game.author.display_image, :class => "authorImage" }
+        =link_to "#{@game.author.display_name}", user_path(@game.author)
+
+      %div{:style => "margin-top:1em;"}     
+        Created at: 
+        = @game.created_at.to_date
+
+      .row{:style => "margin-top:1em;"}
+
+        .span1
+          %span{:class=>"label label-#{@game.difficulty_bootstrap_class}"}= @game.difficulty_in_words
+
+        .span1
+          %i{:class => "icon-eye-open"}
+          %span{ :id => "playedWrapper"}
+            = render :partial => "played", :locals => {:played => @game.played}
+      
+      %div{:id => "ratingWrapper"}
+        = render :partial => "rating", :locals => {:game => @game}
+
+    .row
+      .span4
+        %div{:style => "margin-top:2em", :id => "commentsWrapper"}
+          = render :partial => 'comments', :locals => {:comments => @comments, :game => @game}  
+
+
+.row{:style => "margin-top:1em;"}
+
+  .span12
+
     %div{:class=>"btn-group", :id=>"shareButtons"}
-      %button{:class=>"shareButton"}
-      %button{:class=>"embedButton"}
-      %button{:class=>"reportButton"}
-      .clear      
-      %i{:class => "icon-eye-open"}
-      %span{:id => "playedWrapper"}
-        = render :partial => "played", :locals => {:played => @game.played}    
-      %span{:id => 'difficulty'}
-        | Difficulty: 
-        %span{:class => @game.difficulty_in_words}= @game.difficulty_in_words
+      %button{:class=>"btn shareButton"}
+        %i{ :class => "icon-share"}
+        Share
 
-    .clear
+      %button{:class=>"btn embedButton"}
+        %i{ :class => "icon-retweet"}
+        Embed
 
+      %button{:class=>"btn reportButton btn-danger"}
+        %i{ :class => "icon-flag icon-white"}
+        Report
+
+.row{:style => "margin-top:1em;"}
+  .span8
     = render :partial => "games/layers/share_layer", :locals => {:game => @game}
     = render :partial => "games/layers/embed_layer", :locals => {:game => @game}
     = render :partial => "games/layers/report_layer", :locals => {:game => @game}
-    
-    %div{:style => "margin-top:2em", :id => "commentsWrapper"}
-      = render :partial => 'comments', :locals => {:comments => @comments, :game => @game}  

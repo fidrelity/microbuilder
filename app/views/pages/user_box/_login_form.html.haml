@@ -1,0 +1,35 @@
+=# ------------- User is logged OUT --------------
+-if !user_signed_in?
+  
+  %div{ :class => "well"}
+
+    = form_tag user_session_path do
+
+      %label E-Mail
+      = text_field_tag 'user[email]', '', :placeholder => "Email", :class=>"span3"
+
+      %label Password
+      = password_field_tag 'user[password]', '', :placeholder => "Password", :class=>"span3"
+
+      %button{ :type=>"submit", :class=>"btn"}
+        Login
+
+      =link_to(image_tag("facebook_login.png"), user_omniauth_authorize_path(:facebook))
+
+  = link_to "Create a new Account", new_user_registration_path, :class=>"btn-success btn-large", :id => "createAccountButton"
+
+  =# ------------- User is logged IN --------------
+- else
+
+  %div{ :class => "well"}
+
+    = link_to( user_path(current_user) ) do
+      %h2
+        = image_tag "#{current_user.display_image}", :style => "width:30px"
+        = current_user.display_name
+
+    %div{:style => "margin-top:1em;"}
+      %p
+        = "#{current_user.games.size} games created"
+      %p
+        = "#{current_user.graphics.size} graphics created"

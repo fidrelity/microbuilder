@@ -49,6 +49,8 @@ function paint_main() {
   
   App.paintView = PaintView.create();
   App.paintSizeView = PaintSizeView.create();
+
+  App.spritePlayer = SpritePlayerController.create();
   
   App.pixelDrawer = new PixelDrawer();
   

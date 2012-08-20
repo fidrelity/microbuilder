@@ -1,37 +1,79 @@
-%ul{:id => 'user_graphics', :class => "collection_container"}
-  .bar
-    =image_tag "slider_left.png", :class => "slider_left"
-    =image_tag "slider_right.png", :class => "slider_right"
-    = will_paginate graphics, :show_always => true, :semantic => true, :param_name => :graphics_page, :container => false,  :page_links => false, :previous_label => '<img src="/assets/slider_left.png" alt="Prev page" class="slider_left" />', :next_label => '<img src="/assets/slider_right.png" alt="Next page" class="slider_right" />'
-    .description
+%h3{:class => "page-header" }
+  Graphics 
+
+%div{:id => 'user_graphics', :class => ""}
+
+
+  %div{:class => "btn-group", :style => "margin-bottom:1em"}
+
+    %button{:class => "btn graphicsButton tabButton btn-info"}
       Graphics
-    .counter
-      =user.graphics.size
-    .clear
-  
-  = link_to 'new graphic', new_graphic_path, :class => "add addgraphic"
-  -if false
-    .sort
-      sort by:
-      %select
-        %option{:value =>"64 x 64"}
-          128 x 128
-        %option{:value =>"128 x 128"}
-          100 x 100
-  .clear
-  #graphics
-    -graphics.each do |graphic|
-      %li{:class => "span2 frame_graphic graphic"}
-        %div{:class => "frame_graphic_element", "data-frames" => "#{graphic.frame_count}", :style => "background-image:url(#{graphic.image});width:#{graphic.frame_width}px;height:#{graphic.frame_height}px;"}
-        %ul{:class => 'meta'}
-          =link_to image_tag("icon_public.png"), '#'
-          =link_to image_tag("icon_delete.png"), graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?"
-        .overlay
-          %p
-            = link_to graphic.name, '#'
-            %br
-            %span
-              =graphic.frame_width
-              x
-              =graphic.frame_height
-    .clear
+      = "(#{graphics.size})"
+
+    %button{:class => "btn backgroundButton tabButton"}
+      Backgrounds
+      = "(#{backgrounds.size})"
+
+  %ul{:id => 'graphicLayer', :class => "thumbnails span10 layer"}
+
+    %p
+      = will_paginate graphics, :param_name => :page, :container => false, :page_links => false, :show_always => false
+
+    - graphics.each do |graphic|
+
+      %li{:id => "graphic#{graphic.id}", :class => "span2 "}
+        
+        .thumbnail
+
+          %div{:class => "frame_graphic graphic"}
+          
+            %div{:class => "frame_graphic_element", "data-frames" => "#{graphic.frame_count}", :style => "background-image:url(#{graphic.image});width:#{graphic.frame_width}px;height:#{graphic.frame_height}px;"}
+            
+          %h4
+            = graphic.name            
+          %span
+            =graphic.frame_width
+            x
+            =graphic.frame_height
+
+          -if current_user == graphic.user
+
+            %div{ :class => "settings" }
+
+              .row
+                .span3{:class => "wrapper"}
+                
+                  =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
+                    %i{:class => "icon-trash icon-white"}
+                    delete
+
+  %ul{:id => 'backgroundLayer', :class => "thumbnails span10 layer"}
+
+    = will_paginate backgrounds, :param_name => :page, :container => false, :page_links => false, :show_always => false
+    
+    - backgrounds.each do |graphic|
+
+      %li{:id => "graphic#{graphic.id}", :class => "span5", :style => "width:330px"}
+        
+        .thumbnail
+          
+          %div{ :style => "background-image:url(#{graphic.image});", :class => "backgroundImage"}
+            
+          %h4
+            = graphic.name
+          
+          %span
+            =graphic.frame_width
+            x
+            =graphic.frame_height
+
+          -if current_user == graphic.user
+
+            %div{ :class => "settings" }
+
+              .row
+                .span3{:class => "wrapper"}
+                
+                  =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
+                    %i{:class => "icon-trash icon-white"}
+                    delete

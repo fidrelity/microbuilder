@@ -1,14 +1,13 @@
 - disable = !!cookies["voted_game_#{@game.id}"]
-= button_to "", {:action => "like", :id => game.id}, :method => :put, :remote => true, :disabled => disable, :class => "likeButton"
-= button_to "", {:action => "dislike", :id => game.id}, :method => :put, :remote => true, :disabled => disable, :class => "dislikeButton"
-.clear
-.rating
-  .likes
-    =@game.likes 
-    likes
-  .progress.progress-success
-    %div{:class => "bar", :style => "width:#{game.rating * 100}%;"}
-  .dislikes
-    =@game.dislikes
-    dislikes
-  .clear
+
+.row{:style => "margin-top:1em;"}
+
+  .span1{:style => "width:40px"}
+    = button_to "#{@game.likes}", {:action => "like", :id => game.id}, :method => :put, :remote => true, :disabled => disable, :class => "likeButton btn btn-mini"
+
+  .span2{ :style => "width:125px" }
+    .progress.progress-success
+      %div{:class => "bar", :style => "width:#{game.rating * 100}%;"}
+
+  .span1{:style => "text-align:right;width:40px"}
+    = button_to "#{@game.dislikes}", {:action => "dislike", :id => game.id}, :method => :put, :remote => true, :disabled => disable, :class => "dislikeButton btn btn-mini"

@@ -1,28 +1,20 @@
 %div{ :class => "row", :id => "profile"}
+  
   %div{ :class => "span3"}
-    .banner
-      =image_tag "banner_profile.png"
-      Profile
+    
     #profilewrap
       %img{:src => @user.display_image, :id => "profileimage"}
-    .name
-      =@user.first_name
-    =image_tag "edit_icon.png", :class => "edit"
-    .clear
-    
-    .metaprofile
+      
+      %h3
+        =@user.first_name
+      
       %p
         member since:
         %br
         %span
           =@user.created_at.to_date
-      %p
-        last login:
-        %br
-        %span
-          =@user.last_sign_in_at.to_date
 
-  %div{ :class => "span8"}        
+  %div{ :class => "span9"}        
     = render :partial => 'games', :locals => {:games => @games, :user => @user}
-    = render :partial => 'graphics', :locals => {:graphics => @graphics, :user => @user}
+    = render :partial => 'graphics', :locals => {:graphics => @graphics, :user => @user, :backgrounds => @backgrounds}
     

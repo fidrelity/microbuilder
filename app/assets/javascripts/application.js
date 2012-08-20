@@ -35,20 +35,26 @@ $(document).ready(function() {
   // ---------------------------------------
   // Init slides in guide pages
   if($('#guide-slide-container').length) {
+
     var slider = new SliderDiv({ containerSelector : '#guide-slide-container'});
     slider.autoPlay(5000);
+    
     var elements = $('#guideSteps').find('li');
     elements.first().addClass('activeElement');
 
     elements.click(function() {
+
       var pos = $(this).index();
       slider.moveTo(pos).stopPlay();
+
     });
 
     slider.afterMove = function() {
-      var index = this.currentSlide;
+
+      var index = this.currentSlideIndex;
       elements.removeClass('activeElement');
       elements.eq(index).addClass('activeElement');
+
     };
   }
   // ---------------------------------------
@@ -60,6 +66,12 @@ $(document).ready(function() {
     } else {
       $('.layer').hide();
     }
+  }
+
+  function highlightTab(_obj) {
+    var activeClass = 'btn-info';
+    $(".tabButton").removeClass(activeClass);
+    _obj.addClass(activeClass);
   }
 
   /* Share Button */
@@ -81,6 +93,21 @@ $(document).ready(function() {
   $('.closeLayer').click(function() {
     $('.layer').hide();
   });
+
+
+  // Profile - Graphic tabs
+  $('.graphicsButton').click(function() {
+    toggleLayer($('#graphicLayer')); 
+    highlightTab( $(this) );
+  });  
+
+  $('.backgroundButton').click(function() {
+    toggleLayer($('#backgroundLayer')); 
+    highlightTab( $(this) );
+  });  
+
+
+
 
   $('.likeButton').click(function() {
     $(this).attr('disabled', 'disabled');

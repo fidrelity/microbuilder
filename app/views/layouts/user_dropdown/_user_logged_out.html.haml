@@ -1,0 +1,18 @@
+%div{ :class => "btn-group"}
+    
+  = link_to( new_user_session_path, :class => "btn", :style => "") do
+    %i{:class => "icon-lock"}
+    
+  %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
+    %span{ :class => "caret"}
+
+  %ul{:class => "dropdown-menu"}
+
+    %li{ :id => "fb_login"}
+      =link_to "facebook login", user_omniauth_authorize_path(:facebook)
+
+    %li{:class => ""}
+      =link_to "Create account", new_user_registration_path
+
+    %li{:class => ""}
+      =link_to "Imprint", imprint_path

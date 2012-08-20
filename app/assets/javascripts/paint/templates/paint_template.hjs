@@ -10,7 +10,7 @@
         <button {{action "play" target="App.spritePlayer"}} id="playButton">Play</button>
         <button {{action "stop" target="App.spritePlayer"}} id="stopButton">Stop</button>
         <input type="text" id="playDelay" value="1000" size="2" class="span1 ttip" title="Set animation speed (miliseconds)">
-        <input type="checkbox" value="1" id="replayLoop" class="ttip" checked="checked" title="Loop the animation"> Loop
+        <input type="checkbox" value="1" id="replayLoop" class="ttip" title="Loop the animation"> Loop
       </div>
     
       {{view SpritesView id = "sprites-area-scroll"}}

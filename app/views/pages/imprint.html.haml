@@ -1,60 +1,63 @@
-%div{ :class => "row", :style => ""} 
+%div{ :class => "row", :style => ""}
 
-  %h2{:class=>"page-header"}
-    Imprint
-  %div{:class => "hero-unit", :style => "background:#FFF"}
-    %p
-      Playtin is a Community for playing and creating micro games. We just the website, so we're happy for every feedback!
-      Playtin is not responsible for any law infringements by user generated content.
-      For any possible law infringements please use our Feedback form at the left or
-      use the 'report' feature built in on every games page.
-  
-    %h3= "Address"
-    %p= "Fachhochschule Salzburg University of Applied Sciences"
-    %p= "Urstein Sued 1"
-    %p= "A-5412 Puch/Salzburg"
-    
-    = link_to "http://www.fh-salzburg.ac.at/" do
-      %img{:src => "http://marblerun.at/images/logo-mediaCube.png", :width => 145, :height => 25}
-      %img{:src => "http://marblerun.at/images/logo-fhs.png", :width => 60, :height => 45}
-  %h2{:class=>"page-header"}
-    Who we are
-  
-  %ul{:class => "thumbnails"}
-    %li{:class=>"thumbnail"}
-      <img src="http://placehold.it/128x128" alt="">
-      %h5 
-        Carina Reindl
-        %small 
-          Designer
-    %li{:class=>"thumbnail"} 
-      <img src="http://placehold.it/128x128" alt="">
-      %h5 
-        Andre Schweighofer
-        %small 
-          Developer
-    %li{:class=>"thumbnail"}
-      <img src="http://placehold.it/128x128" alt="">
-      %h5 
-        Eberhard Gräther
-        %small 
-          Developer
-    %li{:class=>"thumbnail graphic"}
-      %div{:class => "frame_graphic", "data-frames" => "2", :style => "background-image:url(assets/team/zeus.png);width:128px;height:128px;"}
-      %h5 
-        =link_to "Francois Weber", "http://www.weberdevelopment.de"
-        %small 
-          Developer
-    %li{:class=>"thumbnail"} 
-      <img src="http://placehold.it/128x128" alt="">
-      %h5 
-        Manuel Gottstein   
-        %small 
-          Developer
-    %li{:class=>"thumbnail"} 
-      <img src="http://placehold.it/128x128" alt="">
-      %h5 
-        Manuel Boesze
-        %small 
-          Developer
+  .span12
+
+    %h2{:class=>"page-header"}
+      Imprint
+
+    .row
+
+      .span8
+
+        %h3
+          Our vision
+        %p
+          Playtin is a community for playing and creating micro games.
+
+          Our vision is to give creative people a tool for easily building their own microgames and share it with other people.
+
+        %h3{:style=>"margin-top:1em;"}
+          Current state
+          %small
+            (08.2012)
+        %p
+          We are currently in a beta phase, thus some features are still not available and in development.
+          If you want to give us some feedback - which we appreciate very much - you can do that by clicking on Feedback button on the left.
+
+        %h3{:style=>"margin-top:1em;"}
+          Info
+        %i
+          Playtin is not responsible for any law infringements by user generated content.
+          For any possible law infringements please use our Feedback form at the left or
+          use the 'report' feature built in on every games page.
       
+        %h3{:style=>"margin-top:1em;"}
+          Address
+        %p= "Fachhochschule Salzburg University of Applied Sciences"
+        %p= "Urstein Sued 1"
+        %p= "A-5412 Puch/Salzburg"
+        
+        = link_to "http://www.fh-salzburg.ac.at/" do
+          %img{:src => "http://marblerun.at/images/logo-mediaCube.png", :width => 145, :height => 25}
+          %img{:src => "http://marblerun.at/images/logo-fhs.png", :width => 60, :height => 45}
+
+      .span4
+        %h2{}
+          Who we are
+        
+        %ul{:class => "thumbnails"}
+
+          %li{:class=>"thumbnail"} 
+            =image_tag("team/dre.png")
+            %h5         
+              =link_to "Andre Schweighofer", "http://fidrelity.at"
+
+          %li{:class=>"thumbnail"}
+            =image_tag("team/ebsi.png")
+            %h5 
+              =link_to "Eberhard Gräther", "http://egraether.com"
+
+          %li{:class=>"thumbnail graphic"}
+            =image_tag("team/zeusreal.jpg")
+            %h5 
+              =link_to "Francois Weber", "http://www.weberdevelopment.de" 

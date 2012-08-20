@@ -1,59 +1,60 @@
-%div{:class => "row"}
+.row
 
-  %div{:class => "span11", :style => "margin-bottom:2em"}  
-    .container
-      %div{:class => "note"}
-        %b
-          Note: 
-        You have to be logged in to use the paint tool.
+  %div{:class => "span12", :style => "margin-bottom:2em"}
 
-      This is the place where you can bring your paintings to life and build your own microgames! Just Login with your facebook account or sign up to create your first game!
+    %h2
+      Paint
 
-%div{:class => "row container"}
-  .banner
-    =image_tag "banner_editor.png"
-    how it works
-  =image_tag "slider_left.png", :class => "slider_left"
+    %p
+      Every game needs graphics. And to give you everything you need for your awesome games, we also created a paint tool!
+
+.row
+
   %div{:class => "span3 guide"}
+
     This is how it works:
+
     %ol{:id => "guideSteps"}
-      %li Pencil and shape tools
-      %li Load an image from your harddrive
-      %li Add sprites
-      %li Animate your graphics
-      %li Share your graphics
+      %li An overview
+      %li Choose the right type
+      %li Know your tools
+      %li Animate your objects
+      %li Draw a background
   
   %div{:class => "span7"}
+
     %div{:id => "guide-slide-container"}
 
       %div{:class => "slide-wrapper"}
-        %div{:class => "slide"}
-          =image_tag "slide1.png"
-          %div{:class => "foot-info"}
-            Use different tools to draw objects
 
         %div{:class => "slide"}
-          =image_tag "slide2.png"
+          =image_tag "guides/paint_overview.png"
           %div{:class => "foot-info"}
-            You can also load an image from your harddrive and paint on them
+            Before creating a game you can draw your game objects ... like batman
 
         %div{:class => "slide"}
-          =image_tag "slide3.png"
+          =image_tag "guides/paint_size.png"
           %div{:class => "foot-info"}
-            Add more sprites to your object
+            First you have to choose between an object or background type
 
         %div{:class => "slide"}
-          =image_tag "slide4.png"
+          =image_tag "guides/paint_tools.png"
           %div{:class => "foot-info"}
-            See the different SPrites in Action
-            
+            Use the pencil, line or circle tool to draw your graphics
+
         %div{:class => "slide"}
-          =image_tag "slide4.png"
+          =image_tag "guides/paint_sprite.png"
           %div{:class => "foot-info"}
-            Before you save, play your game and check it
-  =image_tag "slider_right.png", :class => "slider_right"
-  .clear
-.container
-  .banner
-    Example Graphics
-    =image_tag "banner_editor.png"
+            Your game object can have several states (Sprites)
+
+        %div{:class => "slide"}
+          =image_tag "guides/paint_background.png"
+          %div{:class => "foot-info"}
+            And this is how it looks like drawing a background
+
+%P{ :style => "margin-top:1em;"}
+  Just 
+  =link_to "login with your facebook account", user_omniauth_authorize_path(:facebook)
+  or 
+  = link_to 'sign up', new_user_session_path
+  to create your first game!

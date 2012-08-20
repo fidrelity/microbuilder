@@ -1,35 +1,33 @@
-%div{:id => "logo"}
-  =link_to image_tag("playtin_logo.png"), root_path
-
 %div{ :class => "row", :id => "header"}
-  .row
-    #toplevel
-    
-      =link_to 'Imprint', imprint_path
-    
-      |
-    
-      -if user_signed_in?
-    
-        =link_to "Profile", user_path(current_user.id)
-      
-        =link_to(image_tag(current_user.display_image), user_path(current_user.id))
-      
-        =link_to('Logout', destroy_user_session_path, :method => :delete)
-      -else
-        = link_to 'Login', new_user_session_path
   
-  .row
+  .span3
+    
+    %h1
+      = link_to page_title, root_path
+  
+  .span4
+
+    = form_tag search_games_path, :method => 'get', :class=>"form-inline navbar-search pull-left" do
+      = text_field_tag "query", "", :class => "searchbox", :placeholder => "Search game"
+      %button{:type => "submit", :class => "btn"}
+        %i{:class => "icon-search"}      
+
+  .span4{:style => "width: 290px;"}
   
     %ul{:id => "menu", :class => "nav nav-pills"}
-      %li{:class => "paint", :id =>"paint"}
-        =link_to "", new_graphic_path
-      %li{:class => "editor", :id =>"build"}
-        =link_to "", build_path
       %li{:class => "gallery", :id =>"play"}
-        =link_to "", gallery_path
-      %li{:class => "home", :id =>"home"}
-        =link_to '', root_path
+        =link_to "Play", gallery_path
+
+      %li{:class => "editor", :id =>"build"}      
+        =link_to "Build", build_path
+
+      %li{:class => "paint", :id =>"paint"}
+        =link_to "Paint", new_graphic_path
+
+  .span1{:style => "width: 70px;"}
+    = get_user_dropdown_content(current_user)
+
+
         
 %div{:id => 'flash-messages', :class => "row"}
   %ul
@@ -39,4 +37,3 @@
   =render :partial => 'layouts/flash', :locals => {:flash => flash}
 
 =render :partial => "layouts/feedback"
-

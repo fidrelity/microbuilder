@@ -77,13 +77,22 @@ class Game < ActiveRecord::Base
   end
   
   def difficulty_in_words
-    ratio = (self.won.to_f / self.played.to_f) * 100
-    case ratio
-    when 67..100 then "easy"
-    when 34..67 then "moderate"
-    when 0..34 then "hard"
-    else "none"
-    end
+
+    index = self.difficulty - 1
+    in_words = ["easy", "moderate", "hard"]
+
+    return index > -1 ? in_words[ index ] : "none"
+
+  end
+
+  # Returns twitter bootstrap class for difficulty label
+  def difficulty_bootstrap_class
+
+    index = self.difficulty - 1
+    in_words = ["success", "warning", "important"]
+
+    return index > -1 ? in_words[ index ] : "inverse"
+
   end
   
   private
