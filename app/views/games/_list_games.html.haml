@@ -8,11 +8,13 @@
     %div{ :class => "btn-group"}
 
       %button{ :class => "btn"}
-        Sort by date
+        Sort by #{ params[:type] || "Date" }
       %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
         %span{ :class => "caret"}
 
       %ul{:class => "dropdown-menu"}
+        %li{:class => ""}
+          =link_to "Date", gallery_path
 
         %li{:class => ""}
           =link_to "Rating", gallery_path({:type => "rating"})
