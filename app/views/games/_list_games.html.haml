@@ -46,7 +46,7 @@
             
             .row{:class => "gameDetails"}
               .span1
-                %span{:class=>"label label-important"}
+                %span{:class=>"label label-#{game.difficulty_bootstrap_class}"}
                   = game.difficulty_in_words
               
               .span1
