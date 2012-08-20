@@ -372,7 +372,7 @@
 }
 
 #editor .overlay .timeview .time {
-  width: 30px;
+  width: 45px;
   font-size : 12pt;
 }
 
@@ -421,3 +421,7 @@
   text-align: right;
 }
 
+#editor .smallInfo {
+  font-size:0.7em;
+  display: block;
+}

@@ -24,7 +24,7 @@
       .row{:style => "margin-top:1em;"}
 
         .span1
-          %span{:class => @game.difficulty_in_words}= @game.difficulty_in_words
+          %span{:class=>"label label-#{@game.difficulty_bootstrap_class}"}= @game.difficulty_in_words
 
         .span1
           %i{:class => "icon-eye-open"}

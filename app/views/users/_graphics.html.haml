@@ -1,8 +1,9 @@
 %h3{:class => "page-header" }
-  Graphics
+  Graphics 
 
 %div{:id => 'user_graphics', :class => ""}
-  
+
+
   %div{:class => "btn-group", :style => "margin-bottom:1em"}
 
     %button{:class => "btn graphicsButton tabButton btn-info"}
@@ -14,6 +15,10 @@
       = "(#{backgrounds.size})"
 
   %ul{:id => 'graphicLayer', :class => "thumbnails span10 layer"}
+
+    %p
+      = will_paginate graphics, :param_name => :page, :container => false, :page_links => false, :show_always => false
+
     - graphics.each do |graphic|
 
       %li{:id => "graphic#{graphic.id}", :class => "span2 "}
@@ -43,6 +48,9 @@
                     delete
 
   %ul{:id => 'backgroundLayer', :class => "thumbnails span10 layer"}
+
+    = will_paginate backgrounds, :param_name => :page, :container => false, :page_links => false, :show_always => false
+    
     - backgrounds.each do |graphic|
 
       %li{:id => "graphic#{graphic.id}", :class => "span5", :style => "width:330px"}

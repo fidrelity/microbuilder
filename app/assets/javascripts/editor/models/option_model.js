@@ -530,6 +530,8 @@ var TimeOption = Option.extend({
   mode : 'exact',
   
   doInsert : function( reinsert ) {
+
+    console.log("doInser");
     
     if ( !reinsert ) {
       

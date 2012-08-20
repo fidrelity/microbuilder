@@ -139,27 +139,20 @@ h1 a, h1 a:visited {
 /* Gallery */
 /* ---------------------------------- */
 
-#gallery {
-  position:relative;
-  background:$white;
-  width:945px;
+#gamesList .gameAuthor {
+  position:absolute; top:99px; right:6px;
+  width:30px; height:30px; z-index:300; display: inline;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border:1px solid #222;
 }
 
-#gallery .banner {
-  margin: 0 0 0 40px;
-  width:78px;
+#gamesList .gameAuthor:hover {
+  border:1px solid #F6F6F6; 
 }
 
-#gallery .collection_container {
-  position:relative;
-  margin:0px;
-  top:50px;
-  width:100%;
-}
-
-#gallery .games {
-  margin:85px 0 0 30px;
-  width:885px;
+#gamesList h4, #gamesList .gameDetails {
+  margin-top:5px;  
 }
 
 .share_button { display: inline;}

@@ -5,3 +5,9 @@
     <button class="btn" {{ action "clearPath" }}><i class="icon-trash"></i>clear</button>
   </div>
 {{/if}}
+
+{{#if isDirection}}
+  <div>
+     {{view Ember.TextField valueBinding="{{directionAngle}}" size="3" placeholder="angle" maxlength="3" class="span1"}}
+  </div>
+{{/if}}
