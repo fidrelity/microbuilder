@@ -4,10 +4,14 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @graphics = current_user == @user ? @user.graphics.filter(true, false, 0, 256) : @user.graphics.with_public 
+    
+    @graphics = current_user == @user ? @user.graphics.without_backgrounds : @user.graphics.with_public.without_backgrounds
     @graphics = @graphics.paginate(:page => params[:graphics_page], :per_page => 12)
+   
+    @backgrounds = @user.graphics.backgrounds
+    @backgrounds = @backgrounds.paginate(:page => params[:graphics_page], :per_page => 12)
+
     @games = @user.games.paginate(:page => params[:games_page], :per_page => 6)
-    @backgrounds = @user.graphics.filter(false, true)
   end
 
   def graphics

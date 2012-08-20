@@ -1,9 +1,7 @@
 %div{:id => 'user_games', :class => ""}
   
   %h3{:class => "page-header" }
-    Games (
-    = @user.games.size
-    )
+    = "Games (#{@user.games.size})"
 
   %ul{:id => 'gamesList', :class => "thumbnails span10"}
     - games.each do |game|
