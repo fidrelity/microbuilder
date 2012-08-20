@@ -1,35 +1,9 @@
 %div{ :class => "row"}
 
   .span8
-    %div{ :class => "hero-unit heroExt"}
-
-      %h2
-        Play and Build Microgames*
-        %p
-          Ever wanted to build your own games and share it with your friends? Here you can! Paint you own graphics, build your game and release it!
-          All you need is your browser and imagination!
-        
-        %p
-          = link_to "Start building now", build_path, :class => "btn btn-primary btn-large"
-          
-        %small
-          * no programming skills required.
+    = render :partial => 'pages/user_box/hero_unit'
 
   .span4
-    %div{ :class => "well"}
-      = form_tag user_session_path do
-
-        %label E-Mail
-        = text_field_tag 'user[email]', '', :placeholder => "Email", :class=>"span3"
-
-        %label Password
-        = password_field_tag 'user[password]', '', :placeholder => "Password", :class=>"span3"
-
-        %button{ :type=>"submit", :class=>"btn"}
-          Login
-
-        =link_to(image_tag("facebook_login.png"), user_omniauth_authorize_path(:facebook))
-
-    = link_to "Create a new Account", new_user_registration_path, :class=>"btn-success btn-large", :id => "createAccountButton"
+    = render :partial => 'pages/user_box/login_form'
 
 = render :partial => 'games/list_games', :locals => {:games => @games}
