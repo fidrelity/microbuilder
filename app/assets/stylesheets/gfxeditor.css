@@ -94,6 +94,11 @@
   background-image: url('/assets/zoom_out.png') !important;
 }
 
+#paint-wrapper .tool-bar button.toggleBgButton {
+  background:#FFF;
+  border:1px solid #111;
+}
+
 #paint-wrapper #sizeWrapper {
   overflow: hidden;
   margin: 0 1px;

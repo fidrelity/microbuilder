@@ -105,11 +105,12 @@ var ColorPickerView = Ember.View.extend({
     
   },
 
+  addLastUsedColor : function(_color) {        
 
-  addLastUsedColor : function(_color) {    
+    if( this.lastColors.indexOf(_color) > -1) return false
 
     var colorBuckets = this.$('#lastColorList').find("li");
-    var numberOfBuckets = colorBuckets.last().index();     
+    var numberOfBuckets = colorBuckets.last().index();
 
     this.lastColors[this.lastColorCounter] = _color;
 

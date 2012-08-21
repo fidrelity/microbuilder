@@ -108,8 +108,12 @@ var PipetteToolModel = ToolModel.extend({
   mouseup : function( _mouse, _screenCtx, _toolCtx, _size ) {
     
     var zoom = App.paintController.zoom;
+
+    var colorData = _screenCtx.getImageData( _mouse.x * zoom, _mouse.y * zoom, 1, 1 ).data;
     
-    App.paintController.setColor( _screenCtx.getImageData( _mouse.x * zoom, _mouse.y * zoom, 1, 1 ).data );
+    App.paintController.setColor( colorData );
+
+    //App.colorPickerView.addLastUsedColor( rgbToHex ( colorData[0], colorData[1], colorData[2] ) );
     
   }
   
