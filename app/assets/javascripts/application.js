@@ -22,10 +22,10 @@
 $(document).ready(function() {
 
   // Init Autocomplete .searchbox
-  $( "#term" ).autocomplete({
-      source: "/games/auto_search",
-      minLength: 2
-  });
+  // $( "#query" ).autocomplete({
+  //     source: "/games/auto_search",
+  //     minLength: 2
+  // });
 
   Feedback.init();
   //

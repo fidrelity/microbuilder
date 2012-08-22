@@ -9,10 +9,10 @@
 
     = form_tag search_games_path, :method => 'get', :class=>"form-inline navbar-search pull-left" do
 
-      = text_field_tag "term", "", :class => "searchbox", :placeholder => "Search game", "data-autocomplete" => auto_search_games_path
-    
+      = autocomplete_field_tag "term", "", autocomplete_game_title_games_path, :class => "searchbox ui-autocomplete-input", :placeholder => "Search game"
+
       %button{:type => "submit", :class => "btn"}
-        %i{:class => "icon-search"}
+        %i{:class => "icon-search"}    
 
   .span4{:style => "width: 290px;"}
   
