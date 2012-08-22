@@ -23,7 +23,9 @@ Playtin::Application.routes.draw do
       put 'dislike'
       post '/comment', :to => 'gameComments#create'
     end
-    
+
+    get :autocomplete_game_title, :on => :collection    
+
     collection do 
       get 'auto_search'
       get 'search', :to => 'games#search', :as => 'search'

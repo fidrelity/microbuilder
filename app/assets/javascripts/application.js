@@ -17,11 +17,12 @@
 //= require_tree ./editor/templates
 //= require_tree ./paint/templates
 //= require_tree .
+//= require autocomplete-rails
 
 $(document).ready(function() {
 
   // Init Autocomplete .searchbox
-  $( "#query" ).autocomplete({
+  $( "#term" ).autocomplete({
       source: "/games/auto_search",
       minLength: 2
   });

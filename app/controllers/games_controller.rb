@@ -2,6 +2,8 @@
   respond_to :js, :only => [:create, :index, :update, :like, :dislike, :played]
   before_filter :authenticate_user!, :only => [:create, :destroy]
   before_filter :find_game, :only => [:show, :embed, :destroy, :like, :dislike, :played]
+
+  
   
   def index
     @games = case params[:type]
