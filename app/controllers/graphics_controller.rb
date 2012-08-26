@@ -55,6 +55,11 @@ class GraphicsController < ApplicationController
     render :text => response.to_json, :status => 200
 
   end
+
+  def auto_complete
+    graphics = Graphic.order(:name).where("name like ?", "%#{params[:term]}%")
+    render :text => graphics.map(&:name)
+  end
   
   def tunnel
     response.headers['Content-Type'] = 'image/png'

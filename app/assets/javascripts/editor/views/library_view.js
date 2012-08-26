@@ -3,6 +3,16 @@ var LibraryView = Ember.View.extend({
   templateName : 'editor/templates/library_template',
   
   didInsertElement : function() {
+
+    // Init Autocomplete for games
+    console.log("hier")
+    this.$( ".graphicSearchField" ).autocomplete({
+
+        source: "/graphics/auto_complete",
+
+        minLength: 2
+
+    });
     
     if ( App.libraryController.showOwn ) {
     

@@ -229,7 +229,7 @@ var LibraryController = Ember.ArrayController.extend({
   // Search a graphic by name
   search : function() {
 
-    var term = $("#graphicSearchField").val();
+    var term = $(".graphicSearchField").val();
     if(!term.length) return false;
 
     var path = '/graphics/search';

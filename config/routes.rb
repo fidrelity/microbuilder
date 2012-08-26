@@ -14,6 +14,7 @@ Playtin::Application.routes.draw do
     collection do
       get 'public', :to => 'graphics#public'
       get 'search'
+      get 'auto_complete'
     end
   end
 
