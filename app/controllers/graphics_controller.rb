@@ -1,6 +1,8 @@
 class GraphicsController < ApplicationController
   respond_to :js, :only => [:create, :show, :public, :destroy]
   before_filter :authenticate_user!, :only => [:create, :destroy]
+
+  pg_search_scope :search, :against => [:name]
   
   def index
     @graphics = Graphic.all
@@ -44,22 +46,20 @@ class GraphicsController < ApplicationController
     render :text => response.to_json, :status => 200
   end
 
-  def search
+  def search    
 
-    #graphics = Graphic.order(:name).where("name like ? AND background = ?", "%#{params[:term]}%", params[:background])
-    graphics = get_like(params[:term], params[:background])
+    graphics = Graphic.search(params[:term]).paginate(:page => params[:page], :per_page => 12)
 
     response = graphics.map do |graphic|
         graphic.to_response_hash(current_user)
     end
     
     render :text => response.to_json, :status => 200
-
   end
 
   def auto_complete
     graphics = get_like(params[:term], params[:background])
-    render :text => graphics.map(&:name)
+    render :text => graphics.map { |graphic| "#{graphic.name}" } # (by #{graphic.user.display_name})
   end
   
   def tunnel
@@ -71,10 +71,10 @@ class GraphicsController < ApplicationController
 
   protected
 
-    # Retuns all graphics with name like %name%
-    def get_like(name, isBackground)
+    # Retuns all graphics with name like %term%
+    def get_like(term, isBackground)
       isBackground = isBackground === "undefined" ? false : isBackground
-      graphics = Graphic.order(:name).where("name like ? AND background = ?", "%#{name}%", isBackground)
+      graphics = Graphic.order(:name).where("name like ? AND background = ?", "%#{term}%", isBackground)
     end      
 
 end
