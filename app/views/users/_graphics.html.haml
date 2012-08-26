@@ -8,20 +8,20 @@
 
     %button{:class => "btn graphicsButton tabButton btn-info"}
       Graphics
-      = "(#{graphics.size})"
+      = "(#{graphics_size})"
 
     %button{:class => "btn backgroundButton tabButton"}
       Backgrounds
-      = "(#{backgrounds.size})"
+      = "(#{backgrounds_size})"
 
   %ul{:id => 'graphicLayer', :class => "thumbnails span10 layer"}
 
     %p
-      = will_paginate graphics, :param_name => :page, :container => false, :page_links => false, :show_always => false
+      = will_paginate graphics, :param_name => :graphics, :container => false, :page_links => false, :show_always => false
 
     - graphics.each do |graphic|
 
-      %li{:id => "graphic#{graphic.id}", :class => "span2 "}
+      %li{:id => "graphic#{graphic.id}", :class => "span2"}
         
         .thumbnail
 
@@ -49,7 +49,7 @@
 
   %ul{:id => 'backgroundLayer', :class => "thumbnails span10 layer"}
 
-    = will_paginate backgrounds, :param_name => :page, :container => false, :page_links => false, :show_always => false
+    = will_paginate backgrounds, :param_name => :backgrounds, :container => false, :page_links => false, :show_always => false
     
     - backgrounds.each do |graphic|
 
