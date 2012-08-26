@@ -234,6 +234,8 @@ var LibraryController = Ember.ArrayController.extend({
 
     var path = '/graphics/search';
     var self = this;
+
+    this.set("content", []);
     
     $.ajax({
 
