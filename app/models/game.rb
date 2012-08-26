@@ -47,6 +47,10 @@ class Game < ActiveRecord::Base
     end
   end
   
+  def related(amount = 5)
+    Game.order("RANDOM()").limit(amount)
+  end
+  
   def create_graphics_association(graphic_ids)
     return unless graphic_ids
     

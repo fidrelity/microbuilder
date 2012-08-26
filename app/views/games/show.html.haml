@@ -62,3 +62,4 @@
     = render :partial => "games/layers/share_layer", :locals => {:game => @game}
     = render :partial => "games/layers/embed_layer", :locals => {:game => @game}
     = render :partial => "games/layers/report_layer", :locals => {:game => @game}
+    = render :partial => "related", :locals => {:games => @game.related(4)}
