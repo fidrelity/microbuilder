@@ -7,9 +7,10 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :email, :password, :password_confirmation, 
+  attr_accessible :email, :password, :password_confirmation, :display_name,
                   :remember_me, :first_name, :last_name, :facebook_id
   
+  before_create :generate_display_name                
   validates_length_of :first_name, :minimum => 2
   validates_length_of :last_name, :minimum => 2
   
@@ -20,15 +21,11 @@ class User < ActiveRecord::Base
         user
       else # Create a user with a stub password.
         User.create!(
-          :email => data.email, :password => Devise.friendly_token[0,20],
+          :email => data.email, :password => Devise.friendly_token[0,20], :display_name => data.username,
           :first_name => data.first_name, :last_name => data.last_name, :facebook_id => data.id
         ) 
       end
     end 
-  end
-  
-  def display_name
-    self.first_name
   end
 
   def display_image
@@ -48,6 +45,10 @@ class User < ActiveRecord::Base
   end
   
   private
+    def generate_display_name
+      self.display_name = display_name || first_name  
+    end
+  
     def gravatar_email_hash
       Digest::MD5.hexdigest(email)
     end
