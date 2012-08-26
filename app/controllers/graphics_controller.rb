@@ -57,7 +57,9 @@ class GraphicsController < ApplicationController
   end
 
   def auto_complete
-    graphics = Graphic.order(:name).where("name like ?", "%#{params[:term]}%")
+    isBackground = params[:background] === "undefined" ? false : params[:background]
+
+    graphics = Graphic.order(:name).where("name like ? AND background = ?", "%#{params[:term]}%", isBackground)
     render :text => graphics.map(&:name)
   end
   
