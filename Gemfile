@@ -19,7 +19,6 @@ gem 'feedhub'
 gem 'httparty'
 gem 'statistics2'
 gem 'newrelic_rpm'
-gem 'rails3-jquery-autocomplete'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
