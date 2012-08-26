@@ -1,8 +1,6 @@
 class GraphicsController < ApplicationController
   respond_to :js, :only => [:create, :show, :public, :destroy]
   before_filter :authenticate_user!, :only => [:create, :destroy]
-
-  pg_search_scope :search, :against => [:name]
   
   def index
     @graphics = Graphic.all
@@ -46,7 +44,7 @@ class GraphicsController < ApplicationController
     render :text => response.to_json, :status => 200
   end
 
-  def search    
+  def search
 
     graphics = Graphic.search(params[:term]).paginate(:page => params[:page], :per_page => 12)
 
