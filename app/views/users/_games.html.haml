@@ -4,7 +4,7 @@
     = "Games (#{@user.games.size})"
 
   %p
-    = will_paginate games, :param_name => :page, :container => false, :page_links => false, :show_always => false
+    = will_paginate games, :param_name => :games, :container => false, :page_links => false, :show_always => false
 
   %ul{:id => 'gamesList', :class => "thumbnails span10"}
     - games.each do |game|

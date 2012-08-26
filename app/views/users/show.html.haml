@@ -16,5 +16,9 @@
 
   %div{ :class => "span9"}        
     = render :partial => 'games', :locals => {:games => @games, :user => @user}
-    = render :partial => 'graphics', :locals => {:graphics => @graphics, :user => @user, :backgrounds => @backgrounds}
+    = render :partial => 'graphics', :locals => {:graphics => @graphics,
+      :user => @user,
+      :backgrounds => @backgrounds,
+      :backgrounds_size => @backgrounds_size,
+      :graphics_size => @graphics_size}
     
