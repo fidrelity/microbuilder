@@ -13,6 +13,7 @@ Playtin::Application.routes.draw do
   resources :graphics, :only => [:show, :create, :destroy, :new] do
     collection do
       get 'public', :to => 'graphics#public'
+      get 'search'
     end
   end
 

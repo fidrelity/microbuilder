@@ -36,6 +36,14 @@
 
     </div>
 
+    <!-- Graphic search form -->
+    <div class="form-inline">
+      <input type="text" id="graphicSearchField">
+      <button id="searchButton" class="btn" {{action "search" target="App.libraryController"}}>
+        <i class="icon-search"></i>
+      </button>
+    </div>
+
   </div>
 
   <div class="clear"></div>

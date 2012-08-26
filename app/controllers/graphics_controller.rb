@@ -43,6 +43,18 @@ class GraphicsController < ApplicationController
     
     render :text => response.to_json, :status => 200
   end
+
+  def search
+
+    graphics = Graphic.order(:name).where("name like ? AND background = ?", "%#{params[:term]}%", params[:background])
+
+    response = graphics.map do |graphic|
+        graphic.to_response_hash(current_user)
+    end
+    
+    render :text => response.to_json, :status => 200
+
+  end
   
   def tunnel
     response.headers['Content-Type'] = 'image/png'
