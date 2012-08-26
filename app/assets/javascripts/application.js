@@ -17,7 +17,6 @@
 //= require_tree ./editor/templates
 //= require_tree ./paint/templates
 //= require_tree .
-//= require autocomplete-rails
 
 $(document).ready(function() {
 
