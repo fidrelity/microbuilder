@@ -21,11 +21,14 @@
 
 $(document).ready(function() {
 
-  // Init Autocomplete .searchbox
-  // $( "#query" ).autocomplete({
-  //     source: "/games/auto_search",
-  //     minLength: 2
-  // });
+  // Init Autocomplete for games
+  $( ".searchbox" ).autocomplete({
+
+      source: "/games/auto_search",
+
+      minLength: 2
+
+  });
 
   Feedback.init();
   //

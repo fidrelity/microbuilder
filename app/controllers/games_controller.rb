@@ -84,10 +84,10 @@
     render :nothing => true, :layout => false
   end
 
-  # def auto_search
-  #   @games = Game.order(:title).where("title like ?", "%#{params[:term]}%")
-  #   render json: @games.map(&:title)
-  # end
+  def auto_search
+    @games = Game.order(:title).where("title like ?", "%#{params[:term]}%")
+    render :text => @games.map(&:title)
+  end
 
   private
 
