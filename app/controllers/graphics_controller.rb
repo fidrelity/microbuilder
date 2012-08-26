@@ -46,7 +46,8 @@ class GraphicsController < ApplicationController
 
   def search
 
-    graphics = Graphic.order(:name).where("name like ? AND background = ?", "%#{params[:term]}%", params[:background])
+    #graphics = Graphic.order(:name).where("name like ? AND background = ?", "%#{params[:term]}%", params[:background])
+    graphics = get_like(params[:term], params[:background])
 
     response = graphics.map do |graphic|
         graphic.to_response_hash(current_user)
@@ -57,9 +58,7 @@ class GraphicsController < ApplicationController
   end
 
   def auto_complete
-    isBackground = params[:background] === "undefined" ? false : params[:background]
-
-    graphics = Graphic.order(:name).where("name like ? AND background = ?", "%#{params[:term]}%", isBackground)
+    graphics = get_like(params[:term], params[:background])
     render :text => graphics.map(&:name)
   end
   
@@ -69,4 +68,13 @@ class GraphicsController < ApplicationController
     img_data = HTTParty.get(params[:url]).body
     render :text => img_data
   end
+
+  protected
+
+    # Retuns all graphics with name like %name%
+    def get_like(name, isBackground)
+      isBackground = isBackground === "undefined" ? false : isBackground
+      graphics = Graphic.order(:name).where("name like ? AND background = ?", "%#{name}%", isBackground)
+    end      
+
 end
