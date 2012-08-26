@@ -106,13 +106,6 @@ $(document).ready(function() {
     highlightTab( $(this) );
   });  
 
-
-
-
-  $('.likeButton').click(function() {
-    $(this).attr('disabled', 'disabled');
-  });
-
   // ---------------------------------------
 
 });
