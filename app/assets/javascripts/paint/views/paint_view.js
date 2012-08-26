@@ -14,6 +14,9 @@ var PaintView = Ember.View.extend({
   patternCtx : null,
   
   mouseDown : false,
+
+  bgToggleCounter : 0,
+  availableColors : [],
   
   didInsertElement : function() {
     
@@ -25,6 +28,12 @@ var PaintView = Ember.View.extend({
     this.set( 'patternCanvas', this.$( '#patternCanvas' )[0] );
     
     this.set( 'patternCtx', this.patternCanvas.getContext( '2d' ) );
+
+    // Different background colors for pattern canvas
+    this.availableColors = [
+      ["#FFFFFF", "#CCCCCC"],
+      ["#000000", "#111111"]
+    ];
     
     area.mousedown( function( e ) {
       
@@ -69,6 +78,16 @@ var PaintView = Ember.View.extend({
     $('.popBottom').popover({ placement: 'bottom' });
     
   },
+
+  toggleZoomBackground : function() {    
+
+    this.bgToggleCounter = this.bgToggleCounter < this.availableColors.length - 1 ? ++this.bgToggleCounter : 0;
+    
+    $(".toggleBgButton").css( "background-color" , this.availableColors[this.bgToggleCounter][0] );
+    
+    this.resize();
+
+  },
   
   showTypeSelection : function() {
     
@@ -98,10 +117,10 @@ var PaintView = Ember.View.extend({
       'margin-top': height >= totalHeight ? 0 : -height / 2
     });
     
-    ctx.fillStyle = '#FFF';
+    ctx.fillStyle = this.availableColors[this.bgToggleCounter][0] || '#FFF';
     ctx.fillRect( 0, 0, width, height );
     
-    ctx.fillStyle = '#CCC';
+    ctx.fillStyle = this.availableColors[this.bgToggleCounter][1] || '#CCC';
     
     for ( i = Math.floor( width / size ); i >= 0; i-- ) {
       
