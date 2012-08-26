@@ -1,7 +1,7 @@
  class GamesController < ApplicationController
   respond_to :js, :only => [:create, :index, :update, :like, :dislike, :played]
   before_filter :authenticate_user!, :only => [:create, :destroy]
-  before_filter :find_game, :only => [:show, :embed, :destroy, :like, :dislike, :played]
+  before_filter :find_game, :only => [:show, :embed, :destroy, :like, :dislike, :played]  
   
   def index
     @games = case params[:type]
@@ -40,7 +40,7 @@
   end
   
   def search
-    @games = Game.search(params[:query]).paginate(:page => params[:page], :per_page => 12)
+    @games = Game.search(params[:term]).paginate(:page => params[:page], :per_page => 12)
     render 'index'
   end
   
@@ -86,7 +86,7 @@
 
   def auto_search
     @games = Game.order(:title).where("title like ?", "%#{params[:term]}%")
-    render json: @games.map(&:title)
+    render :text => @games.map(&:title)
   end
 
   private

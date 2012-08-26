@@ -15,6 +15,16 @@ var LibraryView = Ember.View.extend({
     }
     
     App.libraryController.updateDisplay( true );
+
+
+    // Init Autocomplete for graphics
+    this.$( ".graphicSearchField" ).autocomplete({
+
+        source: "/graphics/auto_complete?background=" + App.libraryController.get("showBackground"),
+
+        minLength: 2
+
+    });
     
   }
   

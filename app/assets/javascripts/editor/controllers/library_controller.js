@@ -225,13 +225,49 @@ var LibraryController = Ember.ArrayController.extend({
     });
     
   },
+
+  // Search a graphic by name
+  search : function() {
+
+    var term = $(".graphicSearchField").val();
+    if(!term.length) return false;
+
+    var path = '/graphics/search';
+    var self = this;
+
+    this.set("content", []);
+    
+    $.ajax({
+
+      url : path,
+      type : 'GET',
+      data : { term: term, background : this.showBackground },
+      
+      success: function( data ) {
+        
+        if ( data ) {
+          
+          if ( typeof data === "string" ) {
+            
+            data = JSON.parse( data );            
+            
+          }
+        
+          self.appendGraphics( data, 1);
+        
+        }
+        
+      }
+      
+    });
+
+  },
   
   appendGraphics : function( data, page ) {
     
     if ( !data.length ) {
       
       this.updateDisplay( false, this.page );
-      
       return;
       
     }
