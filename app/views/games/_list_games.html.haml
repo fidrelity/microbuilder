@@ -2,7 +2,10 @@
   .span12
     %h2{ :class => "page-header", :style => "margin-top:0"}
       Games
-      
+      - if params[:term]
+        %small
+          (#{@games.count})
+
 .row
   .span10
     %div{ :class => "btn-group"}
