@@ -200,6 +200,7 @@ var PublishView = Ember.View.extend({
   templateName : 'editor/templates/publish_template',
 
   didInsertElement : function() {
+
     // *** Snapshot of preview game ***
     // onClick on li element
     $('#snapshots').find('li').live('click', function() {
@@ -214,7 +215,26 @@ var PublishView = Ember.View.extend({
       singleField : true
 
     });
+
+    
+    var checkList = $("#check-list");
+
+    var hasWinAction = App.gameController.game.checkWin( App.gameController.game.getData() );
+    this.checkValue( checkList.find(".hasWinAction"), hasWinAction, { fail: "Game has no win action", success: "Game has win action" });
+
+  },
+
+  checkValue : function(object, status, message) {
+
+    var msg = status ? message.success : message.fail;
+    var addClassName = status ? "label-success" : "label-important";
+    var removeClassName = status ? "label-important" : "label-success";
+
+
+    object.addClass(addClassName).removeClass(removeClassName).html(msg);
+
   }
+
 });
 
 var BoundingView = Ember.View.extend({
