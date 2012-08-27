@@ -205,6 +205,15 @@ var PublishView = Ember.View.extend({
     $('#snapshots').find('li').live('click', function() {
       App.gameController.setActiveSnapshot($(this));
     });
+
+    // Tagging field: https://github.com/aehlke/tag-it
+    $("#game-tags").tagit({
+
+      itemName: "tags",
+
+      singleField : true
+
+    });
   }
 });
 

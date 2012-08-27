@@ -157,7 +157,8 @@ var GameController = Ember.Object.extend({
       game.instructions,
       JSON.stringify( game ),
       JSON.stringify( graphicIDs ),
-      win
+      win,
+      $("#game-tags").tagit('assignedTags').join(",")
       // thumb
     );
     
@@ -190,6 +191,7 @@ var GameController = Ember.Object.extend({
           instruction: game.instructions,
           data : JSON.stringify( game ),
           preview_image_data : thumb,
+          tags : $("#game-tags").tagit('assignedTags').join(",")
         },
         
         graphic_ids: graphicIDs

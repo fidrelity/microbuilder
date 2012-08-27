@@ -7,6 +7,10 @@
     <label>Instructions: </label>
     {{view Ember.TextArea valueBinding="App.game.instructions" placeholder="(140 chars max)" maxlength="140"}}
     <br />
+
+    <label>Tags: </label>
+    <ul id="game-tags">
+    </ul>
   </div>
 
   <div class="element left">
