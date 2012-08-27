@@ -3,11 +3,11 @@
 .row{:style => "margin-top:1em;"}
 
   .span1{:style => "width:40px"}
-    = button_to "#{@game.likes}", {:action => "like", :id => game.id}, :method => :put, :remote => true, :disabled => disable, :class => "likeButton btn btn-mini"
+    = button_to "#{@game.likes}", {:action => "like", :id => game.id}, :method => :put, :remote => true, :disabled => disable, :class => "likeButton btn btn-mini", :title => "like"
 
   .span2{ :style => "width:125px" }
     .progress.progress-success
       %div{:class => "bar", :style => "width:#{game.rating * 100}%;"}
 
   .span1{:style => "text-align:right;width:40px"}
-    = button_to "#{@game.dislikes}", {:action => "dislike", :id => game.id}, :method => :put, :remote => true, :disabled => disable, :class => "dislikeButton btn btn-mini"
+    = button_to "#{@game.dislikes}", {:action => "dislike", :id => game.id}, :method => :put, :remote => true, :disabled => disable, :class => "dislikeButton btn btn-mini", :title => "dislike"
