@@ -264,13 +264,14 @@ canvas {
 }
 
 #playGame .likeButton {
-
+  padding-left: 18px;  
+  background:url("bootstrap/like.png") no-repeat;
 }
 
 #playGame .dislikeButton {
-
+  padding-left: 18px;  
+  background:url("bootstrap/dislike.png") no-repeat;  
 }
-
 
 #commentsWrapper .comments {
   overflow-y:auto;
