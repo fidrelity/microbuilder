@@ -13,9 +13,7 @@
 
     <label>Check-list:</label>
 
-    <ul id="check-list">
-      <li class="hasWinAction label label-danger">Game has win action</li>
-    </ul>
+    <ul id="check-list"></ul>
 
   </div>
 

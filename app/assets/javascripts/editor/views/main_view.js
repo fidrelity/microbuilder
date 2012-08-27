@@ -216,22 +216,27 @@ var PublishView = Ember.View.extend({
 
     });
 
-    
-    var checkList = $("#check-list");
+    // --- CHECK LIST ---
+    this.checkList = $("#check-list");
+    this.checkList.html("");
+
+    var hasObjects = App.gameController.game.gameObjects.length > 0;
+    this.checkValue( hasObjects, { fail: "Game has no objects", success: "Game has objects" });    
+
+    var hasBackground = App.gameController.game.background !== null;
+    this.checkValue( hasBackground, { fail: "Game has no background", success: "Game has a background" });    
 
     var hasWinAction = App.gameController.game.checkWin( App.gameController.game.getData() );
-    this.checkValue( checkList.find(".hasWinAction"), hasWinAction, { fail: "Game has no win action", success: "Game has win action" });
-
+    this.checkValue( hasWinAction, { fail: "Game has no win action", success: "Game has win action" });
   },
 
-  checkValue : function(object, status, message) {
+  checkValue : function(status, message) {
 
     var msg = status ? message.success : message.fail;
     var addClassName = status ? "label-success" : "label-important";
     var removeClassName = status ? "label-important" : "label-success";
 
-
-    object.addClass(addClassName).removeClass(removeClassName).html(msg);
+    this.checkList.append('<li class="label ' + addClassName + '">'+ msg +'</li>');
 
   }
 
