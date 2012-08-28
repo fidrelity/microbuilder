@@ -29,8 +29,8 @@
           
             %div{:class => "frame_graphic_element", "data-frames" => "#{graphic.frame_count}", :style => "background-image:url(#{graphic.image});width:#{graphic.frame_width}px;height:#{graphic.frame_height}px;"}
             
-          %h4
-            = graphic.name            
+          %h6
+            = limit_string(graphic.name)
           %span
             =graphic.frame_width
             x

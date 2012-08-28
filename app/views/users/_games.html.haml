@@ -15,7 +15,7 @@
           = link_to image_tag(game.preview_image), play_path(game)
         
           %h4{:style => "margin-top:3px;"}
-            = game.title
+            = limit_string( game.title )
           
           .row{:style => "margin-top:3px;"}
             

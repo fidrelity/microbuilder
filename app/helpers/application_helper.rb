@@ -17,4 +17,16 @@ module ApplicationHelper
 
   end
 
+  def limit_string( str, limit = 10 )
+
+    return str if str.length <= limit
+
+    snip_idx = str.index(/\s/, limit)    
+
+    str = str[0, snip_idx] + " ..." if snip_idx
+
+    return str
+
+  end
+
 end
