@@ -24,6 +24,8 @@ var Notifier = {
     Notifier.wrapper.find(".closeFlash").live("click", function() {
       $(this).parent().hide();
     });
+
+    Notifier.loadingOverlay = $(".loadOverlay");
     
     return Notifier;
   },
@@ -73,17 +75,20 @@ var Notifier = {
   // Shows a popup with a loader animation
   showLoader : function(_msg) {
     if(!_msg) return false;
-    if(!$(".paintOverlay").length){ 
-      throw "Html: div.paintOverlay is missing";
+
+    Notifier.loadingOverlay = Notifier.loadingOverlay || $(".loadOverlay");
+
+    if(!Notifier.loadingOverlay.length){ 
+      throw "Html: div.loadOverlay is missing";
       return false; 
     }
 
     window.scrollTo(0, 0);
 
     var overlayHeight = $(document).height();
-    $(".paintOverlay").css({ height : overlayHeight }).fadeTo(800, 0.8);
+    Notifier.loadingOverlay.css({ height : overlayHeight }).fadeTo(500, 0.9);
 
-    var overlayMessageWrapper = $(".paintOverlayMessage");
+    var overlayMessageWrapper = Notifier.loadingOverlay.find(".overlayMessage");
     //
     overlayMessageWrapper.find(".message").html(_msg);
     //    
@@ -94,7 +99,7 @@ var Notifier = {
   },
 
   hideLoader : function() {
-    $(".paintOverlay").hide();
+    Notifier.loadingOverlay.hide();
     return Notifier;
   }
 

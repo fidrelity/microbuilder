@@ -64,9 +64,27 @@ h1 a, h1 a:visited {
   width:100%;
 }
 
-/* Paint */
-.paintOverlay {
+/* Loading overlay */
+
+.loadOverlay {
+  z-index:9001;
   display:none;
+  width:100%; height:100%;
+  position:absolute; left:0; top:0;
+  background:#111; 
+}
+
+.loadOverlay .overlayMessage {
+  z-index:9002;
+  top:30%; left:40%;
+  padding:2em; position:absolute;
+  background:#000; color:#FFF;
+  border-radius:7px;
+  width:600px;  
+}
+
+.loadOverlay .overlayMessage .message {
+  padding-top:6px; font-size:18px;
 }
 
 /* ---------------------------------- */
