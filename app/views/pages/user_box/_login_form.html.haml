@@ -33,3 +33,10 @@
         = "#{current_user.games.size} games created"
       %p
         = "#{current_user.graphics.size} graphics created"
+      %p
+        %strong
+          Total:
+        %i{:class => "icon-thumbs-up"}
+        = "#{@likes} likes and "
+        %i{:class => "icon-thumbs-down"}
+        = "#{@dislikes} dislikes"
