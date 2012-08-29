@@ -2,17 +2,7 @@
   
   %div{ :class => "span3"}
     
-    #profilewrap
-      %img{:src => @user.display_image, :id => "profileimage"}
-      
-      %h3
-        =@user.first_name
-      
-      %p
-        member since:
-        %br
-        %span
-          =@user.created_at.to_date
+    =render :partial => 'profile', :locals => {:user => @user}
 
   %div{ :class => "span9"}        
     = render :partial => 'games', :locals => {:games => @games, :user => @user}

@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   before_create :generate_display_name                
   validates_length_of :first_name, :minimum => 2
   validates_length_of :last_name, :minimum => 2
+  validates_length_of :display_name, :minimum => 2
   
   class << self
     def find_for_facebook_oauth(access_token, signed_in_resource=nil)

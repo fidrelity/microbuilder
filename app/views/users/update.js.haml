@@ -1,0 +1,8 @@
+:plain
+  $('body').append("#{escape_javascript(render :partial => 'layouts/flash', :locals => {:flash => flash})}")
+  Notifier.notify();
+  $('#profilewrap').replaceWith("#{escape_javascript(render :partial => 'users/profile', :locals => {:user => @user})}");
+  $("#profilewrap #display_name_form").hide();
+  $("#profilewrap .edit").click(function(e) {
+    $("#profilewrap #display_name").replaceWith($("#profilewrap #display_name_form").toggle());
+  });

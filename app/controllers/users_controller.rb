@@ -17,6 +17,17 @@ class UsersController < ApplicationController
     @backgrounds = @backgrounds.paginate(:page => params[:backgrounds], :per_page => 12)
     @games = @user.games.paginate(:page => params[:games], :per_page => 6)
   end
+  
+  def update
+    @user = User.find(params[:id])
+    if current_user == @user
+      if @user.update_attributes(params[:user])
+        flash[:success] = "Successfully updated profile"
+      else
+        flash[:error] = "Not a valid username"
+      end
+    end
+  end
 
   def graphics
     begin

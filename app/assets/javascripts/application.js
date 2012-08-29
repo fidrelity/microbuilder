@@ -29,6 +29,13 @@ $(document).ready(function() {
 
   });
 
+  
+  $("#profilewrap #display_name_form").hide();
+  $("#profilewrap .edit").click(function(e) {
+    $("#profilewrap #display_name").toggle();
+    $("#profilewrap #display_name_form").toggle();
+  });
+  
   Feedback.init();
   //
   Notifier.init().notify();
