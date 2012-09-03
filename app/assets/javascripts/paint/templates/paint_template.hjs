@@ -78,7 +78,7 @@
         <div class="left">
           <button {{action "zoomIn"}} class="zoomin ttipBottom" title="Zoom In"></button>
           <button {{action "zoomOut"}} class="zoomout ttipBottom" title="Zoom Out"></button>
-          <button {{action "toggleZoomBackground"}} class="toggleBgButton ttipBottom" title="Toggle the background pattern"></button>
+          <button {{action "toggleBackground"}} class="toggleBgButton ttipBottom" title="Toggle the background pattern"></button>
         </div>
         
         <div class="left" id="sizeWrapper">

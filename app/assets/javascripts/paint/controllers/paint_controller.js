@@ -628,9 +628,16 @@ var PaintController =  Ember.ArrayController.extend({
     canvas.width = this.width * count;
     canvas.height = this.height;
     
+    if ( this.isBackground ) {
+      
+      ctx.fillStyle = '#FFF';
+      ctx.fillRect( 0, 0, this.width, this.height );
+      
+    }
+    
     for ( i = 0; i < count; i++ ) {
       
-      ctx.putImageData( this.content[i].load(), i * this.width, 0 );
+      ctx.putImageDataOverlap( this.content[i].load(), i * this.width, 0 );
       
     }
     
