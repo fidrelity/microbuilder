@@ -502,7 +502,11 @@ var SelectToolModel = ToolModel.extend({
     _ctx.save();
     _ctx.setTransform( 1, 0, 0, 1, 0.5, 0.5 );
     
+    _ctx.strokeStyle = '#FFF';
     _ctx.strokeRect( rect.x * zoom, rect.y * zoom, rect.width * zoom - 1, rect.height * zoom - 1 );
+    
+    _ctx.strokeStyle = '#000';
+    _ctx.dashedRect( rect.x * zoom, rect.y * zoom, rect.width * zoom - 1, rect.height * zoom - 1, 5 );
     
     _ctx.restore();
     
@@ -586,20 +590,21 @@ var SelectToolModel = ToolModel.extend({
     
   },
   
-  loadImage : function( _ctx, _img, _zoom ) {
+  loadImage : function( _ctx, _img, _zoom, _area ) {
     
     var canvas = document.createElement( 'canvas' ),
       ctx = canvas.getContext( '2d' ),
-      rect = this.area.copy( this.area2 ),
       size = _img;
     
-    if ( rect.width && rect.height ) {
+    if ( _area.width || _area.height ) {
       
-      size = rect;
+      size = _area;
+      
+      this.area.copy( _area );
       
     } else {
       
-      rect.set( 0, 0, size.width, size.height );
+      this.area.set( 0, 0, size.width, size.height );
       
     }
     

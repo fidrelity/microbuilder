@@ -401,9 +401,11 @@ var PaintController = Ember.ArrayController.extend({
   
   handleImage : function( _img ) {
     
+    var area = App.selectTool.area.clone();
+    
     $( '.select' ).trigger( 'click' );
     
-    App.selectTool.loadImage( this.toolCtx, _img, this.zoom );
+    App.selectTool.loadImage( this.toolCtx, _img, this.zoom, area );
     
   },
   
