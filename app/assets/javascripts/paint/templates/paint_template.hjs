@@ -4,22 +4,39 @@
   
     <div id="sprites-area" class="right">
     
-      <canvas id="canvas-merged" width="64" height="64"></canvas>
-    
-      <div class="tool-bar">
-        <button {{action "play" target="App.spritePlayer"}} id="playButton">Play</button>
-        <button {{action "stop" target="App.spritePlayer"}} id="stopButton">Stop</button>
-        <input type="text" id="playDelay" value="1000" size="2" class="span1 ttip" title="Set animation speed (miliseconds)">
-        <input type="checkbox" value="1" id="replayLoop" class="ttip" title="Loop the animation"> Loop
+      <div class="tool-bar btn-group" data-toggle="buttons-radio">
+        
+        <button id="spritesButton" class="btn active" {{action "showSprites"}}>sprites</button>
+        <button id="playerButton" class="btn" {{action "showAnimation"}}>animation</button>
+        
       </div>
     
-      {{view SpritesView id = "sprites-area-scroll"}}
+      {{#if isSprites}}
     
-      <div class="tool-bar tool-bar-bottom">
-        <button {{action "addSprite" target="App.paintController"}} class="ttipBottom" title="Add new sprite">add</button>
-        <button {{action "copySprite" target="App.paintController"}} class="ttipBottom" title="Copy current selected sprite">duplicate</button>
-        <button {{action "removeSprite" target="App.paintController"}} class="ttipBottom" title="Remove current sprite">remove</button>
-      </div>
+        {{view SpritesView id="sprites-area-scroll"}}
+    
+        <div class="tool-bar tool-bar-bottom">
+          <button {{action "addSprite" target="App.paintController"}} class="ttipBottom" title="Add new sprite">add</button>
+          <button {{action "copySprite" target="App.paintController"}} class="ttipBottom" title="Copy current selected sprite">duplicate</button>
+          <button {{action "removeSprite" target="App.paintController"}} class="ttipBottom" title="Remove current sprite">remove</button>
+        </div>
+      
+      {{else}}
+      
+        <div id="sprites-area-scroll">
+          
+          <canvas id="playerCanvas" class="spriteView selected" {{bindAttr width="width"}} {{bindAttr height="height"}}></canvas>
+          
+        </div>
+      
+        <div class="tool-bar  tool-bar-bottom">
+          <button {{action "start" target="App.spritePlayer"}} id="playButton">Play</button>
+          <button {{action "stop" target="App.spritePlayer"}} id="stopButton">Stop</button>
+          <input type="text" id="playDelay" value="300" size="2" class="span1 ttip" title="Set animation speed (miliseconds)">
+          <input type="checkbox" value="1" id="replayLoop" class="ttip" title="Loop the animation"> Loop
+        </div>
+      
+      {{/if}}
     
     </div>
   

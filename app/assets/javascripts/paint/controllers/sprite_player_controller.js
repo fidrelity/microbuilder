@@ -1,116 +1,80 @@
-/*
-  SpritePlayerController
+var SpritePlayerController = Ember.ArrayController.extend({
   
-  - Manages playing of sprites
-*/
-var SpritePlayerController = Ember.Object.extend({
-
-  sprites : null,
-  playDelay : 200,
-  currentFrameIndex : 0,
+  contentBinding : 'App.paintController.content',
+  
+  ctx : null,
+  index : 0,
   playInterval : null,
-
-  init : function () {},
-
-  hide : function() {
-    $('#player').hide();
+  
+  show : function() {
+    
+    this.ctx = $( '#playerCanvas' )[0].getContext( '2d' );
+    
+    this.draw();
+    
+  },
+  
+  start : function() {
+    
+    $('#playButton').hide();
+    $('#stopButton').show();
+    
+    if ( this.content.length > 1 ) {
+      
+      this.playInterval = setInterval( bind( this, this.play ), this.getDuration() );
+      
+    }
+    
   },
   
   play : function() {
-
-    $('#playButton').hide();
-    $('#stopButton').show();
-
-    $('.active-sprite').removeClass('active-sprite');
     
-    this.playDelay = parseInt( $('#playDelay').val() ) || 200;
-
-    this.currentFrameIndex = 0;
+    this.index++;
     
-    this.overSprites();
-
-    console.log("play", this.playDelay);
-
-    this.nextFrame();
-  },
-
-  nextFrame : function() {
-
-    var canvasObjects = this.getSpritesObjects();
-
-    canvasObjects.hide();
-    
-    canvasObjects.eq(this.currentFrameIndex).show();
-
-    if(this.currentFrameIndex == (this.getSpriteCount()) ) {
-
-      // Loop
-      if( this.isLooping() ) {
-
-        this.play();
-        return false;
-
-      // End
-      } else {
-
-        this.stop();
-        return false;
-
+    if ( this.index === this.content.length ) {
+      
+      if ( !this.isLooping() ) {
+        
+        return this.stop();
+        
       }
-
+      
+      this.index = 0
+      
     }
-
-    this.currentFrameIndex++;
     
-    var that = this;
+    this.draw();
     
-    this.playInterval = setTimeout(function(){
-
-      that.nextFrame();
-
-    }, this.playDelay);    
   },
-
+  
+  draw : function() {
+    
+    this.content[ this.index ].draw( this.ctx );
+    
+  },
+  
   stop : function() {
     
-    clearTimeout(this.playInterval);
-
-    this.getSpritesObjects().show();
-    this.floatSprites();
-
-    $('#playButton').show();
-    $('#stopButton').hide();
-
+    $( '#playButton' ).show();
+    $( '#stopButton' ).hide();
+    
+    clearInterval( this.playInterval );
+    
+    this.index = 0;
+    this.draw();
+    
   },
-
-  floatSprites : function() {
-
-    this.getSpritesObjects().removeClass('canvas-over').addClass('canvas-float');
-
-  },
-
-  overSprites : function() {
-
-    this.getSpritesObjects().removeClass('canvas-float').addClass('canvas-over');
-
-  },
-
+  
   isLooping : function() {
-
-    return $("#replayLoop").is(":checked");
-
+    
+    return $( '#replayLoop' ).is( ':checked' );
+    
   },
-
-  getSpritesObjects : function() {
-
-    return $('.spriteView');
-
-  },
-
-  getSpriteCount : function() {
-
-    return this.getSpritesObjects().length;
+  
+  getDuration : function() {
+    
+    return parseInt( $( '#playDelay' ).val() ) || 200;
     
   }
-
+  
 });

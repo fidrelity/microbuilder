@@ -1,4 +1,4 @@
-var PaintController =  Ember.ArrayController.extend({
+var PaintController = Ember.ArrayController.extend({
   
   color : null,
   zoom : 1,

@@ -92,13 +92,15 @@ var SpriteModel = Ember.Object.extend({
     
   },
   
-  draw : function() {
+  draw : function( ctx ) {
     
     var data = this.load();
     
-    if ( data && this.ctx ) {
+    ctx = ctx || this.ctx;
+    
+    if ( data && ctx ) {
       
-      this.ctx.putImageData( data, 0, 0 );
+      ctx.putImageData( data, 0, 0 );
       
     }
     

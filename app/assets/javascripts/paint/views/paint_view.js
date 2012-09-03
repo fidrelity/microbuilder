@@ -18,6 +18,8 @@ var PaintView = Ember.View.extend({
   bgToggleCounter : 0,
   bgColors : [ 'url("/assets/paint/pattern.png")', '#FFF', '#000' ],
   
+  isSprites : true,
+  
   didInsertElement : function() {
     
     var area = this.$( '#zoom-canvas-area' ),
@@ -63,8 +65,23 @@ var PaintView = Ember.View.extend({
       this.toolCanvas.getContext( '2d' )
     );
     
-    this.bgToggleCounter = App.paintController.isBackground ? 0 : 2;
-    this.toggleBackground();
+    if ( App.paintController.isBackground ) {
+      
+      this.bgToggleCounter = 1;
+      
+      this.$( '.toggleBgButton' ).hide();
+      
+      this.resize();
+      
+    } else {
+      
+      this.bgToggleCounter = 2;
+      
+      this.$( '.toggleBgButton' ).show();
+      
+      this.toggleBackground();
+      
+    }
     
     // Init tooltips
     $('.ttip').tooltip();
@@ -176,6 +193,24 @@ var PaintView = Ember.View.extend({
       x : Math.floor( ( e.pageX - offset.left ) / this.zoom ),
       y : Math.floor( ( e.pageY - offset.top ) / this.zoom )
     };
+    
+  },
+  
+  showSprites : function() {
+    
+    this.set( 'isSprites', true );
+    
+    App.spritePlayer.stop();
+    
+  },
+  
+  showAnimation : function() {
+    
+    this.set( 'isSprites', false );
+    
+    Ember.run.end();
+    
+    App.spritePlayer.show();
     
   }
 
