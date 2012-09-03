@@ -112,21 +112,6 @@ var PaintController = Ember.ArrayController.extend({
       
     });
     
-    $( "#sizeSlider" ).slider({
-      
-      value: this.size,
-      min: 1,
-      max: 20,
-      step: 1,
-      
-      slide: function( event, ui ) {
-        
-        App.paintController.setSize( ui.value );
-        
-      }
-      
-    });
-    
     
     if ( !window.File && !window.FileReader && !window.FileList && !window.Blob ) {
       

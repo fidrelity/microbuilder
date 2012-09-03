@@ -6,6 +6,7 @@ var PaintView = Ember.View.extend({
   heightBinding : 'App.paintController.height',
   
   zoomBinding : 'App.paintController.zoom',
+  sizeBinding : 'App.paintController.size',
   
   screenCanvas : null,
   toolCanvas : null,
@@ -82,6 +83,37 @@ var PaintView = Ember.View.extend({
       this.toggleBackground();
       
     }
+    
+    
+    $( "#sizeSlider" ).slider({
+      
+      value: this.size,
+      min: 1,
+      max: 20,
+      step: 1,
+      
+      slide: function( event, ui ) {
+        
+        App.paintController.setSize( ui.value );
+        
+      }
+      
+    });
+    
+    $( "#zoomSlider" ).slider({
+      
+      value: this.zoom,
+      min: 1,
+      max: 4,
+      step: 1,
+      
+      slide: function( event, ui ) {
+        
+        self.setZoom( ui.value );
+        
+      }
+      
+    });
     
     // Init tooltips
     $('.ttip').tooltip();
@@ -182,6 +214,14 @@ var PaintView = Ember.View.extend({
       this.resize();
       
     }
+    
+  },
+  
+  setZoom : function( _zoom ) {
+    
+    this.set( 'zoom', _zoom );
+    
+    this.resize();
     
   },
   
