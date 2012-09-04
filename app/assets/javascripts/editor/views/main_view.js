@@ -201,6 +201,8 @@ var PublishView = Ember.View.extend({
 
   didInsertElement : function() {
 
+    var self = this;
+
     // *** Snapshot of preview game ***
     // onClick on li element
     $('#snapshots').find('li').live('click', function() {
@@ -228,15 +230,47 @@ var PublishView = Ember.View.extend({
 
     var hasWinAction = App.gameController.game.checkWin( App.gameController.game.getData() );
     this.checkValue( hasWinAction, { fail: "Game has no win action", success: "Game has win action" });
+
+    this.checkValue( App.gameController.game.title.length, { fail: "Game has no title", success: "Game has a title" }, "hasTitle");
+    this.addObserver( 'App.gameController.game.title', function() {
+      
+      var hasTitle = App.gameController.game.title.length ;
+      self.checkValue( hasTitle, { fail: "Game has no title", success: "Game has a title" }, "hasTitle");
+      
+    });
+
+    this.checkValue( App.gameController.game.instructions.length, { fail: "Game has no instructions", success: "Game has instructions" }, "hasInstructions");
+    this.addObserver( 'App.gameController.game.instructions', function() {
+      
+      var hasInstr = App.gameController.game.instructions.length;
+      self.checkValue( hasInstr, { fail: "Game has no instructions", success: "Game has instructions" }, "hasInstructions");
+      
+    });
   },
 
-  checkValue : function(status, message) {
+  checkValue : function(status, message, className) {    
 
+    var className = className || "";
     var msg = status ? message.success : message.fail;
     var addClassName = status ? "label-success" : "label-important";
-    var removeClassName = status ? "label-important" : "label-success";
+    var removeClassName = status ? "label-important" : "label-success";    
 
-    this.checkList.append('<li class="label ' + addClassName + '">'+ msg +'</li>');
+    var noClass = true;
+    try {
+
+      noClass = this.checkList.find("." + className).length > 0 ? false : true;
+
+    } catch(e) {}
+
+    if( noClass ) {
+
+      this.checkList.append('<li class="label ' + addClassName + ' ' + className + '">'+ msg +'</li>');
+
+    } else {
+
+      this.checkList.find("." + className).removeClass(removeClassName).addClass(addClassName).html(msg);
+
+    }
 
   }
 
