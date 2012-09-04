@@ -29,12 +29,38 @@ $(document).ready(function() {
 
   });
 
+  // Profile edit form toggle
+  var toggleProfileEdit = function(_linkObj) {
+
+    var profileWrapper = $("#profilewrap");
+
+    var formEle = profileWrapper.find("#display_name_form");
+    formEle.slideToggle().toggleClass("editMode");    
+
+    profileWrapper.find("#display_name").slideToggle();
+
+    if( formEle.hasClass("editMode") ) {
+
+      var inputEle = profileWrapper.find("#user_display_name");
+
+      // Set focus and force cursor to be set to the end of the input
+      var tempVal = inputEle.val();
+      inputEle.focus().val("").val( tempVal );
+      
+      _linkObj.html("Cancel");
+
+    } else {
+
+      _linkObj.html("Edit");
+
+    }
+  };
   
-  $("#profilewrap #display_name_form").hide();
-  $("#profilewrap .edit").click(function(e) {
-    $("#profilewrap #display_name").toggle();
-    $("#profilewrap #display_name_form").toggle();
-  });
+  $("#profilewrap").find(".edit").live("click", function(e) {
+  
+    toggleProfileEdit( $(this) );    
+
+  });  
   
   Feedback.init();
   //

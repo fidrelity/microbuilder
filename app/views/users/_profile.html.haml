@@ -1,15 +1,21 @@
 #profilewrap
   %img{:src => user.display_image, :id => "profileimage"}
   
-  %h3{:id => "display_name"}
-    =user.display_name
-  - if current_user == user
+  %div{:id => "profile_name_wrapper"}
+
+    %span{:id => "display_name"}
+
+      =user.display_name
+
+    - if current_user == user
+          
+      =form_for user, :remote => true, :html => {:id => "display_name_form", :class => "form-inline"} do |f|
+        =f.text_field :display_name, :class => "span2"
+        =f.submit "Save", :class => "btn"
+
     %a{:class => "edit"}
       Edit
-  =form_for user, :remote => true, :html => {:id => "display_name_form"} do |f|
-    =f.text_field :display_name
-    =f.submit
-  
+    
   %p
     member since:
     %br

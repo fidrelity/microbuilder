@@ -160,6 +160,28 @@ body {
   background-size:cover;
 }
 
+#profilewrap #display_name_form {
+  display: none;  
+  margin:0; padding:0;
+}
+
+#profilewrap .edit {
+  cursor:pointer;
+}
+
+#profilewrap #profile_name_wrapper {
+  margin:4px 0 4px 0;
+}
+
+#profilewrap #display_name {
+  font-size:1.6em;
+  font-weight:bold;
+}
+
+#profilewrap #user_display_name {
+  font-size:1.4em;
+}
+
 /* Gallery */
 /* ---------------------------------- */
 
