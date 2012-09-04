@@ -28,7 +28,7 @@
         %li{:class => ""}
           =link_to "Difficulty", gallery_path({:type => "difficulty"})
 
-  .span2
+  .pull-right
     = will_paginate @games, :param_name => :page, :container => false,  :page_links => false, :show_always => true
 
 .row{:style => "margin-top:1em;"}
