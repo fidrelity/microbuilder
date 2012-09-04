@@ -1,4 +1,4 @@
-%div{ :class => "row", :id => "header"}
+%div{:class => "row", :id => "header"}
   
   .span3
     
@@ -15,22 +15,23 @@
         %i{:class => "icon-search"}    
 
   .span4{:style => "width: 290px;"}
-  
-    %ul{:id => "menu", :class => "nav nav-pills"}
-    
-      %li{:class => "gallery", :id =>"play"}
-        =link_to "Play", gallery_path
 
-      %li{:class => "editor", :id =>"build"}      
-        =link_to "Build", build_path
+    %ul{:id => "menu", :class => "nav nav-pills"}
 
       %li{:class => "paint", :id =>"paint"}
         =link_to "Paint", new_graphic_path
 
-  .span1{:style => "width: 70px;"}
+      %li{:class => "editor", :id =>"build"}      
+        =link_to "Build", build_path
+
+      %li{:class => "gallery", :id =>"play"}
+        =link_to "Play", gallery_path
+
+  .span1{:style => "position:relative;left:17px"}
     = get_user_dropdown_content(current_user)
 
-        
+%div{:class => "line"}
+
 %div{:id => 'flash-messages', :class => "row"}
   %ul
     %li{:id => "flash-template",:class => "alert"}

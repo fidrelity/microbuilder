@@ -1,16 +1,11 @@
-#paint-frame {
-  overflow: hidden;
-}
-
 #paint-wrapper {
-  width: 900px;
   height: 500px;
   padding: 0px 0px 0;
+  margin-bottom: 20px;
 }
 
 #paint-wrapper .tool-bar {
   background: #555;
-  /*overflow: hidden;*/
   height: 30px;
   color: #DDD;
 }
@@ -20,11 +15,19 @@
 #paint-wrapper .tool-bar button {
   min-width:30px;
   height:30px;
-  background:top left no-repeat;
   border:none;
   margin:0 1px 0 0;
   float:left;
-  color: #DDD;
+  color: white;
+  background-color: #333;
+}
+
+#paint-wrapper .tool-bar button.active {
+  background-color: #777;
+}
+
+#paint-wrapper .tool-bar .group {
+  margin-right: 30px;
 }
 
 #paint-wrapper .tool-bar button.activeTool {
@@ -59,7 +62,7 @@
   background:url('/assets/paint/circle_icon_fill.png');
 }
 
-#paint-wrapper .tool-bar button.line {
+#paint-wrapper .tool-bar button.lineTool {
   background:url('/assets/paint/icon_line.png');
 }
 
@@ -99,27 +102,32 @@
   border:1px solid #111;
 }
 
-#paint-wrapper #sizeWrapper {
+#paint-wrapper #sizeWrapper, #paint-wrapper #zoomWrapper {
   overflow: hidden;
   margin: 0 1px;
   padding: 7px 10px 3px;
 }
 
 #paint-wrapper #sizeWrapper #sizeSlider {
-  width: 100px;
+  width: 60px;
 }
 
-#paint-wrapper #sizeWrapper #sizeSlider, #paint-wrapper #sizeWrapper #slidervalue {
+#paint-wrapper #zoomWrapper #zoomSlider {
+  width: 40px;
+}
+
+#paint-wrapper #sizeWrapper #sizeSlider, #paint-wrapper #sizeWrapper #sizeValue,
+#paint-wrapper #zoomWrapper #zoomSlider, #paint-wrapper #zoomWrapper #zoomValue {
   float:left;
-  margin-left: 20px;
+  margin-left: 15px;
 }
 
-#paint-wrapper #sizeWrapper span {
+#paint-wrapper #sizeWrapper span, #paint-wrapper #zoomWrapper span {
   float:left;
 }
 
 #paint-wrapper #area-wrapper {
-  /*overflow: hidden;*/
+  overflow: auto;
   border: 1px solid #555;
 }
 
@@ -170,41 +178,6 @@
   border: 1px solid #000;
 }
 
-/* Canvas Elements */
-#zoomCanvas, #canvas-temp {
- /*background:#FFF;
- background:url(bg_transparent.png);*/
- border:1px solid #000000; 
- cursor:crosshair;
- image-rendering: optimizeSpeed;             // Older versions of FF
- image-rendering: -moz-crisp-edges;          // FF 6.0+
- image-rendering: -webkit-optimize-contrast; // Webkit
-                                                //  (Safari now, Chrome soon)
- image-rendering: optimize-contrast;         // Possible future browsers.
- -ms-interpolation-mode: nearest-neighbor;   // IE
-}
-
-.canvas-over  { position:absolute; background: rgba(255, 255, 255, 0.9); }
-
-#canvas-template, #canvas-merged { display:none; }
-#canvas-temp { display:none; z-index:999; position:absolute; background:none;pointer-events:none;border:1px solid #000}
-
-.bgBlack {
-  background-image:none !important;
-  background-color:#000000 !important;
-}
-
-.bgWhite, #zoomCanvas .bgWhite {
-  background-image:none !important;
-  background-color:#FFFFFF !important;
-}
-
-.bgTransparent {
-  background:url("paint/pattern.png");
-}
-
-/* Tools */
-
 #stopButton { display:none; }
 
 /* Game guide */
@@ -246,8 +219,7 @@
 }
 
 .submit {
-  overflow: hidden;
-  margin: 20px;
+  margin-left: 0px;
 }
 
 #selectToolDiv {
@@ -269,6 +241,7 @@
 #paint-wrapper #colorpicker #colortext {
   width : 64px;
   margin-right: 5px;
+  margin-bottom: 0;
 }
 
 #paint-wrapper #colorpicker #colorselect {
@@ -281,6 +254,7 @@
 }
 
 #lastColorsWrapper {
+  display: none;
   background:#555555;
   position:absolute; top:31px;
   padding:4px;
@@ -339,7 +313,7 @@
 #paint-size-wrapper #canvas-size {
   width:128px;
   height:128px;
-  background: url("bg_transparent.png");
+  background: url("/assets/paint/pattern.png");
 }
 
 #paint-size-wrapper #startPainting {

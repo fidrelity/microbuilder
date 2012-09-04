@@ -1,4 +1,4 @@
-var PaintController =  Ember.ArrayController.extend({
+var PaintController = Ember.ArrayController.extend({
   
   color : null,
   zoom : 1,
@@ -107,21 +107,6 @@ var PaintController =  Ember.ArrayController.extend({
       } else if ( e.keyCode === 16 ) { // Shift
         
         this.isShift = false;
-        
-      }
-      
-    });
-    
-    $( "#sizeSlider" ).slider({
-      
-      value: this.size,
-      min: 1,
-      max: 20,
-      step: 1,
-      
-      slide: function( event, ui ) {
-        
-        App.paintController.setSize( ui.value );
         
       }
       
@@ -401,9 +386,11 @@ var PaintController =  Ember.ArrayController.extend({
   
   handleImage : function( _img ) {
     
+    var area = App.selectTool.area.clone();
+    
     $( '.select' ).trigger( 'click' );
     
-    App.selectTool.loadImage( this.toolCtx, _img, this.zoom );
+    App.selectTool.loadImage( this.toolCtx, _img, this.zoom, area );
     
   },
   
@@ -628,9 +615,16 @@ var PaintController =  Ember.ArrayController.extend({
     canvas.width = this.width * count;
     canvas.height = this.height;
     
+    if ( this.isBackground ) {
+      
+      ctx.fillStyle = '#FFF';
+      ctx.fillRect( 0, 0, this.width, this.height );
+      
+    }
+    
     for ( i = 0; i < count; i++ ) {
       
-      ctx.putImageData( this.content[i].load(), i * this.width, 0 );
+      ctx.putImageDataOverlap( this.content[i].load(), i * this.width, 0 );
       
     }
     

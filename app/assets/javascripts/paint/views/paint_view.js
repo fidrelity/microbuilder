@@ -6,6 +6,7 @@ var PaintView = Ember.View.extend({
   heightBinding : 'App.paintController.height',
   
   zoomBinding : 'App.paintController.zoom',
+  sizeBinding : 'App.paintController.size',
   
   screenCanvas : null,
   toolCanvas : null,
@@ -14,9 +15,11 @@ var PaintView = Ember.View.extend({
   patternCtx : null,
   
   mouseDown : false,
-
+  
   bgToggleCounter : 0,
-  availableColors : [],
+  bgColors : [ 'url("/assets/paint/pattern.png")', '#FFF', '#000' ],
+  
+  isSprites : true,
   
   didInsertElement : function() {
     
@@ -28,12 +31,6 @@ var PaintView = Ember.View.extend({
     this.set( 'patternCanvas', this.$( '#patternCanvas' )[0] );
     
     this.set( 'patternCtx', this.patternCanvas.getContext( '2d' ) );
-
-    // Different background colors for pattern canvas
-    this.availableColors = [
-      ["#FFFFFF", "#CCCCCC"],
-      ["#000000", "#111111"]
-    ];
     
     area.mousedown( function( e ) {
       
@@ -69,7 +66,54 @@ var PaintView = Ember.View.extend({
       this.toolCanvas.getContext( '2d' )
     );
     
-    this.resize();
+    if ( App.paintController.isBackground ) {
+      
+      this.bgToggleCounter = 1;
+      
+      this.$( '.toggleBgButton' ).hide();
+      
+      this.resize();
+      
+    } else {
+      
+      this.bgToggleCounter = 2;
+      
+      this.$( '.toggleBgButton' ).show();
+      
+      this.toggleBackground();
+      
+    }
+    
+    
+    $( "#sizeSlider" ).slider({
+      
+      value: this.size,
+      min: 1,
+      max: 20,
+      step: 1,
+      
+      slide: function( event, ui ) {
+        
+        App.paintController.setSize( ui.value );
+        
+      }
+      
+    });
+    
+    $( "#zoomSlider" ).slider({
+      
+      value: this.zoom,
+      min: 1,
+      max: 4,
+      step: 1,
+      
+      slide: function( event, ui ) {
+        
+        self.setZoom( ui.value );
+        
+      }
+      
+    });
     
     // Init tooltips
     $('.ttip').tooltip();
@@ -79,14 +123,14 @@ var PaintView = Ember.View.extend({
     
   },
 
-  toggleZoomBackground : function() {    
-
-    this.bgToggleCounter = this.bgToggleCounter < this.availableColors.length - 1 ? ++this.bgToggleCounter : 0;
+  toggleBackground : function( number ) {
     
-    $(".toggleBgButton").css( "background-color" , this.availableColors[this.bgToggleCounter][0] );
+    this.bgToggleCounter = this.bgToggleCounter < this.bgColors.length - 1 ? this.bgToggleCounter + 1 : 0;
+    
+    $( ".toggleBgButton" ).css( "background", this.bgColors[this.bgToggleCounter] );
     
     this.resize();
-
+    
   },
   
   showTypeSelection : function() {
@@ -117,22 +161,31 @@ var PaintView = Ember.View.extend({
       'margin-top': height >= totalHeight ? 0 : -height / 2
     });
     
-    ctx.fillStyle = this.availableColors[this.bgToggleCounter][0] || '#FFF';
-    ctx.fillRect( 0, 0, width, height );
-    
-    ctx.fillStyle = this.availableColors[this.bgToggleCounter][1] || '#CCC';
-    
-    for ( i = Math.floor( width / size ); i >= 0; i-- ) {
+    if ( this.bgToggleCounter === 0 ) {
       
-      for ( j = Math.floor( height / size ); j >= 0; j-- ) {
+      ctx.fillStyle = '#FFF';
+      ctx.fillRect( 0, 0, width, height );
+      
+      ctx.fillStyle = '#CCC';
+      
+      for ( i = Math.floor( width / size ); i >= 0; i-- ) {
+      
+        for ( j = Math.floor( height / size ); j >= 0; j-- ) {
         
-        if ( ( i % 2 && !( j % 2 ) ) || ( j % 2 && !( i % 2 ) ) ) {
+          if ( ( i % 2 && !( j % 2 ) ) || ( j % 2 && !( i % 2 ) ) ) {
           
-          ctx.fillRect( i * size, j * size, size, size );
+            ctx.fillRect( i * size, j * size, size, size );
           
+          }
+        
         }
-        
+      
       }
+      
+    } else {
+      
+      ctx.fillStyle = this.bgColors[this.bgToggleCounter];
+      ctx.fillRect( 0, 0, width, height );
       
     }
     
@@ -164,6 +217,14 @@ var PaintView = Ember.View.extend({
     
   },
   
+  setZoom : function( _zoom ) {
+    
+    this.set( 'zoom', _zoom );
+    
+    this.resize();
+    
+  },
+  
   getMouse : function( e ) {
     
     var offset = $( this.toolCanvas ).offset();
@@ -172,6 +233,24 @@ var PaintView = Ember.View.extend({
       x : Math.floor( ( e.pageX - offset.left ) / this.zoom ),
       y : Math.floor( ( e.pageY - offset.top ) / this.zoom )
     };
+    
+  },
+  
+  showSprites : function() {
+    
+    this.set( 'isSprites', true );
+    
+    App.spritePlayer.stop();
+    
+  },
+  
+  showAnimation : function() {
+    
+    this.set( 'isSprites', false );
+    
+    Ember.run.end();
+    
+    App.spritePlayer.show();
     
   }
 

@@ -1,0 +1,17 @@
+#profilewrap
+  %img{:src => user.display_image, :id => "profileimage"}
+  
+  %h3{:id => "display_name"}
+    =user.display_name
+  - if current_user == user
+    %a{:class => "edit"}
+      Edit
+  =form_for user, :remote => true, :html => {:id => "display_name_form"} do |f|
+    =f.text_field :display_name
+    =f.submit
+  
+  %p
+    member since:
+    %br
+    %span
+      =user.created_at.to_date

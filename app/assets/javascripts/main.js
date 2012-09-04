@@ -49,7 +49,7 @@ function paint_main() {
   App.selectTool = SelectToolModel.create();
   App.fillTool = FillToolModel.create();
   App.pipetteTool = PipetteToolModel.create();
-
+  
   App.spritePlayer = SpritePlayerController.create();
   
   App.pixelDrawer = new PixelDrawer();

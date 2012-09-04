@@ -17,20 +17,26 @@ body {
 /* ---------------------------------- */
 
 #header {
-  margin-top:2em; margin-bottom:1.5em; border-bottom:1px solid #CCC;
+  margin-top: 2em;
+}
+
+.line {
+  border-bottom:1px solid #CCC;
+  margin-bottom: 1.5em;
 }
 
 #flash-template{
   display: none;
 }
 
-h1 {
+#header h1 {
   display:inline;
   font-size:1.8em;
   font-family:'Press Start 2P';
+  margin-left: 3px;
 }
 
-h1 a, h1 a:visited {
+#header h1 a, #header h1 a:visited {
   color:#222; text-decoration: none;
 }
 
