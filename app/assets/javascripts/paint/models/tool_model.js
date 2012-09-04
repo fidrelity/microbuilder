@@ -346,7 +346,7 @@ var FillToolModel = ToolModel.extend({
     c = c[0] + c[1] + c[2] + c[3];
     c2 = c2[0] + c2[1] + c2[2] + c2[3];
     
-    return Math.abs( c - c2 ) < 50;
+    return Math.abs( c - c2 ) < 1;
     
   },
   

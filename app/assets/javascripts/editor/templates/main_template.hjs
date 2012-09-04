@@ -11,10 +11,10 @@
       
       <button id="trash" class="btn right" {{action "trash"}}><i class="icon-trash"></i> trash </button>
       
-      <div class="duration left">
-        <div class="right">{{App.game.duration}} seconds</div>
+      <div id="duration" class="left">
+        <div id="durationValue" class="right">{{App.game.displayDuration}}</div>
         <div id="slider" class="right"></div>
-        <div class="right"><i class="icon-time"></i> duration:</div>
+        <div id="durationLabel" class="right"><i class="icon-time"></i> duration:</div>
       </div>
       
     </div>

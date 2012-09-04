@@ -99,6 +99,12 @@ var GameModel = Ember.Object.extend({
     
     return false;
     
-  }
+  },
+  
+  displayDuration : function() {
+    
+    return '00:' + ( this.duration < 10 ? '0' : '' ) + this.duration;
+    
+  }.property( 'duration' )
   
 });

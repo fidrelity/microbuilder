@@ -113,15 +113,11 @@
 
 <div class="submit well row">
 
-  <div class="span4">
-
-    <button class="btn btn-warning left ttipBottom" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}>Cancel</button>
-
-  </div>
+  <button class="btn btn-warning span1 left ttipBottom" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}>Cancel</button>
 
   <!-- <div class="form-inline right"> -->
   
-  <div class="span4">
+  <div class="span4 offset3">
 
     <input type="text" id="imageName" placeholder="image name" class="ttipBottom" title="Name of the image">
 
@@ -133,10 +129,6 @@
 
   </div>
 
-  <div class="span2">
-
-    <button class="btn btn-large btn-success span2" {{action "save" target="App.paintController"}}>Save image</button>
-  
-  </div>
+  <button class="btn btn-large btn-success span2 pull-right" {{action "save" target="App.paintController"}}>Save image</button>
 
 </div>

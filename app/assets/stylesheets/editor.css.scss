@@ -289,12 +289,10 @@
   padding-bottom: 15px;
 }
 
-
-#editor .player {
-  margin:auto;
-  width: 836px;
-  height: 514px;
-  overflow:hidden;
+#editor .playerCanvas {
+  border:1px solid black;
+  background: #EEE;
+  box-shadow: inset 0px 0px 12px 0px #AAA;
 }
 
 #editor .overlay label {
@@ -395,14 +393,14 @@
 #editor .stageControls {
   margin: auto 0;
   overflow: hidden;
-  padding: 6px 52px;
+  padding: 6px 0;
 }
 
 #editor .stageControls #trash {
   margin: 12px 0 0;
 }
 
-#editor .duration {
+#editor #duration {
   font-size: 11pt;
   border: 1px solid #CCC;
   padding: 11px 10px 9px;
@@ -411,14 +409,17 @@
   margin-left: 5px;
 }
 
-#editor .duration #slider {
+#editor #duration #slider {
   width: 200px;
   margin: 2px 20px 0;
 }
 
-#editor .duration > div {
-  width: 80px;
-  text-align: right;
+#editor #duration #durationValue {
+  width: 40px;
+}
+
+#editor #duration #durationLabel {
+  width: 82px;
 }
 
 #editor .smallInfo {

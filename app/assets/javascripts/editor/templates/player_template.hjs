@@ -35,6 +35,6 @@
 
 {{else}}
 
-  <canvas class="playerCanvas" style="background:#EEE;border:2px solid #AAA;"></canvas>
+  <canvas class="playerCanvas"></canvas>
 
 {{/if}}
