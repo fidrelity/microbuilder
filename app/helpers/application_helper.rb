@@ -29,4 +29,19 @@ module ApplicationHelper
 
   end
 
+  def render_message(message)
+    user = User.find(message['user_id'])
+    game = Game.find(message['game_id'])
+    text = "#{link_to(user.display_name, user_path(user))}"
+    case message['type']
+    when "game"
+      text += " created #{link_to(game.title, play_path(game))}"
+    when "comment"
+      text += " commented on #{link_to(game.title, play_path(game))}"
+    when "like"
+      text += " liked #{link_to(game.title, play_path(game))}"
+    when "dislike"
+      text += " disliked #{link_to(game.title, play_path(game))}"
+    end
+  end
 end

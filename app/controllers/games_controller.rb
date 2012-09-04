@@ -32,6 +32,7 @@
     if @game.save
       response, status = [play_url(@game), 200]
       push_new_game(@game)
+      Stream.create_message("game", @game.author.id, @game.id)
     else
       response, status = [I18n.t(".games.create.error"), 400]
     end
@@ -69,6 +70,7 @@
     unless cookies["voted_game_#{@game.id}"]
       Game.transaction { @game.update_attribute(:likes, @game.likes + 1) }
       cookies["voted_game_#{@game.id}"] = true
+      Stream.create_message("like", current_user.id, @game.id)
     end
   end
 
@@ -76,6 +78,7 @@
     unless cookies["voted_game_#{@game.id}"]
       Game.transaction { @game.update_attribute(:dislikes, @game.dislikes + 1) }
       cookies["voted_game_#{@game.id}"] = true
+      Stream.create_message("dislike", current_user.id, @game.id)
     end
     render "like"
   end
