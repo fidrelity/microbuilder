@@ -54,6 +54,11 @@ Playtin::Application.configure do
   
   # ember-rails
   config.ember.variant = :development
+  
+  #redis locally. set username and password (the OS user that runs redis)
+  REDIS_USER = YAML.load_file("#{Rails.root}/config/redis_credentials.yml")['username']
+  REDIS_PW = YAML.load_file("#{Rails.root}/config/redis_credentials.yml")['password']
+  ENV["REDISTOGO_URL"] = 'redis://'+ REDIS_USER + ":" + REDIS_PW + '@localhost:6379' 
 end
 
 PAPERCLIP_OPTIONS = {
