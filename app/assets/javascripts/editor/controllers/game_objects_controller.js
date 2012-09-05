@@ -101,9 +101,15 @@ var GameObjectsController = Ember.ArrayController.extend({
     
     for ( i = 0; i < object.behaviours.length; i++ ) {
       
-      App.behaviourController.parseBehaviour( gameObject, object.behaviours[i] );
+      if ( !App.behaviourController.parseBehaviour( gameObject, object.behaviours[i] ) ) {
+        
+        return false;
+        
+      }
       
     }
+    
+    return true;
     
   },
   
