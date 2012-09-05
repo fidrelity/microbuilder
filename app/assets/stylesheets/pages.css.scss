@@ -182,6 +182,38 @@ body {
   font-size:1.4em;
 }
 
+/* Activity Stream */
+
+#messages .stream-image, #messages-public .stream-image {
+  width:20px; height:20px;
+  margin-right: 5px;
+}
+
+#messages-public {
+  min-height: 126px;
+}
+
+#messages ul, #messages-public ul {
+  list-style-type: none;
+  margin:0; padding:0;
+  max-height: 126px;
+  overflow: auto;
+}
+
+#messages h3, #messages-public h3 {
+  margin-bottom: 0.5em;
+}
+
+#messages ul li, #messages-public ul li {
+  padding-bottom: 4px;
+  border-bottom:1px solid #EEE;
+  margin-bottom: 5px;
+}
+
+#messages-public ul li {
+  border-bottom:1px solid #444;
+}
+
 /* Gallery */
 /* ---------------------------------- */
 
