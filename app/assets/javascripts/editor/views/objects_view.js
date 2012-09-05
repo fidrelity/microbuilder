@@ -8,6 +8,8 @@ var ObjectsView = Ember.View.extend({
       
       $( this ).parent().next().toggle( /* 'slow' */ );
       
+      $( 'i', this ).toggleClass( 'hide' );
+      
       //return false;
       
     });//.next().hide();
