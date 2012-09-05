@@ -303,7 +303,7 @@ var ObjectOption = Option.extend({
     
     App.actionController.addOption( this.question, GameObjectsView.create({
       observer : this,
-      contentBinding : 'App.gameObjectsController.others',
+      contentBinding : 'App.gameObjectsController.content',
     }));
     
   },

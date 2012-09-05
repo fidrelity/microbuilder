@@ -249,7 +249,7 @@ var GameController = Ember.Object.extend({
   
   loadGame : function( data ) {
     
-    var game = App.game, i;
+    var game = App.game, i, ret;
     
     game.set( 'title', data.title );
     game.set( 'instructions', data.instructions );
@@ -286,7 +286,15 @@ var GameController = Ember.Object.extend({
       
       for ( i = 0; i < data.gameObjects.length; i++ ) {
         
-        App.gameObjectsController.parseBehaviour( data.gameObjects[i] );
+        if ( !App.gameObjectsController.parseBehaviour( data.gameObjects[i] ) ) {
+          
+          App.mainView.trash( null, true );
+          
+          alert( 'game could not be loaded' );
+          
+          return;
+          
+        }
         
       }
       

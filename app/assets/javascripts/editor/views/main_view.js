@@ -110,9 +110,9 @@ var MainView = Ember.View.extend({
     
   },
   
-  trash : function() {
+  trash : function( e, _noConfirm ) {
     
-    if ( confirm( 'Throw the game away?' ) ) {
+    if ( _noConfirm || confirm( 'Throw the game away?' ) ) {
       
       App.gameController.clear();
       

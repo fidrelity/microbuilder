@@ -31,7 +31,7 @@ var ActionController = Ember.Object.extend({
    
   triggerIDs : [
   
-    'clickSelf', 'clickObject', 'clickArea', // 'clickStage',
+    'clickObject', 'clickArea', // 'clickStage',
     
     'touchObject', 'touchArea',
     'overlapObject', 'overlapArea',
@@ -48,6 +48,12 @@ var ActionController = Ember.Object.extend({
     'gameIsWon', 'gameWasWon',
     'gameIsLost', 'gameWasLost',
     'gameStart'
+  
+  ],
+  
+  deprecatedIDs : [
+  
+    'clickSelf'
   
   ],
   
@@ -398,13 +404,9 @@ var ActionController = Ember.Object.extend({
         ButtonOption.create({
           name: 'click',
           question: 'Click on what?',
-          buttons: ['self', 'object', 'area'],
+          buttons: ['object', 'area'],
           
           decisions: [
-            
-            // self
-            
-            SaveOption.create({ choiceID: 'clickSelf' }),
             
             // object
             

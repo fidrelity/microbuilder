@@ -199,6 +199,12 @@ var ActionTriggerModel = Ember.Object.extend({
       
     });
     
+    if ( !this.choice ) {
+      
+      return false;
+      
+    }
+    
     this.set( 'decisions', this.choice.getDecisions() );
     
     return this;

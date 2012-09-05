@@ -35,7 +35,15 @@ var BehaviourController = Ember.ArrayController.extend({
       
       action = ActionTriggerModel.create().parse( data.actions[i] );
       
-      behaviour.addAction( action );
+      if ( action ) {
+      
+        behaviour.addAction( action );
+      
+      } else {
+        
+        return false;
+        
+      }
       
     }
     
@@ -43,7 +51,15 @@ var BehaviourController = Ember.ArrayController.extend({
       
       trigger = ActionTriggerModel.create().parse( data.triggers[i] );
       
-      behaviour.addTrigger( trigger );
+      if ( trigger ) {
+        
+        behaviour.addTrigger( trigger );
+        
+      } else {
+        
+        return false;
+        
+      }
       
       if ( data.triggers[i].ID === 'gameStart' ) {
         
@@ -55,6 +71,8 @@ var BehaviourController = Ember.ArrayController.extend({
     }
     
     gameObject.behaviours.addObject( behaviour );
+    
+    return true;
     
   },
   
