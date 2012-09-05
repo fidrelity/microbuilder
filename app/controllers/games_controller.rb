@@ -32,7 +32,7 @@
     if @game.save
       response, status = [play_url(@game), 200]
       push_new_game(@game)
-      Stream.create_message("game", @game.author.id, @game.id)
+      Stream.create_message("game", @game.author, @game)
     else
       response, status = [I18n.t(".games.create.error"), 400]
     end

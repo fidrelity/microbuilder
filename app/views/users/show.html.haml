@@ -5,7 +5,7 @@
     =render :partial => 'profile', :locals => {:user => @user}
 
   %div{ :class => "span9"}   
-    = #render :partial => 'shared/stream', :locals => {:messages => @messages}
+    = render :partial => 'shared/stream', :locals => {:messages => @messages}
     = render :partial => 'games', :locals => {:games => @games, :user => @user}
     = render :partial => 'graphics', :locals => {:graphics => @graphics,
       :user => @user,

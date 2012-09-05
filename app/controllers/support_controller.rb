@@ -1,6 +1,7 @@
 # Opens github issue for any support/report/feedback from clients
 # Url: https://github.com/playtin/Support/issues
 class SupportController < ApplicationController
+  
   respond_to :js, :only => [:feedback, :ticket, :report]
 
   def feedback
