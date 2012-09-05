@@ -30,9 +30,11 @@ module ApplicationHelper
   end
 
   def render_message(message)
+
     user = User.find_by_id(message['user_id'])
     game = Game.find(message['game_id'])
-    text = user ? "#{link_to(user.display_name, user_path(user))}" : "Anonymous"
+    #text = user ? "#{image_tag(game.author.display_image)} #{link_to(user.display_name, user_path(user))}" : "Anonymous"
+    text = user ? " #{link_to( image_tag(game.author.display_image, :class => "stream-image"), user_path(user) )} #{link_to(user.display_name, user_path(user))}" : "Anonymous"
     case message['type']
     when "game"
       text += " created #{link_to(game.title, play_path(game))}"
@@ -43,5 +45,7 @@ module ApplicationHelper
     when "dislike"
       text += " disliked #{link_to(game.author.display_name, user_path(game.author))}'s #{link_to(game.title, play_path(game))}"
     end
+
   end
+
 end

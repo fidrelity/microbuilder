@@ -1,11 +1,11 @@
 %div{ :class => "row", :id => "profile"}
   
-  %div{ :class => "span3"}
-    
+  %div{ :class => "span3"}    
     =render :partial => 'profile', :locals => {:user => @user}
 
-  %div{ :class => "span9"}   
-    = #render :partial => 'shared/stream', :locals => {:messages => @messages}
+  %div{ :class => "span9"}
+    #messages{:class => "well"}   
+      = render :partial => 'shared/stream', :locals => {:messages => @messages}
     = render :partial => 'games', :locals => {:games => @games, :user => @user}
     = render :partial => 'graphics', :locals => {:graphics => @graphics,
       :user => @user,

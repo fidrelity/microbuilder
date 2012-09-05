@@ -95,12 +95,21 @@ $(document).ready(function() {
   }
   // ---------------------------------------
   // Game View Buttons 
-  function toggleLayer(_layer) {    
+  function toggleLayer(_layer) {
+
+    console.log(_layer)
+
+
     if(!_layer.is(':visible')) {
+
       $('.layer').hide();
+      
       _layer.show();    
+
     } else {
+
       $('.layer').hide();
+
     }
   }
 
