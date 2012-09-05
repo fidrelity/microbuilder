@@ -103,8 +103,6 @@ var ColorPickerView = Ember.View.extend({
       
       var color = self.lastColors[ $(this).index() + 1 ];
       
-      console.log( self.lastColors, color );
-      
       App.paintController.setColor( color || [ 0, 0, 0, 255 ] );
       
     });

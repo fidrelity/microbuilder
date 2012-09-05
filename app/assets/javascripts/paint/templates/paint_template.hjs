@@ -111,21 +111,17 @@
 
 </div>
 
-<div class="submit well row">
+<div class="submit well row form-horizontal">
 
-  <button class="btn btn-warning span1 left ttipBottom" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}>Cancel</button>
-
-  <!-- <div class="form-inline right"> -->
+  <button class="btn btn-warning span1 left ttipBottom" style="margin-left:0" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}>Cancel</button>
   
-  <div class="span4 offset3">
+  <div class="span3 offset5 form-inline">
 
     <input type="text" id="imageName" placeholder="image name" class="ttipBottom" title="Name of the image">
 
     <label class="checkbox">
       <input type="checkbox" id="makePublic"  class="pop" title="Publish your work" data-content="Check if you want to share this drawing with others"> make public
     </label>
-  
-    <small>{{App.paintController.width}} x {{App.paintController.height}} px</small>
 
   </div>
 
