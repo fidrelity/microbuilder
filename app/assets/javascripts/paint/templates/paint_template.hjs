@@ -14,9 +14,9 @@
       {{view SpritesView id="sprites-area-scroll"}}
   
       <div class="tool-bar tool-bar-bottom">
-        <button {{action "addSprite" target="App.paintController"}} class="ttipBottom" title="Add new sprite">add</button>
-        <button {{action "copySprite" target="App.paintController"}} class="ttipBottom" title="Copy current selected sprite">duplicate</button>
-        <button {{action "removeSprite" target="App.paintController"}} class="ttipBottom" title="Remove current sprite">remove</button>
+        <button {{action "addSprite" target="App.paintController"}} class="add ttipBottom" title="add new sprite"></button>
+        <button {{action "copySprite" target="App.paintController"}} class="duplicate ttipBottom" title="duplicate sprite"></button>
+        <button {{action "removeSprite" target="App.paintController"}} class="remove ttipBottom" title="remove sprite"></button>
       </div>
     
     {{else}}
@@ -58,10 +58,10 @@
       <button {{action "drawRectFillTool" target="App.paintController"}} class="rectanglefill selectable ttip" title="Draw filled rectangle"></button>
       <button {{action "drawCircleFillTool" target="App.paintController"}} class="circlefill selectable ttip group" title="Draw filled circle"></button>
       
-      <button {{action "flipVertical" target="App.paintController"}} class="ttip" title="Flip sprite vertically">flip v</button>
-      <button {{action "flipHorizontal" target="App.paintController"}} class="ttip" title="Flip sprite horizontally">flip h</button>
-      <button {{action "rotateLeft" target="App.paintController"}} class="ttip" title="Rotate sprite left">rot l</button>
-      <button {{action "rotateRight" target="App.paintController"}} class="ttip group" title="Rotate sprite right">rot r</button>
+      <button {{action "flipVertical" target="App.paintController"}} class="flipv ttip" title="Flip sprite vertically"></button>
+      <button {{action "flipHorizontal" target="App.paintController"}} class="fliph ttip" title="Flip sprite horizontally"></button>
+      <button {{action "rotateLeft" target="App.paintController"}} class="rotl ttip" title="Rotate sprite left"></button>
+      <button {{action "rotateRight" target="App.paintController"}} class="rotr ttip group" title="Rotate sprite right"></button>
       
       <button {{action "undoTool" target="App.paintController"}} class="undo ttip" title="Undo"></button>
       <button {{action "redoTool" target="App.paintController"}} class="redo ttip" title="Redo"></button>

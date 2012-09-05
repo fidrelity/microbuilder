@@ -15,6 +15,6 @@
   
   <canvas id="colorselect" class="left"></canvas>
   
-  <button {{action "pipetteTool" target="App.paintController"}} class="pipette selectable ttipBottom left" title="Pick color">pip</button>
+  <button {{action "pipetteTool" target="App.paintController"}} class="pipette selectable ttipBottom left" title="Pick color"></button>
 
 </div>

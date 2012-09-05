@@ -80,21 +80,45 @@
 }
 
 #paint-wrapper .tool-bar button.undo {
-  background:url('/assets/paint/undo_icon.png');
+  background:url('/assets/paint/undo_redo.png');
 }
 
 #paint-wrapper .tool-bar button.redo {
-  background:url('/assets/paint/redo_icon.png');
+  background:url('/assets/paint/undo_redo.png');
+  background-position: 30px 0px;
 }
 
-#paint-wrapper .tool-bar button.pipette {}
-
-#paint-wrapper .tool-bar button.zoomin {
-  background-image: url('/assets/zoom_in.png') !important;
+#paint-wrapper .tool-bar button.flipv {
+  background:url('/assets/paint/flip_vertical.png');
 }
 
-#paint-wrapper .tool-bar button.zoomout {
-  background-image: url('/assets/zoom_out.png') !important;
+#paint-wrapper .tool-bar button.fliph {
+  background:url('/assets/paint/flip_horizontal.png');
+}
+
+#paint-wrapper .tool-bar button.rotl {
+  background:url('/assets/paint/rotate.png');
+}
+
+#paint-wrapper .tool-bar button.rotr {
+  background:url('/assets/paint/rotate.png');
+  background-position: 30px 0px;
+}
+
+#paint-wrapper .tool-bar button.pipette {
+  background:url('/assets/paint/pipette.png');
+}
+
+#paint-wrapper .tool-bar button.add {
+  background-image: url('/assets/paint/zoom_in.png');
+}
+
+#paint-wrapper .tool-bar button.remove {
+  background-image: url('/assets/paint/zoom_out.png');
+}
+
+#paint-wrapper .tool-bar button.duplicate {
+  background-image: url('/assets/paint/duplicate.png');
 }
 
 #paint-wrapper .tool-bar button.toggleBgButton {
