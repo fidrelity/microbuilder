@@ -7,7 +7,7 @@ class PagesController < ApplicationController
       @likes = current_user.games.sum(:likes)
       @dislikes = current_user.games.sum(:dislikes)
     end
-
+    @messages = Stream.latest
   end
 
   def imprint

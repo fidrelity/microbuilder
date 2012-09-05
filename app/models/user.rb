@@ -28,6 +28,17 @@ class User < ActiveRecord::Base
       end
     end 
   end
+  
+  def latest_stream(max = 20)
+    message_ids = REDIS.lrange("stream_#{self.id}", 0, max)
+    messages = []
+    message_ids.each { |message_id| messages << REDIS.hgetall(message_id) }
+    messages
+  end
+  
+  def push_message(message_id)
+    REDIS.lpush('stream', message_id)
+  end
 
   def display_image
     facebook? ? facebook_image_url : gravatar_image_url

@@ -6,6 +6,7 @@ class GameCommentsController < ApplicationController
     comment = current_user.game_comments.create(params[:game_comment])
     @game = comment.game
     flash[:success] = "Your comment was created!"
+    Stream.create_message("comment", comment.user, @game)
     @comments = @game.game_comments
   end
   
