@@ -1,21 +1,21 @@
 class Stream
   
   class << self
-    def create_message(type, user_id, game_id)
+    def create_message(type, user, game)
       current_message_id = message_id
       REDIS.multi do
-        REDIS.hmset(current_message_id.to_i, 'type', type, 'user_id', user_id, 'game_id', game_id)
+        REDIS.hmset(current_message_id.to_i, 'type', type, 'user_id', (user.nil? ? nil : user.id), 'game_id', game.id)
         REDIS.lpush('stream', current_message_id)
+        REDIS.lpush("stream_#{game.author.id}", current_message_id)
+        REDIS.lpush("stream_#{user.id}", current_message_id) if user
         REDIS.incr('message_id')
       end
     end
     
-    def latest(max = 20)
-      message_ids = REDIS.lrange('stream', 0, max)
+    def latest(max = 10)
+      message_ids = REDIS.lrange('stream', 0, (max - 1))
       messages = []
-      message_ids.each do |message_id|
-        messages << REDIS.hgetall(message_id)
-      end
+      message_ids.each { |message_id| messages << REDIS.hgetall(message_id) }
       messages
     end
 

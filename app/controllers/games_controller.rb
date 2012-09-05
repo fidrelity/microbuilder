@@ -70,7 +70,7 @@
     unless cookies["voted_game_#{@game.id}"]
       Game.transaction { @game.update_attribute(:likes, @game.likes + 1) }
       cookies["voted_game_#{@game.id}"] = true
-      Stream.create_message("like", current_user.id, @game.id)
+      Stream.create_message("like", current_user, @game)
     end
   end
 
@@ -78,7 +78,7 @@
     unless cookies["voted_game_#{@game.id}"]
       Game.transaction { @game.update_attribute(:dislikes, @game.dislikes + 1) }
       cookies["voted_game_#{@game.id}"] = true
-      Stream.create_message("dislike", current_user.id, @game.id)
+      Stream.create_message("dislike", current_user, @game)
     end
     render "like"
   end
