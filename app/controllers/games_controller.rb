@@ -85,8 +85,9 @@
   end
 
   def auto_search
-    @games = Game.order(:title).where("title like ?", "%#{params[:term]}%")
-    render :text => @games.map(&:title)
+    term = params[:term].downcase
+    games = Game.order(:title).where("lower(title) like ?", "%#{term}%")    
+    render :text => games.map(&:title)
   end
 
   private

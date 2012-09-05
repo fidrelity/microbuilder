@@ -28,6 +28,8 @@ var PlacementView = Ember.View.extend({
   
   increment : { x : 96, y : 60 },
   scale : 2,
+
+  directionAngle : 0,
   
   didInsertElement : function() {
     
@@ -39,7 +41,7 @@ var PlacementView = Ember.View.extend({
 
 
     this.addObserver( 'directionAngle', function() {
-      
+           
       self.set("directionAngle", 90);
       
     });
@@ -181,7 +183,7 @@ var PlacementView = Ember.View.extend({
       
       if ( type === 'direction' ) {
       
-        this.object.pos.addSelf( obs.location );
+        this.object.pos.addSelf( obs.location );       
 
       } else if ( type === 'offset' ) {
         
@@ -328,8 +330,8 @@ var PlacementView = Ember.View.extend({
         
         this.drawArrow( ctx );
 
-        var angle = new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( this.object.pos ).angle();
-        this.set("directionAngle", Math.round( angle / Math.PI * 180) );
+        // var angle = new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( this.object.pos ).angle();
+        // this.set("directionAngle", Math.round( angle / Math.PI * 180) );
         
       } else if ( this.type === 'path' ) {
         
@@ -472,9 +474,16 @@ var PlacementView = Ember.View.extend({
   
   isDirection : function() {
     
-    return this.type === "direction";
+    //return this.type === "direction";
+    return false;
     
   }.property("direction"),
+
+  // getDirectionAngle : function() {
+
+  //   return 20;
+
+  // }.observes("directionAngle"),
 
   clearPath : function() {
     

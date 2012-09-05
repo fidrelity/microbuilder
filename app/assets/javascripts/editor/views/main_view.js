@@ -234,7 +234,7 @@ var PublishView = Ember.View.extend({
     this.checkValue( App.gameController.game.title.length, { fail: "Game has no title", success: "Game has a title" }, "hasTitle");
     this.addObserver( 'App.gameController.game.title', function() {
       
-      var hasTitle = App.gameController.game.title.length ;
+      var hasTitle = App.gameController.game.title.length;
       self.checkValue( hasTitle, { fail: "Game has no title", success: "Game has a title" }, "hasTitle");
       
     });

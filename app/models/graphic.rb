@@ -39,6 +39,22 @@ class Graphic < ActiveRecord::Base
   def soft_delete
     games.any? ? update_attribute(:user, nil) : destroy
   end
+
+  def self.profile_filter(user_id, current_user)
+
+    user = User.find(user_id)
+
+    if current_user == user
+      graphics = user.graphics.without_backgrounds
+      backgrounds = user.graphics.backgrounds
+    else
+      graphics = user.graphics.with_public.without_backgrounds
+      backgrounds = user.graphics.backgrounds.with_public      
+    end
+
+    return {:backgrounds => backgrounds, :graphics => graphics}
+
+  end
   
   protected
     def self.filter(_public, _backgrounds, min = nil, max = nil)
