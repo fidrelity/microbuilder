@@ -112,8 +112,6 @@ var PipetteToolModel = ToolModel.extend({
     var colorData = _screenCtx.getImageData( _mouse.x * zoom, _mouse.y * zoom, 1, 1 ).data;
     
     App.paintController.setColor( colorData );
-
-    //App.colorPickerView.addLastUsedColor( rgbToHex ( colorData[0], colorData[1], colorData[2] ) );
     
   }
   
@@ -283,7 +281,7 @@ var FillToolModel = ToolModel.extend({
       color = _screenCtx.getImageData( _mouse.x * zoom, _mouse.y * zoom, 1, 1 ).data,
       newColor = App.paintController.colorVals,
       tempColor = [ 0, 0, 0, 0 ],
-      imageData = App.paintController.sprite.load(),
+      imageData = _toolCtx.cloneImageData( App.paintController.sprite.load() ),
       width = imageData.width,
       height = imageData.height,
       stack = [],
@@ -337,7 +335,13 @@ var FillToolModel = ToolModel.extend({
     App.paintController.sprite.save( imageData );
     App.paintController.loadSprite();
     
-    return true;
+    return false;
+    
+  },
+  
+  mouseup : function( _mouse, _screenCtx, _toolCtx, _size ) {
+    
+    return false;
     
   },
   

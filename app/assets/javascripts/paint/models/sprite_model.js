@@ -32,7 +32,7 @@ var SpriteModel = Ember.Object.extend({
     
     var sprite = SpriteModel.create();
     
-    sprite.save( this.load() );
+    sprite.save( this.ctx.cloneImageData( this.load() ) );
     
     return sprite;
     
@@ -64,13 +64,17 @@ var SpriteModel = Ember.Object.extend({
       
     }
     
-    this.draw();
+    if ( this.ctx ) {
+      
+      this.draw();
+      
+    }
     
   },
   
   undo : function() {
     
-    if ( this.iterator > 0 ) {
+    if ( this.iterator > 1 ) {
       
       this.iterator--;
       

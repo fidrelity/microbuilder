@@ -375,6 +375,21 @@ extend( CanvasRenderingContext2D.prototype, {
     
     this.restore();
     
+  },
+  
+  cloneImageData : function( _imageData ) {
+    
+    var imageData = this.createImageData( _imageData ),
+      i;
+    
+    for ( i = 0; i < _imageData.data.length; i++ ) {
+      
+      imageData.data[i] = _imageData.data[i];
+      
+    }
+    
+    return imageData;
+    
   }
   
 });
