@@ -4,6 +4,14 @@ var ObjectsView = Ember.View.extend({
   
   didInsertElement : function() {
     
+    this.$( '.head' ).live( 'click', function() {
+      
+      $( this ).next().toggle( 'slow' );
+      
+      //return false;
+      
+    });//.next().hide();
+    
     this.makeSortable();
     
   },

@@ -19,9 +19,16 @@
 
 #editor .editor_content {
    top:100px;
-   /*width:1034px;*/
-   /*margin: 20px auto 0;*/
    z-index:3;
+}
+
+#editor .movehandle {
+  width: 4px;
+  height: 18px;
+  margin: 6px 7px 0px;
+  border-left: 1px solid #BBB;
+  border-right: 1px solid #BBB;
+  cursor: move;
 }
 
 #editor ul.graphics {
@@ -32,28 +39,16 @@
 #editor ul.graphics li {
   float:left;
   margin: 0 16px 16px 0;
-  border: 2px solid #DDD;
+  border: 1px solid #DDD;
   position: relative;
 }
 
 #editor ul.graphics li:hover {
-  border: 2px solid #888;
-}
-
-#editor .objectsLeft li .icon-move {
-  display: none;
-  opacity: 0.5;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-#editor .objectsLeft li:hover .icon-move {
-  display: block;
+  border: 1px solid #888;
 }
 
 #editor ul.graphics li.selected {
-  border: 2px solid black;
+  border: 1px solid black;
 }
 
 #editor .overlayWrapper {
@@ -76,7 +71,7 @@
   overflow: hidden;
 }
 
-#editor .overlay .head {
+#editor .overlay .overlayhead {
   padding: 8px 16px 4px;
   background-color: #DDD;
 }
@@ -99,7 +94,7 @@
 
 #editor .overlay .objectsLeft {
   background-color: white;
-  width: 168px;
+  width: 96px;
   padding: 15px 0 15px 15px;
 }
 
@@ -109,15 +104,11 @@
 
 #editor .overlay .objectsRight {
   padding: 15px;
+  width: 580px;
 }
 
 #editor .overlay .content {
   padding: 15px 0 0 15px;
-}
-
-#editor .overlay .element {
-  overflow: hidden;
-  margin-bottom: 15px;
 }
 
 #editor .overlay #done {
@@ -132,37 +123,42 @@
   padding: 0;
 }
 
-#editor #behaviours li {
-  background-color: white;
+#editor #behaviours .behaviour {
   margin-bottom: 15px;
+  border: 1px solid #DDD;
+  border-radius: 5px;
+}
+
+#editor #behaviours .head {
+  min-height: 28px;
+  background-color: #DDD;
+}
+
+#editor #behaviours .body {
+  background-color: white;
   padding: 5px;
-  position: relative;
   border-radius: 5px;
 }
 
 #editor #behaviours .list {
-  width: 293px;
+  margin-left: 65px;
 }
 
 #editor #behaviours .triggers, #editor #behaviours .actions {
-  border: 1px solid;
   border-radius: 5px;
   min-height: 28px;
   margin-bottom: 5px;
 }
 
 #editor #behaviours .triggers {
-  border-color: #5E9EE4;
-  background: #8BC9EE;
+  background: #C6E6F8;
 }
 
 #editor #behaviours .actions {
-  border-color: #E76F6F;
-  background: #FFA5A5;
+  background: #F8C9C9;
 }
 
 #editor #behaviours .triggers .element, #editor #behaviours .actions .element {
-  margin: 2px;
   padding: 0;
   overflow: hidden;
   border-radius: 5px;
@@ -180,36 +176,17 @@
   border-color: #E76F6F;
 }
 
-#editor #behaviours .actions .element .icon-move, 
-#editor #behaviours .triggers .element .icon-move {
-  display: none;
-  opacity: 0.5;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-#editor #behaviours .actions .element:hover .icon-move, 
-#editor #behaviours .triggers .element:hover .icon-move {
-  display: block;
-}
-
 #editor #behaviours .text {
   padding: 6px;
   padding-left: 12px;
 }
 
 #editor #behaviours .title {
-  width: 47px;
-  margin: 9px 9px 0px;
+  width: 56px;
+  margin: 7px 0px;
+  float: left;
   text-align: right;
   font-weight: bold;
-}
-
-#editor #behaviours .panel {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
 }
 
 #editor #fog {
@@ -239,19 +216,19 @@
 
 #editor .gameObject {
   overflow: hidden;
-  width:64px; 
-  height:84px;
+  width:96px; 
+  height:116px;
 }
 
 #editor .graphic {
   background-repeat:no-repeat;
   background-color: #FFF;
-  width:64px; 
-  height:64px;
+  width: 96px;
+  height: 96px;
 }
 
 #editor .objectsRight .graphic {
-  border: 2px solid #CCC;
+  border: 1px solid #CCC;
 }
 
 #editor .gameObject .name,  {

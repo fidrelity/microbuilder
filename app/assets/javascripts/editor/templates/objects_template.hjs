@@ -1,27 +1,23 @@
 <table>
-  
+
   <tr>
-    
+
     <td class="objectsLeft" valign="top">
 
-      <div id="objects">
+      {{view GameObjectsView
+        contentBinding = "App.gameObjectsController.content"
+        observerBinding = "App.gameObjectsController"
+      }}
 
-        {{view GameObjectsView
-          contentBinding = "App.gameObjectsController.content"
-          observerBinding = "App.gameObjectsController"
-        }}
+      <div class="clear"></div>
 
-        <div class="clear"></div>
-
-      </div>
-  
       <button class="btn" {{action "searchGraphic" target="App.gameController"}}>
         <i class="icon-plus"></i> object </button>
 
     </td>
 
     <td class="objectsRight" valign="top">
-  
+
       {{#if App.gameObjectsController.current}}
 
         {{#view GameObjectView contentBinding = "App.gameObjectsController.current"}}
@@ -32,8 +28,16 @@
 
           <div class="left" style="margin-left:15px">
 
-            {{view Ember.TextField valueBinding="content.name" maxlength="10"}}
-        
+            <h4 style="margin: 5px 0 10px"> Settings </h4>
+
+            <div class="form-horizontal" style="margin-bottom:9px">
+
+              <span style="margin-right:5px"> name: </span>
+
+              {{view Ember.TextField valueBinding="content.name" maxlength="10"}}
+
+            </div>
+
             <div class="btn-group">
 
               <button class="btn" {{action "changeArt"}}><i class="icon-picture"></i> change art </button>
@@ -56,24 +60,29 @@
             contentBinding = "App.behaviourController.startBehaviour"
             controllerBinding = "App.behaviourController"
           }}
-            <li>
-      
-              <div class="left title"> on start </div>
-      
-              <div class="left list">
+            <li class="behaviour">
 
-                {{view UiActionView
-                  contentBinding= "content.actions"
-                  behaviourIDBinding= "content.ID"
-                }}
-                
-                <button class="btn addButton" {{action "addAction"}}>
-                  <i class="icon-plus"></i> action </button>
-        
+              <div class="head"></div>
+
+              <div class="body">
+
+                <div class="title"> on start </div>
+
+                <div class="list">
+
+                  {{view UiActionView
+                    contentBinding= "content.actions"
+                    behaviourIDBinding= "content.ID"
+                  }}
+
+                  <button class="btn" {{action "addAction"}}><i class="icon-plus"></i> action </button>
+
+                </div>
+
+                <div class="clear"></div>
+
               </div>
-      
-              <div class="clear"></div>
-        
+
             </li>
           {{/view}}
 
@@ -82,43 +91,54 @@
               contentBinding = "this"
               controllerBinding = "App.behaviourController"
             }}
-              <li>
-        
-                <div class="left title"> if </div>
-        
-                <div class="left list">
-    
-                  {{view UiTriggerView
-                    contentBinding= "content.triggers"
-                    behaviourIDBinding= "content.ID"
-                  }}
-                  
-                  <button class="btn addButton" {{action "addTrigger"}}>
-                    <i class="icon-plus"></i> trigger </button>
-        
+
+              <li class="behaviour">
+
+                <div class="head">
+
+                  <div class="btn-group right">
+                    <button class="btn" {{action "duplicate"}}><i class="icon-retweet"></i> duplicate </button>
+                    <button class="btn" {{action "remove"}}><i class="icon-trash"></i> delete </button>
+                  </div>
+
                 </div>
-  
-                <div class="left title"> then </div>
-  
-                <div class="left list">
-    
-                  {{view UiActionView
-                    contentBinding= "content.actions"
-                    behaviourIDBinding= "content.ID"
-                  }}
-                  
-                  <button class="btn addButton" {{action "addAction"}}>
-                    <i class="icon-plus"></i> action </button>
-        
+
+                <div class="body clear">
+
+                  <div class="title"> if </div>
+
+                  <div class="list">
+
+                    {{view UiTriggerView
+                      contentBinding= "content.triggers"
+                      behaviourIDBinding= "content.ID"
+                    }}
+
+                    <button class="btn" style="margin-bottom:8px" {{action "addTrigger"}}>
+                      <i class="icon-plus"></i> trigger </button>
+
+                  </div>
+
+                  <div class="clear"></div>
+
+                  <div class="title"> then </div>
+
+                  <div class="list">
+
+                    {{view UiActionView
+                      contentBinding= "content.actions"
+                      behaviourIDBinding= "content.ID"
+                    }}
+
+                    <button class="btn" {{action "addAction"}}>
+                      <i class="icon-plus"></i> action </button>
+
+                  </div>
+
+                  <div class="clear"></div>
+
                 </div>
-            
-                <div class="btn-group panel">
-                  <button class="btn" {{action "duplicate"}}><i class="icon-retweet"></i> duplicate </button>
-                  <button class="btn" {{action "remove"}}><i class="icon-trash"></i> delete </button>
-                </div>
-            
-                <div class="clear"></div>
-        
+
               </li>
             {{/view}}
           {{/each}}

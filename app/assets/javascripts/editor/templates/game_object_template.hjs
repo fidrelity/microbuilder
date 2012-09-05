@@ -4,4 +4,4 @@
 
 <div class="name"> {{content.name}} </div>
 
-<i class="icon-move"></i>
+<div class="movehandle" style="position: relative;top:-23px;left:-3px;height:15px"></div>
