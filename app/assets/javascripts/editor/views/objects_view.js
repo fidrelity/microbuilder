@@ -4,9 +4,9 @@ var ObjectsView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    this.$( '.head' ).live( 'click', function() {
+    this.$( '.headtitle' ).live( 'click', function() {
       
-      $( this ).next().toggle( 'slow' );
+      $( this ).parent().next().toggle( /* 'slow' */ );
       
       //return false;
       
@@ -144,14 +144,6 @@ var UiActionTriggerView = Ember.CollectionView.extend({
     }
     
   })
-  
-  // emptyView: Ember.View.extend({
-  //   
-  //   tagName : 'li',
-  //   
-  //   classNames : ['element']
-  //   
-  // })
   
 });
 

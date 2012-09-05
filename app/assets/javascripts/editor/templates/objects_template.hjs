@@ -62,7 +62,13 @@
           }}
             <li class="behaviour">
 
-              <div class="head"></div>
+              <div class="head">
+
+                  <div class="headtitle">
+                    <i class="icon-chevron-down"></i> start actions
+                  </div>
+
+              </div>
 
               <div class="body">
 
@@ -101,6 +107,10 @@
                     <button class="btn" {{action "remove"}}><i class="icon-trash"></i> delete </button>
                   </div>
 
+                  <div class="headtitle">
+                    <i class="icon-chevron-down"></i> behaviour {{_parentView.contentIndex}}
+                  </div>
+
                 </div>
 
                 <div class="body clear">
@@ -130,8 +140,7 @@
                       behaviourIDBinding= "content.ID"
                     }}
 
-                    <button class="btn" {{action "addAction"}}>
-                      <i class="icon-plus"></i> action </button>
+                    <button class="btn" {{action "addAction"}}><i class="icon-plus"></i> action </button>
 
                   </div>
 

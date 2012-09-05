@@ -1,4 +1,6 @@
 <div class="left movehandle"></div>
+
 <button class="btn right" {{action "remove"}}><i class="icon-trash"></i></button>
 <button class="btn right" {{action "edit"}}><i class="icon-wrench"></i></button>
+
 <div class="text">{{content.string}}</div>
