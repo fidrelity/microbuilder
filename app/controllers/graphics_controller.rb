@@ -79,7 +79,7 @@ class GraphicsController < ApplicationController
     # Retuns all graphics with name like %term%
     def get_like(term, isBackground)
       isBackground = isBackground === "undefined" ? false : isBackground
-      graphics = Graphic.order(:name).where("name like ? AND background = ?", "%#{term}%", isBackground)
+      graphics = Graphic.order(:name).where("lower(name) like ? AND background = ?", "%#{term.downcase}%", isBackground)
     end      
 
 end
