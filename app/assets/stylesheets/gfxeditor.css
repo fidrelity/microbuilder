@@ -105,7 +105,7 @@
 #paint-wrapper #sizeWrapper, #paint-wrapper #zoomWrapper {
   overflow: hidden;
   margin: 0 1px;
-  padding: 7px 10px 3px;
+  padding: 7px 5px 3px;
 }
 
 #paint-wrapper #sizeWrapper #sizeSlider {
@@ -154,7 +154,8 @@
 
 #paint-wrapper #sprites-area {
   border: 1px solid #555;
-  margin-left: 10px;
+  border-left: none;
+/*  margin-left: 10px;*/
 }
 
 #paint-wrapper #sprites-area-scroll {
@@ -222,20 +223,12 @@
   margin-left: 0px;
 }
 
-#selectToolDiv {
-  border:1px dashed #FF00FF;
-  position:absolute;
-  z-index:222;
-  display:none;
-  cursor: move;
-}
-
 #paint-wrapper #colorpicker #colorfield {
-  width : 26px;
-  height : 26px;
-  border : 1px solid #333;
-  margin-right: 5px;
-  position:relative;
+  width: 26px;
+  height: 26px;
+  border: 1px solid #333;
+  position: relative;
+  background-color: black;
 }
 
 #paint-wrapper #colorpicker #colortext {
@@ -253,28 +246,18 @@
   -ms-user-select: none;
 }
 
-#lastColorsWrapper {
-  display: none;
-  background:#555555;
-  position:absolute; top:31px;
-  padding:4px;
-}
-
 #lastColorList {
-  width:98px;
-  margin:0; 
+  margin: 0 3px 0 0;
+  width: 44px;
   list-style-type:none;
 }
 
-#lastColorList li.lasColorItem {
-  height:13px;width:13px; 
-  background-color:#000000;
-  float:left; margin:2px 4px 0 0;
-  padding:0;
-}
-
-#paint-size-wrapper { 
-  /*padding:40px 20px 40px 20px;*/
+#lastColorList li.lastColorItem {
+  height: 12px;
+  width: 12px;
+  background-color: black;
+  float: left;
+  margin: 1px;
 }
 
 #paint-size-wrapper .type-selected {

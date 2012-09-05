@@ -12,6 +12,8 @@
 
   </div>
 
+  <div style="height:100px"></div>
+
   <div id="fog" {{action "hideOverlay" target="App.mainView"}}></div>
 
 </div>

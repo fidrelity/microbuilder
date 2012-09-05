@@ -325,7 +325,7 @@ var PaintController = Ember.ArrayController.extend({
     
     this.set( 'colorVals', _color );
     this.set( 'color', rgbToHex( _color[0], _color[1], _color[2] ) );
-
+    
   },
   
   updateColor : function() {

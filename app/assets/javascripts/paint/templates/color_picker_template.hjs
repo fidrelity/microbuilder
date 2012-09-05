@@ -1,19 +1,15 @@
 <div id="colorpicker">
 
-  <div id="colorfield" class="left">
-
-    <div id="lastColorsWrapper" class="ttipBottom" title="Last used colors">
-      <ul id="lastColorList">
-        <li class="lasColorItem"></li>
-        <li class="lasColorItem"></li>
-        <li class="lasColorItem"></li>
-        <li class="lasColorItem"></li>
-        <li class="lasColorItem"></li>
-        <li class="lasColorItem" style="margin-right:0;"></li>
-      </ul>
-    </div>
-
-  </div>
+  <div id="colorfield" class="left"></div>
+  
+  <ul id="lastColorList" class="ttipBottom left" title="Last used colors">
+    <li class="lastColorItem"></li>
+    <li class="lastColorItem"></li>
+    <li class="lastColorItem"></li>
+    <li class="lastColorItem"></li>
+    <li class="lastColorItem"></li>
+    <li class="lastColorItem"></li>
+  </ul>
   
   {{view Ember.TextField valueBinding="color" id="colortext" class="left"}}
   

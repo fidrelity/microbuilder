@@ -12,14 +12,13 @@ var ColorPickerView = Ember.View.extend({
   down : false,
 
   lastColors : [],
-  lastColorCounter : 0,
 
   isSelecting : false,
   
   didInsertElement : function() {
 
     this.lastColors = [];
-    this.$('#lastColorList').find("li").css({ "background-color" : "#000000" });
+    this.$( '.lastColorItem' ).css({ "background-color" : "#000000" });
     
     var canvas = this.$( '#colorselect' )[0],
       ctx = canvas.getContext( '2d' ),
@@ -63,7 +62,13 @@ var ColorPickerView = Ember.View.extend({
     
     this.addObserver( 'color', function() {
       
-      self.$( '#colorfield' ).css( 'background-color', self.color );  
+      self.$( '#colorfield' ).css( 'background-color', self.color );
+      
+      if ( !self.down ) {
+        
+        self.addLastUsedColor( self.color );
+        
+      }
       
     });
     
@@ -88,38 +93,37 @@ var ColorPickerView = Ember.View.extend({
     this.$( '#colorselect' ).mouseup( function( e ) {
       
       self.set( 'down', false );
-
-      self.addLastUsedColor(self.color);
+      
+      self.addLastUsedColor( self.color );
       
     });
 
-    this.$('.lasColorItem').click(function() {
+    this.$( '.lastColorItem' ).click( function() {
 
-      var c = self.lastColors[ $(this).index() ];
-
-      var color = c ? c : "#000000";
-
-      self.set( 'color', color );      
+      self.set( 'color', self.lastColors[ $(this).index() + 1 ] || '#000' );
 
     });
     
   },
 
-  addLastUsedColor : function(_color) {        
+  addLastUsedColor : function( _color ) {        
 
-    if( this.lastColors.indexOf(_color) > -1) return false
+    var colorBuckets = this.$( '.lastColorItem' ),
+      numberOfBuckets = colorBuckets.last().index(),
+      i;
 
-    var colorBuckets = this.$('#lastColorList').find("li");
-    var numberOfBuckets = colorBuckets.last().index();
-
-    this.lastColors[this.lastColorCounter] = _color;
-
-    colorBuckets.eq( this.lastColorCounter ).css("background-color", _color);
-
-    this.lastColorCounter++;
-
-    this.lastColorCounter = this.lastColorCounter <= numberOfBuckets ? this.lastColorCounter : 0;
-
+    if ( this.lastColors.unshift( _color ) > 7 ) {
+      
+      this.lastColors.pop();
+      
+    }
+    
+    for ( i = 1; i < this.lastColors.length; i++ ) {
+      
+      $( colorBuckets[i - 1] ).css( 'background-color', this.lastColors[i] );
+      
+    }
+    
   },
   
   getColor : function( e, el ) {
