@@ -5,12 +5,16 @@ var BehaviourModel = Ember.Object.extend({
   triggers : null,
   actions : null,
   
+  open : true,
+  
   init : function() {
     
     this.ID = App.game.behaviourCounter++;
     
     this.set( 'triggers', [] );
     this.set( 'actions', [] );
+    
+    this.set( 'open', true );
     
   },
   
