@@ -3,6 +3,7 @@ var ColorPickerView = Ember.View.extend({
   templateName: 'paint/templates/color_picker_template',
   
   colorBinding : 'App.paintController.color',
+  colorValsBinding : 'App.paintController.colorVals',
   
   imageData : null,
   
@@ -66,7 +67,7 @@ var ColorPickerView = Ember.View.extend({
       
       if ( !self.down ) {
         
-        self.addLastUsedColor( self.color );
+        self.addLastUsedColor( self.colorVals );
         
       }
       
@@ -94,14 +95,18 @@ var ColorPickerView = Ember.View.extend({
       
       self.set( 'down', false );
       
-      self.addLastUsedColor( self.color );
+      self.addLastUsedColor( self.colorVals );
       
     });
-
+    
     this.$( '.lastColorItem' ).click( function() {
-
-      self.set( 'color', self.lastColors[ $(this).index() + 1 ] || '#000' );
-
+      
+      var color = self.lastColors[ $(this).index() + 1 ];
+      
+      console.log( self.lastColors, color );
+      
+      App.paintController.setColor( color || [ 0, 0, 0, 255 ] );
+      
     });
     
   },
@@ -110,17 +115,18 @@ var ColorPickerView = Ember.View.extend({
 
     var colorBuckets = this.$( '.lastColorItem' ),
       numberOfBuckets = colorBuckets.last().index(),
+      colors = this.lastColors,
       i;
 
-    if ( this.lastColors.unshift( _color ) > 7 ) {
+    if ( colors.unshift( _color ) > 7 ) {
       
-      this.lastColors.pop();
+      colors.pop();
       
     }
     
-    for ( i = 1; i < this.lastColors.length; i++ ) {
+    for ( i = 1; i < colors.length; i++ ) {
       
-      $( colorBuckets[i - 1] ).css( 'background-color', this.lastColors[i] );
+      $( colorBuckets[i - 1] ).css( 'background-color', 'rgba(' + colors[i][0] + ',' + colors[i][1] + ',' + colors[i][2] + ',' + colors[i][3] + ')' );
       
     }
     
@@ -134,7 +140,7 @@ var ColorPickerView = Ember.View.extend({
     
     if ( i >= this.width * this.height * 4 ) {
       
-      return '#000000';
+      return [ 0, 0, 0, 255 ];
       
     }
     
