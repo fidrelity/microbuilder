@@ -21,7 +21,14 @@ class GraphicsController < ApplicationController
     @user = current_user
     graphic = current_user.graphics.find(params[:id])
     flash[:success] = "Successfully deleted graphic" if graphic && graphic.destroy
-    @graphics = current_user.graphics.paginate(:page => params[:graphics_page], :per_page => 4)
+    #@graphics = current_user.graphics.paginate(:page => params[:graphics_page], :per_page => 4)
+
+    graphics_to_show = Graphic.profile_filter(@user.id, @user)
+
+    @graphics = graphics_to_show[:graphics].paginate(:page => params[:graphics], :per_page => 12)
+    @backgrounds = graphics_to_show[:backgrounds].paginate(:page => params[:backgrounds], :per_page => 12)
+    @graphics_size = graphics_to_show[:graphics].size
+    @backgrounds_size = graphics_to_show[:backgrounds].size
   end
   
   def public
