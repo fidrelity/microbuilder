@@ -22,7 +22,7 @@
    z-index:3;
 }
 
-#editor .objectsLeft .movehandle {
+#editor .objectsLeft .movehandle, #editor .objectsRight .movehandle {
   width: 4px;
   height: 18px;
   margin: 6px 7px 0px;
