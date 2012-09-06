@@ -6,7 +6,7 @@ class Stream
       REDIS.multi do
         REDIS.hmset(current_message_id.to_i, 'type', type, 'user_id', (user.nil? ? nil : user.id), 'game_id', game.id)
         REDIS.lpush('stream', current_message_id)
-        REDIS.lpush("stream_#{game.author.id}", current_message_id)
+        REDIS.lpush("stream_#{game.author.id}", current_message_id) unless type == "game"
         REDIS.lpush("stream_#{user.id}", current_message_id) if user
         REDIS.incr('message_id')
       end
@@ -15,7 +15,10 @@ class Stream
     def latest(max = 10)
       message_ids = REDIS.lrange('stream', 0, (max - 1))
       messages = []
-      message_ids.each { |message_id| messages << REDIS.hgetall(message_id) }
+      message_ids.each do |message_id| 
+        message = REDIS.hgetall(message_id)
+        messages << message unless message.empty?
+      end
       messages
     end
 

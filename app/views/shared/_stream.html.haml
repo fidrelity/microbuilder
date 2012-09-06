@@ -2,4 +2,4 @@
 
 %ul{:class => "activity-list"}
   - messages.each do |message|
-    %li= raw(render_message(message))
+    = raw(render_message(message))

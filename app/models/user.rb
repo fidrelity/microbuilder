@@ -32,7 +32,10 @@ class User < ActiveRecord::Base
   def latest_stream(max = 20)
     message_ids = REDIS.lrange("stream_#{self.id}", 0, max)
     messages = []
-    message_ids.each { |message_id| messages << REDIS.hgetall(message_id) }
+    message_ids.each do |message_id| 
+      message = REDIS.hgetall(message_id)
+      messages << message unless message.empty?
+    end
     messages
   end
   
