@@ -17,10 +17,10 @@ class Game < ActiveRecord::Base
   
   scope :all_by_played, order("played DESC")
   scope :all_latest, order("created_at DESC")
-  pg_search_scope :search, :against => [:title, :instruction]
+  pg_search_scope :search, :against => [:title, :instruction, :tags]
   
   attr_accessor :preview_image_file_name, :preview_image_data
-  attr_accessible :title, :instruction, :data, :preview_image, 
+  attr_accessible :title, :instruction, :data, :preview_image, :tags, 
                   :preview_image_data, :preview_image_file_name, :played, :won
   
   class << self
