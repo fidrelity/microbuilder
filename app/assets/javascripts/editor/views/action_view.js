@@ -290,20 +290,16 @@ var SpeedView = Ember.View.extend({
   
   classNames : ['speedview', 'optionview'],
   
-  template: Ember.Handlebars.compile( '<div class="slider left"></div><div class="speed left">{{observer.speedName}}</div><div class="setRotateToWrapper"><input type="checkbox" class="setRotateTo"> RotateTo</div>' ),
+  template: Ember.Handlebars.compile( '<div class="slider left"></div><div class="speed left">{{observer.speedName}}</div>' ),
   
   observer : null,
   
   speed : 2,
-
-  rotateTo : false,
-
-  hasRotateToCheckbox : false,
   
   didInsertElement : function() {
     
     var observer = this.observer;
-   
+    
     this.$('.slider').slider({
       
       value: this.speed,
@@ -318,29 +314,6 @@ var SpeedView = Ember.View.extend({
       }
       
     });
-
-
-    // RotateToCheckBox Events
-    
-    var rotateToCheckboxWrapper =  this.$('.setRotateToWrapper');
-    var rotateToCheckbox =  rotateToCheckboxWrapper.find('.setRotateTo');
-
-    if(this.hasRotateToCheckbox) {
-
-      rotateToCheckbox.prop("checked", this.rotateTo);
-
-      // Click Event
-      rotateToCheckbox.live("click", function(){
-
-        observer.setRotateOnMove( $(this).is(":checked") );
-
-      });
-
-    } else {
-
-      rotateToCheckboxWrapper.remove();
-
-    }
     
   }
   

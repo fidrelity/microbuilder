@@ -116,20 +116,11 @@ var ActionTriggerModel = Ember.Object.extend({
     
   },
   
-  rotateOnMove : false,
-  
-  setRotateOnMove : function(state) {
-    
-    state = state || false;
-    this.set("rotateOnMove", state);
-    
-  },
-  
   string : function() {
     
     return this.choice ? this.choice.string( this.parentGameObject.name, this ) : 'no choice';
     
-  }.property( 'choice', 'gameObject', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2', 'path', 'counter', 'rotateOnMove' ),
+  }.property( 'choice', 'gameObject', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2', 'path', 'counter' ),
   
   clone : function() {
     
@@ -155,7 +146,6 @@ var ActionTriggerModel = Ember.Object.extend({
       
       mode : this.mode,
       speed : this.speed,
-      rotateOnMove : this.rotateOnMove,
       
       counter : this.counter,
       
@@ -191,10 +181,9 @@ var ActionTriggerModel = Ember.Object.extend({
       
       mode : d.mode,
       speed : d.speed,
-      rotateOnMove : d.rotateOnMove,
-
+      
       path : d.path ? new Path().copy({ points: d.path }) : null,
-
+      
       counter : d.counter
       
     });
@@ -231,7 +220,7 @@ var ActionTriggerModel = Ember.Object.extend({
         
         case 'location': data.location = this.location.getData(); break;
         case 'direction': data.angle = this.angle(); break;
-
+        
         case 'path': data.path = this.path.getData(); break;
         
         case 'area': data.area = this.area.getData(); break;
@@ -245,7 +234,7 @@ var ActionTriggerModel = Ember.Object.extend({
         
         case 'speed': data.speed = this.speed; break;
         case 'mode': data.mode = this.mode; break;
-
+        
         case 'counter': data.counter = this.counter; break;
         
         default : console.error( 'unknown optionType: ' + optionType );
@@ -253,8 +242,6 @@ var ActionTriggerModel = Ember.Object.extend({
       }
       
     }
-
-    data.rotateToTarget = this.rotateOnMove;
     
     return data;
     

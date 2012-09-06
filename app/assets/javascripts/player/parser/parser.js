@@ -14,7 +14,7 @@ var Parser = {
     
     moveInDirection : function( data, gameObject ) { 
       
-      var action = new MoveAction( 'moveIn', gameObject, data.speed, data.rotateToTarget);
+      var action = new MoveAction( 'moveIn', gameObject, data.speed );
       
       action.direction = data.angle;
           
@@ -24,7 +24,7 @@ var Parser = {
       
     moveInRandom : function( data, gameObject ) { 
       
-      var action = new MoveAction( 'moveIn', gameObject, data.speed, data.rotateToTarget );
+      var action = new MoveAction( 'moveIn', gameObject, data.speed );
       
       action.random = true;
       
@@ -34,7 +34,7 @@ var Parser = {
     
     moveInLocation : function( data, gameObject ) { 
       
-      var action = new MoveAction( 'moveIn', gameObject, data.speed, data.rotateToTarget );
+      var action = new MoveAction( 'moveIn', gameObject, data.speed );
       
       action.target = new Vector().copy( data.location );
       
@@ -57,7 +57,7 @@ var Parser = {
     
     moveToLocation : function( data, gameObject ) { 
       
-      var action = new MoveAction( 'moveTo', gameObject, data.speed, data.rotateToTarget );
+      var action = new MoveAction( 'moveTo', gameObject, data.speed );
       
       action.target = new Vector().copy( data.location );
       
@@ -68,7 +68,7 @@ var Parser = {
     // Move along path action
     moveAlongPath: function( data, gameObject, game ) {
       
-      var action = new MoveAction( 'moveAlongPath', gameObject, data.speed, data.rotateToTarget );
+      var action = new MoveAction( 'moveAlongPath', gameObject, data.speed );
 
       action.path = data.path;
       action.mode = data.mode;
@@ -79,7 +79,7 @@ var Parser = {
     
     moveToObject : function( data, gameObject, game ) { 
       
-      var action = new MoveAction( 'moveTo', gameObject, data.speed, data.rotateToTarget );
+      var action = new MoveAction( 'moveTo', gameObject, data.speed );
       
       action.target = game.getGameObjectWithID( data.objectID ).movement.position;
       action.offset = new Vector().copy( data.offset );

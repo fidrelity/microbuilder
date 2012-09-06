@@ -39,9 +39,6 @@ GameObject.prototype = {
     ctx.save();
     ctx.translate( pos.x, pos.y );
     
-    if(this.movement.rotateToTarget)
-      ctx.rotate(this.movement.angle);
-        
     this.graphic.draw( ctx, this.animation.getFrame() );
     
     ctx.restore();
