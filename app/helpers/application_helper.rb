@@ -13,7 +13,8 @@ module ApplicationHelper
 
   def page_title
 
-    return raw('Play<span class="label label-warning titleSmall">tin</span>')        
+    # return raw('Play<span class="label label-warning titleSmall">tin</span>')
+    return raw('<div id="logo"></div>')
 
   end
 

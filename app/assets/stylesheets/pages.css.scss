@@ -40,20 +40,28 @@ body {
   color:#222; text-decoration: none;
 }
 
+#header #logo {
+  background: url("/assets/logo.png");
+  width: 150px;
+  height: 60px;
+  margin-top: -7px;
+}
+
 .titleSmall {
   font-size:0.9em;
 }
 
-#menu {
-  font-size:22px;margin-left:1em;
+#header #menu {
+  font-size:22px;
+  margin: 3px 20px 0 0;
 }
 
-.nav a, .nav a:visited {
+#header .nav a, .nav a:visited {
   color:#222;
 }
 
-.profile_thumb {
-  width:15px; height:15px;
+#header .profile {
+  margin-top: 5px;
 }
 
 #fb_login a, #facebook_login a:visited {
