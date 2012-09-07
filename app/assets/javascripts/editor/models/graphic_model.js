@@ -67,6 +67,12 @@ var GraphicModel = Ember.Object.extend({
   
   }.property( 'frameWidth', 'frameHeight' ),
   
+  widthStyle : function() {
+    
+    return 'width: ' + this.frameWidth * this.frameCount + 'px';
+    
+  }.property( 'frameWidth' ),
+  
   getData : function() {
     
     return {
