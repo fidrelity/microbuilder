@@ -1,11 +1,9 @@
-<div style="
+<div class="frame_graphic libraryGraphic" style="
   width:{{unbound App.libraryController.thumbSizeWidth}}px;
   height:{{unbound App.libraryController.thumbSizeHeight}}px;
-  overflow:hidden;
-  position:relative;
 ">
 
-    <div  class="frame_graphic_element" data-frames="{{unbound "content.frameCount"}}"
+    <div  class="frame_graphic_element graphicContent" data-frames="{{unbound "content.frameCount"}}"
         {{bindAttr style="divStyle"}}>
     </div>
 

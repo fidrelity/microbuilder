@@ -51,8 +51,6 @@ var GraphicsView = Ember.CollectionView.extend({
     
     tagName : 'li',
     
-    classNames : ['frame_graphic', 'libraryGraphic'],
-    
     templateName : 'editor/templates/graphic_template',
     
     click : function() {
@@ -64,8 +62,7 @@ var GraphicsView = Ember.CollectionView.extend({
     divStyle : function() {
       
       var c = this.content,
-        max = App.libraryController.size.max,
-        offset = { x: Math.floor( ( max - c.frameWidth ) * 0.5 ), y: Math.floor( ( max - c.frameHeight ) * 0.5 ) };
+        zoom, offset, width, height;
       
       if ( c.isBackground ) {
         
@@ -73,9 +70,26 @@ var GraphicsView = Ember.CollectionView.extend({
         
       } else {
         
+        zoom = 96 / Math.max( c.frameWidth, c.frameHeight );
+        
+        if ( zoom < 1 ) {
+          
+          width = c.frameWidth * zoom;
+          height = c.frameHeight * zoom;
+          
+        } else {
+          
+          width = c.frameWidth < 96 ? c.frameWidth : 96;
+          height = c.frameHeight < 96 ? c.frameHeight : 96;
+          
+        }
+        
+        offset = { x: Math.floor( ( 96 - width ) * 0.5 ), y: Math.floor( ( 96 - height ) * 0.5 ) };
+        
         return "background-image:url(" + c.imagePath + ");" + 
-          "width:" + c.frameWidth + "px;height:" + c.frameHeight + "px;" +
-          "position:relative;top:" + offset.y + "px;left:" + offset.x + "px";
+          "width:" + width + "px;height:" + height + "px;" + 
+          "background-size:" + width * c.frameCount + "px " + height + "px;" + 
+          "top:" + offset.y + "px;left:" + offset.x + "px;";
         
       }
     

@@ -34,7 +34,7 @@ var FramePlayer = {
     this.totalFrames = parseInt(_frame.attr("data-frames"));
     
     if(this.totalFrames > 1) {
-      _frame.css({"background-position" : '0px' });
+      _frame.css({"background-position" : '0px 0' });
     
       this.index = 1;
       this.width = _frame.width();
@@ -50,7 +50,7 @@ var FramePlayer = {
       return stop();
     }
     
-    this.frame.css({"background-position" : -(this.width * this.index)});
+    this.frame.css({"background-position" : -(this.width * this.index) + 'px 0'});
     this.index++;
     
     if(this.index === this.totalFrames) {
@@ -62,7 +62,7 @@ var FramePlayer = {
     clearInterval(this.playInterval);
     
     if(this.frame) {
-      this.frame.css({"background-position" : '0px'});
+      this.frame.css({"background-position" : '0px 0'});
       this.frame = null;
     }
   }
