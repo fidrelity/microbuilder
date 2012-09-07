@@ -1,4 +1,4 @@
-<div class="frame_graphic libraryGraphic" style="
+<div class="frame_graphic graphic" style="
   width:{{unbound App.libraryController.thumbSizeWidth}}px;
   height:{{unbound App.libraryController.thumbSizeHeight}}px;
 ">

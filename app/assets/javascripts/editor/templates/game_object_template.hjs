@@ -1,4 +1,4 @@
-<div class="libraryGraphic gameObject">
+<div class="graphic gameObject">
 
     <div {{bindAttr style="content.graphic.divStyle"}}></div>
 

@@ -223,15 +223,11 @@
   height:118px;
 }
 
-#editor .graphic {
-  background-repeat:no-repeat;
-  background-color: #FFF;
+#editor .gameObjectThumb {
   width: 96px;
   height: 96px;
-}
-
-#editor .objectsRight .graphic {
   border: 1px solid #CCC;
+  background: url("/assets/editor/pattern_light.png");
 }
 
 #editor .gameObject .name,  {
@@ -241,14 +237,13 @@
   background-color: #DDD;
 }
 
-#editor .libraryGraphic {
-  background-repeat:no-repeat;
-  background-color: #FFF;
+#editor .graphic {
+  background: url("/assets/editor/pattern_light.png");
   overflow:hidden;
   position:relative;
 }
 
-#editor .libraryGraphic .name {
+#editor .graphic .name {
   position: absolute;
   width:100%;
   padding-top: 4px;

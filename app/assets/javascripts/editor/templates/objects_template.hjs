@@ -22,7 +22,7 @@
 
         {{#view GameObjectView contentBinding = "App.gameObjectsController.current"}}
 
-          <div class="graphic left">
+          <div class="gameObjectThumb left">
             <div {{bindAttr style="content.graphic.divStyle"}}></div>
           </div>
 
