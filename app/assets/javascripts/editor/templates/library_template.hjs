@@ -1,5 +1,5 @@
 <div class="content">
-  <div class="libraryControls element">
+  <div class="libraryControls form-inline">
     <div class="btn-group left" data-toggle="buttons-radio">
 
       <button id="ownButton" class="btn" {{action "showOwns" target="App.libraryController"}}>
@@ -25,19 +25,7 @@
 
     </div>
 
-    <div class="left libraryPage">page {{App.libraryController.page}}</div>
-
-    <div class="btn-group left">
-
-      <button class="btn" {{action "previous" target="App.libraryController"}}>
-        <i class="icon-arrow-left"></i> previous</button>
-      <button class="btn" {{action "next" target="App.libraryController"}}>
-        next <i class="icon-arrow-right"></i></button>
-
-    </div>
-
-    <!-- Graphic search form -->
-    <div class="form-inline">
+    <div class="pull-right">
       <input type="text" class="graphicSearchField">
       <button id="searchButton" class="btn" {{action "search" target="App.libraryController"}}>
         <i class="icon-search"></i>
@@ -51,6 +39,18 @@
   {{view GraphicsView}}
 
   <div class="clear"></div>
+
+  <div class="libraryPagination">
+
+    <button class="btn" {{action "previous" target="App.libraryController"}}>
+      <i class="icon-arrow-left"></i> previous</button>
+
+    <span class="libraryPage">{{App.libraryController.page}} / X</span>
+
+    <button class="btn" {{action "next" target="App.libraryController"}}>
+      next <i class="icon-arrow-right"></i></button>
+
+  </div>
 
 </div>
 

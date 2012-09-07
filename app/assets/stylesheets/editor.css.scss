@@ -256,12 +256,22 @@
   background-color: #DDD;
 }
 
+#editor .libraryControls {
+  margin-bottom: 13px;
+  overflow: auto;
+}
+
 #editor .libraryControls > div {
-  margin-right: 20px;
+  margin-right: 16px;
+}
+
+#editor .libraryPagination {
+  width: 275px;
+  margin: 0 auto 13px;
 }
 
 #editor .libraryPage {
-  margin-top: 5px;
+  margin: 4px 20px 0;
   font-size: 11pt;
 }
 

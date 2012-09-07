@@ -46,7 +46,7 @@ var LibraryController = Ember.ArrayController.extend({
   
   page : 1,
   maxPage : 0,
-  perPage : 12,
+  perPage : 10,
 
   init : function() {
     
@@ -76,7 +76,7 @@ var LibraryController = Ember.ArrayController.extend({
   
   width : function() {
     
-    return this.showBackground ? 935 : this.size.width;
+    return this.showBackground ? 905 : this.size.width;
     
   }.property( 'size', 'showBackground' ),
   
@@ -88,13 +88,13 @@ var LibraryController = Ember.ArrayController.extend({
   
   thumbSizeWidth : function() {
     
-    return this.showBackground ? 210 : this.size.max;
+    return this.showBackground ? 160 : this.size.max;
     
   }.property( 'size', 'showBackground' ),
   
   thumbSizeHeight : function() {
     
-    return ( this.showBackground ? 130 : this.size.max ) + 22;
+    return ( this.showBackground ? 98 : this.size.max ) + 22;
     
   }.property( 'size', 'showBackground' ),
   
