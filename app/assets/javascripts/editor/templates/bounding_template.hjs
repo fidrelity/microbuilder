@@ -1,10 +1,10 @@
 <div class="content">
-  <div class="btn-group left element" data-toggle="buttons-radio">
+  <div class="btn-group element" data-toggle="buttons-radio">
     <button id="rectButton" class="btn" {{action "useBox"}}> box </button>
     <button id="circleButton" class="btn" {{action "useCircle"}}> circle </button>
   </div>
 
-  <div class="element clear">
+  <div class="element clear" style="margin: 13px 0 10px;">
 
     {{view PlacementView 
       observerBinding="this"

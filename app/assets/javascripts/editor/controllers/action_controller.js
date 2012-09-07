@@ -116,7 +116,6 @@ var ActionController = Ember.Object.extend({
                   child: SpeedOption.create({ 
                     name: 'moveInDirectionSpeed',
                     question: 'Set the speed of the movement',
-                    hasRotateToCheckbox: true,
                     child: SaveOption.create({ choiceID: 'moveInDirection' })
                   })
                 }),
@@ -124,7 +123,6 @@ var ActionController = Ember.Object.extend({
                 SpeedOption.create({ 
                   name: 'moveInRandomSpeed',
                   question: 'Set the speed of the movement',
-                  hasRotateToCheckbox: true,
                   child: SaveOption.create({ choiceID: 'moveInRandom' })
                 }),
                 
@@ -135,7 +133,6 @@ var ActionController = Ember.Object.extend({
                   child: SpeedOption.create({ 
                     name: 'moveInLocationSpeed',
                     question: 'Set the speed of the movement',
-                    hasRotateToCheckbox: true,
                     child: SaveOption.create({ choiceID: 'moveInLocation' })
                   })
                 }),
@@ -170,7 +167,6 @@ var ActionController = Ember.Object.extend({
                   child: SpeedOption.create({ 
                     name: 'moveToLocationSpeed',
                     question: 'Set the speed of the movement',
-                    hasRotateToCheckbox: true,
                     child: SaveOption.create({ choiceID: 'moveToLocation' })
                   })
                 }),
@@ -274,7 +270,6 @@ var ActionController = Ember.Object.extend({
                   decision: SpeedOption.create({ 
                     name: 'moveAlongPathSpeed', 
                     question: 'Set the speed of the animation',
-                    hasRotateToCheckbox: true,
                     child: SaveOption.create({ choiceID: 'moveAlongPath' })
                   })
               })

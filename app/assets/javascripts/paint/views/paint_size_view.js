@@ -13,15 +13,22 @@ var PaintSizeView = Ember.View.extend({
       maxWidth : 256,
       maxHeight : 256,
 
-      resize : function(event, ui) { 
+      handles : 'se',
+
+      resize : function(event, ui) {
         $(".objWidth").val(ui.size.width);
         $(".objHeight").val(ui.size.height);
       },
 
-      stop: function(event, ui) {       
+      stop: function(event, ui) {
         App.paintSizeView.setPaintType(ui.helper.parent());
       }
 
+    });
+
+    $('#canvas-size .ui-icon').css({
+      'background': 'url("/assets/paint/handle.png")',
+      width : '30px', height: '30px'
     });
 
     $('.sizeInput').change( function() {

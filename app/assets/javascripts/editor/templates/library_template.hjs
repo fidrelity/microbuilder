@@ -1,5 +1,5 @@
 <div class="content">
-  <div class="libraryControls element">
+  <div class="libraryControls form-inline">
     <div class="btn-group left" data-toggle="buttons-radio">
 
       <button id="ownButton" class="btn" {{action "showOwns" target="App.libraryController"}}>
@@ -13,31 +13,19 @@
 
       {{#unless App.libraryController.showBackground}}
 
-        {{view Ember.Select 
-          viewName="select"
-          contentBinding="App.libraryController.sizes"
-          optionLabelPath="content.string"
-          optionValuePath="content.name"
-          selectionBinding="App.libraryController.size"
-        }}
+        <div class="btn-group left" data-toggle="buttons-radio">
+
+          <button id="smallButton" class="btn" {{action "showSmall"}}>small</button>
+          <button id="mediumButton" class="btn" {{action "showMedium"}}>medium</button>
+          <button id="largeButton" class="btn" {{action "showLarge"}}>large</button>
+
+        </div>
 
       {{/unless}}
 
     </div>
 
-    <div class="left libraryPage">page {{App.libraryController.page}}</div>
-
-    <div class="btn-group left">
-
-      <button class="btn" {{action "previous" target="App.libraryController"}}>
-        <i class="icon-arrow-left"></i> previous</button>
-      <button class="btn" {{action "next" target="App.libraryController"}}>
-        next <i class="icon-arrow-right"></i></button>
-
-    </div>
-
-    <!-- Graphic search form -->
-    <div class="form-inline">
+    <div class="pull-right">
       <input type="text" class="graphicSearchField">
       <button id="searchButton" class="btn" {{action "search" target="App.libraryController"}}>
         <i class="icon-search"></i>
@@ -52,9 +40,41 @@
 
   <div class="clear"></div>
 
+  <div class="libraryPagination">
+
+    <button class="btn" {{action "previous" target="App.libraryController"}}>
+      <i class="icon-arrow-left"></i> previous</button>
+
+    <span class="libraryPage">{{App.libraryController.page}} / X</span>
+
+    <button class="btn" {{action "next" target="App.libraryController"}}>
+      next <i class="icon-arrow-right"></i></button>
+
+  </div>
+
 </div>
+
+{{#if App.libraryController.graphic}}
+
+  <div class="graphicPreview">
+    <div class="previewImage" {{bindAttr style="App.libraryController.graphic.widthStyle"}}>
+      <img {{bindAttr alt="App.libraryController.graphic.name"}}
+        {{bindAttr src="App.libraryController.graphic.imagePath"}} />
+    </div>
+  </div>
+
+{{/if}}
 
 <div class="form-actions" style="margin:0;padding:17px 15px 18px">
   <button class="btn" {{action "cancel" target="App.gameController"}}> 
     <i class="icon-arrow-left"></i> cancel </button>
+    
+    {{#if App.libraryController.graphic}}
+    
+      <button class="btn btn-success right" {{action "selectGraphic" target="App.libraryController"}}>
+        <i class="icon-ok icon-white"></i> ok </button>
+      <div class="actionstring right"> use: {{App.libraryController.graphic.name}} </div>
+    
+    {{/if}}
+    
 </div>

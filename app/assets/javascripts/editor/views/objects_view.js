@@ -4,14 +4,6 @@ var ObjectsView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    this.$( '.headtitle' ).live( 'click', function() {
-      
-      $( this ).parent().next().toggle( /* 'slow' */ );
-      
-      //return false;
-      
-    });//.next().hide();
-    
     this.makeSortable();
     
   },
@@ -164,6 +156,32 @@ var UiTriggerView = UiActionTriggerView.extend({
 });
 
 var BehaviourView = SelectView.extend({
+  
+  didInsertElement : function() {
+    
+    var content = this.content;
+    
+    this.$( '.headtitle' ).click( function() {
+      
+      $( this ).parent().next().toggle( /* 'slow' */ );
+      
+      $( 'i', this ).toggleClass( 'hide' );
+      
+      content.set( 'open', !content.open );
+      
+      //return false;
+      
+    });//.next().hide();
+    
+    if ( !content.open ) {
+      
+      this.$( '.headtitle' ).trigger( 'click' );
+      
+      content.set( 'open', false );
+      
+    }
+    
+  },
   
   addTrigger : function() {
     

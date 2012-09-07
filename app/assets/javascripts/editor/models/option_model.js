@@ -437,15 +437,12 @@ var OffsetOption = Option.extend({
 var SpeedOption = Option.extend({
   
   type : 'speed',
-  hasRotateToCheckbox : false,
   
   doInsert : function( reinsert ) {
-
+    
     App.actionController.addOption( this.question, SpeedView.create({
       observer : this.action,
-      speed : reinsert ? this.action.speed : 2,      
-      rotateTo : reinsert ? this.action.rotateOnMove : false,
-      hasRotateToCheckbox : this.hasRotateToCheckbox
+      speed : reinsert ? this.action.speed : 2
     }));
     
     if ( !reinsert ) {

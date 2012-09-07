@@ -67,7 +67,7 @@
 }
 
 #paint-wrapper .tool-bar button.loadfile {
-  background:url('/assets/paint/load_image_icon.png');
+  background:url('/assets/paint/file.png');
 }
 
 #paint-wrapper .tool-bar button.fill {
@@ -80,12 +80,12 @@
 }
 
 #paint-wrapper .tool-bar button.undo {
-  background:url('/assets/paint/undo_icon.png');
+  background:url('/assets/paint/undo_redo.png');
 }
 
 #paint-wrapper .tool-bar button.redo {
-  background:url('/assets/paint/redo_icon.png');
-/*  background-position: 30px 0px;*/
+  background:url('/assets/paint/undo_redo.png');
+  background-position: 30px 0px;
 }
 
 #paint-wrapper .tool-bar button.flipv {

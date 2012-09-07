@@ -1,4 +1,4 @@
-var MoveAction = function( type, gameObject, speed, rotateInDirection ) {
+var MoveAction = function( type, gameObject, speed ) {
   
   this.gameObject = gameObject;
   this.speed = speed;
@@ -9,12 +9,9 @@ var MoveAction = function( type, gameObject, speed, rotateInDirection ) {
   
   this.random = false;
   this.direction = null;
-
+  
   this.path = [];
-  this.rotateToTarget = rotateInDirection || false;
-
-  this.gameObject.movement.rotateToTarget = this.rotateToTarget; 
-
+  
   if ( type === 'moveIn' ) {
     
     this.execute = this.executeMoveIn;

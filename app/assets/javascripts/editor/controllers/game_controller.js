@@ -33,8 +33,7 @@ var GameController = Ember.Object.extend({
   
   searchGraphic : function() {
     
-    App.libraryController.set( 'showBackground', false );
-    App.libraryController.set( 'selectFunction', this.selectGraphic );
+    App.libraryController.reset( false, this.selectGraphic );
     
     App.mainView.show( 'libraryView', true );
     this.set( 'cancelView', 'objectsView' );
@@ -51,8 +50,7 @@ var GameController = Ember.Object.extend({
   
   searchArtGraphic : function() {
     
-    App.libraryController.set( 'showBackground', false );
-    App.libraryController.set( 'selectFunction', this.selectArtGraphic );
+    App.libraryController.reset( false, this.selectArtGraphic );
     
     App.mainView.show( 'libraryView', true );
     this.set( 'cancelView', 'actionView' );
@@ -70,8 +68,7 @@ var GameController = Ember.Object.extend({
   
   searchBackground : function() {
     
-    App.libraryController.set( 'showBackground', true );
-    App.libraryController.set( 'selectFunction', this.selectBackground );
+    App.libraryController.reset( true, this.selectBackground );
     
     App.mainView.show( 'libraryView', true );
     this.set( 'cancelView', null );
@@ -88,8 +85,7 @@ var GameController = Ember.Object.extend({
   
   searchChangeGraphic : function() {
     
-    App.libraryController.set( 'showBackground', false );
-    App.libraryController.set( 'selectFunction', this.selectChangeGraphic );
+    App.libraryController.reset( false, this.selectChangeGraphic );
     
     App.mainView.show( 'libraryView', true );
     this.set( 'cancelView', 'objectsView' );
@@ -190,8 +186,8 @@ var GameController = Ember.Object.extend({
           title : game.title,
           instruction: game.instructions,
           data : JSON.stringify( game ),
-          preview_image_data : thumb
-          //tags : $("#game-tags").tagit('assignedTags').join(",") // uncomment to send tags
+          preview_image_data : thumb,
+          tags : $("#game-tags").tagit('assignedTags').join(" ")
         },
         
         graphic_ids: graphicIDs

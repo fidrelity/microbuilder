@@ -1,7 +1,9 @@
-<div class="graphic">
+<div class="graphic gameObject">
+
     <div {{bindAttr style="content.graphic.divStyle"}}></div>
+
+    <div class="name"> {{content.name}} </div>
+
+    <div class="movehandle" style="position:absolute;bottom:3px;left:-2px;height:15px"></div>
+
 </div>
-
-<div class="name"> {{content.name}} </div>
-
-<div class="movehandle" style="position: relative;top:-23px;left:-3px;height:15px"></div>

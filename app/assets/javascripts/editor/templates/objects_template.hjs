@@ -22,7 +22,7 @@
 
         {{#view GameObjectView contentBinding = "App.gameObjectsController.current"}}
 
-          <div class="graphic left">
+          <div class="gameObjectThumb left">
             <div {{bindAttr style="content.graphic.divStyle"}}></div>
           </div>
 
@@ -65,7 +65,9 @@
               <div class="head">
 
                   <div class="headtitle">
-                    <i class="icon-chevron-down"></i> start actions
+                    <i class="icon-chevron-down hide"></i>
+                    <i class="icon-chevron-up"></i>
+                    start actions
                   </div>
 
               </div>
@@ -108,7 +110,9 @@
                   </div>
 
                   <div class="headtitle">
-                    <i class="icon-chevron-down"></i> behaviour {{_parentView.contentIndex}}
+                    <i class="icon-chevron-down hide"></i>
+                    <i class="icon-chevron-up"></i>
+                    behaviour {{_parentView.contentIndex}}
                   </div>
 
                 </div>

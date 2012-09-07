@@ -6,6 +6,8 @@
 
 var LibraryController = Ember.ArrayController.extend({
 
+  graphic : null,
+
   showBackground : false,
   showOwn : true,
 
@@ -19,42 +21,38 @@ var LibraryController = Ember.ArrayController.extend({
 
   sizes : [
     {
+      name : 'all',
+      max : 256,
+      min : 0
+    },
+    {
       name : 'small',
       max : 64,
-      min : 0,
-      string : 'small (64 x 64)',
-      width : 687,
-      perPage : 24
+      min : 0
     },
     {
       name : 'medium',
       max : 128,
-      min : 64,
-      string : 'medium (128 x 128)',
-      width : 903,
-      perPage : 12
+      min : 64
     },
     {
-      name : 'big',
+      name : 'large',
       max : 256,
-      min : 128,
-      string : 'big (256 x 256)',
-      width : 843,
-      perPage : 6
+      min : 128
     }
   ],
   
   page : 1,
   maxPage : 0,
-  perPage : 12,
-
+  perPage : 14,
+  
   init : function() {
     
     var self = this;
     
-    this.set( 'size', this.sizes[0] );
-    
     this.addObserver( 'showBackground', function() {
+      
+      this.perPage = this.showBackground ? 10 : 14;
       
       self.updateDisplay( true );   
       
@@ -74,29 +72,33 @@ var LibraryController = Ember.ArrayController.extend({
     
   },
   
+  reset : function( _showBackground, _selectFunction ) {
+    
+    this.set( 'showBackground', _showBackground );
+    this.set( 'selectFunction', _selectFunction );
+    
+    this.set( 'size', this.sizes[0] );
+    this.set( 'graphic', null );
+    
+  },
+  
   width : function() {
     
-    return this.showBackground ? 935 : this.size.width;
+    return this.showBackground ? 905 : 813;
     
-  }.property( 'size', 'showBackground' ),
-  
-  perPageM : function() {
-    
-    return this.showBackground ? 12 : this.size.perPage;
-    
-  }.property( 'size', 'showBackground' ),
+  }.property( 'showBackground' ),
   
   thumbSizeWidth : function() {
     
-    return this.showBackground ? 210 : this.size.max;
+    return ( this.showBackground ? 160 : 96 );
     
-  }.property( 'size', 'showBackground' ),
+  }.property( 'showBackground' ),
   
   thumbSizeHeight : function() {
     
-    return ( this.showBackground ? 130 : this.size.max ) + 22;
+    return ( this.showBackground ? 98 : 96 ) + 22;
     
-  }.property( 'size', 'showBackground' ),
+  }.property( 'showBackground' ),
   
   updateDisplay : function( load, page ) {
     
@@ -406,5 +408,17 @@ var LibraryController = Ember.ArrayController.extend({
     }
     
   },
+  
+  select : function( _graphic ) {
+    
+    this.set( 'graphic', _graphic );
+    
+  },
+  
+  selectGraphic : function() {
+    
+    this.selectFunction.call( App.gameController, this.graphic );
+    
+  }
 
 });

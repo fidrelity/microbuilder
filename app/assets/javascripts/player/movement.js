@@ -22,9 +22,6 @@ var Movement = function() {
   this.pathMode = null; // loop, ping-pong, once
   this.pathDirection = null;
 
-  this.rotateToTarget = false; // indicates whether the object turns to its target
-  this.angle = 0;
-
 };
 
 Movement.prototype = {
@@ -72,8 +69,7 @@ Movement.prototype = {
     
     this.direction = dir;
     this.setSpeed( speed );
-
-    if(this.rotateToTarget) this.angle = dir;
+    
   },
   
   setSpeed : function( speed ) {

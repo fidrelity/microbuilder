@@ -2,6 +2,9 @@ var LibraryView = Ember.View.extend({
   
   templateName : 'editor/templates/library_template',
   
+  sizeBinding : 'App.libraryController.size',
+  sizesBinding : 'App.libraryController.sizes',
+  
   didInsertElement : function() {
     
     if ( App.libraryController.showOwn ) {
@@ -25,6 +28,54 @@ var LibraryView = Ember.View.extend({
         minLength: 2
 
     });
+    
+  },
+  
+  showSmall : function( _e ) {
+    
+    if ( this.size.name === 'small' ) {
+      
+      this.set( 'size', this.sizes[0] );
+      this.$( '#smallButton' ).removeClass( 'active' );
+      _e.stopPropagation();
+      
+    } else {
+      
+      this.set( 'size', this.sizes[1] );
+      
+    }
+    
+  },
+  
+  showMedium : function( _e ) {
+    
+    if ( this.size.name === 'medium' ) {
+      
+      this.set( 'size', this.sizes[0] );
+      this.$( '#mediumButton' ).removeClass( 'active' );
+      _e.stopPropagation();
+      
+    } else {
+      
+      this.set( 'size', this.sizes[2] );
+      
+    }
+    
+  },
+  
+  showLarge : function( _e ) {
+    
+    if ( this.size.name === 'large' ) {
+      
+      this.set( 'size', this.sizes[0] );
+      this.$( '#largeButton' ).removeClass( 'active' );
+      _e.stopPropagation();
+      
+    } else {
+      
+      this.set( 'size', this.sizes[3] );
+      
+    }
     
   }
   
@@ -51,35 +102,13 @@ var GraphicsView = Ember.CollectionView.extend({
     
     tagName : 'li',
     
-    classNames : ['frame_graphic', 'libraryGraphic'],
-    
     templateName : 'editor/templates/graphic_template',
     
     click : function() {
       
-      App.libraryController.selectFunction.call( App.gameController, this.content );
+      App.libraryController.select( this.content );
       
-    },
-    
-    divStyle : function() {
-      
-      var c = this.content,
-        max = App.libraryController.size.max,
-        offset = { x: Math.floor( ( max - c.frameWidth ) * 0.5 ), y: Math.floor( ( max - c.frameHeight ) * 0.5 ) };
-      
-      if ( c.isBackground ) {
-        
-        return "background-image:url(" + c.imagePath + ");background-size:210px 130px;width:210px;height:130px;";
-        
-      } else {
-        
-        return "background-image:url(" + c.imagePath + ");" + 
-          "width:" + c.frameWidth + "px;height:" + c.frameHeight + "px;" +
-          "position:relative;top:" + offset.y + "px;left:" + offset.x + "px";
-        
-      }
-    
-    }.property()
+    }
     
   })
   
