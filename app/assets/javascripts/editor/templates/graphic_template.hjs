@@ -3,8 +3,8 @@
   height:{{unbound App.libraryController.thumbSizeHeight}}px;
 ">
 
-    <div  class="frame_graphic_element graphicContent" data-frames="{{unbound "content.frameCount"}}"
-        {{bindAttr style="divStyle"}}>
+    <div  class="frame_graphic_element" data-frames="{{unbound "content.frameCount"}}"
+        {{bindAttr style="content.divStyle"}}>
     </div>
 
     <div class="name"> {{content.name}} </div>

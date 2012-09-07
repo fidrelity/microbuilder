@@ -57,43 +57,7 @@ var GraphicsView = Ember.CollectionView.extend({
       
       App.libraryController.selectFunction.call( App.gameController, this.content );
       
-    },
-    
-    divStyle : function() {
-      
-      var c = this.content,
-        zoom, offset, width, height;
-      
-      if ( c.isBackground ) {
-        
-        return "background-image:url(" + c.imagePath + ");background-size:160px 98px;width:160px;height:98px;";
-        
-      } else {
-        
-        zoom = 96 / Math.max( c.frameWidth, c.frameHeight );
-        
-        if ( zoom < 1 ) {
-          
-          width = c.frameWidth * zoom;
-          height = c.frameHeight * zoom;
-          
-        } else {
-          
-          width = c.frameWidth < 96 ? c.frameWidth : 96;
-          height = c.frameHeight < 96 ? c.frameHeight : 96;
-          
-        }
-        
-        offset = { x: Math.floor( ( 96 - width ) * 0.5 ), y: Math.floor( ( 96 - height ) * 0.5 ) };
-        
-        return "background-image:url(" + c.imagePath + ");" + 
-          "width:" + width + "px;height:" + height + "px;" + 
-          "background-size:" + width * c.frameCount + "px " + height + "px;" + 
-          "top:" + offset.y + "px;left:" + offset.x + "px;";
-        
-      }
-    
-    }.property()
+    }
     
   })
   

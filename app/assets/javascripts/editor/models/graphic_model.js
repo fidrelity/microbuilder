@@ -34,14 +34,37 @@ var GraphicModel = Ember.Object.extend({
   divStyle : function() {
     
     var g = this,
-      zoom = 96 / Math.max( g.frameWidth, g.frameHeight ),
-      width = g.frameWidth * zoom,
-      height = g.frameHeight * zoom,
-      offset = { x: Math.floor( ( 96 - g.frameWidth * zoom ) * 0.5 ), y: Math.floor( ( 96 - height ) * 0.5 ) };
+      zoom, offset, width, height;
     
-    return 'width:' + width + 'px;height:' + height + 'px;position:relative;top:' + offset.y + 'px;left:' + offset.x + "px;" +
-      'background-image:url("' + g.imagePath + '");background-size:' + width * g.frameCount + "px " + height + "px;";
-    
+    if ( g.isBackground ) {
+      
+      return "background-image:url(" + g.imagePath + ");background-size:160px 98px;width:160px;height:98px;";
+      
+    } else {
+      
+      zoom = 96 / Math.max( g.frameWidth, g.frameHeight );
+      
+      if ( zoom < 1 ) {
+        
+        width = g.frameWidth * zoom;
+        height = g.frameHeight * zoom;
+        
+      } else {
+        
+        width = g.frameWidth < 96 ? g.frameWidth : 96;
+        height = g.frameHeight < 96 ? g.frameHeight : 96;
+        
+      }
+      
+      offset = { x: Math.floor( ( 96 - width ) * 0.5 ), y: Math.floor( ( 96 - height ) * 0.5 ) };
+      
+      return "background-image:url(" + g.imagePath + ");" + 
+        "width:" + width + "px;height:" + height + "px;" + 
+        "background-size:" + width * g.frameCount + "px " + height + "px;" + 
+        "position:relative;top:" + offset.y + "px;left:" + offset.x + "px;";
+      
+    }
+  
   }.property( 'frameWidth', 'frameHeight' ),
   
   getData : function() {

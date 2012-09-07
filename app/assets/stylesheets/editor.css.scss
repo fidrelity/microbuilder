@@ -220,7 +220,7 @@
 #editor .gameObject {
   overflow: hidden;
   width:96px; 
-  height:116px;
+  height:118px;
 }
 
 #editor .graphic {
@@ -245,10 +245,6 @@
   background-repeat:no-repeat;
   background-color: #FFF;
   overflow:hidden;
-  position:relative;
-}
-
-#editor .libraryGraphic .graphicContent {
   position:relative;
 }
 

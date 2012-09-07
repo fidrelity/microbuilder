@@ -96,8 +96,6 @@ var GameObjectsView = Ember.CollectionView.extend({
     
     tagName : 'li',
     
-    classNames : ['gameObject'],
-    
     templateName : 'editor/templates/game_object_template',
     
     didInsertElement : function() {
