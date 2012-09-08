@@ -38,12 +38,16 @@ class SupportController < ApplicationController
       body = body + "\n\nFrom: #{current_user.display_name}\n#{user_link}" if !body.empty?
     end
 
+    body
+
   end
 
   def append_game_to_body(body, game_id)
 
     game_link = root_url + "play/#{game_id}"
     body = body + "\n\nGame: #{game_link}" if !body.empty?
+
+    body
 
   end
 
