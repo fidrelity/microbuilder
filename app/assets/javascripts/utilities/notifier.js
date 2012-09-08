@@ -81,9 +81,9 @@ var Notifier = {
     if(!Notifier.loadingOverlay.length){ 
       throw "Html: div.loadOverlay is missing";
       return false; 
-    }
+    }    
 
-    window.scrollTo(0, 0);
+    this.scrollTop();
 
     var overlayHeight = $(document).height();
     Notifier.loadingOverlay.css({ height : overlayHeight }).fadeTo(500, 0.9);
@@ -96,6 +96,14 @@ var Notifier = {
     overlayMessageWrapper.css({left: newLeft});
 
     return Notifier;
+  },
+
+  scrollTop : function() {
+
+    window.scrollTo(0, 0);
+
+    return Notifier;
+
   },
 
   hideLoader : function() {

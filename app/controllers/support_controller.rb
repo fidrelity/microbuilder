@@ -27,7 +27,7 @@ class SupportController < ApplicationController
 
   def create_issue title, body, label = "question"
     return false if title.empty? || body.empty?
-    #Feedhub::open_issue(:title => title, :body => append_user_to_body( body ), :label => label)
+    Feedhub::open_issue(:title => title, :body => append_user_to_body( body ), :label => label)
     true
   end
 
