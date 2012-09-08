@@ -73,6 +73,34 @@ body {
   background:#333;color:#FFF;padding:1.7em;
 }
 
+.avatar_profile {
+  height: 220px;
+  width: 220px;
+  overflow: hidden;
+  display: inline-block;  
+}
+
+.avatar_big {
+  height: 60px;
+  width: 60px;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.avatar {
+  height: 30px;
+  width: 30px;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.avatar_stream {
+  height: 20px;
+  width: 20px;
+  overflow: hidden;
+  display: inline-block;
+}
+
 #createAccountButton {
   width:100%;
 }
@@ -196,7 +224,6 @@ body {
 /* Activity Stream */
 
 #messages .stream-image, #messages-public .stream-image {
-  width:20px; height:20px;
   margin-right: 5px;
 }
 

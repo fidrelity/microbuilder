@@ -15,7 +15,8 @@
     %div{:id => "playGame" }
 
       %div{:class => "gameDetailAuthor" }
-        %img{:src => @game.author.display_image, :class => "authorImage" }
+        .avatar
+          %img{:src => @game.author.display_image, :class => "authorImage" }
         =link_to "#{@game.author.display_name}", user_path(@game.author)
 
       %div{:style => "margin-top:1em;"}     

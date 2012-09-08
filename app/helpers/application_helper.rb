@@ -36,7 +36,7 @@ module ApplicationHelper
     game = Game.find_by_id(message['game_id'])
     return unless game
     text = "<li>"
-    text += user ? " #{link_to( image_tag(game.author.display_image, :class => "stream-image"), user_path(user) )} #{link_to(user.display_name, user_path(user))}" : "Anonymous"
+    text += user ? "<div class='avatar_stream'>#{link_to( image_tag(game.author.display_image, :class => "stream-image"), user_path(user) )}</div> #{link_to(user.display_name, user_path(user))}" : "Anonymous"
 
     case message['type']
     when "game"
