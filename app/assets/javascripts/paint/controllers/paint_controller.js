@@ -602,6 +602,8 @@ var PaintController = Ember.ArrayController.extend({
       canvas, ctx,
       imgData, i;
     
+    this.resetTool();
+    
     if ( !imageTitle ) {
       
       alert( "Image has no name!" );
