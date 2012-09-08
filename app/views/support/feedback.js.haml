@@ -1,2 +1,3 @@
-:plain
-  Feedback.close();
+:plain  
+  var state = "#{escape_javascript(@message_type)}";
+  Feedback.afterSent(state);
