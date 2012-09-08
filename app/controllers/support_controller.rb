@@ -2,7 +2,7 @@
 # Url: https://github.com/playtin/Support/issues
 class SupportController < ApplicationController
   
-  respond_to :js, :only => [:feedback, :ticket, :report]
+  respond_to :js, :only => [:feedback, :report, :ticket]
 
   def feedback
     issue_state = create_issue "Feedback: #{params[:subject]}", params[:body], "Feedback"
@@ -10,11 +10,10 @@ class SupportController < ApplicationController
   end
 
   def report
-    game_link = root_url + "play/#{params[:gid]}"
-    
-    body = params[:body] + "\n\n#{game_link}" if params[:body]
+    game_id = params[:gid]
+    body = params[:body]
 
-    issue_state = create_issue "Report: #{params[:type]} [#{params[:gid]}]", body, "Report"
+    issue_state = create_issue "Report: #{params[:type]} [#{game_id}]", append_game_to_body( body, game_id ), "Report"
     @message_type = issue_state ? "success" : "error"
   end
   
@@ -28,7 +27,7 @@ class SupportController < ApplicationController
 
   def create_issue title, body, label = "question"
     return false if title.empty? || body.empty?
-    Feedhub::open_issue(:title => title, :body => append_user_to_body( body ), :label => label)
+    #Feedhub::open_issue(:title => title, :body => append_user_to_body( body ), :label => label)
     true
   end
 
@@ -39,7 +38,12 @@ class SupportController < ApplicationController
       body = body + "\n\nFrom: #{current_user.display_name}\n#{user_link}" if !body.empty?
     end
 
-    return body
+  end
+
+  def append_game_to_body(body, game_id)
+
+    game_link = root_url + "play/#{game_id}"
+    body = body + "\n\nGame: #{game_link}" if !body.empty?
 
   end
 
