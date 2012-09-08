@@ -1,6 +1,26 @@
 =# ------------- User is logged OUT --------------
--if !user_signed_in?
-  
+-if user_signed_in?
+  %div{ :class => "well"}
+    = link_to( user_path(current_user) ) do
+      .avatar_big{:style => "float:right;"}
+        = image_tag "#{current_user.display_image}", :style => "width:60px"
+      %h2
+        = current_user.display_name
+
+    %div{:style => "margin-top:1em;"}
+      %p
+        = "#{current_user.games.size} games created"
+      %p
+        = "#{current_user.graphics.size} graphics created"
+      %p
+        %strong
+          Total:
+        %i{:class => "icon-thumbs-up"}
+        = "#{@likes} likes and "
+        %i{:class => "icon-thumbs-down"}
+        = "#{@dislikes} dislikes"
+
+- else
   %div{ :class => "well"}
 
     = form_tag user_session_path do
@@ -17,26 +37,3 @@
       =link_to(image_tag("facebook_login.png"), user_omniauth_authorize_path(:facebook))
 
   = link_to "Create a new Account", new_user_registration_path, :class=>"btn-success btn-large", :id => "createAccountButton"
-
-  =# ------------- User is logged IN --------------
-- else
-
-  %div{ :class => "well"}
-
-    = link_to( user_path(current_user) ) do
-      %h2
-        = image_tag "#{current_user.display_image}", :style => "width:30px"
-        = current_user.display_name
-
-    %div{:style => "margin-top:1em;"}
-      %p
-        = "#{current_user.games.size} games created"
-      %p
-        = "#{current_user.graphics.size} graphics created"
-      %p
-        %strong
-          Total:
-        %i{:class => "icon-thumbs-up"}
-        = "#{@likes} likes and "
-        %i{:class => "icon-thumbs-down"}
-        = "#{@dislikes} dislikes"
