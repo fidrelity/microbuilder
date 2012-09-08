@@ -49,6 +49,12 @@ var MainView = Ember.View.extend({
     
     var view = this.get( name );
     
+    if ( name === 'libraryView' && view === this.overlayView.showView ) {
+      
+      view.didInsertElement();
+      
+    }
+    
     this.overlayView.setWidth( view.width );
     this.overlayView.set( 'showView', view );
     

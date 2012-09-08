@@ -42,13 +42,13 @@
 
   <div class="libraryPagination">
 
-    <button class="btn" {{action "previous" target="App.libraryController"}}>
-      <i class="icon-arrow-left"></i> previous</button>
+    <button id="previousButton" class="btn" {{action "previous" target="App.libraryController"}}>
+      <i class="icon-arrow-left"></i></button>
 
-    <span class="libraryPage">{{App.libraryController.page}} / X</span>
+    <span class="libraryPage">{{App.libraryController.page}} / {{App.libraryController.pages}}</span>
 
-    <button class="btn" {{action "next" target="App.libraryController"}}>
-      next <i class="icon-arrow-right"></i></button>
+    <button id="nextButton" class="btn" {{action "next" target="App.libraryController"}}>
+      <i class="icon-arrow-right"></i></button>
 
   </div>
 

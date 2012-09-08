@@ -3,7 +3,6 @@ var LibraryView = Ember.View.extend({
   templateName : 'editor/templates/library_template',
   
   sizeBinding : 'App.libraryController.size',
-  sizesBinding : 'App.libraryController.sizes',
   
   didInsertElement : function() {
     
@@ -17,9 +16,8 @@ var LibraryView = Ember.View.extend({
       
     }
     
-    App.libraryController.updateDisplay( true );
-
-
+    App.libraryController.loadGraphics();
+    
     // Init Autocomplete for graphics
     this.$( ".graphicSearchField" ).autocomplete({
 
@@ -35,13 +33,13 @@ var LibraryView = Ember.View.extend({
     
     if ( this.size.name === 'small' ) {
       
-      this.set( 'size', this.sizes[0] );
+      App.libraryController.setSize( 0 );
       this.$( '#smallButton' ).removeClass( 'active' );
       _e.stopPropagation();
       
     } else {
       
-      this.set( 'size', this.sizes[1] );
+      App.libraryController.setSize( 1 );
       
     }
     
@@ -51,15 +49,17 @@ var LibraryView = Ember.View.extend({
     
     if ( this.size.name === 'medium' ) {
       
-      this.set( 'size', this.sizes[0] );
+      App.libraryController.setSize( 0 );
       this.$( '#mediumButton' ).removeClass( 'active' );
       _e.stopPropagation();
       
     } else {
       
-      this.set( 'size', this.sizes[2] );
+      App.libraryController.setSize( 2 );
       
     }
+    
+    App.libraryController.loadGraphics();
     
   },
   
@@ -67,15 +67,17 @@ var LibraryView = Ember.View.extend({
     
     if ( this.size.name === 'large' ) {
       
-      this.set( 'size', this.sizes[0] );
+      App.libraryController.setSize( 0 );
       this.$( '#largeButton' ).removeClass( 'active' );
       _e.stopPropagation();
       
     } else {
       
-      this.set( 'size', this.sizes[3] );
+      App.libraryController.setSize( 3 );
       
     }
+    
+    App.libraryController.loadGraphics();
     
   }
   

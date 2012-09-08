@@ -45,39 +45,29 @@ var LibraryController = Ember.ArrayController.extend({
   page : 1,
   maxPage : 0,
   perPage : 14,
+  graphicCount : 123,
   
-  init : function() {
+  pages : function() {
     
-    var self = this;
+    return Math.ceil( this.graphicCount / this.perPage );
     
-    this.addObserver( 'showBackground', function() {
-      
-      this.perPage = this.showBackground ? 10 : 14;
-      
-      self.updateDisplay( true );   
-      
-    });
-    
-    this.addObserver( 'showOwn', function() {
-      
-      self.updateDisplay( true );
-      
-    });
-    
-    this.addObserver( 'size', function() {
-      
-      self.updateDisplay( true );
-      
-    });
-    
-  },
+  }.property( 'graphicCount', 'perPage' ),
   
   reset : function( _showBackground, _selectFunction ) {
     
     this.set( 'showBackground', _showBackground );
     this.set( 'selectFunction', _selectFunction );
     
+    this.set( 'perPage', _showBackground ? 10 : 14 );
     this.set( 'size', this.sizes[0] );
+    
+    this.clear();
+    
+  },
+  
+  clear : function() {
+    
+    this.set( 'page', 1 );
     this.set( 'graphic', null );
     
   },
@@ -100,75 +90,6 @@ var LibraryController = Ember.ArrayController.extend({
     
   }.property( 'showBackground' ),
   
-  updateDisplay : function( load, page ) {
-    
-    var display = this.content;
-      
-    page = page || 1;
-    
-    display = display.filterProperty( 'isBackground', this.showBackground );
-    
-    if ( this.showOwn ) {
-    
-      display = display.filterProperty( 'isOwn', true );
-    
-    } else {
-    
-      display = display.filterProperty( 'isPublic', true );
-    
-    }
-    
-    if ( !this.showBackground ) {
-      
-      display = this.filterSize( display );
-      
-    }
-    
-    display = this.filterPage( display, page );
-    
-    if ( display.length ) {
-      
-      this.set( 'display', display );
-      
-    }
-    
-    if ( load && ( display.length < this.perPage || page === 1 ) ) {
-      
-      this.loadGraphics( page );
-      
-    } else {
-      
-      this.set( 'page', page );
-      
-    }
-    
-  },
-  
-  filterSize : function( graphics ) {
-    
-    var result = [];
-    
-    for ( var i = 0; i < graphics.length; i++ ) {
-      
-      if ( graphics[i].frameWidth <= this.size.max && graphics[i].frameHeight <= this.size.max && 
-        ( graphics[i].frameWidth > this.size.min || graphics[i].frameHeight > this.size.min ) ) {
-        
-        result.push( graphics[i] );
-        
-      }
-      
-    }
-    
-    return result;
-    
-  },
-  
-  filterPage : function( graphics, page ) {
-    
-    return graphics.splice( ( page - 1 ) * this.perPage, this.perPage );
-    
-  },
-  
   graphicSaved : function( data ) {
     
     this.appendGraphics( [data] );
@@ -177,7 +98,7 @@ var LibraryController = Ember.ArrayController.extend({
     
   },
   
-  loadGraphics : function( page ) {
+  loadGraphics : function() {
     
     var path,
       self = this;
@@ -186,11 +107,11 @@ var LibraryController = Ember.ArrayController.extend({
       
       if ( this.showOwn ) {
         
-        path = 'users/current/graphics/backgrounds?page=' + page;
+        path = 'users/current/graphics/backgrounds?';
         
       } else {
         
-        path = 'graphics/public?backgrounds=true&page=' + page;
+        path = 'graphics/public?backgrounds=true&';
         
       }
       
@@ -198,11 +119,11 @@ var LibraryController = Ember.ArrayController.extend({
       
       path = this.showOwn ? 'users/current/graphics' : 'graphics/public';
       
-      path += '?min_size=' + this.size.min + '&max_size=' + this.size.max;
-      
-      path += '&page=' + page;
+      path += '?min_size=' + this.size.min + '&max_size=' + this.size.max + '&';
       
     }
+    
+    path += 'page=' + this.page;
     
     $.ajax({
       url : path,
@@ -218,7 +139,9 @@ var LibraryController = Ember.ArrayController.extend({
             
           }
         
-          self.appendGraphics( data, page );
+          console.log( data, data.length );
+        
+          self.appendGraphics( data );
         
         }
         
@@ -254,8 +177,10 @@ var LibraryController = Ember.ArrayController.extend({
             data = JSON.parse( data );            
             
           }
+          
+          console.log( data, data.length );
         
-          self.appendGraphics( data, 1);
+          self.appendGraphics( data );
         
         }
         
@@ -265,58 +190,45 @@ var LibraryController = Ember.ArrayController.extend({
 
   },
   
-  appendGraphics : function( data, page ) {
+  appendGraphics : function( data ) {
     
-    if ( !data.length ) {
+    var display = [], graphic;
+    
+    for ( var i = 0; i < data.length; i++ ) {
       
-      this.updateDisplay( false, this.page );
-      return;
+      graphic = this.parseGraphic( data[i] );
+      
+      if ( graphic ) {
+        
+        display.push( graphic );
+        
+      }
       
     }
     
-    if ( page === 1 ) {
-      
-      for ( var i = data.length - 1; i >= 0; i-- ) {
-      
-        this.parseGraphic( data[i], page );
-      
-      }
-      
-    } else {
-    
-      for ( var i = 0; i < data.length; i++ ) {
-      
-        this.parseGraphic( data[i], page );
-      
-      }
-    
-    }
-    
-    this.updateDisplay( false, page );
+    this.set( 'display', display );
     
   },
   
-  parseGraphic : function( data, page ) {
+  parseGraphic : function( data ) {
     
-    var filterID = this.content.findProperty( 'ID', data.id ),
-      graphic;
+    var graphic = this.content.findProperty( 'ID', data.id );
     
-    if ( !filterID && data.id ) {
-    
+    if ( graphic ) {
+      
+      return graphic;
+      
+    } else if ( data.id ) {
+      
       graphic = GraphicModel.create();
       this.extendGraphic( graphic, data );
       
-      if ( page === 1 ) {
+      this.addObject( graphic );
+      return graphic;
       
-        this.unshiftObject( graphic );
-      
-      } else {
-        
-        this.addObject( graphic );
-        
-      }
-    
     }
+    
+    return null;
     
   },
   
@@ -383,28 +295,65 @@ var LibraryController = Ember.ArrayController.extend({
   
   showOwns : function() {
     
-    this.set( 'showOwn', true );
+    if ( !this.showOwn ) {
+      
+      this.set( 'showOwn', true );
+      this.clear();
+      
+      this.loadGraphics();
+      
+    }
     
   },
   
   showPublics : function() {
     
-    this.set( 'showOwn', false );
+    if ( this.showOwn ) {
+      
+      this.set( 'showOwn', false );
+      this.clear();
+      
+      this.loadGraphics();
+      
+    }
+    
+  },
+  
+  setSize : function( _index ) {
+    
+    if ( this.size !== this.sizes[_index] ) {
+      
+      this.set( 'size', this.sizes[_index] );
+      this.clear();
+      
+      this.loadGraphics();
+      
+    }
     
   },
   
   next : function() {
     
-    this.updateDisplay( true, this.page + 1 );
+    if ( this.page < Math.ceil( this.graphicCount / this.perPage ) ) {
+      
+      this.set( 'page', this.page + 1 );
+      this.set( 'graphic', null );
+      
+      this.loadGraphics();
+      
+    }
     
   },
   
   previous : function() {
     
     if ( this.page > 1 ) {
-    
-      this.updateDisplay( true, this.page - 1 );
-    
+      
+      this.set( 'page', this.page - 1 );
+      this.set( 'graphic', null );
+      
+      this.loadGraphics();
+      
     }
     
   },
