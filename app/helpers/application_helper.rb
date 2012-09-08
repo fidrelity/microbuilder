@@ -31,24 +31,37 @@ module ApplicationHelper
 
   end
 
-  def render_message(message)
+  # Renders stream-activity message
+  def render_message(message, element_tag = "li")
 
     user = User.find_by_id(message['user_id'])
     game = Game.find_by_id(message['game_id'])
-    return unless game
-    text = "<li>"
-    text += user ? "<div class='avatar_stream'>#{link_to( image_tag(game.author.display_image, :class => "stream-image"), user_path(user) )}</div> #{link_to(user.display_name, user_path(user))}" : "Anonymous"
+    type = message['type']
 
-    case message['type']
-    when "game"
-      text += " created #{link_to(game.title, play_path(game))}"
-    when "comment"
-      text += " commented on #{link_to(game.author.display_name, user_path(game.author))}'s #{link_to(game.title, play_path(game))}"
-    when "like"
-      text += " liked #{link_to(game.author.display_name, user_path(game.author))}'s #{link_to(game.title, play_path(game))}"
-    when "dislike"
-      text += " disliked #{link_to(game.author.display_name, user_path(game.author))}'s #{link_to(game.title, play_path(game))}"
-    end
-    text += "</li>"
+    return unless game
+
+    username = get_stream_user(user, game)
+
+    types = { 
+              :game => " created ", 
+              :comment => " commented on ", 
+              :like => " liked ", 
+              :dislike => " disliked " 
+            }
+    verb = types[type.to_sym]
+
+    author_link = type != "game" ? " #{link_to(game.author.display_name, user_path(game.author))}'s " : ""
+    game_link = "#{link_to(game.title, play_path(game))}"
+
+    return "<#{element_tag}>" + username + verb + author_link + game_link + "</#{element_tag}>"
   end
+
+  def get_stream_user(user, game)
+    if user
+      "<div class='avatar_stream'>#{link_to( image_tag(game.author.display_image, :class => "stream-image"), user_path(user) )}</div> #{link_to(user.display_name, user_path(user))}" 
+    else
+      "Anonymous"
+    end
+  end
+
 end
