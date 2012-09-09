@@ -208,6 +208,8 @@ var LibraryController = Ember.ArrayController.extend({
     
     this.set( 'display', display );
     
+    this.updateButtons();
+    
   },
   
   parseGraphic : function( data ) {
@@ -367,6 +369,30 @@ var LibraryController = Ember.ArrayController.extend({
   selectGraphic : function() {
     
     this.selectFunction.call( App.gameController, this.graphic );
+    
+  },
+  
+  updateButtons : function() {
+    
+    if ( this.page === 1 ) {
+      
+      $( '#previousButton' ).addClass( 'disabled' );
+      
+    } else {
+      
+      $( '#previousButton' ).removeClass( 'disabled' );
+      
+    }
+    
+    if ( this.page === Math.ceil( this.graphicCount / this.perPage ) ) {
+      
+      $( '#nextButton' ).addClass( 'disabled' );
+      
+    } else {
+      
+      $( '#nextButton' ).removeClass( 'disabled' );
+      
+    }
     
   }
 
