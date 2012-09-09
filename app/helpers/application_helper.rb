@@ -56,6 +56,7 @@ module ApplicationHelper
     return "<#{element_tag}>" + username + verb + author_link + game_link + "</#{element_tag}>"
   end
 
+  # Helps to render correct user for stream
   def get_stream_user(user, game)
     if user
       "<div class='avatar_stream'>#{link_to( image_tag(game.author.display_image, :class => "stream-image"), user_path(user) )}</div> #{link_to(user.display_name, user_path(user))}" 
