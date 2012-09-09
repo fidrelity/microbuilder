@@ -1,4 +1,0 @@
-:plain
-  $('body').append("#{escape_javascript(render :partial => 'layouts/flash', :locals => {:flash => flash})}")
-  Notifier.notify();
-  $('#user_games').html("#{escape_javascript(render :partial => 'users/games', :locals => {:user => @user, :games => @games})}");
