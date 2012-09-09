@@ -21,6 +21,8 @@ var MainView = Ember.View.extend({
   },
   
   didInsertElement : function() {
+
+    $.scrollTo( $(".stageControls"), { axies : 'y', duration : 700} );
     
     this.$( '#slider' ).slider({
       

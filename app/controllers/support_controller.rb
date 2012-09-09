@@ -43,7 +43,7 @@ class SupportController < ApplicationController
   end
 
   def append_game_to_body(body, game_id)
-
+    
     game_link = root_url + "play/#{game_id}"
     body = body + "\n\nGame: #{game_link}" if !body.empty?
 
