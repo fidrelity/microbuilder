@@ -54,6 +54,8 @@
       flash[:error] = "Not allowed to delete game"
     end
     @games = current_user.games.paginate(:page => params[:games_page], :per_page => 4)
+    
+    redirect_to user_path(@game.author)
   end
 
   # ------------------

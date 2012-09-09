@@ -42,6 +42,6 @@
               .row
                 .span3{:class => "wrapper"}
                 
-                  =link_to(game_path(game), :method => :delete, :remote => true, :confirm => "Permanently delete this game?") do
+                  =link_to(game_path(game), :method => :delete, :confirm => "Permanently delete this game?") do
                     %i{:class => "icon-trash icon-white"}
                     delete
