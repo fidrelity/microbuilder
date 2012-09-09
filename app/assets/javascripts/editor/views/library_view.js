@@ -110,7 +110,7 @@ var GraphicsView = Ember.CollectionView.extend({
       
       App.libraryController.select( this.content );
 
-      $.scrollTo( $(".overlayWrapper").find(".content"), { axies : 'y', duration : 500} );
+      $.scrollTo( $(".overlayWrapper").find(".graphicPreview"), { axies : 'y', duration : 500} );
       
     }
     
