@@ -14,7 +14,8 @@ module ApplicationHelper
   def page_title
 
     # return raw('Play<span class="label label-warning titleSmall">tin</span>')
-    return raw('<div id="logo"></div>')
+    # return raw('<div id="logo"></div>')
+    return raw('<h1>Playtin</h1>')
 
   end
 

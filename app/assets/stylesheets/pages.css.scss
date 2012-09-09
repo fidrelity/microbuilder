@@ -16,6 +16,13 @@ body {
 /* Header */
 /* ---------------------------------- */
 
+/*@font-face {
+  font-family: 'TitilliumThin';
+  src: url('../fonts/TitilliumText22L001-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}*/
+
 #header {
   margin-top: 2em;
 }
@@ -30,13 +37,27 @@ body {
 }
 
 #header h1 {
-  display:inline;
-  font-size:1.8em;
-  font-family:'Press Start 2P';
+  font-size: 34pt;
+  font-family: 'Japan', sans-serif;
+  color: #BAD666 !important;
+  text-shadow: 2px 2px 0 #333;
+  margin: 3px 7px 5px 0;
+  float: left;
 }
 
 #header h1 a, #header h1 a:visited {
-  color:#222; text-decoration: none;
+  text-decoration: none;
+}
+
+#header h2 {
+  font-size: 7pt;
+  font-family: 'Helvetica Neue Bold', sans-serif;
+  text-transform:uppercase;
+  color: #BBB;
+  line-height: 10px;
+  float: left;
+  width: 70px;
+  margin-top: 5px;
 }
 
 #header #logo {
@@ -46,13 +67,9 @@ body {
   margin-top: -7px;
 }
 
-.titleSmall {
-  font-size:0.9em;
-}
-
 #header #menu {
   font-size:22px;
-  margin: 3px 20px 0 0;
+  margin: 3px 0 0 30px;
 }
 
 #header .nav a, .nav a:visited {
