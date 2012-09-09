@@ -19,6 +19,7 @@ public/games/
 /log/*.log
 /tmp
 .redcar/
+*.rdb
 
 # Ignore vendor
 /vendor
