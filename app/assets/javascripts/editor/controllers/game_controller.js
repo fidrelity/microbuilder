@@ -42,7 +42,16 @@ var GameController = Ember.Object.extend({
   
   selectGraphic : function( graphic ) {
     
-    App.gameObjectsController.createObject( graphic );
+    App.mainView.placingView.set( 'graphic', graphic );
+    
+    App.mainView.show( 'placingView', true );
+    // this.set( 'cancelView', 'libraryView' );
+    
+  },
+  
+  createObject : function( graphic, position, name ) {
+    
+    App.gameObjectsController.createObject( graphic, position, name );
     
     App.mainView.show( 'objectsView' );
     

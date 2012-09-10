@@ -4,7 +4,7 @@ var PlacementView = Ember.View.extend({
 
   classNames : ['placementview', 'optionview'],
   
-  type : 'location', // location, direction, area, offset, bounding, path
+  type : 'location', // location, direction, area, offset, bounding, path, placing
   subtype : 'rect', // rect, circle
   
   observer : null,
@@ -19,6 +19,8 @@ var PlacementView = Ember.View.extend({
   gameObjects : [],
   
   gameObject : null,
+  graphic : null,
+  
   object : null,
   object2 : null,
   
@@ -38,8 +40,7 @@ var PlacementView = Ember.View.extend({
       type = this.type,
       inc = this.increment,
       self = this;
-
-
+      
     this.addObserver( 'directionAngle', function() {
            
       self.set("directionAngle", 90);
@@ -52,7 +53,7 @@ var PlacementView = Ember.View.extend({
 
     $( canvas ).css({ 'border' : '2px solid #AAA', 'background-color' : '#CCC' });
     
-    if ( type === 'location' || type === 'area' || type === 'path' ) {
+    if ( type === 'location' || type === 'area' || type === 'path' || type === 'placing' ) {
       
       canvas.width = ( 640 + inc.x * 2 ) * 0.5;
       canvas.height = ( 390 + inc.y * 2 ) * 0.5;
@@ -136,7 +137,7 @@ var PlacementView = Ember.View.extend({
       obs = this.observer, 
       img, i;
     
-    if ( type === 'location' || type === 'area' || type === 'path' ) {
+    if ( type === 'location' || type === 'area' || type === 'path' || type === 'placing' ) {
       
       if ( App.game.background ) {
         
@@ -170,6 +171,20 @@ var PlacementView = Ember.View.extend({
             
           }
         
+        }
+        
+        if ( this.graphic ) {
+          
+          img = new Image();
+          
+          img.src = this.graphic.imagePath;
+          img.onload = this.doDraw;
+          img.frameWidth = this.graphic.frameWidth;
+          img.pos = this.observer.position;
+          
+          this.gameObjects.unshift( img );
+          this.object = img;
+          
         }
       
       }
