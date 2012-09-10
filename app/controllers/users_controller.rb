@@ -30,17 +30,13 @@ class UsersController < ApplicationController
         !!params[:backgrounds],
         params[:min_size].to_i,
         params[:max_size].to_i
-      )
-      response['size'] = graphics.count
-      graphics.paginate(:page=>params[:page],:per_page=>per_page)
+      ).paginate(:page => params[:page], :per_page=> per_page)
     rescue InvalidGraphicBoundaries => e
       render :json => e.message, :status => 400
       return
     end
-    
-    response['graphics'] = graphics.map! do |graphic|
-        graphic.to_response_hash(current_user)
-    end
+    response['size'] = graphics.count
+    response['graphics'] = graphics.map! { |graphic| graphic.to_response_hash(current_user) }
 
     render :json => response.to_json, :status => 200
   end
