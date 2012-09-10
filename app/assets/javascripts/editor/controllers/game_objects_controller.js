@@ -148,11 +148,7 @@ var GameObjectsController = Ember.ArrayController.extend({
   
   others : function() {
     
-    var others = this.content.without( this.current );
-    
-    others.unshift( this.current );
-    
-    return others;
+    return this.content.without( this.current );
     
   }.property( 'current' ),
   

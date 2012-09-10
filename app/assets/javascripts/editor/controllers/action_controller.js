@@ -140,6 +140,7 @@ var ActionController = Ember.Object.extend({
                 ObjectOption.create({ 
                   name: 'moveInObject',
                   question: 'Choose the object in which direction it should move',
+                  showOthers : true,
                   
                   decision: SpeedOption.create({ 
                     name: 'moveInObjectSpeed',
@@ -174,6 +175,7 @@ var ActionController = Ember.Object.extend({
                 ObjectOption.create({ 
                   name: 'moveToObject', 
                   question: 'Choose to which other object it should move',
+                  showOthers : true,
                   
                   decision: OffsetOption.create({ 
                     name: 'moveToOffset', 
@@ -208,6 +210,7 @@ var ActionController = Ember.Object.extend({
                 ObjectOption.create({ 
                   name: 'jumpToObject', 
                   question: 'Choose to which other object it should jump',
+                  showOthers : true,
                   
                   decision: OffsetOption.create({ 
                     name: 'jumpToOffset', 
@@ -251,6 +254,7 @@ var ActionController = Ember.Object.extend({
             ObjectOption.create({ 
               name: 'moveSwap', 
               question: 'Choose the object to swap position',
+              showOthers : true,
               decision: SaveOption.create({ choiceID: 'moveSwap' })
             }),
 

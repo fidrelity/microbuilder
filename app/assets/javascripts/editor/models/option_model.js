@@ -292,6 +292,7 @@ var ModeOption = ButtonOption.extend({
 var ObjectOption = Option.extend({
   
   type : 'object',
+  showOthers : false,
   
   doInsert : function( reinsert ) {
     
@@ -303,7 +304,7 @@ var ObjectOption = Option.extend({
     
     App.actionController.addOption( this.question, GameObjectsView.create({
       observer : this,
-      contentBinding : 'App.gameObjectsController.content',
+      contentBinding : 'App.gameObjectsController.' + ( this.showOthers ? 'others' : 'content' ),
     }));
     
   },
