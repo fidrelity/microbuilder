@@ -23,8 +23,10 @@
         = "(#{@backgrounds.count})"
 
     = render :partial => 'games', :locals => {:games => @games, :user => @user}
-    = render :partial => 'graphics', :locals => {:graphics => @graphics,
-      :user => @user,
-      :backgrounds => @backgrounds,
-      :backgrounds_size => @backgrounds.count,
-      :graphics_size => @graphics.count}
+    
+    %div{:id => 'user_graphics'}    
+      = render :partial => 'graphics', :locals => {:graphics => @graphics,
+        :user => @user,
+        :backgrounds => @backgrounds,
+        :backgrounds_size => @backgrounds.count,
+        :graphics_size => @graphics.count}

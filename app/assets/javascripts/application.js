@@ -148,7 +148,7 @@ $(document).ready(function() {
   });  
 
   $('.graphicsButton').click(function() {
-    toggleLayer($('#user_graphics'), $(this));     
+    toggleLayer($('#graphicsLayer'), $(this));     
   });  
 
   $('.backgroundButton').click(function() {

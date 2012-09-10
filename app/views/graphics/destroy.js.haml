@@ -1,4 +1,13 @@
 :plain
   $('body').append("#{escape_javascript(render :partial => 'layouts/flash', :locals => {:flash => flash})}")
+  
   Notifier.notify();
+
   $('#user_graphics').html("#{escape_javascript(render :partial => 'users/graphics', :locals => {:user => @user, :graphics => @graphics, :graphics_size => @graphics_size, :backgrounds_size => @backgrounds_size, :backgrounds => @backgrounds})}");
+
+  var layerToShow = "#{@was_background}" === "false" ? "#graphicsLayer" : "#backgroundLayer";
+
+  $(".layer").hide();
+  $(layerToShow).show();
+
+  //$('#user_graphics').find("").show();

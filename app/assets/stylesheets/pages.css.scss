@@ -181,11 +181,11 @@ body {
 /* Profile */
 /* ---------------------------------- */
 
-#profile #user_graphics #graphics {
+#profile #graphicsLayer #graphics {
   margin:0 0 0 30px;
 }
 
-#profile #user_graphics .graphic {
+#profile #graphicsLayer .graphic {
   position:relative;
   width:128px;
   height:128px;
@@ -193,7 +193,7 @@ body {
   overflow:hidden;
 }
 
-#profile #user_graphics .graphic:hover {
+#profile #graphicsLayer .graphic:hover {
   border: 1px solid $gray;
 }
 
@@ -207,7 +207,7 @@ body {
   padding:3px;font-size:0.9em
 }
 
-#backgroundLayer, #user_graphics {
+#backgroundLayer, #graphicsLayer {
   display:none;
 }
 
@@ -250,7 +250,7 @@ body {
 }
 
 #messages-public {
-  min-height: 126px;
+  height: 126px;
 }
 
 #messages ul, #messages-public ul {
