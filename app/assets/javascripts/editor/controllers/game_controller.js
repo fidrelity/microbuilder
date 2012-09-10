@@ -153,7 +153,6 @@ var GameController = Ember.Object.extend({
   publishGame : function() {    
    
     var game = this.game.getData(),
-      win = this.game.checkWin( game ),
       graphicIDs = game.graphics.map( function(i){ return i.ID; } ),
       thumb = this.getSelectedSnapshotData();
     
@@ -162,27 +161,9 @@ var GameController = Ember.Object.extend({
       game.instructions,
       JSON.stringify( game ),
       JSON.stringify( graphicIDs ),
-      win,
       $("#game-tags").tagit('assignedTags').join(",")
       // thumb
     );
-    
-    if ( !game.title.length ) {
-      
-      alert( 'insert title' );
-      return;
-      
-    } else if ( !game.instructions.length ) {
-      
-      alert( 'insert instructions' );
-      return;
-      
-    } else if ( !win ) {
-      
-      alert( 'game has no win action' );
-      return;
-      
-    }
     
     Notifier.showLoader("Creating game! Please wait a few seconds ...");
     

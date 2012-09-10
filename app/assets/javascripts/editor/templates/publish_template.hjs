@@ -35,7 +35,7 @@
   <button {{action "takePreviewSnapshot" target="App.gameController"}} class="btn" style="margin-top:6px">
     <i class="icon-camera"></i> Take snapshot</button>
   
-  <button {{action "publishGame" target="App.gameController"}} class="btn-large btn-success right"> 
+  <button {{action "publish"}} class="btn-large btn-success right"> 
     Publish game</button>
 </div>
 

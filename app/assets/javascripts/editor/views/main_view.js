@@ -213,10 +213,12 @@ var PublishView = Ember.View.extend({
   templateName : 'editor/templates/publish_template',
   
   player : null,
+  values : null,
+  checklist : null,
   
   didInsertElement : function() {
 
-    var self = this;
+    var self = this, name, className, checked, message;
 
     // *** Snapshot of preview game ***
     // onClick on li element
@@ -234,74 +236,118 @@ var PublishView = Ember.View.extend({
     });
 
     // --- CHECK LIST ---
-    this.checkList = $("#check-list");
-    this.checkList.html("");
-
-    var hasObjects = App.gameController.game.gameObjects.length > 0;
-    this.checkValue( hasObjects, { fail: "Game has no objects", success: "Game has objects" });    
-
-    var hasBackground = App.gameController.game.background !== null;
-    this.checkValue( hasBackground, { fail: "Game has no background", success: "Game has a background" });    
-
-    this.checkValue( App.gameController.game.title.length, { fail: "Game has no title", success: "Game has a title" }, "hasTitle");
+    this.checklist = this.$( '#check-list' );
+    this.checklist.html( '' );
+    
+    this.values = {
+      hasObjects : {
+        status : App.gameController.game.gameObjects.length > 0,
+        fail : "Game has no objects",
+        success : "Game has objects"
+      },
+      hasBackground : {
+        status : App.gameController.game.background !== null,
+        fail : "Game has no background",
+        success: "Game has a background"
+      },
+      hasTitle : {
+        status : App.gameController.game.title.length,
+        fail : "Game has no title",
+        success : "Game has a title"
+      },
+      hasInstructions : {
+        status : App.gameController.game.instructions.length,
+        fail : "Game has no instructions",
+        success : "Game has instructions"
+      },
+      hasWinAction : {
+        status : App.gameController.game.checkWin( App.gameController.game.getData() ),
+        fail: "Game has no win action", 
+        success: "Game has win action"
+      },
+      wasWon : {
+        status : false,
+        fail: "Game was not won", 
+        success: "Game was won"
+      }
+    };
+    
     this.addObserver( 'App.gameController.game.title', function() {
       
-      var hasTitle = App.gameController.game.title.length;
-      self.checkValue( hasTitle, { fail: "Game has no title", success: "Game has a title" }, "hasTitle");
+      self.checkValue( 'hasTitle', App.gameController.game.title.length > 0 );
       
     });
-
-    this.checkValue( App.gameController.game.instructions.length, { fail: "Game has no instructions", success: "Game has instructions" }, "hasInstructions");
+    
     this.addObserver( 'App.gameController.game.instructions', function() {
       
-      var hasInstr = App.gameController.game.instructions.length;
-      self.checkValue( hasInstr, { fail: "Game has no instructions", success: "Game has instructions" }, "hasInstructions");
+      self.checkValue( 'hasInstructions', App.gameController.game.instructions.length > 0 );
       
     });
-    
-    var hasWinAction = App.gameController.game.checkWin( App.gameController.game.getData() );
-    this.checkValue( hasWinAction, { fail: "Game has no win action", success: "Game has win action" });
-    
-    var wasWon = false;
-    this.checkValue( wasWon, { fail: "Game was not won", success: "Game was won" }, "wasWon");
     
     this.addObserver( 'player', function() {
       
       self.player.onWin = function() {
         
-        console.log( 'won' );
-        self.checkValue( true, { fail: "Game was not won", success: "Game was won" }, "wasWon");
+        self.checkValue( 'wasWon', true );
         
       };
     
     });
     
+    for ( name in this.values ) {
+    
+      if ( this.values.hasOwnProperty( name ) ) {
+      
+        checked = this.values[name].status;
+        className = checked ? "label-success" : "label-important";
+        message = checked ? this.values[name].success : this.values[name].fail;
+      
+        this.checklist.append( '<li id="' + name + '" class="label ' + className + '">' + message + '</li>');
+      
+      }
+    
+    }
+    
   },
   
-  checkValue : function(status, message, className) {
+  checkValue : function( name, status ) {
     
-    var className = className || "";
-    var msg = status ? message.success : message.fail;
-    var addClassName = status ? "label-success" : "label-important";
-    var removeClassName = status ? "label-important" : "label-success";    
-
-    var noClass = true;
-    try {
-
-      noClass = this.checkList.find("." + className).length > 0 ? false : true;
-
-    } catch(e) {}
-
-    if( noClass ) {
-
-      this.checkList.append('<li class="label ' + addClassName + ' ' + className + '">'+ msg +'</li>');
-
-    } else {
-
-      this.checkList.find("." + className).removeClass(removeClassName).addClass(addClassName).html(msg);
-
+    var value = this.values[name],
+      node = this.checklist.find( '#' + name );
+    
+    value.status = status;
+    
+    node.removeClass( "label-important" ).removeClass( "label-success" );
+    node.addClass( status ? "label-success" : "label-important" );
+    node.html( status ? value.succes : value.fail );
+    
+  },
+  
+  publish : function() {
+    
+    var message = 'You cannot publish your game because:\n', error = false, name;
+    
+    for ( name in this.values ) {
+    
+      if ( this.values.hasOwnProperty( name ) && !this.values[name].status ) {
+      
+        message += '- ' + this.values[name].fail + '\n';
+        error = true;
+      
+      }
+    
     }
-
+    
+    if ( error ) {
+      
+      alert( message );
+      
+    } else {
+      
+      App.gameController.publishGame();
+      
+    }
+    
   }
 
 });
