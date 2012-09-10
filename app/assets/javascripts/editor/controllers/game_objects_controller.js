@@ -34,19 +34,14 @@ var GameObjectsController = Ember.ArrayController.extend({
     
   },
   
-  createObject : function( graphic ) {
+  createObject : function( graphic, position, name ) {
   
     var gameObject = GameObjectModel.create({
-    
-      name : graphic.name,
+      name : name,
       graphic : graphic,
-      position : new Vector( 
-        Math.floor( ( 640 - graphic.frameWidth ) * Math.random() + graphic.frameWidth / 2 ), 
-        Math.floor( ( 390 - graphic.frameHeight ) * Math.random() + graphic.frameHeight / 2 )
-      )
-    
+      position : position.clone()
     });
-  
+    
     this.select( gameObject );
     this.addObject( gameObject );
   

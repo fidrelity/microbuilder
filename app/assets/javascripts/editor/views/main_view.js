@@ -17,12 +17,13 @@ var MainView = Ember.View.extend({
     this.actionView = ActionView.create({ width: 520 });
     this.publishView = PublishView.create({ heading : 'Publish', width: 910 });
     this.boundingView = BoundingView.create({ heading : 'Bounding Area', width: 645 });
+    this.placingView = PlacingView.create({ heading : 'Placing', width: 450 });
     
   },
   
   didInsertElement : function() {
 
-    $.scrollTo( $(".stageControls"), { axies : 'y', duration : 700} );
+    $.scrollTo( $(".stageControls"), { axies : 'y', duration : 700, offset : -30 } );
     
     this.$( '#slider' ).slider({
       
@@ -60,17 +61,19 @@ var MainView = Ember.View.extend({
     this.overlayView.setWidth( view.width );
     this.overlayView.set( 'showView', view );
     
-    if ( push ) {
+    // if ( push ) {
       
       this.overlayView.pushHeading( view.get( 'heading' ) );
       
-    } else {
-      
-      this.overlayView.popHeading();
-      
-    }
+    // } else {
+    //   
+    //   this.overlayView.popHeading();
+    //   
+    // }
     
     this.overlayView.set( 'isVisible', true );
+    
+    $.scrollTo( $( '.overlayhead' ), { axies : 'y', duration : 500, offset : -30 } );
     
   },
   
@@ -172,6 +175,8 @@ var OverlayView = Ember.View.extend({
   },
   
   pushHeading : function( heading ) {
+    
+    this.headings.clear();
     
     this.headings.pushObject( heading );
     
@@ -364,6 +369,29 @@ var BoundingView = Ember.View.extend({
     App.gameController.cancel();
     
     this.set( 'area', null );
+    
+  }
+  
+});
+
+var PlacingView = Ember.View.extend({
+  
+  templateName : 'editor/templates/placing_template',
+  
+  graphic : null,
+  position : null,
+  name : null,
+  
+  didInsertElement : function() {
+    
+    this.set( 'position', new Vector( 320, 195 ) );
+    this.set( 'name', this.graphic.name );
+    
+  },
+  
+  save : function() {
+    
+    App.gameController.createObject( this.graphic, this.position, this.name );
     
   }
   

@@ -1,0 +1,19 @@
+<div class="content">
+
+  <div class="element clear" style="margin: 13px 0 10px;">
+
+    {{view PlacementView 
+      observerBinding="this"
+      type="placing"
+      graphicBinding="graphic"
+    }}
+
+  </div>
+</div>
+
+<div class="form-actions" style="margin:0;padding:17px 15px 18px">
+  <button class="btn" {{action "cancel" target="App.gameController"}}> 
+    <i class="icon-arrow-left"></i> cancel </button>
+  <button class="btn btn-success right" {{action "save"}}><i class="icon-ok icon-white"></i> add object </button>
+  <div class="placingName right">name: {{view Ember.TextField valueBinding="name" maxlength="10"}}</div>
+</div>

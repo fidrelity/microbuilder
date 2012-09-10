@@ -389,6 +389,15 @@
   font-size: 12pt;
 }
 
+#editor .overlay .placingName {
+  font-size: 12pt;
+}
+
+#editor .overlay .placingName .ember-text-field {
+  margin: 0 16px 0 10px;
+  width: 120px;
+}
+
 #editor .stageControls {
   margin: auto 0;
   overflow: hidden;
