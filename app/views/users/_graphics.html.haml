@@ -9,9 +9,9 @@
       
       .thumbnail
 
-        %div{:class => "frame_graphic graphic"}
-        
-          %div{:class => "frame_graphic_element", "data-frames" => "#{graphic.frame_count}", :style => "background-image:url(#{graphic.image});width:#{graphic.frame_width}px;height:#{graphic.frame_height}px;"}
+        %a{:href => "#{graphic.image}", :target => "blank"}
+          %div{:class => "frame_graphic graphic"}
+            %div{:class => "frame_graphic_element", "data-frames" => "#{graphic.frame_count}", :style => "background-image:url(#{graphic.image});width:#{graphic.frame_width}px;height:#{graphic.frame_height}px;"}
           
         %h6
           = limit_string(graphic.name)
