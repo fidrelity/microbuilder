@@ -56,6 +56,10 @@ var MainView = Ember.View.extend({
       
       view.didInsertElement();
       
+    } else if ( name === 'objectsView' ) {
+      
+      this.save();
+      
     }
     
     this.overlayView.setWidth( view.width );
@@ -106,6 +110,16 @@ var MainView = Ember.View.extend({
       }
     
     });
+    
+  },
+  
+  save : function() {
+    
+    if ( window.localStorage ) {
+      
+      window.localStorage.setItem( 'game', JSON.stringify( App.game.getData() ) );
+      
+    }
     
   },
   

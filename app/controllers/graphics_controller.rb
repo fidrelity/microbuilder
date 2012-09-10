@@ -30,32 +30,31 @@ class GraphicsController < ApplicationController
   
   def public
     begin
+      response = {}
       per_page = !!params[:backgrounds] ? 10 : 14
       graphics = Graphic.filter(
         true,
         !!params[:backgrounds],
         params[:min_size].to_i,
         params[:max_size].to_i
-      ).paginate(:page=>params[:page],:per_page=> per_page)
+      ).paginate(:page => params[:page], :per_page => per_page)
     rescue InvalidGraphicBoundaries => e
       render :json => e.message, :status => 400
       return
     end
-    
-    response = graphics.map do |graphic|
-        graphic.to_response_hash(current_user) 
-    end
-    
+    response['size'] = graphics.count
+    response['graphics'] = graphics.map! { |graphic| graphic.to_response_hash(current_user) } 
+
     render :text => response.to_json, :status => 200
   end
 
   def search
 
-    graphics = Graphic.search(params[:term]).paginate(:page => params[:page], :per_page => 12)
-
-    response = graphics.map do |graphic|
-        graphic.to_response_hash(current_user)
-    end
+    graphics = Graphic.search(params[:term])
+    response = {}
+    graphics.paginate(:page => params[:page], :per_page => 14)
+    response['size'] = graphics.count
+    response['graphics'] = graphics.map! { |graphic| graphic.to_response_hash(current_user) }
     
     render :text => response.to_json, :status => 200
   end

@@ -288,7 +288,6 @@ var GameController = Ember.Object.extend({
       
     }
     
-    // App.mainView.updatePlayer();
     App.mainView.$( '#slider' ).slider( 'value', [game.duration] );
     
   },

@@ -38,7 +38,6 @@
         behaviours : [
           {
             triggers : [
-              { ID : clickSelf }
               { ID : clickObject, objectID : <int> }
               { ID : clickArea, area : { x : <int>, y : <int>, width : <int>, height : <int> } }
             
@@ -51,6 +50,14 @@
               { ID : timeExact, time : <int, %> }
               { ID : timeRandom, time : <int, %>, time2 : <int, %> }
             
+              { ID : counterEqualsObject, objectID : <int> }
+              { ID : counterGreaterObject, objectID : <int> }
+              { ID : counterSmallerObject, objectID : <int> }
+            
+              { ID : counterEqualsNumber, counter : <int> }
+              { ID : counterGreaterNumber, counter : <int> }
+              { ID : counterSmallerNumber, counter : <int> }
+            
               { ID : gameIsWon }
               { ID : gameWasWon }
             
@@ -58,6 +65,7 @@
               { ID : gameWasLost }
             
               { ID : gameStart }
+            
             ]
           
             actions : [
@@ -78,10 +86,16 @@
               { ID : moveSwap, objectID : <int> }
               { ID : moveStop }
             
+              { ID : moveAlongPath, mode : <loop, ping-pong, once>, speed : <0-4>, path : [ { x : <int>, y : <int> } ] }
+            
               { ID : artToFrame, frame : <int> }
               { ID : artPlay, mode : <loop, ping-pong, once>, frame : <int>, frame2 : <int>, speed : <0-4> }
               { ID : artStop }
               { ID : artChange, graphicID : <int> }
+            
+              { ID : counterSet, counter : <int> }
+              { ID : counterUp }
+              { ID : counterDown }
             
               { ID : gameWin }
               { ID : gameLose }
@@ -102,3 +116,7 @@
       }
     ]
   }
+  
+changelog:
+
+removed trigger : { ID : clickSelf }
