@@ -209,7 +209,7 @@ var Parser = {
   
   triggerIDs : {
     
-    clickSelf : function( data, gameObject ) {
+    clickSelf : function( data, gameObject ) { // deprecated
       
       return new ClickTrigger( gameObject );
       
