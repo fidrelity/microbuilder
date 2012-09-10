@@ -217,11 +217,15 @@ Player.prototype = {
       
       this.increaseCounter( "win" );
       
+      this.onWin();
+      
     } else {
       
       $('.playerLoseScreen').fadeTo( 600, 0.9 );
       
       this.increaseCounter( "lose" );
+      
+      this.onLose();
       
     }
     
@@ -247,7 +251,10 @@ Player.prototype = {
       type : 'PUT',
       success : function() {}
     });
-  }
+  },
+  
+  onWin : function() {},
+  onLose : function() {}
   
 };
 

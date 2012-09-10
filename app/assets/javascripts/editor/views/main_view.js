@@ -211,7 +211,9 @@ var OverlayView = Ember.View.extend({
 var PublishView = Ember.View.extend({
 
   templateName : 'editor/templates/publish_template',
-
+  
+  player : null,
+  
   didInsertElement : function() {
 
     var self = this;
@@ -241,9 +243,6 @@ var PublishView = Ember.View.extend({
     var hasBackground = App.gameController.game.background !== null;
     this.checkValue( hasBackground, { fail: "Game has no background", success: "Game has a background" });    
 
-    var hasWinAction = App.gameController.game.checkWin( App.gameController.game.getData() );
-    this.checkValue( hasWinAction, { fail: "Game has no win action", success: "Game has win action" });
-
     this.checkValue( App.gameController.game.title.length, { fail: "Game has no title", success: "Game has a title" }, "hasTitle");
     this.addObserver( 'App.gameController.game.title', function() {
       
@@ -259,10 +258,28 @@ var PublishView = Ember.View.extend({
       self.checkValue( hasInstr, { fail: "Game has no instructions", success: "Game has instructions" }, "hasInstructions");
       
     });
+    
+    var hasWinAction = App.gameController.game.checkWin( App.gameController.game.getData() );
+    this.checkValue( hasWinAction, { fail: "Game has no win action", success: "Game has win action" });
+    
+    var wasWon = false;
+    this.checkValue( wasWon, { fail: "Game was not won", success: "Game was won" }, "wasWon");
+    
+    this.addObserver( 'player', function() {
+      
+      self.player.onWin = function() {
+        
+        console.log( 'won' );
+        self.checkValue( true, { fail: "Game was not won", success: "Game was won" }, "wasWon");
+        
+      };
+    
+    });
+    
   },
-
-  checkValue : function(status, message, className) {    
-
+  
+  checkValue : function(status, message, className) {
+    
     var className = className || "";
     var msg = status ? message.success : message.fail;
     var addClassName = status ? "label-success" : "label-important";
