@@ -51,13 +51,19 @@
               = link_to game.title, play_path(game)
             
             .row{:class => "gameDetails"}
-              .span1
+
+              .span1{:style => "width:50px;"}
                 %span{:class=>"label label-#{game.difficulty_bootstrap_class}"}
                   = game.difficulty_in_words
-              
-              .span1
+
+              .span1{:style => "width:40px;"}
                 %i{:class=>"icon-eye-open"}
                 = game.played
 
+              .span1{:style => "width:80px;text-align:right;"}
 
-
+                %i{:class=>"icon-thumbs-up"}
+                = game.likes
+                &nbsp;
+                %i{:class=>"icon-thumbs-down"}
+                = game.dislikes

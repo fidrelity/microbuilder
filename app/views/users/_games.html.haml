@@ -1,12 +1,8 @@
-%div{:id => 'user_games', :class => ""}
-  
-  %h3{:class => "page-header" }
-    = "Games (#{@user.games.size})"
+%ul{:id => 'gameLayer', :class => "thumbnails span10 layer"}
 
   %p
     = will_paginate games, :param_name => :games, :container => false, :page_links => false, :show_always => false
 
-  %ul{:id => 'gamesList', :class => "thumbnails span10"}
     - games.each do |game|
 
       %li{:id => game.id, :class => "span3"}
@@ -19,7 +15,7 @@
           
           .row{:style => "margin-top:3px;"}
             
-            .span1{:style => "width:45px;"}
+            .span1{:style => "width:50px;"}
               %span{:class=>"label label-#{game.difficulty_bootstrap_class}"}
                 = game.difficulty_in_words
 

@@ -95,10 +95,9 @@ $(document).ready(function() {
   }
   // ---------------------------------------
   // Game View Buttons 
-  function toggleLayer(_layer) {
+  function toggleLayer(_layer, _buttonObj) {
 
-    console.log(_layer)
-
+    highlightTab( _buttonObj );
 
     if(!_layer.is(':visible')) {
 
@@ -116,7 +115,7 @@ $(document).ready(function() {
   function highlightTab(_obj) {
     var activeClass = 'btn-info';
     $(".tabButton").removeClass(activeClass);
-    _obj.addClass(activeClass);
+    _obj.addClass(activeClass);    
   }
 
   /* Share Button */
@@ -141,14 +140,16 @@ $(document).ready(function() {
 
 
   // Profile - Graphic tabs
+  $('.gamesButton').click(function() {
+    toggleLayer($('#gameLayer'), $(this));    
+  });  
+
   $('.graphicsButton').click(function() {
-    toggleLayer($('#graphicLayer')); 
-    highlightTab( $(this) );
+    toggleLayer($('#graphicLayer'), $(this));     
   });  
 
   $('.backgroundButton').click(function() {
-    toggleLayer($('#backgroundLayer')); 
-    highlightTab( $(this) );
+    toggleLayer($('#backgroundLayer'), $(this));     
   });  
 
   // ---------------------------------------
