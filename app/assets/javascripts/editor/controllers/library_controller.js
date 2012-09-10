@@ -125,8 +125,6 @@ var LibraryController = Ember.ArrayController.extend({
     
     path += 'page=' + this.page;
     
-    console.log( path );
-    
     $.ajax({
       url : path,
       type : 'GET',
@@ -140,8 +138,6 @@ var LibraryController = Ember.ArrayController.extend({
             data = JSON.parse( data );
             
           }
-          
-          console.log( data );
           
           self.appendGraphics( data.graphics, data.size );
         
@@ -164,8 +160,6 @@ var LibraryController = Ember.ArrayController.extend({
 
     this.set("content", []);
     
-    console.log( path );
-    
     $.ajax({
 
       url : path,
@@ -181,8 +175,6 @@ var LibraryController = Ember.ArrayController.extend({
             data = JSON.parse( data );            
             
           }
-          
-          console.log( data );
           
           self.appendGraphics( data.graphics, data.size );
         
