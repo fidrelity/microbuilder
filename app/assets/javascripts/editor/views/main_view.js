@@ -61,15 +61,15 @@ var MainView = Ember.View.extend({
     this.overlayView.setWidth( view.width );
     this.overlayView.set( 'showView', view );
     
-    if ( push ) {
+    // if ( push ) {
       
       this.overlayView.pushHeading( view.get( 'heading' ) );
       
-    } else {
-      
-      this.overlayView.popHeading();
-      
-    }
+    // } else {
+    //   
+    //   this.overlayView.popHeading();
+    //   
+    // }
     
     this.overlayView.set( 'isVisible', true );
     
@@ -173,6 +173,8 @@ var OverlayView = Ember.View.extend({
   },
   
   pushHeading : function( heading ) {
+    
+    this.headings.clear();
     
     this.headings.pushObject( heading );
     
