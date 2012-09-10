@@ -29,38 +29,7 @@ $(document).ready(function() {
 
   });
 
-  // Profile edit form toggle
-  var toggleProfileEdit = function(_linkObj) {
-
-    var profileWrapper = $("#profilewrap");
-
-    var formEle = profileWrapper.find("#display_name_form");
-    formEle.slideToggle().toggleClass("editMode");    
-
-    profileWrapper.find("#display_name").slideToggle();
-
-    if( formEle.hasClass("editMode") ) {
-
-      var inputEle = profileWrapper.find("#user_display_name");
-
-      // Set focus and force cursor to be set to the end of the input
-      var tempVal = inputEle.val();
-      inputEle.focus().val("").val( tempVal );
-      
-      _linkObj.html("Cancel");
-
-    } else {
-
-      _linkObj.html("Edit");
-
-    }
-  };
-  
-  $("#profilewrap").find(".edit").live("click", function(e) {
-  
-    toggleProfileEdit( $(this) );    
-
-  });  
+  //
   
   Feedback.init();
   //
@@ -139,18 +108,61 @@ $(document).ready(function() {
   });
 
 
-  // Profile - Graphic tabs
+  // ------ Profile -------
+
+  // Profile edit form toggle
+  var toggleProfileEdit = function(_linkObj) {
+
+    var profileWrapper = $("#profilewrap");
+
+    var formEle = profileWrapper.find("#display_name_form");
+    formEle.slideToggle().toggleClass("editMode");    
+
+    profileWrapper.find("#display_name").slideToggle();
+
+    if( formEle.hasClass("editMode") ) {
+
+      var inputEle = profileWrapper.find("#user_display_name");
+
+      // Set focus and force cursor to be set to the end of the input
+      var tempVal = inputEle.val();
+      inputEle.focus().val("").val( tempVal );
+      
+      _linkObj.html("Cancel");
+
+    } else {
+
+      _linkObj.html("Edit");
+
+    }
+  };
+
+  // 
+  $("#profilewrap").find(".edit").live("click", function(e) {
+    toggleProfileEdit( $(this) );    
+  });  
+  
+  // Tabs
   $('.gamesButton').click(function() {
     toggleLayer($('#gameLayer'), $(this));    
   });  
 
   $('.graphicsButton').click(function() {
-    toggleLayer($('#graphicLayer'), $(this));     
+    toggleLayer($('#user_graphics'), $(this));     
   });  
 
   $('.backgroundButton').click(function() {
     toggleLayer($('#backgroundLayer'), $(this));     
-  });  
+  }); 
+
+  // Stream resize
+  var messageWrapper = $("#messages");
+  
+  messageWrapper.resizable({ 
+    alsoResize: ".activity-list", 
+    maxWidth: messageWrapper.width()
+  });
+ 
 
   // ---------------------------------------
 
