@@ -13,7 +13,10 @@ class UsersController < ApplicationController
     @graphics_size = graphics_to_show[:graphics].size
     @backgrounds_size = graphics_to_show[:backgrounds].size
 
-    @games = @user.games.paginate(:page => params[:games], :per_page => 6)
+    @games = @user.games
+    @games_size = @games.size
+    @games = @games.paginate(:page => params[:games], :per_page => 9)
+
     @messages = @user.latest_stream
   end
   
