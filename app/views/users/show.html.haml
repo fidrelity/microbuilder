@@ -11,20 +11,20 @@
 
       %button{:class => "btn gamesButton tabButton btn-info"}
         Games
-        = "(#{@games_size})"
+        = "(#{@games.count})"
 
       %button{:class => "btn graphicsButton tabButton"}
         Graphics
-        = "(#{@graphics_size})"
+        = "(#{@graphics.count})"
 
       %button{:class => "btn backgroundButton tabButton"}
         Backgrounds
-        = "(#{@backgrounds_size})"
+        = "(#{@backgrounds.count})"
 
     = render :partial => 'games', :locals => {:games => @games, :user => @user}
     = render :partial => 'graphics', :locals => {:graphics => @graphics,
       :user => @user,
       :backgrounds => @backgrounds,
-      :backgrounds_size => @backgrounds_size,
-      :graphics_size => @graphics_size}
+      :backgrounds_size => @backgrounds.count,
+      :graphics_size => @graphics.count}
       

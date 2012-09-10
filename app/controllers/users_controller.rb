@@ -4,19 +4,9 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-
-    graphics_to_show = Graphic.profile_filter(@user.id, current_user)
-
-    @graphics = graphics_to_show[:graphics].paginate(:page => params[:graphics], :per_page => 12)
-    @backgrounds = graphics_to_show[:backgrounds].paginate(:page => params[:backgrounds], :per_page => 12)
-    
-    @graphics_size = graphics_to_show[:graphics].size
-    @backgrounds_size = graphics_to_show[:backgrounds].size
-
-    @games = @user.games
-    @games_size = @games.size
-    @games = @games.paginate(:page => params[:games], :per_page => 9)
-
+    @graphics = @user.graphics.without_backgrounds.with_authorization(current_user).paginate(:page => params[:graphics], :per_page => 12)
+    @backgrounds = @user.graphics.backgrounds.with_authorization(current_user).paginate(:page => params[:backgrounds], :per_page => 12)
+    @games = @user.games.paginate(:page => params[:games], :per_page => 9)
     @messages = @user.latest_stream
   end
   

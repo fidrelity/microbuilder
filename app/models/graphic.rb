@@ -25,6 +25,8 @@ class Graphic < ActiveRecord::Base
       min, min, max, max
     )
   }
+  scope :with_authorization, lambda { |user| where("user_id = ? OR public = 't'", user.id) 
+  }
 
   def to_response_hash(current_user)
     user_name = user.display_name if user
