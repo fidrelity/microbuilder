@@ -125,6 +125,8 @@ var LibraryController = Ember.ArrayController.extend({
     
     path += 'page=' + this.page;
     
+    console.log( path );
+    
     $.ajax({
       url : path,
       type : 'GET',
@@ -138,10 +140,10 @@ var LibraryController = Ember.ArrayController.extend({
             data = JSON.parse( data );
             
           }
-        
-          console.log( data, data.length );
-        
-          self.appendGraphics( data );
+          
+          console.log( data );
+          
+          self.appendGraphics( data.graphics, data.size );
         
         }
         
@@ -162,6 +164,8 @@ var LibraryController = Ember.ArrayController.extend({
 
     this.set("content", []);
     
+    console.log( path );
+    
     $.ajax({
 
       url : path,
@@ -178,9 +182,9 @@ var LibraryController = Ember.ArrayController.extend({
             
           }
           
-          console.log( data, data.length );
-        
-          self.appendGraphics( data );
+          console.log( data );
+          
+          self.appendGraphics( data.graphics, data.size );
         
         }
         
@@ -190,13 +194,13 @@ var LibraryController = Ember.ArrayController.extend({
 
   },
   
-  appendGraphics : function( data ) {
+  appendGraphics : function( graphics, size ) {
     
     var display = [], graphic;
     
-    for ( var i = 0; i < data.length; i++ ) {
+    for ( var i = 0; i < graphics.length; i++ ) {
       
-      graphic = this.parseGraphic( data[i] );
+      graphic = this.parseGraphic( graphics[i] );
       
       if ( graphic ) {
         
@@ -207,6 +211,7 @@ var LibraryController = Ember.ArrayController.extend({
     }
     
     this.set( 'display', display );
+    this.set( 'graphicCount', size );
     
     this.updateButtons();
     

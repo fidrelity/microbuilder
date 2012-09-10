@@ -59,8 +59,6 @@ var LibraryView = Ember.View.extend({
       
     }
     
-    App.libraryController.loadGraphics();
-    
   },
   
   showLarge : function( _e ) {
@@ -76,8 +74,6 @@ var LibraryView = Ember.View.extend({
       App.libraryController.setSize( 3 );
       
     }
-    
-    App.libraryController.loadGraphics();
     
   }
   
