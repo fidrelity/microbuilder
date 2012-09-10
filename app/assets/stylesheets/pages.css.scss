@@ -16,12 +16,12 @@ body {
 /* Header */
 /* ---------------------------------- */
 
-/*@font-face {
-  font-family: 'TitilliumThin';
-  src: url('../fonts/TitilliumText22L001-webfont.ttf') format('truetype');
+@font-face {
+  font-family: 'Japan';
+  src: url("/assets/Japan.ttf") format('truetype');
   font-weight: normal;
   font-style: normal;
-}*/
+}
 
 #header {
   margin-top: 2em;
@@ -181,11 +181,11 @@ body {
 /* Profile */
 /* ---------------------------------- */
 
-#profile #user_graphics #graphics {
+#profile .user_graphics #graphics {
   margin:0 0 0 30px;
 }
 
-#profile #user_graphics .graphic {
+#profile .user_graphics .graphic {
   position:relative;
   width:128px;
   height:128px;
@@ -193,7 +193,7 @@ body {
   overflow:hidden;
 }
 
-#profile #user_graphics .graphic:hover {
+#profile .user_graphics .graphic:hover {
   border: 1px solid $gray;
 }
 
@@ -207,7 +207,7 @@ body {
   padding:3px;font-size:0.9em
 }
 
-#backgroundLayer {
+#backgroundLayer, #graphicLayer {
   display:none;
 }
 

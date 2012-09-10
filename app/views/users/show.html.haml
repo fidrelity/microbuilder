@@ -6,10 +6,25 @@
   %div{ :class => "span9"}
     #messages{:class => "well"}   
       = render :partial => 'shared/stream', :locals => {:messages => @messages}
+
+    %div{:class => "btn-group", :style => "margin-bottom:1em"}
+
+      %button{:class => "btn gamesButton tabButton btn-info"}
+        Games
+        = "(#{@games.count})"
+
+      %button{:class => "btn graphicsButton tabButton"}
+        Graphics
+        = "(#{@graphics.count})"
+
+      %button{:class => "btn backgroundButton tabButton"}
+        Backgrounds
+        = "(#{@backgrounds.count})"
+
     = render :partial => 'games', :locals => {:games => @games, :user => @user}
     = render :partial => 'graphics', :locals => {:graphics => @graphics,
       :user => @user,
       :backgrounds => @backgrounds,
-      :backgrounds_size => @backgrounds_size,
-      :graphics_size => @graphics_size}
-    
+      :backgrounds_size => @backgrounds.count,
+      :graphics_size => @graphics.count}
+      
