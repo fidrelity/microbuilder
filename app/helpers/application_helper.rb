@@ -31,37 +31,60 @@ module ApplicationHelper
 
   end
 
-  # Renders stream-activity message
+  # ---- Strean ----
   def render_message(message, element_tag = "li")
 
-    user = User.find_by_id(message['user_id'])
-    game = Game.find_by_id(message['game_id'])
+    username = get_stream_user(message['user_id'])
     type = message['type']
+    object = get_stream_object(message, type)
 
-    return unless game
+    return unless object
 
-    username = get_stream_user(user, game)
+    objects_link = get_object_link(object, type)
+    authors_link = get_objects_author(object, type)
 
-    types = { 
+    types = {
               :game => " created ", 
               :comment => " commented on ", 
               :like => " liked ", 
-              :dislike => " disliked " 
+              :dislike => " disliked ",
+              :graphic => " created "
             }
     verb = types[type.to_sym]
 
-    author_link = type != "game" ? " #{link_to(game.author.display_name, user_path(game.author))}'s " : ""
-    game_link = "#{link_to(game.title, play_path(game))}"
+    return "<#{element_tag}>" + username + verb + authors_link + objects_link + "</#{element_tag}>"
 
-    return "<#{element_tag}>" + username + verb + author_link + game_link + "</#{element_tag}>"
   end
 
   # Helps to render correct user for stream
-  def get_stream_user(user, game)
+  def get_stream_user(user_id)
+    user = User.find_by_id(user_id)    
+
     if user
-      "<div class='avatar_stream'>#{link_to( image_tag(game.author.display_image, :class => "stream-image"), user_path(user) )}</div> #{link_to(user.display_name, user_path(user))}" 
+      "<div class='avatar_stream'>#{link_to( image_tag(user.display_image, :class => "stream-image"), user_path(user) )}</div> #{link_to(user.display_name, user_path(user))}" 
     else
       "Anonymous"
+    end
+  end
+
+  # Get Object (like game or graphic)
+  def get_stream_object(message, type)
+    return Graphic.find_by_id(message['graphic_id']) if type == "graphic"
+    Game.find_by_id(message['game_id'])    
+  end
+
+  # Get author of the object
+  def get_objects_author(object, type)
+    return "" if type == "game" || type == "graphic"
+    return " #{link_to(object.author.display_name, user_path(object.author))}'s "
+  end
+
+  # Get link of object
+  def get_object_link(object, type)
+    if type != "graphic"
+      "#{link_to(object.title, play_path(object))}"
+    else
+      "#{link_to(object.name, graphic_path(object))}"
     end
   end
 
