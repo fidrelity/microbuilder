@@ -14,6 +14,7 @@ class GraphicsController < ApplicationController
 
   def create
     @graphic = current_user.graphics.create(params[:graphic])
+    Stream.create_message("graphic", @graphic.user, @graphic)
     flash[:success] = "Your Graphic was created!"
   end
   

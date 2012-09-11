@@ -1,39 +1,27 @@
 module ApplicationHelper
 
   def get_user_dropdown_content current_user
-
     if current_user
       return render :partial => 'layouts/user_dropdown/user_logged_in'
     else
       return render :partial => 'layouts/user_dropdown/user_logged_out'
     end
-
   end
 
-
   def page_title
-
-    # return raw('Play<span class="label label-warning titleSmall">tin</span>')
-    # return raw('<div id="logo"></div>')
     return raw('<h1>Playtin</h1>')
-
   end
 
   def limit_string( str, limit = 10 )
-
     return str if str.length <= limit
-
     snip_idx = str.index(/\s/, limit)    
-
     str = str[0, snip_idx] + " ..." if snip_idx
 
     return str
-
   end
 
   # ---- Strean ----
   def render_message(message, element_tag = "li")
-
     username = get_stream_user(message['user_id'])
     type = message['type']
     object = get_stream_object(message, type)
@@ -69,23 +57,17 @@ module ApplicationHelper
 
   # Get Object (like game or graphic)
   def get_stream_object(message, type)
-    return Graphic.find_by_id(message['graphic_id']) if type == "graphic"
-    Game.find_by_id(message['game_id'])    
+    type == "graphic" ? Graphic.find_by_id(message['graphic_id']) : Game.find_by_id(message['game_id'])    
   end
 
   # Get author of the object
   def get_objects_author(object, type)
-    return "" if type == "game" || type == "graphic"
-    return " #{link_to(object.author.display_name, user_path(object.author))}'s "
+    (type == "game" || type == "graphic") ? "" : " #{link_to(object.author.display_name, user_path(object.author))}'s "
   end
 
   # Get link of object
   def get_object_link(object, type)
-    if type != "graphic"
-      "#{link_to(object.title, play_path(object))}"
-    else
-      "#{link_to(object.name, graphic_path(object))}"
-    end
+    type == "graphic" ? "the graphic #{link_to(object.name, object.image.to_s)}" : "the game #{link_to(object.title, play_path(object))}"
   end
 
 end

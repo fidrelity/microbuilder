@@ -22,7 +22,8 @@ class Game < ActiveRecord::Base
   attr_accessor :preview_image_file_name, :preview_image_data
   attr_accessible :title, :instruction, :data, :preview_image, :tags, 
                   :preview_image_data, :preview_image_file_name, :played, :won
-  
+  alias_attribute :user, :author
+                  
   class << self
     
     def all_by_difficulty(page, per_page)
