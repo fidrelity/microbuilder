@@ -29,11 +29,10 @@ a:hover {
 #header {
   margin-top: 2em;
   margin-bottom: 1.5em;
-  @include gradient(#F9F9F9, #F0F0F0);
-  border: 1px solid #D6D6D6;
-  box-shadow: 0 1px 0 #E3E3E3;
   border-radius: 4px;
   padding-top: 28px;
+  @include gradient(#FEFEFE, #EFEFEF);
+  box-shadow: 0 1px 1px #999;
 }
 
 .page-header {
