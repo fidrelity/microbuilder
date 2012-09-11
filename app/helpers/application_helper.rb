@@ -31,6 +31,7 @@ module ApplicationHelper
 
     objects_link = get_object_link(object, type)
     authors_link = get_objects_author(object, type)
+    object_popup = get_objects_popup(object, type)
 
     types = {
               :game => " created ", 
@@ -72,9 +73,19 @@ module ApplicationHelper
   def get_object_link(object, type)
 
     if type != "graphic"
+      "<span class='stream-popup' title='#{object.title}' data-content='<img src=#{object.preview_image}>'>#{link_to(object.title, play_path(object))}</span>"
+    else
+      "<span class='stream-popup' title='#{object.name}' data-content='<img src=#{object.image}>'><a href='#{object.image}' target='blank'>#{object.name}</a></span>"      
+    end
+
+  end
+
+  def get_objects_popup(object, type)
+
+    if type != "graphic"
       "#{link_to(object.title, play_path(object))}"
     else
-      "<a href='#{object.image}' target='blank'>#{object.name}</a>"      
+      "<img src='#{object.image}'>"
     end
 
   end

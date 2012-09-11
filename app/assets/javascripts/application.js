@@ -163,7 +163,7 @@ $(document).ready(function() {
     maxWidth: messageWrapper.width()
   });
  
-
+  $('.stream-popup').popover({ placement: 'right' });
   // ---------------------------------------
 
 });
