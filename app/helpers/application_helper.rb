@@ -26,26 +26,28 @@ module ApplicationHelper
     user = User.find_by_id(message['user_id'])
     type = message['type']
     object = get_stream_object(message, type)
+           
+    return unless object    
 
-    return unless object
+    display_name = get_user_display_name(user) if user
 
     case type
 
       when "game"    
-        return render :partial => 'shared/streamtypes/game', :locals => { :user => user, :game => object}
+        return render :partial => 'shared/streamtypes/game', :locals => { :user => user, :game => object, :display_name => display_name}
       
-      when "like"
-        return render :partial => 'shared/streamtypes/game_action', :locals => { :user => user, :game => object, :verb => "liked", :author => object.author }
+      when "like"        
+        return render :partial => 'shared/streamtypes/game_action', :locals => { :user => user, :game => object, :verb => "liked", :author => object.author, :display_name => display_name }
 
-      when "dislike"
-        return render :partial => 'shared/streamtypes/game_action', :locals => { :user => user, :game => object, :verb => "disliked", :author => object.author }
+      when "dislike"        
+        return render :partial => 'shared/streamtypes/game_action', :locals => { :user => user, :game => object, :verb => "disliked", :author => object.author, :display_name => display_name }
 
       when "comment"
-        return render :partial => 'shared/streamtypes/game_action', :locals => { :user => user, :game => object, :verb => "commented on", :author => object.author }
+        return render :partial => 'shared/streamtypes/game_action', :locals => { :user => user, :game => object, :verb => "commented on", :author => object.author, :display_name => display_name }
 
       when "graphic"
         graphic_type = object.background ? "background" : "graphic"
-        return render :partial => 'shared/streamtypes/graphic', :locals => { :user => user, :graphic => object, :graphic_type => graphic_type}
+        return render :partial => 'shared/streamtypes/graphic', :locals => { :user => user, :graphic => object, :graphic_type => graphic_type, :display_name => display_name}
    
     end   
 
@@ -55,6 +57,16 @@ module ApplicationHelper
   def get_stream_object(message, type)
     return Graphic.find_by_id(message['graphic_id']) if type == "graphic"
     Game.find_by_id(message['game_id'])    
-  end 
+  end
+
+  def get_user_display_name(user)
+
+    if user_signed_in? && current_user == user
+      return "You"
+    else
+      return user.display_name
+    end
+
+  end
 
 end
