@@ -1,12 +1,106 @@
 @import "mixins";
 
+@mixin big_font {
+  font-size: 20px;
+  color: white;
+}
+
+@mixin small_font {
+  font-size: 13px;
+  color: white;
+}
+
+@mixin bg {
+  position: absolute;
+  top: 0; left: 0;
+  background-color: $font;
+  opacity: 0.8;
+}
+
 #player {
-  
+  position: relative;
 }
 
 #player #playerCanvas {
   display: block;
 }
+
+/* --- Title --- */
+
+#player .titleScreen {
+  display: none;
+}
+
+#player .playButton {
+  position: absolute;
+  width: 64px;
+  height: 65px;
+  left: 288px;
+  top: 142px;
+  background-image: url("/assets/player/play_button.png");
+}
+
+#player .titleBar {
+  position: absolute;
+  top: 330px; left: 0;
+  margin: 24px 0 0 16px;
+}
+
+#player .titleBar strong {
+  @include big_font;
+}
+
+#player .titleBar span {
+  @include small_font;
+}
+
+#player .titleBg {
+  @include bg;
+  top: 330px;
+  height: 60px;
+  width: 640px;
+}
+
+/* --- Start --- */
+
+#player .startScreen {
+  
+/*  display: none;*/
+  
+  .startBg {
+    @include bg;
+    height: 390px;
+    width: 640px;
+  }
+  
+  .startBar {
+
+    position: absolute;
+    top: 120px; left: 0;
+    width: 640px;
+    text-align: center;
+
+    h2 {
+      @include small_font;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+    }
+
+    .instruction {
+      @include big_font;
+      width: 500px;
+      margin: 30px 70px 50px;
+    }
+
+    p {
+      @include small_font;
+    }
+
+  }
+
+}
+
+/* --- Bar --- */
 
 #player .playerBar {
   height : 30px;
@@ -26,10 +120,10 @@
 }
 
 #player .playerTimeline {
-  width : 490px;
+  width : 486px;
   height : 8px;
   background-color: #C3C3C3;
-  margin: 12px 12px 0;
+  margin: 12px 12px 0 16px;
   border-bottom: 1px solid #F3F3F3;
 }
 

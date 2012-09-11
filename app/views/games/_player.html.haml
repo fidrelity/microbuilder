@@ -2,6 +2,23 @@
 
   %canvas{:id => "playerCanvas", :width => 640, :height => 390}
 
+  .titleScreen
+    .playButton
+    .titleBg
+    .titleBar
+      %strong
+        = game.title
+      %span
+        by #{game.author.display_name}
+
+  .startScreen
+    .startBg
+    .startBar
+      %h2 Instructions
+      .instruction 
+        = game.instruction
+      %p click to start!
+
   .playerBar
 
     .playerTimeline
