@@ -22,6 +22,7 @@ module ApplicationHelper
 
   # ---- Strean ----
   def render_message(message, element_tag = "li")
+
     username = get_stream_user(message['user_id'])
     type = message['type']
     object = get_stream_object(message, type)
@@ -36,7 +37,7 @@ module ApplicationHelper
               :comment => " commented on ", 
               :like => " liked ", 
               :dislike => " disliked ",
-              :graphic => " created "
+              :graphic => " created graphic "
             }
     verb = types[type.to_sym]
 
@@ -57,17 +58,25 @@ module ApplicationHelper
 
   # Get Object (like game or graphic)
   def get_stream_object(message, type)
-    type == "graphic" ? Graphic.find_by_id(message['graphic_id']) : Game.find_by_id(message['game_id'])    
+    return Graphic.find_by_id(message['graphic_id']) if type == "graphic"
+    Game.find_by_id(message['game_id'])    
   end
 
   # Get author of the object
   def get_objects_author(object, type)
-    (type == "game" || type == "graphic") ? "" : " #{link_to(object.author.display_name, user_path(object.author))}'s "
+    return "" if type == "game" || type == "graphic"
+    return " #{link_to(object.author.display_name, user_path(object.author))}'s "
   end
 
   # Get link of object
   def get_object_link(object, type)
-    type == "graphic" ? "the graphic #{link_to(object.name, object.image.to_s)}" : "the game #{link_to(object.title, play_path(object))}"
+
+    if type != "graphic"
+      "#{link_to(object.title, play_path(object))}"
+    else
+      "<a href='#{object.image}' target='blank'>#{object.name}</a>"      
+    end
+
   end
 
 end
