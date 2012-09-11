@@ -23,71 +23,38 @@ module ApplicationHelper
   # ---- Strean ----
   def render_message(message, element_tag = "li")
 
-    username = get_stream_user(message['user_id'])
+    user = User.find_by_id(message['user_id'])
     type = message['type']
     object = get_stream_object(message, type)
 
     return unless object
 
-    objects_link = get_object_link(object, type)
-    authors_link = get_objects_author(object, type)
-    object_popup = get_objects_popup(object, type)
+    case type
 
-    types = {
-              :game => " created ", 
-              :comment => " commented on ", 
-              :like => " liked ", 
-              :dislike => " disliked ",
-              :graphic => " created graphic "
-            }
-    verb = types[type.to_sym]
+      when "game"    
+        return render :partial => 'shared/streamtypes/game', :locals => { :user => user, :game => object}
+      
+      when "like"
+        return render :partial => 'shared/streamtypes/game_action', :locals => { :user => user, :game => object, :verb => "liked", :author => object.author }
 
-    return "<#{element_tag}>" + username + verb + authors_link + objects_link + "</#{element_tag}>"
+      when "dislike"
+        return render :partial => 'shared/streamtypes/game_action', :locals => { :user => user, :game => object, :verb => "disliked", :author => object.author }
+
+      when "comment"
+        return render :partial => 'shared/streamtypes/game_action', :locals => { :user => user, :game => object, :verb => "commented on", :author => object.author }
+
+      when "graphic"
+        graphic_type = object.background ? "background" : "graphic"
+        return render :partial => 'shared/streamtypes/graphic', :locals => { :user => user, :graphic => object, :graphic_type => graphic_type}
+   
+    end   
 
   end
 
-  # Helps to render correct user for stream
-  def get_stream_user(user_id)
-    user = User.find_by_id(user_id)    
-
-    if user
-      "<div class='avatar_stream'>#{link_to( image_tag(user.display_image, :class => "stream-image"), user_path(user) )}</div> #{link_to(user.display_name, user_path(user))}" 
-    else
-      "Anonymous"
-    end
-  end
-
-  # Get Object (like game or graphic)
+  # Returns object like game or graphic
   def get_stream_object(message, type)
     return Graphic.find_by_id(message['graphic_id']) if type == "graphic"
     Game.find_by_id(message['game_id'])    
-  end
-
-  # Get author of the object
-  def get_objects_author(object, type)
-    return "" if type == "game" || type == "graphic"
-    return " #{link_to(object.author.display_name, user_path(object.author))}'s "
-  end
-
-  # Get link of object
-  def get_object_link(object, type)
-
-    if type != "graphic"
-      "<span class='stream-popup' title='#{object.title}' data-content='<img src=#{object.preview_image}>'>#{link_to(object.title, play_path(object))}</span>"
-    else
-      "<span class='stream-popup' title='#{object.name}' data-content='<img src=#{object.image}>'><a href='#{object.image}' target='blank'>#{object.name}</a></span>"      
-    end
-
-  end
-
-  def get_objects_popup(object, type)
-
-    if type != "graphic"
-      "#{link_to(object.title, play_path(object))}"
-    else
-      "<img src='#{object.image}'>"
-    end
-
-  end
+  end 
 
 end
