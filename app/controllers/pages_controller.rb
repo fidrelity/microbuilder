@@ -5,7 +5,7 @@ class PagesController < ApplicationController
 
     if current_user
       @likes = current_user.games.sum(:likes)
-      @dislikes = current_user.games.sum(:dislikes)
+      @plays = current_user.games.sum(:played)
     end
     @messages = Stream.latest
   end

@@ -336,18 +336,11 @@ a:hover {
 /* ---------------------------------- */
 
 #gamesList .gameAuthor {
-  list-style-type: none;
   position:absolute; top:99px; right:6px;
   width:30px; height:30px; z-index:300; display: inline;
   background-size: cover;
   background-repeat: no-repeat;
   border:1px solid #222;
-}
-
-#gamesList li {
-  
-  float : left;
-  
 }
 
 #gamesList .gameAuthor:hover {
