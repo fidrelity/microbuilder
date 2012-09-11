@@ -1,1 +1,9 @@
+%h2{ :class => "page-header"}
+
+  = "games"
+
+  - if params[:term]
+    %small
+      #{@games.count} games found
+
 = render :partial => 'list_games', :locals => {:games => @games}

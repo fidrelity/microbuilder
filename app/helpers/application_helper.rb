@@ -19,9 +19,9 @@ module ApplicationHelper
 
   end
   
-  def no_space( first, second )
+  def head_line( first, second )
   
-    return raw( first + "<span>" + second + "</span>" )
+    return raw( "<h2 class='page-header'>" + first + "<span>" + second + "</span></h2>" )
   
   end
 

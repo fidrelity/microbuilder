@@ -1,7 +1,7 @@
 <div id="paint-size-wrapper">
   
-  <h3 class="page-header">Select the image type</h3>
-
+  <h2 class="page-header">select<span>imagetype</span></h2>
+  
    <div class="row">
     <div class="span6">
     

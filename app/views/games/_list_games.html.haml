@@ -1,14 +1,4 @@
 .row
-  .span12
-    %h2{ :class => "page-header", :style => "margin-top:0"}
-      
-      = no_space( "featured", "games" )
-      
-      - if params[:term]
-        %small
-          #{@games.count} games found
-          
-.row
   .span10
     %div{ :class => "btn-group"}
 
