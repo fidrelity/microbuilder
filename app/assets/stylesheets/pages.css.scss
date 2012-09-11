@@ -1,16 +1,39 @@
-$bg: #fff;
-$font: #000;
-$red: #c11924;
+$bg: #F6F6F6;
+$font: #424755;
 $gray: #464646;
 $lightgray: #dedede;
 $white: #FFFFFF;
 $yellow: #fdc702;
 
+$red: #CD5654;
+$darkred: #AD3634;
+
+$orange: #E49548;
+$blue: #006A82;
+$green: #70B477;
+
+@mixin gradient($from, $to) {
+  background-color: $from;
+  background-image: -moz-linear-gradient($from, $to);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($from), to($to));
+  background-image: -webkit-linear-gradient($from, $to);
+  background-image: -o-linear-gradient($from, $to);
+}
+
 body {
-  background:#F6F6F6;
-  color:#333;
-  font-family: 'Droid Sans', sans-serif;
+  background-color: $bg;
+  background: url("/assets/bg.png");
+  color: $font;
+  font-family: 'Helvetica Neue Bold', 'Helvetica', 'Arial', sans-serif;
   margin-bottom:1em;
+}
+
+a {
+  color: $red;
+}
+
+a:hover {
+  color: $darkred;
 }
 
 /* Header */
@@ -25,11 +48,25 @@ body {
 
 #header {
   margin-top: 2em;
+  margin-bottom: 1.5em;
+  @include gradient(#F9F9F9, #F0F0F0);
+  border: 1px solid #D6D6D6;
+  box-shadow: 0 1px 0 #E3E3E3;
+  border-radius: 4px;
+  padding-top: 28px;
 }
 
-.line {
-  border-bottom:1px solid #CCC;
-  margin-bottom: 1.5em;
+.page-header {
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  text-transform: lowercase;
+  padding-left: 5px;
+}
+
+.page-header span {
+  font-weight: lighter;
 }
 
 #flash-template{
@@ -37,47 +74,73 @@ body {
 }
 
 #header h1 {
-  font-size: 34pt;
-  font-family: 'Japan', sans-serif;
-  color: #BAD666 !important;
-  text-shadow: 2px 2px 0 #333;
-  margin: 3px 7px 5px 0;
-  float: left;
-}
-
-#header h1 a, #header h1 a:visited {
-  text-decoration: none;
+  display : none;
 }
 
 #header h2 {
-  font-size: 7pt;
-  font-family: 'Helvetica Neue Bold', sans-serif;
-  text-transform:uppercase;
-  color: #BBB;
-  line-height: 10px;
-  float: left;
-  width: 70px;
-  margin-top: 5px;
+  display : none;
 }
 
 #header #logo {
-  background: url("/assets/logo.png");
+  background: url("/assets/header/logo_red.png");
   width: 150px;
-  height: 60px;
-  margin-top: -7px;
+  height: 55px;
+  margin-top: -16px;
+  margin-left: 16px;
 }
 
 #header #menu {
-  font-size:22px;
-  margin: 3px 0 0 30px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-left: 1px solid #E3E3E3;
+  border-right: 1px solid #FFF;
+  float: left;
 }
 
+#header #menu li {
+  border-right: 1px solid #E3E3E3;
+  border-left: 1px solid #FFF;
+  border-radius: 0;
+}
+
+#header #menu li a {
+  line-height: 9px;
+}
+
+#header #menu li a:hover {
+  background-color: transparent !important;
+}
+
+#header #menu #paint a:hover { color: $blue; }
+#header #menu #build a:hover { color: $orange; }
+#header #menu #play a:hover { color: $red; }
+
 #header .nav a, .nav a:visited {
-  color:#222;
+  color: $font;
+}
+
+#header .navbar-search {
+  margin-top: 0;
+  border-right: 1px solid #FFF;
+}
+
+#header .navbar-search .searchbox {
+  padding-left: 8px;
+  font-style: italic;
+}
+
+#header #submit {
+  background-image: url("/assets/header/search.png");
+  width: 36px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  border-right: 1px solid #E3E3E3;
 }
 
 #header .profile {
-  margin-top: 5px;
+  margin-right: 20px;
 }
 
 #fb_login a, #facebook_login a:visited {
@@ -273,11 +336,18 @@ body {
 /* ---------------------------------- */
 
 #gamesList .gameAuthor {
+  list-style-type: none;
   position:absolute; top:99px; right:6px;
   width:30px; height:30px; z-index:300; display: inline;
   background-size: cover;
   background-repeat: no-repeat;
   border:1px solid #222;
+}
+
+#gamesList li {
+  
+  float : left;
+  
 }
 
 #gamesList .gameAuthor:hover {

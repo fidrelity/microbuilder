@@ -1,38 +1,41 @@
-%div{:class => "row", :id => "header"}
+.row
+
+  %div{:class => "span12", :id => "header"}
   
-  .span3
+    .row
   
-    %h1
-      = link_to page_title, root_path
-    
-    %h2 first microgame platform
+      .span3
+
+        %h1
+          = link_to "Playtin", root_path
+
+        %h2 1st microgame platform
+
+        = link_to page_title, root_path
   
-  .span4
+      .span4
 
-    = form_tag search_games_path, :method => 'get', :class=>"form-inline navbar-search pull-left" do
+        %ul{:id => "menu", :class => "nav nav-pills"}
 
-      = text_field_tag "term", "", :class => "searchbox", :placeholder => "Search game"
+          %li{:class => "paint", :id =>"paint"}
+            =link_to "Paint", new_graphic_path
 
-      %button{:type => "submit", :class => "btn"}
-        %i{:class => "icon-search"}    
+          %li{:class => "editor", :id =>"build"}      
+            =link_to "Create", build_path
 
-  .span4{:style => "width: 290px;"}
+          %li{:class => "gallery", :id =>"play"}
+            =link_to "Play", gallery_path
+  
+      .span4
 
-    %ul{:id => "menu", :class => "nav nav-pills"}
+        = form_tag search_games_path, :method => 'get', :class=>"form-inline navbar-search" do
 
-      %li{:class => "paint", :id =>"paint"}
-        =link_to "Paint", new_graphic_path
+          = text_field_tag "term", "", :class => "searchbox", :placeholder => "Search game"
 
-      %li{:class => "editor", :id =>"build"}      
-        =link_to "Build", build_path
+          %button{:type => "submit", :id => "submit"}
 
-      %li{:class => "gallery", :id =>"play"}
-        =link_to "Play", gallery_path
-
-  .profile{:class => "pull-right"}
-    = get_user_dropdown_content(current_user)
-
-%div{:class => "line"}
+      .profile{:class => "pull-right"}
+        = get_user_dropdown_content(current_user)
 
 %div{:id => 'flash-messages', :class => "row"}
   %ul

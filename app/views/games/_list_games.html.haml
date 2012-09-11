@@ -1,7 +1,9 @@
 .row
   .span12
     %h2{ :class => "page-header", :style => "margin-top:0"}
-      Games
+      
+      = no_space( "featured", "games" )
+      
       - if params[:term]
         %small
           #{@games.count} games found
@@ -41,7 +43,7 @@
 
         %li{:id => game.id, :class => "span3"}
           
-          .thumbnail{:style => "position:relative"}                              
+          .thumbnail{:style => "position:relative"}
             = link_to image_tag(game.preview_image), play_path(game)
                       
             %a{ :href => user_path(game.author), :title => "#{game.author.display_name}"}
