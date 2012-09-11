@@ -1,0 +1,60 @@
+@import "mixins";
+
+#player {
+  
+}
+
+#player #playerCanvas {
+  display: block;
+}
+
+#player .playerBar {
+  height : 30px;
+  width : 639px;
+  background : #CCC;
+  border-radius: 0 0 4px 4px;
+  @include gradient(#FEFEFE, #CECECE);
+  box-shadow: 0 1px 1px #999;
+}
+
+#player .playerBar > div {
+  float: left;
+}
+
+#player .playerBar:after {
+  clear: both;
+}
+
+#player .playerTimeline {
+  width : 490px;
+  height : 8px;
+  background-color: #C3C3C3;
+  margin: 12px 12px 0;
+  border-bottom: 1px solid #F3F3F3;
+}
+
+#player .playerIndicator {
+  width: 200px;
+  height: 8px;
+  background-color: #CD5654;
+}
+
+#player .playerTimeWrapper {
+  margin-top: 6px;
+  border-right: 1px solid #F3F3F3;
+}
+
+#player .playerTime {
+  width : 44px;
+  height: 20px;
+  font-family: "Arial", sans-serif;
+  border-right: 1px solid #B6B6B6;
+  line-height: 21px;
+}
+
+#player .playerLogo {
+  width: 58px;
+  height: 20px;
+  background-image: url("/assets/player/logo.png");
+  margin: 6px 0 0 10px;
+}
