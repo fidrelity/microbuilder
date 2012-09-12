@@ -16,25 +16,6 @@ a:hover {
   color: $darkred;
 }
 
-/* Header */
-/* ---------------------------------- */
-
-@font-face {
-  font-family: 'Japan';
-  src: url("/assets/Japan.ttf") format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-#header {
-  margin-top: 2em;
-  margin-bottom: 25px;
-  border-radius: 4px;
-  padding-top: 28px;
-  @include gradient(#FEFEFE, #EFEFEF);
-  box-shadow: 0 1px 1px #999;
-}
-
 .page-header {
   font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   font-size: 24px;
@@ -53,74 +34,80 @@ a:hover {
   display: none;
 }
 
-#header h1 {
-  display : none;
-}
+/* Header */
+/* ---------------------------------- */
 
-#header h2 {
-  display : none;
-}
-
-#header #logo {
-  background: url("/assets/header/logo_red.png");
-  width: 150px;
-  height: 55px;
-  margin-top: -16px;
-  margin-left: 16px;
-}
-
-#header #menu {
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border-left: 1px solid #E3E3E3;
-  border-right: 1px solid #FFF;
-  float: left;
-}
-
-#header #menu li {
-  border-right: 1px solid #E3E3E3;
-  border-left: 1px solid #FFF;
-  border-radius: 0;
-}
-
-#header #menu li a {
-  line-height: 9px;
-}
-
-#header #menu li a:hover {
-  background-color: transparent !important;
-}
-
-#header #menu #paint a:hover { color: $blue; }
-#header #menu #build a:hover { color: $orange; }
-#header #menu #play a:hover { color: $red; }
-
-#header .nav a, .nav a:visited {
-  color: $font;
-}
-
-#header .navbar-search {
-  margin-top: 0;
-  border-right: 1px solid #FFF;
-}
-
-#header .navbar-search .searchbox {
-  padding-left: 8px;
-  font-style: italic;
-}
-
-#header #submit {
-  background-image: url("/assets/header/search.png");
-  width: 36px;
-  height: 30px;
-  border: none;
-  background-color: transparent;
-  border-right: 1px solid #E3E3E3;
-}
-
-#header .profile {
-  margin-right: 20px;
+#header {
+  margin: 20px 0 25px;
+  padding: 28px 18px 10px;
+  overflow: auto;
+  
+  border-radius: 4px;
+  @include gradient(#FEFEFE, #EFEFEF);
+  box-shadow: 0 1px 1px #999;
+  
+  h1, h2 {
+    display: none;
+  }
+  
+  #first, #menu, #search {
+    float: left;
+  }
+  
+  #logo {
+    background: url("/assets/header/logo_red.png");
+    width: 150px;
+    height: 55px;
+    margin-top: -16px;
+  }
+  
+  &:after {
+/*    clear: both;*/
+  }
+  
+  #menu {
+    margin-left: 75px;
+    border-left: 1px solid #E3E3E3;
+    border-right: 1px solid #FFF;
+    list-style: none;
+    
+    li {
+      float: left;
+      border-right: 1px solid #E3E3E3;
+      border-left: 1px solid #FFF;
+      padding: 5px 10px;
+      
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    
+    #paint a:hover { color: $blue; }
+    #build a:hover { color: $orange; }
+    #play a:hover { color: $red; }
+    a, a:visited { color: $font; }
+    a:hover { text-decoration: none; }
+  }
+  
+  #search {
+    margin-left: 75px;
+    margin-top: 0;
+    border-right: 1px solid #FFF;
+    
+    .searchbox {
+      padding-left: 8px;
+      font-style: italic;
+    }
+    
+    #submit {
+      background-image: url("/assets/header/search.png");
+      width: 36px;
+      height: 30px;
+      border: none;
+      background-color: transparent;
+      border-right: 1px solid #E3E3E3;
+    }
+  }
 }
 
 #fb_login a, #facebook_login a:visited {

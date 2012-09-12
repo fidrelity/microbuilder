@@ -7,12 +7,6 @@ module ApplicationHelper
       return render :partial => 'layouts/user_dropdown/user_logged_out'
     end
   end
-
-  def page_title
-
-    return raw('<div id="logo"></div>')
-
-  end
   
   def head_line( first, second )
   
