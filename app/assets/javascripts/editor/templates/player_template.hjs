@@ -1,6 +1,6 @@
-{{#if showHTML}}
-
 <div id="player">
+
+{{#if showHTML}}
 
   <canvas id="playerCanvas" width="640" height="390"></canvas>
 
@@ -34,19 +34,17 @@
   </div>
 
   <div class="playerBar">
-    <div class="playerTimeline">
-      <div class="playerIndicator"></div>
-    </div>
+    <canvas class="playerTimeline"></canvas>
     <div class="playerTimeWrapper">
       <div class="playerTime">00:25</div>
     </div>
     <div class="playerLogo"></div>
   </div>
 
-</div>
-
 {{else}}
 
   <canvas id="playerCanvas" class="stageCanvas"></canvas>
 
 {{/if}}
+
+</div>

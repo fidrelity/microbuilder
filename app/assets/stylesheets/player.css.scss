@@ -157,7 +157,7 @@
   box-shadow: 0 1px 1px #999;
 }
 
-#player .playerBar > div {
+#player .playerBar > * {
   float: left;
 }
 
@@ -171,12 +171,6 @@
   background-color: #C3C3C3;
   margin: 12px 12px 0 16px;
   border-bottom: 1px solid #F3F3F3;
-}
-
-#player .playerIndicator {
-  width: 200px;
-  height: 8px;
-  background-color: #CD5654;
 }
 
 #player .playerTimeWrapper {

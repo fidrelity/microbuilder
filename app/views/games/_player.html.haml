@@ -33,15 +33,13 @@
 
   .playerBar
 
-    .playerTimeline
-      .playerIndicator
+    %canvas{:class => "playerTimeline"}
 
     .playerTimeWrapper
       .playerTime
         00:25
 
-    %div
-      = link_to raw('<div class="playerLogo"></div>'), root_path
+    = link_to raw('<div class="playerLogo"></div>'), root_path
 
 :javascript
   $(document).ready( function() {

@@ -6,6 +6,10 @@ var Player = function() {
   
   this.ctx = null;
   this.canvas = null;
+  
+  this.timelineCanvas = null;
+  this.timelineCtx = null;
+  
   this.node = null;
   
   this.game = null;
@@ -55,9 +59,11 @@ Player.prototype = {
   increment : { x : 0, y : 0 },
   scale : 1,
   
-  init : function( canvas, node ) {
+  init : function( _node ) {
     
-    var ctx = canvas.getContext( '2d' ),
+    var canvas = $( '#playerCanvas', _node )[0],
+      ctx = canvas.getContext( '2d' ),
+      timeline = $( '.playerTimeline', _node )[0],
       i = this.increment,
       self = this;
     
@@ -76,19 +82,29 @@ Player.prototype = {
     
     ctx.debug = false;
     
-    $( '.playButton', node ).click( function() {
+    $( '.playButton', _node ).click( function() {
       
       self.fsm.inform();
       
     });
     
-    $( '.startScreen', node ).click( function() {
+    $( '.startScreen', _node ).click( function() {
       
       self.fsm.start();
       
     });
     
-    this.node = node;
+    this.node = _node;
+    
+    if ( timeline ) {
+      
+      timeline.width = $( '.playerTimeline', _node ).width();
+      timeline.height = $( '.playerTimeline', _node ).height();
+      
+      this.timelineCanvas = timeline;
+      this.timelineCtx = timeline.getContext( '2d' );
+      
+    }
     
   },
   
@@ -179,9 +195,30 @@ Player.prototype = {
   
   draw : function( ctx ) {
     
+    var string;
+    
     this.game.draw( ctx );
     
-    this.drawTimeline( ctx, this.timePlayed  );
+    // this.drawTimeline( ctx, this.timePlayed  );
+    
+    if ( this.timePlayed ) {
+    
+      ctx = this.timelineCtx;
+    
+      ctx.fillStyle = '#CD5654';
+      ctx.fillRect( 0, 0, Math.floor( this.timePlayed / this.game.duration * this.timelineCanvas.width ), this.timelineCanvas.height );
+    
+      string = timeString( Math.ceil( ( this.game.duration - this.timePlayed ) / 1000 ) );
+    
+      if ( this.string !== string ) {
+        
+        $( '.playerTime', this.node ).html( string );
+        
+        this.string = string;
+        
+      }
+    
+    }
     
   },
   
@@ -207,6 +244,8 @@ Player.prototype = {
   exitLoad : function() {
     
     $( '.loader', this.node ).hide();
+    
+    $( '.playerTime', this.node ).html( timeString( this.game.duration / 1000 ) );
     
   },
   
@@ -238,6 +277,9 @@ Player.prototype = {
   enterInfo : function() {
     
     $( '.startScreen', this.node ).show();
+    
+    this.timelineCanvas.width = this.timelineCanvas.width;
+    $( '.playerTime', this.node ).html( timeString( this.game.duration / 1000 ) );
     
   },
   

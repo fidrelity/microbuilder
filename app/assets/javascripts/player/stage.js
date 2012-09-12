@@ -47,9 +47,9 @@ extend( Stage.prototype, {
   
   increment : { x : 149, y : 60 },
   
-  init : function( canvas ) {
+  init : function( _node ) {
     
-    Player.prototype.init.call( this, canvas );
+    Player.prototype.init.call( this, _node );
     
     this.mouse.handleDrag();
     

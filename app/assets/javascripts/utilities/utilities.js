@@ -125,6 +125,16 @@ function incrementString( str ) {
   
 };
 
+function timeString( _seconds ) {
+  
+  var minutes = Math.floor( _seconds / 60 );
+  
+  _seconds -= minutes * 60;
+  
+  return ( minutes < 10 ? '0' : '' ) + minutes + ':' + ( _seconds < 10 ? '0' : '' ) + _seconds;
+  
+};
+
 function rgbToHex( r, g, b ) {
   
   return '#' + ( ( 1 << 24 ) + ( r << 16 ) + ( g << 8 ) + b ).toString( 16 ).slice( 1 ).toUpperCase();
