@@ -285,7 +285,8 @@
 }
 
 #paint-size-wrapper .type-selected {
-  border: 2px solid black !important;
+/*  border: 2px solid black !important;*/
+  background: #CD5654 !important;
 }
 
 #paint-size-wrapper .sizeInput {
@@ -293,40 +294,60 @@
 }
 
 #paint-size-wrapper .paint-type {
-  cursor:pointer;
-  border: 2px dashed #999;
+  cursor: pointer;
+  border: 2px solid #999;
 }
 
 #paint-size-wrapper .paint-type:hover {
   border-color: black;
 }
 
+#paint-size-wrapper .sizeWrapper {
+  position: relative;
+  height: 500px;
+  background: #CCC;
+}
+
 #paint-size-wrapper #object {
+  position: absolute;
+  top: 100px;
+  left: 330px;
   width: 256px;
   height: 256px;
   overflow: hidden;
+  background: #FFF;
 }
 
 #paint-size-wrapper #background {
-  width: 310px;
-  height: 45px;
-  background: #CCC;
-  color: #666;
-  text-align: center;
+  position: absolute;
+  top: 50px;
+  left: 160px;
+  width: 640px;
+  height: 390px;
+  background: #FFF;
   font-size: 1.8em;
-  padding: 90px 0 60px;
+}
+
+#paint-size-wrapper .sizeWrapper p {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 #paint-size-wrapper #canvas-size {
   width:128px;
   height:128px;
-  background: url("/assets/paint/pattern.png");
+  background: url("/assets/editor/pattern_light.png");
+}
+
+#paint-size-wrapper .sizeFooter {
+  margin: 20px 0 50px;
 }
 
 #paint-size-wrapper #startPainting {
   display: none;
-  border: none;
-  border-radius: 0px;
-  position: relative;
-  margin:20px 0 20px 0;
+  margin: 0 auto;
+  width: 212px;
 }
