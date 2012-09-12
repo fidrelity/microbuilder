@@ -10,9 +10,14 @@
   color: white;
 }
 
-@mixin bg {
+@mixin abs {
   position: absolute;
   top: 0; left: 0;
+}
+
+@mixin bg {
+  @include abs;
+  width: 640px; height: 390px;
   background-color: $font;
   opacity: 0.8;
 }
@@ -28,21 +33,37 @@
 /* --- Title --- */
 
 #player .titleScreen {
-  display: none;
+/*  display: none;*/
 }
 
 #player .playButton {
+/*  display: none;*/
+  cursor: pointer;
   position: absolute;
   width: 64px;
   height: 65px;
   left: 288px;
   top: 142px;
   background-image: url("/assets/player/play_button.png");
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+#player .loader {
+  display: none;
+  @include abs;
+  @include big_font;
+  color: $font;
+  width: 640px;
+  text-align: center;
+  top: 175px;
 }
 
 #player .titleBar {
-  position: absolute;
-  top: 330px; left: 0;
+  @include abs;
+  top: 330px;
   margin: 24px 0 0 16px;
 }
 
@@ -58,25 +79,21 @@
   @include bg;
   top: 330px;
   height: 60px;
-  width: 640px;
 }
 
 /* --- Start --- */
 
 #player .startScreen {
   
-/*  display: none;*/
+  display: none;
   
   .startBg {
     @include bg;
-    height: 390px;
-    width: 640px;
   }
   
   .startBar {
-
-    position: absolute;
-    top: 120px; left: 0;
+    @include abs;
+    top: 120px;
     width: 640px;
     text-align: center;
 
@@ -98,6 +115,35 @@
 
   }
 
+}
+
+/* --- End --- */
+
+#player .endScreen { 
+  
+  .bg {
+    @include bg;
+    height : 60px;
+  }
+  
+  h2 {
+    @include big_font;
+    @include abs;
+    margin-top: 16px;
+    width: 640px;
+    text-align: center;
+  }
+  
+}
+
+#player .winScreen {
+  display: none;
+  h2 { color: $green; }
+}
+
+#player .loseScreen {
+  display: none;
+  h2 { color: $red; }
 }
 
 /* --- Bar --- */

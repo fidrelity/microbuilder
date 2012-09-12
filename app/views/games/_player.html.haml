@@ -4,6 +4,8 @@
 
   .titleScreen
     .playButton
+    .loader
+      loading...
     .titleBg
     .titleBar
       %strong
@@ -19,6 +21,16 @@
         = game.instruction
       %p click to start!
 
+  .winScreen{:class => "endScreen"}
+    .bg
+    %h2
+      You win!
+
+  .loseScreen{:class => "endScreen"}
+    .bg
+    %h2
+      You lose!
+
   .playerBar
 
     .playerTimeline
@@ -28,7 +40,8 @@
       .playerTime
         00:25
 
-    .playerLogo
+    %div
+      = link_to raw('<div class="playerLogo"></div>'), root_path
 
 :javascript
   $(document).ready( function() {
