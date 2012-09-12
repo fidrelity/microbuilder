@@ -6,6 +6,7 @@ var Player = function() {
   
   this.ctx = null;
   this.canvas = null;
+  this.node = null;
   
   this.game = null;
   this.mouse = null;
@@ -19,21 +20,24 @@ var Player = function() {
   
     states : [
       { name : 'init' },
-      { name : 'load' },
+      { name : 'load', enter : this.enterLoad, exit : this.exitLoad },
     
-      { name : 'ready', enter : this.enterReady, draw : this.drawReady },
-      { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update },
+      { name : 'ready', enter : this.enterReady, draw : this.drawReady, exit : this.exitReady },
+      { name : 'info', enter : this.enterInfo, exit : this.exitInfo },
+      
+      { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update, exit : this.exitPlay },
       { name : 'end' }
     ],
   
     transitions : [
       { name : 'parse', from : '*', to : 'load' },
       { name : 'loaded', from : 'load', to : 'ready', callback : this.onReady },
+      { name : 'inform', from : 'ready', to : 'info' },
     
-      { name : 'start', from : '*', to : 'play', callback : this.reset },
+      { name : 'start', from : 'info', to : 'play', callback : this.reset },
       { name : 'end', from : 'play', to : 'end', callback : this.onEnd },
       
-      { name : 'restart', from : 'end', to : 'play', callback : this.onReady },
+      { name : 'restart', from : 'end', to : 'ready', callback : this.onReady },
       { name : 'reset', from : '*', to : 'ready' }
     ]
   
@@ -51,14 +55,11 @@ Player.prototype = {
   increment : { x : 0, y : 0 },
   scale : 1,
   
-  init : function( canvas ) {
+  init : function( canvas, node ) {
     
     var ctx = canvas.getContext( '2d' ),
-      mouse = new Mouse( this, canvas ),
       i = this.increment,
       self = this;
-    
-    mouse.handleClick();
     
     canvas.width = 640 + 2 * i.x;
     canvas.height = 390 + 2 * i.y;
@@ -70,9 +71,24 @@ Player.prototype = {
     
     this.ctx = ctx;
     this.canvas = canvas;
-    this.mouse = mouse;
+    
+    this.mouse = new Mouse( this, canvas );
     
     ctx.debug = false;
+    
+    $( '.playButton', node ).click( function() {
+      
+      self.fsm.inform();
+      
+    });
+    
+    $( '.startScreen', node ).click( function() {
+      
+      self.fsm.start();
+      
+    });
+    
+    this.node = node;
     
   },
   
@@ -179,22 +195,32 @@ Player.prototype = {
     
   },
   
-  click : function() {
+  click : function() {},
+  
+  enterLoad : function() {
     
-    if ( this.fsm.hasState( 'ready' ) ) {
-      
-      $('.playerStartScreen').hide();
-      
-      this.fsm.start();
-      
-    } else if ( this.fsm.hasState( 'end' ) ) {
-      
-      $('.playerLoseScreen').hide();
-      $('.playerWinScreen').hide();
-      
-      this.fsm.restart();
-      
-    }
+    $( '.titleScreen', this.node ).show();
+    $( '.loader', this.node ).show();
+    
+  },
+  
+  exitLoad : function() {
+    
+    $( '.loader', this.node ).hide();
+    
+  },
+  
+  enterReady : function() {
+    
+    $( '.titleScreen', this.node ).show();
+    $( '.playButton', this.node ).show();
+    
+  },
+  
+  exitReady : function() {
+    
+    $( '.titleScreen', this.node ).hide();
+    $( '.endScreen', this.node ).hide();
     
   },
   
@@ -209,11 +235,37 @@ Player.prototype = {
     
   },
   
+  enterInfo : function() {
+    
+    $( '.startScreen', this.node ).show();
+    
+  },
+  
+  exitInfo : function() {
+    
+    $( '.startScreen', this.node ).hide();
+    
+  },
+  
+  enterPlay : function() {
+    
+    this.mouse.handleClick();
+    
+  },
+  
+  exitPlay : function() {
+    
+    this.mouse.unbind();
+    
+  },
+  
   onEnd : function() {
+    
+    var self = this;
     
     if ( this.game.isWon ) {
       
-      $('.playerWinScreen').fadeTo( 600, 0.9 );
+      $( '.winScreen', this.node ).show();
       
       this.increaseCounter( "win" );
       
@@ -221,7 +273,7 @@ Player.prototype = {
       
     } else {
       
-      $('.playerLoseScreen').fadeTo( 600, 0.9 );
+      $( '.loseScreen', this.node ).show();
       
       this.increaseCounter( "lose" );
       
@@ -230,6 +282,12 @@ Player.prototype = {
     }
     
     this.draw( this.ctx );
+    
+    setTimeout( function() {
+      
+      self.fsm.restart();
+      
+    }, 1000 );
     
   },
   

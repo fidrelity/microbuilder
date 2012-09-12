@@ -9,6 +9,34 @@ var Stage = function() {
   this.selectedObjectCallback = function() {};
   
   this.stageOffset = new Vector();
+  
+  this.fsm = new StateMachine( this );
+  
+  this.fsm.init({
+  
+    initial : 'init',
+  
+    states : [
+      { name : 'init' },
+      { name : 'load' },
+    
+      { name : 'ready', enter : this.enterReady, draw : this.drawReady },
+      { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update },
+      { name : 'end' }
+    ],
+  
+    transitions : [
+      { name : 'parse', from : '*', to : 'load' },
+      { name : 'loaded', from : 'load', to : 'ready', callback : this.onReady },
+    
+      { name : 'start', from : '*', to : 'play', callback : this.reset },
+      { name : 'end', from : 'play', to : 'end', callback : this.onEnd },
+      
+      { name : 'restart', from : 'end', to : 'play', callback : this.onReady },
+      { name : 'reset', from : '*', to : 'ready' }
+    ]
+  
+  });
 
 };
 

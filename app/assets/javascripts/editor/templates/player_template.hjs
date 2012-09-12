@@ -1,40 +1,52 @@
 {{#if showHTML}}
 
-  <div id="playerWrapper">
-    <canvas class="playerCanvas" id="testCanvas"></canvas>
-  
-    <div class="playerStartScreen">
-      <div class="playButton"></div>
-      <h2> {{App.game.title}} </h2>
-      <p> {{App.game.instructions}} </p>
+<div id="player">
+
+  <canvas id="playerCanvas" width="640" height="390"></canvas>
+
+  <div class="titleScreen">
+    <div class="playButton"></div>
+    <div class="loader">loading...</div>
+    <div class="titleBg"></div>
+    <div class="titleBar">
+      <strong>{{App.game.title}}</strong>
+      <span>by {{App.username}}</span>
     </div>
-  
-    <div class="playerWinScreen">
-      <div class="replayButton"></div>
-      <div class="message">
-        Congratulations - you have won the game!
-      </div>
-      <div class="gameData">
-        <h2> {{App.game.title}} </h2>
-        <p> {{App.game.instructions}} </p>
-      </div>
-    </div>
-  
-    <div class="playerLoseScreen">
-      <div class="replayButton"></div>
-      <div class="message">
-        You have lost the game!
-      </div>
-      <div class="gameData">
-        <h2> {{App.game.title}} </h2>
-        <p> {{App.game.instructions}} </p>
-      </div>
-    </div>
-  
   </div>
+
+  <div class="startScreen">
+    <div class="startBg"></div>
+    <div class="startBar">
+      <h2>Instructions</h2>
+      <div class="instruction">{{App.game.instructions}}</div>
+      <p>click to start!</p>
+    </div>
+  </div>
+
+  <div class="winScreen endScreen">
+    <div class="bg"></div>
+    <h2>You win!</h2>
+  </div>
+
+  <div class="loseScreen endScreen">
+    <div class="bg"></div>
+    <h2>You lose!</h2>
+  </div>
+
+  <div class="playerBar">
+    <div class="playerTimeline">
+      <div class="playerIndicator"></div>
+    </div>
+    <div class="playerTimeWrapper">
+      <div class="playerTime">00:25</div>
+    </div>
+    <div class="playerLogo"></div>
+  </div>
+
+</div>
 
 {{else}}
 
-  <canvas class="playerCanvas"></canvas>
+  <canvas id="playerCanvas" class="stageCanvas"></canvas>
 
 {{/if}}

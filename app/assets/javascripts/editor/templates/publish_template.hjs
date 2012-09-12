@@ -17,7 +17,7 @@
 
   </div>
 
-  <div class="element left">
+  <div class="left" style="margin-bottom:15px">
     {{view PlayerView
       type="test"
       playerBinding="player"

@@ -3,4 +3,6 @@
 #editor
 
 :javascript
-  $(document).ready( function() { editor_main(); } );
+  $(document).ready( function() { 
+    editor_main( null, "#{current_user.display_name}" );
+  } );

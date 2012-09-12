@@ -1,10 +1,12 @@
-function editor_main( data ) {
+function editor_main( data, username ) {
 
   window.App = Ember.Application.create();
 
+  App.username = username;
+
   App.game = GameModel.create();
   App.gameController = GameController.create();
-  
+
   App.libraryController = LibraryController.create();
 
   App.gameObjectsController = GameObjectsController.create();
@@ -64,6 +66,7 @@ function paint_main() {
 };
 
 function player_main( data, game_id ) {
+  
   var game_id = game_id || 0;
   
   window.player = new Player();  
@@ -72,7 +75,7 @@ function player_main( data, game_id ) {
   
   if ( $( '#playerCanvas' ) && $( '#playerCanvas' )[0] ) {
   
-    player.init( $( '#playerCanvas' )[0] );
+    player.init( $( '#playerCanvas' )[0], $( '#player' ) );
     player.startRunloop();
     
     //player.debug();
