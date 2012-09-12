@@ -1,12 +1,14 @@
 class Stream
   
   class << self
-    def create_message(type, user, game)
+    def create_message(type, user, object)
       current_message_id = message_id
+      object_id_key = type == "graphic" ? "graphic_id" : "game_id"
+      
       REDIS.multi do
-        REDIS.hmset(current_message_id.to_i, 'type', type, 'user_id', (user.nil? ? nil : user.id), 'game_id', game.id)
+        REDIS.hmset(current_message_id.to_i, 'type', type, 'user_id', (user.nil? ? nil : user.id), object_id_key, object.id)
         REDIS.lpush('stream', current_message_id)
-        REDIS.lpush("stream_#{game.author.id}", current_message_id) unless type == "game"
+        REDIS.lpush("stream_#{object.user.id}", current_message_id) unless type == "game"
         REDIS.lpush("stream_#{user.id}", current_message_id) if user
         REDIS.incr('message_id')
       end

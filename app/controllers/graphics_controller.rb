@@ -14,6 +14,7 @@ class GraphicsController < ApplicationController
 
   def create
     @graphic = current_user.graphics.create(params[:graphic])
+    Stream.create_message("graphic", @graphic.user, @graphic) if @graphic.public
     flash[:success] = "Your Graphic was created!"
   end
   
@@ -24,6 +25,8 @@ class GraphicsController < ApplicationController
     @graphics = @user.graphics.without_backgrounds.with_authorization(current_user).paginate(:page => params[:graphics], :per_page => 12)
     @backgrounds = @user.graphics.backgrounds.with_authorization(current_user).paginate(:page => params[:backgrounds], :per_page => 12)
     @games = @user.games.paginate(:page => params[:games], :per_page => 9)
+
+    @was_background = graphic.background?
   end
   
   def public

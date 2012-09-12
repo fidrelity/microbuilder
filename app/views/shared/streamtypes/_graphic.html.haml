@@ -1,0 +1,8 @@
+%li
+  .avatar_stream
+    = link_to( image_tag(user.display_image, :class => "stream-image"), user_path(user) )
+  = link_to( display_name, user_path(user) )
+  painted
+  %a{ :class => "stream-popup", :href => "#{graphic.image}", "data-content" => "<img src=#{graphic.image}>", :title => "#{graphic.name}" }
+    = "#{graphic.name}"
+  = "#{graphic_type}"

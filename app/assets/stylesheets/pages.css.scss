@@ -247,11 +247,11 @@ a:hover {
 /* Profile */
 /* ---------------------------------- */
 
-#profile .user_graphics #graphics {
+#profile #graphicsLayer #graphics {
   margin:0 0 0 30px;
 }
 
-#profile .user_graphics .graphic {
+#profile #graphicsLayer .graphic {
   position:relative;
   width:128px;
   height:128px;
@@ -259,7 +259,7 @@ a:hover {
   overflow:hidden;
 }
 
-#profile .user_graphics .graphic:hover {
+#profile #graphicsLayer .graphic:hover {
   border: 1px solid $gray;
 }
 
@@ -273,7 +273,7 @@ a:hover {
   padding:3px;font-size:0.9em
 }
 
-#backgroundLayer, #graphicLayer {
+#backgroundLayer, #graphicsLayer {
   display:none;
 }
 
@@ -306,18 +306,23 @@ a:hover {
 
 /* Activity Stream */
 
+#messages {
+  height:128px;
+  overflow:hidden;
+}
+
 #messages .stream-image, #messages-public .stream-image {
   margin-right: 5px;
 }
 
 #messages-public {
-  min-height: 126px;
+  height: 126px;
 }
 
 #messages ul, #messages-public ul {
   list-style-type: none;
   margin:0; padding:0;
-  max-height: 126px;
+  max-height:80%;
   overflow: auto;
 }
 

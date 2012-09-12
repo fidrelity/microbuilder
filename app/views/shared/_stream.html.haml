@@ -1,5 +1,7 @@
 %h3 Latest Activity
 
 %ul{:class => "activity-list"}
+  
   - messages.each do |message|
-    = raw(render_message(message))
+    
+    = render_message(message)

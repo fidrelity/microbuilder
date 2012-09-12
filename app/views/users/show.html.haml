@@ -4,7 +4,8 @@
     =render :partial => 'profile', :locals => {:user => @user}
 
   %div{ :class => "span9"}
-    #messages{:class => "well"}   
+
+    #messages{:class => "well"}
       = render :partial => 'shared/stream', :locals => {:messages => @messages}
 
     %div{:class => "btn-group", :style => "margin-bottom:1em"}
@@ -22,9 +23,10 @@
         = "(#{@backgrounds.count})"
 
     = render :partial => 'games', :locals => {:games => @games, :user => @user}
-    = render :partial => 'graphics', :locals => {:graphics => @graphics,
-      :user => @user,
-      :backgrounds => @backgrounds,
-      :backgrounds_size => @backgrounds.count,
-      :graphics_size => @graphics.count}
-      
+    
+    %div{:id => 'user_graphics'}    
+      = render :partial => 'graphics', :locals => {:graphics => @graphics,
+        :user => @user,
+        :backgrounds => @backgrounds,
+        :backgrounds_size => @backgrounds.count,
+        :graphics_size => @graphics.count}
