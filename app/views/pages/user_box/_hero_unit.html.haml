@@ -7,8 +7,15 @@
 - else
 
   %div{ :class => "welcome"}
+    
     %h2
       Welcome to Playtin!
+      
+    .pull-right
+      = link_to "Start building now", build_path, :class => "btn btn-large pull-right"
+      %br
+      = link_to "Create a new Account", new_user_registration_path, :class=>"btn btn-large pull-right"
+      
     %p
       Ever wanted to build your own game and share 
       %br
@@ -17,8 +24,6 @@
       own graphics, create your game and release it!
       %br
       All you need is your browser and imagination!*
-      
-    = link_to "Start building now", build_path, :class => "btn btn-primary btn-large pull-right"
       
     %small
       * no programming skills required.

@@ -29,14 +29,14 @@
   <div class="sizeWrapper">
     
     <div id="background" class="paint-type" data-type="background">
-      <p>background 640x390</p>
+      <p>background 640 x 390</p>
     </div>
 
     <div id="object" class="paint-type pop" data-type="object" title="Sprite size" data-content="Resize the desired image size with the mouse. Maximum is 256 x 256 pixel.">
     
       <div id="canvas-size"></div>
     
-      <p>graphic {{width}}x{{height}}</p>
+      <p>graphic {{width}} x {{height}}</p>
     
     </div>
 
