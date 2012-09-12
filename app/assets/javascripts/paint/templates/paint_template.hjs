@@ -1,4 +1,4 @@
-<h2 class="page-header">paint<span>something</span></h2>
+<h2 class="page-header">paint<span>{{type}}</span></h2>
 
 <div id="paint-wrapper">
 

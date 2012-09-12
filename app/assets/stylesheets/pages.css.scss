@@ -28,7 +28,7 @@ a:hover {
 
 #header {
   margin-top: 2em;
-  margin-bottom: 1.5em;
+  margin-bottom: 25px;
   border-radius: 4px;
   padding-top: 28px;
   @include gradient(#FEFEFE, #EFEFEF);
@@ -128,6 +128,29 @@ a:hover {
 }
 
 /* Home */
+
+.welcome {
+  
+  padding-left: 20px;
+  text-shadow: 0 1px 0 #CBCBCB;
+  
+  h2 {
+    font-size: 30px;
+    letter-spacing: -2px;
+    margin-bottom: 7px;
+  }
+  
+  p, small {
+    font-size: 18px;
+    line-height: 25px;
+    font-style: italic;
+  }
+  
+  small {
+    color: #9298A0;
+  }
+  
+}
 
 .heroExt {
   background:#333;color:#FFF;padding:1.7em;
