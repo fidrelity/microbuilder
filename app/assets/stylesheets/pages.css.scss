@@ -40,7 +40,7 @@ a:hover {
 #header {
   margin: 20px 0 25px;
   padding: 28px 18px 10px;
-  overflow: auto;
+  height: 36px;
   
   border-radius: 4px;
   @include gradient(#FEFEFE, #EFEFEF);
@@ -62,7 +62,7 @@ a:hover {
   }
   
   &:after {
-/*    clear: both;*/
+    clear: both;
   }
   
   #menu {
@@ -75,7 +75,7 @@ a:hover {
       float: left;
       border-right: 1px solid #E3E3E3;
       border-left: 1px solid #FFF;
-      padding: 5px 10px;
+      padding: 7px 10px 3px;
       
       font-size: 13px;
       letter-spacing: 1px;
@@ -107,6 +107,11 @@ a:hover {
       background-color: transparent;
       border-right: 1px solid #E3E3E3;
     }
+  }
+  
+  #profile .lock {
+    width: 14px;
+    padding: 4px 7px;
   }
 }
 

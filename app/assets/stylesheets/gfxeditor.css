@@ -35,7 +35,7 @@
 }
 
 #paint-wrapper .tool-bar button.pencil {
-  background:url('/assets/edit_button.png');
+  background:url('/assets/paint/pencil.png');
 }
 
 #paint-wrapper .tool-bar button.select {
