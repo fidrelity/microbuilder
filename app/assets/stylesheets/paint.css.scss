@@ -304,13 +304,11 @@
 
 #paint-size-wrapper .sizeWrapper {
   position: relative;
-  height: 500px;
-  background: #CCC;
 }
 
 #paint-size-wrapper #object {
   position: absolute;
-  top: 100px;
+  top: 50px;
   left: 330px;
   width: 256px;
   height: 256px;
@@ -320,7 +318,7 @@
 
 #paint-size-wrapper #background {
   position: absolute;
-  top: 50px;
+  top: 0px;
   left: 160px;
   width: 640px;
   height: 390px;
@@ -343,7 +341,7 @@
 }
 
 #paint-size-wrapper .sizeFooter {
-  margin: 20px 0 50px;
+  margin: 420px 0 50px;
 }
 
 #paint-size-wrapper #startPainting {
