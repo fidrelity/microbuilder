@@ -8,11 +8,14 @@
 
   %ul{:class => "dropdown-menu"}
 
-    %li{ :id => "fb_login"}
+    %li
+      =link_to "sign in", new_session_path(:user)
+
+    %li{:id => "fb_login"}
       =link_to "facebook login", user_omniauth_authorize_path(:facebook)
 
-    %li{:class => ""}
-      =link_to "Create account", new_user_registration_path
+    %li
+      =link_to "create account", new_user_registration_path
 
-    %li{:class => ""}
-      =link_to "Imprint", imprint_path
+    %li
+      =link_to "imprint", imprint_path

@@ -200,7 +200,7 @@ var TimeView = Ember.View.extend({
     
     this.set( 'time', time + '%' );
 
-    this.set('timeInSeconds', this.getTimeInSeconds(time) );    
+    this.set('timeInSeconds', this.getTimeInSeconds(time) );
     
     if ( time2 ) {
     
