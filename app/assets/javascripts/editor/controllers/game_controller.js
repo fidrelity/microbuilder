@@ -150,11 +150,10 @@ var GameController = Ember.Object.extend({
     
   },
   
-  publishGame : function() {    
+  publishGame : function( _thumb ) {
    
     var game = this.game.getData(),
-      graphicIDs = game.graphics.map( function(i){ return i.ID; } ),
-      thumb = this.getSelectedSnapshotData();
+      graphicIDs = game.graphics.map( function(i){ return i.ID; } );
     
     console.log(
       game.title,
@@ -176,7 +175,7 @@ var GameController = Ember.Object.extend({
           title : game.title,
           instruction: game.instructions,
           data : JSON.stringify( game ),
-          preview_image_data : thumb,
+          preview_image_data : _thumb,
           tags : $("#game-tags").tagit('assignedTags').join(" ")
         },
         
@@ -303,44 +302,6 @@ var GameController = Ember.Object.extend({
      background : null
     });
     
-  },
-
-  takePreviewSnapshot : function() {
-    var canvas = document.getElementById("testCanvas");
-
-    var listElements = $('#snapshots').find("li");
- 
-    var img_data = canvas.toDataURL("image/png");
-    var num = listElements.length;
-    var screenshot = '<li class="thumbnail"><img src="'+img_data+'" width="210" height="130" class="thumb"><br><span class="label"><input type="radio" value="" name="previewImage"> Screen '+num+'</span></li>';
-    
-    $('#snapshots').append(screenshot);
-    //    
-    this.setActiveSnapshot($('#snapshots').find("li").last());
-  },
-
-  // highlight selected snapshot element
-  setActiveSnapshot : function(_obj) {
-
-    _obj.find('input[type="radio"]').attr("checked", "checked");
-
-    $('#snapshots').find('li').removeClass('active');
-    _obj.addClass('active');
-
-  },
-
-  // Returns Base64 encoded data of img
-  getSelectedSnapshotData : function() {
-    var selectedRadio = $('#snapshots').find('li.active');
-
-    // Take automatic snapshot, if user didnt
-    if(!selectedRadio.length) {
-      this.takePreviewSnapshot();
-      selectedRadio = $('#snapshots').find('li').first();
-    }
-
-    var selectedImg = selectedRadio.find('img');    
-    return selectedImg.attr("src");
   }
   
 });

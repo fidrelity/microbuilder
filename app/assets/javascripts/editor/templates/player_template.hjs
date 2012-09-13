@@ -2,7 +2,7 @@
 
 {{#if showHTML}}
 
-  <canvas id="playerCanvas" width="640" height="390"></canvas>
+  <canvas id="playerCanvas" class="testCanvas" width="640" height="390"></canvas>
 
   <div class="titleScreen">
     <div class="playButton"></div>

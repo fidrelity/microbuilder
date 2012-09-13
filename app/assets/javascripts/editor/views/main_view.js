@@ -56,7 +56,9 @@ var MainView = Ember.View.extend({
       
       view.didInsertElement();
       
-    } else if ( name === 'objectsView' ) {
+    }
+    
+    if ( name === 'objectsView' ) {
       
       this.save();
       
@@ -230,14 +232,18 @@ var PublishView = Ember.View.extend({
   values : null,
   checklist : null,
   
+  snapshot : null,
+  
   didInsertElement : function() {
 
     var self = this, name, className, checked, message;
 
     // *** Snapshot of preview game ***
     // onClick on li element
-    $('#snapshots').find('li').live('click', function() {
-      App.gameController.setActiveSnapshot($(this));
+    $('#snapshots li').live( 'click', function() {
+      
+      self.setActiveSnapshot( $( this ) );
+      
     });
 
     // Tagging field: https://github.com/aehlke/tag-it
@@ -248,6 +254,8 @@ var PublishView = Ember.View.extend({
       singleField : true
 
     });
+
+    this.set( 'snapshot', null );
 
     // --- CHECK LIST ---
     this.checklist = this.$( '#check-list' );
@@ -283,6 +291,11 @@ var PublishView = Ember.View.extend({
         status : false,
         fail: "Game was not won", 
         success: "Game was won"
+      },
+      hasSnapshot : {
+        status : false,
+        fail: "Game has no snapshot",
+        success: "Game has a snapshot"
       }
     };
     
@@ -295,6 +308,12 @@ var PublishView = Ember.View.extend({
     this.addObserver( 'App.gameController.game.instructions', function() {
       
       self.checkValue( 'hasInstructions', App.gameController.game.instructions.length > 0 );
+      
+    });
+    
+    this.addObserver( 'snapshot', function() {
+      
+      self.checkValue( 'hasSnapshot', self.snapshot !== null );
       
     });
     
@@ -333,7 +352,7 @@ var PublishView = Ember.View.extend({
     
     node.removeClass( "label-important" ).removeClass( "label-success" );
     node.addClass( status ? "label-success" : "label-important" );
-    node.html( status ? value.succes : value.fail );
+    node.html( status ? value.success : value.fail );
     
   },
   
@@ -358,9 +377,53 @@ var PublishView = Ember.View.extend({
       
     } else {
       
-      App.gameController.publishGame();
+      App.gameController.publishGame( this.snapshot );
       
     }
+    
+  },
+  
+  takeSnapshot : function() {
+    
+    var canvas = this.$( '.testCanvas' )[0],
+      img = new Image,
+      snapshot, 
+      self = this;
+    
+    img.onload = function() {
+      
+      var zoomCanvas = document.createElement( 'canvas' ),
+        zoomCtx = zoomCanvas.getContext( '2d' ),
+        num = self.$( '#snapshots li' ).length,
+        snapshot;
+        
+      zoomCanvas.width = 210;
+      zoomCanvas.height = 130;
+      
+      zoomCtx.translate( -0.5, -0.5 );
+      zoomCtx.drawImage( img, 5, 0, 630, 390, 0, 0, 210, 130 );
+      img = zoomCanvas.toDataURL( "image/png" );
+      
+      snapshot = '<li class="thumbnail"><img src="' + img + '" width="210" height="130" class="thumb"><br><span class="label"><input type="radio" value="" name="previewImage"> Screen ' + num + '</span></li>';
+      
+      self.$( '#snapshots' ).append( snapshot );
+      
+      self.setActiveSnapshot( self.$( '#snapshots' ).find( "li" ).last() );
+      
+    };
+    
+    img.src = canvas.toDataURL( "image/png" );
+    
+  },
+  
+  setActiveSnapshot : function(_obj) {
+    
+    _obj.find( 'input[type="radio"]' ).attr( "checked", "checked" );
+    
+    this.$( '#snapshots li' ).removeClass( 'active' );
+    _obj.addClass( 'active' );
+    
+    this.set( 'snapshot', _obj.find( 'img').attr( 'src' ) );
     
   }
 
