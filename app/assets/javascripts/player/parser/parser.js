@@ -174,7 +174,7 @@ var Parser = {
     
     gameWin : function() { return WinAction; },
     gameLose : function() { return LoseAction; },
-    gameEnd : function() { return EndAction; }, // deprecated
+    gameEnd : function() { return EndAction; }, // deprecated 2
 
 
     // -- Counter Action --
@@ -208,7 +208,7 @@ var Parser = {
   
   triggerIDs : {
     
-    clickSelf : function( data, gameObject ) { // deprecated
+    clickSelf : function( data, gameObject ) { // deprecated 2
       
       return new ClickTrigger( gameObject );
       
@@ -309,10 +309,10 @@ var Parser = {
     
     // -- Game --
     
-    gameIsWon : function() { return new EndTrigger( 'isWon' ); }, // deprecated
+    gameIsWon : function() { return new EndTrigger( 'isWon' ); }, // deprecated 2
     gameWasWon : function() { return WonTrigger; },
     
-    gameIsLost : function() { return new EndTrigger( 'isLost' ); }, // deprecated
+    gameIsLost : function() { return new EndTrigger( 'isLost' ); }, // deprecated 2
     gameWasLost : function() { return LostTrigger; },
     
     gameStart : function() { return 'start'; },

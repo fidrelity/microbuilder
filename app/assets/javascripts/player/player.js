@@ -31,7 +31,7 @@ var Player = function() {
       { name : 'info', enter : this.enterInfo, exit : this.exitInfo },
       
       { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update, exit : this.exitPlay },
-      { name : 'end' },
+      { name : 'end', draw : this.draw, update : this.update },
       
       { name : 'error', enter : this.enterError }
     ],
@@ -41,10 +41,10 @@ var Player = function() {
       { name : 'loaded', from : 'load', to : 'ready', callback : this.onReady },
       { name : 'inform', from : 'ready', to : 'info' },
     
-      { name : 'start', from : 'info', to : 'play', callback : this.reset },
+      { name : 'start', from : 'info', to : 'play', callback : this.onStart },
       { name : 'end', from : 'play', to : 'end', callback : this.onEnd },
       
-      { name : 'restart', from : 'end', to : 'ready', callback : this.onReady },
+      { name : 'restart', from : 'end', to : 'ready' },
       { name : 'error', from : '*', to : 'error' }
     ]
   
@@ -63,6 +63,7 @@ Player.prototype = {
   increment : { x : 0, y : 0 },
   scale : 1,
   loadAnimated : true,
+  endDelay : 1000,
   
   init : function( _node ) {
     
@@ -144,7 +145,6 @@ Player.prototype = {
     dt = dt > 30 ? 30 : dt;
     
     this.time = t;
-    this.timePlayed += dt;
     
     this.fsm.update( dt );
     this.fsm.draw( this.ctx );
@@ -157,7 +157,6 @@ Player.prototype = {
   
   reset : function() {
     
-    this.time = 0;
     this.timePlayed = 0;
     this.restTime = 0;
     
@@ -191,7 +190,6 @@ Player.prototype = {
     
     } catch ( e ) {
       
-      console.log( e );
       this.fsm.error();
       
     }
@@ -200,9 +198,15 @@ Player.prototype = {
   
   update : function( dt ) {
     
+    if ( this.fsm.hasState( 'play' ) ) {
+      
+      this.timePlayed += dt;
+      
+    }
+    
     this.game.update( dt );
     
-    if ( this.timePlayed > this.game.duration ) {
+    if ( this.fsm.hasState( 'play' ) && this.timePlayed > this.game.duration ) {
     
       EndAction.execute( this.game );
     
@@ -277,9 +281,7 @@ Player.prototype = {
   onReady : function() {
     
     this.reset();
-    
     this.game.reset();
-    this.game.start();
     
     this.draw( this.ctx );
     
@@ -297,6 +299,15 @@ Player.prototype = {
   exitInfo : function() {
     
     $( '.startScreen', this.node ).hide();
+    
+  },
+  
+  onStart : function() {
+    
+    this.reset();
+    
+    this.game.reset();
+    this.game.start();
     
   },
   

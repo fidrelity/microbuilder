@@ -22,17 +22,20 @@ var Stage = function() {
     
       { name : 'ready', enter : this.enterReady, draw : this.drawReady },
       { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update },
-      { name : 'end' }
+      { name : 'end', draw : this.draw, update : this.update },
+      
+      { name : 'fin' }
     ],
   
     transitions : [
       { name : 'parse', from : '*', to : 'load' },
-      { name : 'loaded', from : 'load', to : 'ready', callback : this.onReady },
+      { name : 'loaded', from : 'load', to : 'ready' },
     
       { name : 'start', from : '*', to : 'play', callback : this.reset },
       { name : 'end', from : 'play', to : 'end', callback : this.onEnd },
-      
-      { name : 'restart', from : 'end', to : 'play', callback : this.onReady },
+    
+      { name : 'finish', from : 'end', to : 'fin' },
+    
       { name : 'reset', from : '*', to : 'ready' }
     ]
   
@@ -129,8 +132,6 @@ extend( Stage.prototype, {
     
   },
   
-  onReady : function() {},
-  
   enterReady : function() {
     
     this.reset();
@@ -156,13 +157,21 @@ extend( Stage.prototype, {
   
   onEnd : function() {
     
+    var self = this;
+    
     this.draw( this.ctx );
+    
+    setTimeout( function() {
+      
+      self.fsm.finish();
+      
+    }, this.endDelay );
     
   },
   
   click : function() {
     
-    if ( this.fsm.hasState( 'end' ) ) {
+    if ( this.fsm.hasState( 'end' ) || this.fsm.hasState( 'fin' ) ) {
       
       this.fsm.reset();
       
