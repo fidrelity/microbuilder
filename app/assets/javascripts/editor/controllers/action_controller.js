@@ -45,8 +45,8 @@ var ActionController = Ember.Object.extend({
     'counterGreaterNumber', 'counterGreaterObject',
     'counterSmallerNumber', 'counterSmallerObject',
     
-    'gameIsWon', 'gameWasWon',
-    'gameIsLost', 'gameWasLost',
+    'gameWasWon',
+    'gameWasLost',
     'gameStart'
   
   ],
@@ -58,6 +58,7 @@ var ActionController = Ember.Object.extend({
     
     // trigger
     'clickSelf',
+    'gameIsWon', 'gameIsLost', 
   
   ],
   
@@ -607,44 +608,12 @@ var ActionController = Ember.Object.extend({
         ButtonOption.create({
           name: 'game',
           question: 'Trigger which game state?', 
-          buttons: ['won', 'lost'], 
+          buttons: ['is won', 'is lost'], 
           
           decisions: [
-            
-            // won
-            
-            ButtonOption.create({
-              name: 'gameWon',
-              question: 'Trigger which event?', 
-              buttons: ['is won', 'was won'], 
-              
-              decisions: [
-                
-                SaveOption.create({ choiceID: 'gameIsWon' }),
-                SaveOption.create({ choiceID: 'gameWasWon' })
-                
-              ]
-            }),
-            
-            // lost
-            
-            ButtonOption.create({
-              name: 'gameLost',
-              question: 'Trigger which event?', 
-              buttons: ['is lost', 'was lost'], 
-              
-              decisions: [
-                
-                SaveOption.create({ choiceID: 'gameIsLost' }),
-                SaveOption.create({ choiceID: 'gameWasLost' })
-                
-              ]
-            }),
-            
-            // start <hidden>
-            
-            SaveOption.create({ choiceID: 'gameStart' })
-            
+            SaveOption.create({ choiceID: 'gameWasWon' }),
+            SaveOption.create({ choiceID: 'gameWasLost' }),
+            SaveOption.create({ choiceID: 'gameStart' }) // start <hidden>
           ]
           
         })

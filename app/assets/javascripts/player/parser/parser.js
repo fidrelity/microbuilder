@@ -309,10 +309,10 @@ var Parser = {
     
     // -- Game --
     
-    gameIsWon : function() { return new EndTrigger( 'isWon' ); },
+    gameIsWon : function() { return new EndTrigger( 'isWon' ); }, // deprecated
     gameWasWon : function() { return WonTrigger; },
     
-    gameIsLost : function() { return new EndTrigger( 'isLost' );; },
+    gameIsLost : function() { return new EndTrigger( 'isLost' ); }, // deprecated
     gameWasLost : function() { return LostTrigger; },
     
     gameStart : function() { return 'start'; },

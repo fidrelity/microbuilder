@@ -78,10 +78,8 @@ var Choice = Ember.Object.extend({
       case 'timeExact' : return 'after ' + a.time + '%';
       case 'timeRandom' : return 'sometime between ' + a.time + '-' + a.time2 + '%';
       
-      case 'gameIsWon' : return 'game is won';
-      case 'gameWasWon' : return 'game was won';
-      case 'gameIsLost' : return 'game is lost';
-      case 'gameWasLost' : return 'game was lost';
+      case 'gameWasWon' : return 'game is won';
+      case 'gameWasLost' : return 'game is lost';
       case 'gameStart' : return 'start';
 
       case 'counterGreaterNumber' : return 'counter greater than ' + action.counter;
