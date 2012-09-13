@@ -16,7 +16,6 @@ var Player = function() {
   this.loader = null;
   
   this.mouse = null;
-  this.game_id = null;
   
   this.fsm = new StateMachine( this );
   
@@ -324,15 +323,11 @@ Player.prototype = {
       
       $( '.winScreen', this.node ).show();
       
-      this.increaseCounter( "win" );
-      
       this.onWin();
       
     } else {
       
       $( '.loseScreen', this.node ).show();
-      
-      this.increaseCounter( "lose" );
       
       this.onLose();
       
@@ -373,19 +368,6 @@ Player.prototype = {
     this.ctx.debug = !this.ctx.debug;
     this.redraw = true;
     
-  },
-
-  // Increases game counter
-  increaseCounter : function(_state) {
-    if(!this.game_id) return false;
-    var state = _state === "win" ? true : false;
-
-    $.ajax({
-      url : '/games/'+this.game_id+'/played',
-      data : { win : state },
-      type : 'PUT',
-      success : function() {}
-    });
   },
   
   onWin : function() {},

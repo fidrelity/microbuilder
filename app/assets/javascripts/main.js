@@ -67,7 +67,18 @@ function paint_main() {
 
 function player_main( data, game_id ) {
   
-  var game_id = game_id || 0;
+  game_id = game_id || 0;
+  
+  function increaseCounter( _isWin ) {
+    
+    $.ajax({
+      url : '/games/' + game_id + '/played',
+      data : { win : _isWin },
+      type : 'PUT',
+      success : function() {}
+    });
+    
+  };
   
   window.player = new Player();  
   
@@ -83,8 +94,14 @@ function player_main( data, game_id ) {
     if ( data ) {
   
       player.parse( data );
-      player.game_id = game_id;
   
+    }
+    
+    if ( game_id ) {
+      
+      player.onWin = function() { increaseCounter( true ); };
+      player.onLose = function() { increaseCounter( false ); };
+      
     }
     
   }
