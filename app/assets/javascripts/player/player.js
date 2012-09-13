@@ -64,6 +64,7 @@ Player.prototype = {
   
   increment : { x : 0, y : 0 },
   scale : 1,
+  loadAnimated : true,
   
   init : function( _node ) {
     
@@ -184,9 +185,7 @@ Player.prototype = {
         
       }
         
-    });
-    
-    this.loader.corsSave = corsSave;
+    }, this.loadAnimated, corsSave );
     
     try {
     

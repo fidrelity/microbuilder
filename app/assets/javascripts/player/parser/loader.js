@@ -1,11 +1,13 @@
-var Loader = function( callback ) {
-
+var Loader = function( callback, animated, corsSave ) {
+  
   this.callback = callback;
-
+  
   this.imageCount = 0;
   this.imagesLoaded = 0;
-
-  this.corsSave = false;
+  
+  this.corsSave = corsSave;
+  
+  this.animated = animated;
   this.loadCircle = 0;
   
   this.c = 0;
@@ -67,7 +69,11 @@ Loader.prototype = {
     
     this.imagesLoaded++;
     
-    // this.checkRemaining();
+    if ( !this.animated ) {
+      
+      this.checkRemaining();
+      
+    }
     
   },
   
