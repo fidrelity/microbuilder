@@ -216,7 +216,7 @@ var TimeView = Ember.View.extend({
 
   getTimeInSeconds : function( time ) {
 
-    return toFixed( time * App.game.duration / 100, 1 ) + " Sec.";
+    return ( time * App.game.get( 'duration' ) / 100 ).toFixed( 1 ) + " Sec.";
 
   }
   
