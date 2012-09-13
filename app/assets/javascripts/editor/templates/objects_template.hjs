@@ -28,7 +28,7 @@
 
           <div class="left" style="margin-left:15px">
 
-            <h4 style="margin: 5px 0 10px"> Settings </h4>
+            <h4 style="margin: 5px 0 10px"> settings </h4>
 
             <div class="form-horizontal" style="margin-bottom:9px">
 
@@ -40,8 +40,8 @@
 
             <div class="btn-group">
 
-              <button class="btn" {{action "changeArt"}}><i class="icon-picture"></i> change art </button>
-              <button class="btn" {{action "bounding"}}><i class="icon-fullscreen"></i> area </button>
+              <button class="btn" {{action "changeArt"}}><i class="icon-picture"></i> change graphic </button>
+              <button class="btn" {{action "bounding"}}><i class="icon-fullscreen"></i> change shape </button>
               <button class="btn" {{action "duplicate"}}><i class="icon-retweet"></i> duplicate </button>
               <button class="btn" {{action "remove"}}><i class="icon-trash"></i> delete </button>
 
@@ -53,7 +53,7 @@
 
         {{/view}}
   
-        <h4 style="margin: 15px 0"> Behaviour </h4>
+        <h4 style="margin: 15px 0"> behaviour </h4>
 
         <ul id="behaviours">
           {{#view BehaviourView 

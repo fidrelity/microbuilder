@@ -301,6 +301,11 @@
 
 #editor .overlay .titlePanel {
   width: 240px;
+  
+  h4 {
+    margin-bottom: 5px;
+    margin-left: 3px;
+  }
 }
 
 #editor .overlay #snapshots {

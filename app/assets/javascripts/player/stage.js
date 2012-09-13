@@ -8,8 +8,6 @@ var Stage = function() {
   this.selectObject = null;
   this.selectedObjectCallback = function() {};
   
-  this.stageOffset = new Vector();
-  
   this.fsm = new StateMachine( this );
   
   this.fsm.init({
@@ -78,9 +76,6 @@ extend( Stage.prototype, {
     
       ctx.clearRect( -i.x, -i.y, 640 + 2 * i.x, 390 + 2 * i.y );
     
-      ctx.save();
-      ctx.translate( this.stageOffset.x, this.stageOffset.y );
-    
       this.game.draw( ctx );
     
       if ( this.selectObject ) {
@@ -93,9 +88,7 @@ extend( Stage.prototype, {
       
       }
       
-      this.drawTimeline( ctx, 0, 'rgba(125,125,125,0.5)' );
-      
-      ctx.restore();
+      this.drawTimeline( ctx, 0, '#888' );
       
       this.redraw = false;
     
@@ -109,14 +102,9 @@ extend( Stage.prototype, {
     
     ctx.clearRect( -i.x, -i.y, 640 + 2 * i.x, 390 + 2 * i.y );
     
-    ctx.save();
-    ctx.translate( this.stageOffset.x, this.stageOffset.y );
-    
     this.game.draw( ctx );
     
-    this.drawTimeline( ctx, this.timePlayed, 'rgba(200,200,0,0.5)' );
-    
-    ctx.restore();
+    this.drawTimeline( ctx, this.timePlayed, '#E49548' );
     
   },
   
@@ -125,10 +113,11 @@ extend( Stage.prototype, {
     var i = this.increment,
       g = this.game;
     
-    ctx.fillStyle = g.isWon ? 'rgba(0,255,0,0.5)' : ( g.isLost ? 'rgba(255,0,0,0.5)' : color );
-    
+    ctx.fillStyle = 'rgba(195,195,195,0.5)';
     ctx.fillRect( 0, 390 + i.y / 2 - 4, 640, 8 );
-    ctx.fillRect( 640 * timePlayed / g.duration - 8, 390 + i.y / 2 - 8, 16, 16 );
+    
+    ctx.fillStyle = g.isWon ? '#70B477' : ( g.isLost ? '#CD5654' : color );
+    ctx.fillRect( 0, 390 + i.y / 2 - 4, 640 * timePlayed / g.duration, 8 );
     
   },
   
@@ -181,12 +170,11 @@ extend( Stage.prototype, {
   
   mousedown : function( mouse ) {
     
-    var object = this.selectObject,
-      mousePos = mouse.pos.sub( this.stageOffset );
+    var object = this.selectObject;
     
-    if ( !object || !object.getGraphicArea().contains( mousePos ) ) {
+    if ( !object || !object.getGraphicArea().contains( mouse.pos ) ) {
       
-      object = this.game.getGameObjectAt( mousePos );
+      object = this.game.getGameObjectAt( mouse.pos );
       
     } 
     
@@ -203,10 +191,6 @@ extend( Stage.prototype, {
     if ( object ) {
       
       object.movement.movePosition( mouse.move );
-      
-    } else if ( this.ctx.debug ) {
-      
-      this.stageOffset.addSelf( mouse.move );
       
     }
     

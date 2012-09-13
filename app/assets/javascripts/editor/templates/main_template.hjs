@@ -9,7 +9,7 @@
           background </button>
       </div>
       
-      <button id="trash" class="btn right" {{action "trash"}}><i class="icon-trash"></i> trash </button>
+      <button id="trash" class="btn right" {{action "trash"}}><i class="icon-trash"></i> trash game </button>
       
       <div id="duration" class="left">
         <div id="durationValue" class="right">{{App.game.displayDuration}}</div>
@@ -31,11 +31,11 @@
         <button class="btn" {{action "play"}}><i class="icon-play"></i> play </button>
         <button class="btn" {{action "stop"}}><i class="icon-stop"></i> stop </button>
         <button class="btn" {{action "debug"}} data-toggle="button"> <i class="icon-wrench"></i> 
-          debug mode </button>
+          detail view </button>
       </span>
       
       <button class="btn-large btn-success right" {{action "finalize" target="App.gameController"}}> 
-        Finalize game </button>
+        finalize game </button>
     </div>
     
   </div>

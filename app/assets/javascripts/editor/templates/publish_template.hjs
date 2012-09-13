@@ -1,18 +1,17 @@
 <div class="content">
   <div class="titlePanel left">
-    <label>Game title: </label>
-    {{view Ember.TextField valueBinding="App.game.title" size="10" placeholder="insert name" maxlength="42"}}
+    <h4>title</h4>
+    {{view Ember.TextField valueBinding="App.game.title" size="10" placeholder="game title" maxlength="42"}}
     <br />
 
-    <label>Instructions: </label>
-    {{view Ember.TextArea valueBinding="App.game.instructions" placeholder="(140 chars max)" maxlength="140"}}
+    <h4>instructions</h4>
+    {{view Ember.TextArea valueBinding="App.game.instructions" placeholder="game instructions" maxlength="140"}}
     <br />
 
-    <label>Tags: </label>
+    <h4>tags</h4>
     <ul id="game-tags"></ul>
 
-    <label>Check-list:</label>
-
+    <h4>checklist</h4>
     <ul id="check-list"></ul>
 
   </div>
@@ -33,10 +32,10 @@
     <i class="icon-arrow-left"></i> cancel </button>
   
   <button {{action "takeSnapshot"}} class="btn" style="margin-top:6px">
-    <i class="icon-camera"></i> Take snapshot</button>
+    <i class="icon-camera"></i> take snapshot </button>
   
-  <button {{action "publish"}} class="btn-large btn-success right"> 
-    Publish game</button>
+  <button {{action "publish"}} class="btn-large btn-success right">
+    publish game</button>
 </div>
 
 <ul id="snapshots" class="thumbnails"></ul>

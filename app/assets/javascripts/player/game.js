@@ -76,8 +76,6 @@ Game.prototype = {
     
     if ( ctx.debug ) {
       
-      this.mouse._pos.copy( this.mouse.pos ).subSelf( this.player.stageOffset );
-      
       ctx.fillCircle( this.mouse._pos.x, this.mouse._pos.y, 3 );
       
     }

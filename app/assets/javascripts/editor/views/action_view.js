@@ -6,7 +6,7 @@ var ActionView = Ember.View.extend({
   
   heading : function() {
     
-    return App.actionController.mode + ' Editor';
+    return App.actionController.mode + ' editor';
     
   }.property( 'App.actionController.mode' )
   
@@ -216,7 +216,7 @@ var TimeView = Ember.View.extend({
 
   getTimeInSeconds : function( time ) {
 
-    return time * App.game.get("duration") / 100 + " Sec.";
+    return toFixed( time * App.game.duration / 100, 1 ) + " Sec.";
 
   }
   

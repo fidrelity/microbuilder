@@ -112,7 +112,7 @@ var GameController = Ember.Object.extend({
   
   addTrigger : function() {
     
-    App.actionController.reset( 'Trigger' );
+    App.actionController.reset( 'trigger' );
     
     App.mainView.show( 'actionView', true );
     this.set( 'cancelView', 'objectsView' );
@@ -121,7 +121,7 @@ var GameController = Ember.Object.extend({
   
   addAction : function() {
     
-    App.actionController.reset( 'Action' );
+    App.actionController.reset( 'action' );
     
     App.mainView.show( 'actionView', true );
     this.set( 'cancelView', 'objectsView' );
