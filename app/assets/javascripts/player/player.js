@@ -32,7 +32,9 @@ var Player = function() {
       { name : 'info', enter : this.enterInfo, exit : this.exitInfo },
       
       { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update, exit : this.exitPlay },
-      { name : 'end' }
+      { name : 'end' },
+      
+      { name : 'error', enter : this.enterError }
     ],
   
     transitions : [
@@ -44,13 +46,16 @@ var Player = function() {
       { name : 'end', from : 'play', to : 'end', callback : this.onEnd },
       
       { name : 'restart', from : 'end', to : 'ready', callback : this.onReady },
-      { name : 'reset', from : '*', to : 'ready' }
+      { name : 'reset', from : '*', to : 'ready' },
+      
+      { name : 'error', from : '*', to : 'error' }
     ]
   
   });
   
   this.time = 0;
   this.timePlayed = 0;
+  this.restTime = 0;
   
   this.terminate = false;
   
@@ -156,6 +161,7 @@ Player.prototype = {
     
     this.time = 0;
     this.timePlayed = 0;
+    this.restTime = 0;
     
     this.mouse.clicked = false;
     
@@ -183,7 +189,16 @@ Player.prototype = {
     
     this.loader.corsSave = corsSave;
     
-    Parser.parseData( data, this.game, this.loader );
+    try {
+    
+      Parser.parseData( data, this.game, this.loader );
+    
+    } catch ( e ) {
+      
+      console.log( e );
+      this.fsm.error();
+      
+    }
     
   },
   
@@ -201,11 +216,9 @@ Player.prototype = {
   
   draw : function( ctx ) {
     
-    var string;
+    var rest;
     
     this.game.draw( ctx );
-    
-    // this.drawTimeline( ctx, this.timePlayed  );
     
     if ( this.timePlayed ) {
     
@@ -214,27 +227,17 @@ Player.prototype = {
       ctx.fillStyle = '#CD5654';
       ctx.fillRect( 0, 0, Math.floor( this.timePlayed / this.game.duration * this.timelineCanvas.width ), this.timelineCanvas.height );
     
-      string = timeString( Math.ceil( ( this.game.duration - this.timePlayed ) / 1000 ) );
+      rest = Math.ceil( ( this.game.duration - this.timePlayed ) / 1000 );
     
-      if ( this.string !== string ) {
+      if ( this.restTime !== rest ) {
         
-        $( '.playerTime', this.node ).html( string );
+        this.showTime( rest );
         
-        this.string = string;
+        this.restTime = rest;
         
       }
     
     }
-    
-  },
-  
-  drawTimeline : function( ctx, timePlayed ) {
-    
-    var g = this.game;
-    
-    ctx.fillStyle = g.isWon ? 'rgba(0,255,0,0.5)' : ( g.isLost ? 'rgba(255,0,0,0.5)' : 'rgba(255,255,0,0.5)' );
-    
-    ctx.fillRect( 0, 386, 640 * timePlayed / g.duration, 4 );
     
   },
   
@@ -257,7 +260,7 @@ Player.prototype = {
     
     $( '.loader', this.node ).hide();
     
-    $( '.playerTime', this.node ).html( timeString( this.game.duration / 1000 ) );
+    this.showTime( this.game.duration / 1000 );
     
   },
   
@@ -291,7 +294,7 @@ Player.prototype = {
     $( '.startScreen', this.node ).show();
     
     this.timelineCanvas.width = this.timelineCanvas.width;
-    $( '.playerTime', this.node ).html( timeString( this.game.duration / 1000 ) );
+    this.showTime( this.game.duration / 1000 );
     
   },
   
@@ -342,6 +345,26 @@ Player.prototype = {
       self.fsm.restart();
       
     }, 1000 );
+    
+  },
+  
+  enterError : function() {
+    
+    $( '.titleScreen', this.node ).hide();
+    $( '.startScreen', this.node ).hide();
+    $( '.endScreen', this.node ).hide();
+    
+    $( '.errorScreen', this.node ).show();
+    
+    this.ctx.fillStyle = 'white';
+    this.ctx.fillRect( 0, 0, 640, 390 );
+    this.showTime( 0 );
+    
+  },
+  
+  showTime : function( _seconds ) {
+    
+    $( '.playerTime', this.node ).html( timeString( _seconds ) );
     
   },
   

@@ -147,6 +147,21 @@
   h2 { color: $red; }
 }
 
+/* --- Error --- */
+
+#player .errorScreen {
+  display: none;
+
+  h2 {
+    @include abs;
+    @include big_font;
+    color: $font;
+    width: 640px;
+    text-align: center;
+    top: 155px;
+  }
+}
+
 /* --- Bar --- */
 
 #player .playerBar {
