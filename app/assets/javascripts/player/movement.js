@@ -108,6 +108,13 @@ Movement.prototype = {
       width, height, bounding = this.boundingArea,
       increase, v, h, y, g = 9.81;
     
+    if ( mode === this.roamMode && area === this.roamArea &&
+      this.speed === this.speeds[speed] ) {
+      
+      return;
+      
+    }
+    
     this.stop();
     
     this.roamMode = mode;
@@ -178,13 +185,27 @@ Movement.prototype = {
   
   jump : function( area ) {
     
+    if ( area === this.roamArea ) {
+      
+      return;
+      
+    }
+    
     this.stop();
+    
+    this.roamArea = area;
     
     this.insertObject( area );
     
   },
 
   followPath : function ( path, mode, speed ) {
+
+    if ( path === this.path && mode === this.pathMode && this.speed === this.speeds[speed] ) {
+      
+      return;
+      
+    }
 
     this.stop();
 
@@ -196,7 +217,7 @@ Movement.prototype = {
       this.path = path;
       this.pathMode = mode;
       
-      this.setSpeed(speed);
+      this.setSpeed( speed );
       this.pathCounter = 1;
       
     }
@@ -208,6 +229,7 @@ Movement.prototype = {
     this.target = null;
     this.direction = null;
     this.roamMode = null;
+    this.roamArea = null;
 
     this.pathCounter = 0;
     this.pathMode = null;
