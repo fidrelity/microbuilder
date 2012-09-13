@@ -28,6 +28,7 @@
 
 #player #playerCanvas {
   display: block;
+  background: white;
 }
 
 /* --- Title --- */
@@ -58,7 +59,7 @@
   color: $font;
   width: 640px;
   text-align: center;
-  top: 175px;
+  top: 205px;
 }
 
 #player .titleBar {

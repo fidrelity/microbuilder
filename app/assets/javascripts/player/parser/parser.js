@@ -320,15 +320,13 @@ var Parser = {
     
   },
   
-  parseData : function( data, game, callback, corsSave ) {
+  parseData : function( data, game, loader ) {
     
     var graphics = data.graphics,
       gameObjects = data.gameObjects,
       behaviours, gameObject, i, j;
     
     this.game = game;
-    this.loader = new Loader( callback );
-    this.loader.corsSave = corsSave;
     
     game.duration = ( data.duration || 5 ) * 1000;
     
@@ -336,7 +334,7 @@ var Parser = {
       
       for ( i = 0; i < graphics.length; i++ ) {
         
-        var graphic = this.parseGraphic( graphics[i] );
+        var graphic = this.parseGraphic( graphics[i], loader );
         
         game.graphics.push( graphic );
         
@@ -403,11 +401,11 @@ var Parser = {
       
     }
     
-    this.loader.checkRemaining();
+    loader.checkRemaining();
     
   },
   
-  parseGraphic : function( data ) {
+  parseGraphic : function( data, loader ) {
     
     var graphic = new Graphic( data.ID );
     
@@ -415,7 +413,7 @@ var Parser = {
     graphic.frameHeight = data.frameHeight;
     
     graphic.frameCount = data.frameCount || 1;
-    graphic.image = this.loader.loadImage( data.url, function() {
+    graphic.image = loader.loadImage( data.url, function() {
       
       graphic.checkSize();
       

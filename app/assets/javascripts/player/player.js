@@ -13,6 +13,8 @@ var Player = function() {
   this.node = null;
   
   this.game = null;
+  this.loader = null;
+  
   this.mouse = null;
   this.game_id = null;
   
@@ -24,9 +26,9 @@ var Player = function() {
   
     states : [
       { name : 'init' },
-      { name : 'load', enter : this.enterLoad, exit : this.exitLoad },
+      { name : 'load', enter : this.enterLoad, draw : this.drawLoad, exit : this.exitLoad },
     
-      { name : 'ready', enter : this.enterReady, draw : this.drawReady, exit : this.exitReady },
+      { name : 'ready', enter : this.enterReady, exit : this.exitReady },
       { name : 'info', enter : this.enterInfo, exit : this.exitInfo },
       
       { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update, exit : this.exitPlay },
@@ -167,7 +169,7 @@ Player.prototype = {
     
     this.game = new Game( this, this.mouse );
     
-    Parser.parseData( data, this.game, function() {
+    this.loader = new Loader( function() {
       
       self.fsm.loaded();
       
@@ -177,7 +179,11 @@ Player.prototype = {
         
       }
         
-    }, corsSave );
+    });
+    
+    this.loader.corsSave = corsSave;
+    
+    Parser.parseData( data, this.game, this.loader );
     
   },
   
@@ -229,6 +235,12 @@ Player.prototype = {
     ctx.fillStyle = g.isWon ? 'rgba(0,255,0,0.5)' : ( g.isLost ? 'rgba(255,0,0,0.5)' : 'rgba(255,255,0,0.5)' );
     
     ctx.fillRect( 0, 386, 640 * timePlayed / g.duration, 4 );
+    
+  },
+  
+  drawLoad : function( ctx ) {
+    
+    this.loader.draw( ctx );
     
   },
   
