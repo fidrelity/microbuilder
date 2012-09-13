@@ -197,6 +197,8 @@ var WinAction = {
       
     }
     
+    game.player.fsm.end();
+    
   }
   
 };
@@ -210,6 +212,8 @@ var LoseAction = {
       game.isLost = true;
       
     }
+    
+    game.player.fsm.end();
     
   }
   

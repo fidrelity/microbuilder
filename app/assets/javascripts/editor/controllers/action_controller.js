@@ -23,7 +23,7 @@ var ActionController = Ember.Object.extend({
     
     'artToFrame', 'artPlay', 'artStop', 'artChange',
        
-    'gameWin', 'gameLose', 'gameEnd',
+    'gameWin', 'gameLose',
 
     'counterSet', 'counterUp', 'counterDown'
     
@@ -31,7 +31,7 @@ var ActionController = Ember.Object.extend({
    
   triggerIDs : [
   
-    'clickObject', 'clickArea', // 'clickStage',
+    'clickObject', 'clickArea',
     
     'touchObject', 'touchArea',
     'overlapObject', 'overlapArea',
@@ -53,7 +53,11 @@ var ActionController = Ember.Object.extend({
   
   deprecatedIDs : [
   
-    'clickSelf'
+    // action
+    'gameEnd',
+    
+    // trigger
+    'clickSelf',
   
   ],
   
@@ -379,12 +383,11 @@ var ActionController = Ember.Object.extend({
         ButtonOption.create({ 
           name: 'game', 
           question: 'Choose what should happen to the game',
-          buttons: ['win', 'lose', 'end'],
+          buttons: ['win', 'lose'],
           
           decisions: [
             SaveOption.create({ choiceID: 'gameWin' }),
-            SaveOption.create({ choiceID: 'gameLose' }),
-            SaveOption.create({ choiceID: 'gameEnd' })
+            SaveOption.create({ choiceID: 'gameLose' })
           ] 
         })
         

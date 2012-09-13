@@ -99,7 +99,6 @@
             
               { ID : gameWin }
               { ID : gameLose }
-              { ID : gameEnd }
             ]
           }
         ]
@@ -120,3 +119,4 @@
 changelog:
 
 removed trigger : { ID : clickSelf }
+removed action : { ID : gameEnd }

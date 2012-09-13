@@ -45,8 +45,6 @@ var Player = function() {
       { name : 'end', from : 'play', to : 'end', callback : this.onEnd },
       
       { name : 'restart', from : 'end', to : 'ready', callback : this.onReady },
-      { name : 'reset', from : '*', to : 'ready' },
-      
       { name : 'error', from : '*', to : 'error' }
     ]
   

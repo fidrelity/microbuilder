@@ -171,11 +171,10 @@ var Parser = {
       return action
       
     },
-        
     
     gameWin : function() { return WinAction; },
     gameLose : function() { return LoseAction; },
-    gameEnd : function() { return EndAction; },
+    gameEnd : function() { return EndAction; }, // deprecated
 
 
     // -- Counter Action --

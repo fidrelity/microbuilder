@@ -59,7 +59,6 @@ var Choice = Ember.Object.extend({
       
       case 'gameWin' : return 'win the game';
       case 'gameLose' : return 'lose the game';
-      case 'gameEnd' : return 'end the game';
 
       case 'counterUp' : return 'increase counter';
       case 'counterDown' : return 'decrease counter';
@@ -67,7 +66,6 @@ var Choice = Ember.Object.extend({
       
       // triggers
       
-      case 'clickSelf' : return 'click on self';
       case 'clickObject' : return 'click on ' + a.gameObject.name;
       case 'clickArea' : return 'click in area ' + a.area.string();
       
