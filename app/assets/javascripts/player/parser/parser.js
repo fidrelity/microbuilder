@@ -174,7 +174,7 @@ var Parser = {
     
     gameWin : function() { return WinAction; },
     gameLose : function() { return LoseAction; },
-    gameEnd : function() { return EndAction; }, // deprecated 2
+    gameEnd : function() { return LoseAction; }, // deprecated 2
 
 
     // -- Counter Action --

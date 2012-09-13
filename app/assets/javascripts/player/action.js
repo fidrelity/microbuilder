@@ -219,8 +219,6 @@ var LoseAction = {
   
 };
 
-var EndAction = LoseAction;
-
 var CounterAction = function( type, count, gameObject ) {
 
   this.gameObject = gameObject;

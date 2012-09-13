@@ -208,7 +208,7 @@ Player.prototype = {
     
     if ( this.fsm.hasState( 'play' ) && this.timePlayed > this.game.duration ) {
     
-      EndAction.execute( this.game );
+      LoseAction.execute( this.game );
     
     }
     
