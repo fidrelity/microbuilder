@@ -109,13 +109,37 @@ var ColorPickerView = Ember.View.extend({
     
   },
 
-  addLastUsedColor : function( _color ) {        
+  addLastUsedColor : function( _color ) {
 
     var colorBuckets = this.$( '.lastColorItem' ),
       numberOfBuckets = colorBuckets.last().index(),
       colors = this.lastColors,
-      i;
-
+      i, j, same;
+    
+    for ( i = 0; i < colors.length; i++ ) {
+      
+      same = true;
+      
+      for ( j = 0; j < 4; j++ ) {
+        
+        if ( colors[i][j] !== _color[j] ) {
+          
+          same = false;
+          break;
+          
+        }
+        
+      }
+      
+      if ( same ) {
+        
+        colors.splice( i, 1 );
+        break;
+        
+      }
+      
+    }
+    
     if ( colors.unshift( _color ) > 7 ) {
       
       colors.pop();
