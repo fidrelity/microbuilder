@@ -16,7 +16,7 @@ a:hover {
   color: $darkred;
 }
 
-.page-header {
+.page-header, .section-header {
   font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   font-size: 24px;
   font-weight: bold;
@@ -26,8 +26,12 @@ a:hover {
   margin: 0;
 }
 
-.page-header span {
+.page-header span, .section-header span {
   font-weight: lighter;
+}
+
+.section-header {
+  margin-bottom: 5px;
 }
 
 #flash-template{
@@ -269,9 +273,9 @@ a:hover {
 }
 
 #profile .settings {
-  border-top:1px solid #EEE;
-  background:#222;
+  border-top: 1px solid #CCC;
   margin-top:5px;
+  padding-top: 2px;
 }
 
 #profile .settings .wrapper {
@@ -312,37 +316,30 @@ a:hover {
 /* Activity Stream */
 
 #messages {
-  height:128px;
-  overflow:hidden;
+  margin-bottom: 20px;
 }
 
 #messages .stream-image, #messages-public .stream-image {
   margin-right: 5px;
 }
 
-#messages-public {
-  height: 126px;
-}
-
 #messages ul, #messages-public ul {
   list-style-type: none;
   margin:0; padding:0;
-  max-height:80%;
+  height: 90px;
   overflow: auto;
+  box-shadow: 0 0 5px #888 inset;
 }
 
-#messages h3, #messages-public h3 {
-  margin-bottom: 0.5em;
+#messages ul {
+  height: 100px;
 }
 
 #messages ul li, #messages-public ul li {
   padding-bottom: 4px;
   border-bottom:1px solid #EEE;
   margin-bottom: 5px;
-}
-
-#messages-public ul li {
-  border-bottom:1px solid #444;
+  padding-left: 10px;
 }
 
 /* Gallery */

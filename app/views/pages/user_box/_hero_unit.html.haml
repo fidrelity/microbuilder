@@ -1,6 +1,6 @@
 -if user_signed_in?
 
-  #messages-public{:class => "well"}
+  #messages-public
     = render :partial => 'shared/stream', :locals => {:messages => @messages}
 
 - else

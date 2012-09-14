@@ -1,16 +1,16 @@
 %div{ :class => "row", :id => "profile"}
   
-  %div{ :class => "span3"}    
+  .span3
     =render :partial => 'profile', :locals => {:user => @user}
 
-  %div{ :class => "span9"}
+  .span9
 
-    #messages{:class => "well"}
+    #messages
       = render :partial => 'shared/stream', :locals => {:messages => @messages}
 
-    %div{:class => "btn-group", :style => "margin-bottom:1em"}
+    %div{:class => "btn-group pull-left", :style => "margin-bottom:1em"}
 
-      %button{:class => "btn gamesButton tabButton btn-info"}
+      %button{:class => "btn gamesButton tabButton active"}
         Games
         = "(#{@games.count})"
 
@@ -21,12 +21,11 @@
       %button{:class => "btn backgroundButton tabButton"}
         Backgrounds
         = "(#{@backgrounds.count})"
-
+        
     = render :partial => 'games', :locals => {:games => @games, :user => @user}
     
-    %div{:id => 'user_graphics'}    
-      = render :partial => 'graphics', :locals => {:graphics => @graphics,
-        :user => @user,
-        :backgrounds => @backgrounds,
-        :backgrounds_size => @backgrounds.count,
-        :graphics_size => @graphics.count}
+    = render :partial => 'graphics', :locals => {:graphics => @graphics,
+      :user => @user,
+      :backgrounds => @backgrounds,
+      :backgrounds_size => @backgrounds.count,
+      :graphics_size => @graphics.count}

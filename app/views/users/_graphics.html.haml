@@ -1,7 +1,8 @@
 %ul{:id => 'graphicsLayer', :class => "thumbnails span10 layer"}
 
-  %p
+  .span4
     = will_paginate graphics, :param_name => :graphics, :container => false, :page_links => false, :show_always => false
+  %br
 
   - graphics.each do |graphic|
 
@@ -28,24 +29,27 @@
               .span3{:class => "wrapper"}
               
                 =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
-                  %i{:class => "icon-trash icon-white"}
+                  %i{:class => "icon-trash"}
                   delete
 
-%ul{:id => 'backgroundLayer', :class => "thumbnails span10 layer"}
 
-  = will_paginate backgrounds, :param_name => :backgrounds, :container => false, :page_links => false, :show_always => false
-  
+%ul{:id => "backgroundLayer", :class => "thumbnails span10 layer"}
+
+  .span4
+    = will_paginate backgrounds, :param_name => :backgrounds, :container => false, :page_links => false, :show_always => false
+  %br
+    
   - backgrounds.each do |graphic|
 
     %li{:id => "graphic#{graphic.id}", :class => "span5", :style => "width:330px"}
-      
+    
       .thumbnail
-        
+      
         %div{ :style => "background-image:url(#{graphic.image});", :class => "backgroundImage"}
-          
+        
         %h4
           = graphic.name
-        
+      
         %span
           =graphic.frame_width
           x
@@ -57,7 +61,7 @@
 
             .row
               .span3{:class => "wrapper"}
-              
+            
                 =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
-                  %i{:class => "icon-trash icon-white"}
+                  %i{:class => "icon-trash"}
                   delete

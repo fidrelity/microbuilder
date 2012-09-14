@@ -1,8 +1,7 @@
 %link{:rel => "image_src", :href => @game.preview_image} 
-.row
-  .span12
-    %h2
-      =@game.title
+
+%h2{:class => "section-header"}
+  =@game.title
 
 .row
 
@@ -20,7 +19,7 @@
         =link_to "#{@game.author.display_name}", user_path(@game.author)
 
       %div{:style => "margin-top:1em;"}     
-        Created at: 
+        created at: 
         = @game.created_at.to_date
 
       .row{:style => "margin-top:1em;"}
@@ -49,15 +48,15 @@
     %div{:class=>"btn-group", :id=>"shareButtons"}
       %button{:class=>"btn shareButton"}
         %i{ :class => "icon-share"}
-        Share
+        share
 
       %button{:class=>"btn embedButton"}
         %i{ :class => "icon-retweet"}
-        Embed
+        embed
 
       %button{:class=>"btn reportButton btn-danger"}
         %i{ :class => "icon-flag icon-white"}
-        Report
+        report
 
 .row{:style => "margin-top:1em;"}
   .span8
