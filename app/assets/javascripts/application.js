@@ -65,46 +65,42 @@ $(document).ready(function() {
   // ---------------------------------------
   // Game View Buttons 
   function toggleLayer(_layer, _buttonObj) {
-
     highlightTab( _buttonObj );
-
-    if(!_layer.is(':visible')) {
-
-      $('.layer').hide();
-      
-      _layer.show();    
-
-    } else {
-
-      $('.layer').hide();
-
+    
+    $('.layer').hide();
+    
+    if ( _layer ) {
+      _layer.show();
     }
   }
 
   function highlightTab(_obj) {
-    var activeClass = 'btn-info';
-    $(".tabButton").removeClass(activeClass);
-    _obj.addClass(activeClass);    
+    $(".tabButton").removeClass('active');
+    $("#shareButtons .btn").removeClass('active');
+    
+    if ( _obj ) {
+      _obj.addClass('active');
+    }
   }
 
   /* Share Button */
   $('.shareButton').click(function() {
-    toggleLayer($('#shareLayer'));
+    toggleLayer($('#shareLayer'), $(this));
   });
 
   /* Embed Button */
   $('.embedButton').click(function() {
-    toggleLayer($('#embedLayer'));   
+    toggleLayer($('#embedLayer'), $(this));   
   });
 
   /* Report Button */
   $('.reportButton').click(function() {
-    toggleLayer($('#reportLayer'));   
+    toggleLayer($('#reportLayer'), $(this));
   });
 
   // Close layers
   $('.closeLayer').click(function() {
-    $('.layer').hide();
+    toggleLayer();
   });
 
 
@@ -163,7 +159,7 @@ $(document).ready(function() {
     maxWidth: messageWrapper.width()
   });
  
-
+  $('.stream-popup').popover({ placement: 'right' });
   // ---------------------------------------
 
 });

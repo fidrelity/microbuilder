@@ -1,0 +1,50 @@
+<div id="player">
+  <canvas id="playerCanvas" width="640" height="390"></canvas>
+
+  <div class="titleScreen">
+    <div class="playButton"></div>
+    <div class="loader">&nbsp;&nbsp;&nbsp;loading...</div>
+    <div class="titleBg"></div>
+    <div class="titleBar">
+      <strong><%= game.title %></strong>
+      <span>by <%= game.author.display_name %></span>
+    </div>
+  </div>
+
+  <div class="startScreen">
+    <div class="startBg"></div>
+    <div class="startBar">
+      <h2>Instructions</h2>
+      <div class="instruction"><%= game.instruction %></div>
+      <p>click to start!</p>
+    </div>
+  </div>
+
+  <div class="winScreen endScreen">
+    <div class="bg"></div>
+    <h2>You win!</h2>
+  </div>
+
+  <div class="loseScreen endScreen">
+    <div class="bg"></div>
+    <h2>You lose!</h2>
+  </div>
+  
+  <div class="errorScreen">
+    <h2>An error occurred while loading the game.</h2>
+  </div>
+
+  <div class="playerBar">
+    <canvas class="playerTimeline"></canvas>
+    <div class="playerTimeWrapper">
+      <div class="playerTime">00:00</div>
+    </div>
+    <div class="playerLogo"></div>
+  </div>
+</div>
+
+<script>
+  $(document).ready( function() {
+    player_main( <%= raw game.data %>, <%= game.id %> );
+  });
+</script>

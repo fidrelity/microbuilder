@@ -1,5 +1,7 @@
 var GameModel = Ember.Object.extend({
   
+  version : 2,
+  
   title : '',
   instructions : '',
   
@@ -25,7 +27,7 @@ var GameModel = Ember.Object.extend({
   
   getData : function() {
     
-    var game = { version : 1 }, graphics = [], i;
+    var game = { version : this.version }, graphics = [], i;
     
     game.title = this.title;
     game.instructions = this.instructions;

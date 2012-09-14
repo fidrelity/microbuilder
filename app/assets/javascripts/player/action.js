@@ -191,9 +191,11 @@ var WinAction = {
   
   execute : function( game ) {
     
-    if ( !game.isLost ) {
+    if ( !game.isWon && !game.isLost ) {
       
       game.isWon = true;
+      
+      game.player.fsm.end();
       
     }
     
@@ -205,28 +207,13 @@ var LoseAction = {
   
   execute : function( game ) {
     
-    if ( !game.isWon ) {
+    if ( !game.isWon && !game.isLost ) {
       
       game.isLost = true;
       
-    }
-    
-  }
-  
-};
-
-
-var EndAction = {
-  
-  execute : function( game ) {
-    
-    if ( !game.isWon ) {
-      
-      game.isLost = true;
+      game.player.fsm.end();
       
     }
-    
-    game.player.fsm.end();
     
   }
   

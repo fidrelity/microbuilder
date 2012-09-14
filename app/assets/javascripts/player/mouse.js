@@ -12,25 +12,23 @@ var Mouse = function( player, canvas ) {
   
   this.area = new Area( 0, 0, 640, 390 );
   
-  this.mode;
-  
 }
 
 Mouse.prototype = {
   
-  handleClick : function() {
-    
-    if ( this.mode === 'click' ) {
-      
-      return;
-      
-    }
-    
-    this.mode = 'click';
+  unbind : function() {
     
     $( this.canvas ).unbind( 'mousedown' );
     $( this.canvas ).unbind( 'mousemove' );
     $( this.canvas ).unbind( 'mouseup' );
+    
+    $( this.canvas ).unbind( 'mousedown' );
+    
+  },
+  
+  handleClick : function() {
+    
+    this.unbind();
     
     $( this.canvas ).mousedown( bind( this, this.click ) );
     
@@ -38,15 +36,7 @@ Mouse.prototype = {
   
   handleDrag : function() {
     
-    if ( this.mode === 'drag' ) {
-      
-      return;
-      
-    }
-    
-    this.mode = 'drag';
-    
-    $( this.canvas ).unbind( 'mousedown' );
+    this.unbind();
     
     $( this.canvas ).mousedown( bind( this, this.mousedown ) );
     $( this.canvas ).mousemove( bind( this, this.mousemove ) );

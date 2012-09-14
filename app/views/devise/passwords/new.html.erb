@@ -1,12 +1,20 @@
-<h2>Forgot your password?</h2>
+<%= head_line("password", "reset") %>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
+<div class="row">
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+  <div class="span3 well">
 
-  <div><%= f.submit "Send me reset password instructions" %></div>
-<% end %>
+    <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+      <%= devise_error_messages! %>
 
-<%= render "links" %>
+      <div><%= f.label :email %>
+      <%= f.email_field :email %></div>
+
+      <div><%= f.submit "send new password", :class => "btn" %></div>
+    <% end %>
+
+    <%= render "links" %>
+
+  </div>
+
+</div>

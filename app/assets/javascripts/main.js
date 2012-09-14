@@ -1,10 +1,12 @@
-function editor_main( data ) {
+function editor_main( data, username ) {
 
   window.App = Ember.Application.create();
 
+  App.username = username;
+
   App.game = GameModel.create();
   App.gameController = GameController.create();
-  
+
   App.libraryController = LibraryController.create();
 
   App.gameObjectsController = GameObjectsController.create();
@@ -64,15 +66,27 @@ function paint_main() {
 };
 
 function player_main( data, game_id ) {
-  var game_id = game_id || 0;
+  
+  game_id = game_id || 0;
+  
+  function increaseCounter( _isWin ) {
+    
+    $.ajax({
+      url : '/games/' + game_id + '/played',
+      data : { win : _isWin },
+      type : 'PUT',
+      success : function() {}
+    });
+    
+  };
   
   window.player = new Player();  
   
   console.log( JSON.stringify( data ) );
   
-  if ( $( '#playerCanvas' ) && $( '#playerCanvas' )[0] ) {
+  if ( $( '#player' ) ) {
   
-    player.init( $( '#playerCanvas' )[0] );
+    player.init( $( '#player' ) );
     player.startRunloop();
     
     //player.debug();
@@ -80,8 +94,14 @@ function player_main( data, game_id ) {
     if ( data ) {
   
       player.parse( data );
-      player.game_id = game_id;
   
+    }
+    
+    if ( game_id ) {
+      
+      player.onWin = function() { increaseCounter( true ); };
+      player.onLose = function() { increaseCounter( false ); };
+      
     }
     
   }

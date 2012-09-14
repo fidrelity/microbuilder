@@ -1,3 +1,5 @@
+<h2 class="page-header">paint<span>{{type}}</span></h2>
+
 <div id="paint-wrapper">
 
   <div id="sprites-area" class="right">

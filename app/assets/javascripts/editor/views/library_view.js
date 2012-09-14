@@ -4,6 +4,12 @@ var LibraryView = Ember.View.extend({
   
   sizeBinding : 'App.libraryController.size',
   
+  heading : function() {
+    
+    return ( App.libraryController.isBackground ? 'background' : 'graphics' ) + ' library';
+    
+  }.property( 'App.libraryController.isBackground' ),
+  
   didInsertElement : function() {
     
     if ( App.libraryController.showOwn ) {

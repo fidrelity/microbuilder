@@ -1,12 +1,4 @@
 .row
-  .span12
-    %h2{ :class => "page-header", :style => "margin-top:0"}
-      Games
-      - if params[:term]
-        %small
-          #{@games.count} games found
-          
-.row
   .span10
     %div{ :class => "btn-group"}
 
@@ -41,7 +33,7 @@
 
         %li{:id => game.id, :class => "span3"}
           
-          .thumbnail{:style => "position:relative"}                              
+          .thumbnail{:style => "position:relative"}
             = link_to image_tag(game.preview_image), play_path(game)
                       
             %a{ :href => user_path(game.author), :title => "#{game.author.display_name}"}

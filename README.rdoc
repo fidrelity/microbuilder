@@ -58,12 +58,8 @@
               { ID : counterGreaterNumber, counter : <int> }
               { ID : counterSmallerNumber, counter : <int> }
             
-              { ID : gameIsWon }
               { ID : gameWasWon }
-            
-              { ID : gameIsLost }
               { ID : gameWasLost }
-            
               { ID : gameStart }
             
             ]
@@ -99,7 +95,6 @@
             
               { ID : gameWin }
               { ID : gameLose }
-              { ID : gameEnd }
             ]
           }
         ]
@@ -119,4 +114,9 @@
   
 changelog:
 
+version 2
+
 removed trigger : { ID : clickSelf }
+removed trigger : { ID : gameIsWon }
+removed trigger : { ID : gameIsLost }
+removed action : { ID : gameEnd }

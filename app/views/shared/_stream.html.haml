@@ -1,5 +1,9 @@
-%h3 Latest Activity
+= section_line "latest", "activity"
 
-%ul{:class => "activity-list"}
-  - messages.each do |message|
-    = raw(render_message(message))
+.well
+
+  %ul{:class => "activity-list"}
+  
+    - messages.each do |message|
+    
+      = render_message(message)

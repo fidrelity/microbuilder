@@ -252,6 +252,12 @@ var PaintView = Ember.View.extend({
     
     App.spritePlayer.show();
     
-  }
+  },
+  
+  type : function() {
+    
+    return ( App.paintController.isBackground ? 'background' : 'graphic' );
+    
+  }.property( 'App.paintController.isBackground' )
 
 });

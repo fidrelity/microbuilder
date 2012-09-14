@@ -1,0 +1,210 @@
+@import "mixins";
+
+@mixin big_font {
+  font-size: 20px;
+  color: white;
+}
+
+@mixin small_font {
+  font-size: 13px;
+  color: white;
+}
+
+@mixin abs {
+  position: absolute;
+  top: 0; left: 0;
+}
+
+@mixin bg {
+  @include abs;
+  width: 640px; height: 390px;
+  background-color: $font;
+  opacity: 0.8;
+}
+
+#player {
+  position: relative;
+}
+
+#player #playerCanvas {
+  display: block;
+  background: white;
+}
+
+/* --- Title --- */
+
+#player .titleScreen {
+  display: none;
+}
+
+#player .playButton {
+  display: none;
+  cursor: pointer;
+  position: absolute;
+  width: 64px;
+  height: 65px;
+  left: 288px;
+  top: 142px;
+  background-image: url("/assets/player/play_button.png");
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+#player .loader {
+  display: none;
+  @include abs;
+  @include big_font;
+  color: $font;
+  width: 640px;
+  text-align: center;
+  top: 205px;
+}
+
+#player .titleBar {
+  @include abs;
+  top: 330px;
+  margin: 24px 0 0 16px;
+}
+
+#player .titleBar strong {
+  @include big_font;
+}
+
+#player .titleBar span {
+  @include small_font;
+}
+
+#player .titleBg {
+  @include bg;
+  top: 330px;
+  height: 60px;
+}
+
+/* --- Start --- */
+
+#player .startScreen {
+  
+  display: none;
+  
+  .startBg {
+    @include bg;
+  }
+  
+  .startBar {
+    @include abs;
+    top: 120px;
+    width: 640px;
+    text-align: center;
+
+    h2 {
+      @include small_font;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+    }
+
+    .instruction {
+      @include big_font;
+      width: 500px;
+      margin: 30px 70px 50px;
+    }
+
+    p {
+      @include small_font;
+    }
+
+  }
+
+}
+
+/* --- End --- */
+
+#player .endScreen { 
+  
+  .bg {
+    @include bg;
+    height : 60px;
+  }
+  
+  h2 {
+    @include big_font;
+    @include abs;
+    margin-top: 16px;
+    width: 640px;
+    text-align: center;
+  }
+  
+}
+
+#player .winScreen {
+  display: none;
+  h2 { color: $green; }
+}
+
+#player .loseScreen {
+  display: none;
+  h2 { color: $red; }
+}
+
+/* --- Error --- */
+
+#player .errorScreen {
+  display: none;
+
+  h2 {
+    @include abs;
+    @include big_font;
+    color: $font;
+    width: 640px;
+    text-align: center;
+    top: 155px;
+  }
+}
+
+/* --- Bar --- */
+
+#player .playerBar {
+  height : 30px;
+  width : 639px;
+  background : #CCC;
+  border-radius: 0 0 4px 4px;
+  @include gradient(#FEFEFE, #CECECE);
+  box-shadow: 0 1px 1px #999;
+}
+
+#player .playerBar > * {
+  float: left;
+}
+
+#player .playerBar:after {
+  clear: both;
+}
+
+#player .playerTimeline {
+  width : 486px;
+  height : 8px;
+  background-color: #C3C3C3;
+  margin: 12px 12px 0 16px;
+  border-bottom: 1px solid #F3F3F3;
+}
+
+#player .playerTimeWrapper {
+  margin-top: 6px;
+  border-right: 1px solid #F3F3F3;
+}
+
+#player .playerTime {
+  width : 44px;
+  height: 20px;
+  font-family: "Arial", sans-serif;
+  border-right: 1px solid #B6B6B6;
+  line-height: 21px;
+}
+
+#player .playerLogo {
+  width: 58px;
+  height: 20px;
+  background-image: url("/assets/player/logo.png");
+  margin: 6px 0 0 10px;
+}

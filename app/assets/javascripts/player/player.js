@@ -7,9 +7,15 @@ var Player = function() {
   this.ctx = null;
   this.canvas = null;
   
+  this.timelineCanvas = null;
+  this.timelineCtx = null;
+  
+  this.node = null;
+  
   this.game = null;
+  this.loader = null;
+  
   this.mouse = null;
-  this.game_id = null;
   
   this.fsm = new StateMachine( this );
   
@@ -19,28 +25,34 @@ var Player = function() {
   
     states : [
       { name : 'init' },
-      { name : 'load' },
+      { name : 'load', enter : this.enterLoad, draw : this.drawLoad, exit : this.exitLoad },
     
-      { name : 'ready', enter : this.enterReady, draw : this.drawReady },
-      { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update },
-      { name : 'end' }
+      { name : 'ready', enter : this.enterReady, exit : this.exitReady },
+      { name : 'info', enter : this.enterInfo, exit : this.exitInfo },
+      
+      { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update, exit : this.exitPlay },
+      { name : 'end', draw : this.draw, update : this.update },
+      
+      { name : 'error', enter : this.enterError }
     ],
   
     transitions : [
       { name : 'parse', from : '*', to : 'load' },
       { name : 'loaded', from : 'load', to : 'ready', callback : this.onReady },
+      { name : 'inform', from : 'ready', to : 'info' },
     
-      { name : 'start', from : '*', to : 'play', callback : this.reset },
+      { name : 'start', from : 'info', to : 'play', callback : this.onStart },
       { name : 'end', from : 'play', to : 'end', callback : this.onEnd },
       
-      { name : 'restart', from : 'end', to : 'play', callback : this.onReady },
-      { name : 'reset', from : '*', to : 'ready' }
+      { name : 'restart', from : 'end', to : 'ready' },
+      { name : 'error', from : '*', to : 'error' }
     ]
   
   });
   
   this.time = 0;
   this.timePlayed = 0;
+  this.restTime = 0;
   
   this.terminate = false;
   
@@ -50,15 +62,16 @@ Player.prototype = {
   
   increment : { x : 0, y : 0 },
   scale : 1,
+  loadAnimated : true,
+  endDelay : 1000,
   
-  init : function( canvas ) {
+  init : function( _node ) {
     
-    var ctx = canvas.getContext( '2d' ),
-      mouse = new Mouse( this, canvas ),
+    var canvas = $( '#playerCanvas', _node )[0],
+      ctx = canvas.getContext( '2d' ),
+      timeline = $( '.playerTimeline', _node )[0],
       i = this.increment,
       self = this;
-    
-    mouse.handleClick();
     
     canvas.width = 640 + 2 * i.x;
     canvas.height = 390 + 2 * i.y;
@@ -70,9 +83,34 @@ Player.prototype = {
     
     this.ctx = ctx;
     this.canvas = canvas;
-    this.mouse = mouse;
+    
+    this.mouse = new Mouse( this, canvas );
     
     ctx.debug = false;
+    
+    $( '.playButton', _node ).click( function() {
+      
+      self.fsm.inform();
+      
+    });
+    
+    $( '.startScreen', _node ).click( function() {
+      
+      self.fsm.start();
+      
+    });
+    
+    this.node = _node;
+    
+    if ( timeline ) {
+      
+      timeline.width = $( '.playerTimeline', _node ).width();
+      timeline.height = $( '.playerTimeline', _node ).height();
+      
+      this.timelineCanvas = timeline;
+      this.timelineCtx = timeline.getContext( '2d' );
+      
+    }
     
   },
   
@@ -107,7 +145,6 @@ Player.prototype = {
     dt = dt > 30 ? 30 : dt;
     
     this.time = t;
-    this.timePlayed += dt;
     
     this.fsm.update( dt );
     this.fsm.draw( this.ctx );
@@ -120,8 +157,8 @@ Player.prototype = {
   
   reset : function() {
     
-    this.time = 0;
     this.timePlayed = 0;
+    this.restTime = 0;
     
     this.mouse.clicked = false;
     
@@ -135,7 +172,7 @@ Player.prototype = {
     
     this.game = new Game( this, this.mouse );
     
-    Parser.parseData( data, this.game, function() {
+    this.loader = new Loader( function() {
       
       self.fsm.loaded();
       
@@ -145,17 +182,33 @@ Player.prototype = {
         
       }
         
-    }, corsSave );
+    }, this.loadAnimated, corsSave );
+    
+    try {
+    
+      Parser.parseData( data, this.game, this.loader );
+    
+    } catch ( e ) {
+      
+      this.fsm.error();
+      
+    }
     
   },
   
   update : function( dt ) {
     
+    if ( this.fsm.hasState( 'play' ) ) {
+      
+      this.timePlayed += dt;
+      
+    }
+    
     this.game.update( dt );
     
-    if ( this.timePlayed > this.game.duration ) {
+    if ( this.fsm.hasState( 'play' ) && this.timePlayed > this.game.duration ) {
     
-      EndAction.execute( this.game );
+      LoseAction.execute( this.game );
     
     }
     
@@ -163,73 +216,158 @@ Player.prototype = {
   
   draw : function( ctx ) {
     
+    var rest;
+    
     this.game.draw( ctx );
     
-    this.drawTimeline( ctx, this.timePlayed  );
+    if ( this.timePlayed ) {
     
-  },
-  
-  drawTimeline : function( ctx, timePlayed ) {
+      ctx = this.timelineCtx;
     
-    var g = this.game;
+      ctx.fillStyle = '#CD5654';
+      ctx.fillRect( 0, 0, Math.floor( this.timePlayed / this.game.duration * this.timelineCanvas.width ), this.timelineCanvas.height );
     
-    ctx.fillStyle = g.isWon ? 'rgba(0,255,0,0.5)' : ( g.isLost ? 'rgba(255,0,0,0.5)' : 'rgba(255,255,0,0.5)' );
+      rest = Math.ceil( ( this.game.duration - this.timePlayed ) / 1000 );
     
-    ctx.fillRect( 0, 386, 640 * timePlayed / g.duration, 4 );
+      if ( this.restTime !== rest ) {
+        
+        this.showTime( rest );
+        
+        this.restTime = rest;
+        
+      }
     
-  },
-  
-  click : function() {
-    
-    if ( this.fsm.hasState( 'ready' ) ) {
-      
-      $('.playerStartScreen').hide();
-      
-      this.fsm.start();
-      
-    } else if ( this.fsm.hasState( 'end' ) ) {
-      
-      $('.playerLoseScreen').hide();
-      $('.playerWinScreen').hide();
-      
-      this.fsm.restart();
-      
     }
+    
+  },
+  
+  drawLoad : function( ctx ) {
+    
+    this.loader.draw( ctx );
+    
+  },
+  
+  click : function() {},
+  
+  enterLoad : function() {
+    
+    $( '.titleScreen', this.node ).show();
+    $( '.loader', this.node ).show();
+    
+  },
+  
+  exitLoad : function() {
+    
+    $( '.loader', this.node ).hide();
+    
+    this.showTime( this.game.duration / 1000 );
+    
+  },
+  
+  enterReady : function() {
+    
+    $( '.titleScreen', this.node ).show();
+    $( '.playButton', this.node ).show();
+    
+  },
+  
+  exitReady : function() {
+    
+    $( '.titleScreen', this.node ).hide();
+    $( '.endScreen', this.node ).hide();
     
   },
   
   onReady : function() {
     
     this.reset();
-    
     this.game.reset();
-    this.game.start();
     
     this.draw( this.ctx );
     
   },
   
+  enterInfo : function() {
+    
+    $( '.startScreen', this.node ).show();
+    
+    this.timelineCanvas.width = this.timelineCanvas.width;
+    this.showTime( this.game.duration / 1000 );
+    
+  },
+  
+  exitInfo : function() {
+    
+    $( '.startScreen', this.node ).hide();
+    
+  },
+  
+  onStart : function() {
+    
+    this.reset();
+    
+    this.game.reset();
+    this.game.start();
+    
+  },
+  
+  enterPlay : function() {
+    
+    this.mouse.handleClick();
+    
+  },
+  
+  exitPlay : function() {
+    
+    this.mouse.unbind();
+    
+  },
+  
   onEnd : function() {
+    
+    var self = this;
     
     if ( this.game.isWon ) {
       
-      $('.playerWinScreen').fadeTo( 600, 0.9 );
-      
-      this.increaseCounter( "win" );
+      $( '.winScreen', this.node ).show();
       
       this.onWin();
       
     } else {
       
-      $('.playerLoseScreen').fadeTo( 600, 0.9 );
-      
-      this.increaseCounter( "lose" );
+      $( '.loseScreen', this.node ).show();
       
       this.onLose();
       
     }
     
     this.draw( this.ctx );
+    
+    setTimeout( function() {
+      
+      self.fsm.restart();
+      
+    }, 1000 );
+    
+  },
+  
+  enterError : function() {
+    
+    $( '.titleScreen', this.node ).hide();
+    $( '.startScreen', this.node ).hide();
+    $( '.endScreen', this.node ).hide();
+    
+    $( '.errorScreen', this.node ).show();
+    
+    this.ctx.fillStyle = 'white';
+    this.ctx.fillRect( 0, 0, 640, 390 );
+    this.showTime( 0 );
+    
+  },
+  
+  showTime : function( _seconds ) {
+    
+    $( '.playerTime', this.node ).html( timeString( _seconds ) );
     
   },
   
@@ -238,19 +376,6 @@ Player.prototype = {
     this.ctx.debug = !this.ctx.debug;
     this.redraw = true;
     
-  },
-
-  // Increases game counter
-  increaseCounter : function(_state) {
-    if(!this.game_id) return false;
-    var state = _state === "win" ? true : false;
-
-    $.ajax({
-      url : '/games/'+this.game_id+'/played',
-      data : { win : state },
-      type : 'PUT',
-      success : function() {}
-    });
   },
   
   onWin : function() {},

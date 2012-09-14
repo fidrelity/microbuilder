@@ -1,52 +1,52 @@
 <div id="paint-size-wrapper">
   
-  <h3 class="page-header">Select the image type</h3>
-
+  <h2 class="page-header">select<span>imagetype</span></h2>
+  
    <div class="row">
     <div class="span6">
     
-      <h3>Object
+      <h3>graphic
         <small>
           <input type="text" class="objWidth span1 sizeInput ttip" value="128" title="width"> x 
           <input type="text" class="objHeight span1 sizeInput ttip" value="128" size="2" title="height"> px
         </small>
       </h3>
     
-      <p>Select game object, if you want to draw for example a car, which<br>has actions in the game (i.e. move) and different states.</p>
+      <p>Graphics are used for movable game objects. They can have multiple sprites for different states or animation.</p>
     
     </div>
 
     <div class="span6">
     
-      <h3>Background</h3>
+      <h3>background</h3>
     
-      <p>The game background can't move and is as big as the game canvas.</p>
+      <p>A background covers the whole field and is not moveable.</p>
     
     </div>
   
   </div>
 
-  <div class="row">
-
-    <div class="span6">
-
-      <div id="object" class="paint-type pop" data-type="object" title="Sprite size" data-content="Resize the desired image size with the mouse. Maximum is 256 x 256 pixel.">
-      
-        <div id="canvas-size"></div>
-      
-      </div>
-
+  <div class="sizeWrapper">
+    
+    <div id="background" class="paint-type" data-type="background">
+      <p>background 640 x 390</p>
     </div>
 
-    <div class="span6">
-      <div id="background" class="paint-type" data-type="background">640x390</div>
+    <div id="object" class="paint-type pop" data-type="object" title="Sprite size" data-content="Resize the desired image size with the mouse. Maximum is 256 x 256 pixel.">
+    
+      <div id="canvas-size"></div>
+    
+      <p>graphic {{width}} x {{height}}</p>
+    
     </div>
 
   </div>
 
-  <button {{action "start"}} id="startPainting" class="btn-large btn-success right">Start painting a new object</button>
+  <div class="sizeFooter">
+
+    <button {{action "start"}} id="startPainting" class="btn-large btn-success">Start painting a new object</button>
   
-  <div class="clear"></div>
+  </div>
   
 </div>
 

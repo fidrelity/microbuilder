@@ -30,6 +30,13 @@ Animation.prototype = {
   
   play : function( start, end, mode, speed ) {
     
+    if ( this.plays && start === this.start && end === this.end && 
+      mode === this.mode && this.speed === this.speeds[ speed ] ) {
+      
+      return;
+      
+    }
+    
     this.stop();
     
     this.start = start;

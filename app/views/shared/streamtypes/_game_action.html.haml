@@ -1,0 +1,17 @@
+%li
+  - if !user.nil?
+    .avatar_stream
+      = link_to( image_tag(user.display_image, :class => "stream-image"), user_path(user) )  
+    = link_to( display_name, user_path(user) )
+  - else
+    Anonymous
+
+  = "#{verb}"
+  
+  - if current_user != author
+    = link_to( "#{author.display_name}'s", user_path(author) )
+  - else
+    your game
+
+  %a{ :class => "stream-popup", :href => "/play/#{game.id}", "data-content" => "<img src=#{game.preview_image}>", :title => "#{game.title}" }
+    = "#{game.title}"

@@ -3,7 +3,12 @@ var PaintSizeView = Ember.View.extend({
   templateName: 'paint/templates/paint_size_template',
   size : null,
   
+  width : 128,
+  height : 128,
+  
   didInsertElement : function() {
+
+    var self = this;
 
     // Resize object
     $('#canvas-size').resizable({
@@ -18,6 +23,9 @@ var PaintSizeView = Ember.View.extend({
       resize : function(event, ui) {
         $(".objWidth").val(ui.size.width);
         $(".objHeight").val(ui.size.height);
+        
+        self.set( 'width', ui.size.width );
+        self.set( 'height', ui.size.height );
       },
 
       stop: function(event, ui) {
@@ -69,16 +77,16 @@ var PaintSizeView = Ember.View.extend({
     
     if ( _obj.attr('data-type') === 'background' ) {
       
-      msg += "a background image";
+      msg += "background";
       
     } else {
       
-      msg += "a new object";
+      msg += "graphic";
       
     }
     
     button.html(msg);
-    button.show();
+    button.css({ display : 'block' });
     
   },
 

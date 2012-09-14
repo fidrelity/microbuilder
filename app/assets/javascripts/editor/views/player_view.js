@@ -23,7 +23,7 @@ var PlayerView = Ember.View.extend({
       
     }
     
-    player.init( this.$( '.playerCanvas' )[0] );
+    player.init( this.$( '#player' ) );
     player.startRunloop();
     
     player.parse( App.game.getData(), null, this.corsSave );

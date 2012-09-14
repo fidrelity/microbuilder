@@ -6,7 +6,7 @@
 
 var ActionController = Ember.Object.extend({
 
-  mode : 'Action',
+  mode : 'action',
 
   action : null,
   actionCopy : null,
@@ -23,7 +23,7 @@ var ActionController = Ember.Object.extend({
     
     'artToFrame', 'artPlay', 'artStop', 'artChange',
        
-    'gameWin', 'gameLose', 'gameEnd',
+    'gameWin', 'gameLose',
 
     'counterSet', 'counterUp', 'counterDown'
     
@@ -31,7 +31,7 @@ var ActionController = Ember.Object.extend({
    
   triggerIDs : [
   
-    'clickObject', 'clickArea', // 'clickStage',
+    'clickObject', 'clickArea',
     
     'touchObject', 'touchArea',
     'overlapObject', 'overlapArea',
@@ -45,15 +45,20 @@ var ActionController = Ember.Object.extend({
     'counterGreaterNumber', 'counterGreaterObject',
     'counterSmallerNumber', 'counterSmallerObject',
     
-    'gameIsWon', 'gameWasWon',
-    'gameIsLost', 'gameWasLost',
+    'gameWasWon',
+    'gameWasLost',
     'gameStart'
   
   ],
   
   deprecatedIDs : [
   
-    'clickSelf'
+    // action
+    'gameEnd',
+    
+    // trigger
+    'clickSelf',
+    'gameIsWon', 'gameIsLost', 
   
   ],
   
@@ -87,7 +92,7 @@ var ActionController = Ember.Object.extend({
     this.set( 'actionOption', ButtonOption.create({ 
       name: 'action', 
       question: 'Select the type of action',
-      buttons: ['move', 'art', 'counter', 'game'],
+      buttons: ['move', 'graphic', 'counter', 'game'],
       
       decisions: [
         
@@ -287,11 +292,11 @@ var ActionController = Ember.Object.extend({
           ]
         }),
         
-        // art
+        // graphic
         
         ButtonOption.create({ 
           name: 'art', 
-          question: 'What should the art do?',
+          question: 'What should the graphic do?',
           buttons: ['to frame', 'play', 'stop', 'change'],
           
           decisions: [
@@ -379,12 +384,11 @@ var ActionController = Ember.Object.extend({
         ButtonOption.create({ 
           name: 'game', 
           question: 'Choose what should happen to the game',
-          buttons: ['win', 'lose', 'end'],
+          buttons: ['win', 'lose'],
           
           decisions: [
             SaveOption.create({ choiceID: 'gameWin' }),
-            SaveOption.create({ choiceID: 'gameLose' }),
-            SaveOption.create({ choiceID: 'gameEnd' })
+            SaveOption.create({ choiceID: 'gameLose' })
           ] 
         })
         
@@ -604,44 +608,12 @@ var ActionController = Ember.Object.extend({
         ButtonOption.create({
           name: 'game',
           question: 'Trigger which game state?', 
-          buttons: ['won', 'lost'], 
+          buttons: ['is won', 'is lost'], 
           
           decisions: [
-            
-            // won
-            
-            ButtonOption.create({
-              name: 'gameWon',
-              question: 'Trigger which event?', 
-              buttons: ['is won', 'was won'], 
-              
-              decisions: [
-                
-                SaveOption.create({ choiceID: 'gameIsWon' }),
-                SaveOption.create({ choiceID: 'gameWasWon' })
-                
-              ]
-            }),
-            
-            // lost
-            
-            ButtonOption.create({
-              name: 'gameLost',
-              question: 'Trigger which event?', 
-              buttons: ['is lost', 'was lost'], 
-              
-              decisions: [
-                
-                SaveOption.create({ choiceID: 'gameIsLost' }),
-                SaveOption.create({ choiceID: 'gameWasLost' })
-                
-              ]
-            }),
-            
-            // start <hidden>
-            
-            SaveOption.create({ choiceID: 'gameStart' })
-            
+            SaveOption.create({ choiceID: 'gameWasWon' }),
+            SaveOption.create({ choiceID: 'gameWasLost' }),
+            SaveOption.create({ choiceID: 'gameStart' }) // start <hidden>
           ]
           
         })
@@ -662,7 +634,7 @@ var ActionController = Ember.Object.extend({
   
   reset : function( mode, action ) {
     
-    mode = mode || ( action.decisions[0].name === 'action' ? 'Action' : 'Trigger' );
+    mode = mode || ( action.decisions[0].name === 'action' ? 'action' : 'trigger' );
     
     this.set( 'action', action ? action.clone() : ActionTriggerModel.create() );
     this.set( 'actionCopy', action );
@@ -684,7 +656,7 @@ var ActionController = Ember.Object.extend({
       
       action.choice.option.reInsert( this.action );
       
-    } else if ( mode === 'Action' ) {
+    } else if ( mode === 'action' ) {
       
       this.actionOption.insert( this.action );
       
@@ -751,7 +723,7 @@ var ActionController = Ember.Object.extend({
   
   save : function() {
     
-    if ( this.mode === 'Action' ) {
+    if ( this.mode === 'action' ) {
     
       this.behaviour.addAction( this.action, this.actionCopy );
     

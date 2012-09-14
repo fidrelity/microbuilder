@@ -59,7 +59,6 @@ var Choice = Ember.Object.extend({
       
       case 'gameWin' : return 'win the game';
       case 'gameLose' : return 'lose the game';
-      case 'gameEnd' : return 'end the game';
 
       case 'counterUp' : return 'increase counter';
       case 'counterDown' : return 'decrease counter';
@@ -67,7 +66,6 @@ var Choice = Ember.Object.extend({
       
       // triggers
       
-      case 'clickSelf' : return 'click on self';
       case 'clickObject' : return 'click on ' + a.gameObject.name;
       case 'clickArea' : return 'click in area ' + a.area.string();
       
@@ -80,10 +78,8 @@ var Choice = Ember.Object.extend({
       case 'timeExact' : return 'after ' + a.time + '%';
       case 'timeRandom' : return 'sometime between ' + a.time + '-' + a.time2 + '%';
       
-      case 'gameIsWon' : return 'game is won';
-      case 'gameWasWon' : return 'game was won';
-      case 'gameIsLost' : return 'game is lost';
-      case 'gameWasLost' : return 'game was lost';
+      case 'gameWasWon' : return 'game is won';
+      case 'gameWasLost' : return 'game is lost';
       case 'gameStart' : return 'start';
 
       case 'counterGreaterNumber' : return 'counter greater than ' + action.counter;
@@ -528,8 +524,6 @@ var TimeOption = Option.extend({
   mode : 'exact',
   
   doInsert : function( reinsert ) {
-
-    console.log("doInser");
     
     if ( !reinsert ) {
       

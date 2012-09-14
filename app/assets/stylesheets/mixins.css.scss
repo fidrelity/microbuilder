@@ -1,0 +1,21 @@
+$bg: #F6F6F6;
+$font: #424755;
+$gray: #464646;
+$lightgray: #dedede;
+$white: #FFFFFF;
+$yellow: #fdc702;
+
+$red: #CD5654;
+$darkred: #AD3634;
+
+$orange: #E49548;
+$blue: #006A82;
+$green: #70B477;
+
+@mixin gradient($from, $to) {
+  background-color: $from;
+  background-image: -moz-linear-gradient($from, $to);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($from), to($to));
+  background-image: -webkit-linear-gradient($from, $to);
+  background-image: -o-linear-gradient($from, $to);
+}

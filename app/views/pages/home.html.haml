@@ -6,4 +6,6 @@
   .span4
     = render :partial => 'pages/user_box/login_form'
 
+= head_line( "featured", "games" )
+
 = render :partial => 'games/list_games', :locals => {:games => @games}

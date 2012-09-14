@@ -8,7 +8,36 @@ var Stage = function() {
   this.selectObject = null;
   this.selectedObjectCallback = function() {};
   
-  this.stageOffset = new Vector();
+  this.fsm = new StateMachine( this );
+  
+  this.fsm.init({
+  
+    initial : 'init',
+  
+    states : [
+      { name : 'init' },
+      { name : 'load' },
+    
+      { name : 'ready', enter : this.enterReady, draw : this.drawReady },
+      { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update },
+      { name : 'end', draw : this.draw, update : this.update },
+      
+      { name : 'fin' }
+    ],
+  
+    transitions : [
+      { name : 'parse', from : '*', to : 'load' },
+      { name : 'loaded', from : 'load', to : 'ready' },
+    
+      { name : 'start', from : '*', to : 'play', callback : this.reset },
+      { name : 'end', from : 'play', to : 'end', callback : this.onEnd },
+    
+      { name : 'finish', from : 'end', to : 'fin' },
+    
+      { name : 'reset', from : '*', to : 'ready' }
+    ]
+  
+  });
 
 };
 
@@ -18,10 +47,11 @@ Stage.prototype.constructor = Player;
 extend( Stage.prototype, {
   
   increment : { x : 149, y : 60 },
+  loadAnimated : false,
   
-  init : function( canvas ) {
+  init : function( _node ) {
     
-    Player.prototype.init.call( this, canvas );
+    Player.prototype.init.call( this, _node );
     
     this.mouse.handleDrag();
     
@@ -46,9 +76,6 @@ extend( Stage.prototype, {
     
       ctx.clearRect( -i.x, -i.y, 640 + 2 * i.x, 390 + 2 * i.y );
     
-      ctx.save();
-      ctx.translate( this.stageOffset.x, this.stageOffset.y );
-    
       this.game.draw( ctx );
     
       if ( this.selectObject ) {
@@ -61,9 +88,7 @@ extend( Stage.prototype, {
       
       }
       
-      this.drawTimeline( ctx, 0, 'rgba(125,125,125,0.5)' );
-      
-      ctx.restore();
+      this.drawTimeline( ctx, 0, '#888' );
       
       this.redraw = false;
     
@@ -77,14 +102,9 @@ extend( Stage.prototype, {
     
     ctx.clearRect( -i.x, -i.y, 640 + 2 * i.x, 390 + 2 * i.y );
     
-    ctx.save();
-    ctx.translate( this.stageOffset.x, this.stageOffset.y );
-    
     this.game.draw( ctx );
     
-    this.drawTimeline( ctx, this.timePlayed, 'rgba(200,200,0,0.5)' );
-    
-    ctx.restore();
+    this.drawTimeline( ctx, this.timePlayed, '#E49548' );
     
   },
   
@@ -93,14 +113,13 @@ extend( Stage.prototype, {
     var i = this.increment,
       g = this.game;
     
-    ctx.fillStyle = g.isWon ? 'rgba(0,255,0,0.5)' : ( g.isLost ? 'rgba(255,0,0,0.5)' : color );
-    
+    ctx.fillStyle = 'rgba(195,195,195,0.5)';
     ctx.fillRect( 0, 390 + i.y / 2 - 4, 640, 8 );
-    ctx.fillRect( 640 * timePlayed / g.duration - 8, 390 + i.y / 2 - 8, 16, 16 );
+    
+    ctx.fillStyle = g.isWon ? '#70B477' : ( g.isLost ? '#CD5654' : color );
+    ctx.fillRect( 0, 390 + i.y / 2 - 4, 640 * timePlayed / g.duration, 8 );
     
   },
-  
-  onReady : function() {},
   
   enterReady : function() {
     
@@ -127,13 +146,21 @@ extend( Stage.prototype, {
   
   onEnd : function() {
     
+    var self = this;
+    
     this.draw( this.ctx );
+    
+    setTimeout( function() {
+      
+      self.fsm.finish();
+      
+    }, this.endDelay );
     
   },
   
   click : function() {
     
-    if ( this.fsm.hasState( 'end' ) ) {
+    if ( this.fsm.hasState( 'end' ) || this.fsm.hasState( 'fin' ) ) {
       
       this.fsm.reset();
       
@@ -143,12 +170,11 @@ extend( Stage.prototype, {
   
   mousedown : function( mouse ) {
     
-    var object = this.selectObject,
-      mousePos = mouse.pos.sub( this.stageOffset );
+    var object = this.selectObject;
     
-    if ( !object || !object.getGraphicArea().contains( mousePos ) ) {
+    if ( !object || !object.getGraphicArea().contains( mouse.pos ) ) {
       
-      object = this.game.getGameObjectAt( mousePos );
+      object = this.game.getGameObjectAt( mouse.pos );
       
     } 
     
@@ -165,10 +191,6 @@ extend( Stage.prototype, {
     if ( object ) {
       
       object.movement.movePosition( mouse.move );
-      
-    } else if ( this.ctx.debug ) {
-      
-      this.stageOffset.addSelf( mouse.move );
       
     }
     

@@ -1,20 +1,21 @@
 %ul{:id => 'gameLayer', :class => "thumbnails span10 layer"}
 
-  %p
+  .span4
     = will_paginate games, :param_name => :games, :container => false, :page_links => false, :show_always => false
+  %br
 
   - games.each do |game|
 
     %li{:id => game.id, :class => "span3"}
-          
+      
       .thumbnail                                                  
         = link_to image_tag(game.preview_image), play_path(game)
-      
+  
         %h4{:style => "margin-top:3px;"}
           = limit_string( game.title )
-        
+    
         .row{:style => "margin-top:3px;"}
-          
+      
           .span1{:style => "width:50px;"}
             %span{:class=>"label label-#{game.difficulty_bootstrap_class}"}
               = game.difficulty_in_words
@@ -37,7 +38,7 @@
 
             .row
               .span3{:class => "wrapper"}
-              
+          
                 =link_to(game_path(game), :method => :delete, :confirm => "Permanently delete this game?") do
-                  %i{:class => "icon-trash icon-white"}
+                  %i{:class => "icon-trash"}
                   delete

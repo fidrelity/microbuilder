@@ -1,83 +1,122 @@
-$bg: #fff;
-$font: #000;
-$red: #c11924;
-$gray: #464646;
-$lightgray: #dedede;
-$white: #FFFFFF;
-$yellow: #fdc702;
+@import "mixins";
 
 body {
-  background:#F6F6F6;
-  color:#333;
-  font-family: 'Droid Sans', sans-serif;
+  background-color: $bg;
+  background: url("/assets/bg.png");
+  color: $font;
+  font-family: 'Helvetica Neue Bold', 'Helvetica', 'Arial', sans-serif;
   margin-bottom:1em;
 }
 
-/* Header */
-/* ---------------------------------- */
-
-@font-face {
-  font-family: 'Japan';
-  src: url("/assets/Japan.ttf") format('truetype');
-  font-weight: normal;
-  font-style: normal;
+a {
+  color: $red;
 }
 
-#header {
-  margin-top: 2em;
+a:hover {
+  color: $darkred;
 }
 
-.line {
-  border-bottom:1px solid #CCC;
-  margin-bottom: 1.5em;
+.page-header, .section-header {
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  text-transform: lowercase;
+  padding-left: 5px;
+  margin: 0;
+}
+
+.page-header span, .section-header span {
+  font-weight: lighter;
+}
+
+.section-header {
+  margin-bottom: 5px;
 }
 
 #flash-template{
   display: none;
 }
 
-#header h1 {
-  font-size: 34pt;
-  font-family: 'Japan', sans-serif;
-  color: #BAD666 !important;
-  text-shadow: 2px 2px 0 #333;
-  margin: 3px 7px 5px 0;
-  float: left;
-}
+/* Header */
+/* ---------------------------------- */
 
-#header h1 a, #header h1 a:visited {
-  text-decoration: none;
-}
-
-#header h2 {
-  font-size: 7pt;
-  font-family: 'Helvetica Neue Bold', sans-serif;
-  text-transform:uppercase;
-  color: #BBB;
-  line-height: 10px;
-  float: left;
-  width: 70px;
-  margin-top: 5px;
-}
-
-#header #logo {
-  background: url("/assets/logo.png");
-  width: 150px;
-  height: 60px;
-  margin-top: -7px;
-}
-
-#header #menu {
-  font-size:22px;
-  margin: 3px 0 0 30px;
-}
-
-#header .nav a, .nav a:visited {
-  color:#222;
-}
-
-#header .profile {
-  margin-top: 5px;
+#header {
+  height: 36px;
+  margin: 15px 0 15px;
+  padding: 25px 18px 10px;
+  
+  border-radius: 4px;
+  @include gradient(#FEFEFE, #EFEFEF);
+  box-shadow: 0 1px 1px #999;
+  
+  h1, h2 {
+    display: none;
+  }
+  
+  #first, #menu, #search {
+    float: left;
+  }
+  
+  #logo {
+    background: url("/assets/header/logo_red.png");
+    width: 150px;
+    height: 55px;
+    margin-top: -16px;
+  }
+  
+  &:after {
+    clear: both;
+  }
+  
+  #menu {
+    margin-left: 75px;
+    border-left: 1px solid #E3E3E3;
+    border-right: 1px solid #FFF;
+    list-style: none;
+    
+    li {
+      float: left;
+      border-right: 1px solid #E3E3E3;
+      border-left: 1px solid #FFF;
+      padding: 7px 10px 3px;
+      
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    
+    #paint a:hover { color: $blue; }
+    #build a:hover { color: $orange; }
+    #play a:hover { color: $red; }
+    a, a:visited { color: $font; }
+    a:hover { text-decoration: none; }
+  }
+  
+  #search {
+    margin-left: 75px;
+    margin-top: 0;
+    border-right: 1px solid #FFF;
+    
+    .searchbox {
+      padding-left: 8px;
+      font-style: italic;
+    }
+    
+    #submit {
+      background-image: url("/assets/header/search.png");
+      width: 36px;
+      height: 30px;
+      border: none;
+      background-color: transparent;
+      border-right: 1px solid #E3E3E3;
+    }
+  }
+  
+  #profile .lock {
+    width: 14px;
+    padding: 4px 7px;
+  }
 }
 
 #fb_login a, #facebook_login a:visited {
@@ -86,9 +125,49 @@ body {
 
 /* Home */
 
+.welcome {
+  
+  width: 600px;
+  padding-left: 20px;
+  text-shadow: 0 1px 0 #CBCBCB;
+  
+  h2 {
+    font-size: 30px;
+    letter-spacing: -2px;
+    margin-bottom: 7px;
+  }
+  
+  p, small {
+    font-size: 18px;
+    line-height: 25px;
+    font-style: italic;
+  }
+  
+  small {
+    color: #9298A0;
+    margin-top: 20px;
+  }
+  
+  .btn {
+    margin-top: 15px;
+  }
+  
+}
+
 .heroExt {
   background:#333;color:#FFF;padding:1.7em;
 }
+
+.guideButtons {
+  width: 200px;
+/*  margin-top: 48px;*/
+  
+  .btn {
+    display: block;
+    margin-bottom: 10px;
+  }
+}
+
 
 .avatar_profile {
   height: 220px;
@@ -116,10 +195,6 @@ body {
   width: 20px;
   overflow: hidden;
   display: inline-block;
-}
-
-#createAccountButton {
-  width:100%;
 }
 
 /* Loading overlay */
@@ -198,9 +273,9 @@ body {
 }
 
 #profile .settings {
-  border-top:1px solid #EEE;
-  background:#222;
+  border-top: 1px solid #CCC;
   margin-top:5px;
+  padding-top: 2px;
 }
 
 #profile .settings .wrapper {
@@ -241,56 +316,56 @@ body {
 /* Activity Stream */
 
 #messages {
-  height:128px;
-  overflow:hidden;
+  margin-bottom: 20px;
 }
 
 #messages .stream-image, #messages-public .stream-image {
   margin-right: 5px;
 }
 
-#messages-public {
-  height: 126px;
-}
-
 #messages ul, #messages-public ul {
   list-style-type: none;
   margin:0; padding:0;
-  max-height:80%;
+  height: 90px;
   overflow: auto;
+  box-shadow: 0 0 5px #888 inset;
 }
 
-#messages h3, #messages-public h3 {
-  margin-bottom: 0.5em;
+#messages ul {
+  height: 100px;
 }
 
 #messages ul li, #messages-public ul li {
   padding-bottom: 4px;
   border-bottom:1px solid #EEE;
   margin-bottom: 5px;
-}
-
-#messages-public ul li {
-  border-bottom:1px solid #444;
+  padding-left: 10px;
 }
 
 /* Gallery */
 /* ---------------------------------- */
 
-#gamesList .gameAuthor {
-  position:absolute; top:99px; right:6px;
-  width:30px; height:30px; z-index:300; display: inline;
-  background-size: cover;
-  background-repeat: no-repeat;
-  border:1px solid #222;
-}
-
-#gamesList .gameAuthor:hover {
-  border:1px solid #F6F6F6; 
-}
-
-#gamesList h4, #gamesList .gameDetails {
-  margin-top:5px;  
+#gamesList { 
+  
+  .gameAuthor {
+    position:absolute; top:99px; right:6px;
+    width:30px; height:30px; z-index:300; display: inline;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border:1px solid #222;
+    
+    &:hover {
+      border:1px solid #F6F6F6; 
+    }
+  }
+  
+  h4, .gameDetails {
+    margin-top:5px;
+  }
+  
+  img {
+    height: 130px;
+  }
 }
 
 .share_button { display: inline;}
@@ -367,7 +442,7 @@ canvas {
 }
 
 #playGame .authorImage {
-  height:40px;
+  height: 30px;
 }
 
 #playGame #ratingWrapper {

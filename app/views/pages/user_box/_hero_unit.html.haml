@@ -1,19 +1,28 @@
-%div{ :class => "hero-unit heroExt"}
+-if user_signed_in?
 
-  -if user_signed_in?
-    #messages-public
-      = render :partial => 'shared/stream', :locals => {:messages => @messages}
+  #messages-public
+    = render :partial => 'shared/stream', :locals => {:messages => @messages}
 
-  - else
+- else
 
+  .welcome
+    
     %h2
-      Play and Build Microgames*
-      %p
-        Ever wanted to build your own games and share it with your friends? Here you can! Paint you own graphics, build your game and release it!
-        All you need is your browser and imagination!
+      Welcome to Playtin!
       
-      %p{:class => "pull-right"}
-        = link_to "Start building now", build_path, :class => "btn btn-primary btn-large"
-        
-      %small
-        * no programming skills required.
+    %p
+      Ever wanted to build your own game and share 
+      it with your friends?
+      %br
+      Here you can! Paint your 
+      own graphics, create your game and release it!
+      All you need is your browser and imagination!*
+      
+    %small{:class => "pull-right"}
+      * no programming skills required.
+      
+    %div
+    
+      = link_to "visit tour", build_path, :class => "btn btn-large"
+    
+      = link_to "sign up", new_user_registration_path, :class=>"btn btn-large"
