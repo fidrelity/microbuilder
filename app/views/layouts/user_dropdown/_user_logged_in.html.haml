@@ -9,10 +9,10 @@
   %ul{:class => "dropdown-menu"}
 
     %li{:class => ""}      
-      =link_to "Profile", user_path(current_user)
+      =link_to "profile", user_path(current_user)
 
     %li{:class => ""}      
-      =link_to "Imprint", imprint_path
+      =link_to "imprint", imprint_path
 
     %li{:class => ""}
-      =link_to "Logout", destroy_user_session_path, :method => :delete
+      =link_to "logout", destroy_user_session_path, :method => :delete

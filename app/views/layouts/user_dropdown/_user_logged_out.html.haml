@@ -9,7 +9,7 @@
   %ul{:class => "dropdown-menu"}
 
     %li
-      =link_to "sign in", new_session_path(:user)
+      =link_to "sign in", new_user_session_path
 
     %li{:id => "fb_login"}
       =link_to "facebook login", user_omniauth_authorize_path(:facebook)

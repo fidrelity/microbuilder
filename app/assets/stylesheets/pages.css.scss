@@ -123,6 +123,7 @@ a:hover {
 
 .welcome {
   
+  width: 600px;
   padding-left: 20px;
   text-shadow: 0 1px 0 #CBCBCB;
   
@@ -140,6 +141,11 @@ a:hover {
   
   small {
     color: #9298A0;
+    margin-top: 20px;
+  }
+  
+  .btn {
+    margin-top: 15px;
   }
   
 }
@@ -147,6 +153,17 @@ a:hover {
 .heroExt {
   background:#333;color:#FFF;padding:1.7em;
 }
+
+.guideButtons {
+  width: 200px;
+/*  margin-top: 48px;*/
+  
+  .btn {
+    display: block;
+    margin-bottom: 10px;
+  }
+}
+
 
 .avatar_profile {
   height: 220px;
@@ -331,20 +348,27 @@ a:hover {
 /* Gallery */
 /* ---------------------------------- */
 
-#gamesList .gameAuthor {
-  position:absolute; top:99px; right:6px;
-  width:30px; height:30px; z-index:300; display: inline;
-  background-size: cover;
-  background-repeat: no-repeat;
-  border:1px solid #222;
-}
-
-#gamesList .gameAuthor:hover {
-  border:1px solid #F6F6F6; 
-}
-
-#gamesList h4, #gamesList .gameDetails {
-  margin-top:5px;  
+#gamesList { 
+  
+  .gameAuthor {
+    position:absolute; top:99px; right:6px;
+    width:30px; height:30px; z-index:300; display: inline;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border:1px solid #222;
+    
+    &:hover {
+      border:1px solid #F6F6F6; 
+    }
+  }
+  
+  h4, .gameDetails {
+    margin-top:5px;
+  }
+  
+  img {
+    height: 130px;
+  }
 }
 
 .share_button { display: inline;}

@@ -1,50 +1,45 @@
+<%= head_line("sign", "in") %>
+
 <div class="row">
 
-  <div class="span12">
-
-    <div class="span4 well">
-
-      <h2>Login</h2>
-      
-      <div class="form">
-
-        <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-        
-          <label><%= f.label :email %></label>
-          <%= f.email_field :email %>
-          
-          <label><%= f.label :password %></label>
-          <%= f.password_field :password %>
-          
-          <p><button type="submit" class="btn">sign in</button></p>
-
-          <p class="checkbox">
-            <% if devise_mapping.rememberable? -%>
-              <%= f.check_box :remember_me %> <%= f.label :remember_me %>
-            <% end -%>
-          </p>
-
-        <% end %>
+  <div class="span3 well">
     
-        <p class="misc"><%= link_to "Forgot your password?", new_password_path(resource_name) %></p>
+    <div class="form">
 
-      </div>
-
-    </div>
-
-    <div class="span6">
-      If you don't already have an account you can
-      <p>
-         <%= link_to "create a new account", new_user_registration_path, :class=>"btn btn-success btn-large" %>
-      </p>
-
+      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
       
-      You can also skip the whole registration process by using
-      <p>
-        <%= link_to(image_tag("facebook_login.png"), user_omniauth_authorize_path(:facebook)) %>
-      </p>
+        <label><%= f.label :email %></label>
+        <%= f.email_field :email %>
+        
+        <label><%= f.label :password %></label>
+        <%= f.password_field :password %>
+        
+        <p><button type="submit" class="btn">sign in</button></p>
+
+        <p class="checkbox">
+          <% if devise_mapping.rememberable? -%>
+            <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+          <% end -%>
+        </p>
+
+      <% end %>
+  
+      <p class="misc"><%= link_to "Forgot your password?", new_password_path(resource_name) %></p>
+
     </div>
 
+  </div>
+
+  <div class="span8 well">
+    <p>If you don't already have an account you can</p>
+    <p>
+       <%= link_to "create a new account", new_user_registration_path, :class=>"btn btn-success btn-large" %>
+    </p>
+
+    <p>You can also skip the whole registration process by using</p>
+    <p>
+      <%= link_to(image_tag("facebook_login.png"), user_omniauth_authorize_path(:facebook)) %>
+    </p>
   </div>
 
 </div>

@@ -31,7 +31,7 @@ var Feedback = {
 
       var newX = ($(document).width() / 2) - (Feedback.wrapper.width() / 2);
       var newY = 200;
-      Feedback.wrapper.css({left: newX, top: newY}).fadeIn(800);
+      Feedback.wrapper.css({left: newX, top: newY}).fadeIn(300);
       Feedback.subject.focus();
 
     }
