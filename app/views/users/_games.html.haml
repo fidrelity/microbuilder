@@ -1,7 +1,7 @@
-%ul{:id => 'gameLayer', :class => "thumbnails span10 layer"}
+%ul{:id => 'gamesLayer', :class => "thumbnails span10 layer"}
 
   .span4
-    = will_paginate games, :param_name => :games, :container => false, :page_links => false, :show_always => false
+    = will_paginate games, :param_name => :games, :container => false, :page_links => false, :show_always => false, :params => {:current => "games"}
   %br
 
   - games.each do |game|

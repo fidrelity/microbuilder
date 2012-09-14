@@ -1,7 +1,7 @@
 %ul{:id => 'graphicsLayer', :class => "thumbnails span10 layer"}
 
   .span4
-    = will_paginate graphics, :param_name => :graphics, :container => false, :page_links => false, :show_always => false
+    = will_paginate graphics, :param_name => :graphics, :container => false, :page_links => false, :show_always => false, :params => {:current => "graphics"}
   %br
 
   - graphics.each do |graphic|
@@ -33,10 +33,10 @@
                   delete
 
 
-%ul{:id => "backgroundLayer", :class => "thumbnails span10 layer"}
+%ul{:id => "backgroundsLayer", :class => "thumbnails span10 layer"}
 
   .span4
-    = will_paginate backgrounds, :param_name => :backgrounds, :container => false, :page_links => false, :show_always => false
+    = will_paginate backgrounds, :param_name => :backgrounds, :container => false, :page_links => false, :show_always => false, :params => {:current => "backgrounds"}
   %br
     
   - backgrounds.each do |graphic|

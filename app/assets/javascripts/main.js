@@ -108,6 +108,13 @@ function player_main( data, game_id ) {
   
 };
 
+function getURLParameter(name) {
+  return decodeURI(
+    (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+  );
+}
+
+
 // Realtime events with pusher.com
 function pusher_main() {
 

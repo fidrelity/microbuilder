@@ -18,7 +18,7 @@
         Graphics
         = "(#{@graphics.count})"
 
-      %button{:class => "btn backgroundButton tabButton"}
+      %button{:class => "btn backgroundsButton tabButton"}
         Backgrounds
         = "(#{@backgrounds.count})"
         
@@ -29,3 +29,6 @@
       :backgrounds => @backgrounds,
       :backgrounds_size => @backgrounds.count,
       :graphics_size => @graphics.count}
+      
+    :javascript
+      var current_tab = "games";

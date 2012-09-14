@@ -138,17 +138,23 @@ $(document).ready(function() {
     toggleProfileEdit( $(this) );    
   });  
   
+  var current_tab = getURLParameter('current');
+  var current_layer = $('#' + current_tab + 'Layer');
+  var current_button = $('.' + current_tab + 'Button');
+
+  toggleLayer(current_layer, current_button);
+  
   // Tabs
   $('.gamesButton').click(function() {
-    toggleLayer($('#gameLayer'), $(this));    
+    toggleLayer($('#gamesLayer'), $(this));
   });  
 
   $('.graphicsButton').click(function() {
     toggleLayer($('#graphicsLayer'), $(this));     
   });  
 
-  $('.backgroundButton').click(function() {
-    toggleLayer($('#backgroundLayer'), $(this));     
+  $('.backgroundsButton').click(function() {
+    toggleLayer($('#backgroundsLayer'), $(this));     
   }); 
 
   // Stream resize
