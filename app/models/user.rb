@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
   end
   
   def gravatar_image_url
-    "http://www.gravatar.com/avatar/#{gravatar_email_hash}?s=180"
+    "http://www.gravatar.com/avatar/#{gravatar_email_hash}?s=180&d=monsterid"
   end
   
   private
