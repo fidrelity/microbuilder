@@ -14,7 +14,7 @@ class GameCommentsController < ApplicationController
     @comment = GameComment.find(params[:id])
     if @comment.user == current_user
       @comment.destroy
-      flash[:notice] = "Successfully deleted comment"
+      flash[:success] = "Successfully deleted comment"
     end
     #redirect_to user_path(@game.author)
   end

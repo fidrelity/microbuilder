@@ -30,7 +30,11 @@ function editor_main( data, username ) {
     
     console.log( data );
     
-    App.gameController.loadGame( data );
+    if ( App.gameController.loadGame( data ) ) {
+      
+      Notifier.add( 'An unfinished game was found and loaded', 'info' ).notify();
+      
+    }
     
   }
 

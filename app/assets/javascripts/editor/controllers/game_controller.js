@@ -279,7 +279,7 @@ var GameController = Ember.Object.extend({
           
           alert( 'game could not be loaded' );
           
-          return;
+          return false;
           
         }
         
@@ -290,6 +290,8 @@ var GameController = Ember.Object.extend({
     }
     
     App.mainView.$( '#slider' ).slider( 'value', [game.duration] );
+    
+    return true;
     
   },
   

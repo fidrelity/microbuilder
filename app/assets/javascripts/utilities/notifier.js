@@ -34,6 +34,8 @@ var Notifier = {
   add : function(_msg, _type) {
     if(!_msg) return false;
     var type = _type || "info";
+    
+    console.log(_msg, _type);
 
     Notifier.queue.push(new Notification(_msg, _type));    
     return Notifier;
