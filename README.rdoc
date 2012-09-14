@@ -1,6 +1,31 @@
 == IMPORTANT NOTE
 == DO NOT WORK AT MASTER BRANCH - NEVER. thx.
 
+== Instructions
+
+= setup heroku
+
+  gem install heroku
+  git remote add heroku git@heroku.com:playtin.git
+  heroku keys add ~./.ssh/id_rsa.pub
+
+= deploy steps
+
+  git checkout -b deploy
+  rake assets:precompile (test if everything works)
+  git add .
+  git commit -m "compiled assets"
+  git push heroku deploy:master (git push -f heroku deploy:master)
+
+if migrations:
+  heroku run rake db:migrate
+
+  git checkout master
+  git branch -D deploy
+
+
+== Game JSON
+
   game : {
     version : <int>
   
@@ -120,3 +145,6 @@ removed trigger : { ID : clickSelf }
 removed trigger : { ID : gameIsWon }
 removed trigger : { ID : gameIsLost }
 removed action : { ID : gameEnd }
+
+
+
