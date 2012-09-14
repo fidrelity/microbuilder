@@ -4,6 +4,6 @@
 
     <div class="name"> {{content.name}} </div>
 
-    <div class="movehandle" style="position:absolute;bottom:3px;left:-2px;height:15px"></div>
+    <div class="movehandle" style="position:absolute;bottom:2px;left:-2px;height:14px"></div>
 
 </div>

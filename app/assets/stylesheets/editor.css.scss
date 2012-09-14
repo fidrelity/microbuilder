@@ -1,3 +1,5 @@
+@import "mixins";
+
 /* EDITOR */
 /* ---------------------------------- */
 
@@ -67,9 +69,11 @@
   background-color: #EEE;
   box-shadow: 2px 2px 10px #888;
   overflow: auto;
+  border-radius: 4px;
 }
 
 #editor .overlay .overlayhead {
+  margin: 0;
   padding: 8px 16px 4px;
   background-color: #DDD;
 }
@@ -102,7 +106,7 @@
 
 #editor .overlay .objectsRight {
   padding: 15px;
-  width: 580px;
+  width: 590px;
 }
 
 #editor .overlay .content {
@@ -133,7 +137,7 @@
 }
 
 #editor #behaviours .head .headtitle {
-  padding: 6px 9px 0;
+  padding: 6px 9px 5px;
   font-weight: bold;
 }
 
@@ -220,7 +224,7 @@
 #editor .gameObject {
   overflow: hidden;
   width:96px; 
-  height:118px;
+  height:116px;
 }
 
 #editor .gameObjectThumb {
@@ -228,13 +232,6 @@
   height: 96px;
   border: 1px solid #CCC;
   background: url("/assets/editor/pattern_light.png");
-}
-
-#editor .gameObject .name,  {
-  padding-top:2px;
-  height:18px;
-  text-align:center;
-  background-color: #DDD;
 }
 
 #editor .graphic {
@@ -246,7 +243,6 @@
 #editor .graphic .name {
   position: absolute;
   width:100%;
-  padding-top: 4px;
   bottom: 0;
   text-align: center;
   background-color: #DDD;

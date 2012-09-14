@@ -2,7 +2,7 @@
 
   <div>
     <div class="stageControls">
-      <div class="btn-group left">
+      <div class="left">
         <button class="btn-large btn-primary" {{action "showObjects" target="App.gameController"}}> 
           objects </button>
         <button class="btn-large btn-primary" {{action "searchBackground" target="App.gameController"}}>

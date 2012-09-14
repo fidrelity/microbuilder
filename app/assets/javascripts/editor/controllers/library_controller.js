@@ -86,7 +86,7 @@ var LibraryController = Ember.ArrayController.extend({
   
   thumbSizeHeight : function() {
     
-    return ( this.showBackground ? 98 : 96 ) + 22;
+    return ( this.showBackground ? 98 : 96 ) + 20;
     
   }.property( 'showBackground' ),
   

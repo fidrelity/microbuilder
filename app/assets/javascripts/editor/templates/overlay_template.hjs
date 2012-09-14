@@ -2,7 +2,7 @@
 
   <div class="overlay">
 
-    <h4 class="overlayhead">{{heading}}</h4>
+    <h5 class="overlayhead">{{heading}}</h5>
 
     <button class="closeButton" {{action "hideOverlay" target="App.mainView"}}> &times; </button>
 

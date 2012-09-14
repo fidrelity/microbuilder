@@ -12,6 +12,8 @@ $orange: #E49548;
 $blue: #006A82;
 $green: #70B477;
 
+$button-green: #74BA7B;
+
 @mixin gradient($from, $to) {
   background-color: $from;
   background-image: -moz-linear-gradient($from, $to);
