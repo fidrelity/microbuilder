@@ -1,15 +1,15 @@
-== IMPORTANT NOTE
-== DO NOT WORK AT MASTER BRANCH - NEVER. thx.
+= IMPORTANT NOTE
+= DO NOT WORK AT MASTER BRANCH - NEVER. thx.
 
 == Instructions
 
-= setup heroku
+=== setup heroku
 
   gem install heroku
   git remote add heroku git@heroku.com:playtin.git
   heroku keys add ~./.ssh/id_rsa.pub
 
-= deploy steps
+=== deploy steps
 
   git checkout -b deploy
   rake assets:precompile (test if everything works)
