@@ -73,7 +73,7 @@
   background-image: url("/assets/player/play_button.png");
   
   &:hover {
-/*    opacity: 0.9 !important;*/
+    opacity: 0.9 !important;
   }
 }
 
@@ -106,16 +106,21 @@
 
     .instruction {
       @include big_font;
-      margin: 30px 40px 30px;
+      margin: 25px 40px 25px;
+      padding: 5px 10px;
       line-height: 28px;
       text-align: center;
+      border-radius: 4px;
+      background: white;
+      font-weight: bold;
+      color: $red;
     }
     
     #counter {
       font-size: 100px;
       margin: 10px 0;
       text-align: center;
-      color: $red;
+      color: white;
       line-height: 70px;
     }
     
