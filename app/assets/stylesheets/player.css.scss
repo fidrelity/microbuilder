@@ -19,16 +19,41 @@
   @include abs;
   width: 640px; height: 390px;
   background-color: $font;
-  opacity: 0.8;
 }
 
 #player {
   position: relative;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #player #playerCanvas {
   display: block;
   background: white;
+}
+
+#player .playerUI {
+  display: none;
+  @include abs;
+  width: 640px;
+  height: 390px;
+  overflow: hidden;
+}
+
+/* --- Load --- */
+
+#player .loadScreen {
+  display: none;
+  @include abs;
+  @include big_font;
+  color: $font;
+  width: 640px;
+  text-align: center;
+  top: 205px;
 }
 
 /* --- Title --- */
@@ -48,103 +73,94 @@
   background-image: url("/assets/player/play_button.png");
   
   &:hover {
-    opacity: 0.8;
+/*    opacity: 0.9 !important;*/
   }
-}
-
-#player .loader {
-  display: none;
-  @include abs;
-  @include big_font;
-  color: $font;
-  width: 640px;
-  text-align: center;
-  top: 205px;
 }
 
 #player .titleBar {
   @include abs;
-  top: 330px;
-  margin: 24px 0 0 16px;
-}
-
-#player .titleBar strong {
-  @include big_font;
-}
-
-#player .titleBar span {
-  @include small_font;
-}
-
-#player .titleBg {
-  @include bg;
-  top: 330px;
-  height: 60px;
-}
-
-/* --- Start --- */
-
-#player .startScreen {
+  top: 390px;
   
-  display: none;
-  
-  .startBg {
-    @include bg;
-  }
-  
-  .startBar {
+  .titleText {
+    
     @include abs;
-    top: 120px;
-    width: 640px;
-    text-align: center;
+    margin: 24px 16px;
+    width: 608px;
+    height: 355px;
+    
+    strong {
+      @include big_font;
+    }
+    
+    span {
+      @include small_font;
+    }
 
     h2 {
       @include small_font;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      letter-spacing: 5px;
+      border-top: 1px solid white;
+      margin-top: 20px;
     }
 
     .instruction {
       @include big_font;
-      width: 500px;
-      margin: 30px 70px 50px;
+      margin: 30px 40px 30px;
+      line-height: 28px;
+      text-align: center;
     }
-
-    p {
+    
+    #counter {
+      font-size: 100px;
+      margin: 10px 0;
+      text-align: center;
+      color: $red;
+      line-height: 70px;
+    }
+    
+    small {
+      display: block;
       @include small_font;
+      text-align: center;
+    }
+    
+    .noticeMouse {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+    
+    .noticeGame {
+      font-size: 16px;
     }
 
   }
-
+  
+  .titleBg {
+    @include bg;
+  }
 }
 
 /* --- End --- */
 
 #player .endScreen { 
-  
-  .bg {
-    @include bg;
-    height : 60px;
-  }
-  
-  h2 {
-    @include big_font;
-    @include abs;
-    margin-top: 16px;
-    width: 640px;
-    text-align: center;
-  }
-  
+  display: none;
+  font-size: 44px;
+  font-weight: bold;
+  @include abs;
+  margin-top: 56px;
+  width: 640px;
+  text-align: center;
+  @include outline(#FFF);
 }
 
 #player .winScreen {
-  display: none;
-  h2 { color: $green; }
+  color: $green;
 }
 
 #player .loseScreen {
-  display: none;
-  h2 { color: $red; }
+  color: $red;
 }
 
 /* --- Error --- */
@@ -195,7 +211,7 @@
 }
 
 #player .playerTime {
-  width : 44px;
+  width: 44px;
   height: 20px;
   font-family: "Arial", sans-serif;
   border-right: 1px solid #B6B6B6;

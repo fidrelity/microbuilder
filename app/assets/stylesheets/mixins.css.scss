@@ -21,3 +21,15 @@ $button-green: #74BA7B;
   background-image: -webkit-linear-gradient($from, $to);
   background-image: -o-linear-gradient($from, $to);
 }
+
+@mixin outline($color) {
+  text-shadow:
+    -1px -1px 0 $color,
+    1px -1px 0 $color,
+    -1px 1px 0 $color,
+    1px 1px 0 $color,
+    -1px 0 0 $color,
+    1px 0 0 $color,
+    0 1px 0 $color,
+    0 -1px 0 $color;
+}

@@ -93,7 +93,7 @@ function player_main( data, game_id ) {
     player.init( $( '#player' ) );
     player.startRunloop();
     
-    //player.debug();
+    // player.debug();
   
     if ( data ) {
   
@@ -190,3 +190,11 @@ function pusher_main() {
   // -----------------------------------------------
 };
 
+(function($){
+    $.fn.disableSelection = function() {
+        return this
+                 .attr('unselectable', 'on')
+                 .css('user-select', 'none')
+                 .on('selectstart', false);
+    };
+})(jQuery);

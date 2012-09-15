@@ -5,7 +5,7 @@
     <br />
 
     <h4>instructions</h4>
-    {{view Ember.TextArea valueBinding="App.game.instructions" placeholder="game instructions" maxlength="140"}}
+    {{view Ember.TextArea valueBinding="App.game.instructions" placeholder="game instructions" maxlength="100"}}
     <br />
 
     <h4>tags</h4>
