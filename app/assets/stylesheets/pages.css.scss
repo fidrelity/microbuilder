@@ -32,7 +32,7 @@ a:hover {
 }
 
 .section-header {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 #flash-messages ul {
@@ -343,7 +343,7 @@ a:hover {
 #messages ul li, #messages-public ul li {
   padding-bottom: 4px;
   border-bottom:1px solid #EEE;
-  margin-bottom: 5px;
+  margin-top: 5px;
   padding-left: 10px;
 }
 
@@ -482,13 +482,13 @@ canvas {
 }
 
 #playGame .likeButton {
-  padding-left: 18px;  
-  background:url("bootstrap/like.png") no-repeat;
+  padding-left: 18px;
+  background:url("/assets/like.png") no-repeat;
 }
 
 #playGame .dislikeButton {
-  padding-left: 18px;  
-  background:url("bootstrap/dislike.png") no-repeat;  
+  padding-left: 18px;
+  background:url("/assets/dislike.png") no-repeat;
 }
 
 #commentsWrapper .comments {

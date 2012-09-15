@@ -139,9 +139,18 @@ $(document).ready(function() {
   });  
   
   var current_tab = getURLParameter('current');
+  
+  if ( current_tab === 'null' ) {
+    
+    current_tab = 'games';
+    
+  }
+  
+  console.log( current_tab );
+  
   var current_layer = $('#' + current_tab + 'Layer');
   var current_button = $('.' + current_tab + 'Button');
-
+  
   toggleLayer(current_layer, current_button);
   
   // Tabs
@@ -155,7 +164,7 @@ $(document).ready(function() {
 
   $('.backgroundsButton').click(function() {
     toggleLayer($('#backgroundsLayer'), $(this));     
-  }); 
+  });
 
   // Stream resize
   var messageWrapper = $("#messages");

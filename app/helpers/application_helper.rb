@@ -19,6 +19,12 @@ module ApplicationHelper
     return raw( "<h2 class='section-header'>" + first + "<span>" + second + "</span></h2>" )
   
   end
+  
+  def add_icon( str, icon )
+  
+    return raw( "<i class='" + icon + "'></i>" + str )
+  
+  end
 
   def limit_string( str, limit = 10 )
     return str if str.length <= limit
