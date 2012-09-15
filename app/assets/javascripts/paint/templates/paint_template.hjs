@@ -1,4 +1,4 @@
-<h2 class="page-header">paint<span>{{type}}</span></h2>
+<h2 class="page-header">paint<span>{{type}}</span> <small>{{width}}x{{height}}</small></h2>
 
 <div id="paint-wrapper">
 
@@ -115,7 +115,7 @@
 
 <div class="submit well row form-horizontal">
 
-  <button class="btn btn-warning span1 left ttipBottom" style="margin-left:0" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}>Cancel</button>
+  <button class="btn btn-warning left ttipBottom" style="margin-left:0" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}>cancel</button>
   
   <div class="span3 offset5 form-inline">
 
@@ -127,6 +127,6 @@
 
   </div>
 
-  <button class="btn btn-large btn-success span2 pull-right" {{action "save" target="App.paintController"}}>Save image</button>
+  <button class="btn btn-large btn-success span2 pull-right" {{action "save" target="App.paintController"}}>save image</button>
 
 </div>

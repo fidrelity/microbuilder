@@ -238,6 +238,12 @@ var GameController = Ember.Object.extend({
     
     var game = App.game, i, ret;
     
+    if ( !data.gameObjects || !data.gameObjects.length ) {
+      
+      return false;
+      
+    }
+    
     game.set( 'title', data.title );
     game.set( 'instructions', data.instructions );
     

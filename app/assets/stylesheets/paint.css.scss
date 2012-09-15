@@ -123,7 +123,10 @@
 
 #paint-wrapper .tool-bar button.toggleBgButton {
   background:#FFF;
-  border:1px solid #111;
+  height: 26px;
+  width: 26px;
+  min-width: 26px;
+  margin: 2px 0 0 1px;
 }
 
 #paint-wrapper #sizeWrapper, #paint-wrapper #zoomWrapper {
@@ -152,7 +155,8 @@
 
 #paint-wrapper #area-wrapper {
   overflow: auto;
-  border: 1px solid #555;
+  border-left: 1px solid #555;
+  border-right: 1px solid #555;
 }
 
 #paint-wrapper #area-wrapper #zoom-canvas-area {
@@ -177,9 +181,7 @@
 }
 
 #paint-wrapper #sprites-area {
-  border: 1px solid #555;
-  border-left: none;
-/*  margin-left: 10px;*/
+  border-right: 1px solid #555;
 }
 
 #paint-wrapper #sprites-area-scroll {
@@ -250,14 +252,14 @@
 #paint-wrapper #colorpicker #colorfield {
   width: 26px;
   height: 26px;
-  border: 1px solid #333;
   position: relative;
   background-color: black;
+  margin-top: 2px;
 }
 
 #paint-wrapper #colorpicker #colortext {
   width : 64px;
-  margin-right: 5px;
+  margin-right: 3px;
   margin-bottom: 0;
 }
 
@@ -271,7 +273,7 @@
 }
 
 #lastColorList {
-  margin: 0 3px 0 0;
+  margin: 1px 1px 0 1px;
   width: 44px;
   list-style-type:none;
 }
