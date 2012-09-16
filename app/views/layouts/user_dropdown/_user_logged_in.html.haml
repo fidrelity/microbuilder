@@ -1,7 +1,8 @@
 %div{ :class => "btn-group pull-right"}
 
   = link_to( user_path(current_user), :class => "btn", :style => "padding:0;") do
-    = image_tag current_user.display_image, {:height => 28}
+    .avatar{:style => "float:right; width:28px !important; height: 28px!important;"}
+      = image_tag current_user.display_image, {:height => 28}
     
   %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
     %span{ :class => "caret"}
