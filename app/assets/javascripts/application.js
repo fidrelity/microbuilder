@@ -169,4 +169,18 @@ $(document).ready(function() {
   $('.stream-popup').popover({ placement: 'right' });
   // ---------------------------------------
 
+  // param injection for ordering games list 
+  $('.btn-group.game-select a').click(function(e) {
+    e.target.href += "?order=" + $('.btn-group.order .active')[0]['value'];
+  });
+  
+  highlight_current_order();
 });
+
+
+function highlight_current_order() {
+  $('.btn-group .order button').removeClass('active');
+  var current_order = getURLParameter('order');
+  if (current_order == "null") current_order = 'desc';
+  $('.btn-group.order button[value=' + current_order + ']').addClass('active');
+}

@@ -15,8 +15,8 @@ class Game < ActiveRecord::Base
   #validate :win_condition_in_data
   validates_presence_of :title, :instruction, :data
   
-  scope :all_by_played, order("played DESC")
-  scope :all_latest, order("created_at DESC")
+  scope :all_by_played, lambda { |ordered| order("played #{ordered.upcase}") }
+  scope :all_latest, lambda { |ordered| order("created_at #{ordered.upcase}") }
   pg_search_scope :search, :against => [:title, :instruction, :tags]
   
   attr_accessor :preview_image_file_name, :preview_image_data
@@ -26,23 +26,24 @@ class Game < ActiveRecord::Base
                   
   class << self
     
-    def all_by_difficulty(page, per_page)
+    def all_by_difficulty(page, order, per_page)
+      order = order == "asc" ? "desc" : "asc"
       query = <<-eos
         SELECT *, (CAST(won AS FLOAT) / CAST(played AS FLOAT)) AS difficulty 
         FROM games WHERE played > 0
-        ORDER BY difficulty ASC
+        ORDER BY difficulty #{order.upcase}
       eos
       paginate_by_sql(query, :page => page, :per_page => per_page)
     end
     
     # SQL from http://evanmiller.org/how-not-to-sort-by-average-rating.html
-    def all_by_rating(page, per_page)
+    def all_by_rating(page, order, per_page)
       query = <<-eos
         SELECT *, ((likes + 1.9208) / (likes + dislikes) 
           - 1.96 * SQRT((likes * dislikes) / (likes + dislikes) + 0.9604) 
           / (likes + dislikes)) / (1 + 3.8416 / (likes + dislikes)) 
         AS rating FROM games WHERE likes + dislikes > 0 
-        ORDER BY rating DESC
+        ORDER BY rating #{order.upcase}
       eos
       paginate_by_sql(query, :page => page, :per_page => per_page)
     end
