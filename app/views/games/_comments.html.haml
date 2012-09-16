@@ -8,8 +8,9 @@
     .row{:class => "comment"}
 
       .span1{:style => "width:25px"}
-        = link_to user_path(comment.user) do 
-          %img{:src => comment.user.display_image, :style => "height:25px;width:25px", :alt => "#{comment.user.display_name}"}
+        .avatar
+          = link_to user_path(comment.user) do
+            %img{:src => comment.user.display_image, :alt => "#{comment.user.display_name}"}
 
       .span3{:style => "width:230px"}
         =comment.comment
