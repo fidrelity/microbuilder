@@ -1,42 +1,46 @@
-%ul{:id => 'gamesLayer', :class => "thumbnails span10 layer"}
+%div{:id => 'gamesLayer', :class => "layer"}
 
-  .span4
-    = will_paginate games, :param_name => :games, :container => false, :page_links => false, :show_always => false, :params => {:current => "games"}
-  %br
-
-  - games.each do |game|
-
-    %li{:id => game.id, :class => "span3"}
+  .row{:class => "paginate_buttons"}
+    .span9
+      = will_paginate games, :param_name => :games, :container => false, :page_links => false, :show_always => false, :params => {:current => "games"}  
       
-      .thumbnail                                                  
-        = link_to image_tag(game.preview_image), play_path(game)
-  
-        %h4{:style => "margin-top:3px;"}
-          = limit_string( game.title )
-    
-        .row{:style => "margin-top:3px;"}
+  .row
+    .span9
+      %ul{:class => "thumbnails"}
 
-          .span1
-            %span{:class=>"label label-#{game.difficulty_bootstrap_class}"}
-              = game.difficulty_in_words
+        - games.each do |game|
 
-          .span2{:style => "width:130px;text-align:right;"}
-            %i{:class=>"icon-eye-open"}
-            = game.played
-            &nbsp;
-            %i{:class=>"icon-thumbs-up"}
-            = game.likes
-            &nbsp;
-            %i{:class=>"icon-thumbs-down"}
-            = game.dislikes
-
-        -if current_user == game.author
-
-          %div{ :class => "settings" }
-
-            .row
-              .span3{:class => "wrapper"}
+          %li{:id => game.id, :class => "span3"}
+            
+            .thumbnail                                                  
+              = link_to image_tag(game.preview_image), play_path(game)
+        
+              %h4{:style => "margin-top:3px;"}
+                = limit_string( game.title )
           
-                =link_to(game_path(game), :method => :delete, :confirm => "Permanently delete this game?") do
-                  %i{:class => "icon-trash"}
-                  delete
+              .row{:style => "margin-top:3px;"}
+
+                .span1
+                  %span{:class=>"label label-#{game.difficulty_bootstrap_class}"}
+                    = game.difficulty_in_words
+
+                .span2{:style => "width:130px;text-align:right;"}
+                  %i{:class=>"icon-eye-open"}
+                  = game.played
+                  &nbsp;
+                  %i{:class=>"icon-thumbs-up"}
+                  = game.likes
+                  &nbsp;
+                  %i{:class=>"icon-thumbs-down"}
+                  = game.dislikes
+
+              -if current_user == game.author
+
+                %div{ :class => "settings" }
+
+                  .row
+                    .span3{:class => "wrapper"}
+                
+                      =link_to(game_path(game), :method => :delete, :confirm => "Permanently delete this game?") do
+                        %i{:class => "icon-trash"}
+                        delete
