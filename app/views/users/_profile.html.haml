@@ -1,7 +1,7 @@
 #profilewrap
   .avatar_profile
     %img{:src => user.display_image, :id => "profileimage"}
-  
+    = link_to "change Avatar", "http://gravatar.com", :target => "_blank"
   %div{:id => "profile_name_wrapper"}
 
     %span{:id => "display_name"}

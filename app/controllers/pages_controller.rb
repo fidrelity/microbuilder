@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
 
   def home
-    @games = Game.all_latest.paginate(:page => params[:page], :per_page => 8)
+    @games = Game.all_latest(params[:order] || 'desc').paginate(:page => params[:page], :per_page => 8)
 
     if current_user
       @likes = current_user.games.sum(:likes)

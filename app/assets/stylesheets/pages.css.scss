@@ -195,6 +195,8 @@ a:hover {
   display: inline-block;
 }
 
+.avatar .authorImage { height: inherit !important;}
+
 .avatar_stream {
   height: 20px;
   width: 20px;
@@ -444,10 +446,6 @@ canvas {
 #playGame .gameDetailAuthor {
   font-size: 1.8em;
   border-bottom:1px solid #CCC;
-}
-
-#playGame .authorImage {
-  height: 30px;
 }
 
 #playGame #ratingWrapper {

@@ -4,15 +4,16 @@
   before_filter :find_game, :only => [:show, :embed, :destroy, :like, :dislike, :played]  
   
   def index
+     params[:order] ||= "desc"
     @games = case params[:type]
       when "rating"
-        Game.all_by_rating(params[:page], 12)
+        Game.all_by_rating(params[:page], params[:order], 12)
       when "played"
-        Game.all_by_played.paginate(:page => params[:page], :per_page => 12)
+        Game.all_by_played(params[:order]).paginate(:page => params[:page], :per_page => 12)
       when "difficulty"
-        Game.all_by_difficulty(params[:page], 12)
+        Game.all_by_difficulty(params[:page], params[:order], 12)
       else
-        Game.all_latest.paginate(:page => params[:page], :per_page => 12)
+        Game.all_latest(params[:order]).paginate(:page => params[:page], :per_page => 12)
       end
   end
   
