@@ -165,8 +165,9 @@ $(document).ready(function() {
     alsoResize: ".activity-list", 
     maxWidth: messageWrapper.width()
   });
+
+  $('.stream-popup').popover({ placement: 'right', trigger: 'hover' });
  
-  $('.stream-popup').popover({ placement: 'right' });
   // ---------------------------------------
 
   // param injection for ordering games list 

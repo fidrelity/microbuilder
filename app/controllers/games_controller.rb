@@ -42,7 +42,13 @@
   end
   
   def search
-    @games = Game.search(params[:term]).paginate(:page => params[:page], :per_page => 12)
+
+    if params[:term].empty?
+      @games = Game.all_latest("desc").paginate(:page => params[:page], :per_page => 12)
+    else
+      @games = Game.search(params[:term]).paginate(:page => params[:page], :per_page => 12)  
+    end
+
     render 'index'
   end
   

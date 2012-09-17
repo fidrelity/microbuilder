@@ -1,67 +1,74 @@
-%ul{:id => 'graphicsLayer', :class => "thumbnails span10 layer"}
+%div{:id => 'graphicsLayer', :class => "layer"}
 
-  .span4
-    = will_paginate graphics, :param_name => :graphics, :container => false, :page_links => false, :show_always => false, :params => {:current => "graphics"}
-  %br
+  .row{:class => "paginate_buttons"}
+    .span9
+      = will_paginate graphics, :param_name => :graphics, :container => false, :page_links => false, :show_always => false, :params => {:current => "graphics"}  
 
-  - graphics.each do |graphic|
+  .row
+    .span9
+      %ul{:class => "thumbnails"}
 
-    %li{:id => "graphic#{graphic.id}", :class => "span2"}
-      
-      .thumbnail
+        - graphics.each do |graphic|
 
-        %a{:href => "#{graphic.image}", :target => "blank"}
-          %div{:class => "frame_graphic graphic"}
-            %div{:class => "frame_graphic_element", "data-frames" => "#{graphic.frame_count}", :style => "background-image:url(#{graphic.image});width:#{graphic.frame_width}px;height:#{graphic.frame_height}px;"}
-          
-        %h6
-          = limit_string(graphic.name)
-        %span
-          =graphic.frame_width
-          x
-          =graphic.frame_height
-
-        -if current_user == graphic.user
-
-          %div{ :class => "settings" }
-
-            .row
-              .span3{:class => "wrapper"}
-              
-                =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
-                  %i{:class => "icon-trash"}
-                  delete
-
-
-%ul{:id => "backgroundsLayer", :class => "thumbnails span10 layer"}
-
-  .span4
-    = will_paginate backgrounds, :param_name => :backgrounds, :container => false, :page_links => false, :show_always => false, :params => {:current => "backgrounds"}
-  %br
-    
-  - backgrounds.each do |graphic|
-
-    %li{:id => "graphic#{graphic.id}", :class => "span5", :style => "width:330px"}
-    
-      .thumbnail
-      
-        %div{ :style => "background-image:url(#{graphic.image});", :class => "backgroundImage"}
-        
-        %h4
-          = graphic.name
-      
-        %span
-          =graphic.frame_width
-          x
-          =graphic.frame_height
-
-        -if current_user == graphic.user
-
-          %div{ :class => "settings" }
-
-            .row
-              .span3{:class => "wrapper"}
+          %li{:id => "graphic#{graphic.id}", :class => "span2"}
             
-                =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
-                  %i{:class => "icon-trash"}
-                  delete
+            .thumbnail
+
+              %a{:href => "#{graphic.image}", :target => "blank"}
+                %div{:class => "frame_graphic graphic"}
+                  %div{:class => "frame_graphic_element", "data-frames" => "#{graphic.frame_count}", :style => "background-image:url(#{graphic.image});width:#{graphic.frame_width}px;height:#{graphic.frame_height}px;"}
+                
+              %h6
+                = limit_string(graphic.name)
+              %span
+                =graphic.frame_width
+                x
+                =graphic.frame_height
+
+              -if current_user == graphic.user
+
+                %div{ :class => "settings" }
+
+                  .row
+                    .span3{:class => "wrapper"}
+                    
+                      =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
+                        %i{:class => "icon-trash"}
+                        delete
+
+
+%div{:id => "backgroundsLayer", :class => "layer"}
+
+  .row{:class => "paginate_buttons"}
+    .span9
+      = will_paginate backgrounds, :param_name => :backgrounds, :container => false, :page_links => false, :show_always => false, :params => {:current => "backgrounds"}
+  .row
+    .span9
+      %ul{:class => "thumbnails"} 
+
+        - backgrounds.each do |graphic|
+
+          %li{:id => "graphic#{graphic.id}", :class => "span5", :style => "width:330px"}
+          
+            .thumbnail
+            
+              %div{ :style => "background-image:url(#{graphic.image});", :class => "backgroundImage"}
+              
+              %h4
+                = graphic.name
+            
+              %span
+                =graphic.frame_width
+                x
+                =graphic.frame_height
+
+              -if current_user == graphic.user
+
+                %div{ :class => "settings" }
+
+                  .row
+                    .span3{:class => "wrapper"}
+                  
+                      =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
+                        %i{:class => "icon-trash"}
+                        delete
