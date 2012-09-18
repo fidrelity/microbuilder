@@ -4,8 +4,16 @@
     = render :partial => 'pages/user_box/hero_unit'
 
   .span4
+    = head_line("join", "playtin")
     = render :partial => 'pages/user_box/login_form'
 
-= head_line( "featured", "games" )
+  .span4{:style => "text-align:center;"}
+    = link_to "visit tour", build_path, :class => "btn btn-large"
+    = link_to "sign up", new_user_registration_path, :class=>"btn btn-large"  
+  .span8
+    #messages-public
+      = render :partial => 'shared/stream', :locals => {:messages => @messages}
+  
 
+= head_line( "featured", "games" )
 = render :partial => 'games/list_games', :locals => {:games => @games}

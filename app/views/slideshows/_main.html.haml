@@ -1,0 +1,32 @@
+=# head_line("welcome","tour")
+%div{:id => 'myCarousel', :class => 'carousel slide'}
+  .carousel-inner
+    .active.item
+      %img{:src => "http://www.scottishhousingregulator.gov.uk/sites/default/files/styles/slideshow/public/media_images/slideshow-image-203.png"}
+      .carousel-caption
+        %h4
+          Discover a world of games!
+        %p 
+          Here you can enjoy games of all kinds. Experience the creativity of a community with all the unique styles and ideas!
+    .item
+      %img{:src => "http://www.scottishhousingregulator.gov.uk/sites/default/files/styles/slideshow/public/media_images/slideshow-image-203.png"}
+      .carousel-caption
+        %h4
+          Be an artist yourself...
+        %p 
+          With our built-in Graphic Editor you can draw objects and backgrounds for your games by yourself.
+          Use your objects in your games or share them with the community. No fancy tools needed. 
+
+    .item
+      %img{:src => "http://www.scottishhousingregulator.gov.uk/sites/default/files/styles/slideshow/public/media_images/slideshow-image-203.png"}
+      .carousel-caption
+        %h4
+          Make your own games
+        %p 
+          You decide what's going on. Choose all the objects, set the interactions and create your unique game. 
+          Instead of programming skills we require a load of creativity and dedication to your ideas!
+    
+  %a.carousel-control.left{:href => '#myCarousel', "data-slide" => 'prev'}
+    &lsaquo;
+  %a.carousel-control.right{:href => '#myCarousel', "data-slide" => 'next'}
+    &rsaquo;

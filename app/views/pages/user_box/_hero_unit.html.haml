@@ -4,25 +4,4 @@
     = render :partial => 'shared/stream', :locals => {:messages => @messages}
 
 - else
-
-  .welcome
-    
-    %h2
-      Welcome to Playtin!
-      
-    %p
-      Ever wanted to build your own game and share 
-      it with your friends?
-      %br
-      Here you can! Paint your 
-      own graphics, create your game and release it!
-      All you need is your browser and imagination!*
-      
-    %small{:class => "pull-right"}
-      * no programming skills required.
-      
-    %div
-    
-      = link_to "visit tour", build_path, :class => "btn btn-large"
-    
-      = link_to "sign up", new_user_registration_path, :class=>"btn btn-large"
+  = render :partial => 'slideshows/main'
