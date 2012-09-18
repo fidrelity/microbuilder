@@ -26,7 +26,7 @@
   end
   
   def create
-    @games = Game.all_latest.paginate(:page => params[:page], :per_page => 4)
+    @games = Game.all_latest("desc").paginate(:page => params[:page], :per_page => 4)
     @game = current_user.games.new(params[:game])
     @game.create_graphics_association(params[:graphic_ids])
     
