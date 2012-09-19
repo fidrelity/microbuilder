@@ -15,11 +15,9 @@
         <div class="titleText">
           <strong>{{App.game.title}}</strong>
           <span>by {{App.username}}</span>
+          <i class="icon-chevron-up icon-white"></i>
           <h2>Instructions:</h2>
           <div class="instruction">{{App.game.instructions}}</div>
-          <small>game starts in</small>
-          <div id="counter">5</div>
-          <small>(click to skip)</small>
           <div class="noticeMouse">
             <img alt="mouse move" src="/assets/mouse_move.png" />
             <img alt="mouse click" src="/assets/mouse_click.png" />
@@ -29,6 +27,7 @@
       </div>
     </div>
     
+    <div class="endBg"></div>
     <div class="winScreen endScreen">You win!</div>
     <div class="loseScreen endScreen">You lose!</div>
     

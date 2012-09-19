@@ -28,7 +28,7 @@ var Player = function() {
       { name : 'load', enter : this.enterLoad, draw : this.drawLoad, exit : this.exitLoad },
     
       { name : 'ready', enter : this.enterReady, exit : this.exitReady },
-      { name : 'info', enter : this.enterInfo, update : this.updateInfo, exit : this.exitInfo },
+      // { name : 'info', enter : this.enterInfo, exit : this.exitInfo },
       
       { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update, exit : this.exitPlay },
       { name : 'end', draw : this.draw, update : this.update },
@@ -39,9 +39,9 @@ var Player = function() {
     transitions : [
       { name : 'parse', from : '*', to : 'load' },
       { name : 'loaded', from : 'load', to : 'ready', callback : this.onReady },
-      { name : 'inform', from : 'ready', to : 'info' },
+      // { name : 'inform', from : 'ready', to : 'info' },
     
-      { name : 'start', from : 'info', to : 'play', callback : this.onStart },
+      { name : 'start', from : 'ready', to : 'play', callback : this.onStart },
       { name : 'end', from : 'play', to : 'end', callback : this.onEnd },
       
       { name : 'restart', from : 'end', to : 'ready' },
@@ -92,16 +92,36 @@ Player.prototype = {
     
     $( '.playButton', _node ).click( function( _e ) {
       
-      self.fsm.inform();
+      self.fsm.start();
       _e.stopPropagation();
       
     });
     
     $( '.playerUI', _node ).click( function() {
       
-      self.fsm.start();
-      self.fsm.inform();
+      // self.fsm.start();
+      // self.fsm.inform();
       self.fsm.restart();
+      
+    });
+    
+    function animateBar( val ) {
+      
+      if ( $( '.titleBar' ).css( 'top' ) !== val + 'px' ) {
+      
+        $( '.titleBar' ).animate( {top: val}, 500 );
+        
+      }
+      
+    };
+    
+    $( '.titleBar', _node ).hover( function() {
+      
+      animateBar( 220 );
+      
+    }, function() {
+      
+      animateBar( 330 );
       
     });
     
@@ -229,7 +249,7 @@ Player.prototype = {
     
       ctx = this.timelineCtx;
     
-      ctx.fillStyle = '#CD5654';
+      ctx.fillStyle = this.game.isWon ? '#70B477' : this.game.isLost ? '#CD5654' : '#999';
       ctx.fillRect( 0, 0, Math.floor( this.timePlayed / this.game.duration * this.timelineCanvas.width ), this.timelineCanvas.height );
     
       rest = Math.ceil( ( this.game.duration - this.timePlayed ) / 1000 );
@@ -279,7 +299,20 @@ Player.prototype = {
   
   exitReady : function() {
     
-    $( '.endScreen', this.node ).hide();
+    var node = this.node;
+    
+    $( '.endScreen', node ).fadeOut( 200 );
+    $( '.endBg', node ).animate( {opacity: 0}, 200 );
+    
+    $( '.playButton', node ).fadeOut( 200 );
+    
+    $( '.titleBar', node ).animate( {top: 390}, 200, function() {
+    
+      $( '.playerUI', node ).hide();
+      $( '.titleScreen', node ).hide();
+      $( '.titleBar', node ).css( {top: 390} );
+    
+    });
     
   },
   
@@ -292,58 +325,31 @@ Player.prototype = {
     
   },
   
-  enterInfo : function() {
-    
-    $( '.titleBar', this.node ).animate( {top: 0}, 500, function(){
-      $( this ).css( {top: 0} );
-    });
-    $( '.playButton', this.node ).fadeOut( 300 );
-    
-    this.timelineCanvas.width = this.timelineCanvas.width;
-    this.showTime( this.game.duration / 1000 );
-    
-    this.restTime = 6;
-    this.timePlayed = 0;
-    
-  },
-  
-  updateInfo : function( dt ) {
-    
-    var rest;
-    
-    this.timePlayed += dt;
-    
-    rest = Math.ceil( ( 5000 - this.timePlayed ) / 1000 );
-  
-    if ( this.restTime !== rest ) {
-      
-      if ( !rest) {
-        
-        this.fsm.start();
-        
-      }
-      
-      $( '#counter', this.node ).html( rest );
-      
-      this.restTime = rest;
-      
-    }
-    
-  },
-  
-  exitInfo : function() {
-    
-    var node = this.node;
-    
-    $( '.titleScreen', node ).fadeOut( 200, function() {
-    
-      $( '.playerUI', node ).hide();
-      $( '.titleScreen', node ).hide();
-      $( '.titleBar', node ).css( {top: 390} );
-    
-    });
-    
-  },
+  // enterInfo : function() {
+  //   
+  //   $( '.titleBar', this.node ).animate( {top: 0}, 500, function(){
+  //     $( this ).css( {top: 0} );
+  //   });
+  //   $( '.playButton', this.node ).fadeOut( 300 );
+  //   
+  //   this.timelineCanvas.width = this.timelineCanvas.width;
+  //   this.showTime( this.game.duration / 1000 );
+  //   
+  // },
+  // 
+  // exitInfo : function() {
+  //   
+  //   var node = this.node;
+  //   
+  //   $( '.titleScreen', node ).fadeOut( 200, function() {
+  //   
+  //     $( '.playerUI', node ).hide();
+  //     $( '.titleScreen', node ).hide();
+  //     $( '.titleBar', node ).css( {top: 390} );
+  //   
+  //   });
+  //   
+  // },
   
   onStart : function() {
     
@@ -355,6 +361,9 @@ Player.prototype = {
   },
   
   enterPlay : function() {
+    
+    this.timelineCanvas.width = this.timelineCanvas.width;
+    this.showTime( this.game.duration / 1000 );
     
     this.mouse.handleClick();
     
@@ -388,6 +397,7 @@ Player.prototype = {
     }
     
     $( msg, this.node ).fadeIn( 300 );
+    $( '.endBg', this.node ).animate( {opacity: 0.9}, 300 );
     
     this.draw( this.ctx );
     
@@ -404,6 +414,7 @@ Player.prototype = {
     $( '.titleScreen', this.node ).hide();
     $( '.startScreen', this.node ).hide();
     $( '.endScreen', this.node ).hide();
+    $( '.endBg', this.node ).hide();
     
     $( '.errorScreen', this.node ).show();
     

@@ -19,6 +19,7 @@
   @include abs;
   width: 640px; height: 390px;
   background-color: $font;
+  opacity: 0.9;
 }
 
 #player {
@@ -69,12 +70,12 @@
   width: 64px;
   height: 65px;
   left: 288px;
-  top: 142px;
+  top: 132px;
   background-image: url("/assets/player/play_button.png");
   
-  &:hover {
+/*  &:hover {
     opacity: 0.9 !important;
-  }
+  }*/
 }
 
 #player .titleBar {
@@ -102,26 +103,23 @@
       text-transform: uppercase;
       border-top: 1px solid white;
       margin-top: 20px;
-    }
-
-    .instruction {
-      @include big_font;
-      margin: 25px 40px 25px;
-      padding: 5px 10px;
-      line-height: 28px;
-      text-align: center;
-      border-radius: 4px;
-      background: white;
-      font-weight: bold;
-      color: $red;
+      margin-bottom: 0;
+      line-height: 35px;
     }
     
-    #counter {
-      font-size: 100px;
-      margin: 10px 0;
+    i {
+      @include abs;
+      top: 15px;
+      left: 297px;
+      opacity: 0.5;
+    }
+    
+    .instruction {
+      @include big_font;
+      margin: 0px 40px;
+      line-height: 28px;
       text-align: center;
-      color: white;
-      line-height: 70px;
+      font-weight: bold;
     }
     
     small {
@@ -131,13 +129,10 @@
     }
     
     .noticeMouse {
+      display: none;
       position: absolute;
       bottom: 0;
       left: 0;
-    }
-    
-    .noticeGame {
-      font-size: 16px;
     }
 
   }
@@ -151,13 +146,13 @@
 
 #player .endScreen { 
   display: none;
-  font-size: 44px;
+  font-size: 36px;
   font-weight: bold;
   @include abs;
-  margin-top: 56px;
+  margin-top: 24px;
   width: 640px;
   text-align: center;
-  @include outline(#FFF);
+  @include glow(#EEE);
 }
 
 #player .winScreen {
@@ -166,6 +161,12 @@
 
 #player .loseScreen {
   color: $red;
+}
+
+.endBg {
+  @include bg;
+  height: 60px;
+  opacity: 0;
 }
 
 /* --- Error --- */

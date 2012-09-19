@@ -33,3 +33,11 @@ $button-green: #74BA7B;
     0 1px 0 $color,
     0 -1px 0 $color;
 }
+
+@mixin glow($color) {
+  text-shadow: 
+    1px 0 3px $color,
+    -1px 0 3px $color,
+    0 1px 3px $color,
+    0 -1px 3px $color;
+}
