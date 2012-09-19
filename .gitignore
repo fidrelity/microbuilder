@@ -20,7 +20,7 @@ public/games/
 /tmp
 .redcar/
 *.rdb
-
+logger.txt
 # Ignore vendor
 /vendor
 /nbproject/private/
