@@ -167,7 +167,7 @@ Player.prototype = {
     var dt, t = Date.now();
     
     dt = t - this.time;
-    dt = dt > 30 ? 30 : dt;
+    dt = dt > 100 ? 100 : dt;
     
     this.time = t;
     
