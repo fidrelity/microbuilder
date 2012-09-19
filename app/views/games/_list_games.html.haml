@@ -22,9 +22,9 @@
   .span3
     %div{:class => 'btn-group order', "data-toggle" => 'buttons-radio', :style => 'float:left;'}
       %button{:class => 'btn', :value => "asc"}
-        Ascending
+        ascending
       %button{:class => 'btn', :value => "desc"}
-        Descending
+        descending
   .pull-right
     = will_paginate @games, :param_name => :page, :container => false,  :page_links => false, :show_always => true
 
