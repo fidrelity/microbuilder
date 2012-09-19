@@ -293,6 +293,7 @@
 
 #paint-size-wrapper .sizeInput {
   font-size:0.8em; padding:1px;
+  height:16px;
 }
 
 #paint-size-wrapper .paint-type {
@@ -306,12 +307,14 @@
 
 #paint-size-wrapper .sizeWrapper {
   position: relative;
+  margin:2em 0 2em;
 }
 
 #paint-size-wrapper #object {
   position: absolute;
   top: 50px;
   left: 330px;
+  margin: auto;
   width: 256px;
   height: 256px;
   overflow: hidden;
@@ -319,9 +322,11 @@
 }
 
 #paint-size-wrapper #background {
-  position: absolute;
-  top: 0px;
-  left: 160px;
+  /*position: absolute;*/
+  /*top: 0px;*/
+  /*left: 160px;*/
+  position:relative;
+  margin:auto;
   width: 640px;
   height: 390px;
   background: #FFF;
@@ -329,11 +334,16 @@
 }
 
 #paint-size-wrapper .sizeWrapper p {
-  position: absolute;
+  position: absolute;  
   top: 10px;
-  left: 10px;
+  left: 10px;  
   font-size: 18px;
   font-weight: bold;
+}
+
+
+#paint-size-wrapper p {
+  margin:0;
 }
 
 #paint-size-wrapper #canvas-size {
@@ -343,11 +353,15 @@
 }
 
 #paint-size-wrapper .sizeFooter {
-  margin: 420px 0 50px;
+
 }
 
 #paint-size-wrapper #startPainting {
   display: none;
   margin: 0 auto;
   width: 212px;
+}
+
+.object_size_form {
+  margin-top:1em;
 }

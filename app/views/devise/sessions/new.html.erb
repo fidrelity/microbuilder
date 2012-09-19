@@ -4,21 +4,21 @@
 
   <div class="span3 well">
     
-    <div class="form">
+    <div class="form">      
 
       <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
       
-        <label><%= f.label :email %></label>
+        <label>email</label>
         <%= f.email_field :email %>
         
-        <label><%= f.label :password %></label>
+        <label>password</label>
         <%= f.password_field :password %>
         
         <p><button type="submit" class="btn">sign in</button></p>
 
         <p class="checkbox">
           <% if devise_mapping.rememberable? -%>
-            <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+            <%= f.check_box :remember_me %> remember me
           <% end -%>
         </p>
 
@@ -30,10 +30,10 @@
 
   </div>
 
-  <div class="span8 well">
+  <div class="span8 well" style="min-height:238px;">
     <p>If you don't already have an account you can</p>
     <p>
-       <%= link_to "create a new account", new_user_registration_path, :class=>"btn btn-success btn-large" %>
+       <%= link_to "create a new account", new_user_registration_path, :class=>"btn playtin_red btn-large" %>
     </p>
 
     <p>You can also skip the whole registration process by using</p>
