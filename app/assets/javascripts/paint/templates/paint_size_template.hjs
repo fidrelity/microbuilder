@@ -5,20 +5,21 @@
    <div class="row">
     <div class="span6">
     
-      <h3>graphic
-        <small>
-          <input type="text" class="objWidth span1 sizeInput ttip" value="128" title="width"> x 
-          <input type="text" class="objHeight span1 sizeInput ttip" value="128" size="2" title="height"> px
-        </small>
-      </h3>
+      <h4>graphic</h4>
     
-      <p>Graphics are used for movable game objects. They can have multiple sprites for different states or animation.</p>
+      <p>Graphics are used for movable game objects. They can<br>have multiple sprites for different states or animation.</p>
+
+      <div class="form-inline object_size_form">
+        Set size:
+        <input type="text" class="objWidth span1 sizeInput ttip" value="128" title="width"> x 
+        <input type="text" class="objHeight span1 sizeInput ttip" value="128" size="2" title="height"> px
+      </div>
     
     </div>
 
     <div class="span6">
     
-      <h3>background</h3>
+      <h4>background</h4>
     
       <p>A background covers the whole field and is not moveable.</p>
     
@@ -44,7 +45,7 @@
 
   <div class="sizeFooter">
 
-    <button {{action "start"}} id="startPainting" class="btn-large btn-success">Start painting a new object</button>
+    <button {{action "start"}} id="startPainting" class="btn-large btn-danger">start painting a new object</button>
   
   </div>
   

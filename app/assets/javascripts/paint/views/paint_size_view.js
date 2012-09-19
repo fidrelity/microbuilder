@@ -48,6 +48,9 @@ var PaintSizeView = Ember.View.extend({
       
       $(".objWidth").val(w);
       $(".objHeight").val(h);
+
+      self.set( 'width', w );
+      self.set( 'height', h );
         
     });
 
@@ -69,7 +72,7 @@ var PaintSizeView = Ember.View.extend({
   setPaintType : function(_obj) {
     
     var button = this.$("#startPainting"),
-      msg = "Start painting ";
+      msg = "start painting ";
       
     this.$('.paint-type').removeClass('type-selected');
     

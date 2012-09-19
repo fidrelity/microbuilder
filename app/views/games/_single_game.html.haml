@@ -1,0 +1,26 @@
+%li{:id => game.id, :class => "span3"}
+          
+  .thumbnail{:style => "position:relative"}
+    = link_to image_tag(game.preview_image), play_path(game)
+              
+    %a{ :href => user_path(game.author), :title => "#{game.author.display_name}"}
+      %div{ :class => "gameAuthor", :style => "background-image:url(#{game.author.display_image})"}
+    
+    %h5
+      = link_to game.title, play_path(game)
+    
+    .row{:class => "gameDetails"}
+
+      .span1
+        %span{:class=>"label label-#{game.difficulty_bootstrap_class}"}
+          = game.difficulty_in_words
+
+      .span2{:style => "width:130px;text-align:right;"}
+        %i{:class=>"icon-eye-open"}
+        = game.played
+        &nbsp;
+        %i{:class=>"icon-thumbs-up"}
+        = game.likes
+        &nbsp;
+        %i{:class=>"icon-thumbs-down"}
+        = game.dislikes
