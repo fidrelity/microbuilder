@@ -84,7 +84,7 @@ var PaintSizeView = Ember.View.extend({
       
     } else {
       
-      msg += "graphic";
+      msg += "graphic (" + this.width + 'x' + this.height + ')';
       
     }
     
