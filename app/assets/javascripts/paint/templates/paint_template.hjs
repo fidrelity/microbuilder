@@ -6,8 +6,8 @@
   
     <div class="tool-bar btn-group" data-toggle="buttons-radio">
       
-      <button id="spritesButton" class="btn active" {{action "showSprites"}}>sprites</button>
-      <button id="playerButton" class="btn" {{action "showAnimation"}}>animation</button>
+      <div id="spritesButton" class="btn active" {{action "showSprites"}}>sprites</div>
+      <div id="playerButton" class="btn" {{action "showAnimation"}}>animation</div>
       
     </div>
   
@@ -32,8 +32,12 @@
       <div class="tool-bar  tool-bar-bottom">
         <button {{action "start" target="App.spritePlayer"}} id="playButton">Play</button>
         <button {{action "stop" target="App.spritePlayer"}} id="stopButton">Stop</button>
-        <input type="text" id="playDelay" value="300" size="2" class="span1 ttip" title="Set animation speed (miliseconds)">
-        <input type="checkbox" value="1" id="replayLoop" class="ttip" title="Loop the animation"> Loop
+        <div style="float:right">
+          <input style="text-align:right" type="text" id="playDelay" value="300" size="2" class="span1 ttip" title="Set animation speed (miliseconds)">ms
+        </div>
+        <div class="hide">
+          <input type="checkbox" value="1" id="replayLoop" class="ttip" title="Loop the animation"> Loop
+        </div>
       </div>
     
     {{/if}}
@@ -115,7 +119,7 @@
 
 <div class="submit well row form-horizontal">
 
-  <button class="btn btn-warning left ttipBottom" style="margin-left:0" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}>cancel</button>
+  <button class="btn left" style="margin-left:0" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}><i class="icon-arrow-left"></i> cancel</button>
   
   <div class="span3 offset5 form-inline">
 

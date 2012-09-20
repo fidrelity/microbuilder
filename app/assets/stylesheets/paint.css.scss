@@ -1,3 +1,5 @@
+@import "mixins";
+
 #paint-wrapper {
   height: 500px;
   padding: 0px 0px 0;
@@ -31,7 +33,7 @@
 }
 
 #paint-wrapper .tool-bar button.activeTool {
-  border-bottom: 4px solid #55bd55;
+  border-bottom: 4px solid $red;
 }
 
 #paint-wrapper .tool-bar button.pencil {
@@ -141,6 +143,20 @@
 
 #paint-wrapper #zoomWrapper #zoomSlider {
   width: 40px;
+}
+
+#paint-wrapper #zoomWrapper #zoomSlider, #paint-wrapper #sizeWrapper #sizeSlider {
+  border-radius: 0;
+  height: 3px;
+  margin-top: 6px;
+  
+  a {
+    border-radius: 0;
+    height: 15px;
+    top: -7px;
+    width: 6px;
+    margin-left: -3px;
+  }
 }
 
 #paint-wrapper #sizeWrapper #sizeSlider, #paint-wrapper #sizeWrapper #sizeValue,
