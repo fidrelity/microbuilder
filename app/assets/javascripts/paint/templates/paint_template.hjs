@@ -115,7 +115,7 @@
 
 <div class="submit well row form-horizontal">
 
-  <button class="btn btn-warning left ttipBottom" style="margin-left:0" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}>cancel</button>
+  <button class="btn btn-danger left ttipBottom" style="margin-left:0" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}>cancel</button>
   
   <div class="span3 offset5 form-inline">
 
@@ -127,6 +127,6 @@
 
   </div>
 
-  <button class="btn btn-large btn-success span2 pull-right" {{action "save" target="App.paintController"}}>save image</button>
+  <button class="btn btn-success span2 pull-right" {{action "save" target="App.paintController"}}>save image</button>
 
 </div>

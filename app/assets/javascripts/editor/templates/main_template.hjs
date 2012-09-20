@@ -2,10 +2,10 @@
 
   <div>
     <div class="stageControls">
-      <div class="left">
-        <button class="btn-large btn-primary" {{action "showObjects" target="App.gameController"}}> 
+      <div class="left" id="stageTop">
+        <button class="btn btn-medium btn-primary" {{action "showObjects" target="App.gameController"}}> 
           objects </button>
-        <button class="btn-large btn-primary" {{action "searchBackground" target="App.gameController"}}>
+        <button class="btn btn-primary" {{action "searchBackground" target="App.gameController"}}>
           background </button>
       </div>
       
@@ -34,7 +34,7 @@
           detail view </button>
       </span>
       
-      <button class="btn-large btn-success right" {{action "finalize" target="App.gameController"}}> 
+      <button id="finalizeButton" class="btn-large btn-success right" {{action "finalize" target="App.gameController"}}> 
         finalize game </button>
     </div>
     

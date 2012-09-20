@@ -4,16 +4,16 @@
       Help us to improve Playtin!
     %div{:id => "feedbackContent", :class => "control-group"}
       %label
-        Subject:
+        subject
       =text_field_tag(:subject, "", :class => "span6")
       %label
-        Your comment:
+        your comment
       =text_area_tag(:body, "", :size => "120x2", :class => "span6")
       %br
-      =submit_tag 'Send feedback', :class => "btn btn-success sendFeedback"
+      =submit_tag 'send feedback', :class => "btn btn-success sendFeedback"
         
       %span{:class => "btn closeFeedback"}
-        Cancel
+        cancel
 
   %div{:id=>"feedbackErrorMessage", :class=>"alert alert-danger"}
     Error - please fill out all text fields!

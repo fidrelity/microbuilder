@@ -9,15 +9,23 @@
 
 .row
 
-  %div{:class => "span3 guide"}
+  %div{:class => "span4 guide"}
 
-    This is how it works:
+    %h3
+      This is how you create ...
 
     %ol{:id => "guideSteps"}
       %li Place objects
       %li Assign behavior
       %li Set trigger and actions
       %li Preview and publish your game
+
+    %div{:class => "signup-info alert alert-info"}
+      Just 
+      =link_to "login with your facebook account", user_omniauth_authorize_path(:facebook)
+      or 
+      = link_to 'sign up', new_user_session_path
+      to create your first game!
   
   %div{:class => "span7"}
 
@@ -44,10 +52,3 @@
           =image_tag "guides/slide4.png"
           %div{:class => "foot-info"}
             Before you save, play your game and check it
-
-%P{ :style => "margin-top:1em;"}
-  Just 
-  =link_to "login with your facebook account", user_omniauth_authorize_path(:facebook)
-  or 
-  = link_to 'sign up', new_user_session_path
-  to create your first game!

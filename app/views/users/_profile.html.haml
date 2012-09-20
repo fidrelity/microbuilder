@@ -1,7 +1,7 @@
 #profilewrap
   .avatar_profile
     %img{:src => user.display_image, :id => "profileimage"}
-    = link_to "change Avatar", "http://gravatar.com", :target => "_blank"
+    = link_to "change avatar", "http://gravatar.com", :target => "_blank"
   %div{:id => "profile_name_wrapper"}
 
     %span{:id => "display_name"}
@@ -15,10 +15,10 @@
         =f.submit "Save", :class => "btn"
 
     %a{:class => "edit"}
-      Edit
+      edit
     
   %p
-    member since:
+    member since
     %br
     %span
       =user.created_at.to_date

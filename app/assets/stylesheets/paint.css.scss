@@ -207,44 +207,6 @@
 
 #stopButton { display:none; }
 
-/* Game guide */
-#slide-container, #guide-slide-container {
-  width:600px;
-  overflow:hidden;
-  height:auto;
-}
-
-.slide-wrapper {
-  overflow:hidden;
-  height:auto;
-  left:0; top:0;
-  position:relative;
-}
-
-.slide {
-  overflow:hidden;
-  position:relative;
-  float:left;
-  min-height:300px;
-  background:#FFF;
-}
-
-.slide .foot-info {
-  width:100%;
-  position:absolute; bottom:0; left:0;
-  padding:4px; color:#FFF; background:#222; opacity:0.8;
-}
-
-#guideSteps li {
-  cursor:pointer;
-  text-decoration:underline;
-  color:#111;
-}
-
-#guideSteps li.activeElement {
-  font-weight:bold;
-}
-
 .submit {
   margin-left: 0px;
 }
@@ -292,8 +254,9 @@
 }
 
 #paint-size-wrapper .sizeInput {
-  font-size:0.8em; padding:1px;
+  font-size:0.8em; padding:1px 4px 1px 4px;
   height:16px;
+  width:22px;
 }
 
 #paint-size-wrapper .paint-type {

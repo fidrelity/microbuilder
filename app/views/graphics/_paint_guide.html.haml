@@ -9,16 +9,25 @@
 
 .row
 
-  %div{:class => "span3 guide"}
+  %div{:class => "span4 guide"}
 
-    This is how it works:
+    %h3
+      This is how you paint ...
 
     %ol{:id => "guideSteps"}
-      %li An overview
-      %li Choose the right type
-      %li Know your tools
-      %li Animate your objects
-      %li Draw a background
+      %li an overview
+      %li choose the right type
+      %li know your tools
+      %li animate your objects
+      %li draw a background
+
+
+    %div{:class => "signup-info alert alert-info"}
+      Just
+      =link_to "login with your facebook account", user_omniauth_authorize_path(:facebook)
+      or 
+      = link_to 'sign up', new_user_session_path
+      to create your first game!
   
   %div{:class => "span7"}
 
@@ -29,31 +38,25 @@
         %div{:class => "slide"}
           =image_tag "guides/paint_overview.png"
           %div{:class => "foot-info"}
-            Before creating a game you can draw your game objects ... like batman
+            before creating a game you can draw your game objects ... like batman
 
         %div{:class => "slide"}
           =image_tag "guides/paint_size.png"
           %div{:class => "foot-info"}
-            First you have to choose between an object or background type
+            first you have to choose between an object or background type
 
         %div{:class => "slide"}
           =image_tag "guides/paint_tools.png"
           %div{:class => "foot-info"}
-            Use the pencil, line or circle tool to draw your graphics
+            use the pencil, line or circle tool to draw your graphics
 
         %div{:class => "slide"}
           =image_tag "guides/paint_sprite.png"
           %div{:class => "foot-info"}
-            Your game object can have several states (Sprites)
+            your game object can have several states (Sprites)
 
         %div{:class => "slide"}
           =image_tag "guides/paint_background.png"
           %div{:class => "foot-info"}
-            And this is how it looks like drawing a background
+            and this is how it looks like drawing a background
 
-%P{ :style => "margin-top:1em;"}
-  Just 
-  =link_to "login with your facebook account", user_omniauth_authorize_path(:facebook)
-  or 
-  = link_to 'sign up', new_user_session_path
-  to create your first game!
