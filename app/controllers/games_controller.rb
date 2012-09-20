@@ -13,7 +13,7 @@
       when "difficulty"
         Game.all_by_difficulty(params[:page], params[:order], 12)
       else
-        Game.all_latest(params[:order]).paginate(:page => params[:page], :per_page => 1)
+        Game.all_latest(params[:order]).paginate(:page => params[:page], :per_page => 12)
       end
   end
   
