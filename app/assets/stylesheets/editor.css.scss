@@ -408,16 +408,28 @@
 }
 
 #editor .stageControls #trash {
-  margin: 12px 0 0;
+  /*margin: 12px 0 0;*/
 }
+
+#editor .stageControls #stageTop button {
+  padding:3px;
+}
+
+#editor #finalizeButton {
+  padding:2px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
 
 #editor #duration {
   font-size: 11pt;
   border: 1px solid #CCC;
-  padding: 11px 10px 9px;
+  padding: 3px 10px 3px;
   background-color: whiteSmoke;
   border-radius: 5px;
   margin-left: 5px;
+  /*height:30px;*/
 }
 
 #editor #duration #slider {
