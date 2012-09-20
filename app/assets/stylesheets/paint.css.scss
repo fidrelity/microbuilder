@@ -28,8 +28,10 @@
   background-color: #777;
 }
 
-#paint-wrapper .tool-bar .group {
-  margin-right: 30px;
+#paint-wrapper .tool-bar .piece {
+  width: 10px;
+  float: left;
+  height: 30px;
 }
 
 #paint-wrapper .tool-bar button.activeTool {

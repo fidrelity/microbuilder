@@ -9,6 +9,9 @@ var PaintSizeView = Ember.View.extend({
   didInsertElement : function() {
 
     var self = this;
+    
+    this.set( 'width', 128 );
+    this.set( 'height', 128 );
 
     // Resize object
     $('#canvas-size').resizable({
@@ -41,8 +44,8 @@ var PaintSizeView = Ember.View.extend({
 
     $('.sizeInput').change( function() {
 
-      var w = Math.min( parseInt($(".objWidth").val()), 256);
-      var h = Math.min( parseInt($(".objHeight").val()), 256) ;
+      var w = clamp( parseInt($(".objWidth").val()), 32, 256 );
+      var h = clamp( parseInt($(".objHeight").val()), 32, 256 );
       
       $('#canvas-size').css({ width: w  + "px", height: h + "px" });
       
