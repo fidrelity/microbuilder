@@ -67,7 +67,8 @@ var SpritePlayerController = Ember.ArrayController.extend({
   
   isLooping : function() {
     
-    return $( '#replayLoop' ).is( ':checked' );
+    // return $( '#replayLoop' ).is( ':checked' );
+    return true;
     
   },
   

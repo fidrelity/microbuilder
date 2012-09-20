@@ -106,7 +106,7 @@ h6 {
     #build a:hover { color: $orange; }
     #play a:hover { color: $red; }*/
     a, a:visited { color: $font; }
-    a:hover { text-decoration: none; }
+    a:hover { text-decoration: none; color: $red; }
   }
   
   #search {

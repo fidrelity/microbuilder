@@ -2,52 +2,48 @@
   
   <h2 class="page-header">select<span>imagetype</span></h2>
   
-   <div class="row">
-    <div class="span6">
+  <div class="row" style="margin-top:20px">
     
-      <h4>graphic</h4>
-    
-      <p>Graphics are used for movable game objects. They can<br>have multiple sprites for different states or animation.</p>
+    <div class="span3">
+
+      <p>Select the type of image you want to paint on the right.</p>
+
+      <h4 style="margin-top:50px">background</h4>
+
+      <p>A background covers the whole field and is not moveable.</p>
+
+      <h4 style="margin-top:50px">graphic</h4>
+
+      <p>Graphics are used for movable game objects. They can have multiple sprites for different states or animation.</p>
 
       <div class="form-inline object_size_form">
         Set size:
         <input type="text" class="objWidth sizeInput ttip span1" value="128" title="width" size="3" maxlength="3"> x 
         <input type="text" class="objHeight sizeInput ttip span1" value="128" size="2" title="height" size="3" maxlength="3"> px
       </div>
-    
+
     </div>
 
-    <div class="span6">
+    <div class="sizeWrapper span9">
     
-      <h4>background</h4>
+      <div id="background" class="paint-type" data-type="background">
+        <p>background 640 x 390</p>
+      </div>
+
+      <div id="object" class="paint-type pop" data-type="object" title="Sprite size" data-content="Drag the handle at the corner to set your desired image size.">
     
-      <p>A background covers the whole field and is not moveable.</p>
+        <div id="canvas-size"></div>
     
+        <p>graphic {{width}} x {{height}}</p>
+    
+      </div>
+
     </div>
   
   </div>
-
-  <div class="sizeWrapper">
-    
-    <div id="background" class="paint-type" data-type="background">
-      <p>background 640 x 390</p>
-    </div>
-
-    <div id="object" class="paint-type pop" data-type="object" title="Sprite size" data-content="Resize the desired image size with the mouse. Maximum is 256 x 256 pixel.">
-    
-      <div id="canvas-size"></div>
-    
-      <p>graphic {{width}} x {{height}}</p>
-    
-    </div>
-
-  </div>
-
-  <div class="sizeFooter">
-
-    <button {{action "start"}} id="startPainting" class="btn-large btn-success">start painting a new object</button>
   
-  </div>
+  <button {{action "start"}} id="startPainting" class="btn-large btn-success">start painting a new object</button>
+
   
 </div>
 

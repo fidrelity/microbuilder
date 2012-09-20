@@ -6,8 +6,8 @@
   
     <div class="tool-bar btn-group" data-toggle="buttons-radio">
       
-      <button id="spritesButton" class="btn active" {{action "showSprites"}}>sprites</button>
-      <button id="playerButton" class="btn" {{action "showAnimation"}}>animation</button>
+      <div id="spritesButton" class="btn active" {{action "showSprites"}}>sprites</div>
+      <div id="playerButton" class="btn" {{action "showAnimation"}}>animation</div>
       
     </div>
   
@@ -32,8 +32,12 @@
       <div class="tool-bar  tool-bar-bottom">
         <button {{action "start" target="App.spritePlayer"}} id="playButton">Play</button>
         <button {{action "stop" target="App.spritePlayer"}} id="stopButton">Stop</button>
-        <input type="text" id="playDelay" value="300" size="2" class="span1 ttip" title="Set animation speed (miliseconds)">
-        <input type="checkbox" value="1" id="replayLoop" class="ttip" title="Loop the animation"> Loop
+        <div style="float:right">
+          <input style="text-align:right" type="text" id="playDelay" value="300" size="2" class="span1 ttip" title="Set animation speed (miliseconds)">ms
+        </div>
+        <div class="hide">
+          <input type="checkbox" value="1" id="replayLoop" class="ttip" title="Loop the animation"> Loop
+        </div>
       </div>
     
     {{/if}}
@@ -52,22 +56,28 @@
         <input type="file" id="file" accept="image/*" />
         <input type="reset" id="reset" />
       </form>
-      <button {{action "selectTool" target="App.paintController"}} class="select selectable ttip group" title="select area"></button>
-
+      <button {{action "selectTool" target="App.paintController"}} class="select selectable ttip" title="select area"></button>
+      
+      <div class="piece"></div>
+      
       <button {{action "drawLineTool" target="App.paintController"}}  class="lineTool selectable ttip" title="Draw line"></button>
       <button {{action "drawRectTool" target="App.paintController"}} class="rectangle selectable ttip" title="Draw rectangle"></button>
       <button {{action "drawCircleTool" target="App.paintController"}} class="circle selectable ttip" title="Draw circle"></button>
       <button {{action "drawRectFillTool" target="App.paintController"}} class="rectanglefill selectable ttip" title="Draw filled rectangle"></button>
-      <button {{action "drawCircleFillTool" target="App.paintController"}} class="circlefill selectable ttip group" title="Draw filled circle"></button>
+      <button {{action "drawCircleFillTool" target="App.paintController"}} class="circlefill selectable ttip" title="Draw filled circle"></button>
+      
+      <div class="piece"></div>
       
       <button {{action "flipVertical" target="App.paintController"}} class="flipv ttip" title="Flip sprite vertically"></button>
       <button {{action "flipHorizontal" target="App.paintController"}} class="fliph ttip" title="Flip sprite horizontally"></button>
       <button {{action "rotateLeft" target="App.paintController"}} class="rotl ttip" title="Rotate sprite left"></button>
-      <button {{action "rotateRight" target="App.paintController"}} class="rotr ttip group" title="Rotate sprite right"></button>
+      <button {{action "rotateRight" target="App.paintController"}} class="rotr ttip" title="Rotate sprite right"></button>
+      <button {{action "clearTool" target="App.paintController"}} class="clearTool ttip" title="Clear current sprite"></button>
+      
+      <div class="piece"></div>
       
       <button {{action "undoTool" target="App.paintController"}} class="undo ttip" title="Undo"></button>
       <button {{action "redoTool" target="App.paintController"}} class="redo ttip" title="Redo"></button>
-      <button {{action "clearTool" target="App.paintController"}} class="clearTool ttip" title="Clear current sprite"></button>
       
       <div class="clear"></div>
     
@@ -115,7 +125,7 @@
 
 <div class="submit well row form-horizontal">
 
-  <button class="btn btn-danger left ttipBottom" style="margin-left:0" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}>cancel</button>
+  <button class="btn left btn-danger" style="margin-left:0" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}><i class="icon-arrow-left icon-white"></i> cancel</button>
   
   <div class="span3 offset5 form-inline">
 

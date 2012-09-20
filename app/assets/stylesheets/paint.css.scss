@@ -1,3 +1,5 @@
+@import "mixins";
+
 #paint-wrapper {
   height: 500px;
   padding: 0px 0px 0;
@@ -26,12 +28,14 @@
   background-color: #777;
 }
 
-#paint-wrapper .tool-bar .group {
-  margin-right: 30px;
+#paint-wrapper .tool-bar .piece {
+  width: 10px;
+  float: left;
+  height: 30px;
 }
 
 #paint-wrapper .tool-bar button.activeTool {
-  border-bottom: 4px solid #55bd55;
+  border-bottom: 4px solid $red;
 }
 
 #paint-wrapper .tool-bar button.pencil {
@@ -143,6 +147,20 @@
   width: 40px;
 }
 
+#paint-wrapper #zoomWrapper #zoomSlider, #paint-wrapper #sizeWrapper #sizeSlider {
+  border-radius: 0;
+  height: 3px;
+  margin-top: 6px;
+  
+  a {
+    border-radius: 0;
+    height: 15px;
+    top: -7px;
+    width: 6px;
+    margin-left: -3px;
+  }
+}
+
 #paint-wrapper #sizeWrapper #sizeSlider, #paint-wrapper #sizeWrapper #sizeValue,
 #paint-wrapper #zoomWrapper #zoomSlider, #paint-wrapper #zoomWrapper #zoomValue {
   float:left;
@@ -248,36 +266,41 @@
   margin: 1px;
 }
 
-#paint-size-wrapper .type-selected {
-/*  border: 2px solid black !important;*/
-  background: #CD5654 !important;
-}
-
 #paint-size-wrapper .sizeInput {
   font-size:0.8em; padding:1px 4px 1px 4px;
   height:16px;
   width:22px;
 }
 
-#paint-size-wrapper .paint-type {
-  cursor: pointer;
-  border: 2px solid #999;
-}
+#paint-size-wrapper {
 
-#paint-size-wrapper .paint-type:hover {
-  border-color: black;
+  .paint-type {
+    cursor: pointer;
+    border: 2px dashed #999;
+  
+    &:hover {
+      border-color: black;
+    }
+  }
+  
+  .type-selected {
+    border: 2px solid black !important;
+    
+    #canvas-size {
+      opacity: 1;
+    }
+  }
 }
 
 #paint-size-wrapper .sizeWrapper {
   position: relative;
-  margin:2em 0 2em;
+  height: 410px;
 }
 
 #paint-size-wrapper #object {
   position: absolute;
-  top: 50px;
-  left: 330px;
-  margin: auto;
+  top: 67px;
+  right: 192px;
   width: 256px;
   height: 256px;
   overflow: hidden;
@@ -285,20 +308,17 @@
 }
 
 #paint-size-wrapper #background {
-  /*position: absolute;*/
-  /*top: 0px;*/
-  /*left: 160px;*/
-  position:relative;
-  margin:auto;
+  position: absolute;
+  top: 0;
+  right: 0;
   width: 640px;
   height: 390px;
   background: #FFF;
-  font-size: 1.8em;
 }
 
 #paint-size-wrapper .sizeWrapper p {
   position: absolute;  
-  top: 10px;
+  bottom: 10px;
   left: 10px;  
   font-size: 18px;
   font-weight: bold;
@@ -312,17 +332,13 @@
 #paint-size-wrapper #canvas-size {
   width:128px;
   height:128px;
-  background: url("/assets/editor/pattern_light.png");
-}
-
-#paint-size-wrapper .sizeFooter {
-
+  background-image: url("/assets/paint/pattern.png");
+  opacity: 0.3;
 }
 
 #paint-size-wrapper #startPainting {
+  float: right;
   display: none;
-  margin: 0 auto;
-  width: 212px;
 }
 
 .object_size_form {
