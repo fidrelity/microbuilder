@@ -47,6 +47,7 @@ h6 {
 
 #flash-messages ul {
   margin-left: 20px;
+  height:35px;
 }
 
 #flash-template {
@@ -58,7 +59,7 @@ h6 {
 
 #header {
   height: 36px;
-  margin: 15px 0 15px;
+  margin: 15px 0 10px;
   padding: 25px 18px 10px;
   
   border-radius: 4px;
@@ -436,6 +437,11 @@ canvas {
 .moderate { color: #FFBC00; }
 
 .hard { color: #FF0000; }
+
+.gallery_paginate_buttons {
+  padding-top:5px;
+  text-align: right;
+}
 
 /* CREATE  - Editor Page when user !logged_in */
 #create {

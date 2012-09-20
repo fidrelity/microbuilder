@@ -1,8 +1,5 @@
-%h2{ :class => "page-header"}
-  = raw("games<span>gallery</span>")
-
-  - if params[:term]
-    %small
-      #{@games.count} games found
+- if params[:term]
+  %small
+    #{@games.count} games found
 
 = render :partial => 'list_games', :locals => {:games => @games}

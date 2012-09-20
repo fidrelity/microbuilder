@@ -1,8 +1,13 @@
 <div class="editor_content">
 
   <div>
+
     <div class="stageControls">
+
       <div class="left" id="stageTop">
+
+        <h2 class="page-header" style="float:left;margin-right:38px">game<span>stage</span></h2>
+
         <button class="btn btn-medium btn-primary" {{action "showObjects" target="App.gameController"}}> 
           objects </button>
         <button class="btn btn-primary" {{action "searchBackground" target="App.gameController"}}>

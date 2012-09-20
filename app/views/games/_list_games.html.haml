@@ -1,32 +1,43 @@
+
 .row
-  .span2
-    %div{ :class => "btn-group game-select"}
 
-      %button{ :class => "btn"}
-        sort by #{ params[:type] || "date" }
-      %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
-        %span{ :class => "caret"}
+  .span5
+    = head_line( "games", "gallery" )
 
-      %ul{:class => "dropdown-menu"}
-        %li{:class => ""}
-          =link_to "Date", gallery_path
+  .span7
 
-        %li{:class => ""}
-          =link_to "Rating", gallery_path({:type => "rating"})
+    .row
 
-        %li{:class => ""}      
-          =link_to "Most played", gallery_path({:type => "played"}) 
+      .span2
+        %div{ :class => "btn-group game-select"}
 
-        %li{:class => ""}
-          =link_to "Difficulty", gallery_path({:type => "difficulty"})
-  .span3
-    %div{:class => 'btn-group order', "data-toggle" => 'buttons-radio', :style => 'float:left;'}
-      %button{:class => 'btn', :value => "asc"}
-        ascending
-      %button{:class => 'btn', :value => "desc"}
-        descending
-  .pull-right
-    = will_paginate @games, :param_name => :page, :container => false,  :page_links => false, :show_always => true
+          %button{ :class => "btn"}
+            sort by #{ params[:type] || "date" }
+          %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
+            %span{ :class => "caret"}
+
+          %ul{:class => "dropdown-menu"}
+            %li{:class => ""}
+              =link_to "Date", gallery_path
+
+            %li{:class => ""}
+              =link_to "Rating", gallery_path({:type => "rating"})
+
+            %li{:class => ""}      
+              =link_to "Most played", gallery_path({:type => "played"}) 
+
+            %li{:class => ""}
+              =link_to "Difficulty", gallery_path({:type => "difficulty"})
+
+      .span3
+        %div{:class => 'btn-group order', "data-toggle" => 'buttons-radio', :style => 'float:left;'}
+          %button{:class => 'btn', :value => "asc"}
+            ascending
+          %button{:class => 'btn', :value => "desc"}
+            descending
+
+      .span2{:class => "gallery_paginate_buttons"}
+        = will_paginate @games, :param_name => :page, :container => false,  :page_links => false, :show_always => true
 
 .row{:style => "margin-top:1em;"}
 
