@@ -630,3 +630,22 @@ canvas {
 .guide .signup-info a, .guid .signup-info a:visited {
   font-weight: bold;
 }
+
+/* Imprint */
+
+#teamlist h6 {
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-size:12px;
+  margin:0;
+  padding:4px 0 0 0; 
+  line-height:16px; 
+}
+
+#teamlist a, a:hover {
+  color:$gray;
+  text-decoration:none;
+}
+
+#teamlist h6 span {
+  font-weight: lighter;
+}

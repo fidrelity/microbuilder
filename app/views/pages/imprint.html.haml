@@ -2,15 +2,54 @@
 
   .span12
 
-    %h2{:class=>"page-header"}
-      Imprint
+    = head_line( "team", "playtin" )
 
     .row
 
-      .span8
+      .span6
+        
+        %ul{:class => "thumbnails", :id => "teamlist"}
 
-        %h4
-          Our vision
+          %li{:class=>"thumbnail"} 
+            =image_tag("team/dre.png")
+            %h6         
+              = link_to ("http://fidrelity.at") do
+                andre<span>schweighofer</span>
+
+          %li{:class=>"thumbnail"}
+            =image_tag("team/ebsi.png")
+            %h6 
+              = link_to ("http://egraether.com") do
+                eberhard<span>gräther</span>
+              
+          %li{:class=>"thumbnail graphic"}
+            =image_tag("team/zeusreal.jpg")
+            %h6 
+              = link_to ("http://www.weberdevelopment.de") do
+                francois<span>weber</span>              
+
+          %li{:class=>"thumbnail graphic"}
+            %div{:style => "width:128px;height:128px;background:#CCC"}
+            %h6 
+              = link_to ("http://www.playtin.com") do
+                manuel<span>gottstein</span>                         
+
+          %li{:class=>"thumbnail graphic"}
+            %div{:style => "width:128px;height:128px;background:#CCC"}
+            %h6 
+              = link_to ("http://www.playtin.com") do
+                manuel<span>boesze</span>
+
+          %li{:class=>"thumbnail graphic"}
+            %div{:style => "width:128px;height:128px;background:#CCC"}
+            %h6 
+              = link_to ("http://www.playtin.com") do
+                hannah<span>langhagel</span>
+
+      .span6
+
+        %h4{:style => "margin-top:0;"}
+          our vision
         %p
           Playtin is a platform on which you can play and create mini games for free.
 
@@ -19,9 +58,7 @@
           Playtin is our mission and tool for those creative and game-loving people, who want to bring their game ideas to life.
 
         %h4{:style=>"margin-top:1em;"}
-          Current state
-          %small
-            (08.2012)
+          current state
         %p
           We are currently in a beta phase, thus some features are still not available and in development.
           If you want to give us some feedback - which we appreciate very much - you can do that by clicking on 
@@ -31,47 +68,29 @@
           on the left.
 
         %h4{:style=>"margin-top:1em;"}
-          Info
+          info
         %i
           Playtin is not responsible for any law infringements by user generated content.
           For any possible law infringements please use our Feedback form at the left or
           use the 'report' feature built in on every games page.
       
         %h4{:style=>"margin-top:1em;"}
-          Address
-        %p= "Fachhochschule Salzburg University of Applied Sciences"
-        %p= "Urstein Sued 1"
-        %p= "A-5412 Puch/Salzburg"
-        
-        = link_to "http://www.fh-salzburg.ac.at/" do
-          %img{:src => "http://marblerun.at/images/logo-mediaCube.png", :width => 145, :height => 25}
-          %img{:src => "http://marblerun.at/images/logo-fhs.png", :width => 60, :height => 45}
+          address
 
-      .span4
-        %h4{}
-          Who we are
-        
-        %ul{:class => "thumbnails"}
+        .row
 
-          %li{:class=>"thumbnail"} 
-            =image_tag("team/dre.png")
-            %h6         
-              =link_to "Andre Schweighofer", "http://fidrelity.at"
+          .span3
+            Fachhochschule Salzburg
+            %br
+            University of Applied Sciences
+            %br
+            Urstein Sued 1
+            %br
+            A-5412 Puch/Salzburg
+          
+          .span3
+            = link_to "http://www.fh-salzburg.ac.at/" do
+              %img{:src => "http://marblerun.at/images/logo-mediaCube.png", :width => 145, :height => 25}
+              %img{:src => "http://marblerun.at/images/logo-fhs.png", :width => 60, :height => 45}
 
-          %li{:class=>"thumbnail"}
-            =image_tag("team/ebsi.png")
-            %h6 
-              =link_to "Eberhard Gräther", "http://egraether.com"
-
-          %li{:class=>"thumbnail graphic"}
-            =image_tag("team/zeusreal.jpg")
-            %h6 
-              =link_to "Francois Weber", "http://www.weberdevelopment.de" 
-
-        Carina Reindl
-        %br
-        Hannah Langhagel
-        %br
-        Manuel Gottstein
-        %br
-        Manuel Boesze
+      
