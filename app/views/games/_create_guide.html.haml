@@ -5,7 +5,9 @@
     = head_line("editor", "tour")
 
     %p
-      This is the place where you can bring your paintings to life and build you own microgames!    
+      This is the place where you can bring your 
+      %br
+      paintings to life and build you own microgames!    
 
 .row
 
@@ -20,7 +22,7 @@
       %li set trigger and actions
       %li preview and publish your game
 
-    %div{:class => "signup-info alert alert-info"}
+    %div{:class => "signup-info well"}
       Just 
       =link_to "login with your facebook account", user_omniauth_authorize_path(:facebook)
       or 

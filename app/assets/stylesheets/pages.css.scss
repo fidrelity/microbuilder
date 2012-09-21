@@ -175,6 +175,10 @@ h6 {
   background:#333;color:#FFF;padding:1.7em;
 }
 
+.home-login-button {
+  margin-right:5px;
+}
+
 .guideButtons {
   width: 200px;
 /*  margin-top: 48px;*/
@@ -601,6 +605,7 @@ canvas {
 }
 
 #guideSteps li {
+  padding-left:2px;
   cursor:pointer;
   text-decoration:underline;  
 }
@@ -625,6 +630,7 @@ canvas {
   position:absolute;
   bottom:0; left:0;
   margin:0 !important;
+  padding:15px
 }
 
 .guide .signup-info a, .guid .signup-info a:visited {
