@@ -549,8 +549,8 @@ canvas {
 
 #commentsWrapper .comments {
   overflow-y:auto;
-  height:140px;
-  max-height:140px;
+  height:163px;
+  max-height:163px;
 }
 
 #commentsWrapper .comments .comment {
@@ -605,7 +605,7 @@ canvas {
 }
 
 #guideSteps li {
-  padding-left:2px;
+  padding-left:5px;
   cursor:pointer;
   text-decoration:underline;  
 }
