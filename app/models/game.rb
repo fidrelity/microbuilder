@@ -14,6 +14,7 @@ class Game < ActiveRecord::Base
   
   #validate :win_condition_in_data
   validates_presence_of :title, :instruction, :data
+  validates_uniqueness_of :title
   
   scope :all_by_played, lambda { |ordered| order("played #{ordered.upcase}") }
   scope :all_latest, lambda { |ordered| order("created_at #{ordered.upcase}") }
@@ -99,6 +100,12 @@ class Game < ActiveRecord::Base
 
     return index > -1 ? in_words[ index ] : "inverse"
 
+  end
+
+  # Friendly URL
+  # https://gist.github.com/1209730
+  def to_param
+    [id, title.parameterize].join("-")
   end
   
   private
