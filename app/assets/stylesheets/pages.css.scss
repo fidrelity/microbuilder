@@ -121,10 +121,11 @@ h6 {
     
     #submit {
       background-image: url("/assets/header/search.png");
-      width: 30px;
+      width: 36px;
       height: 30px;
       border: none;
       background-color: transparent;
+      background-repeat: no-repeat;
       border-right: 1px solid #E3E3E3;
     }
   }
