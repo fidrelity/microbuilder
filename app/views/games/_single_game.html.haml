@@ -12,10 +12,10 @@
     .row{:class => "gameDetails"}
 
       .span1
-        %span{:class=>"label label-#{game.difficulty_bootstrap_class}"}
+        %span{:class=>"label #{difficulty_class(game.difficulty)}"}
           = game.difficulty_in_words
 
-      .span2{:style => "width:130px;text-align:right;"}
+      .span2{:class => "gameStats"}
         %i{:class=>"icon-eye-open"}
         = game.played
         &nbsp;

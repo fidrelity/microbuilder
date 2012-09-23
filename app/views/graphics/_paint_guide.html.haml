@@ -5,7 +5,11 @@
     = head_line("paint", "tour")
 
     %p
-      Every game needs graphics. And to give you everything you need for your awesome games, we also created a paint tool!
+      Every game needs graphics. And to give
+      %br
+      you everything you need for your awesome 
+      %br
+      games, we also created a paint tool!
 
 .row
 
@@ -22,7 +26,7 @@
       %li draw a background
 
 
-    %div{:class => "signup-info alert alert-info"}
+    %div{:class => "signup-info well"}
       Just
       =link_to "login with your facebook account", user_omniauth_authorize_path(:facebook)
       or 

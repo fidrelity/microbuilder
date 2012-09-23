@@ -7,7 +7,7 @@
   %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
     %span{ :class => "caret"}
 
-  %ul{:class => "dropdown-menu"}
+  %ul{:id => "user-dropdown", :class => "dropdown-menu"}
 
     %li{:class => ""}      
       =link_to "profile", user_path(current_user)

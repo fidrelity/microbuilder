@@ -83,4 +83,15 @@ module ApplicationHelper
 
   end
 
+  # Returns twitter bootstrap class for difficulty label
+  def difficulty_class(difficulty)
+
+    index = difficulty - 1
+    #in_words = ["success", "warning", "important"]
+    in_words = ["easy", "moderate", "hard"]
+
+    return index > -1 ? in_words[ index ] : "moderate"
+
+  end
+
 end

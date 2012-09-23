@@ -407,6 +407,11 @@ h6 {
     font-size:0.8em;
   }
 
+  .gameStats {
+    width:130px;text-align:right;
+    color:#CBCBCB;
+  }
+
   h5 {
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     font-size: 14px;
@@ -436,11 +441,12 @@ canvas {
   font-size: 14px;
   font-weight: bolder;
 }
-.easy { color: #5EB95E; }
 
-.moderate { color: #FFBC00; }
+.easy { background-color: $green; }
 
-.hard { color: #FF0000; }
+.moderate { background-color: $font ; }/*#FFBC00*/
+
+.hard { background-color: $red; }
 
 .gallery_paginate_buttons {
   padding-top:5px;
@@ -570,6 +576,12 @@ canvas {
   display: none;
 }
 
+.closeX {
+  position:relative;
+  top:-14px;
+  left:8px;
+}
+
 /* Guides */
 #slide-container, #guide-slide-container {
   width:600px;
@@ -622,7 +634,7 @@ canvas {
 .guide h3 {
   font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   font-size:16px;
-  margin:0 0 1em;
+  margin:2em 0 1em;
   line-height:16px;
 }
 
@@ -658,8 +670,11 @@ canvas {
 
 #imprint #imprint-right {
   text-align: justify;
+  font-size:11px;
+  font-style: italic;
 }
 
 #imprint h4 {
   margin:0 0 5px;
+  font-style: normal;
 }
