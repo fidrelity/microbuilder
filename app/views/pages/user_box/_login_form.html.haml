@@ -1,40 +1,43 @@
 =# ------------- User is logged OUT --------------
 -if user_signed_in?
+  .span4
   
-  %div{ :class => "well"}
-    
-    = link_to( user_path(current_user) ) do
+    %div{ :class => "well"}
+      
+      = link_to( user_path(current_user) ) do
 
-      .avatar_big{:style => "float:right;"}
-        = image_tag "#{current_user.display_image}", :style => "width:60px"
-      %h2
-        = current_user.display_name
+        .avatar_big{:style => "float:right;"}
+          = image_tag "#{current_user.display_image}", :style => "width:60px"
+        %h2
+          = current_user.display_name
 
-    %div{:style => "margin-top:1em;"}
-      %p
-        = "#{current_user.games.size} games created"
-      %p
-        = "#{current_user.graphics.size} graphics created"
-      %p
-        %strong
-          total:
-        %i{:class => "icon-eye-open"}
-        = "#{@plays} plays"
-        and
-        %i{:class => "icon-thumbs-up"}
-        = "#{@likes} likes"
+      %div{:style => "margin-top:1em;"}
+        %p
+          = "#{current_user.games.size} games created"
+        %p
+          = "#{current_user.graphics.size} graphics created"
+        %p
+          %strong
+            total:
+          %i{:class => "icon-eye-open"}
+          = "#{@plays} plays"
+          and
+          %i{:class => "icon-thumbs-up"}
+          = "#{@likes} likes"
 
 - else
 
-  = form_tag user_session_path, :class => "well" do
+  .span4{:style => "width:260px;margin-left:60px"}
 
-    %label e-mail
-    = text_field_tag 'user[email]', '', :placeholder => "e-mail", :class=>"span3"
+    = form_tag user_session_path, :class => "well" do
 
-    %label password
-    = password_field_tag 'user[password]', '', :placeholder => "password", :class=>"span3"
+      %label e-mail
+      = text_field_tag 'user[email]', '', :placeholder => "e-mail", :class=>"span3"
 
-    %button{ :type=>"submit", :class=>"btn home-login-button"}
-      login
+      %label password
+      = password_field_tag 'user[password]', '', :placeholder => "password", :class=>"span3"
 
-    =link_to(image_tag("facebook_login.png"), user_omniauth_authorize_path(:facebook))
+      %button{ :type=>"submit", :class=>"btn home-login-button"}
+        login
+
+      =link_to(image_tag("facebook_login.png"), user_omniauth_authorize_path(:facebook))
