@@ -576,6 +576,12 @@ canvas {
   display: none;
 }
 
+.closeX {
+  position:relative;
+  top:-14px;
+  left:8px;
+}
+
 /* Guides */
 #slide-container, #guide-slide-container {
   width:600px;
@@ -664,8 +670,11 @@ canvas {
 
 #imprint #imprint-right {
   text-align: justify;
+  font-size:11px;
+  font-style: italic;
 }
 
 #imprint h4 {
   margin:0 0 5px;
+  font-style: normal;
 }
