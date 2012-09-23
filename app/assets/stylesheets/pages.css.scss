@@ -379,6 +379,28 @@ h6 {
 /* Gallery */
 /* ---------------------------------- */
 
+#sort-bar {
+  background:#F5F5F5;
+  background-image: -moz-linear-gradient(center top , #FFFFFF, #E6E6E6);
+  border-radius:4px;
+  margin-left:2px;
+}
+
+#sort-bar button, #sort-bar .dropdown-toggle {
+  border:none;
+  box-shadow: none !important;
+  border-radius:none;  
+}
+
+#sort-bar .btn.active, #sort-bar .btn:active {
+  color:$red;
+  background-image: -moz-linear-gradient(center top , #FFFFFF, #E6E6E6);
+}
+
+#sort-bar .game-select {
+  margin-left:0px;
+}
+
 #gamesList { 
   
   .gameAuthor {
@@ -451,6 +473,7 @@ canvas {
 .gallery_paginate_buttons {
   padding-top:5px;
   text-align: right;
+  margin-left:85px;
 }
 
 /* CREATE  - Editor Page when user !logged_in */

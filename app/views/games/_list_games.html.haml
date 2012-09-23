@@ -1,36 +1,35 @@
 
 .row
 
-  .span5
+  .span3
     = head_line( "games", "gallery" )
 
-  .span7
+  .span9
 
-    .row
+    .row{:id => "sort-bar"}
 
-      .span2
-        %div{ :class => "btn-group game-select"}
+      .span2{ :class => "btn-group game-select" }        
 
-          %button{ :class => "btn"}
-            sort by #{ params[:type] || "date" }
+        %button{ :class => "btn"}
+          sort by #{ params[:type] || "date" }
 
-          %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
-            %span{ :class => "caret"}
+        %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
+          %span{ :class => "caret"}
 
-          %ul{:id => "game-order-dropdown", :class => "dropdown-menu", :style => "min-width:130px"}
-            %li{:class => ""}
-              =link_to "date", gallery_path
+        %ul{:id => "game-order-dropdown", :class => "dropdown-menu", :style => "min-width:130px"}
+          %li{:class => ""}
+            =link_to "date", gallery_path
 
-            %li{:class => ""}
-              =link_to "rating", gallery_path({:type => "rating"})
+          %li{:class => ""}
+            =link_to "rating", gallery_path({:type => "rating"})
 
-            %li{:class => ""}      
-              =link_to "most played", gallery_path({:type => "played"}) 
+          %li{:class => ""}      
+            =link_to "most played", gallery_path({:type => "played"}) 
 
-            %li{:class => ""}
-              =link_to "difficulty", gallery_path({:type => "difficulty"})
+          %li{:class => ""}
+            =link_to "difficulty", gallery_path({:type => "difficulty"})
 
-      .span3
+      .span4
         %div{:class => 'btn-group order', "data-toggle" => 'buttons-radio', :style => 'float:left;'}
           %button{:class => 'btn', :value => "asc"}
             ascending
