@@ -92,15 +92,6 @@ class Game < ActiveRecord::Base
 
   end
 
-  # Returns twitter bootstrap class for difficulty label
-  def difficulty_bootstrap_class
-
-    index = self.difficulty - 1
-    in_words = ["success", "warning", "important"]
-
-    return index > -1 ? in_words[ index ] : "inverse"
-
-  end
 
   # Friendly URL
   # https://gist.github.com/1209730

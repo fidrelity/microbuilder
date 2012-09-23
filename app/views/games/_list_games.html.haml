@@ -13,21 +13,22 @@
 
           %button{ :class => "btn"}
             sort by #{ params[:type] || "date" }
+
           %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
             %span{ :class => "caret"}
 
-          %ul{:class => "dropdown-menu"}
+          %ul{:id => "game-order-dropdown", :class => "dropdown-menu", :style => "min-width:130px"}
             %li{:class => ""}
-              =link_to "Date", gallery_path
+              =link_to "date", gallery_path
 
             %li{:class => ""}
-              =link_to "Rating", gallery_path({:type => "rating"})
+              =link_to "rating", gallery_path({:type => "rating"})
 
             %li{:class => ""}      
-              =link_to "Most played", gallery_path({:type => "played"}) 
+              =link_to "most played", gallery_path({:type => "played"}) 
 
             %li{:class => ""}
-              =link_to "Difficulty", gallery_path({:type => "difficulty"})
+              =link_to "difficulty", gallery_path({:type => "difficulty"})
 
       .span3
         %div{:class => 'btn-group order', "data-toggle" => 'buttons-radio', :style => 'float:left;'}
