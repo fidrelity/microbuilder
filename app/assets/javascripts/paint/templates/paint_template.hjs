@@ -72,12 +72,15 @@
       <button {{action "flipHorizontal" target="App.paintController"}} class="fliph ttip" title="Flip sprite horizontally"></button>
       <button {{action "rotateLeft" target="App.paintController"}} class="rotl ttip" title="Rotate sprite left"></button>
       <button {{action "rotateRight" target="App.paintController"}} class="rotr ttip" title="Rotate sprite right"></button>
-      <button {{action "clearTool" target="App.paintController"}} class="clearTool ttip" title="Clear current sprite"></button>
-      
+         
       <div class="piece"></div>
       
       <button {{action "undoTool" target="App.paintController"}} class="undo ttip" title="Undo"></button>
       <button {{action "redoTool" target="App.paintController"}} class="redo ttip" title="Redo"></button>
+
+      <div class="piece"></div>
+
+      <button {{action "clearTool" target="App.paintController"}} class="clearTool ttip" title="Clear current sprite"></button>
       
       <div class="clear"></div>
     
