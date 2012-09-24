@@ -8,31 +8,35 @@
 
     .row{:id => "sort-bar"}
 
-      .span2{ :class => "btn-group game-select" }        
+      .span2{ :class => "game-select" }        
 
-        %button{ :class => "btn"}
-          sort by #{ params[:type] || "date" }
+        .btn-group
 
-        %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
-          %span{ :class => "caret"}
+          %button{ :class => "btn"}
+            sort by #{ params[:type] || "date" }
 
-        %ul{:id => "game-order-dropdown", :class => "dropdown-menu", :style => "min-width:130px"}
-          %li{:class => ""}
-            =link_to "date", gallery_path
+          %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
+            %span{ :class => "caret"}
 
-          %li{:class => ""}
-            =link_to "rating", gallery_path({:type => "rating"})
+          %ul{:id => "game-order-dropdown", :class => "dropdown-menu", :style => "min-width:130px;float:left;"}
+            %li{:class => ""}
+              =link_to "date", gallery_path
 
-          %li{:class => ""}      
-            =link_to "most played", gallery_path({:type => "played"}) 
+            %li{:class => ""}
+              =link_to "rating", gallery_path({:type => "rating"})
 
-          %li{:class => ""}
-            =link_to "difficulty", gallery_path({:type => "difficulty"})
+            %li{:class => ""}      
+              =link_to "most played", gallery_path({:type => "played"}) 
 
-      .span4
+            %li{:class => ""}
+              =link_to "difficulty", gallery_path({:type => "difficulty"})
+
+      .span4{:style => "margin:0;"}
+
         %div{:class => 'btn-group order', "data-toggle" => 'buttons-radio', :style => 'float:left;'}
           %button{:class => 'btn', :value => "asc"}
-            ascending
+            ascending          
+          
           %button{:class => 'btn', :value => "desc"}
             descending
 

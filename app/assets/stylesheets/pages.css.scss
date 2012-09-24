@@ -401,6 +401,7 @@ h6 {
   border:none;
   box-shadow: none !important;
   border-radius:none;  
+  background:url(line.png) right no-repeat;
 }
 
 #sort-bar .btn.active, #sort-bar .btn:active {
@@ -408,10 +409,15 @@ h6 {
   background-image: -moz-linear-gradient(center top , #FFFFFF, #E6E6E6);
   background-image: -webkit-linear-gradient(#FFFFFF, #E6E6E6);
   background-image: -o-linear-gradient(#FFFFFF, #E6E6E6);
+  background:url(line.png) right no-repeat;
 }
 
 #sort-bar .game-select {
   margin-left:0px;
+}
+
+#sort-bar .piece {
+  margin:0;
 }
 
 #gamesList { 
@@ -486,7 +492,7 @@ canvas {
 .gallery_paginate_buttons {
   padding-top:5px;
   text-align: right;
-  margin-left:85px;
+  margin-left:105px;
 }
 
 /* CREATE  - Editor Page when user !logged_in */
