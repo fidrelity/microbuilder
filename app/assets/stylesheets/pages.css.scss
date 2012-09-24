@@ -135,7 +135,11 @@ h6 {
       background-color: transparent;
       background-repeat: no-repeat;
       border-right: 1px solid #E3E3E3;
-    }
+    }    
+  }
+
+  #user-dropdown {
+    min-width: 140px;
   }
   
   #profile .lock {
@@ -560,7 +564,7 @@ canvas {
 }  
 
 #playGame .progress-success {
-  background-image: linear-gradient(bottom, rgb(135,18,26) 91%, rgb(187,24,35) 74%);
+  /*background-image: linear-gradient(bottom, rgb(135,18,26) 91%, rgb(187,24,35) 74%);
   background-image: -o-linear-gradient(bottom, rgb(135,18,26) 91%, rgb(187,24,35) 74%);
   background-image: -moz-linear-gradient(bottom, rgb(135,18,26) 91%, rgb(187,24,35) 74%);
   background-image: -webkit-linear-gradient(bottom, rgb(135,18,26) 91%, rgb(187,24,35) 74%);
@@ -573,6 +577,9 @@ canvas {
   	color-stop(0.91, rgb(135,18,26)),
   	color-stop(0.74, rgb(187,24,35))
   );
+  */
+  background-image:none !important;
+  background-color: $red;
   border-radius:0px;
   height:10px;
   top:4px;
@@ -580,7 +587,7 @@ canvas {
 }
 
 #playGame .bar {
-  background:#4C804A;
+  background:$green;
 }
 
 #playGame .likeButton {
@@ -616,6 +623,7 @@ canvas {
 
 #shareLayer, #reportLayer, #embedLayer {
   display: none;
+  width:603px;
 }
 
 .closeX {
