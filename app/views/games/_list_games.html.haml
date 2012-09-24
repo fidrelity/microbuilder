@@ -41,7 +41,7 @@
             descending
 
       .span2{:class => "gallery_paginate_buttons"}
-        = will_paginate @games, :param_name => :page, :container => false,  :page_links => false, :show_always => true
+        = will_paginate @games, :param_name => :page, :container => false, :page_links => false, :show_always => true, :previous_label => '&#9666; previous', :next_label => 'next &#9656;'
 
 .row{:style => "margin-top:1em;"}
 
