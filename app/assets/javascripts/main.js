@@ -37,6 +37,26 @@ function editor_main( data, username ) {
     }
     
   }
+  
+  App.addObserver( 'showhelp', function() {
+    
+    if ( App.showhelp ) {
+      
+      $('.ttip').tooltip();
+      $('.pop').popover({ trigger: 'hover'});
+      
+    } else {
+      
+      $('.ttip').tooltip( 'destroy' );
+      $('.pop').popover( 'destroy' );
+      
+    }
+    
+  });
+  
+  $('.helpButton').popover({trigger: "hover"});
+  
+  App.set( "showhelp", true );
 
 };
 

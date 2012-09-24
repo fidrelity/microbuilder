@@ -1,3 +1,10 @@
+<div class="help" style="margin-bottom:2px">
+  <span class="label label-info">help:</span>
+
+  The list on the left shows you all objects in your game. Click on one to select it. You can drag them up and down to change their ordering in the game.
+
+</div>
+
 <table>
 
   <tr>
@@ -11,7 +18,7 @@
 
       <div class="clear"></div>
 
-      <button class="btn" {{action "searchGraphic" target="App.gameController"}}>
+      <button class="btn pop" title="new object" data-content="Objects are the actors in your game. They have a certain graphic and position on the field. You can give them behaviours to make them move, play animations and react to player input." {{action "searchGraphic" target="App.gameController"}}>
         <i class="icon-plus"></i> object </button>
 
     </td>
@@ -19,6 +26,13 @@
     <td class="objectsRight" valign="top">
 
       {{#if App.gameObjectsController.current}}
+      
+        <div class="help withSpace">
+          <span class="label label-info">help:</span>
+
+          Below you see all details of the selected object. At the top you can change name, graphic and shape. Beneath is the list of behaviors, which define how this object reacts to player input and events in the game.
+
+        </div>
 
         {{#view GameObjectView contentBinding = "App.gameObjectsController.current"}}
 
@@ -30,7 +44,7 @@
 
             <h5 style="margin: 5px 0 10px"> settings </h5>
 
-            <div class="form-horizontal" style="margin-bottom:9px">
+            <div class="form-horizontal ttip" title="change the name of the object" style="margin-bottom:9px">
 
               <span style="margin-right:5px"> name: </span>
 
@@ -40,10 +54,10 @@
 
             <div class="btn-group">
 
-              <button class="btn" {{action "changeArt"}}><i class="icon-picture"></i> change graphic </button>
-              <button class="btn" {{action "bounding"}}><i class="icon-fullscreen"></i> change shape </button>
-              <button class="btn" {{action "duplicate"}}><i class="icon-retweet"></i> duplicate </button>
-              <button class="btn" {{action "remove"}}><i class="icon-trash"></i> delete </button>
+              <button class="btn ttip" title="change the graphic of the object" {{action "changeArt"}}><i class="icon-picture"></i> change graphic </button>
+              <button class="btn ttip" title="change the clickable and collidable shape" {{action "bounding"}}><i class="icon-fullscreen"></i> change shape </button>
+              <button class="btn ttip" title="duplicate this object with all its behaviors" {{action "duplicate"}}><i class="icon-retweet"></i> duplicate </button>
+              <button class="btn ttip" title="remove this object from your game" {{action "remove"}}><i class="icon-trash"></i> delete </button>
 
             </div>
       
@@ -54,6 +68,12 @@
         {{/view}}
   
         <h5 style="margin: 15px 0"> behaviour </h5>
+        
+        <div class="help withSpace">
+          <span class="label label-info">help:</span>
+          <strong> start actions </strong> get executed one after another as soon as the game starts. See below for more details about actions.
+
+        </div>
 
         <ul id="behaviours">
           {{#view BehaviourView 
@@ -62,7 +82,7 @@
           }}
             <li class="behaviour">
 
-              <div class="head">
+              <div class="head" >
 
                   <div class="headtitle">
                     <i class="icon-chevron-down hide"></i>
@@ -76,7 +96,7 @@
 
                 <div class="title"> on start </div>
 
-                <div class="list">
+                <div class="list" >
 
                   {{view UiActionView
                     contentBinding= "content.actions"
@@ -93,6 +113,12 @@
 
             </li>
           {{/view}}
+
+          <div class="help withSpace">
+            <span class="label label-info">help:</span>
+            <strong> Behaviours </strong> consist of one or more <strong>triggers</strong> and one or more <strong>actions</strong>. A <strong>trigger</strong> checks the state of an object and decides when something happens. An <strong>action</strong> changes the state of an object and decides what happens in your game. If all triggers of a behavior apply, then all actions of this behavior will be executed.
+
+          </div>
 
           {{#each App.behaviourController}}
             {{#view BehaviourView 

@@ -6,7 +6,7 @@ var LibraryView = Ember.View.extend({
   
   heading : function() {
     
-    return ( App.libraryController.isBackground ? 'background' : 'graphics' ) + ' library';
+    return ( App.libraryController.showBackground ? 'background' : 'graphics' ) + ' library';
     
   }.property( 'App.libraryController.isBackground' ),
   

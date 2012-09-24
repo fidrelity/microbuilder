@@ -411,25 +411,14 @@
   /*margin: 12px 0 0;*/
 }
 
-#editor .stageControls #stageTop button {
-  padding:3px;
-}
-
-#editor #finalizeButton {
-  padding:2px;
-  font-size: 15px;
-  font-weight: bold;
-}
-
 
 #editor #duration {
   font-size: 11pt;
   border: 1px solid #CCC;
-  padding: 3px 10px 3px;
+  padding: 10px 10px 6px;
   background-color: whiteSmoke;
   border-radius: 5px;
-  margin-left: 155px;
-  /*height:30px;*/
+  margin-left: 4px;
 }
 
 #editor #duration #slider {
@@ -462,4 +451,27 @@
 
 #check-list li {
   margin-bottom:4px;
+}
+
+
+#editor {
+  
+  .helpButton {
+    background: white;
+    padding: 5px 15px 0px 10px;
+    border-radius: 5px;
+    float: right;
+  }
+
+  .help {
+    background: white;
+    border-radius: 5px;
+    padding: 5px 10px 5px;
+    box-shadow: 0 1px 2px #BBB;
+  }
+  
+  .withSpace {
+    margin-bottom: 10px;
+  }
+  
 }

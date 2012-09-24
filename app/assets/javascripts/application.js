@@ -136,7 +136,7 @@ $(document).ready(function() {
   // 
   $("#profilewrap").find(".edit").live("click", function(e) {
     toggleProfileEdit( $(this) );    
-  });  
+  });
   
   var current_tab = getURLParameter('current');
   if (current_tab == 'null') current_tab = 'games';

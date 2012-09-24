@@ -1,31 +1,47 @@
+{{#if App.showhelp}}
+
+  <div class="help">
+    <span class="label label-info">help:</span>
+
+    {{#if App.libraryController.showBackground}}
+
+      This is the background library. Here you can choose one of the backgrounds you painted, or look for backgrounds other users made publicly available. Click on a background to see it below in full size. Press the button at the bottom right to use this background. The background covers the whole game field and does not move.
+  
+    {{else}}
+    
+      This is the graphics library. Here you can choose one of the graphics you painted, or look for graphics other users made publicly available. Click on a graphic to see it below in full size and with all its sprites. Press the button at the bottom right to use this graphic.
+  
+    {{/if}}
+  
+  </div>
+
+{{/if}}
+
 <div class="content">
+  
   <div class="libraryControls form-inline">
     <div class="btn-group left" data-toggle="buttons-radio">
 
-      <button id="ownButton" class="btn" {{action "showOwns" target="App.libraryController"}}>
+      <button id="ownButton" class="btn ttip" title="show your own paintings" {{action "showOwns" target="App.libraryController"}}>
         <i class="icon-user"></i> own</button>
-      <button id="publicButton" class="btn" {{action "showPublics" target="App.libraryController"}}>
+      <button id="publicButton" class="btn ttip" title="show all available paintings" {{action "showPublics" target="App.libraryController"}}>
         <i class="icon-globe"></i> public</button>
 
     </div>
 
-    <div class="left">
+    {{#unless App.libraryController.showBackground}}
 
-      {{#unless App.libraryController.showBackground}}
+      <div class="btn-group left ttip" title="size filter" data-toggle="buttons-radio">
 
-        <div class="btn-group left" data-toggle="buttons-radio">
+        <button id="smallButton" class="btn" {{action "showSmall"}}>small</button>
+        <button id="mediumButton" class="btn" {{action "showMedium"}}>medium</button>
+        <button id="largeButton" class="btn" {{action "showLarge"}}>large</button>
 
-          <button id="smallButton" class="btn" {{action "showSmall"}}>small</button>
-          <button id="mediumButton" class="btn" {{action "showMedium"}}>medium</button>
-          <button id="largeButton" class="btn" {{action "showLarge"}}>large</button>
+      </div>
 
-        </div>
+    {{/unless}}
 
-      {{/unless}}
-
-    </div>
-
-    <div class="pull-right">
+    <div class="pull-right ttip" title="search by name">
       <input type="text" class="graphicSearchField">
       <button id="searchButton" class="btn" {{action "search" target="App.libraryController"}}>
         <i class="icon-search"></i>

@@ -81,6 +81,15 @@ var MainView = Ember.View.extend({
     
     $.scrollTo( $( '.overlayhead' ), { axies : 'y', duration : 500, offset : -30 } );
     
+    if ( App.showhelp ) {
+      
+      Ember.run.end();
+      
+      $('.ttip').tooltip();
+      $('.pop').popover({ trigger: 'hover'});
+      
+    }
+    
   },
   
   hideOverlay : function() {
