@@ -16,11 +16,11 @@
           = game.difficulty_in_words
 
       .span2{:class => "gameStats"}
-        %i{:class=>"icon-eye-open"}
+        %i{:class=>"icon-gallery-played"}
         = game.played
         &nbsp;
-        %i{:class=>"icon-thumbs-up"}
+        %i{:class=>"icon-gallery-like"}
         = game.likes
         &nbsp;
-        %i{:class=>"icon-comment"}
+        %i{:class=>"icon-gallery-comments"}
         = game.game_comments.size

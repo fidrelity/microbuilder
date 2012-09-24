@@ -28,7 +28,7 @@
           %span{:class=>"label #{difficulty_class( @game.difficulty)}"}= @game.difficulty_in_words
 
         .span1
-          %i{:class => "icon-eye-open"}
+          %i{:class => "icon-show-eye-open"}
           %span{ :id => "playedWrapper"}
             = render :partial => "played", :locals => {:played => @game.played}
       

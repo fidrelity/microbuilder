@@ -499,6 +499,25 @@ canvas {
   margin-left:105px;
 }
 
+.icon-gallery-played {
+  background:url(game/views_gallery.png) no-repeat center center;
+  width:16px; height:16px;
+}
+
+.icon-gallery-like {
+  background:url(game/like_gallery.png) no-repeat center center;
+  width:16px; height:16px;
+}
+
+.icon-gallery-comments {
+  background:url(game/comments_gallery.png) no-repeat center center;
+  width:16px; height:16px;
+}
+
+.icon-gallery-played, .icon-gallery-comments, .icon-gallery-like {
+  margin-top:-1px;
+}
+
 /* CREATE  - Editor Page when user !logged_in */
 #create {
   position:relative;
@@ -593,13 +612,20 @@ canvas {
 #playGame .likeButton {
   padding-left: 18px;
   line-height: 13px;
-  background:url("/assets/like.png") no-repeat;
+  background:url("game/like.png") no-repeat;
 }
 
 #playGame .dislikeButton {
   padding-left: 18px;
   line-height: 13px;
-  background:url("/assets/dislike.png") no-repeat;
+  background:url("game/dislike.png") no-repeat;
+}
+
+.icon-show-eye-open {
+  width:20px;
+  height:20px;
+  background:url("game/views.png") no-repeat; 
+  margin-top: -1px;
 }
 
 #commentsWrapper .comments {
