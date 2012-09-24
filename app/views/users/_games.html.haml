@@ -11,7 +11,7 @@
         - games.each do |game|
 
           %li{:id => game.id, :class => "span3"}
-            
+          
             .thumbnail{:style => "position:relative"}
               = link_to image_tag(game.preview_image), play_path(game)
                         
@@ -28,14 +28,14 @@
                     = game.difficulty_in_words
 
                 .span2{:class => "gameStats"}
-                  %i{:class=>"icon-eye-open"}
+                  %i{:class=>"icon-gallery-played"}
                   = game.played
                   &nbsp;
-                  %i{:class=>"icon-thumbs-up"}
+                  %i{:class=>"icon-gallery-like"}
                   = game.likes
                   &nbsp;
-                  %i{:class=>"icon-thumbs-down"}
-                  = game.dislikes
+                  %i{:class=>"icon-gallery-comments"}
+                  = game.game_comments.size
 
               -if current_user == game.author
 
