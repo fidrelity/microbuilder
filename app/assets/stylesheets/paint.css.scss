@@ -133,6 +133,12 @@
   background-repeat: no-repeat;
 }
 
+#paint-wrapper .paint-zoom-in-icon {
+  background-image: url('/assets/paint/zoom_in.png');
+  height: 16px; width: 16px;
+  background-repeat: no-repeat;
+}
+
 #paint-wrapper .tool-bar button.toggleBgButton {
 /*  background:#FFF;*/
   height: 26px;
@@ -161,11 +167,17 @@
   margin-top: 6px;
   
   a {
-    border-radius: 0;
+    border-radius: 10px;
+    height: 10px;
+    top: -5px;
+    width: 10px;
+    margin-left: -3px;
+    border:1px solid $gray;
+/*    border-radius: 0;
     height: 15px;
     top: -7px;
     width: 6px;
-    margin-left: -3px;
+    margin-left: -3px;*/
   }
 }
 
@@ -352,4 +364,10 @@
 
 .object_size_form {
   margin-top:1em;
+}
+
+/* Overwriting jquery-ui */
+#paint-wrapper .ui-widget-content {
+  background-image:none;
+  background-color: #424755;
 }

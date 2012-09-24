@@ -16,9 +16,9 @@
       {{view SpritesView id="sprites-area-scroll"}}
   
       <div class="tool-bar tool-bar-bottom">
-        <button {{action "addSprite" target="App.paintController"}} class="add ttipBottom" title="add new sprite"></button>
-        <button {{action "copySprite" target="App.paintController"}} class="duplicate ttipBottom" title="duplicate sprite"></button>
+        <button {{action "addSprite" target="App.paintController"}} class="add ttipBottom" title="add new sprite"></button>        
         <button {{action "removeSprite" target="App.paintController"}} class="remove ttipBottom" title="remove sprite"></button>
+        <button {{action "copySprite" target="App.paintController"}} class="duplicate ttipBottom" title="duplicate sprite"></button>
       </div>
     
     {{else}}
@@ -104,22 +104,28 @@
       <button {{action "toggleBackground"}} class="toggleBgButton ttipBottom" title="Toggle the background pattern"></button>
       
       <div class="left" id="zoomWrapper">
-        <span><i class="icon-search icon-white"></i></span>
+        <span class="paint-zoom-in-icon"></span>
         <div id="zoomSlider"></div>
         <div id="zoomValue"> {{App.paintController.zoom}} </div>
         <span>x</span>
       </div>
       
+      <div class="piece"></div>
+
       <div class="left" id="sizeWrapper">
         <span><i class="icon-pencil icon-white"></i></span>
         <div id="sizeSlider"></div>
         <div id="sizeValue"> {{App.paintController.size}} </div>
         <span>px</span>
       </div>
+
+      <div class="piece"></div>
       
       {{view ColorPickerView class = "right"}}
-      
+
       <div class="clear"></div>
+
+
     </div>
   
   </div>
