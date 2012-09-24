@@ -135,7 +135,7 @@
     <input type="text" id="imageName" placeholder="image name" class="ttipBottom" title="Name of the image">
 
     <label class="checkbox">
-      <input type="checkbox" id="makePublic"  class="pop" title="Publish your work" data-content="Check if you want to share this drawing with others"> make public
+      <input type="checkbox" checked="checked" id="makePublic"  class="pop" title="Publish your work" data-content="Check if you want to share this drawing with others"> make public
     </label>
 
   </div>
