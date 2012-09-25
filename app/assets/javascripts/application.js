@@ -177,12 +177,18 @@ $(document).ready(function() {
   // ---------------------------------------
 
   // param injection for ordering games list 
-  $('.btn-group.game-select a').click(function(e) {
+  $('.game-select .btn-group a').click(function(e) {
     e.target.href += "?order=" + $('.btn-group.order .active')[0]['value'];
   });
   
   highlight_current_order();
-
+  
+  $('.btn-group.order button').click(function(e) {
+    var url = window.location.href.split('?')[0];
+    window.location.href = url + "?order=" + e.target.value;
+  });
+  
+  
   // http://jscrollpane.kelvinluck.com/#download
   $('.scroll-pane').jScrollPane();  
 });
