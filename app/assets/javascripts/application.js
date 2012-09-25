@@ -176,6 +176,8 @@ $(document).ready(function() {
   });
   
   highlight_current_order();
+
+  $('.scroll-pane').jScrollPane();
 });
 
 
