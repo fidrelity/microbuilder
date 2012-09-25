@@ -3,24 +3,24 @@
   %a{:class =>"close closeLayer closeX"}
     &times;
 
-  %h4 report us this game
+  %h4 report this game
 
   %p
-    If you think this game doesn't work, is inappropiate or it hurts any rights, then tell us:
+    If you think this game doesn't work, is inappropiate or it hurts any rights, then tell us.
 
   = form_tag("/support/report", :method => "post", :remote => true) do        
 
     = hidden_field_tag(:gid, "#{game.id}", :class => "span6")
 
     %label
-      Tell us why:
-    = text_area_tag(:body, "", :size => "120x2", :class => "span6")
+      your comment
+    = text_area_tag(:body, "", :size => "160x2", :class => "span7")
 
     %label
       Reason:
-    = select_tag "type", "<option value='broken'>Broken</option><option value='copyright'>Copyright infrigment</option><option value='inappropiate'>Inappropiate</option>".html_safe
+    = select_tag "type", "<option value='broken'>broken</option><option value='copyright'>copyright infrigment</option><option value='inappropiate'>inappropiate</option><option value='other'>other</option>".html_safe, :style=>"width:165px"
 
     %p
-      = submit_tag 'Send report', :class => "btn btn-success"
-      %span{:class=>"btn closeLayer"}
-        Cancel
+      = submit_tag 'send report', :class => "btn btn-success"
+      %span{:class=>"btn closeLayer", :style => "margin-left:5px;padding:3px 5px"}
+        cancel

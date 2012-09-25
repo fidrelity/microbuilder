@@ -63,43 +63,49 @@ $(document).ready(function() {
     };
   }
   // ---------------------------------------
-  // Game View Buttons 
-  function toggleLayer(_layer, _buttonObj) {
-    highlightTab( _buttonObj );
-    
+  // Game View Buttons   
+  function toggleLayer(_layer, _buttonObj, _evt) {
+    highlightTab( _buttonObj, _evt || null );
+        
     $('.layer').hide();
-    
-    if ( _layer ) {
-      _layer.show();
-    }
+
+    if ( _layer) {
+
+      _layer.show();        
+
+    } 
+
   }
 
-  function highlightTab(_obj) {
+  function highlightTab(_obj, _evt) {
     $(".tabButton").removeClass('active');
     $("#shareButtons .btn").removeClass('active');
     
     if ( _obj ) {
       _obj.addClass('active');
-    }
+
+      if ( _obj.length && _evt)
+        $.scrollTo( _obj, { axies : 'y', duration : 700, offset : -20 } );
+    }    
   }
 
   /* Share Button */
-  $('.shareButton').click(function() {
-    toggleLayer($('#shareLayer'), $(this));
+  $('.shareButton').click(function(e) {    
+    toggleLayer($('#shareLayer'), $(this), e);
   });
 
   /* Embed Button */
-  $('.embedButton').click(function() {
-    toggleLayer($('#embedLayer'), $(this));   
+  $('.embedButton').click(function(e) {
+    toggleLayer($('#embedLayer'), $(this), e);   
   });
 
   /* Report Button */
-  $('.reportButton').click(function() {
-    toggleLayer($('#reportLayer'), $(this));
+  $('.reportButton').click(function(e) {
+    toggleLayer($('#reportLayer'), $(this), e);
   });
 
   // Close layers
-  $('.closeLayer').click(function() {
+  $('.closeLayer').click(function(e) {
     toggleLayer();
   });
 
@@ -146,16 +152,16 @@ $(document).ready(function() {
   toggleLayer(current_layer, current_button);
   
   // Tabs
-  $('.gamesButton').click(function() {
-    toggleLayer($('#gamesLayer'), $(this));
+  $('.gamesButton').click(function(e) {
+    toggleLayer($('#gamesLayer'), $(this), e);
   });  
 
-  $('.graphicsButton').click(function() {
-    toggleLayer($('#graphicsLayer'), $(this));     
+  $('.graphicsButton').click(function(e) {
+    toggleLayer($('#graphicsLayer'), $(this), e);     
   });  
 
-  $('.backgroundsButton').click(function() {
-    toggleLayer($('#backgroundsLayer'), $(this));     
+  $('.backgroundsButton').click(function(e) {
+    toggleLayer($('#backgroundsLayer'), $(this), e);     
   }); 
 
   // Stream resize
