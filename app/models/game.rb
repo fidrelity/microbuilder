@@ -21,7 +21,7 @@ class Game < ActiveRecord::Base
   pg_search_scope :search, :against => [:title, :instruction, :tags]
   
   attr_accessor :preview_image_file_name, :preview_image_data
-  attr_accessible :title, :instruction, :data, :preview_image, :tags, 
+  attr_accessible :title, :instruction, :data, :preview_image, :tags, :version,
                   :preview_image_data, :preview_image_file_name, :played, :won
   alias_attribute :user, :author
                   
