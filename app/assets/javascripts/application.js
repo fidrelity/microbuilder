@@ -177,7 +177,8 @@ $(document).ready(function() {
   
   highlight_current_order();
 
-  $('.scroll-pane').jScrollPane();
+  // http://jscrollpane.kelvinluck.com/#download
+  $('.scroll-pane').jScrollPane();  
 });
 
 
