@@ -200,7 +200,7 @@
   overflow: auto;
   background: #EEE;
   box-shadow: inset 0px 0px 12px 0px #AAA;
-  border-left: 1px solid #464646;  
+  /*border-left: 1px solid #464646;  */
 }
 
 #paint-wrapper #area-wrapper #zoom-canvas-area #paint-area {
@@ -227,8 +227,8 @@
   overflow: auto;
   background: #EEE;
   box-shadow: inset 0px 0px 12px 0px #AAA;
-  border-right: 1px solid $gray;
-  border-left: 1px solid $gray;
+/*  border-right: 1px solid $gray;
+  border-left: 1px solid $gray;*/
 }
 
 
@@ -265,7 +265,7 @@
 }
 
 #paint-wrapper #colorpicker #colorselect {
-  border: 1px solid #333;
+  border: 1px solid $lightgray;
   cursor: crosshair;
   -moz-user-select: none;
   -webkit-user-select: none;
