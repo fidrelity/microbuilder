@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :email, :password, :password_confirmation, :display_name,
                   :remember_me, :first_name, :last_name, :facebook_id
-  
+          
   before_create :generate_display_name                
   validates_length_of :first_name, :minimum => 2
   validates_length_of :last_name, :minimum => 2

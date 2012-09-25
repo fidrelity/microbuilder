@@ -1,4 +1,8 @@
 %link{:rel => "image_src", :href => @game.preview_image} 
+%meta{:property => "og:type", :content => "#{FACEBOOK_APP_NAME}:game"}
+%meta{:property => "og:url", :content => play_url(@game)}
+%meta{:property => "og:title", :content => @game.title}
+%meta{:property => "og:image", :content => @game.preview_image}
 
 %h2{:class => "section-header"}
   =@game.title

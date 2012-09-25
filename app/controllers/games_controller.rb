@@ -29,7 +29,8 @@
     @games = Game.all_latest("desc").paginate(:page => params[:page], :per_page => 4)
     @game = current_user.games.new(params[:game])
     @game.create_graphics_association(params[:graphic_ids])
-    
+    @game.author_token = session[:facebook_token]
+
     if @game.save
       response, status = [play_url(@game), 200]
       push_new_game(@game)
