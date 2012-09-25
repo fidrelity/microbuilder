@@ -31,7 +31,7 @@ class GraphicsController < ApplicationController
 
   def release
     @graphic = Graphic.find(params[:id])
-    @graphic.update_attribute(:public, true)
+    @graphic.update_attribute(:public, true) if @graphic.user == current_user
   end
   
   def public
