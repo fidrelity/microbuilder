@@ -1,5 +1,5 @@
 class GraphicsController < ApplicationController
-  respond_to :js, :only => [:create, :show, :public, :destroy]
+  respond_to :js, :only => [:create, :show, :public, :destroy, :release]
   before_filter :authenticate_user!, :only => [:create, :destroy]
   
   def index
@@ -27,6 +27,11 @@ class GraphicsController < ApplicationController
     @games = @user.games.paginate(:page => params[:games], :per_page => 9)
 
     @was_background = graphic.background?
+  end
+
+  def release
+    @graphic = Graphic.find(params[:id])
+    @graphic.update_attribute(:public, true)
   end
   
   def public

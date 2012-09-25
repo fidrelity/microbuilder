@@ -30,11 +30,22 @@
                 %div{ :class => "settings" }
 
                   .row
-                    .span3{:class => "wrapper"}
+                    .span1{:class => "wrapper"}
                     
                       =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
                         %i{:class => "icon-trash"}
                         delete
+
+                    .span1{:class => "public_state"}
+                     
+                      - if !graphic.public
+
+                        = button_to "make public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "btn btn-mini", :title => "set public"
+
+                      - else
+
+                        %span.label
+                          public
 
 
 %div{:id => "backgroundsLayer", :class => "layer"}
@@ -67,8 +78,19 @@
                 %div{ :class => "settings" }
 
                   .row
-                    .span3{:class => "wrapper"}
+                    .span1{:class => "wrapper"}
                   
                       =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
                         %i{:class => "icon-trash"}
                         delete
+
+                    .span1{:class => "public_state"}
+
+                      - if !graphic.public
+
+                        = button_to "make public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "btn btn-mini", :title => "set public"                      
+                      - else                        
+
+                        %span.label.label-inverse
+                          public
+

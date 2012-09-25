@@ -10,11 +10,15 @@ Playtin::Application.routes.draw do
     end
   end
   
-  resources :graphics, :only => [:show, :create, :destroy, :new] do
+  resources :graphics, :only => [:show, :create, :destroy, :new] do    
+    member do
+      put 'release'
+    end
+
     collection do
       get 'public', :to => 'graphics#public'
       get 'search'
-      get 'auto_complete'
+      get 'auto_complete'      
     end
   end
 
