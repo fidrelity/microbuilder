@@ -12,13 +12,13 @@
 
         .btn-group
 
-          %button{ :class => "btn"}
+          %button{ :class => "btn", :style => "background:none;width:100px;padding-left:25px;"}
             sort by #{ params[:type] || "date" }
 
-          %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
+          %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown", :style => "padding-left:4px;padding-right:12px"}
             %span{ :class => "caret"}
 
-          %ul{:id => "game-order-dropdown", :class => "dropdown-menu", :style => "min-width:124px;float:left;"}
+          %ul{:id => "game-order-dropdown", :class => "dropdown-menu", :style => "min-width:120px;float:left;"}
             %li{:class => ""}
               =link_to "date", gallery_path
 
