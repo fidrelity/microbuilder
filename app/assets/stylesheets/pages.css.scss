@@ -430,6 +430,10 @@ h6 {
   margin:0;
 }
 
+#sort-bar .btn-group.open .dropdown-toggle {
+  box-shadow:none;
+}
+
 #gamesList { 
   
   .gameAuthor {
@@ -502,7 +506,7 @@ canvas {
 .gallery_paginate_buttons {
   padding-top:5px;
   text-align: right;
-  margin-left:130px;
+  margin-left:125px;
 }
 
 .icon-gallery-played {
