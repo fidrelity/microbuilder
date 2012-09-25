@@ -420,7 +420,8 @@ h6 {
 
 #sort-bar .game-select {
   margin-left:0px;
-  width:120px;
+  width:130px;
+  min-width: 130px;
 }
 
 #sort-bar .piece {
@@ -503,7 +504,7 @@ canvas {
 .gallery_paginate_buttons {
   padding-top:5px;
   text-align: right;
-  margin-left:125px;
+  margin-left:105px;
 }
 
 .icon-gallery-played {
@@ -580,6 +581,7 @@ canvas {
 #playGame .gameDetailAuthor {
   font-size: 1.8em;
   border-bottom:1px solid #CCC;
+  padding:0 0 10px 0;
 }
 
 #playGame #ratingWrapper {
@@ -637,8 +639,8 @@ canvas {
 
 #commentsWrapper .comments {
   overflow-y:auto;
-  height:163px;
-  max-height:163px;
+  height:153px;
+  max-height:153px;
 }
 
 #commentsWrapper .comments .comment {

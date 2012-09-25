@@ -18,9 +18,10 @@
           %img{:src => @game.author.display_image }
         =link_to "#{@game.author.display_name}", user_path(@game.author)
 
-      %div{:style => "margin-top:1em;"}     
-        created at: 
-        = @game.created_at.to_date
+      %div{:style => "margin-top:1em;"}    
+        %b 
+          created at
+          = @game.created_at.to_date
 
       .row{:style => "margin-top:1em;"}
 
