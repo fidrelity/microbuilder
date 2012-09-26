@@ -120,6 +120,20 @@ var PaintView = Ember.View.extend({
     $('.ttipBottom').tooltip({ placement: 'bottom' });
     $('.pop').popover();
     $('.popBottom').popover({ placement: 'bottom' });
+
+    // Exit rescue
+    window.onbeforeunload = function (e) {
+      
+      var message = "Do you really want to leave the paint tool without saving your art?",
+      e = e || window.event;
+      // For IE and Firefox
+      if (e) {
+        e.returnValue = message;
+      }
+
+      // For Safari
+      return message;
+    };
     
   },
 
