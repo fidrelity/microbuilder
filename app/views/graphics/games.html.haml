@@ -1,0 +1,5 @@
+%small
+  Found
+  = pluralize(@games.count, "game")
+
+= render :partial => 'games/list_games', :locals => {:games => @games}

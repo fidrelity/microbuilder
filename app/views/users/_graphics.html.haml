@@ -35,11 +35,13 @@
                     = pluralize(graphic.frame_count, "frame")
 
               .row{:class => "graphicGameDetails"}
-                .span2
+                .span2                
                   Used in
-                  = pluralize(graphic.games.count, "game")
-
-         
+                  - if graphic.games.count > 0
+                    = link_to ( games_graphic_path(graphic) ) do
+                      = pluralize(graphic.games.count, "game")
+                  - else
+                    0 games         
 
               -if current_user == graphic.user
 
@@ -100,15 +102,20 @@
                         %i{:class => "icon-trash"}
                         delete
 
-                    .span2
+                    .span2{:style => "width:160px;text-align:center"}
                       Used in
-                      = pluralize(graphic.games.count, "game")
+                      - if graphic.games.count > 0
+                        = link_to ( games_graphic_path(graphic) ) do
+                          = pluralize(graphic.games.count, "game")
+                      - else
+                        0 games  
+
 
                     .span1{:class => "public_state"}
 
                       - if !graphic.public
 
-                        = button_to "make public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "btn btn-mini", :title => "set public", :confirm => "Make this background available for all users?"
+                        = link_to "set public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "", :title => "set public", :confirm => "Make this background available for all users?"
                       - else                        
 
                         %span.label.label-inverse

@@ -33,6 +33,11 @@ class GraphicsController < ApplicationController
     @graphic = Graphic.find(params[:id])
     @graphic.update_attribute(:public, true) if @graphic.user == current_user
   end
+
+  def games
+    graphic = Graphic.find(params[:id])
+    @games = graphic.games.all_latest("desc").paginate(:page => params[:page], :per_page => 12)    
+  end
   
   def public
     begin
