@@ -30,9 +30,9 @@
                   =graphic.frame_height
 
                 .span1{:class => "frame_display"}
-                  %span{:class => "frame_number"}
-                    = "#{graphic.frame_count}"
-                  frames
+                  =# class .frame_number is used in frame_player.js
+                  %span{:class => "frame_number"} 
+                    = pluralize(graphic.frame_count, "frame")
 
 
               -if current_user == graphic.user
