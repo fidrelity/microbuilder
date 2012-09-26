@@ -324,16 +324,19 @@
 #editor .overlay .actionstring {
   margin: 7px 16px 3px;
   font-size: 12pt;
-  width: 300px;
+  width: 355px;
   text-align: right;
 }
 
 #editor .overlay .questionview {
   clear: both;
   margin: 10px 0 5px;
-  padding: 5px 15px;
-  border-bottom: 1px solid #CCC;
-  font-size: 12pt;
+  
+  .question {
+    padding: 5px 15px;
+    font-size: 12pt;
+    border-bottom: 1px solid #CCC;
+  }
 }
 
 #editor .overlay .buttonview .btn {
@@ -377,7 +380,7 @@
 }
 
 #editor .overlay .frameview {
-  width: 490px;
+  width: 565px;
   margin-left: 15px;
   overflow : auto;
 }
@@ -461,6 +464,7 @@
     padding: 5px 15px 0px 10px;
     border-radius: 5px;
     float: right;
+    box-shadow: 0 1px 2px #BBB;
   }
 
   .help {
@@ -471,6 +475,10 @@
   }
   
   .withSpace {
+    margin: 10px 15px 0;
+  }
+  
+  .bottomSpace {
     margin-bottom: 10px;
   }
   

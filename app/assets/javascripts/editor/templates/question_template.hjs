@@ -1,0 +1,10 @@
+<div class="question">{{content}}</div>
+
+{{#if help}}
+  {{#if App.showhelp}}
+    <div class="help withSpace">
+      <span class="label label-info">help:</span>
+      {{help}}
+    </div>
+  {{/if}}
+{{/if}}

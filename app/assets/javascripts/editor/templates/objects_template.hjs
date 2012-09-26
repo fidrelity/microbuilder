@@ -1,6 +1,6 @@
 {{#if App.showhelp}}
 
-  <div class="help" style="margin-bottom:2px">
+  <div class="help withSpace" style="margin-bottom:10px">
     <span class="label label-info">help:</span>
 
     The list on the left shows you all objects in your game. Click on one to select it. On the right you then see the selected object. At the top you can change name, graphic and shape. Beneath is the list of behaviors, which define how the object reacts to player input and events in the game.
@@ -69,7 +69,7 @@
         
         {{#if App.showhelp}}
         
-          <div class="help withSpace">
+          <div class="help bottomSpace">
             <span class="label label-info">help:</span>
             All <strong> start actions </strong> get executed as soon as the game starts.
           </div>
@@ -117,7 +117,7 @@
 
           {{#if App.showhelp}}
 
-            <div class="help withSpace">
+            <div class="help bottomSpace">
               <span class="label label-info">help:</span>
               <strong> Behaviours </strong> consist of one or more <strong>triggers</strong> and one or more <strong>actions</strong>. A <strong>trigger</strong> checks the state of an object and decides when something happens. An <strong>action</strong> changes the state of an object and defines what happens in your game. 
               <br /><strong> Important: </strong> If all triggers of a behavior apply, then all actions of it will be executed. 

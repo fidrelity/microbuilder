@@ -246,7 +246,7 @@ var ButtonOption = Option.extend({
       
     }
     
-    App.actionController.addOption( this.question, ButtonView.create({
+    App.actionController.addOption( this, ButtonView.create({
       observer : this,
       content : buttons
     }));
@@ -298,7 +298,7 @@ var ObjectOption = Option.extend({
       
     }
     
-    App.actionController.addOption( this.question, GameObjectsView.create({
+    App.actionController.addOption( this, GameObjectsView.create({
       observer : this,
       contentBinding : 'App.gameObjectsController.' + ( this.showOthers ? 'others' : 'content' ),
     }));
@@ -321,7 +321,7 @@ var LocationOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this.question, PlacementView.create({
+    App.actionController.addOption( this, PlacementView.create({
       observer : this.action,
       type : 'location',
       object : App.gameObjectsController.current
@@ -343,7 +343,7 @@ var DirectionOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this.question, PlacementView.create({
+    App.actionController.addOption( this, PlacementView.create({
       observer : this.action,
       type : 'direction',
       object : App.gameObjectsController.current
@@ -365,7 +365,7 @@ var AreaOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this.question, PlacementView.create({
+    App.actionController.addOption( this, PlacementView.create({
       observer : this,
       type : 'area'
     }));
@@ -398,7 +398,7 @@ var PathOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this.question, PlacementView.create({
+    App.actionController.addOption( this, PlacementView.create({
       observer : this.action,
       type : 'path',
       object : App.gameObjectsController.current
@@ -414,7 +414,7 @@ var OffsetOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this.question, PlacementView.create({
+    App.actionController.addOption( this, PlacementView.create({
       observer : this.action,
       type : 'offset',
       object : App.gameObjectsController.current,
@@ -437,7 +437,7 @@ var SpeedOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this.question, SpeedView.create({
+    App.actionController.addOption( this, SpeedView.create({
       observer : this.action,
       speed : reinsert ? this.action.speed : 2
     }));
@@ -462,7 +462,7 @@ var FrameOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this.question, FrameView.create({
+    App.actionController.addOption( this, FrameView.create({
       observer : this,
       graphic : App.gameObjectsController.current.graphic
     }));
@@ -500,7 +500,7 @@ var ArtOption = Option.extend({
     
     this.set( 'graphic', reinsert ? this.action.graphic : null );
     
-    App.actionController.addOption( this.question, ArtView.create({
+    App.actionController.addOption( this, ArtView.create({
       observer : this
     }));
     
@@ -531,7 +531,7 @@ var TimeOption = Option.extend({
       
     }
     
-    App.actionController.addOption( this.question, TimeView.create({
+    App.actionController.addOption( this, TimeView.create({
       observer : this.action,
       type : this.mode,
       min : this.action.time,
@@ -572,7 +572,7 @@ var CounterOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this.question, CounterView.create({
+    App.actionController.addOption( this, CounterView.create({
       observer : this.action,
       value : reinsert ? this.action.counter : '',
     }));

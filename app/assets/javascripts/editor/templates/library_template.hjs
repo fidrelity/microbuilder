@@ -1,6 +1,6 @@
 {{#if App.showhelp}}
 
-  <div class="help">
+  <div class="help withSpace">
     <span class="label label-info">help:</span>
 
     {{#if App.libraryController.showBackground}}

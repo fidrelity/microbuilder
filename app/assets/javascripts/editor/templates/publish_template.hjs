@@ -1,6 +1,6 @@
 {{#if App.showhelp}}
 
-  <div class="help">
+  <div class="help withSpace">
     <span class="label label-info">help:</span>
 
     <strong>Publish</strong> your game. Use the panels on the left to give your game a title and a short instruction. The checklist below tells you what else you need in order to publish. On the right you see how your game will finally look. You need to win your game before publishing to assure that it's not too hard. Take a snapshot of your game for the gallery by using the button 'take snapshot'.

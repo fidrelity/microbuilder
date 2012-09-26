@@ -22,11 +22,11 @@ var QuestionView = Ember.View.extend({
   
   content : '',
   
-  tagName : 'p',
+  help : '',
   
   classNames : ['clear', 'questionview'],
   
-  template: Ember.Handlebars.compile("{{content}}")
+  templateName : 'editor/templates/question_template'
   
 });
 

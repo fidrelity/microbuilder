@@ -1,3 +1,22 @@
+{{#if App.showhelp}}
+
+  <div class="help withSpace">
+    <span class="label label-info">help:</span>
+
+    {{#if App.actionController.isAction}}
+
+      This panel allows you to create a new <strong>action</strong>. Actions let you define what happens to your object. You start by selecting the type of action. Then step by step other options will be added until your action is complete and ready to save. There are a lot of possibilities, read the headlines and help texts to know more.
+
+    {{else}}
+
+      This panel allows you to create a new <strong>trigger</strong>. Triggers let you define when something happens in your game. You start by selecting the type of trigger. Then step by step other options will be added until your trigger is complete and ready to save. There are a lot of possibilities, read the headlines and help texts to know more.
+
+    {{/if}}
+
+  </div>
+
+{{/if}}
+
 <div class="actionContent">
 
   {{view Ember.ContainerView currentViewBinding="App.actionController.optionViews"}}

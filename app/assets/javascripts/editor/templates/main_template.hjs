@@ -12,7 +12,7 @@
     
     {{#if App.showhelp}}
     
-      <div class="help withSpace">
+      <div class="help bottomSpace">
         <span class="label label-info">help:</span>
         This is the <strong>stage</strong> of the game editor. The buttons and elements on top let you change your game, the bar below lets you test if it works the way you want. The green button at the right bottom will lead you to a final panel for publishing your game.
         <br /><strong>Tip:</strong> You can move objects around by dragging them.
