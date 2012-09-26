@@ -40,7 +40,7 @@
                      
                       - if !graphic.public
 
-                        = button_to "make public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "btn btn-mini", :title => "set public"
+                        = button_to "make public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "btn btn-mini", :title => "set public", :confirm => "Make this graphic available for all?"          
 
                       - else
 
@@ -88,7 +88,7 @@
 
                       - if !graphic.public
 
-                        = button_to "make public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "btn btn-mini", :title => "set public"                      
+                        = button_to "make public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "btn btn-mini", :title => "set public", :confirm => "Make this background available for all?"
                       - else                        
 
                         %span.label.label-inverse
