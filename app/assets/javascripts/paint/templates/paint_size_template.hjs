@@ -14,7 +14,7 @@
 
       <h4 style="margin-top:50px">graphic</h4>
 
-      <p>Graphics are used for movable game objects. They can have multiple sprites for different states or animation.</p>
+      <p>Graphics are used for movable game objects. They can have multiple frames for different states or animation.</p>
 
       <div class="form-inline object_size_form">
         Set size:

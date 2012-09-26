@@ -6,7 +6,7 @@
   
     <div class="tool-bar btn-group" data-toggle="buttons-radio">
       
-      <div id="spritesButton" class="btn active" {{action "showSprites"}}>sprites</div>
+      <div id="spritesButton" class="btn active" {{action "showSprites"}}>frames</div>
       <div id="playerButton" class="btn" {{action "showAnimation"}}>animation</div>
       
     </div>
@@ -113,7 +113,7 @@
       <div class="piece"></div>
 
       <div class="left" id="sizeWrapper">
-        <span><i class="icon-pencil icon-white"></i></span>
+        <span><i class="icon-pencil"></i></span>
         <div id="sizeSlider"></div>
         <div id="sizeValue"> {{App.paintController.size}} </div>
         <span>px</span>
