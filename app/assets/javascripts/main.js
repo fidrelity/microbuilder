@@ -38,12 +38,13 @@ function editor_main( data, username ) {
     
   }
   
-  App.addObserver( 'showhelp', function() {
+  App.updateHelp = function() {
     
     if ( App.showhelp ) {
       
       $('.ttip').tooltip();
       $('.pop').popover({ trigger: 'hover'});
+      
       
     } else {
       
@@ -51,6 +52,19 @@ function editor_main( data, username ) {
       $('.pop').popover( 'destroy' );
       
     }
+    
+  };
+  
+  App.hideHelp = function() {
+    
+    $('.ttip').tooltip( 'hide' );
+    $('.pop').popover( 'hide' );
+    
+  };
+  
+  App.addObserver( 'showhelp', function() {
+    
+    App.updateHelp();
     
   });
   

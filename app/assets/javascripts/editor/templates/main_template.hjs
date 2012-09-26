@@ -14,7 +14,8 @@
     
       <div class="help withSpace">
         <span class="label label-info">help:</span>
-        This is the stage of the game editor. Here you can move your objects around and test if your game works the way you want. The buttons and elements above the stage let you change your game, the bar below lets you test it. The green button at the right bottom will lead you to a final panel for publishing your game.
+        This is the <strong>stage</strong> of the game editor. The buttons and elements on top let you change your game, the bar below lets you test if it works the way you want. The green button at the right bottom will lead you to a final panel for publishing your game.
+        <br /><strong>Tip:</strong> You can move objects around by dragging them.
       </div>
     
     {{/if}}
@@ -51,7 +52,7 @@
         <button class="btn ttip" {{action "play"}}><i class="icon-play"></i> play </button>
         <button class="btn ttip" {{action "stop"}}><i class="icon-stop"></i> stop </button>
         <button class="btn pop" {{action "debug"}} data-toggle="button" title="detail view" 
-          data-content="Enable to see information about the game objects like: collision area, counter value, movement target/direction, click/contact areas.">
+          data-content="Enable this to see information about the game objects like: collision area, counter value, movement target/direction, click/contact areas.">
           <i class="icon-wrench"></i> 
           detail view 
         </button>

@@ -33,6 +33,8 @@ var LibraryView = Ember.View.extend({
 
     });
     
+    App.updateHelp();
+    
   },
   
   showSmall : function( _e ) {

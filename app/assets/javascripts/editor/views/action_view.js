@@ -8,7 +8,13 @@ var ActionView = Ember.View.extend({
     
     return App.actionController.mode + ' editor';
     
-  }.property( 'App.actionController.mode' )
+  }.property( 'App.actionController.mode' ),
+  
+  didInsertElement : function() {
+    
+    App.updateHelp();
+    
+  }
   
 });
 

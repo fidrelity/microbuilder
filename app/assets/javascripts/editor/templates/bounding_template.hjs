@@ -1,3 +1,14 @@
+{{#if App.showhelp}}
+
+  <div class="help">
+    <span class="label label-info">help:</span>
+
+    Change the <strong>shape</strong> of your object. The shape defines within which area the object is clickable and when it collides with other objects. You can choose between <strong>box</strong> and <strong>circle</strong>. As default the area of the graphic is used. Use your mouse to click and drag in order to define the new shape below.
+
+  </div>
+
+{{/if}}
+
 <div class="content">
   <div class="btn-group element" data-toggle="buttons-radio">
     <button id="rectButton" class="btn" {{action "useBox"}}> box </button>

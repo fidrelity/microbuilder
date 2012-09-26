@@ -6,6 +6,8 @@ var ObjectsView = Ember.View.extend({
     
     this.makeSortable();
     
+    App.updateHelp();
+    
   },
   
   makeSortable : function() {

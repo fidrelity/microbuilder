@@ -1,9 +1,14 @@
-<div class="help" style="margin-bottom:2px">
-  <span class="label label-info">help:</span>
+{{#if App.showhelp}}
 
-  The list on the left shows you all objects in your game. Click on one to select it. You can drag them up and down to change their ordering in the game.
+  <div class="help" style="margin-bottom:2px">
+    <span class="label label-info">help:</span>
 
-</div>
+    The list on the left shows you all objects in your game. Click on one to select it. On the right you then see the selected object. At the top you can change name, graphic and shape. Beneath is the list of behaviors, which define how the object reacts to player input and events in the game.
+    <br /><strong> Tip: </strong> You can drag objects up and down in the list to change their ordering in the game.
+
+  </div>
+
+{{/if}}
 
 <table>
 
@@ -26,13 +31,6 @@
     <td class="objectsRight" valign="top">
 
       {{#if App.gameObjectsController.current}}
-      
-        <div class="help withSpace">
-          <span class="label label-info">help:</span>
-
-          Below you see all details of the selected object. At the top you can change name, graphic and shape. Beneath is the list of behaviors, which define how this object reacts to player input and events in the game.
-
-        </div>
 
         {{#view GameObjectView contentBinding = "App.gameObjectsController.current"}}
 
@@ -69,11 +67,14 @@
   
         <h5 style="margin: 15px 0"> behaviour </h5>
         
-        <div class="help withSpace">
-          <span class="label label-info">help:</span>
-          <strong> start actions </strong> get executed one after another as soon as the game starts. See below for more details about actions.
-
-        </div>
+        {{#if App.showhelp}}
+        
+          <div class="help withSpace">
+            <span class="label label-info">help:</span>
+            All <strong> start actions </strong> get executed as soon as the game starts.
+          </div>
+        
+        {{/if}}
 
         <ul id="behaviours">
           {{#view BehaviourView 
@@ -114,11 +115,17 @@
             </li>
           {{/view}}
 
-          <div class="help withSpace">
-            <span class="label label-info">help:</span>
-            <strong> Behaviours </strong> consist of one or more <strong>triggers</strong> and one or more <strong>actions</strong>. A <strong>trigger</strong> checks the state of an object and decides when something happens. An <strong>action</strong> changes the state of an object and decides what happens in your game. If all triggers of a behavior apply, then all actions of this behavior will be executed.
+          {{#if App.showhelp}}
 
-          </div>
+            <div class="help withSpace">
+              <span class="label label-info">help:</span>
+              <strong> Behaviours </strong> consist of one or more <strong>triggers</strong> and one or more <strong>actions</strong>. A <strong>trigger</strong> checks the state of an object and decides when something happens. An <strong>action</strong> changes the state of an object and defines what happens in your game. 
+              <br /><strong> Important: </strong> If all triggers of a behavior apply, then all actions of it will be executed. 
+              <br /><strong> Tip: </strong> You can drag triggers and actions from one behavior to another.
+
+            </div>
+          
+          {{/if}}
 
           {{#each App.behaviourController}}
             {{#view BehaviourView 
@@ -185,7 +192,7 @@
 
         <div class="clear"></div>
 
-        <button class="btn" {{action "createBehaviour" target="App.behaviourController"}}>
+        <button class="btn pop" title="new behaviour" data-content="Behaviours are the logic elements in your game. They define how an object reacts to player input and event in the game. They consist of triggers and actions." {{action "createBehaviour" target="App.behaviourController"}}>
           <i class="icon-plus"></i> behaviour </button>
   
       {{else}}
@@ -200,4 +207,4 @@
   
 </table>
 
-<button id="done" class="btn btn-success" {{action "hideOverlay" target="App.mainView"}}> done </button>
+<button id="done" class="btn btn-success ttip" title="go back to stage" data-placement="bottom" {{action "hideOverlay" target="App.mainView"}}> done </button>

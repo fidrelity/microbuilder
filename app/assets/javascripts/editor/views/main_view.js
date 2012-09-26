@@ -64,6 +64,8 @@ var MainView = Ember.View.extend({
       
     }
     
+    App.hideHelp();
+    
     this.overlayView.setWidth( view.width );
     this.overlayView.set( 'showView', view );
     
@@ -80,15 +82,6 @@ var MainView = Ember.View.extend({
     this.overlayView.set( 'isVisible', true );
     
     $.scrollTo( $( '.overlayhead' ), { axies : 'y', duration : 500, offset : -30 } );
-    
-    if ( App.showhelp ) {
-      
-      Ember.run.end();
-      
-      $('.ttip').tooltip();
-      $('.pop').popover({ trigger: 'hover'});
-      
-    }
     
   },
   
@@ -350,6 +343,8 @@ var PublishView = Ember.View.extend({
     
     }
     
+    App.updateHelp();
+    
   },
   
   checkValue : function( name, status ) {
@@ -473,6 +468,8 @@ var BoundingView = Ember.View.extend({
       
     }
     
+    App.updateHelp();
+    
   },
   
   useBox : function() {
@@ -535,6 +532,8 @@ var PlacingView = Ember.View.extend({
     
     this.set( 'position', new Vector( 320, 195 ) );
     this.set( 'name', this.graphic.name );
+    
+    App.updateHelp();
     
   },
   

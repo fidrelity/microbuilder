@@ -5,11 +5,11 @@
 
     {{#if App.libraryController.showBackground}}
 
-      This is the background library. Here you can choose one of the backgrounds you painted, or look for backgrounds other users made publicly available. Click on a background to see it below in full size. Press the button at the bottom right to use this background. The background covers the whole game field and does not move.
+      Select a <strong>background</strong> for your game. The background covers the whole game field and does not move. You can choose one of the backgrounds you painted, or look for ones other users made publicly available. Click on a background to see it below in full size. Then press the button at the bottom right to use it. 
   
     {{else}}
     
-      This is the graphics library. Here you can choose one of the graphics you painted, or look for graphics other users made publicly available. Click on a graphic to see it below in full size and with all its sprites. Press the button at the bottom right to use this graphic.
+      Select a <strong>graphic</strong> for your object. You can choose one of the graphics you painted, or look for graphics other users made publicly available. Click on a graphic to see it below in full size and with all its sprites. Then press the button at the bottom right to use this graphic.
   
     {{/if}}
   

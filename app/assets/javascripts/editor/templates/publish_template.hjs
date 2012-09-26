@@ -1,15 +1,31 @@
+{{#if App.showhelp}}
+
+  <div class="help">
+    <span class="label label-info">help:</span>
+
+    <strong>Publish</strong> your game. Use the panels on the left to give your game a title and a short instruction. The checklist below tells you what else you need in order to publish. On the right you see how your game will finally look. You need to win your game before publishing to assure that it's not too hard. Take a snapshot of your game for the gallery by using the button 'take snapshot'.
+    <br /><strong>Important:</strong> As soon as your game is published you can't make any changes.
+
+  </div>
+
+{{/if}}
+
 <div class="content">
   <div class="titlePanel left">
-    <h4>title</h4>
-    {{view Ember.TextField valueBinding="App.game.title" size="10" placeholder="game title" maxlength="42"}}
-    <br />
+    <div class="pop" title="title" data-content="Provide a name for your game. This can be anything, really.">
+      <h4>title</h4>
+      {{view Ember.TextField valueBinding="App.game.title" size="10" placeholder="game title" maxlength="42"}}
+    </div>
 
-    <h4>instructions</h4>
-    {{view Ember.TextArea valueBinding="App.game.instructions" placeholder="game instructions" maxlength="100"}}
-    <br />
+    <div class="pop" title="instrucions" data-content="Tell your players how to play your game. Be aware that your players might have no idea how your game works.">
+      <h4>instructions</h4>
+      {{view Ember.TextArea valueBinding="App.game.instructions" placeholder="game instructions" maxlength="100"}}
+    </div>
 
-    <h4>tags</h4>
-    <ul id="game-tags"></ul>
+    <div class="pop" title="tags" data-content="Tags are used to make your game searchable. Provide words that describe your game.">
+      <h4>tags</h4>
+      <ul id="game-tags" ></ul>
+    </div>
 
     <h4>checklist</h4>
     <ul id="check-list"></ul>
