@@ -76,22 +76,22 @@
   margin: 0;
   padding: 8px 16px 4px;
   background-color: #DDD;
+  @include gradient( #EEE, #DDD );
 }
 
 #editor .overlay .closeButton {
   position: absolute;
   top: 0px;
   right: 0px;
-  background-color: #444;
-  color: white;
   border: 0;
   font-size: 18pt;
   padding: 4px 8px 8px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 #editor .overlay .closeButton:hover {
-  background-color: #333;
+  background-color: #CCC;
 }
 
 #editor .overlay .objectsLeft {
@@ -464,14 +464,14 @@
     padding: 5px 15px 0px 10px;
     border-radius: 5px;
     float: right;
-    box-shadow: 0 1px 2px #BBB;
+    box-shadow: 0 1px 1px #BBB;
   }
 
   .help {
     background: white;
     border-radius: 5px;
     padding: 5px 10px 5px;
-    box-shadow: 0 1px 2px #BBB;
+    box-shadow: 0 1px 1px #BBB;
   }
   
   .withSpace {

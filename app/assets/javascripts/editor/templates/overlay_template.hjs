@@ -4,7 +4,7 @@
 
     <h5 class="overlayhead">{{heading}}</h5>
 
-    <button class="closeButton" {{action "hideOverlay" target="App.mainView"}}> &times; </button>
+    <div class="closeButton" {{action "hideOverlay" target="App.mainView"}}> &times; </div>
 
     {{view Ember.ContainerView currentViewBinding="showView"}}
 
