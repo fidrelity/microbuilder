@@ -85,11 +85,21 @@
               
               %h4
                 = graphic.name
-            
-              %span{:class => "graphicDetails"}
-                =graphic.frame_width
-                x
-                =graphic.frame_height
+              
+              .row
+
+                %div{:class => "graphicDetails span1"}
+                  =graphic.frame_width
+                  x
+                  =graphic.frame_height
+
+                .span2{:class => "backgroundInGamesUsed"}
+                  Used in
+                  - if graphic.games.count > 0
+                    = link_to ( games_graphic_path(graphic) ) do
+                      = pluralize(graphic.games.count, "game")
+                  - else
+                    0 games  
 
               -if current_user == graphic.user
 
@@ -101,15 +111,6 @@
                       =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
                         %i{:class => "icon-trash"}
                         delete
-
-                    .span2{:style => "width:160px;text-align:center"}
-                      Used in
-                      - if graphic.games.count > 0
-                        = link_to ( games_graphic_path(graphic) ) do
-                          = pluralize(graphic.games.count, "game")
-                      - else
-                        0 games  
-
 
                     .span1{:class => "public_state"}
 

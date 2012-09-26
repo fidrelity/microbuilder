@@ -382,11 +382,16 @@ h6 {
 
 .thumbnails .thumbnail .graphicDetails, .thumbnails .thumbnail .graphicGameDetails {
 /*  color:#CBCBCB;*/
-  font-size: 11px;
+  font-size: 11px;  
 }
 
 #profile .thumbnails .thumbnail .frame_display {
   width:50px; text-align:right;
+}
+
+.thumbnails .thumbnail .backgroundInGamesUsed {
+  font-size: 11px;
+  text-align:center;
 }
 
 /* Activity Stream */
