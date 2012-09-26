@@ -1,67 +1,63 @@
 <div class="editor_content">
 
-  <div>
+  <div class="helpButton" title="help option" data-content="Check to enable help messages, tooltips and popovers like this. Keep this option on, as long as you are not familiar with this editor." data-placement="left">
+    <label class="checkbox">
+      {{view Ember.Checkbox checkedBinding="App.showhelp"}} show help
+    </label>
+  </div>
 
-    <div class="helpButton" title="help option" data-content="Check to enable help messages, tooltips and popovers like this. Keep this option on, as long as you are not familiar with this editor." data-placement="left">
-      <label class="checkbox">
-        {{view Ember.Checkbox checkedBinding="App.showhelp"}} show help
-      </label>
+  <h2 class="page-header">game<span>stage</span></h2>
+  
+  {{#if App.showhelp}}
+  
+    <div class="help bottomSpace">
+      <span class="label label-info">help:</span>
+      This is the <strong>stage</strong> of the game editor. The buttons and elements on top let you change your game, the bar below lets you test if it works the way you want. The green button at the right bottom will lead you to a final panel for publishing your game.
+      <br /><strong>Tip:</strong> You can move objects around by dragging them.
     </div>
+  
+  {{/if}}
 
-    <h2 class="page-header">game<span>stage</span></h2>
-    
-    {{#if App.showhelp}}
-    
-      <div class="help bottomSpace">
-        <span class="label label-info">help:</span>
-        This is the <strong>stage</strong> of the game editor. The buttons and elements on top let you change your game, the bar below lets you test if it works the way you want. The green button at the right bottom will lead you to a final panel for publishing your game.
-        <br /><strong>Tip:</strong> You can move objects around by dragging them.
-      </div>
-    
-    {{/if}}
+  <div class="stageControls">
 
-    <div class="stageControls">
+    <div class="left" id="stageTop">
 
-      <div class="left" id="stageTop">
-
-        <button class="btn btn-large btn-primary ttip" {{action "showObjects" target="App.gameController"}}
-          title="see list of all objects in the game"> objects </button>
-        <button class="btn btn-large btn-primary ttip" {{action "searchBackground" target="App.gameController"}}
-          title="select a background"> background </button>
-      </div>
-      
-      <button id="trash" class="btn right ttip" {{action "trash"}} title="throw the game away"><i class="icon-trash"></i> trash game </button>
-      
-      <div id="duration" class="left pop" title="game duration" data-content="Use the slider to set the duration of the game from 5 to 30 seconds. If the time is over, the game is lost." data-placement="top">
-        <div id="durationValue" class="right">{{App.game.displayDuration}}</div>
-        <div id="slider" class="right"></div>
-        <div id="durationLabel" class="right"><i class="icon-time"></i> duration:</div>
-      </div>
-      
+      <button class="btn btn-large btn-primary ttip" {{action "showObjects" target="App.gameController"}}
+        title="see list of all objects in the game"> objects </button>
+      <button class="btn btn-large btn-primary ttip" {{action "searchBackground" target="App.gameController"}}
+        title="select a background"> background </button>
     </div>
     
-    <div id="stage">
+    <button id="trash" class="btn right ttip" {{action "trash"}} title="throw the game away"><i class="icon-trash"></i> trash game </button>
     
-      {{view PlayerView 
-        type="stage"
-        playerBinding="player"
-      }}
-    
-      <div class="bar btn-group">
-        <div class="btn play ttip" {{action "play"}}><i class="icon-play"></i> play </div>
-        <div class="btn stop ttip" {{action "stop"}}><i class="icon-stop"></i> stop </div>
-        <div class="btn timelineWrapper">
-          <canvas class="timeline playerTimeline"></canvas>
-        </div>
-        <div class="btn view pop" {{action "debug"}} data-toggle="button" title="detail view" 
-          data-content="Enable this to see information about the game objects like: collision area, counter value, movement target/direction, click/contact areas." data-placement="top">
-          <i class="icon-wrench"></i> 
-          detail view 
-        </div>
-      </div>
-    
+    <div id="duration" class="left pop" title="game duration" data-content="Use the slider to set the duration of the game from 5 to 30 seconds. If the time is over, the game is lost." data-placement="top">
+      <div id="durationValue" class="right">{{App.game.displayDuration}}</div>
+      <div id="slider" class="right"></div>
+      <div id="durationLabel" class="right"><i class="icon-time"></i> duration:</div>
     </div>
     
+  </div>
+  
+  <div id="stage">
+  
+    {{view PlayerView 
+      type="stage"
+      playerBinding="player"
+    }}
+  
+    <div class="bar btn-group">
+      <div class="btn play ttip" {{action "play"}}><i class="icon-play"></i> play </div>
+      <div class="btn stop ttip" {{action "stop"}}><i class="icon-stop"></i> stop </div>
+      <div class="btn timelineWrapper">
+        <canvas class="timeline playerTimeline"></canvas>
+      </div>
+      <div class="btn view pop" {{action "debug"}} data-toggle="button" title="detail view" 
+        data-content="Enable this to see information about the game objects like: collision area, counter value, movement target/direction, click/contact areas." data-placement="top">
+        <i class="icon-wrench"></i> 
+        detail view 
+      </div>
+    </div>
+  
   </div>
   
   <div style="height:100px">

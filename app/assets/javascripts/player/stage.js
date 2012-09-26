@@ -61,9 +61,14 @@ extend( Stage.prototype, {
   
   reset : function() {
     
+    var ctx = this.timelineCtx;
+    
     Player.prototype.reset.call( this );
     
     this.timelineCanvas.width = this.timelineCanvas.width;
+    
+    ctx.fillStyle = '#C3C3C3';
+    ctx.fillRect( 0, 6, this.timelineCanvas.width, 8 );
     
     this.selectObject = null;
     this.redraw = true;
@@ -90,8 +95,6 @@ extend( Stage.prototype, {
       
       }
       
-      this.drawTimeline( ctx, 0 );
-      
       this.redraw = false;
     
     }
@@ -106,7 +109,14 @@ extend( Stage.prototype, {
     
     this.game.draw( ctx );
     
-    this.drawTimeline( this.timelineCtx );
+    ctx = this.timelineCtx;
+    
+    ctx.save();
+    ctx.translate( 0, 6 );
+    
+    this.drawTimeline( ctx );
+    
+    ctx.restore();
     
   },
   

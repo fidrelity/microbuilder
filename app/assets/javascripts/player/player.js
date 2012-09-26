@@ -84,6 +84,8 @@ Player.prototype = {
     this.ctx = ctx;
     this.canvas = canvas;
     
+    ctx.player = this;
+    
     this.mouse = new Mouse( this, canvas );
     
     ctx.debug = false;
