@@ -26,9 +26,8 @@ var Player = function() {
     states : [
       { name : 'init' },
       { name : 'load', enter : this.enterLoad, draw : this.drawLoad, exit : this.exitLoad },
-    
+      
       { name : 'ready', enter : this.enterReady, exit : this.exitReady },
-      // { name : 'info', enter : this.enterInfo, exit : this.exitInfo },
       
       { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update, exit : this.exitPlay },
       { name : 'end', draw : this.draw, update : this.update },
@@ -39,8 +38,7 @@ var Player = function() {
     transitions : [
       { name : 'parse', from : '*', to : 'load' },
       { name : 'loaded', from : 'load', to : 'ready', callback : this.onReady },
-      // { name : 'inform', from : 'ready', to : 'info' },
-    
+      
       { name : 'start', from : 'ready', to : 'play', callback : this.onStart },
       { name : 'end', from : 'play', to : 'end', callback : this.onEnd },
       
@@ -99,8 +97,6 @@ Player.prototype = {
     
     $( '.playerUI', _node ).click( function() {
       
-      // self.fsm.start();
-      // self.fsm.inform();
       self.fsm.restart();
       
     });
@@ -247,10 +243,7 @@ Player.prototype = {
     
     if ( this.timePlayed ) {
     
-      ctx = this.timelineCtx;
-    
-      ctx.fillStyle = this.game.isWon ? '#70B477' : this.game.isLost ? '#CD5654' : '#999';
-      ctx.fillRect( 0, 0, Math.floor( this.timePlayed / this.game.duration * this.timelineCanvas.width ), this.timelineCanvas.height );
+      this.drawTimeline( this.timelineCtx );
     
       rest = Math.ceil( ( this.game.duration - this.timePlayed ) / 1000 );
     
@@ -263,6 +256,13 @@ Player.prototype = {
       }
     
     }
+    
+  },
+  
+  drawTimeline : function( ctx ) {
+    
+    ctx.fillStyle = this.game.isWon ? '#70B477' : this.game.isLost ? '#CD5654' : '#999';
+    ctx.fillRect( 0, 0, Math.floor( this.timePlayed / this.game.duration * this.timelineCanvas.width ), this.timelineCanvas.height );
     
   },
   
@@ -324,32 +324,6 @@ Player.prototype = {
     this.draw( this.ctx );
     
   },
-  
-  // enterInfo : function() {
-  //   
-  //   $( '.titleBar', this.node ).animate( {top: 0}, 500, function(){
-  //     $( this ).css( {top: 0} );
-  //   });
-  //   $( '.playButton', this.node ).fadeOut( 300 );
-  //   
-  //   this.timelineCanvas.width = this.timelineCanvas.width;
-  //   this.showTime( this.game.duration / 1000 );
-  //   
-  // },
-  // 
-  // exitInfo : function() {
-  //   
-  //   var node = this.node;
-  //   
-  //   $( '.titleScreen', node ).fadeOut( 200, function() {
-  //   
-  //     $( '.playerUI', node ).hide();
-  //     $( '.titleScreen', node ).hide();
-  //     $( '.titleBar', node ).css( {top: 390} );
-  //   
-  //   });
-  //   
-  // },
   
   onStart : function() {
     

@@ -40,32 +40,36 @@
       
     </div>
     
-    <div class="player">
+    <div id="stage">
+    
       {{view PlayerView 
         type="stage"
         playerBinding="player"
       }}
-    </div>
     
-    <div class="bar btn-group">
-      <div class="btn play ttip" {{action "play"}}><i class="icon-play"></i> play </div>
-      <div class="btn stop ttip" {{action "stop"}}><i class="icon-stop"></i> stop </div>
-      <div class="btn timelineWrapper">
-        <canvas class="timeline"></canvas>
+      <div class="bar btn-group">
+        <div class="btn play ttip" {{action "play"}}><i class="icon-play"></i> play </div>
+        <div class="btn stop ttip" {{action "stop"}}><i class="icon-stop"></i> stop </div>
+        <div class="btn timelineWrapper">
+          <canvas class="timeline playerTimeline"></canvas>
+        </div>
+        <div class="btn view pop" {{action "debug"}} data-toggle="button" title="detail view" 
+          data-content="Enable this to see information about the game objects like: collision area, counter value, movement target/direction, click/contact areas." data-placement="top">
+          <i class="icon-wrench"></i> 
+          detail view 
+        </div>
       </div>
-      <div class="btn view pop" {{action "debug"}} data-toggle="button" title="detail view" 
-        data-content="Enable this to see information about the game objects like: collision area, counter value, movement target/direction, click/contact areas." data-placement="top">
-        <i class="icon-wrench"></i> 
-        detail view 
-      </div>
+    
     </div>
     
   </div>
   
-  <button class="btn-large btn-success right ttip" title="prepare your game for publishing" data-placement="bottom" {{action "finalize" target="App.gameController"}}> 
+  <div style="height:100px">
+    
+    <button class="btn-large btn-success right ttip" title="prepare your game for publishing" data-placement="bottom" {{action "finalize" target="App.gameController"}}> 
     finalize game </button>
-  
-  <div style="height:50px"></div>
+    
+  </div>
   
   {{view OverlayView}}
 
