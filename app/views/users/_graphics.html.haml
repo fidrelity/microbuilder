@@ -20,10 +20,20 @@
                 
               %h6
                 = limit_string(graphic.name)
-              %span
-                =graphic.frame_width
-                x
-                =graphic.frame_height
+
+              .row{:class => "graphicDetails"}
+                
+                .span1
+
+                  =graphic.frame_width
+                  x
+                  =graphic.frame_height
+
+                .span1{:class => "frame_display"}
+                  %span{:class => "frame_number"}
+                    = "#{graphic.frame_count}"
+                  frames
+
 
               -if current_user == graphic.user
 
@@ -39,8 +49,8 @@
                     .span1{:class => "public_state"}
                      
                       - if !graphic.public
-
-                        = button_to "make public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "btn btn-mini", :title => "set public", :confirm => "Make this graphic available for all?"          
+                        
+                        = link_to "set public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "", :title => "set public", :confirm => "Make this graphic available for all users?"     
 
                       - else
 
@@ -68,7 +78,7 @@
               %h4
                 = graphic.name
             
-              %span
+              %span{:class => "graphicDetails"}
                 =graphic.frame_width
                 x
                 =graphic.frame_height
@@ -88,7 +98,7 @@
 
                       - if !graphic.public
 
-                        = button_to "make public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "btn btn-mini", :title => "set public", :confirm => "Make this background available for all?"
+                        = button_to "make public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "btn btn-mini", :title => "set public", :confirm => "Make this background available for all users?"
                       - else                        
 
                         %span.label.label-inverse

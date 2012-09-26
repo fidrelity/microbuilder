@@ -1,6 +1,7 @@
 var FramePlayer = {
 
   frame : null,
+  current_frame_display : null,
   index : 0,
   width : 64,
   totalFrames : 1,
@@ -14,7 +15,7 @@ var FramePlayer = {
     
     $('.frame_graphic').live('mouseover', function() {
       
-      self.initPlay($(this).find('.frame_graphic_element'));
+      self.initPlay($(this).find('.frame_graphic_element'), $(this).parent().parent().find('.graphicDetails').find('.frame_display').find('.frame_number'));
       
     }).live('mouseout', function() { 
       
@@ -24,8 +25,11 @@ var FramePlayer = {
     
   },
 
-  initPlay : function(_frame) {
+  initPlay : function(_frame, _frameSpan) {
     
+    console.log(_frameSpan);
+    this.current_frame_display = _frameSpan;
+
     if(this.frame) {
       this.stop();
     }
@@ -53,6 +57,8 @@ var FramePlayer = {
     this.frame.css({"background-position" : -(this.width * this.index) + 'px 0'});
     this.index++;
     
+    this.current_frame_display.html(this.index)
+
     if(this.index === this.totalFrames) {
       this.index = 0; // reset when last one
     }
@@ -64,6 +70,7 @@ var FramePlayer = {
     if(this.frame) {
       this.frame.css({"background-position" : '0px 0'});
       this.frame = null;
+      this.current_frame_display = null;
     }
   }
   

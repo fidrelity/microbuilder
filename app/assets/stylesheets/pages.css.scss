@@ -316,14 +316,16 @@ h6 {
   border: 1px solid $gray;
 }
 
-#profile .settings {
+#profile .thumbnails .thumbnail .settings {
   border-top: 1px solid #CCC;
   margin-top:5px;
   padding-top: 2px;
+  font-size:0.8em
 }
 
-#profile .settings .wrapper {
-  padding:3px;font-size:0.9em
+#profile .thumbnails .thumbnail .settings .wrapper {
+  padding:0px;
+  width:50px;
 }
 
 #backgroundLayer, #graphicsLayer {
@@ -362,12 +364,29 @@ h6 {
   margin:1.5em 0 1.5em 0;  
 }
 
-.public_state {
-  
+#profile .thumbnails .thumbnail .public_state {
+  text-align: right;
 }
 
-.public_state form {
+#profile .thumbnails .thumbnail .public_state form {
   margin:0;
+}
+
+#profile .thumbnails .thumbnail {
+  background:#FFF;
+}
+
+#graphicsLayer .thumbnails .thumbnail h6, #backgroundsLayer .thumbnails .thumbnail h4 {
+  margin:2px 0 0 0;
+}
+
+.thumbnails .thumbnail .graphicDetails {
+  color:#CBCBCB;
+  font-size: 11px;
+}
+
+#profile .thumbnails .thumbnail .frame_display {
+  width:50px; text-align:right;
 }
 
 /* Activity Stream */
