@@ -1,7 +1,7 @@
 %h4
   comments (#{comments.size})
 
-%div{:class=>"comments"}  
+%div{:class=>"comments scroll-pane"}  
   
   -comments.each do |comment|
 
@@ -12,7 +12,7 @@
           = link_to user_path(comment.user) do
             %img{:src => comment.user.display_image, :alt => "#{comment.user.display_name}"}
 
-      .span3{:style => "width:230px"}
+      .span3{:style => "width:210px"}
         =comment.comment
 
         %span{:class => "commentData"}
@@ -22,7 +22,7 @@
 
 .row{:class => "commentForm"}
 
-  .span4      
+  .span4
 
     =form_for GameComment.new, :url => comment_game_path, :html => {:class => "form-inline"}, :remote => true do |t|
 
