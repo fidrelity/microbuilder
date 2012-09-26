@@ -34,6 +34,12 @@
                   %span{:class => "frame_number"} 
                     = pluralize(graphic.frame_count, "frame")
 
+              .row{:class => "graphicGameDetails"}
+                .span2
+                  Used in
+                  = pluralize(graphic.games.count, "game")
+
+         
 
               -if current_user == graphic.user
 
@@ -94,6 +100,10 @@
                         %i{:class => "icon-trash"}
                         delete
 
+                    .span2
+                      Used in
+                      = pluralize(graphic.games.count, "game")
+
                     .span1{:class => "public_state"}
 
                       - if !graphic.public
@@ -103,4 +113,7 @@
 
                         %span.label.label-inverse
                           public
+
+
+
 
