@@ -674,6 +674,7 @@ canvas {
 }
 
 #commentsWrapper .comments {
+  max-width:280px;
   overflow-y:auto;
   height:153px;
   max-height:153px;

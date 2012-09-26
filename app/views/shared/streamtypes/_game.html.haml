@@ -3,5 +3,5 @@
     = link_to( image_tag(user.display_image, :class => "stream-image"), user_path(user) )
   = link_to( display_name, user_path(user) )
   created
-  %a{ :class => "stream-popup", :href => "/play/#{game.id}", "data-content" => "<img src=#{game.preview_image}>", :title => "#{game.title}" }
+  %a{ :class => "stream-popup", :href => "/play/#{game.id}", "data-content" => "<img src=#{game.preview_image}>", :title => "#{strip_tags game.title}" }
     = "#{game.title}"
