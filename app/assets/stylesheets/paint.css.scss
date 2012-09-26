@@ -8,15 +8,12 @@
 
 #paint-wrapper .tool-bar {
   background:#F5F5F5;
-  background-image: -moz-linear-gradient(center top , #FFFFFF, #E6E6E6);
-  background-image: -webkit-linear-gradient(#FFFFFF, #E6E6E6);
-  background-image: -o-linear-gradient(#FFFFFF, #E6E6E6);
+  @include gradient( #FFFFFF, #E6E6E6 );
   border-radius:4px;
   height: 30px;
   color: #464646;
+  box-shadow: 0 1px 1px #999;
 }
-
-#paint-wrapper .tool-bar-bottom {}
 
 #paint-wrapper .tool-bar button {
   min-width:30px;
@@ -187,7 +184,7 @@
 }
 
 #paint-wrapper #area-wrapper {
-  overflow: auto;
+/*  overflow: auto;*/
 }
 
 #paint-wrapper #area-wrapper #zoom-canvas-area {
