@@ -61,7 +61,8 @@
 
 .jspDrag
 {
-	background: #464646;
+	/*background: #464646;*/
+	border:1px solid #464646;
 	position: relative;
 	top: 0;
 	left: 0;
@@ -77,7 +78,8 @@
 
 .jspArrow
 {
-	background: #50506d;
+	background: #464646;
+	border:1px solid #464646;
 	text-indent: -20000px;
 	display: block;
 	cursor: pointer;
@@ -86,7 +88,7 @@
 .jspArrow.jspDisabled
 {
 	cursor: default;
-	background: #80808d;
+	background: #464646;
 }
 
 .jspVerticalBar .jspArrow

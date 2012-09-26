@@ -164,12 +164,25 @@ $(document).ready(function() {
     toggleLayer($('#backgroundsLayer'), $(this), e);     
   }); 
 
+
+  // ---------------------------------------
+  // Custom scroll bars
+  // http://jscrollpane.kelvinluck.com/#download
+  var pane = $('.scroll-pane')
+  pane.jScrollPane({ showArrows: true });
+  var jspane_api = pane.data('jsp');
+    
+  // ---------------------------------------
   // Stream resize
   var messageWrapper = $("#messages");
   
   messageWrapper.resizable({ 
     alsoResize: ".activity-list", 
-    maxWidth: messageWrapper.width()
+    maxWidth: messageWrapper.width(),
+    minWidth: messageWrapper.width(),
+    stop : function() {
+      jspane_api.reinitialise();
+    }
   });
 
   $('.stream-popup').popover({ placement: 'right', trigger: 'hover' });
@@ -188,9 +201,6 @@ $(document).ready(function() {
     window.location.href = url + "?order=" + e.target.value;
   });
   
-  
-  // http://jscrollpane.kelvinluck.com/#download
-  $('.scroll-pane').jScrollPane();  
 });
 
 
