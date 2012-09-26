@@ -11,13 +11,13 @@
 
   %ul{:id => "menu"}
 
-    %li{:id =>"paint"}
+    %li{:id =>"paint", :class => ("active" if current_page?(new_graphic_path))}
       =link_to "Paint", new_graphic_path
 
-    %li{:id =>"build"}      
+    %li{:id =>"build", :class => ("active" if current_page?(build_path))}      
       =link_to "Create", build_path
 
-    %li{:id =>"play"}
+    %li{:id =>"play", :class => ("active" if current_page?(gallery_path) || current_page?(play_path(params[:id] || -1)))}
       =link_to "Play", gallery_path
 
   = form_tag search_games_path, :method => 'get', :class => "form-inline navbar-search", :id => "search" do

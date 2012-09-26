@@ -1,4 +1,3 @@
-
 .row
 
   .span3
@@ -8,17 +7,17 @@
 
     .row{:id => "sort-bar"}
 
-      .span2{ :class => "game-select" }        
+      .span2{ :class => "game-select" }
 
         .btn-group
 
-          %button{ :class => "btn"}
+          %button{ :class => "btn", :style => "background:none;"}
             sort by #{ params[:type] || "date" }
 
-          %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown"}
+          %button{ :class => "btn dropdown-toggle", "data-toggle" => "dropdown", :style => "padding-left:2px;padding-right:12px"}
             %span{ :class => "caret"}
 
-          %ul{:id => "game-order-dropdown", :class => "dropdown-menu", :style => "min-width:124px;float:left;"}
+          %ul{:id => "game-order-dropdown", :class => "dropdown-menu", :style => "min-width:120px;float:left;"}
             %li{:class => ""}
               =link_to "date", gallery_path
 
@@ -31,7 +30,7 @@
             %li{:class => ""}
               =link_to "difficulty", gallery_path({:type => "difficulty"})
 
-      .span4{:style => "margin:0;"}
+      .span4{:style => "margin-left:8px;"}
 
         %div{:class => 'btn-group order', "data-toggle" => 'buttons-radio', :style => 'float:left;'}
           %button{:class => 'btn', :value => "asc"}
@@ -41,7 +40,7 @@
             descending
 
       .span2{:class => "gallery_paginate_buttons"}
-        = will_paginate @games, :param_name => :page, :container => false,  :page_links => false, :show_always => true
+        = will_paginate @games, :param_name => :page, :container => false, :page_links => false, :show_always => true, :previous_label => '&#9666; previous', :next_label => 'next &#9656;'
 
 .row{:style => "margin-top:1em;"}
 

@@ -10,7 +10,12 @@ Playtin::Application.routes.draw do
     end
   end
   
-  resources :graphics, :only => [:show, :create, :destroy, :new] do
+  resources :graphics, :only => [:show, :create, :destroy, :new] do    
+    member do
+      put 'release'
+      get 'games'
+    end
+
     collection do
       get 'public', :to => 'graphics#public'
       get 'search'
@@ -28,7 +33,7 @@ Playtin::Application.routes.draw do
 
     get :autocomplete_game_title, :on => :collection    
 
-    collection do 
+    collection do       
       get 'auto_search'
       get 'search', :to => 'games#search', :as => 'search'      
     end

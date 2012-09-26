@@ -25,7 +25,6 @@
   margin:0 1px 0 0;
   float:left;
   color: white;
-  background-color: #333;
 }
 
 #paint-wrapper .tool-bar button.active {
@@ -111,19 +110,37 @@
 }
 
 #paint-wrapper .tool-bar button.add {
-  background-image: url('/assets/paint/zoom_in.png');
+  background-image: url('/assets/paint/plus.png');
 }
 
 #paint-wrapper .tool-bar button.remove {
-  background-image: url('/assets/paint/zoom_out.png');
+  background-image: url('/assets/paint/minus.png');
 }
 
 #paint-wrapper .tool-bar button.duplicate {
   background-image: url('/assets/paint/duplicate.png');
 }
 
+#paint-wrapper #playButton {
+  background-image: url('/assets/paint/play.png'); 
+  height: 26px; width: 26px;
+  background-repeat: no-repeat;
+}
+
+#paint-wrapper #stopButton {
+  background-image: url('/assets/paint/stop.png');
+  height: 26px; width: 26px;
+  background-repeat: no-repeat;
+}
+
+#paint-wrapper .paint-zoom-in-icon {
+  background-image: url('/assets/paint/zoom_in.png');
+  height: 16px; width: 16px;
+  background-repeat: no-repeat;
+}
+
 #paint-wrapper .tool-bar button.toggleBgButton {
-  background:#FFF;
+/*  background:#FFF;*/
   height: 26px;
   width: 26px;
   min-width: 26px;
@@ -150,11 +167,17 @@
   margin-top: 6px;
   
   a {
-    border-radius: 0;
+    border-radius: 4px;
+    height: 10px;
+    top: -5px;
+    width: 10px;
+    margin-left: -3px;
+    border:1px solid $gray;
+/*    border-radius: 0;
     height: 15px;
     top: -7px;
     width: 6px;
-    margin-left: -3px;
+    margin-left: -3px;*/
   }
 }
 
@@ -177,7 +200,7 @@
   overflow: auto;
   background: #EEE;
   box-shadow: inset 0px 0px 12px 0px #AAA;
-  border-left: 1px solid #464646;  
+  /*border-left: 1px solid #464646;  */
 }
 
 #paint-wrapper #area-wrapper #zoom-canvas-area #paint-area {
@@ -204,8 +227,8 @@
   overflow: auto;
   background: #EEE;
   box-shadow: inset 0px 0px 12px 0px #AAA;
-  border-right: 1px solid $gray;
-  border-left: 1px solid $gray;
+/*  border-right: 1px solid $gray;
+  border-left: 1px solid $gray;*/
 }
 
 
@@ -242,7 +265,7 @@
 }
 
 #paint-wrapper #colorpicker #colorselect {
-  border: 1px solid #333;
+  border: 1px solid $lightgray;
   cursor: crosshair;
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -341,4 +364,10 @@
 
 .object_size_form {
   margin-top:1em;
+}
+
+/* Overwriting jquery-ui */
+#paint-wrapper .ui-widget-content {
+  background-image:none;
+  background-color: #424755;
 }

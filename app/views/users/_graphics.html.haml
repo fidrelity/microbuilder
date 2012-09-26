@@ -20,21 +20,50 @@
                 
               %h6
                 = limit_string(graphic.name)
-              %span
-                =graphic.frame_width
-                x
-                =graphic.frame_height
+
+              .row{:class => "graphicDetails"}
+                
+                .span1
+
+                  =graphic.frame_width
+                  x
+                  =graphic.frame_height
+
+                .span1{:class => "frame_display"}
+                  =# class .frame_number is used in frame_player.js
+                  %span{:class => "frame_number"} 
+                    = pluralize(graphic.frame_count, "frame")
+
+              .row{:class => "graphicGameDetails"}
+                .span2                
+                  Used in
+                  - if graphic.games.count > 0
+                    = link_to ( games_graphic_path(graphic) ) do
+                      = pluralize(graphic.games.count, "game")
+                  - else
+                    0 games         
 
               -if current_user == graphic.user
 
                 %div{ :class => "settings" }
 
                   .row
-                    .span3{:class => "wrapper"}
+                    .span1{:class => "wrapper"}
                     
                       =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
                         %i{:class => "icon-trash"}
                         delete
+
+                    .span1{:class => "public_state"}
+                     
+                      - if !graphic.public
+                        
+                        = link_to "set public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "", :title => "set public", :confirm => "Make this graphic available for all users?"     
+
+                      - else
+
+                        %span.label
+                          public
 
 
 %div{:id => "backgroundsLayer", :class => "layer"}
@@ -56,19 +85,43 @@
               
               %h4
                 = graphic.name
-            
-              %span
-                =graphic.frame_width
-                x
-                =graphic.frame_height
+              
+              .row
+
+                %div{:class => "graphicDetails span1"}
+                  =graphic.frame_width
+                  x
+                  =graphic.frame_height
+
+                .span2{:class => "backgroundInGamesUsed"}
+                  Used in
+                  - if graphic.games.count > 0
+                    = link_to ( games_graphic_path(graphic) ) do
+                      = pluralize(graphic.games.count, "game")
+                  - else
+                    0 games  
 
               -if current_user == graphic.user
 
                 %div{ :class => "settings" }
 
                   .row
-                    .span3{:class => "wrapper"}
+                    .span1{:class => "wrapper"}
                   
                       =link_to(graphic_path(graphic), :method => :delete, :remote => true, :confirm => "Permanently delete this graphic?") do
                         %i{:class => "icon-trash"}
                         delete
+
+                    .span1{:class => "public_state"}
+
+                      - if !graphic.public
+
+                        = link_to "set public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "", :title => "set public", :confirm => "Make this background available for all users?"
+                      - else                        
+
+                        %span.label.label-inverse
+                          public
+
+
+
+

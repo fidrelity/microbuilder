@@ -1,9 +1,8 @@
 %div{:id => 'gamesLayer', :class => "layer"}
 
   .row{:class => "paginate_buttons"}
-    .span9
-      = will_paginate games, :param_name => :games, :container => false, :page_links => false, :show_always => false, :params => {:current => "games"}  
-      
+    .span9      
+      = will_paginate games, :param_name => :games, :container => false, :page_links => false, :show_always => false, :previous_label => '&#9666; previous', :next_label => 'next &#9656;', :params => {:current => "games"}
   .row
     .span9
       %ul{:class => "thumbnails", :id => 'gamesList'}

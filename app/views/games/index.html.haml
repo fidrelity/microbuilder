@@ -1,5 +1,6 @@
 - if params[:term]
   %small
-    #{@games.count} games found
+    Found
+    = pluralize(@games.count, "game")
 
 = render :partial => 'list_games', :locals => {:games => @games}
