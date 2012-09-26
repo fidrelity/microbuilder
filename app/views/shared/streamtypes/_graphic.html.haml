@@ -3,6 +3,6 @@
     = link_to( image_tag(user.display_image, :class => "stream-image"), user_path(user) )
   = link_to( display_name, user_path(user) )
   painted
-  %a{ :class => "stream-popup", :href => "#{graphic.image}", :target => "_blank","data-content" => "<img src=#{graphic.image}>", :title => "#{graphic.name}" }
+  %a{ :class => "stream-popup", :href => "#{graphic.image}", :target => "_blank","data-content" => "<img src=#{graphic.image}>", :title => "#{strip_tags graphic.name}" }
     = "#{graphic.name}"
   = "#{graphic_type}"

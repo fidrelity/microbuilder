@@ -13,5 +13,5 @@
   - else
     your game
 
-  %a{ :class => "stream-popup", :href => "/play/#{game.id}", "data-content" => "<img src=#{game.preview_image}>", :title => "#{game.title}" }
+  %a{ :class => "stream-popup", :href => "/play/#{game.id}", "data-content" => "<img src=#{game.preview_image}>", :title => "#{strip_tags game.title}" }
     = "#{game.title}"
