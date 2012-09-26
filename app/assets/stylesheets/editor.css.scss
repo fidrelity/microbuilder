@@ -483,3 +483,38 @@
   }
   
 }
+
+#editor .bar {
+  
+  margin-bottom: 15px;
+  height: 30px;
+  
+  background-color: whiteSmoke;
+  @include gradient( #FFFFFF, #E6E6E6 );
+  
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  
+  .play {
+    border-top-left-radius: 0;
+  }
+  
+  .stop {
+    
+    
+  }
+  
+  .timelineWrapper {
+    pointer-events: none;
+    
+    .timeline {
+      width: 650px;
+      height: 9px;
+      background-color: #999;
+    }
+  }
+  
+  .view {
+    border-top-right-radius: 0;
+  }
+}

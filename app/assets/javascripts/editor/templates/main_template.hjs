@@ -47,22 +47,23 @@
       }}
     </div>
     
-    <div class="stageControls">
-      <span class="btn-group left">
-        <button class="btn ttip" {{action "play"}}><i class="icon-play"></i> play </button>
-        <button class="btn ttip" {{action "stop"}}><i class="icon-stop"></i> stop </button>
-        <button class="btn pop" {{action "debug"}} data-toggle="button" title="detail view" 
-          data-content="Enable this to see information about the game objects like: collision area, counter value, movement target/direction, click/contact areas.">
-          <i class="icon-wrench"></i> 
-          detail view 
-        </button>
-      </span>
-      
-      <button class="btn-large btn-success right ttip" title="prepare your game for publishing" data-placement="bottom" {{action "finalize" target="App.gameController"}}> 
-        finalize game </button>
+    <div class="bar btn-group">
+      <div class="btn play ttip" {{action "play"}}><i class="icon-play"></i> play </div>
+      <div class="btn stop ttip" {{action "stop"}}><i class="icon-stop"></i> stop </div>
+      <div class="btn timelineWrapper">
+        <canvas class="timeline"></canvas>
+      </div>
+      <div class="btn view pop" {{action "debug"}} data-toggle="button" title="detail view" 
+        data-content="Enable this to see information about the game objects like: collision area, counter value, movement target/direction, click/contact areas." data-placement="top">
+        <i class="icon-wrench"></i> 
+        detail view 
+      </div>
     </div>
     
   </div>
+  
+  <button class="btn-large btn-success right ttip" title="prepare your game for publishing" data-placement="bottom" {{action "finalize" target="App.gameController"}}> 
+    finalize game </button>
   
   <div style="height:50px"></div>
   
