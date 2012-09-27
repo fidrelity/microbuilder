@@ -83,7 +83,7 @@ h6 {
   background:url('twitter_playtin.png');
   position:absolute;
   left:0px;
-  top:218px;
+  top:215px;
   cursor:pointer;
 }
 
@@ -315,7 +315,7 @@ h6 {
   background:url('/assets/feedback.png');
   position:absolute;
   left:0px;
-  top:255px;
+  top:248px;
   cursor:pointer;
 }
 
@@ -466,6 +466,11 @@ h6 {
 
 /* Gallery */
 /* ---------------------------------- */
+
+#list-games-header h2 {
+  line-height: 26px;
+}
+
 
 #sort-bar {
   background:#F5F5F5;
