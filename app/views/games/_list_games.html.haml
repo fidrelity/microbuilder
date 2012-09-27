@@ -7,7 +7,7 @@
 
     .row{:id => "sort-bar"}
 
-      .span2{ :class => "game-select" }
+      .game-select
 
         .btn-group
 
@@ -30,7 +30,7 @@
             %li{:class => ""}
               =link_to "difficulty", gallery_path({:type => "difficulty"})
 
-      .span4{:style => "margin-left:8px;"}
+      %div
 
         %div{:class => 'btn-group order', "data-toggle" => 'buttons-radio', :style => 'float:left;'}
           %button{:class => 'btn', :value => "asc"}
@@ -39,7 +39,7 @@
           %button{:class => 'btn', :value => "desc"}
             descending
 
-      .span2{:class => "gallery_paginate_buttons"}
+      .gallery_paginate_buttons
         = will_paginate @games, :param_name => :page, :container => false, :page_links => false, :show_always => true, :previous_label => '&#9666; previous', :next_label => 'next &#9656;'
 
 .row{:style => "margin-top:1em;"}

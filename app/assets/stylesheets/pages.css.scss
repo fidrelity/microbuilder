@@ -500,11 +500,10 @@ h6 {
 
 #sort-bar {
   background:#F5F5F5;
-  background-image: -moz-linear-gradient(center top , #FFFFFF, #E6E6E6);
-  background-image: -webkit-linear-gradient(#FFFFFF, #E6E6E6);
-  background-image: -o-linear-gradient(#FFFFFF, #E6E6E6);
+  @include gradient( #FFFFFF, #E6E6E6 );
   border-radius:4px;
   margin-left:2px;
+  box-shadow: 0 1px 1px #999;
 }
 
 #sort-bar button, #sort-bar .dropdown-toggle {
@@ -524,8 +523,7 @@ h6 {
 
 #sort-bar .game-select {
   margin-left:0px;
-  width:130px;
-  min-width: 130px;
+  float: left;
 }
 
 #sort-bar .piece {
@@ -608,7 +606,8 @@ canvas {
 .gallery_paginate_buttons {
   padding-top:5px;
   text-align: right;
-  margin-left:105px;
+  float: right;
+  margin-right: 14px;
 }
 
 .icon-gallery-played {
