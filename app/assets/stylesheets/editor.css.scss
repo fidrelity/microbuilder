@@ -541,10 +541,15 @@
   
   .timelineWrapper {
     pointer-events: none;
+    display: inline-block;
+    border-top: 1px solid #CCC;
+    border-bottom: 1px solid #BBB;
     
     .timeline {
       width: 650px;
       height: 14px;
+      vertical-align: middle;
+      margin: 6px 14px 7px;
       background-color: #F9F9F9;
       border-bottom: 1px solid #F3F3F3;
     }

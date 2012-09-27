@@ -46,7 +46,7 @@
     <div class="bar btn-group">
       <div class="btn play ttip" {{action "play"}}><i class="icon-play"></i> play </div>
       <div class="btn stop ttip" {{action "stop"}}><i class="icon-stop"></i> stop </div>
-      <div class="btn timelineWrapper">
+      <div class="timelineWrapper">
         <canvas class="timeline playerTimeline"></canvas>
       </div>
       <div class="btn view pop" {{action "debug"}} data-toggle="button" title="detail view" 
