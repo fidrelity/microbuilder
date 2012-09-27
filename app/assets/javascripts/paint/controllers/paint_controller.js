@@ -15,6 +15,12 @@ var PaintController = Ember.ArrayController.extend({
   
   isBackground : false,
   
+  notBackground : function() {
+    
+    return !this.isBackground;
+    
+  }.property( 'isBackground' ),
+  
   screenCtx : null,
   toolCtx : null,
   

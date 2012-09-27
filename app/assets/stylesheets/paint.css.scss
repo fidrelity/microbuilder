@@ -108,26 +108,24 @@
 }
 
 #paint-wrapper .tool-bar button.add {
-  background-image: url('/assets/paint/plus.png');
+  background: url('/assets/paint/plus.png');
 }
 
 #paint-wrapper .tool-bar button.remove {
-  background-image: url('/assets/paint/minus.png');
+  background: url('/assets/paint/minus.png');
 }
 
 #paint-wrapper .tool-bar button.duplicate {
-  background-image: url('/assets/paint/duplicate.png');
+  background: url('/assets/paint/duplicate.png');
 }
 
 #paint-wrapper #playButton {
-  background-image: url('/assets/paint/play.png'); 
-  height: 26px; width: 26px;
+  background: url('/assets/paint/play.png'); 
   background-repeat: no-repeat;
 }
 
 #paint-wrapper #stopButton {
-  background-image: url('/assets/paint/stop.png');
-  height: 26px; width: 26px;
+  background: url('/assets/paint/stop.png');
   background-repeat: no-repeat;
 }
 
@@ -135,10 +133,10 @@
   background-image: url('/assets/paint/zoom_in.png');
   height: 16px; width: 16px;
   background-repeat: no-repeat;
+  margin-left: 6px;
 }
 
 #paint-wrapper .tool-bar button.toggleBgButton {
-/*  background:#FFF;*/
   height: 26px;
   width: 26px;
   min-width: 26px;
@@ -148,11 +146,11 @@
 #paint-wrapper #sizeWrapper, #paint-wrapper #zoomWrapper {
   overflow: hidden;
   margin: 0 1px;
-  padding: 7px 5px 3px;
+  padding: 7px 2px 3px;
 }
 
 #paint-wrapper #sizeWrapper #sizeSlider {
-  width: 60px;
+  width: 50px;
 }
 
 #paint-wrapper #zoomWrapper #zoomSlider {
@@ -160,6 +158,8 @@
 }
 
 #paint-wrapper #zoomWrapper #zoomSlider, #paint-wrapper #sizeWrapper #sizeSlider {
+  background-image:none;
+  background-color: #424755;
   border-radius: 0;
   height: 3px;
   margin-top: 6px;
@@ -177,7 +177,7 @@
 #paint-wrapper #sizeWrapper #sizeSlider, #paint-wrapper #sizeWrapper #sizeValue,
 #paint-wrapper #zoomWrapper #zoomSlider, #paint-wrapper #zoomWrapper #zoomValue {
   float:left;
-  margin-left: 15px;
+  margin-left: 10px;
 }
 
 #paint-wrapper #sizeWrapper span, #paint-wrapper #zoomWrapper span {
@@ -290,15 +290,20 @@
 
   .paint-type {
     cursor: pointer;
-    border: 2px dashed #999;
+    color: lighten($font, 30%);
+    border: 1px solid lighten($font, 30%);
+    background: #FFF;
   
     &:hover {
-      border-color: black;
+      box-shadow: 0px 1px 10px #CCC;
+      color: lighten($font, 15%);
+      border: 1px solid lighten($font, 15%);
     }
   }
   
   .type-selected {
-    border: 2px solid black !important;
+    border-color: $font !important;
+    color: $font !important;
     
     #canvas-size {
       opacity: 1;
@@ -318,7 +323,6 @@
   width: 256px;
   height: 256px;
   overflow: hidden;
-  background: #FFF;
 }
 
 #paint-size-wrapper #background {
@@ -327,7 +331,6 @@
   right: 0;
   width: 640px;
   height: 390px;
-  background: #FFF;
 }
 
 #paint-size-wrapper .sizeWrapper p {
@@ -357,10 +360,4 @@
 
 .object_size_form {
   margin-top:1em;
-}
-
-/* Overwriting jquery-ui */
-#paint-wrapper .ui-widget-content {
-  background-image:none;
-  background-color: #424755;
 }

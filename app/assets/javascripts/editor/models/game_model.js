@@ -11,7 +11,7 @@ var GameModel = Ember.Object.extend({
   gameObjectCounter : 1,
   behaviourCounter : 1,
   
-  duration : 5,
+  duration : 15,
   
   setBackground : function( graphic ) {
     

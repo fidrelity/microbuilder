@@ -23,7 +23,7 @@ var MainView = Ember.View.extend({
   
   didInsertElement : function() {
 
-    $.scrollTo( $(".stageControls"), { axies : 'y', duration : 700, offset : -30 } );
+    $.scrollTo( $(".topbar"), { axies : 'y', duration : 700, offset : -30 } );
     
     this.$( '#slider' ).slider({
       
@@ -98,12 +98,8 @@ var MainView = Ember.View.extend({
     
     var player = this.player,
       data = App.game.getData();
-      
-    if ( window.localStorage ) {
-      
-      window.localStorage.setItem( 'game', JSON.stringify( data ) );
-      
-    }
+    
+    Storage.write( 'game', JSON.stringify( data ) );
     
     player.parse( data, function() {
       
@@ -119,11 +115,7 @@ var MainView = Ember.View.extend({
   
   save : function() {
     
-    if ( window.localStorage ) {
-      
-      window.localStorage.setItem( 'game', JSON.stringify( App.game.getData() ) );
-      
-    }
+    Storage.write( 'game', JSON.stringify( App.game.getData() ) );
     
   },
   
@@ -148,13 +140,9 @@ var MainView = Ember.View.extend({
       App.gameObjectsController.set( 'current', null );
       App.behaviourController.set( 'current', null );
       
-      this.$( '#slider' ).slider( 'value', [5] );
+      this.$( '#slider' ).slider( 'value', [App.game.duration] );
       
-      if ( window.localStorage ) {
-      
-        window.localStorage.setItem( 'game', null );
-      
-      }
+      Storage.write( 'game', null );
       
     }
     

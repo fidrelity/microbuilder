@@ -46,7 +46,7 @@ Stage.prototype.constructor = Player;
 
 extend( Stage.prototype, {
   
-  increment : { x : 149, y : 60 },
+  increment : { x : 150, y : 60 },
   loadAnimated : false,
   
   init : function( _node ) {
@@ -61,7 +61,14 @@ extend( Stage.prototype, {
   
   reset : function() {
     
+    var ctx = this.timelineCtx;
+    
     Player.prototype.reset.call( this );
+    
+    this.timelineCanvas.width = this.timelineCanvas.width;
+    
+    ctx.fillStyle = '#C3C3C3';
+    ctx.fillRect( 0, 6, this.timelineCanvas.width, 8 );
     
     this.selectObject = null;
     this.redraw = true;
@@ -88,8 +95,6 @@ extend( Stage.prototype, {
       
       }
       
-      this.drawTimeline( ctx, 0 );
-      
       this.redraw = false;
     
     }
@@ -104,20 +109,14 @@ extend( Stage.prototype, {
     
     this.game.draw( ctx );
     
-    this.drawTimeline( ctx, this.timePlayed );
+    ctx = this.timelineCtx;
     
-  },
-  
-  drawTimeline : function( ctx, timePlayed, color ) {
+    ctx.save();
+    ctx.translate( 0, 6 );
     
-    var i = this.increment,
-      g = this.game;
+    this.drawTimeline( ctx );
     
-    ctx.fillStyle = 'rgba(195,195,195,0.5)';
-    ctx.fillRect( 0, 390 + i.y / 2 - 4, 640, 8 );
-    
-    ctx.fillStyle = g.isWon ? '#70B477' : ( g.isLost ? '#CD5654' : '#999' );
-    ctx.fillRect( 0, 390 + i.y / 2 - 4, 640 * timePlayed / g.duration, 8 );
+    ctx.restore();
     
   },
   

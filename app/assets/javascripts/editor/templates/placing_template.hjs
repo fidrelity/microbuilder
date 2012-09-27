@@ -1,7 +1,7 @@
 {{#if App.showhelp}}
 
   <div class="help withSpace">
-    <span class="label label-info">help:</span>
+    <span class="label">help:</span>
 
     Set <strong>position</strong> and <strong>name</strong> of your new object. Use your mouse to drag the new object to your desired position on the game field. You can change this position later on the stage. Enter the name of your new object in the text field below. You can change the name later in the objects panel.
 

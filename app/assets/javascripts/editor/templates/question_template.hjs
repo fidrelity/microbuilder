@@ -3,7 +3,7 @@
 {{#if help}}
   {{#if App.showhelp}}
     <div class="help withSpace">
-      <span class="label label-info">help:</span>
+      <span class="label">help:</span>
       {{help}}
     </div>
   {{/if}}

@@ -19,10 +19,13 @@
   @include abs;
   width: 640px; height: 390px;
   background-color: $font;
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 #player {
+  font-family: 'Helvetica Neue Bold', 'Helvetica', 'Arial', sans-serif;
+  line-height: 20px;
+  
   position: relative;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -72,10 +75,6 @@
   left: 288px;
   top: 132px;
   background-image: url("/assets/player/play_button.png");
-  
-/*  &:hover {
-    opacity: 0.9 !important;
-  }*/
 }
 
 #player .titleBar {
@@ -99,12 +98,13 @@
 
     h2 {
       @include small_font;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
       text-transform: uppercase;
       border-top: 1px solid white;
       margin-top: 20px;
       margin-bottom: 0;
       line-height: 35px;
+      font-size: 11px;
     }
     
     i {
@@ -146,13 +146,15 @@
 
 #player .endScreen { 
   display: none;
-  font-size: 36px;
+  font-size: 32px;
   font-weight: bold;
   @include abs;
+  top: 132px;
   margin-top: 24px;
   width: 640px;
   text-align: center;
-  @include glow(#EEE);
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0 #EEE;
 }
 
 #player .winScreen {
@@ -165,7 +167,8 @@
 
 .endBg {
   @include bg;
-  height: 60px;
+  top: 132px;
+  height: 65px;
   opacity: 0;
 }
 

@@ -17,7 +17,6 @@
   
   <button {{action "pipetteTool" target="App.paintController"}} class="pipette selectable ttipBottom left" title="Pick color"></button>
 
-  <div class="piece" style="margin:0"></div>    
-
+  <div class="piece" style="margin:0"></div>
 
 </div>

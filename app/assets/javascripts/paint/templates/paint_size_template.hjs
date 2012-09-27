@@ -42,7 +42,7 @@
   
   </div>
   
-  <button {{action "start"}} id="startPainting" class="btn-large btn-success">start painting a new object</button>
+  <div {{action "start"}} id="startPainting" class="ptn-success">start painting a new object</div>
 
   
 </div>

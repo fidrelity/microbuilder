@@ -193,11 +193,7 @@ var GameController = Ember.Object.extend({
         
           // alert( 'sucess: ' + data.responseText );
           
-          if ( window.localStorage ) {
-          
-            window.localStorage.setItem( 'game', null );
-          
-          }
+          Storage.write( 'game', null );
           
           window.location = data.responseText;
           Notifier.hideLoader();
@@ -308,7 +304,7 @@ var GameController = Ember.Object.extend({
      gameObjectCounter : 1,
      title : '',
      instructions : '',
-     duration : 5,
+     duration : 15,
      background : null
     });
     

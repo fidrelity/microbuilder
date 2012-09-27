@@ -14,16 +14,17 @@ var PlayerView = Ember.View.extend({
     if ( this.type === 'stage' ) {
       
       player = new Stage();
+      player.init( $( '#stage' ) );
       
       player.selectedObjectCallback = bind( App.gameObjectsController, App.gameObjectsController.selectID );
       
     } else {
       
       player = new Player();
+      player.init( this.$( '#player' ) );
       
     }
     
-    player.init( this.$( '#player' ) );
     player.startRunloop();
     
     player.parse( App.game.getData(), null, this.corsSave );

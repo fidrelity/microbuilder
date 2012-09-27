@@ -56,7 +56,7 @@ h6 {
 
 .piece {
   margin:0 5px 0 5px;
-  background:#F6F6F6 url(/assets/line.png);
+  background:#F6F6F6 url("/assets/line.png");
   width: 2px;
   height: 30px;
   float: left;
@@ -64,6 +64,47 @@ h6 {
 
 .popover-title {
   font-weight: bold;
+}
+
+
+#facebook_sidebutton {
+  height:41px;
+  width:40px;
+  background:url('facebook_playtin.png');
+  position:absolute;
+  left:0px;
+  top:180px;
+  cursor:pointer;
+}
+
+#twitter_sidebutton {
+  height:39px;
+  width:40px;
+  background:url('twitter_playtin.png');
+  position:absolute;
+  left:0px;
+  top:215px;
+  cursor:pointer;
+}
+
+.ptn-success {
+  padding: 8px 16px 7px;
+  color: white;
+  font-size: 17px;
+  cursor:pointer;
+  border: 1px solid darken($green, 10%);
+  border-radius: 4px;
+  background-color: $green;
+  @include gradient(lighten($green, 5%), darken($green, 5%));
+  
+  &:hover {
+    @include gradient($green, darken($green, 10%));
+  }
+
+}
+
+.new_user label {
+  text-transform: lowercase;
 }
 
 /* Header */
@@ -193,6 +234,32 @@ h6 {
   margin-right:5px;
 }
 
+
+#home-profile-box {
+  margin-top:3.5em;
+}
+
+#home-profile-box h2 {
+  margin:8px 0 0 0;
+}
+
+#home-profile-box .stats {
+  font-size:11px;line-height:16px
+}
+
+.home-profile-total-stats {
+  font-size:14px;
+  border-top:1px solid #CCC;
+  border-bottom:1px solid #CCC;
+  margin-top:1.5em;
+  padding:0.7em 0 0.7em 0;
+}
+
+.home-profile-total-stats i, .home-profile-total-stats span {
+  margin-left:0.8em;
+}
+
+
 .guideButtons {
   width: 200px;
 /*  margin-top: 48px;*/
@@ -278,7 +345,7 @@ h6 {
   background:url('/assets/feedback.png');
   position:absolute;
   left:0px;
-  top:30%;
+  top:248px;
   cursor:pointer;
 }
 
@@ -430,13 +497,17 @@ h6 {
 /* Gallery */
 /* ---------------------------------- */
 
+#list-games-header h2 {
+  line-height: 26px;
+}
+
+
 #sort-bar {
   background:#F5F5F5;
-  background-image: -moz-linear-gradient(center top , #FFFFFF, #E6E6E6);
-  background-image: -webkit-linear-gradient(#FFFFFF, #E6E6E6);
-  background-image: -o-linear-gradient(#FFFFFF, #E6E6E6);
+  @include gradient( #FFFFFF, #E6E6E6 );
   border-radius:4px;
   margin-left:2px;
+  box-shadow: 0 1px 1px #999;
 }
 
 #sort-bar button, #sort-bar .dropdown-toggle {
@@ -456,8 +527,7 @@ h6 {
 
 #sort-bar .game-select {
   margin-left:0px;
-  width:130px;
-  min-width: 130px;
+  float: left;
 }
 
 #sort-bar .piece {
@@ -540,7 +610,8 @@ canvas {
 .gallery_paginate_buttons {
   padding-top:5px;
   text-align: right;
-  margin-left:105px;
+  float: right;
+  margin-right: 14px;
 }
 
 .icon-gallery-played {
