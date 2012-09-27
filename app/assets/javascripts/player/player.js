@@ -293,18 +293,24 @@ Player.prototype = {
   
   enterReady : function() {
     
-    $( '.titleScreen', this.node ).show();
-    $( '.playButton', this.node ).fadeIn( 500 );
-    $( '.titleBar', this.node ).animate( {top: 330}, 500 );
+    var node = this.node;
+    
+    $( '.titleScreen', node ).show();
+    
+    $( '.endScreen', node ).fadeOut( 200 );
+    $( '.endBg', node ).animate( {width: 65, left: 288}, 200, function() {
+      
+      $( '.endBg', node ).animate( {opacity: 0}, 500 );
+      $( '.playButton', node ).fadeIn( 300 );
+      $( '.titleBar', node ).animate( {top: 330}, 500 );
+      
+    });
     
   },
   
   exitReady : function() {
     
     var node = this.node;
-    
-    $( '.endScreen', node ).fadeOut( 200 );
-    $( '.endBg', node ).animate( {opacity: 0}, 200 );
     
     $( '.playButton', node ).fadeOut( 200 );
     
@@ -373,7 +379,8 @@ Player.prototype = {
     }
     
     $( msg, this.node ).fadeIn( 300 );
-    $( '.endBg', this.node ).animate( {opacity: 0.9}, 300 );
+    $( '.endBg', this.node ).css( {width: 640, left: 0} );
+    $( '.endBg', this.node ).animate( {opacity: 0.8}, 300 );
     
     this.draw( this.ctx );
     

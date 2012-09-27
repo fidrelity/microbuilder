@@ -5,9 +5,13 @@
   <canvas id="playerCanvas" class="testCanvas" width="640" height="390"></canvas>
 
   <div class="playerUI">
-
+    
     <div class="loadScreen">&nbsp;&nbsp;&nbsp;loading...</div>
-
+    
+    <div class="endBg"></div>
+    <div class="winScreen endScreen">You win!</div>
+    <div class="loseScreen endScreen">You lose!</div>
+    
     <div class="titleScreen">
       <div class="playButton"></div>
       <div class="titleBar">
@@ -26,10 +30,6 @@
         </div>
       </div>
     </div>
-    
-    <div class="endBg"></div>
-    <div class="winScreen endScreen">You win!</div>
-    <div class="loseScreen endScreen">You lose!</div>
     
     <div class="errorScreen">
       <h2>An error occurred while loading the game.</h2>

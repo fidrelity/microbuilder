@@ -19,7 +19,7 @@
   @include abs;
   width: 640px; height: 390px;
   background-color: $font;
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 #player {
@@ -72,10 +72,6 @@
   left: 288px;
   top: 132px;
   background-image: url("/assets/player/play_button.png");
-  
-/*  &:hover {
-    opacity: 0.9 !important;
-  }*/
 }
 
 #player .titleBar {
@@ -146,13 +142,15 @@
 
 #player .endScreen { 
   display: none;
-  font-size: 36px;
+  font-size: 32px;
   font-weight: bold;
   @include abs;
+  top: 132px;
   margin-top: 24px;
   width: 640px;
   text-align: center;
-  @include glow(#EEE);
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0 #EEE;
 }
 
 #player .winScreen {
@@ -165,7 +163,8 @@
 
 .endBg {
   @include bg;
-  height: 60px;
+  top: 132px;
+  height: 65px;
   opacity: 0;
 }
 
