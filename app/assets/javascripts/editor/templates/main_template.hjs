@@ -11,29 +11,27 @@
   {{#if App.showhelp}}
   
     <div class="help bottomSpace">
-      <span class="label label-info">help:</span>
+      <span class="label">help:</span>
       This is the <strong>stage</strong> of the game editor. The buttons and elements on top let you change your game, the bar below lets you test if it works the way you want. The green button at the right bottom will lead you to a final panel for publishing your game.
       <br /><strong>Tip:</strong> You can move objects around by dragging them.
     </div>
   
   {{/if}}
 
-  <div class="stageControls">
+  <div class="topbar">
 
-    <div class="left" id="stageTop">
+    <div id="trash" class="right ttip" {{action "trash"}} title="throw the game away"><i class="icon-trash"></i> trash game </div>
 
-      <button class="btn btn-large btn-primary ttip" {{action "showObjects" target="App.gameController"}}
-        title="see list of all objects in the game"> objects </button>
-      <button class="btn btn-large btn-primary ttip" {{action "searchBackground" target="App.gameController"}}
-        title="select a background"> background </button>
-    </div>
-    
-    <button id="trash" class="btn right ttip" {{action "trash"}} title="throw the game away"><i class="icon-trash"></i> trash game </button>
-    
-    <div id="duration" class="left pop" title="game duration" data-content="Use the slider to set the duration of the game from 5 to 30 seconds. If the time is over, the game is lost." data-placement="top">
-      <div id="durationValue" class="right">{{App.game.displayDuration}}</div>
-      <div id="slider" class="right"></div>
-      <div id="durationLabel" class="right"><i class="icon-time"></i> duration:</div>
+    <div id="objects" class="left ttip" {{action "showObjects" target="App.gameController"}}
+      title="see list of all objects in the game"> objects </div>
+        
+    <div id="background" class="left ttip" {{action "searchBackground" target="App.gameController"}}
+      title="select a background"> background </div>
+        
+    <div id="duration" class="pop" title="game duration" data-content="Use the slider to set the duration of the game from 5 to 30 seconds. If the time is over, the game is lost." data-placement="top">
+      <div id="durationLabel" class="left"><i class="icon-time"></i> duration</div>
+      <div id="slider" class="left"></div>
+      <div id="durationValue" class="left">{{App.game.displayDuration}}</div>
     </div>
     
   </div>

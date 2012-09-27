@@ -46,7 +46,7 @@ Stage.prototype.constructor = Player;
 
 extend( Stage.prototype, {
   
-  increment : { x : 149, y : 60 },
+  increment : { x : 150, y : 60 },
   loadAnimated : false,
   
   init : function( _node ) {
