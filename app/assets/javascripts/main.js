@@ -78,6 +78,8 @@ function editor_main( data, username ) {
   showhelp = !(showhelp && showhelp === 'no');
   
   App.set( 'showhelp', showhelp );
+  
+  $('#create').addTouch();
 
 };
 
