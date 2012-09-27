@@ -291,15 +291,20 @@
 
   .paint-type {
     cursor: pointer;
-    border: 2px dashed #999;
+    color: lighten($font, 30%);
+    border: 1px solid lighten($font, 30%);
+    background: #FFF;
   
     &:hover {
-      border-color: black;
+      box-shadow: 0px 1px 10px #CCC;
+      color: lighten($font, 15%);
+      border: 1px solid lighten($font, 15%);
     }
   }
   
   .type-selected {
-    border: 2px solid black !important;
+    border-color: $font !important;
+    color: $font !important;
     
     #canvas-size {
       opacity: 1;
@@ -319,7 +324,6 @@
   width: 256px;
   height: 256px;
   overflow: hidden;
-  background: #FFF;
 }
 
 #paint-size-wrapper #background {
@@ -328,7 +332,6 @@
   right: 0;
   width: 640px;
   height: 390px;
-  background: #FFF;
 }
 
 #paint-size-wrapper .sizeWrapper p {
