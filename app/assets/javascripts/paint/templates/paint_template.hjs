@@ -149,6 +149,6 @@
 
   </div>
 
-  <button class="btn btn-success span2 pull-right" {{action "save" target="App.paintController"}}>save image</button>
+  <div class="ptn-success right" {{action "save" target="App.paintController"}}>save image</div>
 
 </div>

@@ -76,7 +76,6 @@
   margin: 0;
   padding: 8px 16px 4px;
   background-color: #DDD;
-  @include gradient( #EEE, #DDD );
 }
 
 #editor .overlay .closeButton {
@@ -85,7 +84,7 @@
   right: 0px;
   border: 0;
   font-size: 18pt;
-  padding: 4px 8px 8px;
+  padding: 4px 11px 8px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -285,8 +284,7 @@
 }
 
 #editor .stageCanvas {
-  border:1px solid $gray;
-  background: #EEE !important;
+  background: #E4E4E4 !important;
   box-shadow: inset 0px 0px 12px 0px #AAA;
 }
 
@@ -404,39 +402,6 @@
   width: 120px;
 }
 
-#editor .stageControls {
-  margin: auto 0;
-  overflow: hidden;
-  padding: 6px 0;
-}
-
-#editor .stageControls #trash {
-  /*margin: 12px 0 0;*/
-}
-
-
-#editor #duration {
-  font-size: 11pt;
-  border: 1px solid #CCC;
-  padding: 10px 10px 6px;
-  background-color: whiteSmoke;
-  border-radius: 5px;
-  margin-left: 4px;
-}
-
-#editor #duration #slider {
-  width: 200px;
-  margin: 2px 20px 0;
-}
-
-#editor #duration #durationValue {
-  width: 40px;
-}
-
-#editor #duration #durationLabel {
-  width: 82px;
-}
-
 #editor .smallInfo {
   font-size:0.7em;
   display: block;
@@ -472,6 +437,11 @@
     border-radius: 5px;
     padding: 5px 10px 5px;
     box-shadow: 0 1px 1px #BBB;
+    color: #7C8186;
+    
+    .label {
+      background-color: $blue2;
+    }
   }
   
   .withSpace {
@@ -482,4 +452,105 @@
     margin-bottom: 10px;
   }
   
+}
+
+#editor .topbar {
+  
+  overflow: auto;
+  
+  #objects, #background, #duration, #trash {
+    padding: 7px 15px 5px;
+    border: 1px solid #C5C5C5;
+    border-left: none;
+    background-color: whiteSmoke;
+    @include gradient( #FFFFFF, #E6E6E6 );
+  }
+  
+  #objects, #background {
+    background-color: $blue2;
+    @include gradient(lighten($blue2, 5%), $blue2);
+    color: white;
+    font-size: 17px;
+    border-color: darken($blue2, 5%);
+    
+    &:hover {
+      @include gradient($blue2, darken($blue2, 5%));
+    }
+  }
+  
+  #trash {
+    
+    &:hover {
+      @include gradient( #F5F5F5, #D9D9D9 );
+    }
+  }
+  
+  #objects {
+    border-top-left-radius: 4px;
+    border-left: darken($blue2, 5%);
+  }
+  
+  #trash {
+    border-top-right-radius: 4px;
+  }
+  
+  #duration {
+    
+    overflow: auto;
+    
+    #slider {
+      width: 150px;
+      margin: 8px 15px 0;
+      
+      background-image:none;
+      background-color: #424755;
+      border-radius: 0;
+      height: 3px;
+      
+      a {
+        border-radius: 4px;
+        width: 11px;
+        height: 11px;
+        top: -5px;
+        margin-left: -5px;
+        border:1px solid $gray;
+      }
+    }
+  }
+}
+
+#editor .bar {
+  
+  margin-bottom: 15px;
+  height: 30px;
+  
+  background-color: whiteSmoke;
+  @include gradient( #FFFFFF, #E6E6E6 );
+  
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  
+  .play {
+    border-top-left-radius: 0;
+  }
+  
+  .stop {
+    
+    
+  }
+  
+  .timelineWrapper {
+    pointer-events: none;
+    
+    .timeline {
+      width: 650px;
+      height: 14px;
+      background-color: #F9F9F9;
+      border-bottom: 1px solid #F3F3F3;
+    }
+  }
+  
+  .view {
+    border-top-right-radius: 0;
+  }
 }

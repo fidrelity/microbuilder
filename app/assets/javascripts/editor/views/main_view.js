@@ -23,7 +23,7 @@ var MainView = Ember.View.extend({
   
   didInsertElement : function() {
 
-    $.scrollTo( $(".stageControls"), { axies : 'y', duration : 700, offset : -30 } );
+    $.scrollTo( $(".topbar"), { axies : 'y', duration : 700, offset : -30 } );
     
     this.$( '#slider' ).slider({
       

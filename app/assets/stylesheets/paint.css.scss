@@ -159,6 +159,8 @@
 }
 
 #paint-wrapper #zoomWrapper #zoomSlider, #paint-wrapper #sizeWrapper #sizeSlider {
+  background-image:none;
+  background-color: #424755;
   border-radius: 0;
   height: 3px;
   margin-top: 6px;
@@ -356,10 +358,4 @@
 
 .object_size_form {
   margin-top:1em;
-}
-
-/* Overwriting jquery-ui */
-#paint-wrapper .ui-widget-content {
-  background-image:none;
-  background-color: #424755;
 }
