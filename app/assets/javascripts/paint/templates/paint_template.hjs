@@ -32,7 +32,7 @@
       <div class="tool-bar">
         <button {{action "start" target="App.spritePlayer"}} id="playButton"></button>
         <button {{action "stop" target="App.spritePlayer"}} id="stopButton"></button>
-        <div style="float:right">
+        <div style="float:right; margin-right: 10px;">
           <input style="text-align:right" type="text" id="playDelay" value="300" size="2" class="span1 ttip" title="Set animation speed (miliseconds)">ms
         </div>
         <div class="hide">
@@ -120,14 +120,17 @@
 
       <div class="piece"></div>
       
-      <button {{action "toggleBackground"}} class="toggleBgButton ttipBottom" title="Toggle the background pattern"></button>
+      {{#if App.paintController.notBackground}}
       
-      <div class="piece"></div>
+        <button {{action "toggleBackground"}} class="toggleBgButton ttipBottom" title="Toggle the background pattern"></button>
+      
+        <div class="piece"></div>
+      
+      {{/if}}
       
       {{view ColorPickerView class = "right"}}
 
       <div class="clear"></div>
-
 
     </div>
   

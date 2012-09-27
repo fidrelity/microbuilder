@@ -120,13 +120,11 @@
 
 #paint-wrapper #playButton {
   background-image: url('/assets/paint/play.png'); 
-  height: 26px; width: 26px;
   background-repeat: no-repeat;
 }
 
 #paint-wrapper #stopButton {
   background-image: url('/assets/paint/stop.png');
-  height: 26px; width: 26px;
   background-repeat: no-repeat;
 }
 
@@ -134,10 +132,10 @@
   background-image: url('/assets/paint/zoom_in.png');
   height: 16px; width: 16px;
   background-repeat: no-repeat;
+  margin-left: 6px;
 }
 
 #paint-wrapper .tool-bar button.toggleBgButton {
-/*  background:#FFF;*/
   height: 26px;
   width: 26px;
   min-width: 26px;
@@ -147,11 +145,11 @@
 #paint-wrapper #sizeWrapper, #paint-wrapper #zoomWrapper {
   overflow: hidden;
   margin: 0 1px;
-  padding: 7px 5px 3px;
+  padding: 7px 2px 3px;
 }
 
 #paint-wrapper #sizeWrapper #sizeSlider {
-  width: 60px;
+  width: 50px;
 }
 
 #paint-wrapper #zoomWrapper #zoomSlider {
@@ -178,7 +176,7 @@
 #paint-wrapper #sizeWrapper #sizeSlider, #paint-wrapper #sizeWrapper #sizeValue,
 #paint-wrapper #zoomWrapper #zoomSlider, #paint-wrapper #zoomWrapper #zoomValue {
   float:left;
-  margin-left: 15px;
+  margin-left: 10px;
 }
 
 #paint-wrapper #sizeWrapper span, #paint-wrapper #zoomWrapper span {

@@ -70,15 +70,11 @@ var PaintView = Ember.View.extend({
       
       this.bgToggleCounter = 1;
       
-      this.$( '.toggleBgButton' ).hide();
-      
       this.resize();
       
     } else {
       
       this.bgToggleCounter = 2;
-      
-      this.$( '.toggleBgButton' ).show();
       
       this.toggleBackground();
       
