@@ -219,6 +219,12 @@
   border:none;
 }
 
+#editor .frame_graphic_element {
+  
+  position:absolute;
+  top:35%;
+}
+
 #editor .frame {
   float: left;
 }
@@ -239,6 +245,7 @@
   height: 96px;
   border: 1px solid #CCC;
   background: url("/assets/editor/pattern_light.png");
+  position: relative;
 }
 
 #editor .graphic {
