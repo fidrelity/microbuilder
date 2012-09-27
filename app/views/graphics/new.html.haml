@@ -1,7 +1,7 @@
--if user_signed_in?      
+-if user_signed_in?    
   =render :partial => "paint_tool"
 -else
-  =render :partial => "paint_guide"
+  =render :partial => "paint_tool"
 
 .loadOverlay
   %div{:class => "overlayMessage row"}

@@ -115,6 +115,9 @@ var PaintView = Ember.View.extend({
       
     });
     
+    // make canvases compatible for touch events
+    $('#zoom-canvas-area').addTouch();
+    
     // Init tooltips
     $('.ttip').tooltip();
     $('.ttipBottom').tooltip({ placement: 'bottom' });
