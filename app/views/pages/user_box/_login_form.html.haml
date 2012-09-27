@@ -2,28 +2,38 @@
 -if user_signed_in?
   .span4
   
-    %div{ :class => "well"}
+    .row{:id => "home-profile-box"}
       
-      = link_to( user_path(current_user) ) do
+      .span3
 
-        .avatar_big{:style => "float:right;"}
-          = image_tag "#{current_user.display_image}", :style => "width:60px"
         %h2
-          = current_user.display_name
+          = link_to current_user.display_name, user_path(current_user)
+          
+        %div{:class => "stats"}        
 
-      %div{:style => "margin-top:1em;"}
-        %p
           = "#{current_user.games.size} games created"
-        %p
+          %br
           = "#{current_user.graphics.size} graphics created"
-        %p
-          %strong
-            total:
-          %i{:class => "icon-eye-open"}
-          = "#{@plays} plays"
-          and
-          %i{:class => "icon-thumbs-up"}
-          = "#{@likes} likes"
+          
+      .span1
+
+        = link_to( user_path(current_user) ) do
+
+          .avatar_big{:style => "margin-top:1em"}
+            = image_tag "#{current_user.display_image}", :style => "width:60px;"
+
+    .row
+
+      .span4{:class => "home-profile-total-stats"}
+
+        %strong
+          total
+        %i{:class => "icon-eye-open"}
+        = "#{@plays} plays"
+        %span
+          \/
+        %i{:class => "icon-thumbs-up"}
+        = "#{@likes} likes"
 
 - else
 

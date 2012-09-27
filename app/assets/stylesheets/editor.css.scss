@@ -472,14 +472,14 @@
     color: white;
     font-size: 17px;
     border-color: darken($blue2, 5%);
-    
+    cursor: pointer;
     &:hover {
       @include gradient($blue2, darken($blue2, 5%));
     }
   }
   
   #trash {
-    
+    cursor: pointer;
     &:hover {
       @include gradient( #F5F5F5, #D9D9D9 );
     }
