@@ -95,12 +95,13 @@
 
     h2 {
       @include small_font;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
       text-transform: uppercase;
       border-top: 1px solid white;
       margin-top: 20px;
       margin-bottom: 0;
       line-height: 35px;
+      font-size: 11px;
     }
     
     i {

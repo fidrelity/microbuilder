@@ -105,7 +105,7 @@ Player.prototype = {
     
     function animateBar( val ) {
       
-      if ( $( '.titleBar' ).css( 'top' ) !== val + 'px' ) {
+      if ( $( '.titleBar' ).css( 'top' ) !== val + 'px' && self.fsm.hasState( 'ready' ) ) {
       
         $( '.titleBar' ).animate( {top: val}, 500 );
         
