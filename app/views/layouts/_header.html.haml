@@ -37,4 +37,7 @@
       = link_to '&times;'.html_safe, '#', :class => ['close', 'closeFlash']
   =render :partial => 'layouts/flash', :locals => {:flash => flash}
 
+
+%a{:id=>"facebook_sidebutton", :href => "https://www.facebook.com/playtinCom"}
+%a{:id=>"twitter_sidebutton", :href => "http://twitter.com/playtincom"}
 =render :partial => "layouts/feedback"

@@ -66,6 +66,26 @@ h6 {
   font-weight: bold;
 }
 
+#facebook_sidebutton {
+  height:41px;
+  width:40px;
+  background:url('facebook_playtin.png');
+  position:absolute;
+  left:0px;
+  top:180px;
+  cursor:pointer;
+}
+
+#twitter_sidebutton {
+  height:39px;
+  width:40px;
+  background:url('twitter_playtin.png');
+  position:absolute;
+  left:0px;
+  top:218px;
+  cursor:pointer;
+}
+
 /* Header */
 /* ---------------------------------- */
 
@@ -278,7 +298,7 @@ h6 {
   background:url('/assets/feedback.png');
   position:absolute;
   left:0px;
-  top:30%;
+  top:255px;
   cursor:pointer;
 }
 
