@@ -107,24 +107,24 @@
 }
 
 #paint-wrapper .tool-bar button.add {
-  background-image: url('/assets/paint/plus.png');
+  background: url('/assets/paint/plus.png');
 }
 
 #paint-wrapper .tool-bar button.remove {
-  background-image: url('/assets/paint/minus.png');
+  background: url('/assets/paint/minus.png');
 }
 
 #paint-wrapper .tool-bar button.duplicate {
-  background-image: url('/assets/paint/duplicate.png');
+  background: url('/assets/paint/duplicate.png');
 }
 
 #paint-wrapper #playButton {
-  background-image: url('/assets/paint/play.png'); 
+  background: url('/assets/paint/play.png'); 
   background-repeat: no-repeat;
 }
 
 #paint-wrapper #stopButton {
-  background-image: url('/assets/paint/stop.png');
+  background: url('/assets/paint/stop.png');
   background-repeat: no-repeat;
 }
 

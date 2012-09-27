@@ -16,9 +16,15 @@
       {{view SpritesView id="sprites-area-scroll"}}
   
       <div class="tool-bar">
-        <button {{action "addSprite" target="App.paintController"}} class="add ttipBottom" title="add new sprite"></button>        
-        <button {{action "removeSprite" target="App.paintController"}} class="remove ttipBottom" title="remove sprite"></button>
-        <button {{action "copySprite" target="App.paintController"}} class="duplicate ttipBottom" title="duplicate sprite"></button>
+        <button style="float:right; margin-right:5px" {{action "copySprite" target="App.paintController"}} class="duplicate ttipBottom" title="duplicate sprite"></button>
+        
+        <div style="float:right" class="piece"></div>
+        
+        <button style="float:right" {{action "removeSprite" target="App.paintController"}} class="remove ttipBottom" title="remove sprite"></button>
+        
+        <div style="float:right" class="piece"></div>
+        
+        <button style="float:right" {{action "addSprite" target="App.paintController"}} class="add ttipBottom" title="add new sprite"></button> 
       </div>
     
     {{else}}
@@ -30,11 +36,11 @@
       </div>
     
       <div class="tool-bar">
-        <button {{action "start" target="App.spritePlayer"}} id="playButton"></button>
-        <button {{action "stop" target="App.spritePlayer"}} id="stopButton"></button>
         <div style="float:right; margin-right: 10px;">
           <input style="text-align:right" type="text" id="playDelay" value="300" size="2" class="span1 ttip" title="Set animation speed (miliseconds)">ms
         </div>
+        <button style="float:right" {{action "start" target="App.spritePlayer"}} id="playButton"></button>
+        <button style="float:right" {{action "stop" target="App.spritePlayer"}} id="stopButton"></button>
         <div class="hide">
           <input type="checkbox" value="1" id="replayLoop" class="ttip" title="Loop the animation"> Loop
         </div>
