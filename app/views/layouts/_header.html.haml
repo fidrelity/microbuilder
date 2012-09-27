@@ -17,7 +17,7 @@
     %li{:id =>"build", :class => ("active" if current_page?(build_path))}      
       =link_to "Create", build_path
 
-    %li{:id =>"play", :class => ("active" if current_page?(gallery_path) || current_page?(play_path(params[:id] || -1)))}
+    %li{:id =>"play", :class => ("active" if current_page?(gallery_path) || current_page?(gallery_path({:type => "rating"})) || current_page?(gallery_path({:type => "played"})) || current_page?(gallery_path({:type => "difficulty"})) || current_page?(play_path(params[:id] || -1)))}
       =link_to "Play", gallery_path
 
   = form_tag search_games_path, :method => 'get', :class => "form-inline navbar-search", :id => "search" do
