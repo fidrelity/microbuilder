@@ -62,14 +62,39 @@ Playtin::Application.configure do
   ENV["REDISTOGO_URL"] = 'redis://'+ REDIS_USER + ":" + REDIS_PW + '@localhost:6379' 
 end
 
-PAPERCLIP_OPTIONS = {
-  :url => "/:class/:id/:basename" + ".png",
-  :path => Rails.root.to_s + "/public/:class/:id/:basename" + ".png",
-}
+if false
+  PAPERCLIP_OPTIONS = {
+    :url => "/:class/:id/:basename" + ".png",
+    :path => Rails.root.to_s + "/public/:class/:id/:basename" + ".png",
+  }
 
-PAPERCLIP_THUMB_OPTIONS = {
-  :default_url => "/:class/:id/" + "thumbnail.png",
-  :path => Rails.root.to_s + "/public/:class/:id/" + "thumbnail.png",
-  :styles => { :small => "210x130!" }
-}
+  PAPERCLIP_THUMB_OPTIONS = {
+    :default_url => "/:class/:id/" + "thumbnail.png",
+    :path => Rails.root.to_s + "/public/:class/:id/" + "thumbnail.png",
+    :styles => { :small => "210x130!" }
+  }
+else
+  PAPERCLIP_OPTIONS = {
+    :url => "/:class/:id/:basename" + ".png",
+    :path => "/:class/:id/:basename" + ".png",
+    :storage => :s3,
+    :bucket => 'mbgfx',
+    :s3_credentials => {
+      :access_key_id => ENV['S3_KEY'],
+      :secret_access_key => ENV['S3_SECRET']
+    }
+  }
 
+  PAPERCLIP_THUMB_OPTIONS = {
+    :url => "https://s3.amazonaws.com/mbgfx/:class/:id/:basename" + ".png",
+    :default_url => "https://s3.amazonaws.com/mbgfx/:class/:id/" + "thumbnail.png",
+    :path => "/:class/:id/" + "thumbnail.png",
+    :styles => { :small => "210x130!" },
+    :storage => :s3,
+    :bucket => 'mbgfx',
+    :s3_credentials => {
+      :access_key_id => ENV['S3_KEY'],
+      :secret_access_key => ENV['S3_SECRET']
+    }
+  }
+end
