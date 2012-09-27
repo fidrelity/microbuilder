@@ -18,9 +18,9 @@ function editor_main( data, username ) {
   App.mainView = MainView.create();
   App.mainView.appendTo('#editor');
   
-  if ( !data && window.localStorage ) {
+  if ( !data ) {
     
-    data = JSON.parse( window.localStorage.getItem( 'game' ) );
+    data = JSON.parse( Storage.read( 'game' ) );
     
   }
   
@@ -45,11 +45,14 @@ function editor_main( data, username ) {
       $('.ttip').tooltip();
       $('.pop').popover({ trigger: 'hover'});
       
+      Storage.write( 'showhelp', 'yes' );
       
     } else {
       
       $('.ttip').tooltip( 'destroy' );
       $('.pop').popover( 'destroy' );
+      
+      Storage.write( 'showhelp', 'no' );
       
     }
     
@@ -70,7 +73,11 @@ function editor_main( data, username ) {
   
   $('.helpButton').popover({trigger: "hover"});
   
-  App.set( "showhelp", true );
+  var showhelp = Storage.read( 'showhelp' );
+  
+  showhelp = !(showhelp && showhelp === 'no');
+  
+  App.set( 'showhelp', showhelp );
 
 };
 
