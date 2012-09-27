@@ -50,8 +50,7 @@
   <button {{action "takeSnapshot"}} class="btn" style="margin-top:6px">
     <i class="icon-camera"></i> take snapshot </button>
   
-  <button {{action "publish"}} class="btn-large btn-success right">
-    publish game</button>
+  <div {{action "publish"}} class="ptn-success right">publish game</div>
 </div>
 
 <ul id="snapshots" class="thumbnails"></ul>

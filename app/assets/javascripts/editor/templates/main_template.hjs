@@ -60,8 +60,8 @@
   
   <div style="height:100px">
     
-    <button class="btn-large btn-success right ttip" title="prepare your game for publishing" data-placement="bottom" {{action "finalize" target="App.gameController"}}> 
-    finalize game </button>
+    <div class="ptn-success right ttip" title="prepare your game for publishing" data-placement="bottom" {{action "finalize" target="App.gameController"}}> 
+    finalize game </div>
     
   </div>
   

@@ -56,7 +56,7 @@ h6 {
 
 .piece {
   margin:0 5px 0 5px;
-  background:#F6F6F6 url(/assets/line.png);
+  background:#F6F6F6 url("/assets/line.png");
   width: 2px;
   height: 30px;
   float: left;
@@ -64,6 +64,21 @@ h6 {
 
 .popover-title {
   font-weight: bold;
+}
+
+.ptn-success {
+  padding: 8px 16px 7px;
+  color: white;
+  font-size: 17px;
+  
+  border: 1px solid darken($green, 10%);
+  border-radius: 4px;
+  background-color: $green;
+  @include gradient(lighten($green, 5%), darken($green, 5%));
+  
+  &:hover {
+    @include gradient($green, darken($green, 10%));
+  }
 }
 
 /* Header */
