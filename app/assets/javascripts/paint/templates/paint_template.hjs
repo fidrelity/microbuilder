@@ -114,8 +114,7 @@
       <div class="left" id="zoomWrapper">
         <span class="paint-zoom-in-icon"></span>
         <div id="zoomSlider" class="p-slider"></div>
-        <div id="zoomValue"> {{App.paintController.zoom}} </div>
-        <span>x</span>
+        <div id="zoomValue"> {{App.paintController.zoom}}x </div>
       </div>
       
       <div class="piece"></div>
@@ -123,15 +122,14 @@
       <div class="left" id="sizeWrapper">
         <span><i class="icon-pencil"></i></span>
         <div id="sizeSlider" class="p-slider"></div>
-        <div id="sizeValue"> {{App.paintController.size}} </div>
-        <span>px</span>
+        <div id="sizeValue"> {{App.paintController.size}}px </div>
       </div>
 
       <div class="piece"></div>
       
       {{#if App.paintController.notBackground}}
       
-        <button {{action "toggleBackground"}} class="toggleBgButton ttipBottom" title="Toggle the background pattern"></button>
+        <div {{action "toggleBackground"}} class="toggleBgButton ttipBottom" title="Toggle the background pattern"></div>
       
         <div class="piece"></div>
       

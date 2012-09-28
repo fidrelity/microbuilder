@@ -17,20 +17,23 @@
 }
 
 #paint-wrapper button {
-  min-width:30px;
-  height:30px;
-  border:none;
-  margin:0 1px 0 0;
-  float:left;
-  color: white;
-}
-
-#paint-wrapper button.active {
-  background-color: #777;
-}
-
-#paint-wrapper button.activeTool {
-  border-bottom: 4px solid $red;
+  min-width: 30px;
+  height: 30px;
+  border: none;
+  margin: 0;
+  float: left;
+  
+  &:hover {
+    border-bottom: 4px solid lighten($font, 20%);
+  }
+  
+  &:active {
+    border-bottom: 4px solid $font;
+  }
+  
+  &.activeTool {
+    border-bottom: 4px solid $red;
+  }
 }
 
 #paint-wrapper .tool-bar button.pencil {
@@ -135,10 +138,11 @@
   margin-left: 6px;
 }
 
-#paint-wrapper .tool-bar button.toggleBgButton {
+#paint-wrapper .tool-bar .toggleBgButton {
   height: 26px;
   width: 26px;
   margin: 2px 0 0 1px;
+  float: left;
 }
 
 #paint-wrapper #sizeWrapper, #paint-wrapper #zoomWrapper {
@@ -233,6 +237,7 @@
   }
 
   #colorselect {
+    margin-top: 1px;
     cursor: crosshair;
     -moz-user-select: none;
     -webkit-user-select: none;
