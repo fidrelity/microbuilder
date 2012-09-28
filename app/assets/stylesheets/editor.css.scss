@@ -235,6 +235,7 @@
 
 #editor .gameObject {
   overflow: hidden;
+  border: none;
   width:96px; 
   height:116px;
 }
@@ -254,7 +255,7 @@
   position:relative;
 }
 
-#editor .graphic .name {
+#editor .graphic .name, input .name {
   position: absolute;
   width:100%;
   bottom: 0;

@@ -8,6 +8,8 @@ var ObjectsView = Ember.View.extend({
     
     App.updateHelp();
     
+    $('.objectsLeft').addTouch();
+    $('.objectsRight').addTouch();
   },
   
   makeSortable : function() {

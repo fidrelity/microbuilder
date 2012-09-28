@@ -1,4 +1,4 @@
-<div class="graphic gameObject">
+<div class="graphic gameObject" onclick="">
 
     <div {{bindAttr style="content.graphic.divStyle"}}></div>
 
