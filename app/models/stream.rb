@@ -11,6 +11,7 @@ class Stream
           'type', type, 'user_id', (user.nil? ? nil : user.id), 
           object_id_key, object.id, 'date', DateTime.now.to_s
         )
+        REDIS.expire(current_message_id, 21.days.seconds)
         REDIS.lpush('stream', current_message_id)
         REDIS.lpush("stream_#{object.user.id}", current_message_id) unless type == ("game" || "graphic")
         REDIS.lpush("stream_#{user.id}", current_message_id) if user && user != object.user
