@@ -8,7 +8,7 @@ var ColorPickerView = Ember.View.extend({
   imageData : null,
   
   width : 180,
-  height : 28,
+  height : 30,
   
   down : false,
 
@@ -89,7 +89,13 @@ var ColorPickerView = Ember.View.extend({
       
       }
       
-    })
+    });
+    
+    this.$( '#colorselect' ).mouseout( function( e ) {
+      
+      self.set( 'down', false );
+      
+    });
     
     this.$( '#colorselect' ).mouseup( function( e ) {
       

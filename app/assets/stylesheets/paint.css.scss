@@ -16,7 +16,7 @@
   box-shadow: 0 1px 1px #999;
 }
 
-#paint-wrapper .tool-bar button {
+#paint-wrapper button {
   min-width:30px;
   height:30px;
   border:none;
@@ -25,12 +25,11 @@
   color: white;
 }
 
-#paint-wrapper .tool-bar button.active {
+#paint-wrapper button.active {
   background-color: #777;
 }
 
-
-#paint-wrapper .tool-bar button.activeTool {
+#paint-wrapper button.activeTool {
   border-bottom: 4px solid $red;
 }
 
@@ -107,15 +106,15 @@
   background:url('/assets/paint/pipette.png');
 }
 
-#paint-wrapper .tool-bar button.add {
+#paint-wrapper .add {
   background: url('/assets/paint/plus.png');
 }
 
-#paint-wrapper .tool-bar button.remove {
+#paint-wrapper .remove {
   background: url('/assets/paint/minus.png');
 }
 
-#paint-wrapper .tool-bar button.duplicate {
+#paint-wrapper .duplicate {
   background: url('/assets/paint/duplicate.png');
 }
 
@@ -210,18 +209,13 @@
   left: 0;
 }
 
-#paint-wrapper #sprites-area {
-  
-}
-
 #paint-wrapper #sprites-area-scroll {
   height: 430px;
   padding: 0 10px;
   overflow: auto;
   background: #EEE;
   box-shadow: inset 0px 0px 12px 0px #AAA;
-/*  border-right: 1px solid $gray;
-  border-left: 1px solid $gray;*/
+  border-left: 1px solid #BBB;
 }
 
 
@@ -243,41 +237,44 @@
   margin-left: 0px;
 }
 
-#paint-wrapper #colorpicker #colorfield {
-  width: 26px;
-  height: 26px;
-  position: relative;
-  background-color: black;
-  margin-top: 2px;
-}
+#paint-wrapper #colorpicker {
 
-#paint-wrapper #colorpicker #colortext {
-  width : 64px;
-  margin-right: 3px;
-  margin-bottom: 0;
-}
+  #colorfield {
+    width: 26px;
+    height: 26px;
+    position: relative;
+    background-color: black;
+    margin-top: 2px;
+  }
 
-#paint-wrapper #colorpicker #colorselect {
-  border: 1px solid $lightgray;
-  cursor: crosshair;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  -ms-user-select: none;
-}
+  #colortext {
+    width : 64px;
+    margin-right: 3px;
+    margin-bottom: 0;
+  }
 
-#lastColorList {
-  margin: 1px 1px 0 1px;
-  width: 44px;
-  list-style-type:none;
-}
+  #colorselect {
+    cursor: crosshair;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -ms-user-select: none;
+  }
 
-#lastColorList li.lastColorItem {
-  height: 12px;
-  width: 12px;
-  background-color: black;
-  float: left;
-  margin: 1px;
+  #lastColorList {
+    margin: 1px 1px 0 1px;
+    width: 44px;
+    list-style-type:none;
+  }
+
+  #lastColorList li.lastColorItem {
+    height: 12px;
+    width: 12px;
+    background-color: black;
+    float: left;
+    margin: 1px;
+  }
+
 }
 
 #paint-size-wrapper .sizeInput {
