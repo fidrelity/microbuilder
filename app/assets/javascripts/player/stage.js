@@ -103,10 +103,6 @@ extend( Stage.prototype, {
   
   draw : function( ctx ) {
     
-    var i = this.increment;
-    
-    ctx.clearRect( -i.x, -i.y, 640 + 2 * i.x, 390 + 2 * i.y );
-    
     this.game.draw( ctx );
     
     ctx = this.timelineCtx;
@@ -122,6 +118,15 @@ extend( Stage.prototype, {
   
   enterReady : function() {
     
+    var ctx = this.ctx;
+    
+    if ( ctx.clipOn ) {
+    
+      ctx.clipOn = false;
+      ctx.restore();
+    
+    }
+    
     this.reset();
     
     this.game.reset();
@@ -134,12 +139,29 @@ extend( Stage.prototype, {
   
   enterPlay : function() {
     
+    var ctx = this.ctx,
+      i = this.increment;
+    
     this.mouse.handleClick();
     
     this.reset();
     
     this.game.reset();
     this.game.start();
+    
+    if ( !ctx.clipOn ) {
+    
+      ctx.fillStyle = '#424755';
+      ctx.fillRect( -i.x, -i.y, 640 + 2 * i.x, 390 + 2 * i.y );
+    
+      ctx.save();
+    
+      ctx.rect( 0, 0, 640, 390 );
+      ctx.clip();
+    
+      ctx.clipOn = true;
+    
+    }
     
   },
   
