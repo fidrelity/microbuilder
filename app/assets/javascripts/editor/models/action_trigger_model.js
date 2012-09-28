@@ -129,7 +129,7 @@ var ActionTriggerModel = Ember.Object.extend({
       decisions : this.decisions.concat(),
       choice : this.choice,
       
-      gameObject : this.gameObject,
+      gameObject : this.gameObject === this.parentGameObject ? App.gameObjectsController.current : this.gameObject,
       
       location : this.location ? this.location.clone() : null,
       offset : this.offset ? this.offset.clone() : null,
@@ -152,7 +152,6 @@ var ActionTriggerModel = Ember.Object.extend({
       path : this.path ? this.path.clone() : null
       
     });
-
     
   },
   
