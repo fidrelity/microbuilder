@@ -36,6 +36,8 @@ var PaintSizeView = Ember.View.extend({
       }
 
     });
+    
+    $('#canvas-size').addTouch(); // size selector compatible for touch events
 
     $('#canvas-size .ui-icon').css({
       'background': 'url("/assets/paint/handle.png")',

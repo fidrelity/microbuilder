@@ -120,7 +120,6 @@ var PaintController = Ember.ArrayController.extend({
       
     });
     
-    
     if ( !window.File && !window.FileReader && !window.FileList && !window.Blob ) {
       
       $('#file').remove();

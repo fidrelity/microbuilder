@@ -61,7 +61,7 @@ var GraphicModel = Ember.Object.extend({
       return "background-image:url(" + g.imagePath + ");" + 
         "width:" + width + "px;height:" + height + "px;" + 
         "background-size:" + width * g.frameCount + "px " + height + "px;" + 
-        "position:relative;top:" + offset.y + "px;left:" + offset.x + "px;";
+        "position:absolute;top:" + offset.y + "px;left:" + offset.x + "px;";
       
     }
   

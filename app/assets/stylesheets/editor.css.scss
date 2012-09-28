@@ -17,6 +17,7 @@
 
 #editor {
   padding:0px 0 0 0;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 #editor .editor_content {
@@ -211,6 +212,18 @@
   margin: 0;
 }
 
+#editor .frame_graphic {
+  display:block; 
+  margin:0px; 
+  padding: 0px; 
+  border:none;
+}
+
+#editor .frame_graphic_element {
+  position: absolute;
+  top: 0px;
+}
+
 #editor .frame {
   float: left;
 }
@@ -222,15 +235,18 @@
 
 #editor .gameObject {
   overflow: hidden;
+  border: none;
   width:96px; 
   height:116px;
 }
 
 #editor .gameObjectThumb {
+  position: relative;
   width: 96px;
   height: 96px;
   border: 1px solid #CCC;
   background: url("/assets/editor/pattern_light.png");
+  position: relative;
 }
 
 #editor .graphic {
@@ -239,7 +255,7 @@
   position:relative;
 }
 
-#editor .graphic .name {
+#editor .graphic .name, input .name {
   position: absolute;
   width:100%;
   bottom: 0;

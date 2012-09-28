@@ -319,6 +319,8 @@ var SpeedView = Ember.View.extend({
       
     });
     
+    this.$('.slider').addTouch();
+    
   }
   
 });

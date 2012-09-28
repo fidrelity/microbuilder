@@ -72,4 +72,3 @@ PAPERCLIP_THUMB_OPTIONS = {
   :path => Rails.root.to_s + "/public/:class/:id/" + "thumbnail.png",
   :styles => { :small => "210x130!" }
 }
-

@@ -201,6 +201,9 @@ $(document).ready(function() {
     window.location.href = url + "?order=" + e.target.value;
   });
   
+  // Fix Twitter Bootstrap dropdown for touch devices
+  $('#header').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
+  
 });
 
 
