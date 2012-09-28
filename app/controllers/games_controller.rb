@@ -1,7 +1,7 @@
  class GamesController < ApplicationController
   respond_to :js, :only => [:create, :index, :update, :like, :dislike, :played]
   before_filter :authenticate_user!, :only => [:create, :destroy]
-  before_filter :find_game, :only => [:show, :embed, :destroy, :like, :dislike, :played]  
+  before_filter :find_game, :only => [:embed, :destroy, :like, :dislike, :played]  
   
   def index
      params[:order] ||= "desc"
@@ -18,6 +18,8 @@
   end
   
   def show
+    @game = Game.unscoped.find(params[:id])
+    render :reported unless @game.visible
     @comments = @game.game_comments
   end
   
@@ -91,10 +93,6 @@
       Stream.create_message("dislike", current_user, @game)
     end
     render "like"
-  end
-
-  def report
-    render :nothing => true, :layout => false
   end
 
   def auto_search

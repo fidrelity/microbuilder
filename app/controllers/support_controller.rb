@@ -10,11 +10,19 @@ class SupportController < ApplicationController
   end
 
   def report
-    game_id = params[:gid]
+    @game = Game.find(params[:gid])
     body = params[:body]
 
-    issue_state = create_issue "Report: #{params[:type]} [#{game_id}]", append_game_to_body( body, game_id ), "Report"
-    @message_type = issue_state ? "success" : "error"
+    unless cookies["reported_game_#{@game.id}"]
+      Game.transaction do
+        @game.reports += 1
+        @game.visible = false if @game.reports > 4
+        @game.save
+      end
+      cookies["reported_game_#{@game.id}"] = true
+      issue_state = create_issue "Report: #{params[:type]} [#{@game.id}]", append_game_to_body( body, @game.id ), "Report"
+      @message_type = issue_state ? "success" : "error"
+    end
   end
   
   def ticket

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120925143144) do
+ActiveRecord::Schema.define(:version => 20120928112724) do
 
   create_table "game_comments", :force => true do |t|
     t.string   "comment"
@@ -22,12 +22,12 @@ ActiveRecord::Schema.define(:version => 20120925143144) do
   end
 
   create_table "games", :force => true do |t|
-    t.string   "title",                                     :null => false
-    t.string   "instruction",                               :null => false
-    t.text     "data",                                      :null => false
+    t.string   "title",                                        :null => false
+    t.string   "instruction",                                  :null => false
+    t.text     "data",                                         :null => false
     t.integer  "user_id"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.integer  "likes",                      :default => 0
     t.integer  "dislikes",                   :default => 0
     t.integer  "played",                     :default => 0
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(:version => 20120925143144) do
     t.integer  "won",                        :default => 0
     t.text     "tags"
     t.integer  "version",                    :default => 2
+    t.boolean  "visible",                    :default => true
+    t.integer  "reports",                    :default => 0
   end
 
   create_table "games_graphics", :id => false, :force => true do |t|
