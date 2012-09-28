@@ -1,7 +1,7 @@
 #profilewrap
   .avatar_profile
     %img{:src => user.display_image, :id => "profileimage"}
-    = link_to "change avatar", "http://gravatar.com", :target => "_blank"
+    = link_to "change avatar", "http://gravatar.com", :target => "_blank" if (current_user == user && !user.facebook?)
   %div{:id => "profile_name_wrapper"}
 
     %span{:id => "display_name"}
