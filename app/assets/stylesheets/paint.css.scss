@@ -75,7 +75,6 @@
 
 #paint-wrapper .tool-bar button.clearTool {
   background:url('/assets/paint/clear_icon.png');
-/*  background:url('/assets/paint/icon_delete.png');*/
 }
 
 #paint-wrapper .tool-bar button.undo {
@@ -126,6 +125,7 @@
 #paint-wrapper #stopButton {
   background: url('/assets/paint/stop.png');
   background-repeat: no-repeat;
+  display:none;
 }
 
 #paint-wrapper .paint-zoom-in-icon {
@@ -138,7 +138,6 @@
 #paint-wrapper .tool-bar button.toggleBgButton {
   height: 26px;
   width: 26px;
-  min-width: 26px;
   margin: 2px 0 0 1px;
 }
 
@@ -157,20 +156,7 @@
 }
 
 #paint-wrapper #zoomWrapper #zoomSlider, #paint-wrapper #sizeWrapper #sizeSlider {
-  background-image:none;
-  background-color: #424755;
-  border-radius: 0;
-  height: 3px;
   margin-top: 6px;
-  
-  a {
-    border-radius: 4px;
-    width: 11px;
-    height: 11px;
-    top: -5px;
-    margin-left: -5px;
-    border:1px solid $gray;
-  }
 }
 
 #paint-wrapper #sizeWrapper #sizeSlider, #paint-wrapper #sizeWrapper #sizeValue,
@@ -183,16 +169,11 @@
   float:left;
 }
 
-#paint-wrapper #area-wrapper {
-/*  overflow: auto;*/
-}
-
 #paint-wrapper #area-wrapper #zoom-canvas-area {
   height: 430px;
   overflow: auto;
   background: #EEE;
   box-shadow: inset 0px 0px 12px 0px #AAA;
-  /*border-left: 1px solid #464646;  */
 }
 
 #paint-wrapper #area-wrapper #zoom-canvas-area #paint-area {
@@ -230,8 +211,6 @@
 #paint-wrapper #sprites-area-scroll .selected { 
   border: 1px solid #000;
 }
-
-#stopButton { display:none; }
 
 .submit {
   margin-left: 0px;

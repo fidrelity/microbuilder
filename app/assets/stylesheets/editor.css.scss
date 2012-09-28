@@ -517,20 +517,6 @@
     #slider {
       width: 150px;
       margin: 8px 15px 0;
-      
-      background-image:none;
-      background-color: #424755;
-      border-radius: 0;
-      height: 3px;
-      
-      a {
-        border-radius: 4px;
-        width: 11px;
-        height: 11px;
-        top: -5px;
-        margin-left: -5px;
-        border:1px solid $gray;
-      }
     }
   }
 }

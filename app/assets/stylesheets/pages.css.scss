@@ -63,6 +63,22 @@ h6 {
   float: left;
 }
 
+.p-slider {
+  background-image: none !important;
+  background-color: #424755 !important;
+  border-radius: 0 !important;
+  height: 3px !important;
+  
+  a {
+    border-radius: 4px !important;
+    width: 11px !important;
+    height: 11px !important;
+    top: -5px !important;
+    margin-left: -5px !important;
+    border:1px solid $gray !important;
+  }
+}
+
 .popover-title {
   font-weight: bold;
 }

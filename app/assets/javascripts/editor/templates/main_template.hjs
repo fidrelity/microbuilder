@@ -30,7 +30,7 @@
         
     <div id="duration" class="pop" title="game duration" data-content="Use the slider to set the duration of the game from 5 to 30 seconds. If the time is over, the game is lost." data-placement="top">
       <div id="durationLabel" class="left"><i class="icon-time"></i> duration</div>
-      <div id="slider" class="left"></div>
+      <div id="slider" class="left p-slider"></div>
       <div id="durationValue" class="left">{{App.game.displayDuration}}</div>
     </div>
     

@@ -113,7 +113,7 @@
       
       <div class="left" id="zoomWrapper">
         <span class="paint-zoom-in-icon"></span>
-        <div id="zoomSlider"></div>
+        <div id="zoomSlider" class="p-slider"></div>
         <div id="zoomValue"> {{App.paintController.zoom}} </div>
         <span>x</span>
       </div>
@@ -122,7 +122,7 @@
 
       <div class="left" id="sizeWrapper">
         <span><i class="icon-pencil"></i></span>
-        <div id="sizeSlider"></div>
+        <div id="sizeSlider" class="p-slider"></div>
         <div id="sizeValue"> {{App.paintController.size}} </div>
         <span>px</span>
       </div>
