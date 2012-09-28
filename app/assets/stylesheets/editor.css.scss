@@ -96,7 +96,7 @@
 
 #editor .overlay .objectsLeft {
   background-color: white;
-  width: 96px;
+  width: 228px;
   padding: 15px 0 15px 15px;
 }
 
@@ -238,6 +238,7 @@
   border: none;
   width:96px; 
   height:116px;
+  float: left;
 }
 
 #editor .gameObjectThumb {
