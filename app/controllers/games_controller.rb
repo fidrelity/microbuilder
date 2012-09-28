@@ -113,6 +113,6 @@
   end
 
   def find_game
-    @game = Game.find(params[:id])
+    @game = Game.find_by_id(params[:id])
   end
 end
