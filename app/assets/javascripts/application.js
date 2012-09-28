@@ -204,6 +204,8 @@ $(document).ready(function() {
   // Fix Twitter Bootstrap dropdown for touch devices
   $('#header').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
   
+  
+  $('.rating_form').submit(function(e) { $('.rating_form .btn').attr('disabled', true) });
 });
 
 
