@@ -91,7 +91,7 @@ function randBool() {
 
 function incrementString( str ) {
   
-  var num, val = 0, i = 0;
+  var num, val = null, i = 0;
   
   if ( !str || !str.length ) {
     
@@ -115,7 +115,7 @@ function incrementString( str ) {
     
   } while ( num === 9 );
   
-  if ( val ) {
+  if ( val !== null ) {
     
     return str + ( val + 1 );
     
