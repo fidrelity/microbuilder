@@ -6,4 +6,8 @@
     =stylesheet_link_tag 'player'
     %style * { margin:0px; padding:0px; }
   %body
-    = render :partial => "player", :locals => {:game => @game}
+    -if @game
+      = render :partial => "player", :locals => {:game => @game}
+    - else
+      %h2
+        = link_to "Game not found", root_path, :class => "backlink", :target => "_blank"

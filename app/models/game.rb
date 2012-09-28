@@ -16,12 +16,13 @@ class Game < ActiveRecord::Base
   validates_presence_of :title, :instruction, :data
   validates_uniqueness_of :title
   
+  default_scope where(:visible => true)
   scope :all_by_played, lambda { |ordered| order("played #{ordered.upcase}") }
   scope :all_latest, lambda { |ordered| order("created_at #{ordered.upcase}") }
   pg_search_scope :search, :against => [:title, :instruction, :tags]
   
   attr_accessor :preview_image_file_name, :preview_image_data, :author_token
-  attr_accessible :title, :instruction, :data, :preview_image, :tags, :version,
+  attr_accessible :title, :instruction, :data, :preview_image, :tags, :version, :visible, :reports,
                   :preview_image_data, :preview_image_file_name, :played, :won, :author_token
   alias_attribute :user, :author
                   
