@@ -79,8 +79,10 @@ function editor_main( data, username ) {
   
   App.set( 'showhelp', showhelp );
   
-  $('#create').addTouch();
-
+  $('#player').addTouch();
+  $('.topbar').addTouch();
+  $('.bar').addTouch();
+  
 };
 
 function paint_main() {

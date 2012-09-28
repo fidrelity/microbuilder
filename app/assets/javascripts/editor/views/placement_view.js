@@ -53,6 +53,8 @@ var PlacementView = Ember.View.extend({
 
     $( canvas ).css({ 'border' : '2px solid #AAA', 'background-color' : '#CCC' });
     
+    $('.placement').addTouch();
+    
     if ( type === 'location' || type === 'area' || type === 'path' || type === 'placing' ) {
       
       canvas.width = ( 640 + inc.x * 2 ) * 0.5;

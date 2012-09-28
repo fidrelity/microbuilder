@@ -82,7 +82,6 @@ var MainView = Ember.View.extend({
     this.overlayView.set( 'isVisible', true );
     
     $.scrollTo( $( '.overlayhead' ), { axies : 'y', duration : 500, offset : -30 } );
-    
   },
   
   hideOverlay : function() {
