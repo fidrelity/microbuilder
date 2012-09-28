@@ -363,8 +363,8 @@
 }
 
 #editor .overlay .speedview .slider {
-  margin: 5px 7px;
-  width: 300px;
+  margin: 12px 7px 5px;
+  width: 150px;
 }
 
 #editor .overlay .speedview .speed {
@@ -386,11 +386,12 @@
 }
 
 #editor .overlay .timeview .slider {
+  margin-top: 13px;
   width: 300px;
 }
 
 #editor .overlay .timeview .time {
-  width: 45px;
+  width: 46px;
   font-size : 12pt;
 }
 

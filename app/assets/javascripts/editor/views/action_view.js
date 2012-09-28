@@ -168,7 +168,7 @@ var TimeView = Ember.View.extend({
   
   classNames : ['timeview', 'optionview'],
   
-  template: Ember.Handlebars.compile( '<div class="time">{{time}}<span class="smallInfo">{{timeInSeconds}}</span></div><div class="slider"></div><div class="time">{{time2}}<span class="smallInfo">{{time2InSeconds}}</span></div>' ),
+  template: Ember.Handlebars.compile( '<div class="time">{{time}}<span class="smallInfo">{{timeInSeconds}}</span></div><div class="slider p-slider"></div><div class="time">{{time2}}<span class="smallInfo">{{time2InSeconds}}</span></div>' ),
   
   observer : null,
   type : null,
@@ -294,7 +294,7 @@ var SpeedView = Ember.View.extend({
   
   classNames : ['speedview', 'optionview'],
   
-  template: Ember.Handlebars.compile( '<div class="slider left"></div><div class="speed left">{{observer.speedName}}</div>' ),
+  template: Ember.Handlebars.compile( '<div class="slider p-slider left"></div><div class="speed left">{{observer.speedName}}</div>' ),
   
   observer : null,
   
