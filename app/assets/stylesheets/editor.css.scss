@@ -542,28 +542,25 @@
     border-top-left-radius: 0;
   }
   
-  .stop {
-    
-    
-  }
-  
   .timelineWrapper {
     pointer-events: none;
-    display: inline-block;
     border-top: 1px solid #CCC;
     border-bottom: 1px solid #BBB;
+    height: 28px;
+    border-radius: 4px;
     
     .timeline {
+      position: relative;
+      top: 6px;
+      left: 14px;
       width: 650px;
       height: 14px;
-      vertical-align: middle;
-      margin: 6px 14px 7px;
       background-color: #F9F9F9;
       border-bottom: 1px solid #F3F3F3;
     }
   }
   
   .view {
-    border-top-right-radius: 0;
+    border-bottom-right-radius: 4px;
   }
 }

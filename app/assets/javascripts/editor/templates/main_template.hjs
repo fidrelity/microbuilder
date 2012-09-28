@@ -44,15 +44,17 @@
     }}
   
     <div class="bar btn-group">
-      <div class="btn play ttip" {{action "play"}}><i class="icon-play"></i> play </div>
-      <div class="btn stop ttip" {{action "stop"}}><i class="icon-stop"></i> stop </div>
-      <div class="timelineWrapper">
-        <canvas class="timeline playerTimeline"></canvas>
-      </div>
-      <div class="btn view pop" {{action "debug"}} data-toggle="button" title="detail view" 
+      <div class="btn play left ttip" {{action "play"}}><i class="icon-play"></i> play </div>
+      <div class="btn stop left ttip" {{action "stop"}}><i class="icon-stop"></i> stop </div>
+      
+      <div class="btn view right pop" {{action "debug"}} data-toggle="button" title="detail view" 
         data-content="Enable this to see information about the game objects like: collision area, counter value, movement target/direction, click/contact areas." data-placement="top">
         <i class="icon-wrench"></i> 
         detail view 
+      </div>
+      
+      <div class="timelineWrapper">
+        <canvas class="timeline playerTimeline"></canvas>
       </div>
     </div>
   
