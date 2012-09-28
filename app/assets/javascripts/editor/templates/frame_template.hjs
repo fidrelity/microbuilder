@@ -19,8 +19,7 @@
     
       <li class="frame" {{action "select"}} style="
         width:{{unbound content.frameWidth}}px;
-        height:{{unbound content.frameHeight}}px;
-      ">
+        height:{{unbound content.frameHeight}}px;" onclick="">
         {{content.number}}
       </li>
     
