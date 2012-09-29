@@ -82,13 +82,13 @@ var Choice = Ember.Object.extend({
       case 'gameWasLost' : return 'game is lost';
       case 'gameStart' : return 'start';
 
-      case 'counterGreaterNumber' : return 'counter greater than ' + action.counter;
-      case 'counterSmallerNumber' : return 'counter smaller than ' + action.counter;
-      case 'counterEqualsNumber' : return 'counter equal to ' + action.counter;
+      case 'counterGreaterNumber' : return a.gameObject.name + '\'s counter is greater than ' + action.counter;
+      case 'counterSmallerNumber' : return a.gameObject.name + '\'s counter is smaller than ' + action.counter;
+      case 'counterEqualsNumber' : return a.gameObject.name + '\'s counter is equal to ' + action.counter;
 
-      case 'counterGreaterObject' : return 'counter greater than ' + a.gameObject.name + '\'s counter';
-      case 'counterSmallerObject' : return 'counter smaller than ' + a.gameObject.name + '\'s counter';
-      case 'counterEqualsObject' : return 'counter equal to ' + a.gameObject.name + '\'s counter';
+      case 'counterGreaterObject' : return a.gameObject.name + '\'s counter is greater than ' + a.gameObject2.name + '\'s counter';
+      case 'counterSmallerObject' : return a.gameObject.name + '\'s counter is smaller than ' + a.gameObject2.name + '\'s counter';
+      case 'counterEqualsObject' : return a.gameObject.name + '\'s counter is equal to ' + a.gameObject2.name + '\'s counter';
       
       default : console.error( 'Unknow choice name: ' + this.ID );
       
@@ -294,7 +294,6 @@ var ObjectOption = Option.extend({
     
     if ( reinsert ) {
       
-      // this.action.gameObject.set( 'active', true );
       App.gameObjectsController.set( 'selected', this.action.gameObject );
       
     }
@@ -324,12 +323,6 @@ var Object2Option = Option.extend({
   type : 'object2',
   
   doInsert : function( reinsert ) {
-    
-    if ( reinsert ) {
-      
-      // this.action.gameObject2.set( 'active', true );
-      
-    }
     
     App.actionController.addOption( this, GameObjectsView.create({
       observer : this,

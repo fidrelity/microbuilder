@@ -303,19 +303,43 @@ var Parser = {
     
     counterEqualsObject : function( data, gameObject, game ) { 
       
-      return new CounterTrigger( "equal", gameObject, null, game.getGameObjectWithID( data.objectID ) );
+      if ( game.version < 4 ) {
+        
+        return new CounterTrigger( "equal", gameObject, null, game.getGameObjectWithID( data.objectID ) );
+        
+      } else {
+        
+        return new CounterTrigger( "equal", game.getGameObjectWithID( data.objectID ), null, game.getGameObjectWithID( data.object2ID ) );
+        
+      }
       
     },
     
     counterGreaterObject : function( data, gameObject, game ) { 
       
-      return new CounterTrigger( "greater", gameObject, null, game.getGameObjectWithID( data.objectID ) );
+      if ( game.version < 4 ) {
+        
+        return new CounterTrigger( "greater", gameObject, null, game.getGameObjectWithID( data.objectID ) );
+        
+      } else {
+        
+        return new CounterTrigger( "greater", game.getGameObjectWithID( data.objectID ), null, game.getGameObjectWithID( data.object2ID ) );
+        
+      }
       
     },
     
     counterSmallerObject : function( data, gameObject, game ) { 
       
-      return new CounterTrigger( "smaller", gameObject, null, game.getGameObjectWithID( data.objectID ) );
+      if ( game.version < 4 ) {
+        
+        return new CounterTrigger( "smaller", gameObject, null, game.getGameObjectWithID( data.objectID ) );
+        
+      } else {
+        
+        return new CounterTrigger( "smaller", game.getGameObjectWithID( data.objectID ), null, game.getGameObjectWithID( data.object2ID ) );
+        
+      }
       
     },
     
@@ -323,19 +347,43 @@ var Parser = {
     
     counterEqualsNumber : function( data, gameObject, game ) { 
       
-      return new CounterTrigger( "equal", gameObject, data.counter, null );
+      if ( game.version < 4 ) {
+        
+        return new CounterTrigger( "equal", gameObject, data.counter, null );
+        
+      } else {
+        
+        return new CounterTrigger( "equal", game.getGameObjectWithID( data.objectID ), data.counter, null );
+        
+      }
       
     },
     
     counterGreaterNumber : function( data, gameObject, game ) { 
       
-      return new CounterTrigger( "greater", gameObject, data.counter, null );
+      if ( game.version < 4 ) {
+        
+        return new CounterTrigger( "greater", gameObject, data.counter, null );
+        
+      } else {
+        
+        return new CounterTrigger( "greater", game.getGameObjectWithID( data.objectID ), data.counter, null );
+        
+      }
       
     },
     
     counterSmallerNumber : function( data, gameObject, game ) {
       
-      return new CounterTrigger( "smaller", gameObject, data.counter, null );
+      if ( game.version < 4 ) {
+        
+        return new CounterTrigger( "smaller", gameObject, data.counter, null );
+        
+      } else {
+        
+        return new CounterTrigger( "smaller", game.getGameObjectWithID( data.objectID ), data.counter, null );
+        
+      }
       
     },
     

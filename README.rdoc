@@ -77,13 +77,13 @@ if migrations:
               { ID : timeExact, time : <int, %> }
               { ID : timeRandom, time : <int, %>, time2 : <int, %> }
             
-              { ID : counterEqualsObject, objectID : <int> }
-              { ID : counterGreaterObject, objectID : <int> }
-              { ID : counterSmallerObject, objectID : <int> }
+              { ID : counterEqualsObject, objectID : <int>, object2ID : <int> }
+              { ID : counterGreaterObject, objectID : <int>, object2ID : <int> }
+              { ID : counterSmallerObject, objectID : <int>, object2ID : <int> }
             
-              { ID : counterEqualsNumber, counter : <int> }
-              { ID : counterGreaterNumber, counter : <int> }
-              { ID : counterSmallerNumber, counter : <int> }
+              { ID : counterEqualsNumber, objectID : <int>, counter : <int> }
+              { ID : counterGreaterNumber, objectID : <int>, counter : <int> }
+              { ID : counterSmallerNumber, objectID : <int>, counter : <int> }
             
               { ID : gameWasWon }
               { ID : gameWasLost }
@@ -139,7 +139,25 @@ if migrations:
   }
 
 
-### Change log ###
+=== Change log
+
+version 4
+
+* added 'object2ID : <int>' to trigger : 'counterEqualsObject'
+* added 'object2ID : <int>' to trigger : 'counterGreaterObject'
+* added 'object2ID : <int>' to trigger : 'counterSmallerObject'
+
+* added 'objectID : <int>' to trigger : 'counterEqualsNumber'
+* added 'objectID : <int>' to trigger : 'counterGreaterNumber'
+* added 'objectID : <int>' to trigger : 'counterSmallerNumber'
+
+version 3
+
+* added 'object2ID : <int>' to trigger : 'touchObject'
+* added 'object2ID : <int>' to trigger : 'overlapObject'
+
+* added 'objectID : <int>' to trigger : 'touchArea'
+* added 'objectID : <int>' to trigger : 'overlapArea'
 
 version 3
 

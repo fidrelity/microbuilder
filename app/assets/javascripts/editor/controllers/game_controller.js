@@ -279,7 +279,7 @@ var GameController = Ember.Object.extend({
           
           App.mainView.trash( null, true );
           
-          alert( 'game could not be loaded' );
+          Notifier.add( 'Your unfinished game could not be loaded due to compatibility issues with our new version', 'error' ).notify();
           
           return false;
           
@@ -292,6 +292,12 @@ var GameController = Ember.Object.extend({
     }
     
     App.mainView.$( '#slider' ).slider( 'value', [game.duration] );
+    
+    if ( game.version !== data.version ) {
+      
+      Notifier.add( 'Your unfinished game has an older version, some parts might be broken', 'error' ).notify();
+      
+    }
     
     return true;
     
