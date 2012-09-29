@@ -14,7 +14,7 @@ var PaintController = Ember.ArrayController.extend({
   tool : null,
   
   isBackground : false,
-  
+
   notBackground : function() {
     
     return !this.isBackground;
@@ -73,6 +73,8 @@ var PaintController = Ember.ArrayController.extend({
   },
   
   initEvents : function() {
+
+    this.toggleOnBeforeUnload(true);
     
     $( document ).keydown( function( e ) {
       
@@ -150,7 +152,7 @@ var PaintController = Ember.ArrayController.extend({
       
       this.saveSprite();
       
-    }
+    }    
     
   },
   
@@ -657,7 +659,8 @@ var PaintController = Ember.ArrayController.extend({
       },
       
       success : function( data ) {
-        
+
+        App.paintController.toggleOnBeforeUnload(false)
         App.paintController.goToTypeSelection( false );
         Notifier.hideLoader();
         
@@ -689,6 +692,34 @@ var PaintController = Ember.ArrayController.extend({
     App.paintView.remove();
     App.paintSizeView.appendTo( '#content' );
     
+  },
+
+  toggleOnBeforeUnload : function( _doUnloadPrompt ) {
+
+    var doUnloadPrompt = _doUnloadPrompt || false;
+
+    if( doUnloadPrompt ) {
+
+      window.onbeforeunload = function (e) {
+    
+        var message = "Do you really want to leave the paint tool without saving your art?",
+        e = e || window.event;
+        // For IE and Firefox
+        if (e) {
+          e.returnValue = message;
+        }
+
+        // For Safari
+        return message;
+      };
+      
+
+    } else {
+
+      window.onbeforeunload = null;
+
+    }
+
   }
 
 });
