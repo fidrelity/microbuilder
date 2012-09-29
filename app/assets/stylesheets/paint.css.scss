@@ -143,6 +143,7 @@
   width: 26px;
   margin: 2px 0 0 1px;
   float: left;
+  cursor: pointer;
 }
 
 #paint-wrapper #sizeWrapper, #paint-wrapper #zoomWrapper {
@@ -167,6 +168,11 @@
 #paint-wrapper #zoomWrapper #zoomSlider, #paint-wrapper #zoomWrapper #zoomValue {
   float:left;
   margin-left: 10px;
+}
+
+#paint-wrapper #sizeWrapper #sizeValue {
+  width: 31px;
+  text-align: right;
 }
 
 #paint-wrapper #sizeWrapper span, #paint-wrapper #zoomWrapper span {
@@ -257,6 +263,7 @@
     background-color: black;
     float: left;
     margin: 1px;
+    cursor: pointer;
   }
 
 }

@@ -112,7 +112,7 @@
     <div class="tool-bar">
       
       <div class="left" id="zoomWrapper">
-        <span class="paint-zoom-in-icon"></span>
+        <span style="margin-left:6px"><i class="icon-search"></i></span>
         <div id="zoomSlider" class="p-slider"></div>
         <div id="zoomValue"> {{App.paintController.zoom}}x </div>
       </div>
