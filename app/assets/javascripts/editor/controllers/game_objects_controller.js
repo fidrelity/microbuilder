@@ -9,6 +9,7 @@ var GameObjectsController = Ember.ArrayController.extend({
   contentBinding : "App.game.gameObjects",
   
   current : null,
+  selected : null,
   
   select : function( gameObject ) {
     
@@ -151,6 +152,12 @@ var GameObjectsController = Ember.ArrayController.extend({
     return this.content.without( this.current );
     
   }.property( 'current' ),
+  
+  subset : function() {
+    
+    return this.content.without( this.selected );
+    
+  }.property( 'selected' ),
   
   moveObject : function( pos, pos2 ) {
     

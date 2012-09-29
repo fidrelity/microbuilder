@@ -84,6 +84,7 @@ var ButtonView = Ember.CollectionView.extend({
 var GameObjectsView = Ember.CollectionView.extend({
   
   observer : null,
+  active : null,
   
   tagName : 'ul',
   classNames : ['graphics', 'gameobjectsview', 'optionview'],
@@ -118,11 +119,9 @@ var GameObjectsView = Ember.CollectionView.extend({
       
       });
       
-      if ( this.content === App.gameObjectsController.current || this.content.active ) {
+      if ( this.content === this._parentView.active ) {
         
         this.selectSelf();
-        
-        this.content.set( 'active', false );
         
       }
       

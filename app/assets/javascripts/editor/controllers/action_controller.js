@@ -472,64 +472,73 @@ var ActionController = Ember.Object.extend({
             
             // touch
             
-            ButtonOption.create({
+            ObjectOption.create({
               name: 'touch',
-              question: 'Touches what?',
-              buttons: ['object', 'area'],
+              question: 'Choose the object to trigger the touch',
               
-              decisions: [
+              decision: ButtonOption.create({
+                name: 'touch',
+                question: 'Touches what?',
+                buttons: ['object', 'area'],
+              
+                decisions: [
                 
-                // object
+                  // object
                 
-                ObjectOption.create({
-                  name: 'touchObject',
-                  question: 'Choose the object to trigger the touch',
+                  Object2Option.create({
+                    name: 'touchObject',
+                    question: 'Choose the second object to trigger the touch',
                   
-                  decision: SaveOption.create({ choiceID: 'touchObject' })
-                }),
+                    decision: SaveOption.create({ choiceID: 'touchObject' })
+                  }),
                 
-                // area
+                  // area
                 
-                AreaOption.create({
-                  name: 'touchArea',
-                  question: 'Select the area to trigger the touch',
+                  AreaOption.create({
+                    name: 'touchArea',
+                    question: 'Select the area to trigger the touch',
                   
-                  decision : SaveOption.create({ choiceID: 'touchArea' })
-                })
+                    decision : SaveOption.create({ choiceID: 'touchArea' })
+                  })
                 
-              ]
+                ]
+              })
             }),
             
             // overlap
             
-            ButtonOption.create({
+            ObjectOption.create({
               name: 'overlap',
-              question: 'Overlaps what?',
-              buttons: ['object', 'area'],
+              question: 'Choose the object to trigger the overlap',
               
-              decisions: [
+              decision: ButtonOption.create({
+                name: 'overlap',
+                question: 'Overlaps what?',
+                buttons: ['object', 'area'],
+              
+                decisions: [
                 
-                // object
+                  // object
                 
-                ObjectOption.create({
-                  name: 'overlapObject',
-                  question: 'Choose the object to trigger the overlap',
+                  Object2Option.create({
+                    name: 'overlapObject',
+                    question: 'Choose the second object to trigger the overlap',
                   
-                  decision: SaveOption.create({ choiceID: 'overlapObject' })
-                }),
+                    decision: SaveOption.create({ choiceID: 'overlapObject' })
+                  }),
                 
-                // area
+                  // area
                 
-                AreaOption.create({
-                  name: 'overlapArea',
-                  question: 'Select the area to trigger the overlap',
+                  AreaOption.create({
+                    name: 'overlapArea',
+                    question: 'Select the area to trigger the overlap',
                   
-                  decision : SaveOption.create({ choiceID: 'overlapArea' })
-                })
+                    decision : SaveOption.create({ choiceID: 'overlapArea' })
+                  })
                 
-              ]
+                ]
+              })
             })
-            
           ]
         }),
         

@@ -69,11 +69,11 @@ var Choice = Ember.Object.extend({
       case 'clickObject' : return 'click on ' + a.gameObject.name;
       case 'clickArea' : return 'click in area ' + a.area.string();
       
-      case 'touchObject' : return n + ' touches ' + a.gameObject.name;
-      case 'touchArea' : return n + ' touches area ' + a.area.string();
+      case 'touchObject' : return a.gameObject.name + ' touches ' + a.gameObject2.name;
+      case 'touchArea' : return a.gameObject.name + ' touches area ' + a.area.string();
       
-      case 'overlapObject' : return n + ' overlaps ' + a.gameObject.name;
-      case 'overlapArea' : return n + ' overlaps area ' + a.area.string();
+      case 'overlapObject' : return a.gameObject.name + ' overlaps ' + a.gameObject2.name;
+      case 'overlapArea' : return a.gameObject.name + ' overlaps area ' + a.area.string();
       
       case 'timeExact' : return 'after ' + a.time + '%';
       case 'timeRandom' : return 'sometime between ' + a.time + '-' + a.time2 + '%';
@@ -294,13 +294,15 @@ var ObjectOption = Option.extend({
     
     if ( reinsert ) {
       
-      this.action.gameObject.set( 'active', true );
+      // this.action.gameObject.set( 'active', true );
+      App.gameObjectsController.set( 'selected', this.action.gameObject );
       
     }
     
     App.actionController.addOption( this, GameObjectsView.create({
       observer : this,
       contentBinding : 'App.gameObjectsController.' + ( this.showOthers ? 'others' : 'content' ),
+      active : reinsert ? this.action.gameObject : App.gameObjectsController.current
     }));
     
   },
@@ -308,6 +310,38 @@ var ObjectOption = Option.extend({
   decide : function( object ) {
     
     this.action.setObject( object );
+    
+    App.gameObjectsController.set( 'selected', object );
+    
+    this.decision.insert( this.action );
+    
+  }
+  
+});
+
+var Object2Option = Option.extend({
+  
+  type : 'object2',
+  
+  doInsert : function( reinsert ) {
+    
+    if ( reinsert ) {
+      
+      // this.action.gameObject2.set( 'active', true );
+      
+    }
+    
+    App.actionController.addOption( this, GameObjectsView.create({
+      observer : this,
+      contentBinding : 'App.gameObjectsController.subset',
+      active : reinsert ? this.action.gameObject2 : App.gameObjectsController.current
+    }));
+    
+  },
+  
+  decide : function( object ) {
+    
+    this.action.setObject2( object );
     
     this.decision.insert( this.action );
     

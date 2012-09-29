@@ -37,6 +37,12 @@ var ActionTriggerModel = Ember.Object.extend({
     
   },
   
+  setObject2 : function( object ) {
+    
+    this.set( 'gameObject2', object );
+    
+  },
+  
   setLocation : function( location ) {
     
     this.set( 'location', location );
@@ -120,7 +126,7 @@ var ActionTriggerModel = Ember.Object.extend({
     
     return this.choice ? this.choice.string( this.parentGameObject.name, this ) : 'no choice';
     
-  }.property( 'choice', 'gameObject', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2', 'path', 'counter' ),
+  }.property( 'choice', 'gameObject', 'gameObject2', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2', 'path', 'counter' ),
   
   clone : function() {
     
@@ -130,6 +136,7 @@ var ActionTriggerModel = Ember.Object.extend({
       choice : this.choice,
       
       gameObject : this.gameObject === this.parentGameObject ? App.gameObjectsController.current : this.gameObject,
+      gameObject2 : this.gameObject2 === this.parentGameObject ? App.gameObjectsController.current : this.gameObject2,
       
       location : this.location ? this.location.clone() : null,
       offset : this.offset ? this.offset.clone() : null,
@@ -164,6 +171,7 @@ var ActionTriggerModel = Ember.Object.extend({
       choice : App.actionController.getChoice( d.ID ),
       
       gameObject : d.objectID ? App.gameObjectsController.getObject( d.objectID ) : null,
+      gameObject2 : d.object2ID ? App.gameObjectsController.getObject( d.object2ID ) : null,
       
       location : d.location ? new Vector().copy( d.location ) : d.angle ? new Vector( 1, 0 ).rotateSelf( d.angle ) : null,
       offset : d.offset ? new Vector().copy( d.offset ) : null,
@@ -216,6 +224,7 @@ var ActionTriggerModel = Ember.Object.extend({
         case 'save': break;
         
         case 'object': data.objectID = this.gameObject.ID; break;
+        case 'object2': data.object2ID = this.gameObject2.ID; break;
         
         case 'location': data.location = this.location.getData(); break;
         case 'direction': data.angle = this.angle(); break;
