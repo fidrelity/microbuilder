@@ -231,25 +231,57 @@ var Parser = {
     
     touchObject : function( data, gameObject, game ) {
       
-      return new ContactTrigger( 'touch', gameObject, game.getGameObjectWithID( data.objectID ) );
+      if ( game.version < 3 ) {
+        
+        return new ContactTrigger( 'touch', gameObject, game.getGameObjectWithID( data.objectID ) );
+        
+      } else {
+        
+        return new ContactTrigger( 'touch', game.getGameObjectWithID( data.objectID ), game.getGameObjectWithID( data.object2ID ) );
+        
+      }
       
     },
     
     touchArea : function( data, gameObject ) {
       
-      return new ContactTrigger( 'touch', gameObject, null, new Area().copy( data.area ) );
+      if ( game.version < 3 ) {
+        
+        return new ContactTrigger( 'touch', gameObject, null, new Area().copy( data.area ) );
+        
+      } else {
+        
+        return new ContactTrigger( 'touch', game.getGameObjectWithID( data.objectID ), null, new Area().copy( data.area ) );
+        
+      }
       
     },
     
     overlapObject : function( data, gameObject, game ) {
       
-      return new ContactTrigger( 'overlap', gameObject, game.getGameObjectWithID( data.objectID ) );
+      if ( game.version < 3 ) {
+        
+        return new ContactTrigger( 'overlap', gameObject, game.getGameObjectWithID( data.objectID ) );
+        
+      } else {
+        
+        return new ContactTrigger( 'overlap', game.getGameObjectWithID( data.objectID ), game.getGameObjectWithID( data.object2ID ) );
+        
+      }
       
     },
     
     overlapArea : function( data, gameObject ) {
       
-      return new ContactTrigger( 'overlap', gameObject, null, new Area().copy( data.area ) );
+      if ( game.version < 3 ) {
+        
+        return new ContactTrigger( 'overlap', gameObject, null, new Area().copy( data.area ) );
+        
+      } else {
+        
+        return new ContactTrigger( 'overlap', game.getGameObjectWithID( data.objectID ), null, new Area().copy( data.area ) );
+        
+      }
       
     },
     
@@ -327,6 +359,7 @@ var Parser = {
     
     this.game = game;
     
+    game.version = data.version;
     game.duration = ( data.duration || 5 ) * 1000;
     
     if ( graphics && graphics.length > 0 ) {
