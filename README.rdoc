@@ -26,6 +26,22 @@ if migrations:
 
 == Game JSON
 
+
+  // definitions
+  {} : object
+  () : optional
+  <> : data-type
+  [] : array
+  | : or
+
+  // objects
+  <int>
+  <float>
+  <string>
+  <vector> : { x : <int>, y : <int> }
+  <area> : { x : <int>, y : <int>, width : <int>, height : <int> }
+  <circle> : { x : <int>, y : <int>, radius : <int> }
+
   game : {
     version : <int>
   
@@ -42,35 +58,21 @@ if migrations:
         name : <string>
         graphicID : <int>
         
-        position : {
-          x : <int>
-          y : <int>
-        }
+        position : <vector>
         
-        ( boundingArea: <
-          {
-            x : <int>
-            y : <int>
-            width : <int>
-            height : <int>
-          },{
-            x : <int>
-            y : <int>
-            radius : <int>
-          }
-        >)
+        ( boundingArea: <area> | <circle> )
         
         behaviours : [
           {
             triggers : [
               { ID : clickObject, objectID : <int> }
-              { ID : clickArea, area : { x : <int>, y : <int>, width : <int>, height : <int> } }
+              { ID : clickArea, area : <area> }
             
-              { ID : touchObject, objectID : <int> }
-              { ID : touchArea, area : { x : <int>, y : <int>, width : <int>, height : <int> } }
+              { ID : touchObject, objectID : <int>, object2ID : <int> }
+              { ID : touchArea, objectID : <int>, area : <area> }
             
-              { ID : overlapObject, objectID : <int> }
-              { ID : overlapArea, area : { x : <int>, y : <int>, width : <int>, height : <int> } }
+              { ID : overlapObject, objectID : <int>, object2ID : <int> }
+              { ID : overlapArea, objectID : <int>, area : <area> }
             
               { ID : timeExact, time : <int, %> }
               { ID : timeRandom, time : <int, %>, time2 : <int, %> }
@@ -86,28 +88,27 @@ if migrations:
               { ID : gameWasWon }
               { ID : gameWasLost }
               { ID : gameStart }
-            
             ]
           
             actions : [
               { ID : moveInDirection, angle : <float, radians>, speed : <0-4> }
               { ID : moveInRandom, speed : <0-4> }
-              { ID : moveInLocation, location : { x : <int>, y : <int> }, speed : <0-4> }
+              { ID : moveInLocation, location : <vector>, speed : <0-4> }
               { ID : moveInObject, objectID : <int>, speed : <0-4> }
             
-              { ID : moveToLocation, location : { x : <int>, y : <int> }, speed : <0-4> }
-              { ID : moveToObject, objectID : <int>, offset : { x : <int>, y : <int> }, speed : <0-4> }
+              { ID : moveToLocation, location : <vector>, speed : <0-4> }
+              { ID : moveToObject, objectID : <int>, offset : <vector>, speed : <0-4> }
             
-              { ID : jumpToLocation, location : { x : <int>, y : <int> } }
-              { ID : jumpToObject, objectID : <int>, offset : { x : <int>, y : <int> } }
-              { ID : jumpToArea, area : { x : <int>, y : <int>, width : <int>, height : <int> } }
+              { ID : jumpToLocation, location : <vector> }
+              { ID : jumpToObject, objectID : <int>, offset : <vector> }
+              { ID : jumpToArea, area : <area> }
             
-              { ID : moveRoam, mode : <wiggle, reflect, insect, bounce>, area : { x : <int>, y : <int>, width : <int>, height : <int> }, speed : <0-4> }
+              { ID : moveRoam, mode : <wiggle, reflect, insect, bounce>, area : <area>, speed : <0-4> }
             
               { ID : moveSwap, objectID : <int> }
               { ID : moveStop }
             
-              { ID : moveAlongPath, mode : <loop, ping-pong, once>, speed : <0-4>, path : [ { x : <int>, y : <int> } ] }
+              { ID : moveAlongPath, mode : <loop, ping-pong, once>, speed : <0-4>, path : [ <vector> ] }
             
               { ID : artToFrame, frame : <int> }
               { ID : artPlay, mode : <loop, ping-pong, once>, frame : <int>, frame2 : <int>, speed : <0-4> }
@@ -136,15 +137,26 @@ if migrations:
       }
     ]
   }
-  
-changelog:
+
+
+### Change log ###
+
+version 3
+
+* added 'object2ID : <int>' to trigger : 'touchObject'
+* added 'object2ID : <int>' to trigger : 'overlapObject'
+
+* added 'objectID : <int>' to trigger : 'touchArea'
+* added 'objectID : <int>' to trigger : 'overlapArea'
+
 
 version 2
 
-removed trigger : { ID : clickSelf }
-removed trigger : { ID : gameIsWon }
-removed trigger : { ID : gameIsLost }
-removed action : { ID : gameEnd }
+* removed trigger : 'clickSelf'
+* removed trigger : 'gameIsWon'
+* removed trigger : 'gameIsLost'
+
+* removed action : 'gameEnd'
 
 
 
