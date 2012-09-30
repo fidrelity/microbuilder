@@ -34,6 +34,8 @@ var PaintView = Ember.View.extend({
     
     area.mousedown( function( e ) {
       
+      if ( e.button !== 0 ) return;
+      
       App.paintController.mousedown( self.getMouse( e ) );
       
       self.set( 'active', true );
@@ -42,11 +44,15 @@ var PaintView = Ember.View.extend({
     
     area.mousemove( function( e ) {
       
+      if ( e.button !== 0 ) return;
+      
       App.paintController.mousemove( self.getMouse( e ), self.active );
       
     });
     
     area.mouseup( function( e ) {
+      
+      if ( e.button !== 0 ) return;
       
       App.paintController.mouseup( self.getMouse( e ) );
       
