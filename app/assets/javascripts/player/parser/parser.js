@@ -243,7 +243,7 @@ var Parser = {
       
     },
     
-    touchArea : function( data, gameObject ) {
+    touchArea : function( data, gameObject, game ) {
       
       if ( game.version < 3 ) {
         
@@ -271,7 +271,7 @@ var Parser = {
       
     },
     
-    overlapArea : function( data, gameObject ) {
+    overlapArea : function( data, gameObject, game ) {
       
       if ( game.version < 3 ) {
         

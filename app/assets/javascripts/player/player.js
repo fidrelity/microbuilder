@@ -215,6 +215,7 @@ Player.prototype = {
     
     } catch ( e ) {
       
+      console.log( e, e.message, e.stack );
       this.fsm.error();
       
     }
