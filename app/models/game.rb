@@ -14,7 +14,6 @@ class Game < ActiveRecord::Base
   
   #validate :win_condition_in_data
   validates_presence_of :title, :instruction, :data
-  validates_uniqueness_of :title
   
   default_scope where(:visible => true)
   scope :all_by_played, lambda { |ordered| order("played #{ordered.upcase}") }
