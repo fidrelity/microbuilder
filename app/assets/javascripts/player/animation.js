@@ -95,6 +95,10 @@ Animation.prototype = {
         
           this.frame += this.up ? 1 : -1;
         
+        } else {
+        
+          this.stop();
+        
         }
       
       }
