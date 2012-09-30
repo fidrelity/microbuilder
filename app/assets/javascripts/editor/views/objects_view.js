@@ -211,7 +211,7 @@ var BehaviourView = SelectView.extend({
   remove : function() {
     
     if ( ( !this.content.actions.length && !this.content.triggers.length ) || 
-      confirm( 'Throw the condition away?' ) ) {
+      confirm( 'Throw the behavior away?' ) ) {
       
       this._super();
       
@@ -228,6 +228,8 @@ var GameObjectView = Ember.View.extend({
   remove: function() {
     
     if ( confirm( 'Delete the game object?' ) ) {
+      
+      App.hideHelp();
       
       App.gameObjectsController.removeGameObject( this.content );
       App.gameObjectsController.set( 'current', null );

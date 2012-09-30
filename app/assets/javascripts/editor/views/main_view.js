@@ -92,6 +92,8 @@ var MainView = Ember.View.extend({
     
     this.updatePlayer();
     
+    App.hideHelp();
+    
   },
   
   updatePlayer : function() {
