@@ -20,77 +20,85 @@ var Choice = Ember.Object.extend({
     
     var n = name, a = action;
    
-    switch ( this.ID ) {
+    try {
+   
+      switch ( this.ID ) {
       
-      // actions
+        // actions
       
-      case 'moveInDirection' : 
-        n = 'move in direction ' + Math.floor( a.angle() * -1 / Math.PI * 180 ) + '˚';
-        return n + ' - ' + a.getSpeedName();
-      case 'moveInRandom' : return 'move in random direction' + ' - ' + a.getSpeedName();
-      case 'moveInObject' : return 'move in direction of ' + a.gameObject.name + ' - ' + a.getSpeedName();
-      case 'moveInLocation' : return 'move in direction of location ' + a.location.string() + ' - ' + a.getSpeedName();
+        case 'moveInDirection' : 
+          n = 'move in direction ' + Math.floor( a.angle() * -1 / Math.PI * 180 ) + '˚';
+          return n + ' - ' + a.getSpeedName();
+        case 'moveInRandom' : return 'move in random direction' + ' - ' + a.getSpeedName();
+        case 'moveInObject' : return 'move in direction of ' + a.gameObject.name + ' - ' + a.getSpeedName();
+        case 'moveInLocation' : return 'move in direction of location ' + a.location.string() + ' - ' + a.getSpeedName();
 
-      case 'moveAlongPath' : return 'move ' + a.mode + ' along path - ' + a.getSpeedName();
+        case 'moveAlongPath' : return 'move ' + a.mode + ' along path - ' + a.getSpeedName();
       
-      case 'moveToLocation' : return 'move to location ' + a.location.string() + ' - ' + a.getSpeedName();
-      case 'moveToObject' : 
-        n = 'move to ' + a.gameObject.name + ' - ' + a.getSpeedName();
-        return n + ( a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
+        case 'moveToLocation' : return 'move to location ' + a.location.string() + ' - ' + a.getSpeedName();
+        case 'moveToObject' : 
+          n = 'move to ' + a.gameObject.name + ' - ' + a.getSpeedName();
+          return n + ( a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
       
-      case 'jumpToLocation' : return 'jump to location ' + a.location.string();
-      case 'jumpToObject' : 
-        n = 'jump to ' + a.gameObject.name;
-        return n + ( a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
-      case 'jumpToArea' : return 'jump to area ' + a.area.string();
+        case 'jumpToLocation' : return 'jump to location ' + a.location.string();
+        case 'jumpToObject' : 
+          n = 'jump to ' + a.gameObject.name;
+          return n + ( a.offset.norm() ? ' - offset ' + a.offset.string() : '' );
+        case 'jumpToArea' : return 'jump to area ' + a.area.string();
       
-      case 'moveRoam' : 
-        n = 'roam in ' + a.mode + ' mode within area ' + a.area.string();
-        return n + ' - ' + a.getSpeedName();
-      case 'moveSwap' : return 'swap position with ' + a.gameObject.name;
-      case 'moveStop' : return 'stop moving';
+        case 'moveRoam' : 
+          n = 'roam in ' + a.mode + ' mode within area ' + a.area.string();
+          return n + ' - ' + a.getSpeedName();
+        case 'moveSwap' : return 'swap position with ' + a.gameObject.name;
+        case 'moveStop' : return 'stop moving';
       
-      case 'artToFrame' : return 'display frame ' + a.frame;
-      case 'artPlay' : 
-        n = ( a.mode === 'loop' ? ' loop ' : ( a.mode === 'once' ? ' play once ' : ' play ping-pong ' ) );
-        return n + ' from frame ' + a.frame + ' to ' + a.frame2 + ' - ' + a.getSpeedName();
-      case 'artStop' : return 'stop the animation';
-      case 'artChange' : return 'change art to ' + a.graphic.name;
+        case 'artToFrame' : return 'display frame ' + a.frame;
+        case 'artPlay' : 
+          n = ( a.mode === 'loop' ? ' loop ' : ( a.mode === 'once' ? ' play once ' : ' play ping-pong ' ) );
+          return n + ' from frame ' + a.frame + ' to ' + a.frame2 + ' - ' + a.getSpeedName();
+        case 'artStop' : return 'stop the animation';
+        case 'artChange' : return 'change art to ' + a.graphic.name;
       
-      case 'gameWin' : return 'win the game';
-      case 'gameLose' : return 'lose the game';
+        case 'gameWin' : return 'win the game';
+        case 'gameLose' : return 'lose the game';
 
-      case 'counterUp' : return 'increase counter';
-      case 'counterDown' : return 'decrease counter';
-      case 'counterSet' : return 'set counter to ' + a.counter;
+        case 'counterUp' : return 'increase counter';
+        case 'counterDown' : return 'decrease counter';
+        case 'counterSet' : return 'set counter to ' + a.counter;
       
-      // triggers
+        // triggers
       
-      case 'clickObject' : return 'click on ' + a.gameObject.name;
-      case 'clickArea' : return 'click in area ' + a.area.string();
+        case 'clickObject' : return 'click on ' + a.gameObject.name;
+        case 'clickArea' : return 'click in area ' + a.area.string();
       
-      case 'touchObject' : return a.gameObject.name + ' touches ' + a.gameObject2.name;
-      case 'touchArea' : return a.gameObject.name + ' touches area ' + a.area.string();
+        case 'touchObject' : return a.gameObject.name + ' touches ' + a.gameObject2.name;
+        case 'touchArea' : return a.gameObject.name + ' touches area ' + a.area.string();
       
-      case 'overlapObject' : return a.gameObject.name + ' overlaps ' + a.gameObject2.name;
-      case 'overlapArea' : return a.gameObject.name + ' overlaps area ' + a.area.string();
+        case 'overlapObject' : return a.gameObject.name + ' overlaps ' + a.gameObject2.name;
+        case 'overlapArea' : return a.gameObject.name + ' overlaps area ' + a.area.string();
       
-      case 'timeExact' : return 'after ' + a.time + '%';
-      case 'timeRandom' : return 'sometime between ' + a.time + '-' + a.time2 + '%';
+        case 'timeExact' : return 'after ' + a.time + '%';
+        case 'timeRandom' : return 'sometime between ' + a.time + '-' + a.time2 + '%';
       
-      case 'gameWasWon' : return 'game is won';
-      case 'gameWasLost' : return 'game is lost';
-      case 'gameStart' : return 'start';
+        case 'gameWasWon' : return 'game is won';
+        case 'gameWasLost' : return 'game is lost';
+        case 'gameStart' : return 'start';
 
-      case 'counterGreaterNumber' : return a.gameObject.name + '\'s counter is greater than ' + action.counter;
-      case 'counterSmallerNumber' : return a.gameObject.name + '\'s counter is smaller than ' + action.counter;
-      case 'counterEqualsNumber' : return a.gameObject.name + '\'s counter is equal to ' + action.counter;
+        case 'counterGreaterNumber' : return a.gameObject.name + '\'s counter is greater than ' + action.counter;
+        case 'counterSmallerNumber' : return a.gameObject.name + '\'s counter is smaller than ' + action.counter;
+        case 'counterEqualsNumber' : return a.gameObject.name + '\'s counter is equal to ' + action.counter;
 
-      case 'counterGreaterObject' : return a.gameObject.name + '\'s counter is greater than ' + a.gameObject2.name + '\'s counter';
-      case 'counterSmallerObject' : return a.gameObject.name + '\'s counter is smaller than ' + a.gameObject2.name + '\'s counter';
-      case 'counterEqualsObject' : return a.gameObject.name + '\'s counter is equal to ' + a.gameObject2.name + '\'s counter';
+        case 'counterGreaterObject' : return a.gameObject.name + '\'s counter is greater than ' + a.gameObject2.name + '\'s counter';
+        case 'counterSmallerObject' : return a.gameObject.name + '\'s counter is smaller than ' + a.gameObject2.name + '\'s counter';
+        case 'counterEqualsObject' : return a.gameObject.name + '\'s counter is equal to ' + a.gameObject2.name + '\'s counter';
       
-      default : console.error( 'Unknow choice name: ' + this.ID );
+        default : console.error( 'Unknow choice name: ' + this.ID );
+      
+      }
+    
+    } catch ( e ) {
+      
+      return 'broken';
       
     }
     

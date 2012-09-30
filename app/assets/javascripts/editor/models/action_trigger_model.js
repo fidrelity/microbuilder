@@ -213,41 +213,49 @@ var ActionTriggerModel = Ember.Object.extend({
       ID : this.choice.ID
     }, i, optionType;
     
-    for ( i = 0; i < this.decisions.length; i++ ) {
+    try {
+    
+      for ( i = 0; i < this.decisions.length; i++ ) {
       
-      optionType = this.decisions[i].type;
+        optionType = this.decisions[i].type;
       
-      switch ( optionType ) {
+        switch ( optionType ) {
         
-        case 'empty': break;
-        case 'button': break;
-        case 'save': break;
+          case 'empty': break;
+          case 'button': break;
+          case 'save': break;
         
-        case 'object': data.objectID = this.gameObject.ID; break;
-        case 'object2': data.object2ID = this.gameObject2.ID; break;
+          case 'object': data.objectID = this.gameObject.ID; break;
+          case 'object2': data.object2ID = this.gameObject2.ID; break;
         
-        case 'location': data.location = this.location.getData(); break;
-        case 'direction': data.angle = this.angle(); break;
+          case 'location': data.location = this.location.getData(); break;
+          case 'direction': data.angle = this.angle(); break;
         
-        case 'path': data.path = this.path.getData(); break;
+          case 'path': data.path = this.path.getData(); break;
         
-        case 'area': data.area = this.area.getData(); break;
+          case 'area': data.area = this.area.getData(); break;
         
-        case 'offset': data.offset = this.offset.getData(); break;
+          case 'offset': data.offset = this.offset.getData(); break;
         
-        case 'frame': data.frame = this.frame; if ( this.frame2 ) data.frame2 = this.frame2; break;
-        case 'art': data.graphicID = this.graphic.ID; graphics.push( this.graphic ); break;
+          case 'frame': data.frame = this.frame; if ( this.frame2 ) data.frame2 = this.frame2; break;
+          case 'art': data.graphicID = this.graphic.ID; graphics.push( this.graphic ); break;
         
-        case 'time': data.time = this.time; if ( this.time2 ) data.time2 = this.time2; break;
+          case 'time': data.time = this.time; if ( this.time2 ) data.time2 = this.time2; break;
         
-        case 'speed': data.speed = this.speed; break;
-        case 'mode': data.mode = this.mode; break;
+          case 'speed': data.speed = this.speed; break;
+          case 'mode': data.mode = this.mode; break;
         
-        case 'counter': data.counter = this.counter; break;
+          case 'counter': data.counter = this.counter; break;
         
-        default : console.error( 'unknown optionType: ' + optionType );
+          default : console.error( 'unknown optionType: ' + optionType );
         
+        }
+      
       }
+      
+    } catch( e ) {
+      
+      return null;
       
     }
     

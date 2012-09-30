@@ -69,7 +69,7 @@ var BehaviourModel = Ember.Object.extend({
   
   getData : function( graphics ) {
     
-    var data, i;
+    var data, i, trigger, action;
     
     if ( this.triggers.length && this.actions.length ) {
     
@@ -77,13 +77,25 @@ var BehaviourModel = Ember.Object.extend({
     
       for ( i = 0; i < this.triggers.length; i++ ) {
       
-        data.triggers.push( this.triggers[i].getData() );
+        trigger = this.triggers[i].getData();
+      
+        if ( trigger ) {
+      
+          data.triggers.push( trigger );
+      
+        }
       
       }
     
       for ( i = 0; i < this.actions.length; i++ ) {
       
-        data.actions.push( this.actions[i].getData( graphics ) );
+        action = this.actions[i].getData( graphics );
+      
+        if ( action ) {
+      
+          data.actions.push( action );
+      
+        }
       
       }
     
