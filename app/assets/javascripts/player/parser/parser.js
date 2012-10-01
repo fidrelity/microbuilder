@@ -505,7 +505,7 @@ var Parser = {
   
   parseGameObject : function( data ) {
     
-    var gameObject = new GameObject( data.ID );
+    var gameObject = new GameObject( data.ID, data.name );
     
     gameObject.movement.startPosition.copy( data.position );
     

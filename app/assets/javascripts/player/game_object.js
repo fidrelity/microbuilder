@@ -1,6 +1,7 @@
-var GameObject = function( ID ) {
+var GameObject = function( ID, name ) {
   
   this.ID = ID;
+  this.name = name;
   
   this.startGraphic = null;
   this.graphic = null;
