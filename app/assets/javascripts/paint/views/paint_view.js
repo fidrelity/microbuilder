@@ -23,7 +23,7 @@ var PaintView = Ember.View.extend({
   
   didInsertElement : function() {
     
-    var area = this.$( '#zoom-canvas-area' ),
+    var area = this.$( '#mouse-area' ),
       self = this;
     
     this.set( 'screenCanvas', this.$( '#screenCanvas' )[0] );
@@ -32,9 +32,9 @@ var PaintView = Ember.View.extend({
     
     this.set( 'patternCtx', this.patternCanvas.getContext( '2d' ) );
     
+    area.disableSelection();
+    
     area.mousedown( function( e ) {
-      
-      if ( e.button !== 0 ) return;
       
       App.paintController.mousedown( self.getMouse( e ) );
       
@@ -44,15 +44,11 @@ var PaintView = Ember.View.extend({
     
     area.mousemove( function( e ) {
       
-      if ( e.button !== 0 ) return;
-      
       App.paintController.mousemove( self.getMouse( e ), self.active );
       
     });
     
     area.mouseup( function( e ) {
-      
-      if ( e.button !== 0 ) return;
       
       App.paintController.mouseup( self.getMouse( e ) );
       
@@ -167,6 +163,11 @@ var PaintView = Ember.View.extend({
       height: height,
       top: height >= totalHeight ? '0%' : '50%',
       'margin-top': height >= totalHeight ? 0 : -height / 2
+    });
+    
+    this.$( '#mouse-area' ).css({ 
+      width: (width > this.$( '#zoom-canvas-area' ).width() ? width : '100%'),
+      height: (height > this.$( '#zoom-canvas-area' ).height() ? height : '100%')
     });
     
     if ( this.bgToggleCounter === 0 ) {

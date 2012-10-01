@@ -124,6 +124,16 @@
 }
 
 #paint-wrapper #zoom-canvas-area {
+  position: relative;
+  
+  #mouse-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+  
   #paint-area {
     margin: auto;
     position: relative;

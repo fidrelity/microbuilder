@@ -94,15 +94,19 @@
   </div>
   
   <div id="zoom-canvas-area">
-  
-    <div id="paint-area">
-      
-      <canvas id="patternCanvas"></canvas>
-      
-      <canvas id="screenCanvas"></canvas>
-      
-      <canvas id="toolCanvas"></canvas>
-      
+    
+    <div id="mouse-area">
+    
+      <div id="paint-area">
+    
+        <canvas id="patternCanvas"></canvas>
+    
+        <canvas id="screenCanvas"></canvas>
+    
+        <canvas id="toolCanvas"></canvas>
+    
+      </div>
+    
     </div>
   
   </div>
