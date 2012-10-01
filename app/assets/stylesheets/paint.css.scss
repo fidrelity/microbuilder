@@ -2,7 +2,7 @@
 
 #paint-wrapper {
   height: 500px;
-  padding: 0px 0px 0;
+  padding: 0px;
   margin-bottom: 20px;
   -webkit-tap-highlight-color: rgba(0,0,0,0); 
 }
@@ -34,90 +34,28 @@
   &.activeTool {
     border-bottom: 4px solid $red;
   }
-}
-
-#paint-wrapper .tool-bar button.pencil {
-  background:url('/assets/paint/pencil.png');
-}
-
-#paint-wrapper .tool-bar button.select {
-  background:url('/assets/paint/select_icon.png');
-}
-
-#paint-wrapper .tool-bar button.eraser {
-  background:url('/assets/paint/eraser_icon.png');
-}
-
-#paint-wrapper .tool-bar button.rectangle {
-  background:url('/assets/paint/rectangle.png');
-}
-
-#paint-wrapper .tool-bar button.circle {
-  background:url('/assets/paint/circle.png');
-}
-
-#paint-wrapper .tool-bar button.rectanglefill {
-  background:url('/assets/paint/rectangle_filled.png');
-}
-
-#paint-wrapper .tool-bar button.circlefill {
-  background:url('/assets/paint/circle_filled.png');
-}
-
-#paint-wrapper .tool-bar button.lineTool {
-  background:url('/assets/paint/line.png');
-}
-
-#paint-wrapper .tool-bar button.loadfile {
-  background:url('/assets/paint/file.png');
-}
-
-#paint-wrapper .tool-bar button.fill {
-  background:url('/assets/paint/fill_icon.png');
-}
-
-#paint-wrapper .tool-bar button.clearTool {
-  background:url('/assets/paint/clear_icon.png');
-}
-
-#paint-wrapper .tool-bar button.undo {
-  background:url('/assets/paint/undo.png');
-}
-
-#paint-wrapper .tool-bar button.redo {
-  background:url('/assets/paint/redo.png');  
-}
-
-#paint-wrapper .tool-bar button.flipv {
-  background:url('/assets/paint/flip_vertical.png');
-}
-
-#paint-wrapper .tool-bar button.fliph {
-  background:url('/assets/paint/flip_horizontal.png');
-}
-
-#paint-wrapper .tool-bar button.rotl {
-  background:url('/assets/paint/rotate_left.png');
-}
-
-#paint-wrapper .tool-bar button.rotr {
-  background:url('/assets/paint/rotate_right.png');  
-}
-
-#paint-wrapper .tool-bar button.pipette {
-  background:url('/assets/paint/pipette.png');
-}
-
-#paint-wrapper .add {
-  background: url('/assets/paint/plus.png');
-}
-
-#paint-wrapper .remove {
-  background: url('/assets/paint/minus.png');
-}
-
-#paint-wrapper .duplicate {
-  background: url('/assets/paint/duplicate.png');
+  
+  &.pencil { background:url('/assets/paint/pencil.png') }
+  &.select { background:url('/assets/paint/select_icon.png') }
+  &.eraser { background:url('/assets/paint/eraser_icon.png') }
+  &.rectangle { background:url('/assets/paint/rectangle.png') }
+  &.circle { background:url('/assets/paint/circle.png') }
+  &.rectanglefill { background:url('/assets/paint/rectangle_filled.png') }
+  &.circlefill { background:url('/assets/paint/circle_filled.png') }
+  &.lineTool { background:url('/assets/paint/line.png') }
+  &.loadfile { background:url('/assets/paint/file.png') }
+  &.fill { background:url('/assets/paint/fill_icon.png') }
+  &.clearTool { background:url('/assets/paint/clear_icon.png') }
+  &.undo { background:url('/assets/paint/undo.png') }
+  &.redo { background:url('/assets/paint/redo.png') }
+  &.flipv { background:url('/assets/paint/flip_vertical.png') }
+  &.fliph { background:url('/assets/paint/flip_horizontal.png') }
+  &.rotl { background:url('/assets/paint/rotate_left.png') }
+  &.rotr { background:url('/assets/paint/rotate_right.png') }
+  &.pipette { background:url('/assets/paint/pipette.png') }
+  &.add { background: url('/assets/paint/plus.png') }
+  &.remove { background: url('/assets/paint/minus.png') }
+  &.duplicate { background: url('/assets/paint/duplicate.png') }
 }
 
 #paint-wrapper #playButton {
@@ -138,92 +76,87 @@
   margin-left: 6px;
 }
 
-#paint-wrapper .tool-bar .toggleBgButton {
+#paint-wrapper .toggleBgButton {
   height: 26px;
   width: 26px;
-  margin: 2px 0 0 1px;
+  margin-top: 2px;
   float: left;
   cursor: pointer;
 }
 
-#paint-wrapper #sizeWrapper, #paint-wrapper #zoomWrapper {
+#paint-wrapper .sliderWrapper {
+  float: left;
   overflow: hidden;
   margin: 0 1px;
   padding: 7px 2px 3px;
+
+  #sizeSlider {
+    margin-top: 6px;
+    width: 50px;
+  }
+
+  #zoomSlider {
+    margin-top: 6px;
+    width: 40px;
+  }
+
+  span {
+    float:left;
+  }
+
+  #sizeSlider, #sizeValue, #zoomSlider, #zoomValue {
+    float:left;
+    margin-left: 10px;
+  }
+
+  #sizeValue {
+    width: 31px;
+    text-align: right;
+  }
 }
 
-#paint-wrapper #sizeWrapper #sizeSlider {
-  width: 50px;
-}
-
-#paint-wrapper #zoomWrapper #zoomSlider {
-  width: 40px;
-}
-
-#paint-wrapper #zoomWrapper #zoomSlider, #paint-wrapper #sizeWrapper #sizeSlider {
-  margin-top: 6px;
-}
-
-#paint-wrapper #sizeWrapper #sizeSlider, #paint-wrapper #sizeWrapper #sizeValue,
-#paint-wrapper #zoomWrapper #zoomSlider, #paint-wrapper #zoomWrapper #zoomValue {
-  float:left;
-  margin-left: 10px;
-}
-
-#paint-wrapper #sizeWrapper #sizeValue {
-  width: 31px;
-  text-align: right;
-}
-
-#paint-wrapper #sizeWrapper span, #paint-wrapper #zoomWrapper span {
-  float:left;
-}
-
-#paint-wrapper #area-wrapper #zoom-canvas-area {
+#paint-wrapper #zoom-canvas-area,
+#paint-wrapper #sprites-area-scroll {
   height: 430px;
   overflow: auto;
-  background: #EEE;
+  background: #E4E4E4;
   box-shadow: inset 0px 0px 12px 0px #AAA;
 }
 
-#paint-wrapper #area-wrapper #zoom-canvas-area #paint-area {
-  margin: auto;
-  position: relative;
-  border: 1px solid #464646;
-  box-shadow: 0px 0px 12px 0px #AAA;
-  cursor: crosshair;
-}
+#paint-wrapper #zoom-canvas-area {
+  #paint-area {
+    margin: auto;
+    position: relative;
+    border: 1px solid #464646;
+    box-shadow: 0px 0px 12px 0px #AAA;
+    cursor: crosshair;
 
-#paint-wrapper #area-wrapper #zoom-canvas-area #paint-area canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
 }
 
 #paint-wrapper #sprites-area-scroll {
-  height: 430px;
   padding: 0 10px;
-  overflow: auto;
-  background: #EEE;
-  box-shadow: inset 0px 0px 12px 0px #AAA;
   border-left: 1px solid #BBB;
-}
 
+  .spriteView {
+    background: url("/assets/paint/pattern.png");
+    margin: 10px auto;
+    border: 1px solid lighten($font, 40%);
+    display: block;
 
-#paint-wrapper #sprites-area-scroll .spriteView {
-  background: url("/assets/paint/pattern.png");
-  margin: 10px auto;
-  border: 1px dashed $gray;
-  display: block;
-  box-shadow: 0px 0px 12px 0px #AAA;
-}
+    &:hover {
+      box-shadow: 0px 0px 12px 0px #AAA;
+    }
 
-#paint-wrapper #sprites-area-scroll .selected { 
-  border: 1px solid #000;
-}
-
-.submit {
-  margin-left: 0px;
+    &.selected {
+      border-color: $font;
+    }
+  }
 }
 
 #paint-wrapper #colorpicker {
@@ -243,7 +176,7 @@
   }
 
   #colorselect {
-    margin-top: 1px;
+    border: 1px solid black;
     cursor: crosshair;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -265,13 +198,6 @@
     margin: 1px;
     cursor: pointer;
   }
-
-}
-
-#paint-size-wrapper .sizeInput {
-  font-size:0.8em; padding:1px 4px 1px 4px;
-  height:16px;
-  width:22px;
 }
 
 #paint-size-wrapper {
@@ -294,58 +220,61 @@
     color: $font !important;
     
     #canvas-size {
-      opacity: 1;
+      opacity: 1 !important;
     }
   }
-}
 
-#paint-size-wrapper .sizeWrapper {
-  position: relative;
-  height: 410px;
-}
+  .sizeWrapper {
+    position: relative;
+    height: 410px;
 
-#paint-size-wrapper #object {
-  position: absolute;
-  top: 67px;
-  right: 192px;
-  width: 256px;
-  height: 256px;
-  overflow: hidden;
-}
+    #object {
+      position: absolute;
+      top: 67px;
+      right: 192px;
+      width: 256px;
+      height: 256px;
+      overflow: hidden;
+      
+      #canvas-size {
+        width:128px;
+        height:128px;
+        background-image: url("/assets/paint/pattern.png");
+        opacity: 0.3;
+      }
+    }
 
-#paint-size-wrapper #background {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 640px;
-  height: 390px;
-}
+    #background {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 640px;
+      height: 390px;
+    }
 
-#paint-size-wrapper .sizeWrapper p {
-  position: absolute;  
-  bottom: 10px;
-  left: 10px;  
-  font-size: 18px;
-  font-weight: bold;
-}
+    p {
+      margin: 0;
+      position: absolute;
+      bottom: 10px;
+      left: 10px;  
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
 
+  #startPainting {
+    float: right;
+    display: none;
+  }
 
-#paint-size-wrapper p {
-  margin:0;
-}
+  .object_size_form {
+    margin-top:1em;
 
-#paint-size-wrapper #canvas-size {
-  width:128px;
-  height:128px;
-  background-image: url("/assets/paint/pattern.png");
-  opacity: 0.3;
-}
-
-#paint-size-wrapper #startPainting {
-  float: right;
-  display: none;
-}
-
-.object_size_form {
-  margin-top:1em;
+    .sizeInput {
+      font-size:0.8em;
+      padding:1px 4px 1px 4px;
+      height:16px;
+      width:22px;
+    }
+  }
 }
