@@ -26,19 +26,29 @@ h6 {
   color:#FFF;
 }
 
-.page-header, .section-header {
+.page-header, .section-header, .link-line {
   font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   font-size: 24px;
   font-weight: bold;
   letter-spacing: -1px;
   line-height: 30px;
   text-transform: lowercase;
-  /*padding-left: 5px;*/
   margin: 0;
+  color: $font;
+  
+  &:hover {
+    color: $font;
+  }
+  
+  span {
+    font-weight: lighter;
+  }
 }
 
-.page-header span, .section-header span {
-  font-weight: lighter;
+.link-line {
+  font-size: 20px;
+  background: url('link.png') no-repeat;
+  padding: 1px 30px;
 }
 
 .section-header {
@@ -229,22 +239,20 @@ h6 {
     margin-bottom: 7px;
   }
   
-  p, small {
+  p {
     text-align: justify;
     font-size: 18px;
     line-height: 23px;
     font-style: italic;
+    margin-bottom: 20px;
   }
   
   small {
-    color: #9298A0;
-    margin-top: 20px;
+    font-weight: bold;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-top: 9px;
   }
-  
-  .btn {
-    margin-top: 15px;
-  }
-  
 }
 
 .heroExt {

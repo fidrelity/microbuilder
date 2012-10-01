@@ -20,6 +20,12 @@ module ApplicationHelper
   
   end
   
+  def button_line( first, second )
+  
+    return raw( first + "<span>" + second + "</span>" )
+  
+  end
+  
   def add_icon( str, icon )
   
     return raw( "<i class='" + icon + "'></i>" + str )
