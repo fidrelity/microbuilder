@@ -17,10 +17,9 @@
 
   <div class="element clear" style="margin: 13px 0 10px;">
 
-    {{view PlacementView 
+    {{view BoundingPlacementView 
       observerBinding="this"
-      type="bounding" 
-      subtypeBinding="type" 
+      typeBinding="type"
       gameObjectBinding="gameObject"
     }}
 

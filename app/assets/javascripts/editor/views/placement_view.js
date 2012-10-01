@@ -1,114 +1,39 @@
 var PlacementView = Ember.View.extend({
   
   templateName : 'editor/templates/placement_template',
-
-  classNames : ['placementview', 'optionview'],
-  
-  type : 'location', // location, direction, area, offset, bounding, path, placing
-  subtype : 'rect', // rect, circle
+  classNames : ['optionview'],
   
   observer : null,
+  
+  canvas : null,
+  ctx : null,
+  
+  mouse : null,
   
   width : 640,
   height : 390,
   
-  ctx : null,
-  mouse : null,
-  
-  background : null,
-  gameObjects : [],
-  
-  gameObject : null,
-  graphic : null,
-  
-  object : null,
-  object2 : null,
-  
   area : null,
-
-  path : null,  
   
+  redraw : false,
   increment : { x : 96, y : 60 },
   scale : 2,
-
-  directionAngle : 0,
   
   didInsertElement : function() {
     
-    var canvas = this.$( '.placement' )[0],
-      ctx = canvas.getContext( '2d' ),
-      type = this.type,
-      inc = this.increment,
+    var canvas = this.$( '.placement' ),
+      ctx = canvas[0].getContext( '2d' ),
       self = this;
       
-    this.addObserver( 'directionAngle', function() {
-           
-      self.set("directionAngle", 90);
-      
-    });
+    canvas.addTouch();
     
-    this.area = new Area;
-
-    this.path = new Path;
-
-    $( canvas ).css({ 'border' : '2px solid #AAA', 'background-color' : '#CCC' });
-    
-    $('.placement').addTouch();
-    
-    if ( type === 'location' || type === 'area' || type === 'path' || type === 'placing' ) {
-      
-      canvas.width = ( 640 + inc.x * 2 ) * 0.5;
-      canvas.height = ( 390 + inc.y * 2 ) * 0.5;
-      
-      ctx.scale( 0.5, 0.5 );
-      ctx.translate( inc.x, inc.y );
-      
-      ctx.lineWidth = 3;
-      
-    } else if ( type === 'direction' || type === 'offset') {
-      
-      canvas.width = canvas.height = 200;
-      this.width = this.height = 400;
-      
-      ctx.scale( 0.5, 0.5 );
-      
-      ctx.lineWidth = 3;
-      
-      this.increment = { x : 0, y : 0 };
-      
-    } else if ( type === 'bounding' ) {
-      
-      this.width = this.gameObject.graphic.frameWidth + 50;
-      this.height = this.gameObject.graphic.frameHeight + 50;
-      
-      canvas.width = this.width * 2;
-      canvas.height = this.height * 2;
-      
-      ctx.scale( 2, 2 );
-      
-      ctx.lineWidth = 1;
-      
-      this.scale = 0.5;
-      this.increment = { x : 0, y : 0 };
-      
-      this.addObserver( 'subtype', function() {
-        
-        self.setBoundingType();
-        
-      });
-      
-      if ( this.subtype === 'circle' ) {
-        
-        this.area = new Circle;
-        
-      }
-      
-    }
-    
+    this.canvas = canvas[0];
     this.ctx = ctx;
     
-    this.mouse = new Mouse( this, canvas );
+    this.mouse = new Mouse( this, canvas[0] );
     this.mouse.handleDrag();
+    
+    this.area = new Area;
     
     this.doDraw = function() {
       
@@ -118,7 +43,7 @@ var PlacementView = Ember.View.extend({
       
         requestAnimationFrame( function() {
         
-          self.draw();
+          self.draw( self.ctx );
           
           self.redraw = false;
         
@@ -128,153 +53,84 @@ var PlacementView = Ember.View.extend({
       
     }
     
-    this.load();
+    this.initView( canvas[0], ctx );
     
   },
   
-  load : function() {
-  
-    var objs = App.gameObjectsController.content, 
-      type = this.type, 
-      obs = this.observer, 
+  initGame : function( _canvas, _ctx ) {
+    
+    var objs = App.gameObjectsController.content,
+      obs = this.observer,
+      inc = this.increment,
       img, i;
     
-    if ( type === 'location' || type === 'area' || type === 'path' || type === 'placing' ) {
+    _canvas.width = ( 640 + inc.x * 2 ) * 0.5;
+    _canvas.height = ( 390 + inc.y * 2 ) * 0.5;
+    
+    _ctx.scale( 0.5, 0.5 );
+    _ctx.translate( inc.x, inc.y );
+    
+    _ctx.lineWidth = 3;
+    
+    
+    if ( App.game.background ) {
       
-      if ( App.game.background ) {
-        
-        img = new Image();
-        img.src = App.game.background.imagePath;
-        img.onload = this.doDraw;
-        
-        this.background = img;
-        
-      }
+      img = new Image();
+      img.src = App.game.background.imagePath;
+      img.onload = this.doDraw;
       
-      if ( objs ) {
+      this.background = img;
       
-        this.gameObjects = [];
+    }
+    
+    if ( objs ) {
+    
+      this.gameObjects = [];
+      
+      for ( i = 0; i < objs.length; i++ ) {
         
-        for ( i = 0; i < objs.length; i++ ) {
+        img = this.getImage( objs[i] );
+        
+        if ( this.object === objs[i] ) {
           
-          img = this.getImage( objs[i] );
+          this.object = img;
+          this.gameObjects.unshift( img );
+          
+        } else {
           
           this.gameObjects.push( img );
           
-          if ( this.object === objs[i] ) {
-            
-            this.object = img;
-            
-            if ( obs.location ) {
-              
-              this.object.pos.copy( obs.location );
-              
-            }
-            
-          }
-        
-        }
-        
-        if ( this.graphic ) {
-          
-          img = new Image();
-          
-          img.src = this.graphic.imagePath;
-          img.onload = this.doDraw;
-          img.frameWidth = this.graphic.frameWidth;
-          img.pos = this.observer.position;
-          
-          this.gameObjects.unshift( img );
-          this.object = img;
-          
         }
       
       }
-      
-    } else {
-      
-      this.object = this.getImage( this.object || this.gameObject );
-      this.gameObjects = [this.object];
-      
-      this.object.pos.set( this.width * 0.5, this.height * 0.5 );
-      
-      if ( type === 'direction' ) {
-      
-        this.object.pos.addSelf( obs.location );       
-
-      } else if ( type === 'offset' ) {
-        
-        this.object.pos.addSelf( obs.offset );
-        
-        img = this.getImage( this.object2 );
-        img.pos.set( this.width * 0.5, this.height * 0.5 );
-        
-        this.gameObjects.push( img );
-        
-      } else if ( type === 'bounding' && this.gameObject.boundingArea ) {
-        
-        this.area = this.gameObject.boundingArea.clone();
-        
-        this.area.x += this.object.pos.x;
-        this.area.y += this.object.pos.y;
-        
-        this.area.done = true;
-        
-        this.sendArea();
-        
-      }
-      
-    }
     
-    if ( type === 'area' && obs.action && obs.action.area ) {
-      
-      this.area.copy( obs.action.area );
-      this.area.done = true;
-      
-    }
-    
-    if ( type === 'path' ) {
-      
-      if ( obs.path ) {
-        
-        this.path.copy( obs.path );
-        
-      }
-      
-      this.path.points[0] = this.object.pos.getData();
-      
     }
     
   },
   
-  getImage : function( obj ) {
+  initSole : function( _canvas, _ctx ) {
+    
+    _canvas.width = _canvas.height = 200;
+    this.width = this.height = 400;
+    
+    _ctx.scale( 0.5, 0.5 );
+    
+    _ctx.lineWidth = 3;
+    
+    this.increment = { x : 0, y : 0 };
+    
+  },
+  
+  getImage : function( _obj ) {
     
     var img = new Image();
     
-    img.src = obj.graphic.imagePath;
+    img.src = _obj.graphic.imagePath;
     img.onload = this.doDraw;
-    img.frameWidth = obj.graphic.frameWidth;
-    img.pos = obj.position.clone();
+    img.frameWidth = _obj.graphic.frameWidth;
+    img.pos = _obj.position.clone();
     
     return img;
-    
-  },
-  
-  setBoundingType : function() {
-    
-    if ( this.subtype === 'circle' && !this.area.radius ) {
-      
-      this.area = new Circle();
-      
-    } else if ( this.subtype === 'rect' && !this.area.width ) {
-      
-      this.area = new Area();
-      
-    }
-    
-    this.sendArea();
-    
-    this.doDraw();
     
   },
   
@@ -292,76 +148,177 @@ var PlacementView = Ember.View.extend({
     
   },
   
-  draw : function() {
+  drawGame : function( _ctx ) {
     
-    var ctx = this.ctx, i = this.increment, img, w, h;
+    var i = this.increment, img, w, h;
     
-    if ( i.x || i.y ) {
-      
-      ctx.clearRect( -i.x, -i.y, this.width + 2 * i.x, this.height + 2 * i.y );
-      
-    }
+    _ctx.clearRect( -i.x, -i.y, this.width + 2 * i.x, this.height + 2 * i.y );
     
     if ( this.background ) {
     
-      ctx.drawImage( this.background, 0, 0 );
+      _ctx.drawImage( this.background, 0, 0 );
     
     } else {
       
-      ctx.fillStyle = '#FFF';
-      ctx.fillRect( 0, 0, this.width, this.height );
+      _ctx.fillStyle = '#FFF';
+      _ctx.fillRect( 0, 0, this.width, this.height );
       
     }
     
     for ( i = this.gameObjects.length - 1; i >= 0; i-- ) {
       
-      img = this.gameObjects[i];
-      w = img.frameWidth;
-      h = img.height;
-      
-      ctx.drawImage( img, 0, 0, w, h, img.pos.x - w * 0.5, img.pos.y - h * 0.5, w, h );
+      this.drawImage( _ctx, this.gameObjects[i] );
       
     }
     
-    if ( this.type === 'bounding' ) {
+  },
+  
+  drawObject : function( _ctx, _stroke ) {
+    
+    var img = this.object;
+    
+    _ctx.fillStyle = '#FFF';
+    _ctx.fillRect( 0, 0, this.width, this.height );
+    
+    if ( this.object2 ) {
       
-      img = this.object;
-      w = img.frameWidth;
-      h = img.height;
+      this.drawImage( _ctx, this.object2 );
       
-      ctx.strokeStyle = '#AAA';
-      ctx.dashedRect( img.pos.x - w * 0.5, img.pos.y - h * 0.5, w, h, 7 );
+    }
+    
+    this.drawImage( _ctx, this.object, _stroke );
+    
+  },
+  
+  drawImage : function( _ctx, _obj, _stroke ) {
+    
+    var w = _obj.frameWidth,
+      h = _obj.height;
+    
+    _ctx.drawImage( _obj, 0, 0, w, h, _obj.pos.x - w * 0.5, _obj.pos.y - h * 0.5, w, h );
+    
+    if ( _stroke ) {
       
-      ctx.strokeStyle = '#000';
-      this.area.draw( ctx );
+      _ctx.strokeStyle = '#000';
+      _ctx.strokeRect( _obj.pos.x - w * 0.5, _obj.pos.y - h * 0.5, w, h );
       
-    } else if ( this.object ) {
+    }
+    
+  },
+  
+  mousedownObject : function( _mouse ) {
+  
+    var obj = this.object,
+      area = this.area;
+    
+    area.set( obj.pos.x - obj.frameWidth * 0.5, obj.pos.y - obj.height * 0.5, obj.frameWidth, obj.height );
+    
+    if ( !area.contains( _mouse.pos ) ) {
       
-      img = this.object;
-      w = img.frameWidth;
-      h = img.height;
+      _mouse.dragging = false;
       
-      ctx.strokeRect( img.pos.x - w * 0.5, img.pos.y - h * 0.5, w, h );
+    }
+    
+  },
+  
+  mousedownArea : function( _mouse ) {
+  
+    var area = this.area;
+    
+    if ( !area.contains( _mouse.pos ) ) {
       
-      if ( this.type === 'direction' ) {
-        
-        this.drawArrow( ctx );
-
-        // var angle = new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( this.object.pos ).angle();
-        // this.set("directionAngle", Math.round( angle / Math.PI * 180) );
-        
-      } else if ( this.type === 'path' ) {
-        
-        ctx.fillStyle = ctx.strokeStyle = '#000';
-        this.path.draw( ctx );
-        
-      }
+      area.set( _mouse.pos.x, _mouse.pos.y, 0, 0 );
+      area.done = false;
+      
+      this.doDraw();
+      
+    }
+    
+  },
+  
+  mousemoveObject : function( _mouse ) {
+    
+    this.object.pos.addSelf( _mouse.move );
+    
+    this.doDraw();
+    
+  },
+  
+  mousemoveArea : function( _mouse ) {
+    
+    var area = this.area;
+    
+    if ( area.done ) {
+      
+      area.move( _mouse.move );
       
     } else {
       
-      this.area.draw( this.ctx );
+      area.resize( _mouse.pos );
       
     }
+    
+    this.doDraw();
+    
+  }
+  
+});
+
+var LocationPlacementView = PlacementView.extend({
+  
+  initView : function( _canvas, _ctx ) {
+    
+    var obs = this.observer;
+    
+    this.initGame( _canvas, _ctx );
+    
+    if ( obs.location ) {
+      
+      this.object.pos.copy( obs.location );
+      
+    }
+    
+    this.set( 'mousedown', this.mousedownObject );
+    this.set( 'mousemove', this.mousemoveObject );
+    
+  },
+  
+  draw : function( _ctx ) {
+    
+    this.drawGame( _ctx );
+    
+    this.drawImage( _ctx, this.object, true );
+    
+  },
+  
+  mouseup : function( _mouse ) {
+    
+    this.observer.setLocation( this.object.pos.clone() );
+    
+  }
+  
+});
+
+var DirectionPlacementView = PlacementView.extend({
+  
+  initView : function( _canvas, _ctx ) {
+    
+    this.initSole( _canvas, _ctx );
+    
+    this.object = this.getImage( this.object );
+    
+    this.object.pos.set( this.width * 0.5, this.height * 0.5 ).addSelf( this.observer.location );
+    
+    this.set( 'mousedown', this.mousedownObject );
+    this.set( 'mousemove', this.mousemoveObject );
+    
+  },
+  
+  draw : function( _ctx ) {
+    
+    this.drawObject( _ctx, true );
+    
+    this.drawArrow( _ctx );
     
   },
   
@@ -380,134 +337,275 @@ var PlacementView = Ember.View.extend({
     
   },
   
-  mousedown : function( mouse ) {
- 
-    var obj = this.object,
-      area = this.area;
+  mouseup : function( _mouse ) {
     
-    if ( this.type === 'path' ) {
+    this.observer.setLocation( new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( this.object.pos ) );
+    
+  }
+  
+});
+
+var AreaPlacementView = PlacementView.extend({
+  
+  area : null,
+  
+  initView : function( _canvas, _ctx ) {
+    
+    var obs = this.observer;
+    
+    this.initGame( _canvas, _ctx );
+    
+    if ( obs.action && obs.action.area ) {
       
-      this.path.add( {x: mouse.pos.x, y: mouse.pos.y} );
-      this.observer.setPath( this.path );
-      this.doDraw();
-      
-    } else if ( obj && this.type !== 'bounding' ) {
-      
-      area.set( obj.pos.x - obj.frameWidth * 0.5, obj.pos.y - obj.height * 0.5, obj.frameWidth, obj.height );
-      
-      if ( !area.contains( mouse.pos ) ) {
-        
-        mouse.dragging = false;
-        
-      }
-      
-    } else if ( !area.contains( mouse.pos ) ) {
-      
-      area.set( mouse.pos.x, mouse.pos.y, 0, 0 );
-      area.done = false;
-      
-      this.doDraw();
+      this.area.copy( obs.action.area );
+      this.area.done = true;
       
     }
+    
+    this.set( 'mousedown', this.mousedownArea );
+    this.set( 'mousemove', this.mousemoveArea );
     
   },
   
-  mousemove : function( mouse ) {
+  draw : function( _ctx ) {
     
-    var obj = this.object,
-      area = this.area;
+    this.drawGame( _ctx );
     
-    if ( this.type === 'path' ) {
-      
-      return;
-      
-    } else if ( obj && this.type !== 'bounding' ) {
-      
-      obj.pos.addSelf( mouse.move );
-      
-    } else {
+    this.area.draw( _ctx );
     
-      if ( area.done ) {
-        
-        area.move( mouse.move );
-        
-      } else {
-        
-        area.resize( mouse.pos );
-        
-      }
+  },
+  
+  mouseup : function( _mouse ) {
     
+    var area = this.area;
+    
+    area.adjust();
+    area.done = true;
+    
+    this.observer.decide( area.clone() );
+    
+  }
+  
+});
+
+var OffsetPlacementView = PlacementView.extend({
+  
+  initView : function( _canvas, _ctx ) {
+    
+    this.initSole( _canvas, _ctx );
+    
+    this.object = this.getImage( this.object );
+    this.object.pos.set( this.width * 0.5, this.height * 0.5 ).addSelf( this.observer.offset );
+    
+    this.object2 = this.getImage( this.object2 );
+    this.object2.pos.set( this.width * 0.5, this.height * 0.5 );
+    
+    this.set( 'mousedown', this.mousedownObject );
+    this.set( 'mousemove', this.mousemoveObject );
+    
+  },
+  
+  draw : function( _ctx ) {
+    
+    this.drawObject( _ctx, true );
+    
+  },
+  
+  mouseup : function( _mouse ) {
+    
+    this.observer.setOffset( new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( this.object.pos ) );
+    
+  }
+  
+});
+
+var BoundingPlacementView = PlacementView.extend({
+  
+  type : 'rect', // rect, circle
+  gameObject : null,
+  
+  initView : function( _canvas, _ctx ) {
+    
+    var self = this;
+    
+    if ( this.type === 'circle' ) {
+      
+      this.area = new Circle;
+      
     }
+    
+    this.addObserver( 'type', function() {
+      
+      self.setBoundingType();
+      
+    });
+    
+    this.width = this.gameObject.graphic.frameWidth + 50;
+    this.height = this.gameObject.graphic.frameHeight + 50;
+    
+    _canvas.width = this.width * 2;
+    _canvas.height = this.height * 2;
+    
+    _ctx.scale( 2, 2 );
+    _ctx.lineWidth = 1;
+    
+    this.object = this.getImage( this.gameObject );
+    this.object.pos.set( this.width * 0.5, this.height * 0.5 );
+    
+    if ( this.gameObject.boundingArea ) {
+      
+      this.area = this.gameObject.boundingArea.clone();
+      
+      this.area.x += this.width * 0.5;
+      this.area.y += this.height * 0.5;
+      
+      this.area.done = true;
+      
+      this.sendArea();
+      
+    }
+    
+    this.scale = 0.5;
+    this.increment = { x : 0, y : 0 };
+    
+    this.set( 'mousedown', this.mousedownArea );
+    this.set( 'mousemove', this.mousemoveArea );
+    
+  },
+  
+  draw : function( _ctx ) {
+    
+    this.drawObject( _ctx );
+    
+    img = this.object;
+    w = img.frameWidth;
+    h = img.height;
+    
+    _ctx.strokeStyle = '#AAA';
+    _ctx.dashedRect( img.pos.x - w * 0.5, img.pos.y - h * 0.5, w, h, 7 );
+    
+    _ctx.strokeStyle = '#000';
+    this.area.draw( _ctx );
+    
+  },
+  
+  setBoundingType : function() {
+    
+    if ( this.type === 'circle' && !this.area.radius ) {
+      
+      this.area = new Circle();
+      
+    } else if ( this.type === 'rect' && !this.area.width ) {
+      
+      this.area = new Area();
+      
+    }
+    
+    this.sendArea();
     
     this.doDraw();
     
   },
   
-  mouseup : function( mouse ) {
+  mouseup : function( _mouse ) {
     
-    var obj = this.object,
-      area = this.area;
+    var area = this.area;
     
-    if ( obj && this.type !== 'bounding' ) {
+    area.adjust();
+    area.done = true;
+    
+    this.sendArea();
+    
+  }
+  
+});
+
+var PathPlacementView = PlacementView.extend({
+  
+  path : null,
+  isPath : true,
+  
+  initView : function( _canvas, _ctx ) {
+    
+    var obs = this.observer;
+    
+    this.initGame( _canvas, _ctx );
+    
+    this.path = new Path;
+    
+    if ( obs.path ) {
       
-      if ( this.type === 'direction' ) {
-        
-        this.observer.setLocation( new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( obj.pos ) );
-        
-      } else if ( this.type === 'offset' ) {
-        
-        this.observer.setOffset( new Vector( -this.width * 0.5, -this.height * 0.5 ).addSelf( obj.pos ) );
-        
-      } else if ( this.type === 'location' ) {
-      
-        this.observer.setLocation( obj.pos.clone() );
-        
-      }
-      
-    } else {
-      
-      area.adjust();
-      area.done = true;
-      
-      if ( this.type === 'area' ) {
-        
-        this.observer.decide( area.clone() );
-        
-      } else {
-        
-        this.sendArea();
-        
-      }
+      this.path.copy( obs.path );
       
     }
     
+    this.path.points[0] = this.object.pos.getData();
+    
   },
   
-  isPath : function() {
+  draw : function( _ctx ) {
     
-    return this.type === "path";
+    this.drawGame( _ctx );
     
-  }.property("type"),
+    this.drawImage( _ctx, this.object, true );
+    
+    _ctx.fillStyle = _ctx.strokeStyle = '#000';
+    this.path.draw( _ctx );
+    
+  },
   
-  isDirection : function() {
-    
-    //return this.type === "direction";
-    return false;
-    
-  }.property("direction"),
-
-  // getDirectionAngle : function() {
-
-  //   return 20;
-
-  // }.observes("directionAngle"),
-
   clearPath : function() {
     
     this.path = new Path( [this.object.pos.getData()] );
     this.observer.setPath( this.path );
     this.doDraw();
     
-  }
+  },
+  
+  mousedown : function( _mouse ) {
+    
+    this.path.add( { x: _mouse.pos.x, y: _mouse.pos.y } );
+    this.observer.setPath( this.path );
+    this.doDraw();
+    
+  },
+  
+  mousemove : function( _mouse ) { return; },
+  mouseup : function( _mouse ) { return; }
+  
+});
+
+var PlacingPlacementView = PlacementView.extend({
+  
+  initView : function( _canvas, _ctx ) {
+    
+    var img;
+    
+    this.initGame( _canvas, _ctx );
+    
+    img = new Image();
+    
+    img.src = this.graphic.imagePath;
+    img.onload = this.doDraw;
+    img.frameWidth = this.graphic.frameWidth;
+    img.pos = this.observer.position;
+    
+    this.gameObjects.unshift( img );
+    this.object = img;
+    
+    this.set( 'mousedown', this.mousedownObject );
+    this.set( 'mousemove', this.mousemoveObject );
+    
+  },
+  
+  draw : function( _ctx ) {
+    
+    this.drawGame( _ctx );
+    
+    this.drawImage( _ctx, this.object, true );
+    
+  },
+  
+  mouseup : function( _mouse ) { return; }
   
 });
