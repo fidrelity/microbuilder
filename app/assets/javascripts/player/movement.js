@@ -57,7 +57,7 @@ Movement.prototype = {
     this.stop();
     
     this.target = pos;
-    this.offset = offset;
+    this.offset.copy( offset );
     
     this.setSpeed( speed );
 
@@ -234,6 +234,8 @@ Movement.prototype = {
     this.pathCounter = 0;
     this.pathMode = null;
     this.pathDirection = null;
+
+    this.offset.set( 0, 0 );
    
   },
   
@@ -468,7 +470,10 @@ Movement.prototype = {
         
       }
       
+      ctx.save();
+      ctx.fillStyle = ctx.strokeStyle = 'red';
       ctx.drawArrow( this.position.x, this.position.y, this.target.x + this.offset.x, this.target.y + this.offset.y, 0.7 );
+      ctx.restore();
       
     } else if ( this.roamMode ) {
       
