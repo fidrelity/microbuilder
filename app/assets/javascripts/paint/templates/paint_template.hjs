@@ -16,15 +16,15 @@
       {{view SpritesView id="sprites-area-scroll"}}
   
       <div>
-        <button style="float:right; margin-right:5px" {{action "copySprite" target="App.paintController"}} class="duplicate ttipBottom" title="duplicate sprite"></button>
+        <button style="float:right; margin-right:5px" {{action "copySprite"}} class="duplicate ttipBottom" title="duplicate sprite"></button>
         
         <div style="float:right" class="piece"></div>
         
-        <button style="float:right" {{action "removeSprite" target="App.paintController"}} class="remove ttipBottom" title="remove sprite"></button>
+        <button style="float:right" {{action "removeSprite"}} class="remove ttipBottom" title="remove sprite"></button>
         
         <div style="float:right" class="piece"></div>
         
-        <button style="float:right" {{action "addSprite" target="App.paintController"}} class="add ttipBottom" title="add new sprite"></button>
+        <button style="float:right" {{action "addSprite"}} class="add ttipBottom" title="add new sprite"></button>
         
         <div class="piece" style="margin-left:0"></div>
       </div>

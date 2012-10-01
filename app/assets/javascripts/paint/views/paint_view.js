@@ -118,14 +118,17 @@ var PaintView = Ember.View.extend({
     });
     
     // make canvases compatible for touch events
-    $('#area-wrapper').addTouch();
+    $('#zoom-canvas-area').addTouch();
+    $('#sprites-area-scroll').addTouch();
     
     // Init tooltips
     $('.ttip').tooltip();
     $('.ttipBottom').tooltip({ placement: 'bottom' });
     $('.pop').popover({ trigger: "hover" });
     $('.popBottom').popover({ placement: 'bottom', trigger: "hover" });
-
+    
+    this.makeSortable();
+    
   },
 
   toggleBackground : function( number ) {
@@ -247,6 +250,10 @@ var PaintView = Ember.View.extend({
     
     App.spritePlayer.stop();
     
+    Ember.run.end();
+    
+    this.makeSortable();
+    
   },
   
   showAnimation : function() {
@@ -263,6 +270,66 @@ var PaintView = Ember.View.extend({
     
     return ( App.paintController.isBackground ? 'background' : 'graphic' );
     
-  }.property( 'App.paintController.isBackground' )
+  }.property( 'App.paintController.isBackground' ),
+  
+  makeSortable : function() {
+    
+    var pos, pos2;
+    
+    this.$( '#sprites-area-scroll' ).sortable({
+      
+      placeholder: 'placeholder',
+      
+      start : function(e, ui) {
+        
+        pos = $( this ).sortable( 'toArray' ).indexOf( ui.item[0].id );
+        
+      },
+      
+      stop : function(e, ui) {
+        
+        pos2 = $( this ).sortable( 'toArray' ).indexOf( ui.item[0].id );
+        
+        if ( pos !== pos2 ) {
+          
+          App.paintController.moveSprite( pos, pos2 );
+          
+        }
+        
+      }
+      
+    }).disableSelection();
+    
+  },
+  
+  addSprite : function() {
+    
+    App.paintController.addSprite();
+    
+    Ember.run.end();
+    
+    this.makeSortable();
+    
+  },
+  
+  copySprite : function() {
+    
+    App.paintController.copySprite();
+    
+    Ember.run.end();
+    
+    this.makeSortable();
+    
+  },
+  
+  removeSprite : function() {
+    
+    App.paintController.removeSprite();
+    
+    Ember.run.end();
+    
+    this.makeSortable();
+    
+  },
 
 });

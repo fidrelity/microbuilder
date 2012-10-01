@@ -241,6 +241,15 @@ var PaintController = Ember.ArrayController.extend({
     
   },
   
+  moveSprite : function( pos, pos2 ) {
+    
+    var sprite = this.content[pos];
+    
+    this.content.removeAt( pos );
+    this.content.insertAt( pos2, sprite );
+    
+  },
+  
   saveSprite : function() {
     
     var width = this.width,
