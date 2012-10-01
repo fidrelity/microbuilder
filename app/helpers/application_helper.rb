@@ -67,15 +67,22 @@ module ApplicationHelper
       when "graphic"
         graphic_type = object.background ? "background" : "graphic"
         return render :partial => 'shared/streamtypes/graphic', :locals => { :user => user, :graphic => object, :graphic_type => graphic_type, :display_name => display_name}
-   
+
+      when "graphic_publish"
+        graphic_type = object.background ? "background" : "graphic"
+        return render :partial => 'shared/streamtypes/graphic_publish', :locals => { :user => user, :graphic => object, :graphic_type => graphic_type, :display_name => display_name}
     end   
 
   end
 
   # Returns object like game or graphic
   def get_stream_object(message, type)
-    return Graphic.find_by_id(message['graphic_id']) if type == "graphic"
-    Game.find_by_id(message['game_id'])    
+    
+    if type == "graphic" || type == "graphic_publish"
+      return Graphic.find_by_id(message['graphic_id']) 
+    end
+
+    Game.find_by_id(message['game_id'])
   end
 
   def get_user_display_name(user)
