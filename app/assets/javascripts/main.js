@@ -60,8 +60,12 @@ function editor_main( data, username ) {
   
   App.hideHelp = function() {
     
-    $('.ttip').tooltip( 'hide' );
-    $('.pop').popover( 'hide' );
+    if ( App.showhelp ) {
+    
+      $('.ttip').tooltip( 'hide' );
+      $('.pop').popover( 'hide' );
+      
+    }
     
   };
   

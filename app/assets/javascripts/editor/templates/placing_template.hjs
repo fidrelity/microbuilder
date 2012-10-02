@@ -13,7 +13,7 @@
 
   <div class="element clear" style="margin: 13px 0 10px;">
 
-    {{view PlacingPlacementView 
+    {{view ObjectPlacementView
       observerBinding="this"
       graphicBinding="graphic"
     }}

@@ -135,9 +135,9 @@ var PlacementView = Ember.View.extend({
   
   drawGame : function( _ctx ) {
     
-    var i = this.increment, img, w, h;
+    var inc = this.increment, i;
     
-    _ctx.clearRect( -i.x, -i.y, this.width + 2 * i.x, this.height + 2 * i.y );
+    _ctx.clearRect( -inc.x, -inc.y, this.width + 2 * inc.x, this.height + 2 * inc.y );
     
     if ( this.background ) {
     
@@ -199,15 +199,13 @@ var PlacementView = Ember.View.extend({
 
 // Object
 
-var PlacingObjectView = PlacementView.extend({
+var ObjectPlacementView = PlacementView.extend({
   
   initView : function( _canvas, _ctx ) {
     
-    var img;
+    var img = new Image();
     
     this.initGame( _canvas, _ctx );
-    
-    img = new Image();
     
     img.src = this.graphic.imagePath;
     img.onload = this.doDraw;
@@ -252,7 +250,7 @@ var PlacingObjectView = PlacementView.extend({
   
 });
 
-var LocationPlacementView = PlacingObjectView.extend({
+var LocationPlacementView = ObjectPlacementView.extend({
   
   initView : function( _canvas, _ctx ) {
     
@@ -284,7 +282,7 @@ var LocationPlacementView = PlacingObjectView.extend({
   
 });
 
-var DirectionPlacementView = PlacingObjectView.extend({
+var DirectionPlacementView = ObjectPlacementView.extend({
   
   initView : function( _canvas, _ctx ) {
     
@@ -327,7 +325,7 @@ var DirectionPlacementView = PlacingObjectView.extend({
   
 });
 
-var OffsetPlacementView = PlacingObjectView.extend({
+var OffsetPlacementView = ObjectPlacementView.extend({
   
   initView : function( _canvas, _ctx ) {
     
