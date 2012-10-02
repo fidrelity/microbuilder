@@ -1,0 +1,19 @@
+<li class="create-activity">
+
+  <div class="avatar_stream">
+    
+    <a {{bindAttr href="userUrl"}}>
+
+      <img class="stream-image" src="">
+
+    </a>
+
+  </div>
+
+  <a {{bindAttr href="userUrl"}}>{{userName}}</a>
+  
+  created
+
+  <a class="stream-popup" {{bindAttr href="gameUrl"}} {{bindAttr data-content="gameImgUrl"}} {{bindAttr data-original-title="title"}}> {{title}} </a>
+
+</li>
