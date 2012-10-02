@@ -2,17 +2,19 @@
 
   <div class="avatar_stream">
     
-    <a {{bindAttr href="authorPath"}}>
+    <a {{bindAttr href="userPath"}}>
 
-      <img class="stream-image" {{bindAttr src="authorImage"}}>
+      <img class="stream-image" {{bindAttr src="userImage"}}>
 
     </a>
 
   </div>
 
-  <a {{bindAttr href="authorPath"}}>{{authorName}}</a>
+  <a {{bindAttr href="userPath"}}>{{userName}}</a>
   
-  created
+  {{actionType}}
+
+  <a {{bindAttr href="authorPath"}}>{{authorName}}'s</a>
 
   <a class="stream-popup" {{bindAttr href="gamePath"}} {{bindAttr data-content="gameImage"}} {{bindAttr data-original-title="gameTitle"}}>
     {{gameTitle}}

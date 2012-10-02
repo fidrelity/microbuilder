@@ -22,6 +22,8 @@ class Stream
       user_ids = [object.user.id]
       user_ids << user.id if user
       delete_obsolete_messages(user_ids)
+
+      #to_pusher(type, user, object)
     end
 
     def get_object_id(type)
@@ -44,6 +46,61 @@ class Stream
         messages << message unless message.empty?
       end
       messages
+    end
+
+    # Push game to pusher (for real time stream)
+    def to_pusher(type, user, object)
+
+      channel_name = "stream_channel"
+
+      # events = [ "game_create", "graphic_create", "game_action"]
+
+      data = case type
+
+        when "game"
+
+          {        
+            :authorName => object.author.display_name,
+            :authorPath => "/users/#{object.author.id}",
+            :authorImage => object.author.image,
+            :gameTitle => object.title,
+            :gamePath => "/play/#{object.id}",
+            :gameImage => object.preview_image
+          }
+
+        when "graphic"
+
+          image_type = object.background ? "graphic" : "background"
+
+          {        
+            :authorName => object.user.display_name,
+            :authorPath => object,
+            :authorImage => game.author.image,
+            :graphicTitle => object.name,
+            :graphicPath => object.image
+            :graphicImage => object.image
+            :imageType => image_type
+          }
+
+        else           
+
+          { 
+            :userName => "",
+            :authorPath => "/users/",
+            :authorName => object.user.display_name,
+            :authorPath => object,
+            :authorImage => game.author.image,
+            :gameTitle => object.title,
+            :gamePath => "/play/#{object.id}",
+            :gameImage => object.preview_image,
+            :actionType => get_action_type(type) # liked, disliked, commented on
+          }
+
+      end
+
+      # Send
+      Pusher[channel_name].trigger(event, data)
+
     end
 
     private
