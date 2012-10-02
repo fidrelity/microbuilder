@@ -58,7 +58,10 @@ var PaintView = Ember.View.extend({
     
     $('.selectable').click(function() {
       
+      $('.activeTool').tooltip( 'hide' );
+      
       $('.selectable').removeClass('activeTool');
+      
       $(this).addClass('activeTool');
       
     });
