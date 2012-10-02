@@ -92,7 +92,7 @@ extend( Stage.prototype, {
         ctx.strokeStyle = '#000';
         
         this.selectObject.getGraphicArea().draw( ctx );
-      
+        
       }
       
       this.redraw = false;
@@ -156,6 +156,7 @@ extend( Stage.prototype, {
     
       ctx.save();
     
+      ctx.beginPath();
       ctx.rect( 0, 0, 640, 390 );
       ctx.clip();
     
