@@ -58,7 +58,10 @@ var PaintView = Ember.View.extend({
     
     $('.selectable').click(function() {
       
+      $('.activeTool').tooltip( 'hide' );
+      
       $('.selectable').removeClass('activeTool');
+      
       $(this).addClass('activeTool');
       
     });
@@ -116,6 +119,7 @@ var PaintView = Ember.View.extend({
     // make canvases compatible for touch events
     $('#zoom-canvas-area').addTouch();
     $('#sprites-area-scroll').addTouch();
+    $('.tool-bar').addTouch();
     
     // Init tooltips
     $('.ttip').tooltip();

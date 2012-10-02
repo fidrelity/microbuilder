@@ -356,9 +356,8 @@ var LocationOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this, PlacementView.create({
+    App.actionController.addOption( this, LocationPlacementView.create({
       observer : this.action,
-      type : 'location',
       object : App.gameObjectsController.current
     }));
     
@@ -378,9 +377,8 @@ var DirectionOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this, PlacementView.create({
+    App.actionController.addOption( this, DirectionPlacementView.create({
       observer : this.action,
-      type : 'direction',
       object : App.gameObjectsController.current
     }));
     
@@ -400,9 +398,8 @@ var AreaOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this, PlacementView.create({
+    App.actionController.addOption( this, AreaPlacementView.create({
       observer : this,
-      type : 'area'
     }));
     
     if ( !reinsert ) {
@@ -433,9 +430,8 @@ var PathOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this, PlacementView.create({
+    App.actionController.addOption( this, PathPlacementView.create({
       observer : this.action,
-      type : 'path',
       object : App.gameObjectsController.current
     }));
     
@@ -449,9 +445,8 @@ var OffsetOption = Option.extend({
   
   doInsert : function( reinsert ) {
     
-    App.actionController.addOption( this, PlacementView.create({
+    App.actionController.addOption( this, OffsetPlacementView.create({
       observer : this.action,
-      type : 'offset',
       object : App.gameObjectsController.current,
       object2 : this.action.gameObject
     }));
