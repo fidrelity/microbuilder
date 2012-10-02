@@ -1,5 +1,5 @@
 class GraphicsController < ApplicationController
-  respond_to :js, :only => [:create, :show, :public, :destroy, :release]
+  respond_to :js, :only => [:create, :show, :public, :destroy, :publish]
   before_filter :authenticate_user!, :only => [:create, :destroy]
   
   def index
@@ -20,18 +20,24 @@ class GraphicsController < ApplicationController
   
   def destroy
     @user = current_user
-    graphic = @user.graphics.find(params[:id])
-    flash[:success] = "Successfully deleted graphic" if graphic && graphic.destroy
+    @graphic = @user.graphics.find(params[:id])
+    flash[:success] = "Successfully deleted graphic" if @graphic && @graphic.destroy
     @graphics = @user.graphics.without_backgrounds.with_authorization(current_user).paginate(:page => params[:graphics], :per_page => 12)
     @backgrounds = @user.graphics.backgrounds.with_authorization(current_user).paginate(:page => params[:backgrounds], :per_page => 12)
     @games = @user.games.paginate(:page => params[:games], :per_page => 9)
 
-    @was_background = graphic.background?
+    @was_background = @graphic.background?
   end
 
-  def release
+  def publish
     @graphic = Graphic.find(params[:id])
-    @graphic.update_attribute(:public, true) if @graphic.user == current_user
+
+    if @graphic.user == current_user      
+      if @graphic.update_attribute(:public, true)
+        Stream.create_message("graphic_publish", @graphic.user, @graphic)
+      end
+    end
+
   end
 
   def games

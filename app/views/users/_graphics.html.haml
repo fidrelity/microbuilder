@@ -58,7 +58,7 @@
                      
                       - if !graphic.public
                         
-                        = link_to "set public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "", :title => "set public", :confirm => "Make this graphic available for all users?"     
+                        = link_to "set public", {:controller => "graphics", :action => "publish", :id => graphic.id}, :method => :put, :remote => true, :class => "", :title => "set public", :confirm => "Make this graphic available for all users?"     
 
                       - else
 
@@ -116,7 +116,7 @@
 
                       - if !graphic.public
 
-                        = link_to "set public", {:controller => "graphics", :action => "release", :id => graphic.id}, :method => :put, :remote => true, :class => "", :title => "set public", :confirm => "Make this background available for all users?"
+                        = link_to "set public", {:controller => "graphics", :action => "publish", :id => graphic.id}, :method => :put, :remote => true, :class => "", :title => "set public", :confirm => "Make this background available for all users?"
                       - else                        
 
                         %span.label.label-inverse

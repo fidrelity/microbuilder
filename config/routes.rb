@@ -12,7 +12,7 @@ Playtin::Application.routes.draw do
   
   resources :graphics, :only => [:show, :create, :destroy, :new] do    
     member do
-      put 'release'
+      put 'publish'
       get 'games'
     end
 
