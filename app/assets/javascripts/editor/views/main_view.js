@@ -12,6 +12,7 @@ var MainView = Ember.View.extend({
     
     this._super();
     
+    this.storageView = StorageView.create();
     this.libraryView = LibraryView.create({ widthBinding: 'App.libraryController.width' });
     this.objectsView = ObjectsView.create({ heading : 'objects & behaviour', width: 863 });
     this.actionView = ActionView.create({ width: 595 });

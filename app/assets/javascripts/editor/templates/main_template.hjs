@@ -17,6 +17,8 @@
     </div>
   
   {{/if}}
+  
+  {{view StorageView }}
 
   <div class="topbar">
 
@@ -37,7 +39,7 @@
   </div>
   
   <div id="stage">
-  
+    
     {{view PlayerView 
       type="stage"
       playerBinding="player"

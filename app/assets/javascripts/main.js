@@ -65,6 +65,49 @@ function editor_main( data, username ) {
     
   };
   
+  App.storageExtend = function() {
+    counter = 1;
+    
+    current = window.localStorage.getItem('game');
+    
+    if(current.length <= 56) {
+      console.log('seems to be an empty game, no need to save');
+      return; // seems to be an empty game, no need to save
+    }
+    
+    for(var i in window.localStorage){
+       game = localStorage.getItem(i);
+       try {
+         json = JSON.parse(this.game);
+         if(json != null && this.game.length>56) counter++;
+       }
+       catch(err) {
+         // showHelp might crash the json parser
+       }
+       
+    }
+    
+    for(i=0; i<counter; i++) {
+      console.log(i, counter);
+      if(window.localStorage.getItem('game'+counter) != null) counter++;
+    }
+    
+    window.localStorage.setItem('game'+counter, window.localStorage.getItem('game')); //backup
+    //window.localStorage.setItem('game', 'null');
+    
+    App.mainView.trash( null, true );
+  }
+  
+  App.storageLoad = function(game) {
+    
+    window.localStorage.setItem('game', window.localStorage.getItem('game'+game)); 
+    
+    $('#storageView').remove();
+    
+    App.game.getData();
+    App.mainView.updatePlayer();
+  }
+  
   App.addObserver( 'showhelp', function() {
     
     App.updateHelp();
