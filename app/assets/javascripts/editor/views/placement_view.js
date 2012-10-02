@@ -8,11 +8,10 @@ var PlacementView = Ember.View.extend({
   canvas : null,
   ctx : null,
   
-  mouse : null,
-  
   width : 640,
   height : 390,
   
+  mouse : null,
   area : null,
   
   redraw : false,
@@ -134,20 +133,6 @@ var PlacementView = Ember.View.extend({
     
   },
   
-  sendArea : function() {
-    
-    var area = this.area.clone(),
-      obj = this.object;
-    
-    area.x -= obj.pos.x;
-    area.y -= obj.pos.y;
-    
-    area.adjust();
-    
-    this.observer.setArea( area );
-    
-  },
-  
   drawGame : function( _ctx ) {
     
     var i = this.increment, img, w, h;
@@ -206,7 +191,43 @@ var PlacementView = Ember.View.extend({
     
   },
   
-  mousedownObject : function( _mouse ) {
+  mousedown : function( _mouse ) { return; },
+  mousemove : function( _mouse ) { return; },
+  mouseup : function( _mouse ) { return; }
+  
+});
+
+// Object
+
+var PlacingObjectView = PlacementView.extend({
+  
+  initView : function( _canvas, _ctx ) {
+    
+    var img;
+    
+    this.initGame( _canvas, _ctx );
+    
+    img = new Image();
+    
+    img.src = this.graphic.imagePath;
+    img.onload = this.doDraw;
+    img.frameWidth = this.graphic.frameWidth;
+    img.pos = this.observer.position;
+    
+    this.gameObjects.unshift( img );
+    this.object = img;
+    
+  },
+  
+  draw : function( _ctx ) {
+    
+    this.drawGame( _ctx );
+    
+    this.drawImage( _ctx, this.object, true );
+    
+  },
+  
+  mousedown : function( _mouse ) {
   
     var obj = this.object,
       area = this.area;
@@ -221,42 +242,9 @@ var PlacementView = Ember.View.extend({
     
   },
   
-  mousedownArea : function( _mouse ) {
-  
-    var area = this.area;
-    
-    if ( !area.contains( _mouse.pos ) ) {
-      
-      area.set( _mouse.pos.x, _mouse.pos.y, 0, 0 );
-      area.done = false;
-      
-      this.doDraw();
-      
-    }
-    
-  },
-  
-  mousemoveObject : function( _mouse ) {
+  mousemove : function( _mouse ) {
     
     this.object.pos.addSelf( _mouse.move );
-    
-    this.doDraw();
-    
-  },
-  
-  mousemoveArea : function( _mouse ) {
-    
-    var area = this.area;
-    
-    if ( area.done ) {
-      
-      area.move( _mouse.move );
-      
-    } else {
-      
-      area.resize( _mouse.pos );
-      
-    }
     
     this.doDraw();
     
@@ -264,7 +252,7 @@ var PlacementView = Ember.View.extend({
   
 });
 
-var LocationPlacementView = PlacementView.extend({
+var LocationPlacementView = PlacingObjectView.extend({
   
   initView : function( _canvas, _ctx ) {
     
@@ -277,9 +265,6 @@ var LocationPlacementView = PlacementView.extend({
       this.object.pos.copy( obs.location );
       
     }
-    
-    this.set( 'mousedown', this.mousedownObject );
-    this.set( 'mousemove', this.mousemoveObject );
     
   },
   
@@ -299,7 +284,7 @@ var LocationPlacementView = PlacementView.extend({
   
 });
 
-var DirectionPlacementView = PlacementView.extend({
+var DirectionPlacementView = PlacingObjectView.extend({
   
   initView : function( _canvas, _ctx ) {
     
@@ -308,9 +293,6 @@ var DirectionPlacementView = PlacementView.extend({
     this.object = this.getImage( this.object );
     
     this.object.pos.set( this.width * 0.5, this.height * 0.5 ).addSelf( this.observer.location );
-    
-    this.set( 'mousedown', this.mousedownObject );
-    this.set( 'mousemove', this.mousemoveObject );
     
   },
   
@@ -345,50 +327,7 @@ var DirectionPlacementView = PlacementView.extend({
   
 });
 
-var AreaPlacementView = PlacementView.extend({
-  
-  area : null,
-  
-  initView : function( _canvas, _ctx ) {
-    
-    var obs = this.observer;
-    
-    this.initGame( _canvas, _ctx );
-    
-    if ( obs.action && obs.action.area ) {
-      
-      this.area.copy( obs.action.area );
-      this.area.done = true;
-      
-    }
-    
-    this.set( 'mousedown', this.mousedownArea );
-    this.set( 'mousemove', this.mousemoveArea );
-    
-  },
-  
-  draw : function( _ctx ) {
-    
-    this.drawGame( _ctx );
-    
-    this.area.draw( _ctx );
-    
-  },
-  
-  mouseup : function( _mouse ) {
-    
-    var area = this.area;
-    
-    area.adjust();
-    area.done = true;
-    
-    this.observer.decide( area.clone() );
-    
-  }
-  
-});
-
-var OffsetPlacementView = PlacementView.extend({
+var OffsetPlacementView = PlacingObjectView.extend({
   
   initView : function( _canvas, _ctx ) {
     
@@ -399,9 +338,6 @@ var OffsetPlacementView = PlacementView.extend({
     
     this.object2 = this.getImage( this.object2 );
     this.object2.pos.set( this.width * 0.5, this.height * 0.5 );
-    
-    this.set( 'mousedown', this.mousedownObject );
-    this.set( 'mousemove', this.mousemoveObject );
     
   },
   
@@ -419,7 +355,82 @@ var OffsetPlacementView = PlacementView.extend({
   
 });
 
-var BoundingPlacementView = PlacementView.extend({
+// Area
+
+var AreaPlacementView = PlacementView.extend({
+  
+  area : null,
+  
+  initView : function( _canvas, _ctx ) {
+    
+    var obs = this.observer;
+    
+    this.initGame( _canvas, _ctx );
+    
+    if ( obs.action && obs.action.area ) {
+      
+      this.area.copy( obs.action.area );
+      this.area.done = true;
+      
+    }
+    
+  },
+  
+  draw : function( _ctx ) {
+    
+    this.drawGame( _ctx );
+    
+    this.area.draw( _ctx );
+    
+  },
+  
+  mousedown : function( _mouse ) {
+  
+    var area = this.area;
+    
+    if ( !area.contains( _mouse.pos ) ) {
+      
+      area.set( _mouse.pos.x, _mouse.pos.y, 0, 0 );
+      area.done = false;
+      
+      this.doDraw();
+      
+    }
+    
+  },
+  
+  mousemove : function( _mouse ) {
+    
+    var area = this.area;
+    
+    if ( area.done ) {
+      
+      area.move( _mouse.move );
+      
+    } else {
+      
+      area.resize( _mouse.pos );
+      
+    }
+    
+    this.doDraw();
+    
+  },
+  
+  mouseup : function( _mouse ) {
+    
+    var area = this.area;
+    
+    area.adjust();
+    area.done = true;
+    
+    this.observer.decide( area.clone() );
+    
+  }
+  
+});
+
+var BoundingPlacementView = AreaPlacementView.extend({
   
   type : 'rect', // rect, circle
   gameObject : null,
@@ -460,16 +471,12 @@ var BoundingPlacementView = PlacementView.extend({
       this.area.y += this.height * 0.5;
       
       this.area.done = true;
-      
       this.sendArea();
       
     }
     
     this.scale = 0.5;
     this.increment = { x : 0, y : 0 };
-    
-    this.set( 'mousedown', this.mousedownArea );
-    this.set( 'mousemove', this.mousemoveArea );
     
   },
   
@@ -507,6 +514,20 @@ var BoundingPlacementView = PlacementView.extend({
     
   },
   
+  sendArea : function() {
+    
+    var area = this.area.clone(),
+      obj = this.object;
+    
+    area.x -= obj.pos.x;
+    area.y -= obj.pos.y;
+    
+    area.adjust();
+    
+    this.observer.setArea( area );
+    
+  },
+  
   mouseup : function( _mouse ) {
     
     var area = this.area;
@@ -519,6 +540,8 @@ var BoundingPlacementView = PlacementView.extend({
   }
   
 });
+
+// Path
 
 var PathPlacementView = PlacementView.extend({
   
@@ -568,44 +591,6 @@ var PathPlacementView = PlacementView.extend({
     this.observer.setPath( this.path );
     this.doDraw();
     
-  },
-  
-  mousemove : function( _mouse ) { return; },
-  mouseup : function( _mouse ) { return; }
-  
-});
-
-var PlacingPlacementView = PlacementView.extend({
-  
-  initView : function( _canvas, _ctx ) {
-    
-    var img;
-    
-    this.initGame( _canvas, _ctx );
-    
-    img = new Image();
-    
-    img.src = this.graphic.imagePath;
-    img.onload = this.doDraw;
-    img.frameWidth = this.graphic.frameWidth;
-    img.pos = this.observer.position;
-    
-    this.gameObjects.unshift( img );
-    this.object = img;
-    
-    this.set( 'mousedown', this.mousedownObject );
-    this.set( 'mousemove', this.mousemoveObject );
-    
-  },
-  
-  draw : function( _ctx ) {
-    
-    this.drawGame( _ctx );
-    
-    this.drawImage( _ctx, this.object, true );
-    
-  },
-  
-  mouseup : function( _mouse ) { return; }
+  }
   
 });
