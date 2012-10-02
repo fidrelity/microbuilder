@@ -165,74 +165,70 @@ function getURLParameter(name) {
 
 
 // Realtime events with pusher.com
-function pusher_main() {
+function pusher_main(jspane_api) {
 
-  /* Pusher Events*/
+  /* Pusher Events */
   var pusher = new Pusher('a4bc39aab42024a54d27');
 
-  // -----------------------------------------------
-  // New Game *DEPRECATED ELEMENTS*
-  var channel = pusher.subscribe('game_channel');
+  window.App = Ember.Application.create(); 
 
-  channel.bind('newgame', function(data) {
+  App.streamContainer = StreamContainerView.create();
+  App.streamContainer.appendTo(".jspPane");
 
-    var gameObj = $('#gamesList').find("li").first().clone().removeAttr("id").hide();
-    var content = gameObj.find('.thumbnail');
-    
-    content.prepend('<a href="/users/'+data.author_id+'">by '+data.author+'</a>');
-    content.prepend('<h4>'+data.name+' <span class="badge badge-important">New</span></h4>');
-    content.prepend('<a href="/play/'+data.game_id+'"><img src="/assets/game.png" alt="Game"></a>');
+  // Create Game Activity
+  var stream_channel = pusher.subscribe('stream_channel');
 
-    $(".thumbnails").prepend(gameObj);
-    gameObj.fadeIn(1000);
-    $(".thumbnails").find('.span2').last().remove()
+  stream_channel.bind('game_create', function(data) {
 
-  });
+    App.streamContainer.get('childViews').pushObject( GameActivityView.create({
+          authorName : data.authorName,
+          authorPath : data.authorPath,
+          authorImage : data.authorImage,
+          gameTitle : data.gameTitle,
+          gamePath : data.gamePath,
+          gameImage : data.gameImage
+        }) );
 
-
-  // Stream
-  var channel = pusher.subscribe('game_public_stream');
-
-  channel.bind('new_activity', function(data) {
-
-    var streamList = $(".activity-list");
-    var streamEle = streamList.find("li").first().clone;
-
-    var user_image = data.user_image;
-    var user_id    = data.user_id;
-    var user_name  = data.user_image;
-    
-    var verb = data.verb; // liked, created, commented ...
-
-    var game_author_name = data.game_author_name;
-    var game_author_id = data.game_author_id;
-    var game_id = data.game_id;
-
-    // ----
-      
-      var avatar = streamEle.find(".avatar_stream");
-      avatar.find("a").attr("href", "/users/" + user_id); //Todo: if anonymous
-      avatar.find(".stream-image").attr("src", user_image);
-
-      // <div class="avatar_stream">
-      // <a href="/users/1">
-      // <img class="stream-image" src="http://www.gravatar.com/avatar/921acfa60558d9f7051d64e8d7940f85?s=180" alt="921acfa60558d9f7051d64e8d7940f85?s=180">
-      // </a>
-      // </div>
-      // <a href="/users/1">Zeus</a>
-      // liked
-      // <a href="/users/1">Zeus</a>
-      // 's
-      // <a href="/play/26">Homer Iron Beach</a>
-
-
-    // ----
-
-    streamList.prepend(streamEle);
+    jspane_api.reinitialise();
 
   });
 
-  // -----------------------------------------------
+  // Graphic created
+  stream_channel.bind('graphic_create', function(data) {    
+
+    App.streamContainer.get('childViews').pushObject( GraphicActivityView.create({
+          authorName : data.authorName,
+          authorPath : data.authorPath,
+          authorImage : data.authorImage,
+          graphicTitle : data.graphicTitle,
+          graphicPath : data.graphicPath,          
+          graphicImage : data.graphicImage,
+          imageType : data.imageType
+        }) );
+
+    jspane_api.reinitialise();
+
+  });
+
+  // Game action created - like, dislike, commented
+  stream_channel.bind('game_action', function(data) {
+
+    App.streamContainer.get('childViews').pushObject( UserOnGameView.create({
+          userName : data.userName,
+          userPath : data.userPath,
+          userImage : data.userImage,
+          authorName : data.authorName,
+          authorPath : data.authorPath,          
+          gameTitle : data.gameTitle,
+          gamePath : data.gamePath,
+          gameImage : data.gameImage,
+          actionType : data.imageType // liked, disliked, commented on
+        }) );
+
+    jspane_api.reinitialise();
+
+  });
+
 };
 
 (function($){
