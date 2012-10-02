@@ -1,0 +1,18 @@
+<div id="storageView">
+
+  <div id="storageManager">
+    A  unfinished Game was found in your Browser's cache (localstorage)!
+    
+    <div class="left">
+      You can load the unfinished Game
+    
+      <ul id="localGames">
+      </ul>
+    </div>
+    <div class="right">
+      or you create a <input type="button" value="new game" onclick="App.storageExtend(); $('#storageView').remove();" />
+    </div>
+    
+  </div>
+
+</div>
