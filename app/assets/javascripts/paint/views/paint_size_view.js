@@ -118,6 +118,8 @@ var PaintSizeView = Ember.View.extend({
       
     }
     
+    $('.pop').popover( 'destroy' );
+    
     App.paintSizeView.remove();
     
     App.paintController.initType( isBackground, w, h );
