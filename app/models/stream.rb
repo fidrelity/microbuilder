@@ -28,21 +28,28 @@ class Stream
       user_ids << user.id if user
       delete_obsolete_messages(user_ids)
 
-      # Push to real time stream
+      # Push to real-time stream
       to_pusher(type, user, obj) #if Rails.env.production?
     end
    
     def latest(max = 10)
-      max = 20 if max > 20
-      message_ids = REDIS.lrange('stream', 0, (max - 1))
+
+      max = 20 if max > 20      
+      message_ids = REDIS.lrange('stream', 0, (max - 1))      
       messages = []
+      
       message_ids.each do |message_id| 
-        message = REDIS.hgetall(message_id)
+      
+        message = REDIS.hgetall(message_id)      
         messages << buildMessageForStream(message) unless message.empty?
+      
       end
+      
       messages
+
     end
 
+    # Builds stream activity message with all data
     def buildMessageForStream(message)
 
       type = message["type"]
@@ -63,7 +70,7 @@ class Stream
 
     end
 
-     # Returns object like game or graphic
+    # Returns object (i.e game or graphic)
     def get_stream_object(type, object_id)      
     
       if type == "graphic" || type == "graphic_publish"
@@ -74,7 +81,7 @@ class Stream
       
     end
 
-    # Push game to pusher (for real time stream)
+    # Push game to pusher
     def to_pusher(type, user, obj)
 
       channel_name = "stream_channel"
@@ -83,11 +90,12 @@ class Stream
 
       data = get_message_data(type, obj, user)
 
-      # Send
+      # Actual send
       Pusher[channel_name].trigger(event[:pusher_event], data)
 
     end
 
+    # Returns hash for certain message type
     def get_message_data(type, obj, user = nil)
 
       event = get_event_data_by_type(type)      
@@ -102,7 +110,7 @@ class Stream
             :authorImage => obj.author.display_image,
             :gameTitle => obj.title,
             :gamePath => "/play/#{obj.id}",
-            :gameImage => obj.preview_image
+            :gameImage => "", #obj.preview_image
           }
 
         when "graphic"
@@ -120,12 +128,12 @@ class Stream
 
         else           
 
-          userName = user.nil? ? "Anonymous" : user.name
+          userName = user.nil? ? "Anonymous" : user.display_name
           userPath = user.nil? ? "" : "/users/#{user.id}"
           userImage = user.nil? ? "" : user.display_image
 
           {
-            :userName => user.name,
+            :userName => userName,
             :userPath => userPath,
             :userImage => userImage,
             :authorName => obj.user.display_name,
@@ -142,6 +150,7 @@ class Stream
 
     end
 
+    # Returns data for stream message type
     def get_event_data_by_type(type)
 
       events = {
@@ -187,7 +196,9 @@ class Stream
       return events[type]
     end
 
+    # -----------------------------------
     private
+
       def message_id
         REDIS.get('message_id') || REDIS.set('message_id', 0) && REDIS.get('message_id')
       end
