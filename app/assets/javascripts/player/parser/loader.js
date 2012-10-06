@@ -12,6 +12,8 @@ var Loader = function( callback, animated, corsSave ) {
   
   this.c = 0;
 
+  this.finishedLoading = false;
+
 };
 
 Loader.prototype = {
@@ -82,8 +84,10 @@ Loader.prototype = {
     if ( this.imageCount === this.imagesLoaded ) {
       
       this.callback();
+
+      this.finishedLoading = true;
       
-      this.finishedLoading();
+      //this.finishedLoading();
       
     }
     

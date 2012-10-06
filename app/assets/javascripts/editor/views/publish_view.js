@@ -14,8 +14,7 @@ var PublishView = Ember.View.extend({
   didInsertElement : function() {
 
     var self = this, name, className, checked, message;
-
-    // *** Snapshot of preview game ***
+    
     // onClick on li element -> set this as active snapshot
     $('#snapshots li').live( 'click', function() {
       
@@ -121,18 +120,6 @@ var PublishView = Ember.View.extend({
     });
 
     
-    // Only allow snapshot if game has loaded
-    this.addObserver( 'player.loader', function() {
-      
-      self.player.loader.finishedLoading = function() {
-
-        self.hasLoaded = true;
-
-      };
-
-    });
-
-    
     for ( name in this.values ) {
     
       if ( this.values.hasOwnProperty( name ) ) {
@@ -192,8 +179,8 @@ var PublishView = Ember.View.extend({
   },
   
   takeSnapshot : function() {
-
-    if(!this.hasLoaded) return false;
+    
+    if(!this.player.loader.finishedLoading) return false;
     
     var canvas = this.$( '.testCanvas' )[0],
       img = new Image,
