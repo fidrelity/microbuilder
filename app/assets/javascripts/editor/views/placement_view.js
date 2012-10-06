@@ -251,6 +251,8 @@ var ObjectPlacementView = PlacementView.extend({
 });
 
 var LocationPlacementView = ObjectPlacementView.extend({
+
+  startPosition : null,
   
   initView : function( _canvas, _ctx ) {
     
@@ -262,16 +264,36 @@ var LocationPlacementView = ObjectPlacementView.extend({
       
       this.object.pos.copy( obs.location );
       
-    }
+      this.startPosition = obs.parentGameObject.position;
+    }    
     
   },
   
-  draw : function( _ctx ) {
-    
+  draw : function( _ctx ) {    
+
     this.drawGame( _ctx );
+
+    this.drawStartLocation( _ctx );
     
     this.drawImage( _ctx, this.object, true );
     
+  },
+
+  drawStartLocation : function( _ctx ) {
+
+    var w = this.object.frameWidth,
+        h = this.object.height,
+        x = this.startPosition.x - w * 0.5,
+        y = this.startPosition.y - h * 0.5;
+
+    _ctx.strokeStyle = '#CCC';
+    _ctx.dashedRect( x , y, w, h, 5);
+
+    _ctx.save();
+    _ctx.globalAlpha = 0.4;
+    _ctx.drawImage( this.object, 0, 0, w, h, x, y, w, h );
+    _ctx.restore();
+
   },
   
   mouseup : function( _mouse ) {
