@@ -698,6 +698,7 @@ var PaintController = Ember.ArrayController.extend({
       
     }
     
+    this.toggleOnBeforeUnload();
     App.paintView.remove();
     App.paintSizeView.appendTo( '#content' );
     
