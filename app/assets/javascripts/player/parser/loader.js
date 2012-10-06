@@ -83,6 +83,8 @@ Loader.prototype = {
       
       this.callback();
       
+      this.finishedLoading();
+      
     }
     
   },
@@ -132,6 +134,8 @@ Loader.prototype = {
     
     this.loadCircle = load;
     
-  }
+  },
+
+  finishedLoading : function() {} // observed from publish view
   
 };

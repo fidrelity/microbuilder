@@ -223,6 +223,8 @@ var PublishView = Ember.View.extend({
   player : null,
   values : null,
   checklist : null,
+
+  hasLoaded : false,
   
   snapshot : null,
   
@@ -231,11 +233,27 @@ var PublishView = Ember.View.extend({
     var self = this, name, className, checked, message;
 
     // *** Snapshot of preview game ***
-    // onClick on li element
+    // onClick on li element -> set this as active snapshot
     $('#snapshots li').live( 'click', function() {
       
       self.setActiveSnapshot( $( this ) );
       
+    });
+
+    // KeyEvents
+    $(document).keydown(function(e) {
+
+      if( !$("input, textarea").is(":focus")) {
+
+        switch(e.keyCode) {
+
+          // Key S
+          case(83) : self.takeSnapshot(); break;
+
+        }
+
+      }
+
     });
 
     // Tagging field: https://github.com/aehlke/tag-it
@@ -315,9 +333,21 @@ var PublishView = Ember.View.extend({
         
         self.checkValue( 'wasWon', true );
         
-      };
+      };      
     
     });
+
+    // Only allow snapshot if game has loaded
+    this.addObserver( 'player.loader', function() {
+      
+      self.player.loader.finishedLoading = function() {
+
+        self.hasLoaded = true;
+
+      };
+
+    });
+
     
     for ( name in this.values ) {
     
@@ -378,6 +408,8 @@ var PublishView = Ember.View.extend({
   },
   
   takeSnapshot : function() {
+
+    if(!this.hasLoaded) return false;
     
     var canvas = this.$( '.testCanvas' )[0],
       img = new Image,

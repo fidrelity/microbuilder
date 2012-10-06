@@ -48,7 +48,7 @@
     <i class="icon-arrow-left"></i> cancel </button>
   
   <button {{action "takeSnapshot"}} class="btn" style="margin-top:6px">
-    <i class="icon-camera"></i> take snapshot </button>
+    <i class="icon-camera"></i> take snapshot (key s) </button>
   
   <div {{action "publish"}} class="ptn-success right">publish game</div>
 </div>
