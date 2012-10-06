@@ -140,7 +140,7 @@ class Stream
             :authorPath => obj.user.id,            
             :gameTitle => obj.title,
             :gamePath => "/play/#{obj.id}",
-            :gameImage => obj.preview_image,
+            :gameImage => "", #obj.preview_image,
             :actionType => event[:verb] # liked, disliked, commented on
           }
 
