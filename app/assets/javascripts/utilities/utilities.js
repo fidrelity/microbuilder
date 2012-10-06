@@ -405,7 +405,7 @@ extend( CanvasRenderingContext2D.prototype, {
 });
 
 Array.prototype.forEachApply = function( fn, a ) {
-  
+
   this.forEach( function( e ) {
     
     e[fn].call( e, a );

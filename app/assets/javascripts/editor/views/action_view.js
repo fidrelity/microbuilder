@@ -381,3 +381,42 @@ var CounterView = Ember.TextField.extend({
   }
   
 });
+
+
+var ScaleView = Ember.View.extend({
+  
+  tagName : 'div',
+  
+  classNames : ['scaleview', 'optionview'],
+  
+  template: Ember.Handlebars.compile( '<div class="slider p-slider left"></div><div class="scale left">to {{observer.scale}}% of original size</div>' ),
+  
+  observer : null,
+  
+  scale : 50,
+  
+  didInsertElement : function() {
+    
+    var observer = this.observer;
+    
+    this.$('.slider').slider({
+      
+      value: this.scale,
+      
+      min: 10,
+      max: 110,
+      step: 10,
+      
+      slide: function( event, ui ) {
+        
+        observer.setScale( ui.value );
+        
+      }
+      
+    });
+    
+    this.$('.slider').addTouch();
+    
+  }
+  
+});

@@ -102,7 +102,12 @@ var ActionTriggerModel = Ember.Object.extend({
     return this.speeds[ this.speed ];
     
   },
-  
+
+  setScale : function(scale) {
+
+    this.set("scale", scale);
+
+  },
   
   angle : function() {
     
@@ -126,7 +131,7 @@ var ActionTriggerModel = Ember.Object.extend({
     
     return this.choice ? this.choice.string( this.parentGameObject.name, this ) : 'no choice';
     
-  }.property( 'choice', 'gameObject', 'gameObject2', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'time', 'time2', 'path', 'counter' ),
+  }.property( 'choice', 'gameObject', 'gameObject2', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'scale', 'time', 'time2', 'path', 'counter' ),
   
   clone : function() {
     
@@ -154,6 +159,8 @@ var ActionTriggerModel = Ember.Object.extend({
       mode : this.mode,
       speed : this.speed,
       
+      scale : this.scale,
+
       counter : this.counter,
       
       path : this.path ? this.path.clone() : null
@@ -188,6 +195,8 @@ var ActionTriggerModel = Ember.Object.extend({
       
       mode : d.mode,
       speed : d.speed,
+
+      scale : d.scale,
       
       path : d.path ? new Path().copy({ points: d.path }) : null,
       
@@ -247,6 +256,8 @@ var ActionTriggerModel = Ember.Object.extend({
         
           case 'counter': data.counter = this.counter; break;
         
+          case 'scale': data.scale = this.scale; break;
+
           default : console.error( 'unknown optionType: ' + optionType );
         
         }

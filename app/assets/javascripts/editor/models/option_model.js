@@ -52,6 +52,8 @@ var Choice = Ember.Object.extend({
         case 'moveSwap' : return 'swap position with ' + a.gameObject.name;
         case 'moveStop' : return 'stop moving';
       
+        case 'scaleSize' : return 'scale to ' + a.scale + "% by " + a.mode;
+
         case 'artToFrame' : return 'display frame ' + a.frame;
         case 'artPlay' : 
           n = ( a.mode === 'loop' ? ' loop ' : ( a.mode === 'once' ? ' play once ' : ' play ping-pong ' ) );
@@ -65,6 +67,7 @@ var Choice = Ember.Object.extend({
         case 'counterUp' : return 'increase counter';
         case 'counterDown' : return 'decrease counter';
         case 'counterSet' : return 'set counter to ' + a.counter;
+        
       
         // triggers
       
@@ -92,7 +95,7 @@ var Choice = Ember.Object.extend({
         case 'counterSmallerObject' : return a.gameObject.name + '\'s counter is smaller than ' + a.gameObject2.name + '\'s counter';
         case 'counterEqualsObject' : return a.gameObject.name + '\'s counter is equal to ' + a.gameObject2.name + '\'s counter';
       
-        default : console.error( 'Unknow choice name: ' + this.ID );
+        default : console.error( 'Unknown choice name: ' + this.ID );
       
       }
     
@@ -610,6 +613,31 @@ var CounterOption = Option.extend({
     if ( !reinsert ) {
     
       this.action.setCounter( 0 );
+    
+    }
+    
+  }
+  
+});
+
+
+var ScaleOption = Option.extend({
+  
+  type : 'scale',
+  
+  doInsert : function( reinsert ) {
+    
+    App.actionController.addOption( this, ScaleView.create({
+
+      observer : this.action,
+      
+      scale : reinsert ? this.action.scale : 50
+
+    }));
+    
+    if ( !reinsert ) {
+    
+      this.action.setScale( 50 );
     
     }
     

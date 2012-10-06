@@ -142,8 +142,25 @@ var Parser = {
       return new StopAction( gameObject );
       
     },
-    
-    
+
+    // -------------------------------------------------
+    // Transformation
+
+    scaleSize : function( data, gameObject ) {
+
+      console.log("scaling", data, gameObject);
+      
+      var s =  new ScaleAction( data, gameObject );
+
+      console.log(s);
+
+      return s;
+
+    },
+
+    // -------------------------------------------------
+    // Art
+        
     artToFrame : function( data, gameObject ) {
       
       return new ArtAction( 'frame', gameObject, data.frame );
@@ -171,13 +188,16 @@ var Parser = {
       return action
       
     },
+
+    // -------------------------------------------------
+    // Art
     
     gameWin : function() { return WinAction; },
     gameLose : function() { return LoseAction; },
     gameEnd : function() { return LoseAction; }, // deprecated 2
 
-
-    // -- Counter Action --
+    // -------------------------------------------------    
+    // Counter Action
 
     counterSet : function( data, gameObject, game ) { 
       

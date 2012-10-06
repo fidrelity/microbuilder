@@ -124,6 +124,58 @@ var StopAction = function( gameObject ) {
   
 };
 
+// -------------------------------------------
+
+var ScaleAction = function(data, gameObject) {
+
+  this.scaleTo = data.scale;
+
+  this.mode = data.mode;
+
+  this.gameObject = gameObject;
+
+  if(this.mode === "jumping") {
+
+    this.execute = this.executeJumpScale;
+
+  } else if(this.mode === "moving") {
+
+    this.execute = this.executeMoveScale;
+
+  }
+
+};
+
+ScaleAction.prototype = {
+  
+  execute : null,
+
+  executeJumpScale : function() {
+    
+    //this.gameObject.graphic.frameWidth = this.calculateSizeByPercentage(this.scaleTo);
+    //this.gameObject.graphic.frameHeight = this.calculateSizeByPercentage(this.scaleTo);
+
+    this.gameObject.graphic.image.naturalWidth = this.calculateSizeByPercentage(this.scaleTo);
+    this.gameObject.graphic.image.naturalHeight = this.calculateSizeByPercentage(this.scaleTo);
+
+  },
+
+  executeMoveScale : function() {
+
+    console.log("move scale");
+
+  },
+
+  calculateSizeByPercentage : function() {
+
+    return 50;
+
+  }
+
+};
+
+
+// -------------------------------------------
 
 var ArtAction = function( type, gameObject, frame, frame2, mode, speed ) {
   

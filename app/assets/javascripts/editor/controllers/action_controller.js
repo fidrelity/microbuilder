@@ -26,6 +26,8 @@ var ActionController = Ember.Object.extend({
     'jumpToLocation', 'jumpToObject', 'jumpToArea', // 'jumpToClick',
     
     'moveRoam', 'moveSwap', 'moveStop', 'moveAlongPath',
+
+    'scaleSize',
     
     'artToFrame', 'artPlay', 'artStop', 'artChange',
        
@@ -98,7 +100,7 @@ var ActionController = Ember.Object.extend({
     this.set( 'actionOption', ButtonOption.create({ 
       name: 'action', 
       question: 'Select the type of action',
-      buttons: ['move', 'graphic', 'counter', 'game'],
+      buttons: ['move', 'transform', 'graphic', 'counter', 'game'],
       
       decisions: [
         
@@ -310,9 +312,44 @@ var ActionController = Ember.Object.extend({
 
           ]
         }),
+
+        // -----------------------------------------
+        // transformation        
+        ButtonOption.create({
+
+          name: 'transform',
+          question: 'What type of transformation?', 
+          help: 'Transformation help text.',
+
+          buttons: ['scale'],
+
+          decisions: [
+
+            // Size action
+            ModeOption.create({
+
+              name: 'scaleMode',
+              question: 'Choose the scaling transformation mode',
+              buttons:  ['jump', 'move'],
+              modes:  ['jumping', 'moving'],
+                  
+                decision: ScaleOption.create({
+
+                  name: 'scalingSize',
+                  question: 'How much should it scale?',
+                  child: SaveOption.create({ choiceID: 'scaleSize' })
+
+                })
+            })
+
+            // other action (... rotate)
+
+          ]
+
+        }),
         
-        // graphic
-        
+        // -----------------------------------------
+        // graphic        
         ButtonOption.create({ 
           name: 'art', 
           question: 'What should the graphic do?',
@@ -572,7 +609,8 @@ var ActionController = Ember.Object.extend({
             
           ]
         }),
-        
+
+          
         // counter
         
         ObjectOption.create({
@@ -649,7 +687,7 @@ var ActionController = Ember.Object.extend({
           })
           
         }),
-        
+      
         // game
         
         ButtonOption.create({
@@ -765,7 +803,7 @@ var ActionController = Ember.Object.extend({
     
     if ( !choice ) {
       
-      console.error( 'Unknow choice name: ' + choiceID );
+      console.error( 'Unknown choice name: ' + choiceID );
       
     }
     
