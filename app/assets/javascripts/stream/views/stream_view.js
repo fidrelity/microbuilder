@@ -1,8 +1,178 @@
+/*
+  Todo>
+    - separate public / private stream
+    - object.image -> stack overflow
+    - multiple inserts when Stream.create
+    - reinit jsScrollPane
+    - fancy prepend effect
+*/
+
 var StreamContainerView = Ember.ContainerView.extend({
 
   templateName : 'editor/templates/stream_template',
 
-  classNames: ['stream-container']  
+  tagName : "ul",
+
+  classNames: ['stream-container'],
+
+  pusher : null,
+
+  didInsertElement : function() {
+
+    this.loadStream();
+
+    this.registerPusherEvents();
+
+
+
+  },
+
+  loadStream : function() {
+
+    var self = this;
+
+     $.ajax({
+
+      url : "/stream/public_stream",
+
+      type : 'GET',
+      
+      success: function( data ) {
+        
+        if ( data ) {
+          
+          if ( typeof data === "string" ) {
+            
+            data = JSON.parse( data );
+            
+          }
+          
+          self.displayMessages(data);  
+        
+        }
+        
+      }
+      
+    });
+
+  },
+
+  registerPusherEvents : function() {
+
+    // Create Game Activity
+    var stream_channel = this.pusher.subscribe('stream_channel');
+
+    var self = this;
+
+    stream_channel.bind('game_create', function(data) {
+
+      //console.log(data);
+
+      self.addGameMessage(data);
+
+    });
+
+    // Graphic created
+    stream_channel.bind('graphic_create', function(data) {      
+      
+      self.addGraphicMessage(data);
+
+    });
+
+    // Game action created - like, dislike, commented
+    stream_channel.bind('game_action', function(data) {
+
+      self.addGameActionMessage(data);
+
+    });
+
+  },
+
+  displayMessages : function(messages) {
+
+    var messageLength = messages.length;    
+
+    for ( var i = 0; i < messageLength; i++ ) {
+
+      this.addMessage( messages[i] );
+
+    }
+
+  },
+
+  addMessage : function(data) {
+
+    var type = data.type;    
+
+    switch(type) {
+
+      case("game") : this.addGameMessage(data);
+                     break;
+
+      case("graphic") : this.addGraphicMessage(data); 
+                        break;
+
+      case("like") :  this.addGameActionMessage(data); 
+                      break;
+
+      case("dislike") : this.addGameActionMessage(data); 
+                        break;
+
+      case("comment") : this.addGameActionMessage(data);
+                        break;
+    }
+
+  },
+
+  addGameMessage : function(data) {
+
+    this.get('childViews').unshiftObject( GameActivityView.create({
+      authorName : data.authorName,
+      authorPath : data.authorPath,
+      authorImage : data.authorImage,
+      gameTitle : data.gameTitle,
+      gamePath : data.gamePath,
+      gameImage : data.gameImage
+    }) );
+
+    return this;
+
+  },
+
+  addGraphicMessage : function(data) {    
+
+    this.get('childViews').unshiftObject( GraphicActivityView.create({
+      authorName : data.authorName,
+      authorPath : data.authorPath,
+      authorImage : data.authorImage,
+      graphicTitle : data.graphicTitle,
+      graphicPath : data.graphicPath,
+      imageType : data.imageType
+    }) );
+
+    return this;
+
+  },
+
+  addGameActionMessage : function(data) {
+
+    console.log(data);
+    
+    this.get('childViews').unshiftObject( UserOnGameView.create({
+      userName : data.userName,
+      userPath : data.userPath,
+      userImage : data.userImage,
+      authorName : data.authorName,
+      authorPath : data.authorPath,          
+      gameTitle : data.gameTitle,
+      gamePath : data.gamePath,
+      gameImage : data.gameImage,
+      actionType : data.actionType // liked, disliked, commented on
+    }) );
+
+    return this;
+
+  }
   
 });
 
@@ -10,6 +180,12 @@ var StreamContainerView = Ember.ContainerView.extend({
 // Game created message
 
 var GameActivityView = Ember.View.extend({
+
+  didInsertElement : function() { 
+
+    reinitStreamPopUp();
+
+  },
   
   templateName: 'stream/templates/create_game_template',
 
@@ -23,13 +199,26 @@ var GameActivityView = Ember.View.extend({
 
   gamePath : null,
 
-  gameImage : null
+  gameImage : null,
+
+  popUpThumb : function() {
+
+    return '<img src="' + this.get("gameImage") + '">';
+    
+  }.property("gameImage")
 
 });
 
+// For: like, dislike, comment - on game
 var UserOnGameView = Ember.View.extend({
   
   templateName: 'stream/templates/game_action_template',
+
+  didInsertElement : function() { 
+
+    reinitStreamPopUp();    
+
+  },
 
   userName : null,
   
@@ -47,11 +236,30 @@ var UserOnGameView = Ember.View.extend({
 
   gameImage : null,
 
-  actionType : null
+  actionType : null,
+
+  isAnonymous : function() {
+
+    return this.get('userName') === 'Anonymous' || this.get('userName').length === 0;
+
+  }.property("userName"),
+
+  popUpThumb : function() {
+
+    return '<img src="' + this.get("gameImage") + '">';
+    
+  }.property("gameImage")
 
 });
 
+// Graphic created message
 var GraphicActivityView = Ember.View.extend({
+
+  didInsertElement : function() { 
+
+    reinitStreamPopUp();
+
+  },
   
   templateName: 'stream/templates/create_graphic_template',
 
@@ -70,3 +278,10 @@ var GraphicActivityView = Ember.View.extend({
   imageType : null
 
 });
+
+//
+function reinitStreamPopUp() {
+
+  $('.stream-popup').popover({ placement: 'right', trigger: 'hover' });
+
+}

@@ -14,7 +14,7 @@
   
   created
 
-  <a class="stream-popup" {{bindAttr href="gamePath"}} {{bindAttr data-content="gameImage"}} {{bindAttr data-original-title="gameTitle"}}>
+  <a class="stream-popup" {{bindAttr href="gamePath"}} {{bindAttr data-content="popUpThumb"}} {{bindAttr data-original-title="gameTitle"}}>
     {{gameTitle}}
   </a>
 

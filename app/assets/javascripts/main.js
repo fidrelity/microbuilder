@@ -165,69 +165,19 @@ function getURLParameter(name) {
 
 
 // Realtime events with pusher.com
-function pusher_main(jspane_api) {
+function pusher_main() {
+  
+  if(!window.App)  {
+    window.App = Ember.Application.create(); 
+  }
 
-  /* Pusher Events */
   var pusher = new Pusher('a4bc39aab42024a54d27');
 
-  window.App = Ember.Application.create(); 
-
-  App.streamContainer = StreamContainerView.create();
-  App.streamContainer.appendTo(".jspPane");
-
-  // Create Game Activity
-  var stream_channel = pusher.subscribe('stream_channel');
-
-  stream_channel.bind('game_create', function(data) {
-
-    App.streamContainer.get('childViews').pushObject( GameActivityView.create({
-          authorName : data.authorName,
-          authorPath : data.authorPath,
-          authorImage : data.authorImage,
-          gameTitle : data.gameTitle,
-          gamePath : data.gamePath,
-          gameImage : data.gameImage
-        }) );
-
-    jspane_api.reinitialise();
-
+  App.streamContainer = StreamContainerView.create({
+    pusher : pusher
   });
 
-  // Graphic created
-  stream_channel.bind('graphic_create', function(data) {    
-
-    App.streamContainer.get('childViews').pushObject( GraphicActivityView.create({
-          authorName : data.authorName,
-          authorPath : data.authorPath,
-          authorImage : data.authorImage,
-          graphicTitle : data.graphicTitle,
-          graphicPath : data.graphicPath,          
-          graphicImage : data.graphicImage,
-          imageType : data.imageType
-        }) );
-
-    jspane_api.reinitialise();
-
-  });
-
-  // Game action created - like, dislike, commented
-  stream_channel.bind('game_action', function(data) {
-
-    App.streamContainer.get('childViews').pushObject( UserOnGameView.create({
-          userName : data.userName,
-          userPath : data.userPath,
-          userImage : data.userImage,
-          authorName : data.authorName,
-          authorPath : data.authorPath,          
-          gameTitle : data.gameTitle,
-          gamePath : data.gamePath,
-          gameImage : data.gameImage,
-          actionType : data.imageType // liked, disliked, commented on
-        }) );
-
-    jspane_api.reinitialise();
-
-  });
+  App.streamContainer.appendTo(".activity-list");
 
 };
 

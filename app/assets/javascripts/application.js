@@ -172,9 +172,6 @@ $(document).ready(function() {
   var pane = $('.scroll-pane')
   pane.jScrollPane({ showArrows: true });
   var jspane_api = pane.data('jsp');
-
-  // Realtime activity stream
-  pusher_main(jspane_api);
     
   // ---------------------------------------
   // Stream resize
