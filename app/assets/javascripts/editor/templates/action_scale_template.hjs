@@ -1,0 +1,23 @@
+<div {{bindAttr style="divWrapperStyle"}}>
+  <div {{bindAttr style="divStyle"}}></div>
+</div>
+
+{{#if hasFrames}}
+  <div class="left">
+    Preview frames:
+  </div>
+  <div class="left">
+    <button class="btn btn-mini" title="prev frame" {{action "prevFrame"}}><i class="icon-chevron-left"></i></button>
+    <button class="btn btn-mini" title="next frame" {{action "nextFrame"}}><i class="icon-chevron-right"></i></button>
+  </div>
+{{/if}}
+
+<div style="clear:both;">
+  <div class="slider p-slider left"></div>
+  <div class="scale left">to {{observer.scale}}% of original size</div>
+</div>
+
+<!-- 
+<button class="btn right ttip" title="delete" {{action "remove"}}><i class="icon-trash"></i></button>
+<button class="btn right ttip" title="edit" {{action "edit"}}><i class="icon-wrench"></i></button>
+ -->

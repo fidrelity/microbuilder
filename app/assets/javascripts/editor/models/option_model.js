@@ -625,21 +625,23 @@ var CounterOption = Option.extend({
 
 var ScaleOption = Option.extend({
   
-  type : 'scale',
+  type : 'scale',  
   
   doInsert : function( reinsert ) {
-    
+
     App.actionController.addOption( this, ScaleView.create({
 
       observer : this.action,
+
+      graphic : App.gameObjectsController.current.graphic,
       
-      scale : reinsert ? this.action.scale : 50
+      scale : reinsert ? this.action.scale : 100
 
     }));
     
     if ( !reinsert ) {
     
-      this.action.setScale( 50 );
+      this.action.setScale( 100 );
     
     }
     

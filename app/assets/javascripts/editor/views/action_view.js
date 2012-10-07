@@ -389,11 +389,43 @@ var ScaleView = Ember.View.extend({
   
   classNames : ['scaleview', 'optionview'],
   
-  template: Ember.Handlebars.compile( '<div class="slider p-slider left"></div><div class="scale left">to {{observer.scale}}% of original size</div>' ),
+  templateName: 'editor/templates/action_scale_template',
   
   observer : null,
   
-  scale : 50,
+  scale : 100,
+
+  graphic : null,
+
+  currentFrame : 0,
+
+  divWrapperStyle : function() {
+
+    var g = this.graphic;
+    var maxW = g.frameWidth * 150 / 100;
+    var maxH = g.frameHeight * 150 / 100;
+
+    return "width:" + maxW + "px;height:" + maxH + "px;border:1px solid gray";
+
+  }.property(),
+
+  divStyle : function() {
+    
+    var g = this.graphic;    
+
+    if ( g ) {
+
+      var toScale = this.observer.scale;
+
+      var w = g.frameWidth * toScale / 100;
+      var h = g.frameHeight * toScale / 100;
+
+      var frameToShow = -(this.get("currentFrame") * w);
+      
+      return 'background-position:' + frameToShow + 'px;margin:auto;width:' + w + 'px;height:' + h + 'px;background-image:url(' + g.imagePath + ');background-size:cover;background-repeat:no-repeat;';      
+    }
+    
+  }.property( 'observer.graphic' , 'observer.scale', 'currentFrame' ),
   
   didInsertElement : function() {
     
@@ -417,6 +449,36 @@ var ScaleView = Ember.View.extend({
     
     this.$('.slider').addTouch();
     
-  }
+  },
+
+  nextFrame : function() {    
+
+    if(this.get('currentFrame') < this.graphic.frameCount - 1) {
+
+      var number = this.currentFrame + 1;
+
+      this.set('currentFrame', number);
+
+    }
+
+  },
+
+  prevFrame : function() {   
+
+    if(this.get('currentFrame') > 0) {
+
+      var number = this.currentFrame - 1;
+
+      this.set('currentFrame', number);
+
+    }
+
+  },
+
+  hasFrames : function() {
+
+    return this.graphic.frameCount > 1;
+
+  }.property()
   
 });
