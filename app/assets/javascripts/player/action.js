@@ -136,6 +136,7 @@ var ScaleAction = function(data, gameObject) {
   this.originalHeight = this.gameObject.graphic.image.height;
 
   this.scaleInterval = 60;
+  this.scaleTimeout = null;
 
   var speeds = [0.0125, 0.0375, 0.0625, 0.25, 0.625];
   
@@ -177,7 +178,7 @@ ScaleAction.prototype = {
 
     var goOn = false;
 
-    // Current Imag is smaller than scaleTo
+    // Current image is smaller than scaleTo
     if(this.deltaSize > 0) {
 
       if(this.gameObject.graphic.scaleX < this.scaleTo / 100) {
@@ -187,7 +188,7 @@ ScaleAction.prototype = {
 
       }
 
-    // Current Imag is bigger than scaleTo
+    // Current image is bigger than scaleTo
     } else {
 
       if(this.gameObject.graphic.scaleX > this.scaleTo / 100) {
@@ -202,11 +203,15 @@ ScaleAction.prototype = {
     // repeat
     if(goOn) {
 
-      setTimeout(function() {
+      this.scaleTimeout = setTimeout(function() {
       
         self.executeMoveScale();
       
       }, this.scaleInterval);
+
+    } else {
+
+      clearTimeout(this.scaleTimeout);
 
     }
 
