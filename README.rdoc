@@ -109,6 +109,9 @@ if migrations:
               { ID : moveStop }
             
               { ID : moveAlongPath, mode : <loop, ping-pong, once>, speed : <0-4>, path : [ <vector> ] }
+
+              { ID : 'scaleSize', speed: <0-4> }
+              { ID : 'flipObject', mode : <horizontally, vertically, both> }
             
               { ID : artToFrame, frame : <int> }
               { ID : artPlay, mode : <loop, ping-pong, once>, frame : <int>, frame2 : <int>, speed : <0-4> }
@@ -142,6 +145,9 @@ if migrations:
 === Change log
 
 version 4
+
+* added 'scaleSize' action
+* added 'flipObject' action
 
 * added 'object2ID : <int>' to trigger : 'counterEqualsObject'
 * added 'object2ID : <int>' to trigger : 'counterGreaterObject'
