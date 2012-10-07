@@ -130,26 +130,27 @@ var ScaleAction = function(data, gameObject) {
 
   this.scaleTo = data.scale;
 
-  this.mode = data.mode;
-
-  this.gameObject = gameObject;  
+  this.gameObject = gameObject;    
 
   this.originalWidth  = this.gameObject.graphic.image.width;
   this.originalHeight = this.gameObject.graphic.image.height;
 
   this.scaleInterval = 60;
-  this.scaleSpeed = 0.1;
+
+  var speeds = [0.0125, 0.0375, 0.0625, 0.25, 0.625];
+  
+  this.scaleSpeed = speeds[data.speed];
 
   this.deltaSize = this.scaleTo < 100 ? -1 : 1;
 
   //this.boundingAreaWidth = this.gameObject.movement.boundingArea.width;
   //this.boundingAreaHeight = this.gameObject.movement.boundingArea.height;
   
-  if(this.mode === "jumping") {
+  if(data.speed === 4) {
 
     this.execute = this.executeJumpScale;
 
-  } else if(this.mode === "moving") {
+  } else {
 
     this.execute = this.executeMoveScale;
 
@@ -163,7 +164,7 @@ ScaleAction.prototype = {
 
   executeJumpScale : function() {   
 
-    this.adapatBoundingBox();
+    //this.adapatBoundingBox();
 
     this.gameObject.graphic.scaleX = this.scaleTo / 100;
     this.gameObject.graphic.scaleY = this.scaleTo / 100;

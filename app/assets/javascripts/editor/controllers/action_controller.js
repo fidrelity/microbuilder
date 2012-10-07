@@ -27,7 +27,7 @@ var ActionController = Ember.Object.extend({
     
     'moveRoam', 'moveSwap', 'moveStop', 'moveAlongPath',
 
-    'scaleSize', 'flipObject',
+    'scaleSize',  'flipObject',
     
     'artToFrame', 'artPlay', 'artStop', 'artChange',
        
@@ -326,23 +326,19 @@ var ActionController = Ember.Object.extend({
           decisions: [
 
             // Size action
-            ModeOption.create({
+            ScaleOption.create({
 
-              name: 'scaleMode',
-              question: 'Choose the scaling transformation mode',
-              buttons:  ['jump', 'move'], //, 
-              modes:  ['jumping', 'moving'], //
-                  
-                decision: ScaleOption.create({
+              name: 'scaleToSize',
+              question: 'How much should it scale?',
 
-                  name: 'scalingSize',
-                  question: 'How much should it scale?',
-                  child: SaveOption.create({ choiceID: 'scaleSize' })
+              child: SpeedOption.create({ 
+                name: 'scaleSpeed',
+                question: 'Set the speed of the scaling',
+                child: SaveOption.create({ choiceID: 'scaleSize' })
+              })
 
-                })
             }),
-
-
+      
             // Flip action
             ModeOption.create({
 
@@ -355,10 +351,8 @@ var ActionController = Ember.Object.extend({
 
             })
 
-            // other action (... rotate)
-            
-
-          ]
+            // other action (... rotate)    
+          ] 
 
         }),
         
