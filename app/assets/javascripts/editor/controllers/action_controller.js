@@ -319,7 +319,7 @@ var ActionController = Ember.Object.extend({
 
           name: 'transform',
           question: 'What type of transformation?', 
-          help: 'You can make your game object bigger or smaller by scaling it or flip it',
+          help: 'You can change the appeareance of a game object. Select scale if you want to change the objects size or flip to mirror it in a direction.',
 
           buttons: ['scale', 'flip'],
 
