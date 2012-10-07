@@ -27,7 +27,7 @@ var ActionController = Ember.Object.extend({
     
     'moveRoam', 'moveSwap', 'moveStop', 'moveAlongPath',
 
-    'scaleSize',
+    'scaleSize', 'flipObject',
     
     'artToFrame', 'artPlay', 'artStop', 'artChange',
        
@@ -321,7 +321,7 @@ var ActionController = Ember.Object.extend({
           question: 'What type of transformation?', 
           help: 'Transformation help text.',
 
-          buttons: ['scale'],
+          buttons: ['scale', 'flip'],
 
           decisions: [
 
@@ -330,8 +330,8 @@ var ActionController = Ember.Object.extend({
 
               name: 'scaleMode',
               question: 'Choose the scaling transformation mode',
-              buttons:  ['jump', 'move'],
-              modes:  ['jumping', 'moving'],
+              buttons:  ['jump'], //, 'move'
+              modes:  ['jumping'], //, 'moving'
                   
                 decision: ScaleOption.create({
 
@@ -340,9 +340,23 @@ var ActionController = Ember.Object.extend({
                   child: SaveOption.create({ choiceID: 'scaleSize' })
 
                 })
+            }),
+
+
+            // Flip action
+            ModeOption.create({
+
+              name: 'flipMode',
+              question: 'Choose the flipping transformation mode',
+              buttons:  ['horizontally', 'vertically', 'both directions'],
+              modes:  ['horizontally', 'vertically', 'both'],
+
+              decision: SaveOption.create({ choiceID: 'flipObject' })
+
             })
 
             // other action (... rotate)
+            
 
           ]
 

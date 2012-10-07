@@ -20,6 +20,8 @@ GameObject.prototype = {
     this.setGraphic( this.startGraphic );
     
     this.movement.reset();
+
+    this.graphic.reset();
     
     this.counter = 0;
     

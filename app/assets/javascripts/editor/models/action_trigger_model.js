@@ -131,7 +131,7 @@ var ActionTriggerModel = Ember.Object.extend({
     
     return this.choice ? this.choice.string( this.parentGameObject.name, this ) : 'no choice';
     
-  }.property( 'choice', 'gameObject', 'gameObject2', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'scale', 'time', 'time2', 'path', 'counter' ),
+  }.property( 'choice', 'gameObject', 'gameObject2', 'parentGameObject.name', 'location', 'offset', 'area', 'frame', 'frame2', 'graphic', 'mode', 'speed', 'scale', 'time', 'time2', 'path', 'counter', 'flipObject' ),
   
   clone : function() {
     
@@ -257,6 +257,8 @@ var ActionTriggerModel = Ember.Object.extend({
           case 'counter': data.counter = this.counter; break;
         
           case 'scale': data.scale = this.scale; break;
+
+          case 'flip': data.mode = this.mode; break;
 
           default : console.error( 'unknown optionType: ' + optionType );
         

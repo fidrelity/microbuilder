@@ -132,8 +132,14 @@ var ScaleAction = function(data, gameObject) {
 
   this.mode = data.mode;
 
-  this.gameObject = gameObject;
+  this.gameObject = gameObject;  
 
+  this.originalWidth  = this.gameObject.graphic.image.width;
+  this.originalHeight = this.gameObject.graphic.image.height;
+
+  //this.boundingAreaWidth = this.gameObject.movement.boundingArea.width;
+  //this.boundingAreaHeight = this.gameObject.movement.boundingArea.height;
+  
   if(this.mode === "jumping") {
 
     this.execute = this.executeJumpScale;
@@ -150,13 +156,12 @@ ScaleAction.prototype = {
   
   execute : null,
 
-  executeJumpScale : function() {
-    
-    //this.gameObject.graphic.frameWidth = this.calculateSizeByPercentage(this.scaleTo);
-    //this.gameObject.graphic.frameHeight = this.calculateSizeByPercentage(this.scaleTo);
+  executeJumpScale : function() {   
 
-    this.gameObject.graphic.image.naturalWidth = this.calculateSizeByPercentage(this.scaleTo);
-    this.gameObject.graphic.image.naturalHeight = this.calculateSizeByPercentage(this.scaleTo);
+    this.adapatBoundingBox();
+
+    this.gameObject.graphic.scaleX = this.scaleTo / 100;
+    this.gameObject.graphic.scaleY = this.scaleTo / 100;
 
   },
 
@@ -166,14 +171,60 @@ ScaleAction.prototype = {
 
   },
 
-  calculateSizeByPercentage : function() {
+  adapatBoundingBox : function() {
 
-    return 50;
+    return false;
+
+    // var scaledSize = this.calculateSizeByPercentage(),
+    //     area = this.gameObject.movement.boundingArea;
+
+    // area.width  = Math.floor(this.scaleTo * this.boundingAreaWidth / 100);
+    // area.height = Math.floor(this.scaleTo * this.boundingAreaHeight / 100);
+
+  },
+
+  calculateSizeByPercentage : function() {   
+
+    var scaledWidth  = Math.round(this.scaleTo * this.originalWidth / 100);
+    var scaledHeight = Math.round(this.scaleTo * this.originalHeight / 100);
+
+    return { width: scaledWidth, height: scaledHeight };
 
   }
 
 };
 
+
+var FlipAction = function(data, gameObject) {
+
+  this.mode = data.mode;
+
+  this.gameObject = gameObject;
+
+};
+
+FlipAction.prototype = {
+  
+  execute : function() {    
+
+    if(this.mode === "horizontally") {
+
+      this.gameObject.graphic.flipDirectionX *= -1;      
+
+    } else if (this.mode === "vertically") {       
+
+      this.gameObject.graphic.flipDirectionY *= -1;
+
+    } else if (this.mode === "both") {
+
+      this.gameObject.graphic.flipDirectionX *= -1;
+      this.gameObject.graphic.flipDirectionY *= -1;
+
+    }
+
+  }
+
+};
 
 // -------------------------------------------
 

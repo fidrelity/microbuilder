@@ -146,15 +146,16 @@ var Parser = {
     // -------------------------------------------------
     // Transformation
 
-    scaleSize : function( data, gameObject ) {
-
-      console.log("scaling", data, gameObject);
+    scaleSize : function( data, gameObject ) {      
       
-      var s =  new ScaleAction( data, gameObject );
+      return new ScaleAction( data, gameObject );
 
-      console.log(s);
+    },
 
-      return s;
+
+    flipObject : function( data, gameObject ) {      
+      
+      return new FlipAction( data, gameObject );
 
     },
 

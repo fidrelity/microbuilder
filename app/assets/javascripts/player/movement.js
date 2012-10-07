@@ -31,7 +31,7 @@ Movement.prototype = {
   reset : function() {
     
     this.position.copy( this.startPosition );
-    
+
     this.stop();    
     
   },

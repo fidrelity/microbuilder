@@ -404,7 +404,7 @@ var ScaleView = Ember.View.extend({
       value: this.scale,
       
       min: 10,
-      max: 110,
+      max: 150,
       step: 10,
       
       slide: function( event, ui ) {

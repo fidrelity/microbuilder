@@ -53,6 +53,7 @@ var Choice = Ember.Object.extend({
         case 'moveStop' : return 'stop moving';
       
         case 'scaleSize' : return 'scale to ' + a.scale + "% by " + a.mode;
+        case 'flipObject' : return 'flip object ' + a.mode;
 
         case 'artToFrame' : return 'display frame ' + a.frame;
         case 'artPlay' : 
