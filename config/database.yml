@@ -5,8 +5,7 @@
 #   gem 'sqlite3'
 development:
   adapter: postgresql
-  username: root
-  password: pw
+  username: root  
   database: microbuilder_dev
   pool: 5
   timeout: 5000
