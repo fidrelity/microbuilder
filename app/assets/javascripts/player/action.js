@@ -137,6 +137,11 @@ var ScaleAction = function(data, gameObject) {
   this.originalWidth  = this.gameObject.graphic.image.width;
   this.originalHeight = this.gameObject.graphic.image.height;
 
+  this.scaleInterval = 60;
+  this.scaleSpeed = 0.1;
+
+  this.deltaSize = this.scaleTo < 100 ? -1 : 1;
+
   //this.boundingAreaWidth = this.gameObject.movement.boundingArea.width;
   //this.boundingAreaHeight = this.gameObject.movement.boundingArea.height;
   
@@ -167,13 +172,53 @@ ScaleAction.prototype = {
 
   executeMoveScale : function() {
 
-    console.log("move scale");
+    var self = this;
+
+    var goOn = false;
+
+    // Current Imag is smaller than scaleTo
+    if(this.deltaSize > 0) {
+
+      if(this.gameObject.graphic.scaleX < this.scaleTo / 100) {
+
+        this.scaleAnimate();
+        goOn = true;
+
+      }
+
+    // Current Imag is bigger than scaleTo
+    } else {
+
+      if(this.gameObject.graphic.scaleX > this.scaleTo / 100) {
+
+        this.scaleAnimate();
+        goOn = true;
+        
+      }
+
+    }
+
+    // repeat
+    if(goOn) {
+
+      setTimeout(function() {
+      
+        self.executeMoveScale();
+      
+      }, this.scaleInterval);
+
+    }
+
+  },
+
+  scaleAnimate : function() {
+
+    this.gameObject.graphic.scaleX += (this.scaleSpeed * this.deltaSize);        
+    this.gameObject.graphic.scaleY += (this.scaleSpeed * this.deltaSize);
 
   },
 
   adapatBoundingBox : function() {
-
-    return false;
 
     // var scaledSize = this.calculateSizeByPercentage(),
     //     area = this.gameObject.movement.boundingArea;
@@ -183,12 +228,11 @@ ScaleAction.prototype = {
 
   },
 
-  calculateSizeByPercentage : function() {   
+  calculateSizeByPercentage : function( _size) {   
 
-    var scaledWidth  = Math.round(this.scaleTo * this.originalWidth / 100);
-    var scaledHeight = Math.round(this.scaleTo * this.originalHeight / 100);
+    if(_size === 0) return false;
 
-    return { width: scaledWidth, height: scaledHeight };
+    return Math.round(this.scaleTo * _size / 100);    
 
   }
 

@@ -319,7 +319,7 @@ var ActionController = Ember.Object.extend({
 
           name: 'transform',
           question: 'What type of transformation?', 
-          help: 'Transformation help text.',
+          help: 'You can make your game object bigger or smaller by scaling it or flip it',
 
           buttons: ['scale', 'flip'],
 
@@ -330,8 +330,8 @@ var ActionController = Ember.Object.extend({
 
               name: 'scaleMode',
               question: 'Choose the scaling transformation mode',
-              buttons:  ['jump'], //, 'move'
-              modes:  ['jumping'], //, 'moving'
+              buttons:  ['jump', 'move'], //, 
+              modes:  ['jumping', 'moving'], //
                   
                 decision: ScaleOption.create({
 
