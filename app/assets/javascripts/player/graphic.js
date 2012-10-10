@@ -8,12 +8,6 @@ var Graphic = function( ID ) {
   this.frameHeight = 0;
   
   this.frameCount = 1;
-
-  this.scaleX = 1;
-  this.scaleY = 1;
-
-  this.flipDirectionX = 1
-  this.flipDirectionY = 1
   
 };
 
@@ -24,17 +18,11 @@ Graphic.prototype = {
     var width = this.frameWidth,
       height = this.frameHeight;
     
-    ctx.save();
-    
-      ctx.scale(this.scaleX * this.flipDirectionX, this.scaleY * this.flipDirectionY);
-
-      ctx.drawImage( 
-        this.image, 
-        ( frame - 1 ) * width, 0, width, height, 
-        -0.5 * width, -0.5 * height, width, height 
-      );
-
-    ctx.restore();
+    ctx.drawImage( 
+      this.image,
+      ( frame - 1 ) * width, 0, width, height,
+      -0.5 * width, -0.5 * height, width, height
+    );
     
   },
   
@@ -48,13 +36,6 @@ Graphic.prototype = {
       
     }
     
-  },
-
-  reset : function() {
-
-    this.scaleX = this.scaleY = 1;
-    this.flipDirectionX = this.flipDirectionY = 1;
-
   }
   
 };

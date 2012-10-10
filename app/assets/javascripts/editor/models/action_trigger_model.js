@@ -102,11 +102,11 @@ var ActionTriggerModel = Ember.Object.extend({
     return this.speeds[ this.speed ];
     
   },
-
+  
   setScale : function(scale) {
-
-    this.set("scale", scale);
-
+    
+    this.set( 'scale', scale);
+    
   },
   
   angle : function() {
@@ -160,7 +160,7 @@ var ActionTriggerModel = Ember.Object.extend({
       speed : this.speed,
       
       scale : this.scale,
-
+      
       counter : this.counter,
       
       path : this.path ? this.path.clone() : null
@@ -195,7 +195,7 @@ var ActionTriggerModel = Ember.Object.extend({
       
       mode : d.mode,
       speed : d.speed,
-
+      
       scale : d.scale,
       
       path : d.path ? new Path().copy({ points: d.path }) : null,
@@ -257,9 +257,9 @@ var ActionTriggerModel = Ember.Object.extend({
           case 'counter': data.counter = this.counter; break;
         
           case 'scale': data.scale = this.scale; break;
-
+        
           case 'flip': data.mode = this.mode; break;
-
+        
           default : console.error( 'unknown optionType: ' + optionType );
         
         }

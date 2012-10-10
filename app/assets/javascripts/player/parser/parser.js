@@ -142,23 +142,22 @@ var Parser = {
       return new StopAction( gameObject );
       
     },
-
+    
     // -------------------------------------------------
     // Transformation
-
-    scaleSize : function( data, gameObject ) {      
+    
+    scaleSize : function( data, gameObject ) {
       
-      return new ScaleAction( data, gameObject );
-
-    },
-
-
-    flipObject : function( data, gameObject ) {      
+      return new ScaleAction( gameObject, data.scale / 100, data.speed );
       
-      return new FlipAction( data, gameObject );
-
     },
-
+    
+    flipObject : function( data, gameObject ) {
+      
+      return new FlipAction( data.mode, gameObject );
+      
+    },
+    
     // -------------------------------------------------
     // Art
         

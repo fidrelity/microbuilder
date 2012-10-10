@@ -126,154 +126,75 @@ var StopAction = function( gameObject ) {
 
 // -------------------------------------------
 
-var ScaleAction = function(data, gameObject) {
-
-  this.scaleTo = data.scale;
-
-  this.gameObject = gameObject;    
-
-  this.originalWidth  = this.gameObject.graphic.image.width;
-  this.originalHeight = this.gameObject.graphic.image.height;
-
-  this.scaleInterval = 60;
-  this.scaleTimeout = null;
-
-  var speeds = [0.0125, 0.0375, 0.0625, 0.25, 0.625];
+var ScaleAction = function( gameObject, scale, speed ) {
   
-  this.scaleSpeed = speeds[data.speed];
-
-  this.deltaSize = this.scaleTo < 100 ? -1 : 1;
-
-  //this.boundingAreaWidth = this.gameObject.movement.boundingArea.width;
-  //this.boundingAreaHeight = this.gameObject.movement.boundingArea.height;
+  this.gameObject = gameObject;
   
-  if(data.speed === 4) {
-
+  this.scale = new Vector( scale, scale );
+  this.speed = this.speeds[speed];
+  
+  if ( speed === 4 ) {
+    
     this.execute = this.executeJumpScale;
-
+    
   } else {
-
+    
     this.execute = this.executeMoveScale;
-
+    
   }
 
 };
 
 ScaleAction.prototype = {
   
+  speeds : [0.00125, 0.00375, 0.00625, 0.025, 0.0625],
+  
   execute : null,
-
-  executeJumpScale : function() {   
-
-    //this.adapatBoundingBox();
-
-    this.gameObject.graphic.scaleX = this.scaleTo / 100;
-    this.gameObject.graphic.scaleY = this.scaleTo / 100;
-
+  
+  executeJumpScale : function() {
+    
+    this.gameObject.animation.setScale( this.scale );
+    
   },
-
+  
   executeMoveScale : function() {
-
-    var self = this;
-
-    var goOn = false;
-
-    // Current image is smaller than scaleTo
-    if(this.deltaSize > 0) {
-
-      if(this.gameObject.graphic.scaleX < this.scaleTo / 100) {
-
-        this.scaleAnimate();
-        goOn = true;
-
-      }
-
-    // Current image is bigger than scaleTo
-    } else {
-
-      if(this.gameObject.graphic.scaleX > this.scaleTo / 100) {
-
-        this.scaleAnimate();
-        goOn = true;
-        
-      }
-
-    }
-
-    // repeat
-    if(goOn) {
-
-      this.scaleTimeout = setTimeout(function() {
-      
-        self.executeMoveScale();
-      
-      }, this.scaleInterval);
-
-    } else {
-
-      clearTimeout(this.scaleTimeout);
-
-    }
-
-  },
-
-  scaleAnimate : function() {
-
-    this.gameObject.graphic.scaleX += (this.scaleSpeed * this.deltaSize);        
-    this.gameObject.graphic.scaleY += (this.scaleSpeed * this.deltaSize);
-
-  },
-
-  adapatBoundingBox : function() {
-
-    // var scaledSize = this.calculateSizeByPercentage(),
-    //     area = this.gameObject.movement.boundingArea;
-
-    // area.width  = Math.floor(this.scaleTo * this.boundingAreaWidth / 100);
-    // area.height = Math.floor(this.scaleTo * this.boundingAreaHeight / 100);
-
-  },
-
-  calculateSizeByPercentage : function( _size) {   
-
-    if(_size === 0) return false;
-
-    return Math.round(this.scaleTo * _size / 100);    
-
+    
+    this.gameObject.animation.scaleTo( this.scale, this.speed );
+    
   }
 
 };
 
 
-var FlipAction = function(data, gameObject) {
-
-  this.mode = data.mode;
-
+var FlipAction = function( mode, gameObject ) {
+  
   this.gameObject = gameObject;
-
+  this.flip = new Vector( 1, 1 );
+  
+  if ( mode === 'horizontally' ) {
+    
+    this.flip.set( -1, 1 );
+    
+  } else if ( mode === 'vertically' ) {
+    
+    this.flip.set( 1, -1 );
+    
+  } else if ( mode === 'both' ) {
+    
+    this.flip.set( -1, -1 );
+    
+  }
+  
 };
 
 FlipAction.prototype = {
   
-  execute : function() {    
-
-    if(this.mode === "horizontally") {
-
-      this.gameObject.graphic.flipDirectionX *= -1;      
-
-    } else if (this.mode === "vertically") {       
-
-      this.gameObject.graphic.flipDirectionY *= -1;
-
-    } else if (this.mode === "both") {
-
-      this.gameObject.graphic.flipDirectionX *= -1;
-      this.gameObject.graphic.flipDirectionY *= -1;
-
-    }
-
+  execute : function() {
+    
+    this.gameObject.animation.flip( this.flip );
+    
   }
-
+  
 };
 
 // -------------------------------------------
