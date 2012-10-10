@@ -1,7 +1,15 @@
 -if user_signed_in?
 
   #messages-public
-    = render :partial => 'shared/stream', :locals => {:messages => @messages}
+    = section_line "latest", "activity"
+
+    .well  
+
+      %div{:class => "activity-list scroll-pane"}
+    =# render :partial => 'shared/stream', :locals => {:messages => @messages}    
+
+    :javascript
+        pusher_main();
 
 - else
 

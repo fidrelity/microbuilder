@@ -16,6 +16,7 @@
 //= require ember
 //= require_tree ./editor/templates
 //= require_tree ./paint/templates
+//= require_tree ./stream/templates
 //= require_tree .
 
 $(document).ready(function() {
@@ -35,7 +36,7 @@ $(document).ready(function() {
   //
   Notifier.init().notify();
   //
-  FramePlayer.init();
+  FramePlayer.init();  
 
   // ---------------------------------------
   // Init slides in guide pages

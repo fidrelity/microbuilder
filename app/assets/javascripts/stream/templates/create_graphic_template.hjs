@@ -1,0 +1,23 @@
+<li class="create-graphic-activity">
+
+  <div class="avatar_stream">
+    
+    <a {{bindAttr href="authorPath"}}>
+
+      <img class="stream-image" {{bindAttr src="authorImage"}}>
+
+    </a>
+
+  </div>
+
+  <a {{bindAttr href="authorPath"}}>{{authorName}}</a>
+  
+  painted
+
+  <a class="stream-popup" {{bindAttr href="graphicPath"}} {{bindAttr data-content="graphicPath"}} {{bindAttr data-original-title="graphicTitle"}}>
+    {{graphicTitle}} 
+  </a>
+
+  {{imageType}}
+
+</li>

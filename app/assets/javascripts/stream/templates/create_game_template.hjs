@@ -1,0 +1,21 @@
+<li class="create-activity">
+
+  <div class="avatar_stream">
+    
+    <a {{bindAttr href="authorPath"}}>
+
+      <img class="stream-image" {{bindAttr src="authorImage"}}>
+
+    </a>
+
+  </div>
+
+  <a {{bindAttr href="authorPath"}}>{{authorName}}</a>
+  
+  created
+
+  <a class="stream-popup" {{bindAttr href="gamePath"}} {{bindAttr data-content="popUpThumb"}} {{bindAttr data-original-title="gameTitle"}}>
+    {{gameTitle}}
+  </a>
+
+</li>
