@@ -1,5 +1,5 @@
 #
-# Possiblie Types:
+# Possible Types:
 # => game, graphic, graphic_publish, like, dislike, comment
 #
 
@@ -58,9 +58,11 @@ class Stream
 
       obj = get_stream_object(type, message[event[:object_id]])
 
+      user = User.find_by_id(message['user_id'])
+
       return unless obj
 
-      message = get_message_data(type, obj)
+      message = get_message_data(type, obj, user)
 
       common_data = {
         :type => type
@@ -138,7 +140,7 @@ class Stream
             :userPath => userPath,
             :userImage => userImage,
             :authorName => obj.user.display_name,
-            :authorPath => obj.user.id,            
+            :authorPath => "/users/#{obj.user.id}",            
             :gameTitle => obj.title,
             :gamePath => "/play/#{obj.id}",
             :gameImage => obj.preview_image.to_s,

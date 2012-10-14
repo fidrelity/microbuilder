@@ -1,7 +1,6 @@
 /*
   Todo>
-    - separate public / private stream
-    - object.image -> stack overflow
+    - separate public / private stream    
     - multiple inserts when Stream.create
     - reinit jsScrollPane
     - fancy prepend effect
@@ -22,8 +21,6 @@ var StreamContainerView = Ember.ContainerView.extend({
     this.loadStream();
 
     this.registerPusherEvents();
-
-
 
   },
 
@@ -273,9 +270,13 @@ var GraphicActivityView = Ember.View.extend({
 
   graphicPath : null,
 
-  graphicImage : null,
+  imageType : null,
 
-  imageType : null
+  popUpThumb : function() {
+
+    return '<img src="' + this.get("graphicPath") + '">';
+    
+  }.property("graphicPath")
 
 });
 

@@ -14,7 +14,7 @@
   
   painted
 
-  <a class="stream-popup" {{bindAttr href="graphicPath"}} {{bindAttr data-content="graphicPath"}} {{bindAttr data-original-title="graphicTitle"}}>
+  <a class="stream-popup" {{bindAttr href="graphicPath"}} {{bindAttr data-content="popUpThumb"}} {{bindAttr data-original-title="graphicTitle"}}>
     {{graphicTitle}} 
   </a>
 
