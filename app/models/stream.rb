@@ -78,7 +78,7 @@ class Stream
       if type == "graphic" || type == "graphic_publish"
         return Graphic.find_by_id(object_id)
       else
-        Game.find_by_id(object_id)  
+        Game.find_by_id(object_id)
       end
       
     end
@@ -97,7 +97,7 @@ class Stream
 
     end
 
-    # Returns hash for certain message type
+    # Returns data hash for message by type
     def get_message_data(type, obj, user = nil, current_user = nil)
 
       event = get_event_data_by_type(type)      
@@ -107,7 +107,7 @@ class Stream
       data = case type
 
         when "game"
-
+          # authorName's created gameTitle
           {        
             :authorName => authorName,
             :authorPath => "/users/#{obj.author.id}",
@@ -119,7 +119,7 @@ class Stream
           }
 
         when "graphic"
-
+          # authorName painted graphicTitle {type}
           image_type = obj.background ? "graphic" : "background"
 
           {        
@@ -132,7 +132,7 @@ class Stream
           }
 
         else           
-
+          # userName {verb} authorName's gameTitle
           userName = get_user_name(user, current_user)
           userPath = user.nil? ? "" : "/users/#{user.id}"
           userImage = user.nil? ? "" : user.display_image
@@ -201,6 +201,7 @@ class Stream
       return events[type]
     end
 
+    # Returns authors name (the one who created obj)    
     def get_author_name(obj, type, current_user)
 
       return obj.user.display_name if current_user.nil?
@@ -215,6 +216,7 @@ class Stream
 
     end
 
+    # Returns the name of the user who liked, disliked, commented on the obj    
     def get_user_name(user, current_user)
 
       if user.nil? 

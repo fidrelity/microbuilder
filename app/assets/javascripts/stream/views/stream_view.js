@@ -154,8 +154,6 @@ var StreamContainerView = Ember.ContainerView.extend({
   },
 
   addGameActionMessage : function(data) {
-
-    console.log(data);
     
     this.get('childViews').unshiftObject( UserOnGameView.create({
       userName : data.userName,

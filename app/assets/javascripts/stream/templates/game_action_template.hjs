@@ -23,7 +23,7 @@
   {{actionType}}
 
   {{#if userIsAuthor }}
-    your
+    your game
   {{else}}
     <a {{bindAttr href="authorPath"}}>{{authorName}}'s</a>
   {{/if}}
