@@ -147,7 +147,7 @@ var ScaleAction = function( gameObject, scale, speed ) {
 
 ScaleAction.prototype = {
   
-  speeds : [0.00125, 0.00375, 0.00625, 0.025, 0.0625],
+  speeds : [ 0.000125, 0.000375, 0.00125, 0.00375, 1],
   
   execute : null,
   
