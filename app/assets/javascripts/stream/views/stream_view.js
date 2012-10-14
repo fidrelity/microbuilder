@@ -247,7 +247,13 @@ var UserOnGameView = Ember.View.extend({
 
     return '<img src="' + this.get("gameImage") + '">';
     
-  }.property("gameImage")
+  }.property("gameImage"),
+
+  userIsAuthor : function() {
+
+    return this.get('authorName') === "your";
+
+  }.property("authorName")
 
 });
 

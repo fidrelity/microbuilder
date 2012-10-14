@@ -32,7 +32,7 @@ class Stream
       to_pusher(type, user, obj) #if Rails.env.production?
     end
    
-    def latest(max = 10)
+    def latest(max = 10, current_user = nil)
 
       max = 20 if max > 20      
       message_ids = REDIS.lrange('stream', 0, (max - 1))      
@@ -41,7 +41,7 @@ class Stream
       message_ids.each do |message_id| 
       
         message = REDIS.hgetall(message_id)      
-        messages << buildMessageForStream(message) unless message.empty?
+        messages << buildMessageForStream(message, current_user) unless message.empty?
       
       end
       
@@ -50,7 +50,7 @@ class Stream
     end
 
     # Builds stream activity message with all data
-    def buildMessageForStream(message)
+    def buildMessageForStream(message, current_user)
 
       type = message["type"]
 
@@ -62,7 +62,7 @@ class Stream
 
       return unless obj
 
-      message = get_message_data(type, obj, user)
+      message = get_message_data(type, obj, user, current_user)
 
       common_data = {
         :type => type
@@ -98,16 +98,18 @@ class Stream
     end
 
     # Returns hash for certain message type
-    def get_message_data(type, obj, user = nil)
+    def get_message_data(type, obj, user = nil, current_user = nil)
 
       event = get_event_data_by_type(type)      
+
+      authorName = get_author_name(obj, event[:pusher_event], current_user)
 
       data = case type
 
         when "game"
 
           {        
-            :authorName => obj.author.display_name,
+            :authorName => authorName,
             :authorPath => "/users/#{obj.author.id}",
             :authorImage => obj.author.display_image,
             :gameTitle => obj.title,
@@ -121,7 +123,7 @@ class Stream
           image_type = obj.background ? "graphic" : "background"
 
           {        
-            :authorName => obj.user.display_name,
+            :authorName => authorName,
             :authorPath => "/users/#{obj.user.id}",
             :authorImage => obj.user.display_image,
             :graphicTitle => obj.name,
@@ -131,7 +133,7 @@ class Stream
 
         else           
 
-          userName = user.nil? ? "Anonymous" : user.display_name
+          userName = get_user_name(user, current_user)
           userPath = user.nil? ? "" : "/users/#{user.id}"
           userImage = user.nil? ? "" : user.display_image
 
@@ -139,7 +141,7 @@ class Stream
             :userName => userName,
             :userPath => userPath,
             :userImage => userImage,
-            :authorName => obj.user.display_name,
+            :authorName => authorName,
             :authorPath => "/users/#{obj.user.id}",            
             :gameTitle => obj.title,
             :gamePath => "/play/#{obj.id}",
@@ -161,7 +163,7 @@ class Stream
         "game" => {
           :object_id => "game_id",
           :pusher_event => "game_create",
-          :verb => "created"
+          :verb => "created"          
         }, 
 
         "graphic" => {
@@ -197,6 +199,32 @@ class Stream
       }
 
       return events[type]
+    end
+
+    def get_author_name(obj, type, current_user)
+
+      return obj.user.display_name if current_user.nil?
+
+      if current_user == obj.user && type != "game_action"
+        "You"
+      elsif current_user == obj.user && type == "game_action"
+        "your"
+      else
+        obj.user.display_name
+      end
+
+    end
+
+    def get_user_name(user, current_user)
+
+      if user.nil? 
+        "Anonymous" 
+      elsif current_user == user
+        "You"
+      else 
+        user.display_name
+      end
+
     end
 
     # -----------------------------------

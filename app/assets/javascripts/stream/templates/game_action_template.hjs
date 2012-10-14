@@ -22,7 +22,11 @@
   
   {{actionType}}
 
-  <a {{bindAttr href="authorPath"}}>{{authorName}}'s</a>
+  {{#if userIsAuthor }}
+    your
+  {{else}}
+    <a {{bindAttr href="authorPath"}}>{{authorName}}'s</a>
+  {{/if}}
 
   <a class="stream-popup" {{bindAttr href="gamePath"}} {{bindAttr data-content="popUpThumb"}} {{bindAttr data-original-title="gameTitle"}}>
     {{gameTitle}}
