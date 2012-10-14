@@ -87,7 +87,9 @@ var StreamContainerView = Ember.ContainerView.extend({
 
   displayMessages : function(messages) {
 
-    var messageLength = messages.length;    
+    messages.reverse();
+
+    var messageLength = messages.length;
 
     for ( var i = 0; i < messageLength; i++ ) {
 
