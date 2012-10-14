@@ -143,7 +143,24 @@ var Parser = {
       
     },
     
+    // -------------------------------------------------
+    // Transformation
     
+    scaleSize : function( data, gameObject ) {
+      
+      return new ScaleAction( gameObject, data.scale / 100, data.speed );
+      
+    },
+    
+    flipObject : function( data, gameObject ) {
+      
+      return new FlipAction( data.mode, gameObject );
+      
+    },
+    
+    // -------------------------------------------------
+    // Art
+        
     artToFrame : function( data, gameObject ) {
       
       return new ArtAction( 'frame', gameObject, data.frame );
@@ -171,13 +188,16 @@ var Parser = {
       return action
       
     },
+
+    // -------------------------------------------------
+    // Art
     
     gameWin : function() { return WinAction; },
     gameLose : function() { return LoseAction; },
     gameEnd : function() { return LoseAction; }, // deprecated 2
 
-
-    // -- Counter Action --
+    // -------------------------------------------------    
+    // Counter Action
 
     counterSet : function( data, gameObject, game ) { 
       

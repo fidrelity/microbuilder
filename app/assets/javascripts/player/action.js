@@ -124,6 +124,80 @@ var StopAction = function( gameObject ) {
   
 };
 
+// -------------------------------------------
+
+var ScaleAction = function( gameObject, scale, speed ) {
+  
+  this.gameObject = gameObject;
+  
+  this.scale = new Vector( scale, scale );
+  this.speed = this.speeds[speed];
+  
+  if ( speed === 4 ) {
+    
+    this.execute = this.executeJumpScale;
+    
+  } else {
+    
+    this.execute = this.executeMoveScale;
+    
+  }
+
+};
+
+ScaleAction.prototype = {
+  
+  speeds : [0.00125, 0.00375, 0.00625, 0.025, 0.0625],
+  
+  execute : null,
+  
+  executeJumpScale : function() {
+    
+    this.gameObject.animation.setScale( this.scale );
+    
+  },
+  
+  executeMoveScale : function() {
+    
+    this.gameObject.animation.scaleTo( this.scale, this.speed );
+    
+  }
+
+};
+
+
+var FlipAction = function( mode, gameObject ) {
+  
+  this.gameObject = gameObject;
+  this.flip = new Vector( 1, 1 );
+  
+  if ( mode === 'horizontally' ) {
+    
+    this.flip.set( -1, 1 );
+    
+  } else if ( mode === 'vertically' ) {
+    
+    this.flip.set( 1, -1 );
+    
+  } else if ( mode === 'both' ) {
+    
+    this.flip.set( -1, -1 );
+    
+  }
+  
+};
+
+FlipAction.prototype = {
+  
+  execute : function() {
+    
+    this.gameObject.animation.flip( this.flip );
+    
+  }
+  
+};
+
+// -------------------------------------------
 
 var ArtAction = function( type, gameObject, frame, frame2, mode, speed ) {
   

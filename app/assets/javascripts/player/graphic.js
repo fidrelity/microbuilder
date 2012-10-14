@@ -19,9 +19,9 @@ Graphic.prototype = {
       height = this.frameHeight;
     
     ctx.drawImage( 
-      this.image, 
-      ( frame - 1 ) * width, 0, width, height, 
-      -0.5 * width, -0.5 * height, width, height 
+      this.image,
+      ( frame - 1 ) * width, 0, width, height,
+      -0.5 * width, -0.5 * height, width, height
     );
     
   },

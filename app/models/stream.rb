@@ -110,7 +110,8 @@ class Stream
             :authorImage => obj.author.display_image,
             :gameTitle => obj.title,
             :gamePath => "/play/#{obj.id}",
-            :gameImage => "", #obj.preview_image
+            :gameImage => obj.preview_image.to_s
+
           }
 
         when "graphic"
@@ -122,7 +123,7 @@ class Stream
             :authorPath => "/users/#{obj.user.id}",
             :authorImage => obj.user.display_image,
             :graphicTitle => obj.name,
-            :graphicPath => obj.image_file_name,
+            :graphicPath => obj.image.to_s,
             :imageType => image_type
           }
 
@@ -140,7 +141,7 @@ class Stream
             :authorPath => obj.user.id,            
             :gameTitle => obj.title,
             :gamePath => "/play/#{obj.id}",
-            :gameImage => "", #obj.preview_image,
+            :gameImage => obj.preview_image.to_s,
             :actionType => event[:verb] # liked, disliked, commented on
           }
 

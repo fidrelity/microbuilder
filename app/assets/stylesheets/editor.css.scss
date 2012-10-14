@@ -367,12 +367,12 @@
   overflow: hidden;
 }
 
-#editor .overlay .speedview .slider {
+#editor .overlay .speedview .slider, #editor .overlay .scaleview .slider {
   margin: 12px 7px 5px;
   width: 150px;
 }
 
-#editor .overlay .speedview .speed {
+#editor .overlay .speedview .speed, #editor .overlay .scaleview .scale {
   font-size: 12pt;
   margin: 5px 15px;
 }

@@ -20,6 +20,7 @@ GameObject.prototype = {
     this.setGraphic( this.startGraphic );
     
     this.movement.reset();
+    this.animation.reset();
     
     this.counter = 0;
     
@@ -35,10 +36,13 @@ GameObject.prototype = {
   draw : function( ctx ) {
     
     var pos = this.movement.position,
+      scale = this.animation.getScale(),
       area;
     
     ctx.save();
+    
     ctx.translate( pos.x, pos.y );
+    ctx.scale( scale.x, scale.y );
     
     this.graphic.draw( ctx, this.animation.getFrame() );
     

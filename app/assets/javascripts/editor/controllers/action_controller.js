@@ -26,6 +26,8 @@ var ActionController = Ember.Object.extend({
     'jumpToLocation', 'jumpToObject', 'jumpToArea', // 'jumpToClick',
     
     'moveRoam', 'moveSwap', 'moveStop', 'moveAlongPath',
+
+    'scaleSize',  'flipObject',
     
     'artToFrame', 'artPlay', 'artStop', 'artChange',
        
@@ -98,7 +100,7 @@ var ActionController = Ember.Object.extend({
     this.set( 'actionOption', ButtonOption.create({ 
       name: 'action', 
       question: 'Select the type of action',
-      buttons: ['move', 'graphic', 'counter', 'game'],
+      buttons: ['move', 'transform', 'graphic', 'counter', 'game'],
       
       decisions: [
         
@@ -310,9 +312,52 @@ var ActionController = Ember.Object.extend({
 
           ]
         }),
+
+        // -----------------------------------------
+        // transformation        
+        ButtonOption.create({
+
+          name: 'transform',
+          question: 'What type of transformation?', 
+          help: 'You can change the appeareance of a game object. Select scale if you want to change the objects size or flip to mirror it in a direction.',
+
+          buttons: ['scale', 'flip'],
+
+          decisions: [
+
+            // Size action
+            ScaleOption.create({
+
+              name: 'scaleToSize',
+              question: 'How much should it scale?',
+
+              child: SpeedOption.create({ 
+                name: 'scaleSpeed',
+                question: 'Set the speed of the scaling',
+                child: SaveOption.create({ choiceID: 'scaleSize' })
+              })
+
+            }),
+      
+            // Flip action
+            ModeOption.create({
+
+              name: 'flipMode',
+              question: 'Choose the flipping transformation mode',
+              buttons:  ['horizontally', 'vertically', 'both directions'],
+              modes:  ['horizontally', 'vertically', 'both'],
+
+              decision: SaveOption.create({ choiceID: 'flipObject' })
+
+            })
+
+            // other action (... rotate)    
+          ] 
+
+        }),
         
-        // graphic
-        
+        // -----------------------------------------
+        // graphic        
         ButtonOption.create({ 
           name: 'art', 
           question: 'What should the graphic do?',
@@ -572,7 +617,8 @@ var ActionController = Ember.Object.extend({
             
           ]
         }),
-        
+
+          
         // counter
         
         ObjectOption.create({
@@ -649,7 +695,7 @@ var ActionController = Ember.Object.extend({
           })
           
         }),
-        
+      
         // game
         
         ButtonOption.create({
@@ -765,7 +811,7 @@ var ActionController = Ember.Object.extend({
     
     if ( !choice ) {
       
-      console.error( 'Unknow choice name: ' + choiceID );
+      console.error( 'Unknown choice name: ' + choiceID );
       
     }
     
