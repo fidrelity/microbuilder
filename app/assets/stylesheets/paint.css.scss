@@ -23,6 +23,8 @@
   margin: 0;
   float: left;
   
+  background: url('/assets/paint/sprite.png');
+  
   &:hover {
     border-bottom: 4px solid lighten($font, 20%);
   }
@@ -35,45 +37,30 @@
     border-bottom: 4px solid $red;
   }
   
-  &.pencil { background:url('/assets/paint/pencil.png') }
-  &.select { background:url('/assets/paint/select_icon.png') }
-  &.eraser { background:url('/assets/paint/eraser_icon.png') }
-  &.rectangle { background:url('/assets/paint/rectangle.png') }
-  &.circle { background:url('/assets/paint/circle.png') }
-  &.rectanglefill { background:url('/assets/paint/rectangle_filled.png') }
-  &.circlefill { background:url('/assets/paint/circle_filled.png') }
-  &.lineTool { background:url('/assets/paint/line.png') }
-  &.loadfile { background:url('/assets/paint/file.png') }
-  &.fill { background:url('/assets/paint/fill_icon.png') }
-  &.clearTool { background:url('/assets/paint/clear_icon.png') }
-  &.undo { background:url('/assets/paint/undo.png') }
-  &.redo { background:url('/assets/paint/redo.png') }
-  &.flipv { background:url('/assets/paint/flip_vertical.png') }
-  &.fliph { background:url('/assets/paint/flip_horizontal.png') }
-  &.rotl { background:url('/assets/paint/rotate_left.png') }
-  &.rotr { background:url('/assets/paint/rotate_right.png') }
-  &.pipette { background:url('/assets/paint/pipette.png') }
-  &.add { background: url('/assets/paint/plus.png') }
-  &.remove { background: url('/assets/paint/minus.png') }
-  &.duplicate { background: url('/assets/paint/duplicate.png') }
-}
-
-#paint-wrapper #playButton {
-  background: url('/assets/paint/play.png'); 
-  background-repeat: no-repeat;
-}
-
-#paint-wrapper #stopButton {
-  background: url('/assets/paint/stop.png');
-  background-repeat: no-repeat;
-  display:none;
-}
-
-#paint-wrapper .paint-zoom-in-icon {
-  background-image: url('/assets/paint/zoom_in.png');
-  height: 16px; width: 16px;
-  background-repeat: no-repeat;
-  margin-left: 6px;
+  &.pencil { background-position: -120px -30px }
+  &.select { background-position: -30px -30px }
+  &.eraser { background-position: -60px -30px }
+  &.rectangle { background-position: -210px -30px }
+  &.rectanglefill { background-position: -210px 0px }
+  &.circle { background-position: -240px -30px }
+  &.circlefill { background-position: -240px 0px }
+  &.lineTool { background-position: -90px -30px }
+  &.loadfile { background-position: -150px -30px }
+  &.fill { background-position: 0px -30px }
+  &.clearTool { background-position: 0px 0px }
+  &.undo { background-position: -60px 0px }
+  &.redo { background-position: -30px 0px }
+  &.flipv { background-position: -180px 0px }
+  &.fliph { background-position: -150px 0px }
+  &.rotl { background-position: -120px 0px }
+  &.rotr { background-position: -90px 0px }
+  &.pipette { background-position: 0px -60px }
+  &.add { background-position: -60px -60px }
+  &.remove { background-position: -30px -60px }
+  &.duplicate { background-position: -120px -60px }
+  
+  &#playButton { background-position: -180px -30px }
+  &#stopButton { background-position: -90px -60px; display: none; }
 }
 
 #paint-wrapper .toggleBgButton {
