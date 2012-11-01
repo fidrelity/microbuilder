@@ -4,5 +4,8 @@
 
 :javascript
   $(document).ready( function() {
-    editor_main( null, "#{current_user.display_name}" );
+
+    var data = #{@game_data} || null;
+    editor_main( data, "#{current_user.display_name}" );
+
   } );

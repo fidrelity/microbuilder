@@ -4,7 +4,7 @@
   before_filter :find_game, :only => [:embed, :destroy, :like, :dislike, :played]  
   
   def index
-     params[:order] ||= "desc"
+    params[:order] ||= "desc"
     @games = case params[:type]
       when "rating"
         Game.all_by_rating(params[:page], params[:order], 12)
@@ -21,6 +21,14 @@
     @game = Game.unscoped.find(params[:id])
     render :reported unless @game.visible
     @comments = @game.game_comments
+  end
+
+  def new
+    @game_data = "null"
+    
+    if params[:id]
+      @game_data = Game.unscoped.find(params[:id]).data
+    end       
   end
   
   def embed
