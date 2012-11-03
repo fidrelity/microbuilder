@@ -47,8 +47,8 @@ h6 {
 
 .link-line {
   font-size: 20px;
-  background: url('link.png') no-repeat;
-  padding: 1px 30px;
+  background: #CCC url('link.png') no-repeat;
+  padding:1px 30px;
 }
 
 .section-header {
@@ -254,6 +254,28 @@ h6 {
     margin-top: 9px;
   }
 }
+
+#welcomeTeaser {
+  margin-top:1em;
+}
+
+#welcomeTeaser img {
+  border:5px solid #CCC;
+}
+
+
+#welcomeTeaser img:hover {
+  border:5px solid $red;
+}
+
+.welcome .link-line {
+  font-size: 20px;
+  background: #CCC url('link.png') no-repeat;
+  padding:4px 40px;
+  border:1px solid #CCC;
+  border-radius:4px;  
+}
+
 
 .heroExt {
   background:#333;color:#FFF;padding:1.7em;
