@@ -76,7 +76,7 @@ MoveAction.prototype = {
       
     } else {
       
-      dir = this.target.sub( this.gameObject.movement.position ).angle();
+      dir = this.target.sub( this.gameObject.getPosition() ).angle();
       
     }
     
@@ -100,8 +100,8 @@ var SwapAction = function( objectOne, objectTwo ) {
   
   this.execute = function() {
     
-    var one = objectOne.movement.position,
-      two = objectTwo.movement.position,
+    var one = objectOne.getPosition(),
+      two = objectTwo.getPosition(),
       swap = one.clone();
     
     objectOne.movement.stop();
@@ -128,7 +128,7 @@ var StopAction = function( gameObject ) {
 
 var ScaleAction = function( gameObject, scale, speed ) {
   
-  this.gameObject = gameObject;
+  this.shape = gameObject.shape;
   
   this.scale = new Vector( scale, scale );
   this.speed = this.speeds[speed];
@@ -153,13 +153,13 @@ ScaleAction.prototype = {
   
   executeJumpScale : function() {
     
-    this.gameObject.animation.setScale( this.scale );
+    this.shape.setScale( this.scale );
     
   },
   
   executeMoveScale : function() {
     
-    this.gameObject.animation.scaleTo( this.scale, this.speed );
+    this.shape.scaleTo( this.scale, this.speed );
     
   }
 
@@ -168,7 +168,7 @@ ScaleAction.prototype = {
 
 var FlipAction = function( mode, gameObject ) {
   
-  this.gameObject = gameObject;
+  this.shape = gameObject.shape;
   this.flip = new Vector( 1, 1 );
   
   if ( mode === 'horizontally' ) {
@@ -191,7 +191,7 @@ FlipAction.prototype = {
   
   execute : function() {
     
-    this.gameObject.animation.flip( this.flip );
+    this.shape.flip( this.flip );
     
   }
   

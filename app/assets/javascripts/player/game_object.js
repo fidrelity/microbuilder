@@ -6,7 +6,8 @@ var GameObject = function( ID, name ) {
   this.startGraphic = null;
   this.graphic = null;
   
-  this.movement = new Movement();
+  this.shape = new Shape();
+  this.movement = new Movement( this.shape );
   this.animation = new Animation();
   
   this.counter = 0;
@@ -19,6 +20,7 @@ GameObject.prototype = {
     
     this.setGraphic( this.startGraphic );
     
+    this.shape.reset();
     this.movement.reset();
     this.animation.reset();
     
@@ -28,6 +30,7 @@ GameObject.prototype = {
   
   update : function( dt ) {
     
+    this.shape.update( dt );
     this.movement.update( dt );
     this.animation.update( dt );
     
@@ -35,24 +38,15 @@ GameObject.prototype = {
   
   draw : function( ctx ) {
     
-    var pos = this.movement.position,
-      scale = this.animation.getScale(),
-      area;
+    var area;
     
-    ctx.save();
-    
-    ctx.translate( pos.x, pos.y );
-    ctx.scale( scale.x, scale.y );
-    
-    this.graphic.draw( ctx, this.animation.getFrame() );
-    
-    ctx.restore();
+    this.shape.draw( ctx, this.graphic, this.animation.getFrame() );
     
     if ( ctx.debug ) {
       
       this.movement.draw( ctx );
       
-      area = this.movement.getArea();
+      area = this.shape.getBounds();
       ctx.fillText( this.counter, area.x + 2, area.y + 17 );
       
     }
@@ -63,7 +57,7 @@ GameObject.prototype = {
     
     this.graphic = graphic;
     
-    this.movement.setGraphicSize( graphic.frameWidth, graphic.frameHeight );
+    this.shape.setGraphicSize( graphic.frameWidth, graphic.frameHeight );
     
     this.animation.setFrame( 1 );
     
@@ -77,28 +71,15 @@ GameObject.prototype = {
     
   },
   
-  getArea : function() {
-    
-    return this.movement.getArea();
-    
-  },
-  
-  getGraphicArea : function() {
-    
-    return this.getArea();
-    
-    var pos = this.movement.position,
-      g = this.graphic,
-      width = g.frameWidth,
-      height = g.frameHeight;
-    
-    return new Area( pos.x - width * 0.5, pos.y - height * 0.5, width, height );
-    
-  },
-  
   getPosition : function() {
     
-    return this.movement.position;
+    return this.shape.getPosition();
+    
+  },
+  
+  getArea : function() {
+    
+    return this.shape.getBounds();
     
   }
   

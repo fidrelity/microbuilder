@@ -91,7 +91,7 @@ extend( Stage.prototype, {
         
         ctx.strokeStyle = '#000';
         
-        this.selectObject.getGraphicArea().draw( ctx );
+        this.selectObject.getArea().draw( ctx );
         
       }
       
@@ -194,7 +194,7 @@ extend( Stage.prototype, {
     
     var object = this.selectObject;
     
-    if ( !object || !object.getGraphicArea().contains( mouse.pos ) ) {
+    if ( !object || !object.getArea().contains( mouse.pos ) ) {
       
       object = this.game.getGameObjectAt( mouse.pos );
       
@@ -212,7 +212,7 @@ extend( Stage.prototype, {
     
     if ( object ) {
       
-      object.movement.movePosition( mouse.move );
+      object.shape.movePosition( mouse.move );
       
     }
     

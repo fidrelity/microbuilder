@@ -17,7 +17,7 @@ var Parser = {
       var action = new MoveAction( 'moveIn', gameObject, data.speed );
       
       action.direction = data.angle;
-          
+      
       return action;
       
     },
@@ -46,7 +46,7 @@ var Parser = {
       
       var action = new MoveAction( 'moveIn', gameObject, data.speed );
       
-      action.target = game.getGameObjectWithID( data.objectID ).movement.position;
+      action.target = game.getGameObjectWithID( data.objectID ).getPosition();
       
       return action;
       
@@ -81,7 +81,7 @@ var Parser = {
       
       var action = new MoveAction( 'moveTo', gameObject, data.speed );
       
-      action.target = game.getGameObjectWithID( data.objectID ).movement.position;
+      action.target = game.getGameObjectWithID( data.objectID ).getPosition();
       action.offset = new Vector().copy( data.offset );
       
       return action;
@@ -105,7 +105,7 @@ var Parser = {
       
       var action = new MoveAction( 'jumpTo', gameObject );
       
-      action.target = game.getGameObjectWithID( data.objectID ).movement.position;
+      action.target = game.getGameObjectWithID( data.objectID ).getPosition();
       action.offset = new Vector().copy( data.offset );
       
       return action;
@@ -527,7 +527,7 @@ var Parser = {
     
     var gameObject = new GameObject( data.ID, data.name );
     
-    gameObject.movement.startPosition.copy( data.position );
+    gameObject.shape.startPosition.copy( data.position );
     
     gameObject.setStartGraphic( this.game.getGraphicWithID( data.graphicID ) );
     
@@ -535,12 +535,11 @@ var Parser = {
       
       if ( data.boundingArea.width ) {
         
-        gameObject.movement.boundingArea = new Area().copy( data.boundingArea );
+        gameObject.shape.setBounds( new Area().copy( data.boundingArea ) );
         
       } else if ( data.boundingArea.radius ) {
         
-        gameObject.movement.boundingArea = new Circle().copy( data.boundingArea );
-        gameObject.movement.area = new Circle();
+        gameObject.shape.setBounds( new Circle().copy( data.boundingArea ) );
         
       }
       

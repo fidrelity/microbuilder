@@ -8,14 +8,6 @@ var Animation = function() {
   
   this.speed;
   
-  this.scale = new Vector( 1, 1 );
-  this.targetScale = new Vector();
-  
-  this.scales = false;
-  this.scaleSpeed;
-  
-  this.vector = new Vector();
-  
 };
 
 Animation.prototype = {
@@ -25,9 +17,6 @@ Animation.prototype = {
   reset : function() {
     
     this.stop();
-    
-    this.scale.set( 1, 1 );
-    this.scales = false;
     
   },
   
@@ -78,21 +67,11 @@ Animation.prototype = {
   
   update : function( dt ) {
     
-    if ( this.plays ) {
+    if ( !this.plays ) {
       
-      this.updateFrame( dt );
-      
-    }
-    
-    if ( this.scales ) {
-      
-      this.updateScale( dt );
+      return;
       
     }
-    
-  },
-  
-  updateFrame : function( dt ) {
     
     this.time += dt;
     
@@ -133,62 +112,6 @@ Animation.prototype = {
       }
       
     }
-    
-  },
-  
-  getScale : function() {
-    
-    return this.scale;
-    
-  },
-  
-  setScale : function( scale ) {
-    
-    this.scale.copy( scale );
-    
-  },
-  
-  scaleTo : function( target, speed ) {
-    
-    this.targetScale.copy( target );
-    this.scaleSpeed = speed;
-    
-    this.scales = true;
-    
-  },
-  
-  updateScale : function( dt ) {
-    
-    var vector = this.vector,
-      target = this.targetScale,
-      scale = this.scale,
-      distance = this.scaleSpeed * dt;
-    
-    vector.copy( target ).subSelf( scale );
-    
-    if ( vector.norm() < distance ) {
-      
-      scale.copy( target );
-      
-      this.scales = false;
-      
-    } else {
-      
-      vector.normalizeSelf().mulSelf( distance );
-      
-      scale.addSelf( vector );
-      
-    }
-    
-  },
-  
-  flip : function( flip ) {
-    
-    this.scale.x *= flip.x;
-    this.scale.y *= flip.y;
-    
-    this.targetScale.x *= flip.x;
-    this.targetScale.y *= flip.y;
     
   }
   

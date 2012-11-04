@@ -1,10 +1,6 @@
-var Movement = function() {
+var Movement = function( shape ) {
   
-  this.position = new Vector();
-  this.startPosition = new Vector();
-  
-  this.area = new Area();
-  this.boundingArea = null;
+  this.shape = shape;
   
   this.target;
   this.direction;
@@ -30,9 +26,13 @@ Movement.prototype = {
   
   reset : function() {
     
-    this.position.copy( this.startPosition );
-
-    this.stop();    
+    this.stop();
+    
+  },
+  
+  getPosition : function() {
+    
+    return this.shape.getPosition();
     
   },
   
@@ -40,15 +40,13 @@ Movement.prototype = {
     
     this.stop();
     
-    this.position.copy( pos );
+    this.shape.setPosition( pos );
     
   },
   
-  movePosition : function( vec ) {
+  getArea : function() {
     
-    this.stop();
-    
-    this.position.copy( this.startPosition.addSelf( vec ) );
+    return this.shape.getBounds();
     
   },
   
@@ -60,7 +58,7 @@ Movement.prototype = {
     this.offset.copy( offset );
     
     this.setSpeed( speed );
-
+    
   },
   
   setDirection : function( dir, speed ) {
@@ -78,35 +76,11 @@ Movement.prototype = {
     
   },
   
-  getArea : function() {
-    
-    var pos = this.position;
-    
-    if ( this.boundingArea ) {
-      
-      return this.area.copy( this.boundingArea ).addSelf( pos );
-      
-    }
-    
-    return this.area.setCenter( pos.x, pos.y );
-    
-  },
-  
-  setGraphicSize : function( width, height ) {
-    
-    if ( !this.boundingArea ) {
-      
-      this.area.setSize( width, height );
-      
-    }
-    
-  },
-  
   roam : function( mode, area, speed ) {
     
     var objArea = this.getArea(),
-      width, height, bounding = this.boundingArea,
-      increase, v, h, y, g = 9.81;
+      bounds = this.shape.getStartBounds(),
+      width, height, increase, v, h, y, g = 9.81;
     
     if ( mode === this.roamMode && area === this.roamArea &&
       this.speed === this.speeds[speed] ) {
@@ -165,10 +139,10 @@ Movement.prototype = {
       y = h - objArea.y;
       v = Math.sqrt( 2 * h * g );
       
-      if ( bounding ) {
+      if ( bounds ) {
         
-        y += bounding.radius || 0;
-        this.bounceStart = area.y + area.height - ( bounding.radius || bounding.height ) - bounding.y;
+        y += bounds.radius || 0;
+        this.bounceStart = area.y + area.height - ( bounds.radius || bounds.height ) - bounds.y;
         
       } else {
         
@@ -211,7 +185,7 @@ Movement.prototype = {
 
     if ( path.length > 1 ) {
       
-      path[0] = this.position.clone();    
+      path[0] = this.getPosition().clone();
       this.target = path[1];
       
       this.path = path;
@@ -265,7 +239,7 @@ Movement.prototype = {
     
     var vector = this.vector,
       target = this.target,
-      pos = this.position;
+      pos = this.getPosition();
     
     vector.copy( target ).addSelf( this.offset ).subSelf( pos );
     
@@ -348,12 +322,13 @@ Movement.prototype = {
     
     var vector = this.vector,
       mode = this.roamMode,
+      pos = this.getPosition(),
       breakout;
     
     vector.set( distance, 0 ).rotateSelf( this.direction );
     
-    this.position.addSelf( vector );
-   
+    pos.addSelf( vector );
+    
     if ( mode ) {
     
       if ( mode === 'wiggle' ) {
@@ -370,7 +345,7 @@ Movement.prototype = {
       
       if ( breakout ) {
         
-        this.position.subSelf( vector );
+        pos.subSelf( vector );
         
         this.reflectDirection( breakout );
         
@@ -382,12 +357,14 @@ Movement.prototype = {
   
   updateBounce : function( time ) {
     
-    var breakout;
+    var pos = this.getPosition(),
+      dir = this.direction,
+      breakout;
     
     time *= 10 * this.speed;
     
-    this.position.x += this.direction.x;
-    this.position.y = this.bounceStart - this.direction.y * time + 4.905 * time * time;
+    pos.x += dir.x;
+    pos.y = this.bounceStart - dir.y * time + 4.905 * time * time;
     
     breakout = this.getArea().leavesArea( this.roamArea );
     
@@ -395,13 +372,13 @@ Movement.prototype = {
       
       if ( breakout === 'x' || breakout === 'width' ) {
       
-        this.direction.x *= -1;
-        this.position.x += this.direction.x;
+        dir.x *= -1;
+        pos.x += dir.x;
       
       } else {
       
         this.time = 0;
-        this.position.y = this.bounceStart;
+        pos.y = this.bounceStart;
       
       }
       
@@ -430,22 +407,22 @@ Movement.prototype = {
   insertObject : function( area ) {
     
     var objArea = this.getArea(),
-      bounding = this.boundingArea,
-      pos = this.position;
+      bounds = this.shape.getStartBounds(),
+      pos = this.getPosition();
     
     pos.set(
       area.x + Math.random() * ( area.width - ( objArea.width || 2 * objArea.radius ) ),
       area.y + Math.random() * ( area.height - ( objArea.height || 2 * objArea.radius ) )
     );
     
-    if ( bounding ) {
+    if ( bounds ) {
       
-      pos.subSelf( bounding );
+      pos.subSelf( bounds );
       
-      if ( bounding.radius) {
+      if ( bounds.radius) {
         
-        pos.x += bounding.radius;
-        pos.y += bounding.radius;
+        pos.x += bounds.radius;
+        pos.y += bounds.radius;
         
       }
       
@@ -460,6 +437,8 @@ Movement.prototype = {
   
   draw : function( ctx ) {
     
+    var pos = this.getPosition();
+    
     this.getArea().draw( ctx );
     
     if ( this.target ) {
@@ -472,7 +451,7 @@ Movement.prototype = {
       
       ctx.save();
       ctx.fillStyle = ctx.strokeStyle = 'red';
-      ctx.drawArrow( this.position.x, this.position.y, this.target.x + this.offset.x, this.target.y + this.offset.y, 0.7 );
+      ctx.drawArrow( pos.x, pos.y, this.target.x + this.offset.x, this.target.y + this.offset.y, 0.7 );
       ctx.restore();
       
     } else if ( this.roamMode ) {
@@ -483,7 +462,7 @@ Movement.prototype = {
       
       ctx.save();
       
-      ctx.translate( this.position.x, this.position.y );
+      ctx.translate( pos.x, pos.y );
       ctx.rotate( this.direction );
       
       ctx.drawArrow( 0, 0, 70, 0, 0.5 );
