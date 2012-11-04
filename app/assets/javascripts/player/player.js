@@ -394,7 +394,7 @@ Player.prototype = {
     
     setTimeout( function() {
     
-      if ( self.onRestart() ) {
+      if ( self.onRestart( self.game.isWon ) ) {
         
         self.fsm.restart();
         
