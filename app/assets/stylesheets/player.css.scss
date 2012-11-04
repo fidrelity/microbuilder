@@ -80,6 +80,7 @@
 #player .titleBar {
   @include abs;
   top: 390px;
+  z-index: 1;
   
   .titleText {
     
