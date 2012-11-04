@@ -151,6 +151,8 @@ function player_main( data, game_id ) {
       player.onWin = function() { increaseCounter( true ); };
       player.onLose = function() { increaseCounter( false ); };
       
+      // player.onRestart = function() { player.parse( data ); return false; };
+      
     }
     
   }

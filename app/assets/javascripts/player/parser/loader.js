@@ -9,10 +9,6 @@ var Loader = function( callback, animated, corsSave ) {
   
   this.animated = animated;
   this.loadCircle = 0;
-  
-  this.c = 0;
-
-  this.finishedLoading = false;
 
 };
 
@@ -33,21 +29,14 @@ Loader.prototype = {
       
     }
     
-    var image = new Image();
-    
-    var self = this;
+    var image = new Image(),
+      self = this;
     
     image.onload = function () {
       
-      self.c++;
+      callback();
       
-      // setTimeout( function() {
-        
-        callback();
-        
-        self.imageLoaded();
-        
-      // }, self.c * 500 );
+      self.imageLoaded();
       
     }
     
@@ -84,10 +73,6 @@ Loader.prototype = {
     if ( this.imageCount === this.imagesLoaded ) {
       
       this.callback();
-
-      this.finishedLoading = true;
-      
-      //this.finishedLoading();
       
     }
     
@@ -139,7 +124,5 @@ Loader.prototype = {
     this.loadCircle = load;
     
   },
-
-  finishedLoading : function() {} // observed from publish view
   
 };

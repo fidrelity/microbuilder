@@ -52,6 +52,7 @@ var Player = function() {
   this.timePlayed = 0;
   this.restTime = 0;
   
+  this.hasLoaded = false;
   this.terminate = false;
   
 };
@@ -193,11 +194,15 @@ Player.prototype = {
     
     var self = this;
     
+    this.hasLoaded = false;
+    
     this.fsm.parse();
     
     this.game = new Game( this, this.mouse );
     
     this.loader = new Loader( function() {
+      
+      self.hasLoaded = true;
       
       self.fsm.loaded();
       
@@ -388,9 +393,13 @@ Player.prototype = {
     this.draw( this.ctx );
     
     setTimeout( function() {
-      
-      self.fsm.restart();
-      
+    
+      if ( self.onRestart() ) {
+        
+        self.fsm.restart();
+        
+      }
+    
     }, 1500 );
     
   },
@@ -423,8 +432,10 @@ Player.prototype = {
     
   },
   
-  onWin : function() {},
-  onLose : function() {}
+  onWin : function() { },
+  onLose : function() { },
+  
+  onRestart : function() { return true; }
   
 };
 

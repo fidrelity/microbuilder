@@ -6,8 +6,6 @@ var PublishView = Ember.View.extend({
   player : null,
   values : null,
   checklist : null,
-
-  hasLoaded : false,
   
   snapshot : null,
   
@@ -115,10 +113,10 @@ var PublishView = Ember.View.extend({
         
         self.checkValue( 'wasWon', true );
         
-      };      
+      };
     
     });
-
+    
     
     for ( name in this.values ) {
     
@@ -180,11 +178,14 @@ var PublishView = Ember.View.extend({
   
   takeSnapshot : function() {
     
-    if(!this.player.loader.finishedLoading) return false;
+    if ( !this.player || !this.player.hasLoaded ) {
+      
+      return;
+      
+    }
     
-    var canvas = this.$( '.testCanvas' )[0],
-      img = new Image,
-      snapshot, 
+    var img = new Image,
+      snapshot,
       self = this;
     
     img.onload = function() {
@@ -209,7 +210,7 @@ var PublishView = Ember.View.extend({
       
     };
     
-    img.src = canvas.toDataURL( "image/png" );
+    img.src = this.player.canvas.toDataURL( "image/png" );
     
   },
   
