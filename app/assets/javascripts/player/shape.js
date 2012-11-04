@@ -3,7 +3,7 @@ var Shape = function() {
   this.startPosition = new Vector();
   this.position = new Vector();
   
-  this.startBounds;
+  this.startBounds = new Area();
   this.bounds = new Area();
   
   this.scale = new Vector( 1, 1 );
@@ -47,15 +47,7 @@ Shape.prototype = {
   
   getBounds : function() {
     
-    var pos = this.position;
-    
-    if ( this.startBounds ) {
-      
-      return this.bounds.copy( this.startBounds ).addSelf( pos );
-      
-    }
-    
-    return this.bounds.setCenter( pos.x, pos.y );
+    return this.bounds.copy( this.startBounds ).addSelf( this.position );
     
   },
   
@@ -70,13 +62,15 @@ Shape.prototype = {
     this.startBounds = bounds.clone();
     this.bounds = bounds.clone();
     
+    this.startBounds.done = true;
+    
   },
   
   setGraphicSize : function( width, height ) {
     
-    if ( !this.startBounds ) {
+    if ( !this.startBounds.done ) {
       
-      this.bounds.setSize( width, height );
+      this.startBounds.set( -width / 2, -height / 2, width, height );
       
     }
     

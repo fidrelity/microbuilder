@@ -139,7 +139,7 @@ Movement.prototype = {
       y = h - objArea.y;
       v = Math.sqrt( 2 * h * g );
       
-      if ( bounds ) {
+      if ( bounds.done ) {
         
         y += bounds.radius || 0;
         this.bounceStart = area.y + area.height - ( bounds.radius || bounds.height ) - bounds.y;
@@ -415,7 +415,7 @@ Movement.prototype = {
       area.y + Math.random() * ( area.height - ( objArea.height || 2 * objArea.radius ) )
     );
     
-    if ( bounds ) {
+    if ( bounds.done ) {
       
       pos.subSelf( bounds );
       
