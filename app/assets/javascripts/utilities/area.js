@@ -181,6 +181,18 @@ extend( Area.prototype, {
     
   },
   
+  scaleSelf : function( vec ) {
+    
+    this.x *= vec.x;
+    this.y *= vec.y;
+    
+    this.width *= vec.x;
+    this.height *= vec.y;
+    
+    return this.adjust();
+    
+  },
+  
   string : function() {
     
     return '( ' + this.x + ' | ' + this.y + ' | ' + this.width + ' | ' + this.height + ' )';

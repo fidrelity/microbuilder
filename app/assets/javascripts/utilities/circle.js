@@ -150,6 +150,17 @@ extend( Circle.prototype, {
     
   },
   
+  scaleSelf : function( vec ) {
+    
+    this.x *= vec.x;
+    this.y *= vec.y;
+    
+    this.radius *= Math.abs( vec.x );
+    
+    return this;
+    
+  },
+  
   string : function() {
     
     return '( ' + this.x + ' | ' + this.y + ' | ' + this.radius + ' )';

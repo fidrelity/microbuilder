@@ -47,7 +47,7 @@ Shape.prototype = {
   
   getBounds : function() {
     
-    return this.bounds.copy( this.startBounds ).addSelf( this.position );
+    return this.bounds.copy( this.startBounds ).scaleSelf( this.scale ).addSelf( this.position );
     
   },
   
