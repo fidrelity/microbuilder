@@ -27,7 +27,7 @@ var Player = function() {
       { name : 'init' },
       { name : 'load', enter : this.enterLoad, draw : this.drawLoad, exit : this.exitLoad },
       
-      { name : 'ready', enter : this.enterReady, exit : this.exitReady },
+      { name : 'ready', enter : this.enterReady },
       
       { name : 'play', enter : this.enterPlay, draw : this.draw, update : this.update, exit : this.exitPlay },
       { name : 'end', draw : this.draw, update : this.update },
@@ -266,8 +266,14 @@ Player.prototype = {
   
   enterLoad : function() {
     
-    $( '.playerUI', this.node ).show();
-    $( '.loadScreen', this.node ).show();
+    var node = this.node;
+    
+    $( '.playerUI', node ).show();
+    $( '.loadScreen', node ).show();
+    
+    $( '.titleScreen', node ).hide();
+    $( '.playButton', node ).hide();
+    $( '.titleBar', node ).removeClass( 'interactive' );
     
   },
   
@@ -296,7 +302,16 @@ Player.prototype = {
     
   },
   
-  exitReady : function() {
+  onReady : function() {
+    
+    this.reset();
+    this.game.reset();
+    
+    this.draw( this.ctx );
+    
+  },
+  
+  onStart : function() {
     
     var node = this.node;
     
@@ -309,19 +324,6 @@ Player.prototype = {
       $( '.titleScreen', node ).hide();
     
     }, 200);
-    
-  },
-  
-  onReady : function() {
-    
-    this.reset();
-    this.game.reset();
-    
-    this.draw( this.ctx );
-    
-  },
-  
-  onStart : function() {
     
     this.reset();
     
