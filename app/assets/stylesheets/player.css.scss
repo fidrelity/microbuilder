@@ -82,6 +82,15 @@
   top: 390px;
   z-index: 1;
   
+  @include transition(top, 0.2s, linear);
+  
+  &.interactive {
+    top: 330px;
+    &:hover {
+      top: 220px;
+    }
+  }
+  
   .titleText {
     
     @include abs;

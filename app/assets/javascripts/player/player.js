@@ -106,26 +106,6 @@ Player.prototype = {
     
     $('#player').addTouch();
     
-    function animateBar( val ) {
-      
-      if ( $( '.titleBar' ).css( 'top' ) !== val + 'px' && self.fsm.hasState( 'ready' ) ) {
-      
-        $( '.titleBar' ).animate( {top: val}, 500 );
-        
-      }
-      
-    };
-    
-    $( '.titleBar', _node ).hover( function() {
-      
-      animateBar( 220 );
-      
-    }, function() {
-      
-      animateBar( 330 );
-      
-    });
-    
     this.node = _node;
     
     if ( timeline ) {
@@ -310,7 +290,7 @@ Player.prototype = {
       
       $( '.endBg', node ).animate( {opacity: 0}, 500 );
       $( '.playButton', node ).fadeIn( 300 );
-      $( '.titleBar', node ).animate( {top: 330}, 500 );
+      $( '.titleBar', node ).addClass( 'interactive' );
       
     });
     
@@ -321,14 +301,14 @@ Player.prototype = {
     var node = this.node;
     
     $( '.playButton', node ).fadeOut( 200 );
+    $( '.titleBar', node ).removeClass( 'interactive' );
     
-    $( '.titleBar', node ).animate( {top: 390}, 200, function() {
+    setTimeout( function() {
     
       $( '.playerUI', node ).hide();
       $( '.titleScreen', node ).hide();
-      $( '.titleBar', node ).css( {top: 390} );
     
-    });
+    }, 200);
     
   },
   
