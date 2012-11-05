@@ -420,6 +420,24 @@ Array.prototype.clone = function() {
   
 };
 
+Array.prototype.shuffle = function() {
+  
+  var i = this.length, j, swap;
+  
+  while ( i-- > 0 ) {
+    
+    j = Math.floor( Math.random() * ( i + 1 ) );
+    
+    swap = this[i];
+    this[i] = this[j];
+    this[j] = swap;
+    
+  }
+  
+  return this;
+  
+}
+
 Array.max = function( array ) {
   
   return Math.max.apply( Math, array );
