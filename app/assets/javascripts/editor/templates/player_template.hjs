@@ -17,7 +17,7 @@
       <div class="titleBar">
         <div class="titleBg"></div>
         <div class="titleText">
-          <strong>{{App.game.title}}</strong>
+          <strong class="title">{{App.game.title}}</strong>
           <span>by {{App.username}}</span>
           <i class="icon-chevron-up icon-white"></i>
           <h2>Instructions</h2>
