@@ -648,3 +648,24 @@ var ScaleOption = Option.extend({
   }
   
 });
+
+var FlipOption = Option.extend({
+  
+  type : 'flip',
+  
+  doInsert : function( reinsert ) {
+    
+    App.actionController.addOption( this, FlipView.create({
+      observer : this.action,
+      object : App.gameObjectsController.current,
+    }));
+    
+    if ( !reinsert ) {
+    
+      //this.action.setOffset( new Vector( 0, 0 ) );
+    
+    }
+    
+  }
+  
+});

@@ -347,7 +347,12 @@ var ActionController = Ember.Object.extend({
               buttons:  ['horizontally', 'vertically', 'both directions'],
               modes:  ['horizontally', 'vertically', 'both'],
 
-              decision: SaveOption.create({ choiceID: 'flipObject' })
+              decision: FlipOption.create({ 
+                name: 'flip',
+
+                child: SaveOption.create({ choiceID: 'flipObject' })
+
+              })
 
             })
 

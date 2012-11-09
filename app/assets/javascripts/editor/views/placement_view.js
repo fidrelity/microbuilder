@@ -614,3 +614,33 @@ var PathPlacementView = PlacementView.extend({
   }
   
 });
+
+
+var FlipView = ObjectPlacementView.extend({
+  
+  initView : function( _canvas, _ctx ) {
+    
+    this.initSole( _canvas, _ctx );
+    
+    this.object = this.getImage( this.object );
+    this.object.pos.set( this.object.frameWidth,  this.object.height );
+
+    this.scaleX = this.scaleY = 1;
+
+  },
+
+  
+  draw : function( _ctx, _obj ) {
+    
+    _ctx.save();
+    
+    _ctx.scale(this.scaleX, this.scaleY);
+        
+    this.drawImage(_ctx, this.object, false);
+
+    _ctx.restore();
+    
+  }
+  
+  
+});
