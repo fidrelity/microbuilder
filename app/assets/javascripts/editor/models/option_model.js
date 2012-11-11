@@ -652,7 +652,7 @@ var ScaleOption = Option.extend({
 var FlipOption = Option.extend({
   
   type : 'flip',
-  
+ 
   doInsert : function( reinsert ) {
     
     App.actionController.addOption( this, FlipView.create({

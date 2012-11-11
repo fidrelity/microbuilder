@@ -617,28 +617,90 @@ var PathPlacementView = PlacementView.extend({
 
 
 var FlipView = ObjectPlacementView.extend({
+
+  scaleX : 1,
+  scaleY : 1,
+  translateX : 0,
+  translateY : 0,
   
   initView : function( _canvas, _ctx ) {
     
     this.initSole( _canvas, _ctx );
     
     this.object = this.getImage( this.object );
-    this.object.pos.set( this.object.frameWidth,  this.object.height );
 
-    this.scaleX = this.scaleY = 1;
+    this.width = this.object.frameWidth;
+    this.height = this.object.height;
+  
+    this.canvas = _canvas;    
+    _canvas.width = this.width;
+    _canvas.height = this.height;
+        
+    _ctx.lineWidth = 1;
 
+    this.object.pos.set( this.width * 0.5, this.height * 0.5);
+
+    var self = this;
+
+    var observer = this.observer;
+    
+    this.setTransformation();
+
+    this.addObserver( 'observer.mode', function() {
+      
+      self.setTransformation();
+      self.doDraw();
+      
+    });
+    
   },
 
   
   draw : function( _ctx, _obj ) {
     
+    this.canvas.width = this.canvas.width;
+
     _ctx.save();
-    
+
+    _ctx.translate(this.translateX, this.translateY);
     _ctx.scale(this.scaleX, this.scaleY);
         
     this.drawImage(_ctx, this.object, false);
 
     _ctx.restore();
+    
+  },
+
+  setTransformation : function() {
+
+    var mode = this.observer.mode;
+
+    if ( mode === 'horizontally' ) {
+      
+      this.translateX = this.width;
+      this.translateY = 0;
+
+      this.scaleX = -1;
+      this.scaleY = 1;
+
+      
+    } else if ( mode === 'vertically' ) {
+
+      this.translateX = 0;
+      this.translateY = this.height;
+      
+      this.scaleX = 1;
+      this.scaleY = -1;
+      
+    } else if ( mode === 'both' ) {
+
+      this.translateX = this.width;
+      this.translateY = this.height;
+      
+      this.scaleX = -1;
+      this.scaleY = -1;
+      
+    }    
     
   }
   
