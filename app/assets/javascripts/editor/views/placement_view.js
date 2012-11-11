@@ -596,20 +596,41 @@ var PathPlacementView = PlacementView.extend({
     this.path.draw( _ctx );
     
   },
+
+  updatePath : function() {
+
+    this.observer.setPath( this.path );
+    this.doDraw();
+
+  },
   
   clearPath : function() {
     
     this.path = new Path( [this.object.pos.getData()] );
-    this.observer.setPath( this.path );
-    this.doDraw();
+    this.updatePath();
     
+  },
+
+  removeLastPath : function() {
+
+    if(this.path.points.length === 1) {
+
+      this.clearPath();      
+
+    } else {
+
+      this.path.points.pop();  
+
+    }
+
+    this.updatePath();
+
   },
   
   mousedown : function( _mouse ) {
     
     this.path.add( { x: _mouse.pos.x, y: _mouse.pos.y } );
-    this.observer.setPath( this.path );
-    this.doDraw();
+    this.updatePath();
     
   }
   
