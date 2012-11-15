@@ -7,12 +7,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :email, :password, :password_confirmation, :display_name,
-                  :remember_me, :first_name, :last_name, :facebook_id
+  attr_accessible :email, :password, :password_confirmation, 
+                  :display_name, :remember_me, :facebook_id
           
-  before_create :generate_display_name                
-  validates_length_of :first_name, :minimum => 2
-  validates_length_of :last_name, :minimum => 2
   validates_length_of :display_name, :minimum => 2
   
   class << self
@@ -22,8 +19,8 @@ class User < ActiveRecord::Base
         user
       else # Create a user with a stub password.
         User.create!(
-          :email => data.email, :password => Devise.friendly_token[0,20], :display_name => data.username,
-          :first_name => data.first_name, :last_name => data.last_name, :facebook_id => data.id
+          :email => data.email, :password => Devise.friendly_token[0,20], 
+          :display_name => data.username, :facebook_id => data.id
         ) 
       end
     end 
@@ -61,7 +58,7 @@ class User < ActiveRecord::Base
   
   private
     def generate_display_name
-      self.display_name = display_name || first_name  
+      self.display_name = display_name  
     end
   
     def gravatar_email_hash

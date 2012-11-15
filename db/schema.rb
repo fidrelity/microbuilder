@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120928112724) do
+ActiveRecord::Schema.define(:version => 20121115172849) do
 
   create_table "game_comments", :force => true do |t|
     t.string   "comment"
@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(:version => 20120928112724) do
     t.integer  "user_id"
     t.datetime "created_at",                                   :null => false
     t.datetime "updated_at",                                   :null => false
-    t.integer  "played",                     :default => 0
     t.integer  "likes",                      :default => 0
     t.integer  "dislikes",                   :default => 0
+    t.integer  "played",                     :default => 0
     t.string   "preview_image_file_name"
     t.string   "preview_image_content_type"
     t.integer  "preview_image_file_size"
@@ -85,8 +85,6 @@ ActiveRecord::Schema.define(:version => 20120928112724) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "first_name",                             :null => false
-    t.string   "last_name",                              :null => false
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "facebook_id"
