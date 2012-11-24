@@ -66,8 +66,8 @@ var Choice = Ember.Object.extend({
         case 'gameWin' : return 'win the game';
         case 'gameLose' : return 'lose the game';
 
-        case 'counterUp' : return 'increase counter';
-        case 'counterDown' : return 'decrease counter';
+        case 'counterUp' : return 'count up';
+        case 'counterDown' : return 'count down';
         case 'counterSet' : return 'set counter to ' + a.counter;
         
       
