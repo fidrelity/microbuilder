@@ -22,11 +22,6 @@
           <i class="icon-chevron-up icon-white"></i>
           <h2>Instructions</h2>
           <div class="instruction">{{App.game.instructions}}</div>
-          <div class="noticeMouse">
-            <img alt="mouse move" src="/assets/mouse_move.png" />
-            <img alt="mouse click" src="/assets/mouse_click.png" />
-            <br /><small>use your mouse to play</small>
-          </div>
         </div>
       </div>
     </div>

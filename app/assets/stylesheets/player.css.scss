@@ -96,7 +96,6 @@
     @include abs;
     margin: 24px 16px;
     width: 608px;
-    height: 355px;
     
     strong {
       @include big_font;
@@ -137,18 +136,12 @@
       @include small_font;
       text-align: center;
     }
-    
-    .noticeMouse {
-      display: none;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-    }
 
   }
   
   .titleBg {
     @include bg;
+    height: 170px;
   }
 }
 
@@ -180,9 +173,10 @@
 }
 
 .endBg {
-  @include bg;
-  top: 132px;
+  margin: 132px auto 0;
+  width: 640px;
   height: 65px;
+  background-color: $font;
   opacity: 0;
 }
 
