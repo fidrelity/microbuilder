@@ -86,7 +86,7 @@
   
   &.interactive {
     top: 330px;
-    &:hover {
+    &.active {
       top: 220px;
     }
   }
@@ -150,6 +150,10 @@
   .titleBg {
     @include bg;
   }
+}
+
+#player .playerUI:hover .titleBar.interactive {
+  top: 220px;
 }
 
 /* --- End --- */

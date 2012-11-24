@@ -274,6 +274,7 @@ Player.prototype = {
     $( '.titleScreen', node ).hide();
     $( '.playButton', node ).hide();
     $( '.titleBar', node ).removeClass( 'interactive' );
+    $( '.titleBar', node ).removeClass( 'active' );
     
   },
   
@@ -300,6 +301,12 @@ Player.prototype = {
       
     });
     
+    $( '.titleBar', node ).click( function() {
+    
+      $( this ).toggleClass( 'active' );
+    
+    });
+    
   },
   
   onReady : function() {
@@ -317,6 +324,7 @@ Player.prototype = {
     
     $( '.playButton', node ).fadeOut( 200 );
     $( '.titleBar', node ).removeClass( 'interactive' );
+    $( '.titleBar', node ).removeClass( 'active' );
     
     setTimeout( function() {
     
