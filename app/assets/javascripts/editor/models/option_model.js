@@ -314,7 +314,8 @@ var ObjectOption = Option.extend({
     App.actionController.addOption( this, GameObjectsView.create({
       observer : this,
       contentBinding : 'App.gameObjectsController.' + ( this.showOthers ? 'others' : 'content' ),
-      active : reinsert ? this.action.gameObject : App.gameObjectsController.current
+      active : reinsert ? this.action.gameObject : null,
+      highlight : App.gameObjectsController.current
     }));
     
   },
@@ -340,7 +341,8 @@ var Object2Option = Option.extend({
     App.actionController.addOption( this, GameObjectsView.create({
       observer : this,
       contentBinding : 'App.gameObjectsController.subset',
-      active : reinsert ? this.action.gameObject2 : App.gameObjectsController.current
+      active : reinsert ? this.action.gameObject2 : null,
+      highlight : App.gameObjectsController.current
     }));
     
   },

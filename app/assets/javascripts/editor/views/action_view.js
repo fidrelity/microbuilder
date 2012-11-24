@@ -85,6 +85,7 @@ var GameObjectsView = Ember.CollectionView.extend({
   
   observer : null,
   active : null,
+  highlight : null,
   
   tagName : 'ul',
   classNames : ['graphics', 'gameobjectsview', 'optionview'],
@@ -122,6 +123,10 @@ var GameObjectsView = Ember.CollectionView.extend({
       if ( this.content === this._parentView.active ) {
         
         this.selectSelf();
+        
+      } else if ( this.content === this._parentView.highlight ) {
+        
+          this.$().addClass( 'highlight' );
         
       }
       
