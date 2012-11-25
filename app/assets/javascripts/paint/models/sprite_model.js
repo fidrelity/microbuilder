@@ -115,11 +115,25 @@ var SpriteModel = Ember.Object.extend({
   
   getImage : function() {
     
+    if ( !this.canvas ) {
+      
+      console.error( "no canvas" );
+      return null;
+      
+    }
+    
     return this.canvas.toDataURL( "image/png" );
     
   },
   
   saveImage : function( _img ) {
+    
+    if ( !this.ctx ) {
+      
+      console.error( "no context" );
+      return;
+      
+    }
     
     this.ctx.drawImage( _img, 0, 0 );
     this.save( this.ctx.getImageData( 0, 0, App.paintController.width, App.paintController.height ) );
