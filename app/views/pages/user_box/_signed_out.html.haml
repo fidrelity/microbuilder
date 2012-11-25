@@ -1,39 +1,31 @@
 .span8{:class => "welcome"}
   
   %h2
-    paint, create and play microgames!
+    Paint, create and play microgames!*
 
   Create your microgame in just 3 steps:
 
   .row{:id => "welcomeTeaser"}
 
-    .span2{:style => "margin-right:66px"}
+    .span2{:class => "thumbnail"}
       = link_to image_tag("guides/welcome/paint.jpg"), new_graphic_path
-    
-    .span2{:style => "margin-right:66px"}
-      = link_to image_tag("guides/welcome/create.jpg"), build_path        
-
-    .span2
-      = link_to image_tag("guides/welcome/play.jpg"), gallery_path        
-
-  .row
-    .span2{:style => "margin-right:66px"}
-      %p
+      %div
         1. paint
-    
-    .span2{:style => "margin-right:66px"}
-      %p
+
+    .span2{:class => "thumbnail"}
+      = link_to image_tag("guides/welcome/create.jpg"), build_path
+      %div
         2. create
 
-    .span2
-      %p
+    .span2{:class => "thumbnail"}
+      = link_to image_tag("guides/welcome/play.jpg"), gallery_path
+      %div
         3. play and share
-    
-  %div{:style => "margin-bottom:2em"}
-    %p
-      Ever wanted to build your own microgame and share it with your friends?
-      Here you can! Paint your own graphics, create your game and release it!
-      All you need is your browser and imagination!*
+
+  %p
+    Ever wanted to build your own microgame and share it with your friends?
+    Here you can! Paint your own graphics, create your game and release it!
+    All you need is your browser and imagination!
     
   %small{:class => "pull-right"}
     * no programming skills required.

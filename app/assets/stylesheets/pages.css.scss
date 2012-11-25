@@ -261,13 +261,25 @@ h6 {
 
 #welcomeTeaser {
   margin-top:1em;
+  margin-bottom:1em;
 }
 
-#welcomeTeaser img {
-  border:5px solid #CCC;
+#welcomeTeaser .span2 {
+  cursor: pointer;
+  background: white;
+  margin-left: 75px;
   
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 20px;
+  
+  &:first-child {
+    margin-left: 20px;
+  }
   &:hover {
-    border:5px solid $red;
+    border-color: $red;
+    box-shadow: 0px 1px 4px #AAA;
   }
 }
 
@@ -586,9 +598,8 @@ h6 {
     border:1px solid #222;
     
     &:hover {
-      border:1px solid #F6F6F6; 
+      border:1px solid #777; 
     }
-
   }
 
   a, a:hover {
