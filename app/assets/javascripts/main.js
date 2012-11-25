@@ -99,9 +99,11 @@ function editor_main( data, username ) {
   
 };
 
-function paint_main( data ) {
+function paint_main( data, username ) {
   
   window.App = Ember.Application.create();
+  
+  App.username = username;
   
   App.paintController = PaintController.create();
 

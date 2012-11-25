@@ -153,7 +153,7 @@ var PublishView = Ember.View.extend({
     
     if ( App.username === '' ) {
       
-      if ( confirm( 'You can\'t publish your game, because you are not signed in.\n\nDo you want to go to the sign in form?\n(Your game will wait here)' ) ) {
+      if ( confirm( 'You can\'t publish your game, because you are not signed in.\n\nDo you want to sign in?\n(Your game will wait here)' ) ) {
       
         document.location.href = '/users/sign_in'; 
       

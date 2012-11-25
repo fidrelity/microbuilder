@@ -68,6 +68,12 @@ var PaintController = Ember.ArrayController.extend({
     App.paintSizeView.remove();
     App.paintView.appendTo( '#content' );
     
+    if ( App.username === '' ) {
+      
+      Notifier.add( 'Your are not signed in. You can\'t save your image to your profile.', 'error' ).notify();
+      
+    }
+    
   },
   
   initView : function( _screenCtx, _toolCtx ) {
@@ -623,6 +629,20 @@ var PaintController = Ember.ArrayController.extend({
   
   save : function() {
     
+    if ( App.username === '' ) {
+      
+      if ( confirm( 'You can\'t save your image, because you are not signed in.\n\nDo you want to sign in?\n(Your image will wait here)' ) ) {
+      
+        document.location.href = '/users/sign_in'; 
+      
+      }
+      
+      return;
+      
+    }
+    
+    Notifier.clear();
+    
     var imageTitle = $( "#imageName" ).val(),
       makePublic = $( "#makePublic" ).is( ":checked" ) ? 1 : 0,
       count = this.content.length,
@@ -700,6 +720,7 @@ var PaintController = Ember.ArrayController.extend({
     
     if ( confirm( "Delete all and go back to type selection?" ) ) {
       
+      Notifier.clear();
       this.initSize();
       
     }

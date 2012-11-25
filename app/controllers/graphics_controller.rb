@@ -15,7 +15,7 @@ class GraphicsController < ApplicationController
   def create
     @graphic = current_user.graphics.create(params[:graphic])
     Stream.create_message("graphic", @graphic.user, @graphic) if @graphic.public
-    flash[:success] = "Your Graphic was created!"
+    flash[:success] = "Your Graphic was created! You can now use it in your games."
   end
   
   def destroy
