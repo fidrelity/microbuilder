@@ -32,13 +32,13 @@ function editor_main( data, username ) {
     
     if ( App.gameController.loadGame( data ) ) {
       
-      Notifier.add( 'An unfinished game was found and loaded', 'info' ).notify();
+      Notifier.add( 'An unfinished game was found in your browser', 'info' ).notify();
       
     }
     
   } else {
     
-    Notifier.add( 'Your game will be stored in the browser until you publish it to your profile.', 'info' ).notify();
+    Notifier.add( 'Your game will be stored in the browser until you publish it.', 'info' ).notify();
     
   }
   
@@ -127,14 +127,13 @@ function paint_main( data ) {
     
     if ( App.paintController.loadGraphic( data ) ) {
       
-      Notifier.add( 'An unfinished graphic was found and loaded', 'info' ).notify();
+      Notifier.add( 'An unfinished graphic was found in your browser.', 'info' ).notify();
       return;
       
     }
     
   }
   
-  Notifier.add( 'Your image will be stored in the browser until you publish it to your profile.', 'info' ).notify();
   App.paintController.initSize();
   
   // App.paintController.initType( true, 640, 390 );

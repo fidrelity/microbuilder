@@ -121,6 +121,7 @@ var PaintSizeView = Ember.View.extend({
     $('.pop').popover( 'destroy' );
     
     App.paintController.initPaint( isBackground, w, h );
+    Notifier.add( 'Your image will be stored in the browser until you publish it to your profile.', 'info' ).notify();
     
   }
   
