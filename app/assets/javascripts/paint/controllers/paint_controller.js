@@ -34,7 +34,19 @@ var PaintController = Ember.ArrayController.extend({
     
   },
   
-  initType : function( _isBackground, _width, _height ) {
+  initSize : function() {
+    
+    this.clearGraphic();
+    
+    App.paintView.set( 'name', '' );
+    App.paintView.set( 'public', true );
+    
+    App.paintView.remove();
+    App.paintSizeView.appendTo('#content');
+    
+  },
+  
+  initPaint : function( _isBackground, _width, _height, _empty ) {
     
     this.setProperties({
       
@@ -44,11 +56,17 @@ var PaintController = Ember.ArrayController.extend({
       
     });
     
-    this.content.clear();
-    
     this.set( 'zoom', _isBackground ? 1 : 2 );
     
-    this.addSprite();
+    if ( !_empty ) {
+      
+      this.content.clear();
+      this.addSprite();
+      
+    }
+    
+    App.paintSizeView.remove();
+    App.paintView.appendTo( '#content' );
     
   },
   
@@ -56,12 +74,6 @@ var PaintController = Ember.ArrayController.extend({
     
     this.set( 'screenCtx', _screenCtx );
     this.set( 'toolCtx', _toolCtx );
-    
-    if ( this.isBackground ) {
-      
-      $('#sprites-area').hide();
-      
-    }
     
     this.setColor( [0, 0, 0, 255] );
     
@@ -73,8 +85,6 @@ var PaintController = Ember.ArrayController.extend({
   },
   
   initEvents : function() {
-
-    this.toggleOnBeforeUnload(true);
     
     $( document ).keydown( function( e ) {
       
@@ -279,6 +289,7 @@ var PaintController = Ember.ArrayController.extend({
     }
     
     this.sprite.save( imageData );
+    this.saveGraphic();
     
   },
   
@@ -668,9 +679,8 @@ var PaintController = Ember.ArrayController.extend({
       },
       
       success : function( data ) {
-
-        App.paintController.toggleOnBeforeUnload(false)
-        App.paintController.goToTypeSelection( false );
+        
+        App.paintController.initSize();
         Notifier.hideLoader();
         
       },
@@ -686,50 +696,87 @@ var PaintController = Ember.ArrayController.extend({
     
   },
   
-  goToTypeSelection : function (_ask) {
+  goToTypeSelection : function() {
     
-    if ( _ask || typeof( _ask ) === "object" ) {
+    if ( confirm( "Delete all and go back to type selection?" ) ) {
       
-      if ( !confirm( "Delete all and go back to type selection?" ) ) {
-        
-        return false;
-        
-      }
+      this.initSize();
       
     }
-    
-    this.toggleOnBeforeUnload();
-    App.paintView.remove();
-    App.paintSizeView.appendTo( '#content' );
     
   },
-
-  toggleOnBeforeUnload : function( _doUnloadPrompt ) {
-
-    var doUnloadPrompt = _doUnloadPrompt || false;
-
-    if( doUnloadPrompt ) {
-
-      window.onbeforeunload = function (e) {
+  
+  clearGraphic : function() {
     
-        var message = "Do you really want to leave the paint tool without saving your art?",
-        e = e || window.event;
-        // For IE and Firefox
-        if (e) {
-          e.returnValue = message;
-        }
-
-        // For Safari
-        return message;
-      };
+    Storage.write( 'graphic', null );
+    
+    for ( var i = 0; i < 8; i++ ) {
       
-
-    } else {
-
-      window.onbeforeunload = null;
-
+      Storage.write( 'graphicData' + i, null );
+      
     }
-
+    
+  },
+  
+  saveGraphic : function() {
+    
+    // check sprites display mode
+    
+    var data = {
+      name : $( "#imageName" ).val(),
+      count : this.content.length,
+      width : this.width,
+      height : this.height,
+      public : $( "#makePublic" ).is( ":checked" ) ? 1 : 0,
+      background : this.isBackground,
+    };
+    
+    for ( var i = 0; i < data.count; i++ ) {
+      
+      Storage.write( 'graphicData' + i, JSON.stringify( this.content[i].getImage() ) );
+      
+    }
+    
+    Storage.write( 'graphic', JSON.stringify( data ) );
+    
+  },
+  
+  loadGraphic : function( _data ) {
+    
+    var img, sprite;
+    
+    if ( !_data.width || !_data.height || !_data.count ) {
+      
+      return false;
+      
+    }
+    
+    this.initPaint( _data.background, _data.width, _data.height, true );
+    
+    for ( var i = 0; i < _data.count; i++ ) {
+      
+      img = new Image();
+      img.src = JSON.parse( Storage.read( 'graphicData' + i ) );
+      
+      sprite = SpriteModel.create();
+      
+      img.onload = ( function( _sprite, _img ) {
+        
+        return function() { _sprite.saveImage( _img ); };
+        
+      })( sprite, img );
+      
+      this.content.push( sprite );
+      
+    }
+    
+    this.set( 'sprite', this.content[0] );
+    
+    App.paintView.set( 'name', _data.name );
+    App.paintView.set( 'public', _data.public );
+    
+    return true;
+    
   }
 
 });

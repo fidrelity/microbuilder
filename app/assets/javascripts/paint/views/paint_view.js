@@ -21,6 +21,9 @@ var PaintView = Ember.View.extend({
   
   isSprites : true,
   
+  name : '',
+  public : true,
+  
   didInsertElement : function() {
     
     var area = this.$( '#mouse-area' ),
@@ -75,6 +78,8 @@ var PaintView = Ember.View.extend({
       
       this.bgToggleCounter = 1;
       
+      this.$('#sprites-area').hide();
+      
       this.resize();
       
     } else {
@@ -115,6 +120,9 @@ var PaintView = Ember.View.extend({
       }
       
     });
+    
+    this.$( "#makePublic" ).attr( 'checked', !!this.public );
+    this.$( "#imageName" ).val( this.name );
     
     // make canvases compatible for touch events
     $('#zoom-canvas-area').addTouch();

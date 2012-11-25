@@ -400,6 +400,21 @@ extend( CanvasRenderingContext2D.prototype, {
     
     return imageData;
     
+  },
+  
+  createImageDataFromData : function( _data ) {
+    
+    var imageData = this.createImageData( _data.width, _data.height ),
+      i;
+    
+    for ( i = 0; i < _data.data.length; i++ ) {
+      
+      imageData.data[i] = _data.data[i];
+      
+    }
+    
+    return imageData;
+    
   }
   
 });

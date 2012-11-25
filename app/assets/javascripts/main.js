@@ -36,6 +36,10 @@ function editor_main( data, username ) {
       
     }
     
+  } else {
+    
+    Notifier.add( 'Your game will be stored in the browser until you publish it to your profile.', 'info' ).notify();
+    
   }
   
   App.updateHelp = function() {
@@ -89,7 +93,7 @@ function editor_main( data, username ) {
   
 };
 
-function paint_main() {
+function paint_main( data ) {
   
   window.App = Ember.Application.create();
   
@@ -109,7 +113,29 @@ function paint_main() {
   
   App.pixelDrawer = new PixelDrawer();
   
-  App.paintSizeView.appendTo('#content');
+  if ( !data ) {
+  
+    data = JSON.parse( Storage.read( 'graphic' ) );
+  
+  }
+  
+  if ( data ) {
+    
+    // Ember.run.end();
+    
+    console.log( data );
+    
+    if ( App.paintController.loadGraphic( data ) ) {
+      
+      Notifier.add( 'An unfinished graphic was found and loaded', 'info' ).notify();
+      return;
+      
+    }
+    
+  }
+  
+  Notifier.add( 'Your image will be stored in the browser until you publish it to your profile.', 'info' ).notify();
+  App.paintController.initSize();
   
   // App.paintController.initType( true, 640, 390 );
   // App.paintController.initType( false, 128, 128 );
