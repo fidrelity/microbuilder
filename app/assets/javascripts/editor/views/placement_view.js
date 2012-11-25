@@ -588,11 +588,15 @@ var PathPlacementView = PlacementView.extend({
   
   draw : function( _ctx ) {
     
+    var w = this.object.frameWidth,
+      h = this.object.height,
+      pos = this.object.pos;
+    
     this.drawGame( _ctx );
     
-    this.drawImage( _ctx, this.object, true );
-    
     _ctx.fillStyle = _ctx.strokeStyle = '#000';
+    _ctx.dashedRect( pos.x - w * 0.5, pos.y - h * 0.5, w, h, 5 );
+    
     this.path.draw( _ctx );
     
   },
