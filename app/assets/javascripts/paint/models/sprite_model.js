@@ -1,5 +1,6 @@
 var SpriteModel = Ember.Object.extend({
   
+  canvas : null,
   ctx : null,
   
   stack : null,
@@ -12,18 +13,20 @@ var SpriteModel = Ember.Object.extend({
     
   },
   
-  initView : function( _ctx ) {
+  initView : function( _canvas ) {
     
-    this.set( 'ctx', _ctx );
+    this.set( 'canvas', _canvas );
+    this.set( 'ctx', _canvas.getContext( '2d' ) );
     
     if ( !this.stack.length ) {
       
-      this.save( _ctx.getImageData( 0, 0, App.paintController.width, App.paintController.height ) );
+      this.save( this.ctx.getImageData( 0, 0, App.paintController.width, App.paintController.height ) );
       
     }
     
     this.draw();
     
+    // FIXME: not necessary every time, e.g. when all sprites are added
     App.paintController.loadSprite();
     
   },
@@ -105,6 +108,39 @@ var SpriteModel = Ember.Object.extend({
     if ( data && ctx ) {
       
       ctx.putImageData( data, 0, 0 );
+      
+    }
+    
+  },
+  
+  getImage : function() {
+    
+    if ( !this.canvas ) {
+      
+      console.error( "no canvas" );
+      return null;
+      
+    }
+    
+    return this.canvas.toDataURL( "image/png" );
+    
+  },
+  
+  saveImage : function( _img ) {
+    
+    if ( !this.ctx ) {
+      
+      console.error( "no context" );
+      return;
+      
+    }
+    
+    this.ctx.drawImage( _img, 0, 0 );
+    this.save( this.ctx.getImageData( 0, 0, App.paintController.width, App.paintController.height ) );
+    
+    if ( this === App.paintController.sprite ) {
+      
+      App.paintController.loadSprite();
       
     }
     

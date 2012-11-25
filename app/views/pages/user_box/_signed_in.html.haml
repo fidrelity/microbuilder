@@ -1,0 +1,38 @@
+.span8
+  #messages-public
+    = render :partial => 'shared/stream', :locals => {:messages => @messages}
+
+.span4
+
+  .row{:id => "home-profile-box"}
+    
+    .span3
+
+      %h2
+        = link_to current_user.display_name, user_path(current_user)
+        
+      %div{:class => "stats"}        
+
+        = "#{current_user.games.size} games created"
+        %br
+        = "#{current_user.graphics.size} graphics created"
+        
+    .span1
+
+      = link_to( user_path(current_user) ) do
+
+        .avatar_big{:style => "margin-top:1em"}
+          = image_tag "#{current_user.display_image}", :style => "width:60px;"
+
+  .row
+
+    .span4{:class => "home-profile-total-stats"}
+
+      %strong
+        total
+      %i{:class => "icon-eye-open"}
+      = "#{@plays} plays"
+      %span
+        \/
+      %i{:class => "icon-thumbs-up"}
+      = "#{@likes} likes"

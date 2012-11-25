@@ -12,5 +12,8 @@ class PagesController < ApplicationController
 
   def imprint
   end
+  
+  def tour
+  end
 
 end

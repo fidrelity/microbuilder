@@ -48,12 +48,6 @@ var Notifier = {
     for (var i = 0; i < Notifier.queue.length; i++) {
       Notifier.append(Notifier.queue.pop());
     };
-
-    if(Notifier.FADE_OUT_TIME > 0) {
-      setTimeout(function() {
-        Notifier.list.find(".alert-success").fadeOut(1000);
-      }, Notifier.FADE_OUT_TIME);
-    }
     return Notifier;
   },
 
@@ -64,6 +58,11 @@ var Notifier = {
     clone.addClass("alert-" + notification.type);
     Notifier.list.append(clone);
     clone.fadeIn(500);
+    if(notification.type === "success" && Notifier.FADE_OUT_TIME > 0) {
+      setTimeout(function() {
+        clone.fadeOut(1000);
+      }, Notifier.FADE_OUT_TIME);
+    }
     return Notifier;
   },
 

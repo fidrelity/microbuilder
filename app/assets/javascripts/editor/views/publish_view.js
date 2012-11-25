@@ -151,6 +151,18 @@ var PublishView = Ember.View.extend({
   
   publish : function() {
     
+    if ( App.username === '' ) {
+      
+      if ( confirm( 'You can\'t publish your game, because you are not signed in.\n\nDo you want to sign in?\n(Your game will wait here)' ) ) {
+      
+        document.location.href = '/users/sign_in'; 
+      
+      }
+      
+      return;
+      
+    }
+    
     var message = 'You cannot publish your game because:\n', error = false, name;
     
     for ( name in this.values ) {

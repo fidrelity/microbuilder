@@ -46,7 +46,7 @@
   position: relative;
 }
 
-#editor ul.graphics li:hover {
+#editor ul.graphics li:hover, #editor ul.graphics li.highlight {
   border: 1px solid #888;
 }
 

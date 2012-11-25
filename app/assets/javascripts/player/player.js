@@ -104,6 +104,12 @@ Player.prototype = {
       
     });
     
+    $( '.titleBar', _node ).click( function() {
+    
+      $( this ).toggleClass( 'active' );
+    
+    });
+    
     $('#player').addTouch();
     
     this.node = _node;
@@ -274,6 +280,7 @@ Player.prototype = {
     $( '.titleScreen', node ).hide();
     $( '.playButton', node ).hide();
     $( '.titleBar', node ).removeClass( 'interactive' );
+    $( '.titleBar', node ).removeClass( 'active' );
     
   },
   
@@ -292,7 +299,7 @@ Player.prototype = {
     $( '.titleScreen', node ).show();
     
     $( '.endScreen', node ).fadeOut( 200 );
-    $( '.endBg', node ).animate( {width: 65, left: 288}, 200, function() {
+    $( '.endBg', node ).animate( {width: 65 }, 200, function() {
       
       $( '.endBg', node ).animate( {opacity: 0}, 500 );
       $( '.playButton', node ).fadeIn( 300 );
@@ -317,6 +324,7 @@ Player.prototype = {
     
     $( '.playButton', node ).fadeOut( 200 );
     $( '.titleBar', node ).removeClass( 'interactive' );
+    $( '.titleBar', node ).removeClass( 'active' );
     
     setTimeout( function() {
     
@@ -369,7 +377,7 @@ Player.prototype = {
     }
     
     $( msg, this.node ).fadeIn( 300 );
-    $( '.endBg', this.node ).css( {width: 640, left: 0} );
+    $( '.endBg', this.node ).css( {width: 640} );
     $( '.endBg', this.node ).animate( {opacity: 0.8}, 300 );
     
     this.draw( this.ctx );

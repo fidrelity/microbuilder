@@ -19,6 +19,7 @@
       {{view GameObjectsView
         contentBinding = "App.gameObjectsController.content"
         observerBinding = "App.gameObjectsController"
+        activeBinding = "App.gameObjectsController.current"
       }}
 
       <div class="clear"></div>

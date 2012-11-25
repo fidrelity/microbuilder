@@ -18,7 +18,7 @@ var SpritesView = Ember.CollectionView.extend({
         canvas.width = App.paintController.width;
         canvas.height = App.paintController.height;
         
-        this.content.initView( canvas.getContext( '2d' ) );
+        this.content.initView( canvas );
         
         this.addObserver( 'App.paintController.sprite', function() {
         

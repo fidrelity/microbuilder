@@ -1,7 +1,13 @@
--if user_signed_in?    
-  =render :partial => "paint_tool"
--else
-  =render :partial => "paint_guide"
+#content
+
+:javascript
+  $(document).ready( function() {
+    
+    var data = null;
+    var name = "#{current_user ? current_user.display_name : ""}";
+    paint_main( data, name );
+    
+  } );
 
 .loadOverlay
   %div{:class => "overlayMessage row"}
@@ -9,4 +15,3 @@
       =image_tag "loader_circle.gif"
     %div{:class => "span6"}
       %div{ :class => "span6 message"}
-  

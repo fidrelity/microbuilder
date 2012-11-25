@@ -30,13 +30,13 @@
 
   </div>
 
-  <div class="span8 well" style="min-height:238px;">
-    <p>If you don't already have an account you can</p>
+  <div class="span3 well" style="min-height:238px;">
+    <p>If you don't already have an account:</p>
     <p>
-       <%= link_to "create a new account", new_user_registration_path, :class=>"btn btn-danger btn-large" %>
+       <%= link_to button_line("sign", "up"), new_user_registration_path, :class => "link-line" %>
     </p>
-
-    <p>You can also skip the whole registration process by using</p>
+    <br />
+    <p>You can also skip the whole registration process with:</p>
     <p>
       <%= link_to(image_tag("facebook_login.png"), user_omniauth_authorize_path(:facebook)) %>
     </p>

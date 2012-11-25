@@ -24,6 +24,12 @@ function editor_main( data, username ) {
     
   }
   
+  if ( !username ) {
+    
+    Notifier.add( 'Your are not signed in. You can\'t publish your game.', 'error' ).notify();
+    
+  }
+  
   if ( data ) {
     
     Ember.run.end();
@@ -32,9 +38,13 @@ function editor_main( data, username ) {
     
     if ( App.gameController.loadGame( data ) ) {
       
-      Notifier.add( 'An unfinished game was found and loaded', 'info' ).notify();
+      Notifier.add( 'An unfinished game was found in your browser', 'info' ).notify();
       
     }
+    
+  } else {
+    
+    Notifier.add( 'Your game will be stored in the browser until you publish it.', 'info' ).notify();
     
   }
   
@@ -60,8 +70,12 @@ function editor_main( data, username ) {
   
   App.hideHelp = function() {
     
-    $('.ttip').tooltip( 'hide' );
-    $('.pop').popover( 'hide' );
+    if ( App.get( 'showhelp' ) ) {
+    
+      $('.ttip').tooltip( 'hide' );
+      $('.pop').popover( 'hide' );
+    
+    }
     
   };
   
@@ -85,9 +99,11 @@ function editor_main( data, username ) {
   
 };
 
-function paint_main() {
+function paint_main( data, username ) {
   
   window.App = Ember.Application.create();
+  
+  App.username = username;
   
   App.paintController = PaintController.create();
 
@@ -105,7 +121,28 @@ function paint_main() {
   
   App.pixelDrawer = new PixelDrawer();
   
-  App.paintSizeView.appendTo('#content');
+  if ( !data ) {
+  
+    data = JSON.parse( Storage.read( 'graphic' ) );
+  
+  }
+  
+  if ( data ) {
+    
+    // Ember.run.end();
+    
+    console.log( data );
+    
+    if ( App.paintController.loadGraphic( data ) ) {
+      
+      Notifier.add( 'An unfinished graphic was found in your browser.', 'info' ).notify();
+      return;
+      
+    }
+    
+  }
+  
+  App.paintController.initSize();
   
   // App.paintController.initType( true, 640, 390 );
   // App.paintController.initType( false, 128, 128 );

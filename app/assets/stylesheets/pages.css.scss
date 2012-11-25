@@ -32,7 +32,6 @@ h6 {
   font-weight: bold;
   letter-spacing: -1px;
   line-height: 30px;
-  text-transform: lowercase;
   margin: 0;
   color: $font;
   
@@ -48,7 +47,12 @@ h6 {
 .link-line {
   font-size: 20px;
   background: #CCC url('link.png') no-repeat;
-  padding:1px 30px;
+  padding: 2px 9px 4px 30px;
+  border-radius: 4px;
+  
+  &:hover {
+    background-color: #C0C0C0;
+  }
 }
 
 .section-header {
@@ -57,7 +61,7 @@ h6 {
 
 #flash-messages ul {
   margin-left: 20px;
-  min-height: 35px;
+  min-height: 38px;
 }
 
 #flash-template {
@@ -229,7 +233,7 @@ h6 {
 
 .welcome {
   
-  width: 550px;
+  width: 600px;
   padding-left: 20px;
   text-shadow: 0 1px 0 #CBCBCB;
   
@@ -257,45 +261,42 @@ h6 {
 
 #welcomeTeaser {
   margin-top:1em;
+  margin-bottom:1em;
 }
 
-#welcomeTeaser img {
-  border:5px solid #CCC;
-}
-
-
-#welcomeTeaser img:hover {
-  border:5px solid $red;
-}
-
-.welcome .link-line {
-  font-size: 20px;
-  background: #CCC url('link.png') no-repeat;
-  padding:4px 40px;
-  border:1px solid #CCC;
-  border-radius:4px;  
-}
-
-
-.heroExt {
-  background:#333;color:#FFF;padding:1.7em;
+#welcomeTeaser .span2 {
+  cursor: pointer;
+  background: white;
+  margin-left: 75px;
+  
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 20px;
+  
+  &:first-child {
+    margin-left: 20px;
+  }
+  &:hover {
+    border-color: $red;
+    box-shadow: 0px 1px 4px #AAA;
+  }
 }
 
 .home-login-button {
   margin-right:5px;
 }
 
-
 #home-profile-box {
   margin-top:3.5em;
-}
-
-#home-profile-box h2 {
-  margin:8px 0 0 0;
-}
-
-#home-profile-box .stats {
-  font-size:11px;line-height:16px
+  
+  h2 {
+    margin:8px 0 0 0;
+  }
+  
+  .stats {
+    font-size:11px;line-height:16px
+  }
 }
 
 .home-profile-total-stats {
@@ -304,16 +305,14 @@ h6 {
   border-bottom:1px solid #CCC;
   margin-top:1.5em;
   padding:0.7em 0 0.7em 0;
+  
+  i, span {
+    margin-left:0.8em;
+  }
 }
-
-.home-profile-total-stats i, .home-profile-total-stats span {
-  margin-left:0.8em;
-}
-
 
 .guideButtons {
   width: 200px;
-/*  margin-top: 48px;*/
   
   .btn {
     display: block;
@@ -599,9 +598,8 @@ h6 {
     border:1px solid #222;
     
     &:hover {
-      border:1px solid #F6F6F6; 
+      border:1px solid #777; 
     }
-
   }
 
   a, a:hover {
@@ -682,52 +680,6 @@ canvas {
 
 .icon-gallery-played, .icon-gallery-comments, .icon-gallery-like {
   margin-top:-1px;
-}
-
-/* CREATE  - Editor Page when user !logged_in */
-#create {
-  position:relative;
-}
-
-#create .container {
-  position:relative;
-  width:900px;
-  background:$white;
-  padding:20px;
-  margin:0 0 30px 0;
-}
-
-#create .banner {
-  margin: 0 0 0 20px;
-  width:70px;
-}
-
-#create .container .banner {
-  margin:0;
-  padding-right:20px;
-  width:auto;
-}
-
-#create .note {
-  margin:40px 0 20px 0;
-  width:860px;
-  background:$lightgray;
-  padding:20px;
-  border-radius:15px;
-}
-
-#create img.slider_left {
-  float:left;
-  top:135px;
-  position:relative;
-  left:-20px;
-}
-
-#create img.slider_right {
-  float:left;
-  top:135px;
-  position:relative;
-  left:60px;
 }
 
 /* PLAY site */
@@ -827,7 +779,7 @@ canvas {
 }
 
 /* Guides */
-#slide-container, #guide-slide-container {
+#slide-container, #guide-slide-container-paint, #guide-slide-container-create {
   width:600px;
   overflow:hidden;
   height:auto;
@@ -860,19 +812,21 @@ canvas {
   height:301px;
 }
 
-#guideSteps li {
-  padding-left:5px;
-  cursor:pointer;
-  text-decoration:underline;  
-}
-
-#guideSteps li:hover {
-  color:#CD5654;
-}
-
-#guideSteps li.activeElement {
-  font-weight:bold;
-  color:#CD5654;
+#guideStepsPaint, #guideStepsCreate {
+  
+  li {
+    padding-left:5px;
+    cursor:pointer;
+    text-decoration:underline;
+    
+    &:hover {
+      color:#CD5654;
+    }
+    &.activeElement {
+      font-weight:bold;
+      color:#CD5654;
+    }
+  }
 }
 
 .guide h3 {

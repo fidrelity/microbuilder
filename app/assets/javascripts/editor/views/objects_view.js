@@ -135,6 +135,7 @@ var UiActionTriggerView = Ember.CollectionView.extend({
     
     remove : function() {
       
+      App.hideHelp();
       this.content.parent[this._parentView.type].removeObject( this.content );
       
     }
