@@ -24,6 +24,12 @@ function editor_main( data, username ) {
     
   }
   
+  if ( !username ) {
+    
+    Notifier.add( 'Your are not signed in. You can\'t publish your game.', 'error' ).notify();
+    
+  }
+  
   if ( data ) {
     
     Ember.run.end();

@@ -61,7 +61,7 @@ h6 {
 
 #flash-messages ul {
   margin-left: 20px;
-  min-height: 35px;
+  min-height: 38px;
 }
 
 #flash-template {
@@ -669,52 +669,6 @@ canvas {
 
 .icon-gallery-played, .icon-gallery-comments, .icon-gallery-like {
   margin-top:-1px;
-}
-
-/* CREATE  - Editor Page when user !logged_in */
-#create {
-  position:relative;
-}
-
-#create .container {
-  position:relative;
-  width:900px;
-  background:$white;
-  padding:20px;
-  margin:0 0 30px 0;
-}
-
-#create .banner {
-  margin: 0 0 0 20px;
-  width:70px;
-}
-
-#create .container .banner {
-  margin:0;
-  padding-right:20px;
-  width:auto;
-}
-
-#create .note {
-  margin:40px 0 20px 0;
-  width:860px;
-  background:$lightgray;
-  padding:20px;
-  border-radius:15px;
-}
-
-#create img.slider_left {
-  float:left;
-  top:135px;
-  position:relative;
-  left:-20px;
-}
-
-#create img.slider_right {
-  float:left;
-  top:135px;
-  position:relative;
-  left:60px;
 }
 
 /* PLAY site */

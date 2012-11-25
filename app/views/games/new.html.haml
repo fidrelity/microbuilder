@@ -1,8 +1,15 @@
-#create
-  -if user_signed_in?      
-    =render :partial => "create_tool"
-  -else
-    =render :partial => "create_guide"
+=# head_line( "game", "stage" )
+
+#editor
+
+:javascript
+  $(document).ready( function() {
+
+    var data = #{@game_data} || null;
+    var name = "#{current_user ? current_user.display_name : ""}";
+    editor_main( data, name );
+
+  } );
 
 .loadOverlay
   %div{:class => "overlayMessage row"}
