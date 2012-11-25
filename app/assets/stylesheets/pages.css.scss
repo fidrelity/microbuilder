@@ -768,7 +768,7 @@ canvas {
 }
 
 /* Guides */
-#slide-container, #guide-slide-container {
+#slide-container, #guide-slide-container-paint, #guide-slide-container-create {
   width:600px;
   overflow:hidden;
   height:auto;
@@ -801,19 +801,21 @@ canvas {
   height:301px;
 }
 
-#guideSteps li {
-  padding-left:5px;
-  cursor:pointer;
-  text-decoration:underline;  
-}
-
-#guideSteps li:hover {
-  color:#CD5654;
-}
-
-#guideSteps li.activeElement {
-  font-weight:bold;
-  color:#CD5654;
+#guideStepsPaint, #guideStepsCreate {
+  
+  li {
+    padding-left:5px;
+    cursor:pointer;
+    text-decoration:underline;
+    
+    &:hover {
+      color:#CD5654;
+    }
+    &.activeElement {
+      font-weight:bold;
+      color:#CD5654;
+    }
+  }
 }
 
 .guide h3 {

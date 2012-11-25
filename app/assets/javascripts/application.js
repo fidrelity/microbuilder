@@ -39,28 +39,39 @@ $(document).ready(function() {
 
   // ---------------------------------------
   // Init slides in guide pages
-  if($('#guide-slide-container').length) {
+  if($('#guide-slide-container-paint').length) {
 
-    var slider = new SliderDiv({ containerSelector : '#guide-slide-container'});
-    slider.autoPlay(5000);
+    var sliderPaint = new SliderDiv({ containerSelector : '#guide-slide-container-paint'});
+    var sliderCreate = new SliderDiv({ containerSelector : '#guide-slide-container-create'});
+    sliderPaint.autoPlay(5000);
+    sliderCreate.autoPlay(5000);
     
-    var elements = $('#guideSteps').find('li');
-    elements.first().addClass('activeElement');
+    var elementsPaint = $('#guideStepsPaint').find('li');
+    var elementsCreate = $('#guideStepsCreate').find('li');
+    
+    elementsPaint.first().addClass('activeElement');
+    elementsCreate.first().addClass('activeElement');
 
-    elements.click(function() {
+    var clickHandler = function( _slider ) {
+      return function() {
+        var pos = $(this).index();
+        _slider.moveTo(pos).stopPlay();
+      };
+    }
+    
+    var moveHandler = function( _elements ) {
+      return function() {
+        var index = this.currentSlideIndex;
+        _elements.removeClass('activeElement');
+        _elements.eq(index).addClass('activeElement');
+      };
+    }
 
-      var pos = $(this).index();
-      slider.moveTo(pos).stopPlay();
+    elementsPaint.click(clickHandler(sliderPaint));
+    elementsCreate.click(clickHandler(sliderCreate));
 
-    });
-
-    slider.afterMove = function() {
-
-      var index = this.currentSlideIndex;
-      elements.removeClass('activeElement');
-      elements.eq(index).addClass('activeElement');
-
-    };
+    sliderPaint.afterMove = moveHandler(elementsPaint);
+    sliderCreate.afterMove = moveHandler(elementsCreate);
   }
   // ---------------------------------------
   // Game View Buttons   

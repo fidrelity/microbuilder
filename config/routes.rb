@@ -44,6 +44,7 @@ Playtin::Application.routes.draw do
   post 'support/ticket', :to => 'support#ticket'
     
   get '/imprint', :to => 'pages#imprint'
+  get '/tour', :to => 'pages#tour'
   get '/gallery(/:type)', :to => 'games#index', :as => 'gallery'
   get '/play/:id', :to => 'games#show', :as => 'play'
   get '/play/:id/embed', :to => 'games#embed'
