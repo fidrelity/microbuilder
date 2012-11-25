@@ -1,9 +1,9 @@
 %div{ :class => "row"}
 
-  .span8
-    = render :partial => 'pages/user_box/hero_unit'
-  
-  = render :partial => 'pages/user_box/login_form'
+  -if user_signed_in?
+    = render :partial => 'pages/user_box/signed_in'
+  - else
+    = render :partial => 'pages/user_box/signed_out'
 
 .hr
 

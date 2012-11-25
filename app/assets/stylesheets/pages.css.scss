@@ -32,7 +32,6 @@ h6 {
   font-weight: bold;
   letter-spacing: -1px;
   line-height: 30px;
-  text-transform: lowercase;
   margin: 0;
   color: $font;
   
@@ -48,7 +47,12 @@ h6 {
 .link-line {
   font-size: 20px;
   background: #CCC url('link.png') no-repeat;
-  padding:1px 30px;
+  padding: 2px 30px 4px;
+  border-radius: 4px;
+  
+  &:hover {
+    background-color: #C0C0C0;
+  }
 }
 
 .section-header {
@@ -229,7 +233,7 @@ h6 {
 
 .welcome {
   
-  width: 550px;
+  width: 600px;
   padding-left: 20px;
   text-shadow: 0 1px 0 #CBCBCB;
   
@@ -261,41 +265,26 @@ h6 {
 
 #welcomeTeaser img {
   border:5px solid #CCC;
-}
-
-
-#welcomeTeaser img:hover {
-  border:5px solid $red;
-}
-
-.welcome .link-line {
-  font-size: 20px;
-  background: #CCC url('link.png') no-repeat;
-  padding:4px 40px;
-  border:1px solid #CCC;
-  border-radius:4px;  
-}
-
-
-.heroExt {
-  background:#333;color:#FFF;padding:1.7em;
+  
+  &:hover {
+    border:5px solid $red;
+  }
 }
 
 .home-login-button {
   margin-right:5px;
 }
 
-
 #home-profile-box {
   margin-top:3.5em;
-}
-
-#home-profile-box h2 {
-  margin:8px 0 0 0;
-}
-
-#home-profile-box .stats {
-  font-size:11px;line-height:16px
+  
+  h2 {
+    margin:8px 0 0 0;
+  }
+  
+  .stats {
+    font-size:11px;line-height:16px
+  }
 }
 
 .home-profile-total-stats {
@@ -304,16 +293,14 @@ h6 {
   border-bottom:1px solid #CCC;
   margin-top:1.5em;
   padding:0.7em 0 0.7em 0;
+  
+  i, span {
+    margin-left:0.8em;
+  }
 }
-
-.home-profile-total-stats i, .home-profile-total-stats span {
-  margin-left:0.8em;
-}
-
 
 .guideButtons {
   width: 200px;
-/*  margin-top: 48px;*/
   
   .btn {
     display: block;
