@@ -123,6 +123,6 @@ Loader.prototype = {
     
     this.loadCircle = load;
     
-  },
+  }
   
 };
