@@ -820,6 +820,16 @@ canvas {
   height:301px;
 }
 
+.guide-button {
+  position: relative;
+  top: -30px;
+}
+
+.guide-line {
+  @extend .hr;
+  margin-top: 0;
+}
+
 #guideStepsPaint, #guideStepsCreate {
   
   li {

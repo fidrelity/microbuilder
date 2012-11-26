@@ -1,6 +1,6 @@
 .row
 
-  %div{:class => "span12", :style => "margin-bottom:2em"}
+  .span12
 
     = head_line("paint", "tour")
 
@@ -9,11 +9,11 @@
       %br
       everything you need for your awesome game,
       %br
-      we also created a paint tool!
+      we also built a paint tool!
 
 .row
 
-  %div{:class => "span4 guide"}
+  .span4{:class => "guide"}
 
     %h3
       This is how you paint ...
@@ -24,62 +24,56 @@
       %li know your tools
       %li animate your objects
       %li draw a background
-
-
-    %div{:class => "signup-info well"}
-      Just
-      =link_to "login with your facebook account", user_omniauth_authorize_path(:facebook)
-      or 
-      = link_to 'sign up', new_user_registration_path
-      to create your first game!
   
-  %div{:class => "span7"}
+  .span7
 
     %div{:id => "guide-slide-container-paint"}
 
       %div{:class => "slide-wrapper"}
 
-        %div{:class => "slide"}
+        .slide
           =image_tag "guides/paint_overview.png"
-          %div{:class => "foot-info"}
-            before creating a game you can draw your game objects ... like batman
+          .foot-info
+            Before creating a game you can draw your game objects ... like Batman!
 
-        %div{:class => "slide"}
+        .slide
           =image_tag "guides/paint_size.png"
-          %div{:class => "foot-info"}
-            first you have to choose between an object or background type
+          .foot-info
+            First you have to choose between an object or background type.
 
-        %div{:class => "slide"}
+        .slide
           =image_tag "guides/paint_tools.png"
-          %div{:class => "foot-info"}
-            use the pencil, line or circle tool to draw your graphics
+          .foot-info
+            Use the pencil, line or circle tool to draw your graphics.
 
-        %div{:class => "slide"}
+        .slide
           =image_tag "guides/paint_sprite.png"
-          %div{:class => "foot-info"}
-            your game object can have several states (Sprites)
+          .foot-info
+            Your game object can have several states (sprites).
 
-        %div{:class => "slide"}
+        .slide
           =image_tag "guides/paint_background.png"
-          %div{:class => "foot-info"}
-            and this is how it looks like drawing a background
+          .foot-info
+            Backgrounds are painted in the same way.
 
-.hr
+= link_to button_line("start", "painting"), new_graphic_path, :class => "link-line guide-button"
+
+.guide-line
 
 .row
 
-  %div{:class => "span12", :style => "margin-bottom:3.5em"}
+  .span12
 
     = head_line("create", "tour")
 
     %p
       This is the place where you can bring your paintings
       %br
-      to life and build you own microgames! 
+      to life and create you own microgames!
 
 .row
 
-  %div{:class => "span4 guide"}
+  .span4{:class => "guide"}
 
     %h3
       This is how you create ...
@@ -87,38 +81,42 @@
     %ol{:id => "guideStepsCreate"}
       %li place objects
       %li assign behavior
-      %li set trigger and actions
-      %li preview and publish your game
-
-    %div{:class => "signup-info well"}
-      Just 
-      =link_to "login with your facebook account", user_omniauth_authorize_path(:facebook)
-      or 
-      = link_to 'sign up', new_user_registration_path
-      to create your first game!
+      %li set triggers and actions
+      %li test, preview and publish your game
   
-  %div{:class => "span7"}
+  .span7
 
     %div{:id => "guide-slide-container-create"}
 
       %div{:class => "slide-wrapper"}
 
-        %div{:class => "slide"}
+        .slide
           =image_tag "guides/slide1.png"
-          %div{:class => "foot-info"}
-            After you have painted your game objects, you can place them on the canvas
+          .foot-info
+            After you have painted your game objects, you can place them on the stage.
 
-        %div{:class => "slide"}
+        .slide
           =image_tag "guides/slide2.png"
-          %div{:class => "foot-info"}
-            In the action editor, you can assign behaviors to your game objects
+          .foot-info
+            In the action editor, you can assign behaviors to your game objects.
 
-        %div{:class => "slide"}
+        .slide
           =image_tag "guides/slide3.png"
-          %div{:class => "foot-info"}
-            Set triggers and actions on your game objects in the "IF ... THEN ..." style
+          .foot-info
+            Set triggers and actions on your game objects in "IF ... THEN ..." style.
 
-        %div{:class => "slide"}
+        .slide
           =image_tag "guides/slide4.png"
-          %div{:class => "foot-info"}
-            Before you save: play your game and give it a title, instructions and take a preview image
+          .foot-info
+            Before you save: Play your game. Give it a title, instructions and take a preview image.
+
+= link_to button_line("start", "creating"), build_path, :class => "link-line guide-button"
+
+.guide-line
+
+.well{:class => "signup-info"}
+  Just 
+  =link_to "login with your facebook account", user_omniauth_authorize_path(:facebook)
+  or 
+  = link_to 'sign up', new_user_registration_path
+  to publish your first game!
