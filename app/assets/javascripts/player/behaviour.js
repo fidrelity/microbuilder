@@ -25,9 +25,19 @@ Behaviour.prototype = {
     
     if ( triggers ) {
       
-      this.actions.forEachApply( 'execute', game );
+      if ( game.version < 5 ) {
+      
+        this.actions.forEachApply( 'execute', game );
+      
+      } else {
+      
+        return this.actions;
+      
+      }
       
     }
+    
+    return [];
     
   },
   

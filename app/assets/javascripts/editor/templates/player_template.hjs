@@ -8,18 +8,23 @@
     
     <div class="loadScreen">&nbsp;&nbsp;&nbsp;loading...</div>
     
-    <div class="endBg"></div>
-    <div class="winScreen endScreen">You win!</div>
-    <div class="loseScreen endScreen">You lose!</div>
+    <div class="endScreen">
+      <div class="endText winScreen">You win!</div>
+      <div class="endText loseScreen">You lose!</div>
+    </div>
     
     <div class="titleScreen">
       <div class="playButton"></div>
+      
       <div class="titleBar">
-        <div class="titleBg"></div>
-        <div class="titleText">
+        <div class="content">
           <strong class="title">{{App.game.title}}</strong>
           <span>by {{App.username}}</span>
-          <i class="icon-chevron-up icon-white"></i>
+        </div>
+      </div>
+      
+      <div class="instructionBar">
+        <div class="content">
           <h2>Instructions</h2>
           <div class="instruction">{{App.game.instructions}}</div>
         </div>

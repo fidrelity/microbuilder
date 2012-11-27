@@ -17,6 +17,8 @@ var Game = function( player, mouse ) {
   this.isWon = false;
   this.isLost = false;
   
+  this.version = 0;
+  
 };
 
 Game.prototype = {
@@ -41,7 +43,15 @@ Game.prototype = {
   
   update : function( dt ) {
     
-    this.behaviours.forEachApply( 'check', this );
+    var actionQueue = [];
+    
+    for ( var i = 0; i < this.behaviours.length; i++ ) {
+    
+      actionQueue = actionQueue.concat( this.behaviours[i].check( this ) );
+    
+    }
+    
+    actionQueue.forEachApply( 'execute', this );
     
     this.gameObjects.forEachApply( 'update', dt );
     
@@ -53,7 +63,7 @@ Game.prototype = {
     
     if ( this.background ) {
     
-      ctx.drawImage( this.background, 0, 0 );
+      this.background.drawImage( ctx );
     
     } else {
       

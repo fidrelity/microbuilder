@@ -415,7 +415,7 @@ var Parser = {
     gameIsLost : function() { return new EndTrigger( 'isLost' ); }, // deprecated 2
     gameWasLost : function() { return LostTrigger; },
     
-    gameStart : function() { return 'start'; },
+    gameStart : function() { return 'start'; }
     
   },
   
@@ -493,7 +493,7 @@ var Parser = {
     
     if ( data.backgroundID ) {
       
-      game.background = game.getGraphicWithID( data.backgroundID ).image;
+      game.background = game.getGraphicWithID( data.backgroundID );
       
     } else {
       
@@ -515,7 +515,7 @@ var Parser = {
     graphic.frameCount = data.frameCount || 1;
     graphic.image = loader.loadImage( data.url, function() {
       
-      graphic.checkSize();
+      graphic.init();
       
     });
     

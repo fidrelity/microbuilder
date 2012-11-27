@@ -150,6 +150,6 @@ Shape.prototype = {
     
     ctx.restore();
     
-  },
+  }
   
 };

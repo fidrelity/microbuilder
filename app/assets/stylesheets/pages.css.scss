@@ -46,12 +46,16 @@ h6 {
 
 .link-line {
   font-size: 20px;
-  background: #CCC url('link.png') no-repeat;
+  background: #FFF url('link.png') no-repeat;
   padding: 2px 9px 4px 30px;
+  border: 1px solid #E3E3E3;
   border-radius: 4px;
   
+  @include transition(all, 0.2s, linear);
+  
   &:hover {
-    background-color: #C0C0C0;
+    border-color: $red;
+    box-shadow: 0px 1px 4px #AAA;
   }
 }
 
@@ -269,10 +273,9 @@ h6 {
   background: white;
   margin-left: 75px;
   
-  font-size: 14px;
-  font-weight: bold;
-  letter-spacing: -1px;
-  line-height: 20px;
+  font-size: 18px;
+  line-height: 25px;
+  font-style: italic;
   
   &:first-child {
     margin-left: 20px;
@@ -636,6 +639,11 @@ h6 {
 
   .thumbnail {
     background:#FFF;
+    
+    &:hover {
+      border-color: $red;
+      box-shadow: 0px 1px 4px #AAA;
+    }
   }
 }
 
@@ -810,6 +818,16 @@ canvas {
 .guide {
   position:relative;
   height:301px;
+}
+
+.guide-button {
+  position: relative;
+  top: -30px;
+}
+
+.guide-line {
+  @extend .hr;
+  margin-top: 0;
 }
 
 #guideStepsPaint, #guideStepsCreate {

@@ -58,7 +58,7 @@
     <button {{action "pencilTool" target="App.paintController"}} class="pencil selectable ttip" title="Draw with pencil"></button>
     <button {{action "eraseTool" target="App.paintController"}} class="eraser selectable ttip" title="Erase area"></button>
     <button {{action "fillTool" target="App.paintController"}} class="fill selectable ttip" title="Fill area"></button>
-    <button id="loadFileButton" class="loadfile selectable ttip" title="Load file from hard drive"></button>
+    <button style="display:none;" id="loadFileButton" class="loadfile selectable ttip" title="Load file from hard drive"></button>
     <form style="display:none;">
       <input type="file" id="file" accept="image/*" />
       <input type="reset" id="reset" />

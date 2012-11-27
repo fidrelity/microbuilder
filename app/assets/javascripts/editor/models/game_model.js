@@ -1,6 +1,6 @@
 var GameModel = Ember.Object.extend({
   
-  version : 4,
+  version : 5,
   
   title : '',
   instructions : '',
