@@ -144,6 +144,9 @@ if migrations:
 
 === Change log
 
+version 5
+* queueing actions before execution
+
 version 4
 
 * added 'scaleSize' action
