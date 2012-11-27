@@ -63,7 +63,7 @@ Game.prototype = {
     
     if ( this.background ) {
     
-      ctx.drawImage( this.background, 0, 0 );
+      this.background.drawImage( ctx );
     
     } else {
       
