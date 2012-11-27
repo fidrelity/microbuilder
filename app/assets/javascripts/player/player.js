@@ -104,12 +104,6 @@ Player.prototype = {
       
     });
     
-    $( '.titleBar', _node ).click( function() {
-    
-      $( this ).toggleClass( 'active' );
-    
-    });
-    
     $('#player').addTouch();
     
     this.node = _node;
@@ -278,9 +272,10 @@ Player.prototype = {
     $( '.loadScreen', node ).show();
     
     $( '.titleScreen', node ).hide();
-    $( '.playButton', node ).hide();
-    $( '.titleBar', node ).removeClass( 'interactive' );
+    
+    $( '.playButton', node ).removeClass( 'active' );
     $( '.titleBar', node ).removeClass( 'active' );
+    $( '.instructionBar', node ).removeClass( 'active' );
     
   },
   
@@ -297,15 +292,11 @@ Player.prototype = {
     var node = this.node;
     
     $( '.titleScreen', node ).show();
+    $( '.endScreen', node ).fadeOut( 300 );
     
-    $( '.endScreen', node ).fadeOut( 200 );
-    $( '.endBg', node ).animate( {width: 65 }, 200, function() {
-      
-      $( '.endBg', node ).animate( {opacity: 0}, 500 );
-      $( '.playButton', node ).fadeIn( 300 );
-      $( '.titleBar', node ).addClass( 'interactive' );
-      
-    });
+    $( '.playButton', node ).addClass( 'active' );
+    $( '.titleBar', node ).addClass( 'active' );
+    $( '.instructionBar', node ).addClass( 'active' );
     
   },
   
@@ -322,16 +313,12 @@ Player.prototype = {
     
     var node = this.node;
     
-    $( '.playButton', node ).fadeOut( 200 );
-    $( '.titleBar', node ).removeClass( 'interactive' );
+    $( '.playButton', node ).removeClass( 'active' );
     $( '.titleBar', node ).removeClass( 'active' );
+    $( '.instructionBar', node ).removeClass( 'active' );
     
-    setTimeout( function() {
-    
-      $( '.playerUI', node ).hide();
-      $( '.titleScreen', node ).hide();
-    
-    }, 200);
+    $( '.playerUI', node ).delay( 500 ).fadeOut( 0 );
+    $( '.titleScreen', node ).delay( 500 ).fadeOut( 0 );
     
     this.reset();
     
@@ -376,9 +363,9 @@ Player.prototype = {
       
     }
     
-    $( msg, this.node ).fadeIn( 300 );
-    $( '.endBg', this.node ).css( {width: 640} );
-    $( '.endBg', this.node ).animate( {opacity: 0.8}, 300 );
+    $( '.endText', this.node ).hide();
+    $( msg, this.node ).show();
+    $( '.endScreen', this.node ).fadeIn( 200 );
     
     this.draw( this.ctx );
     
@@ -399,7 +386,6 @@ Player.prototype = {
     $( '.titleScreen', this.node ).hide();
     $( '.startScreen', this.node ).hide();
     $( '.endScreen', this.node ).hide();
-    $( '.endBg', this.node ).hide();
     
     $( '.errorScreen', this.node ).show();
     
