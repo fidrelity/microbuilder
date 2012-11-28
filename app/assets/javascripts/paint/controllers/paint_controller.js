@@ -67,12 +67,7 @@ var PaintController = Ember.ArrayController.extend({
     
     App.paintSizeView.remove();
     App.paintView.appendTo( '#content' );
-    
-    if ( App.username === '' ) {
-      
-      Notifier.add( 'Your are not signed in. You can\'t save your image to your profile.', 'error' ).notify();
-      
-    }
+
     
   },
   
@@ -87,6 +82,8 @@ var PaintController = Ember.ArrayController.extend({
     $( '.pencil' ).trigger( 'click' );
     
     this.initEvents();
+
+    this.initDemoMode();
     
   },
   
@@ -160,6 +157,17 @@ var PaintController = Ember.ArrayController.extend({
       
     }
     
+  },
+
+  initDemoMode : function() {
+    
+    if ( App.username === '' ) {
+      
+      Notifier.add( 'Your are not signed in. You can\'t save your image to your profile.', 'error' ).notify();
+      $('#saveGraphicButton').addClass("disabled");
+      
+    }
+
   },
   
   mousedown : function( mouse ) {

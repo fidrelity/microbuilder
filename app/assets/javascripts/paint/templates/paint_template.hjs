@@ -149,7 +149,7 @@
 
   <button class="btn left btn-danger" title="Delete all and go back to size selection" {{action "goToTypeSelection" target="App.paintController"}}><i class="icon-arrow-left icon-white"></i> cancel</button>
   
-  <div class="ptn-success right" {{action "save" target="App.paintController"}}>save image</div>
+  <div id="saveGraphicButton" class="ptn-success right" {{action "save" target="App.paintController"}}>save le image</div>
   
   <div class="right" style="margin-right:14px">
 

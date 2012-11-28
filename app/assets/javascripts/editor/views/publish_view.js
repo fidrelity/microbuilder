@@ -20,6 +20,10 @@ var PublishView = Ember.View.extend({
       
     });
 
+    if( App.username === '' ) {
+      $('.ptn-success').addClass("disabled");
+    }
+
     // KeyEvents
     $(document).keydown(function(e) {
 
@@ -157,7 +161,7 @@ var PublishView = Ember.View.extend({
       
         document.location.href = '/users/sign_in'; 
       
-      }
+      }      
       
       return;
       
