@@ -3,11 +3,12 @@ function editor_main( data, username ) {
   window.App = Ember.Application.create();
 
   App.username = username;
+  App.isSignedIn = username !== '';
 
   App.game = GameModel.create();
   App.gameController = GameController.create();
 
-  App.libraryController = LibraryController.create();
+  App.libraryController = LibraryController.create({ showOwn : App.isSignedIn });
 
   App.gameObjectsController = GameObjectsController.create();
   App.behaviourController = BehaviourController.create();
@@ -104,12 +105,13 @@ function paint_main( data, username ) {
   window.App = Ember.Application.create();
   
   App.username = username;
+  App.isSignedIn = username !== '';
   
   App.paintController = PaintController.create();
-
+  
   App.paintView = PaintView.create();
   App.paintSizeView = PaintSizeView.create();
- 
+  
   App.pencilTool = PencilToolModel.create();
   App.eraserTool = EraserToolModel.create();
   App.drawTool = DrawToolModel.create();

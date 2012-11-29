@@ -143,6 +143,12 @@ var LibraryController = Ember.ArrayController.extend({
         
         }
         
+      },
+      
+      error : function() {
+        
+        self.appendGraphics( [], 0 );
+        
       }
       
     });
@@ -172,13 +178,19 @@ var LibraryController = Ember.ArrayController.extend({
           
           if ( typeof data === "string" ) {
             
-            data = JSON.parse( data );            
+            data = JSON.parse( data );
             
           }
           
           self.appendGraphics( data.graphics, data.size );
         
         }
+        
+      },
+      
+      error : function() {
+        
+        self.appendGraphics( [], 0 );
         
       }
       

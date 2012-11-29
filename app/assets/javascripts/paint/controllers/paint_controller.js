@@ -161,7 +161,7 @@ var PaintController = Ember.ArrayController.extend({
 
   initDemoMode : function() {
     
-    if ( App.username === '' ) {
+    if ( !App.isSignedIn ) {
       
       Notifier.add( 'Your are not signed in. You can\'t save your image to your profile.', 'error' ).notify();
       $('#saveGraphicButton').addClass("disabled");
@@ -637,7 +637,7 @@ var PaintController = Ember.ArrayController.extend({
   
   save : function() {
     
-    if ( App.username === '' ) {
+    if ( !App.isSignedIn ) {
       
       if ( confirm( 'You can\'t save your image, because you are not signed in.\n\nDo you want to sign in?\n(Your image will wait here)' ) ) {
       

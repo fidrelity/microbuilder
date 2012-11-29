@@ -20,7 +20,7 @@ var PublishView = Ember.View.extend({
       
     });
 
-    if( App.username === '' ) {
+    if( !App.isSignedIn ) {
       $('.ptn-success').addClass("disabled");
     }
 
@@ -155,7 +155,7 @@ var PublishView = Ember.View.extend({
   
   publish : function() {
     
-    if ( App.username === '' ) {
+    if ( !App.isSignedIn ) {
       
       if ( confirm( 'You can\'t publish your game, because you are not signed in.\n\nDo you want to sign in?\n(Your game will wait here)' ) ) {
       
