@@ -303,6 +303,12 @@ ArtTrigger.prototype = {
     return this.gameObject.animation.frame === this.triggerFrame;
 
   },
+
+  artHasGraphic : function() {
+  
+    return false;   
+
+  },
   
   check : function( game ) {
 

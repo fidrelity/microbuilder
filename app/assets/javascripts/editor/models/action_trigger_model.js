@@ -170,7 +170,7 @@ var ActionTriggerModel = Ember.Object.extend({
   },
   
   parse : function( data ) {
-    
+    console.log(data);
     var d = data;
     
     this.setProperties({

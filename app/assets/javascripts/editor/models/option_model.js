@@ -98,6 +98,7 @@ var Choice = Ember.Object.extend({
         case 'counterEqualsObject' : return a.gameObject.name + '\'s counter is equal to ' + a.gameObject2.name + '\'s counter';
 
         case 'artHasFrame' : return a.gameObject.name + " has frame " + a.frame;
+        case 'artHasGraphic' : return a.gameObject.name + " has graphic " + a.graphic.name;
       
         default : console.error( 'Unknown choice name: ' + this.ID );
       

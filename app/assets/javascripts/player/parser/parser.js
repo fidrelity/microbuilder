@@ -417,7 +417,15 @@ var Parser = {
     
     gameStart : function() { return 'start'; },
 
+    // -- Art --
+
     artHasFrame : function(data, gameObject, game) {
+
+      return new ArtTrigger(data, game.getGameObjectWithID( data.objectID ));
+
+    },
+
+    artHasGraphic : function(data, gameObject, game) {
 
       return new ArtTrigger(data, game.getGameObjectWithID( data.objectID ));
 
