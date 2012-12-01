@@ -278,3 +278,49 @@ CounterTrigger.prototype = {
   draw : function( ctx ) {}
   
 };
+
+
+var ArtTrigger = function(data, gameObject) {
+  
+  console.log(data, gameObject);
+
+  this.gameObject = gameObject;
+
+  this.triggerFrame = data.frame || 0;
+  
+  this.triggered = false;
+  
+  this.triggerFunction = this[data["ID"]];
+   
+}
+
+ArtTrigger.prototype = {
+
+  triggerFunction : null,
+
+  artHasFrame : function() {
+
+    return this.gameObject.animation.frame === this.triggerFrame;
+
+  },
+  
+  check : function( game ) {
+
+    if ( this.triggerFunction() && this.triggered === false) {
+      
+      return this.triggered = true;
+      
+    }
+    
+    return false;   
+  },
+  
+  reset : function() {
+
+    this.triggered = false;
+
+  },
+
+  draw : function() {}
+  
+};

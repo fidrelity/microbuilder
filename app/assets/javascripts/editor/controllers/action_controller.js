@@ -46,7 +46,7 @@ var ActionController = Ember.Object.extend({
     
     'timeExact', 'timeRandom',
     
-    // 'artHasFrame', 'artGetsFrame',
+    'artHasFrame', //'artGetsFrame',
     // 'artHasGraphic', 'artGetsGraphic',
     
     'counterEqualsNumber', 'counterEqualsObject',
@@ -473,7 +473,7 @@ var ActionController = Ember.Object.extend({
     this.set( 'triggerOption', ButtonOption.create({ 
       name: 'trigger', 
       question: 'Select the type of trigger',
-      buttons: ['click', 'contact', 'time', 'counter', 'game'], // 'art'],
+      buttons: ['click', 'contact', 'time', 'counter', 'game', 'art'],
       
       decisions: [
         
@@ -715,7 +715,38 @@ var ActionController = Ember.Object.extend({
             SaveOption.create({ choiceID: 'gameStart' }) // start <hidden>
           ]
           
-        })
+        }),
+
+        // art trigger
+        ButtonOption.create({
+          name: 'art',
+          question: 'When should it trigger?',
+          help: 'If the game objects graphic changes, then you can trigger an action',
+          buttons: ['displays a frame'],
+
+          decisions: [
+
+            // has frame
+            ObjectOption.create({
+              name: 'hasFrame',
+              question: 'Choose the object whose frame will change',
+            
+                decision:           
+                
+                  FrameOption.create({
+                    takePrevSelectedGameObjectGraphic: true,
+                    name: 'artHasFrame',
+                    question : 'Which frame triggers the action?',
+                    help: 'Select the frame number which will trigger the action',
+                    decision: SaveOption.create({ choiceID: 'artHasFrame' })
+                  })
+            })
+
+            // other art trigger
+
+          ]
+          
+        }),
         
       ]
     }));

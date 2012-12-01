@@ -21,7 +21,7 @@ var Choice = Ember.Object.extend({
     var n = name, a = action;
    
     try {
-   
+
       switch ( this.ID ) {
       
         // actions
@@ -96,6 +96,8 @@ var Choice = Ember.Object.extend({
         case 'counterGreaterObject' : return a.gameObject.name + '\'s counter is greater than ' + a.gameObject2.name + '\'s counter';
         case 'counterSmallerObject' : return a.gameObject.name + '\'s counter is smaller than ' + a.gameObject2.name + '\'s counter';
         case 'counterEqualsObject' : return a.gameObject.name + '\'s counter is equal to ' + a.gameObject2.name + '\'s counter';
+
+        case 'artHasFrame' : return a.gameObject.name + " has frame " + a.frame;
       
         default : console.error( 'Unknown choice name: ' + this.ID );
       
@@ -496,12 +498,22 @@ var FrameOption = Option.extend({
   frame : 0,
   
   mode : 'frame',
+
+  takePrevSelectedGameObjectGraphic : false,
+
+  graphic : null,
   
   doInsert : function( reinsert ) {
+
+    if(this.takePrevSelectedGameObjectGraphic) {
+
+      this.graphic = this.action.gameObject.graphic;
+
+    }
     
     App.actionController.addOption( this, FrameView.create({
       observer : this,
-      graphic : App.gameObjectsController.current.graphic
+      graphic : this.graphic || App.gameObjectsController.current.graphic
     }));
     
     if ( !reinsert ) {

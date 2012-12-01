@@ -415,7 +415,13 @@ var Parser = {
     gameIsLost : function() { return new EndTrigger( 'isLost' ); }, // deprecated 2
     gameWasLost : function() { return LostTrigger; },
     
-    gameStart : function() { return 'start'; }
+    gameStart : function() { return 'start'; },
+
+    artHasFrame : function(data, gameObject, game) {
+
+      return new ArtTrigger(data, game.getGameObjectWithID( data.objectID ));
+
+    }
     
   },
   
