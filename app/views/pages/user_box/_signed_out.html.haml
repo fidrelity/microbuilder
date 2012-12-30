@@ -37,6 +37,8 @@
   
     = link_to button_line("sign", "up"), new_user_registration_path, :class => "link-line"
 
+    = link_to button_line("try", "it"), build_path, :class => "link-line red"
+
 .span4{:style => "width:260px;margin-left:60px"}
 
   = form_tag user_session_path, :class => "well" do
