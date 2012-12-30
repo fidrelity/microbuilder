@@ -73,6 +73,14 @@ $(document).ready(function() {
     sliderPaint.afterMove = moveHandler(elementsPaint);
     sliderCreate.afterMove = moveHandler(elementsCreate);
   }
+
+  // TryOut Button on start page
+  $("#tryIt").popover({
+    trigger : "hover",
+    title : "Try it out",
+    content : "You can try out the editor and paint tool without having to be signed in."
+  });
+
   // ---------------------------------------
   // Game View Buttons   
   function toggleLayer(_layer, _buttonObj, _evt) {
