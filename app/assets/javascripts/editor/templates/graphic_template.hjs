@@ -1,12 +1,18 @@
-<button class="frame_graphic graphic" style="
-  width:{{unbound App.libraryController.thumbSizeWidth}}px;
-  height:{{unbound App.libraryController.thumbSizeHeight}}px;
-">
+<div class="frame_graphic_wrapper" style="">
 
-    <div  class="frame_graphic_element" data-frames="{{unbound "content.frameCount"}}"
-        {{bindAttr style="content.divStyle"}}>
-    </div>
+  <button class="frame_graphic graphic" style="
+    width:{{unbound App.libraryController.thumbSizeWidth}}px;
+    height:{{unbound App.libraryController.thumbSizeHeight}}px;
+  ">
 
-    <div class="name"> {{content.name}} </div>
+      <div  class="frame_graphic_element" data-frames="{{unbound "content.frameCount"}}"
+          {{bindAttr style="content.divStyle"}}>
+      </div>
 
-</button>
+      <div class="name"> {{content.name}} </div>    
+  </button>
+
+  <!-- <a href="/users/{{unbound content.userId}}" title="{{unbound content.userName}}"> -->
+    <div class="image" style="background-image:url({{unbound content.userImage}})" title="{{unbound content.userName}}"></div>
+  <!-- </a> -->
+</div>

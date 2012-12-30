@@ -234,6 +234,14 @@
   opacity: 0.2;
 }
 
+#editor .frame_graphic_wrapper {
+  position:relative;overflow:hidden
+}
+
+#editor .frame_graphic_wrapper .image {
+  position:absolute; bottom:20px; left:0; background-size:cover; width:25px; height:25px; border:1px solid #CCC;
+}
+
 #editor .gameObject {
   overflow: hidden;
   border: none;
@@ -263,6 +271,10 @@
   bottom: 0;
   text-align: center;
   background-color: #DDD;
+}
+
+#editor .graphic .name {
+  font-size: 0.8em
 }
 
 #editor .graphicPreview {

@@ -6,6 +6,8 @@
     "name":"1332157251_2.png",
     "url":"/graphics/18/1332157251_2.png",
     "user_name":"Andre",
+    "user_image":"http://...",
+    "user_id" : "1",
     "background":false,
     "frame_count":1,
     "frame_width":64,
@@ -20,6 +22,8 @@ var GraphicModel = Ember.Object.extend({
   ID : null,
   name : null,
   userName : null,
+  userImage : null,
+  userId : null,
   
   imagePath : null,
   

@@ -34,7 +34,8 @@ class Graphic < ActiveRecord::Base
       :id => id, :name => image_file_name, :url => image.to_s, 
       :background => background, :user_name => user_name,
       :frame_count => frame_count, :frame_width => frame_width,
-      :frame_height => frame_height, :public => public, :is_own => self.user == current_user
+      :frame_height => frame_height, :public => public, :is_own => self.user == current_user,
+      :user_image => user.display_image, :user_id => user.id
     }
   end
   

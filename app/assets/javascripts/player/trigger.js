@@ -282,8 +282,6 @@ CounterTrigger.prototype = {
 
 var ArtTrigger = function(data, gameObject) {
   
-  console.log(data, gameObject);
-
   this.gameObject = gameObject;
 
   this.triggerFrame = data.frame || 0;

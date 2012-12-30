@@ -244,7 +244,7 @@ var LibraryController = Ember.ArrayController.extend({
   },
   
   loadGraphic : function( data ) {
-    
+
     var graphic = GraphicModel.create({
       ID : data.ID,
       imagePath : data.url,
@@ -293,6 +293,8 @@ var LibraryController = Ember.ArrayController.extend({
       ID : d.id,
       name : d.name,
       userName : d.user_name,
+      userImage : d.user_image,
+      userId : d.user_id,
       imagePath : d.url,
       isBackground : d.background,
       isPublic : d.public,
