@@ -17,11 +17,6 @@
         %div{:class=>"tourInfo", :style => "left:100px; top:-30px"}
           Use the pencil-, fill- or one of the shape-tools  
 
-        %div{:class=>"tourInfo", :style => "left:90px; top:120px"}
-          Draw your current frame
-          %br
-          on this canvas
-
         %div{:class=>"tourInfo", :style => "left:750px; top:120px"}
           Use frames for different states of your game object
 
@@ -90,12 +85,28 @@
         3. Play and share
 
       %p
-        After publishing your micro game - everybody can play it!
-        Share it on social networks, embed it on your page or see how people like and comment it.
-        Play on your iPad
+        After publishing your microgame - everybody can play it!
+        Share it on social networks, embed it on your page or see how people like and comment it.        
 
       %div{:class => "tourWrapper", :style => "height:354px"}
         = image_tag "guides/new/play600.jpg", :style => "border:1px solid #CCC;"
+
+        %div{:class=>"tourInfo", :style => "left:790px; top:80px;"}
+          see game stats like 
+          %br
+          rating, difficulty and plays
+
+        %div{:class=>"tourInfo", :style => "left:790px; top:250px;"}
+          write / read
+          %br
+          comments
+
+        %div{:class=>"tourInfo", :style => "left:0px; top:380px; text-align:left;"}
+          = image_tag "guides/new/share.jpg", :style => "border-radius:10px;border:1px solid #CCC;float:left;margin:0 10px 10px 0"        
+          share your game
+          %br
+          with others!
+
 
   .row{:id => "tourFooter"}
 
