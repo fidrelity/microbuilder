@@ -16,4 +16,7 @@ class PagesController < ApplicationController
   def tour
   end
 
+  def tour_new
+  end
+
 end

@@ -901,3 +901,26 @@ canvas {
   margin:0 0 5px;
   font-style: normal;
 }
+
+#tour h2, h3{
+  font-family: 'Gloria Hallelujah', cursive;
+}
+
+.tourWrapper {position:relative;text-align:center; width:100%; margin:4em 0 4em 0; height:400px;}
+
+.tourInfo {
+  position:absolute;
+  top:0; left:0;
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 1.2em;
+}
+
+#tourFooter {  
+  margin-top: 4em;
+  margin-bottom: 2em;
+}
+
+#tourFooter a {  
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size:2.5em;
+}

@@ -1,0 +1,109 @@
+%div{:id => "tour"}
+  
+  .row
+
+    .span12
+
+      %h3
+        1. Paint
+     
+      %p
+        Playtin offers a basic paint tool with all the necessary tools you need to paint your own game world
+        and objects.
+
+      %div{:class => "tourWrapper"}
+        = image_tag "guides/paint_overview.png"
+
+        %div{:class=>"tourInfo", :style => "left:100px; top:-30px"}
+          Use the pencil-, fill- or one of the shape-tools  
+
+        %div{:class=>"tourInfo", :style => "left:90px; top:120px"}
+          Draw your current frame
+          %br
+          on this canvas
+
+        %div{:class=>"tourInfo", :style => "left:750px; top:120px"}
+          Use frames for different states of your game object
+
+        %div{:class=>"tourInfo", :style => "left:100px; top:310px"}
+          you can zoom in/out
+          %br
+          for a better drawing experience
+
+        %div{:class=>"tourInfo", :style => "left:500px; top:320px; text-align:left;"}
+          = image_tag "guides/new/publish_graphic.png", :style => "border-radius:10px;border:1px solid #CCC;float:left;margin:0 10px 10px 0"        
+          share your graphics, so that others can use them in their game too!
+
+      %h3
+        2. Create
+
+      %div{:class => "tourWrapper"}
+        =image_tag "guides/new/editor600.jpg", :style => "position:absolute; right:30px; top:0px"
+        =image_tag "guides/new/behavior.jpg", :style => "position:absolute; left:0px; top:100px"
+
+        %div{:class=>"tourInfo", :style => "left:150px; top:-30px"}
+          Add game objects or set the background
+
+        %div{:class=>"tourInfo", :style => "left:50px; top:70px"}
+          Set game mechanics in the behavior editor
+
+        %div{:class=>"tourInfo", :style => "left:850px; top:380px"}
+          Enable the detail view
+          %br
+          to see more
+
+        %div{:class=>"tourInfo", :style => "left:750px; top:150px"}
+          Place your game objects on the stage by drag and drop
+
+      %h4{:style => "margin-top:10em;"}
+        IF ... THEN ...
+
+      %p
+        Every game works by adding behaviors on your game objects. 
+        %br
+        Add triggers and actions with the IF-THEN principle.
+
+      %p
+        For example: 
+        %b
+          IF 
+        a click on your game object occurs 
+        %b
+          THEN 
+        move
+
+      %div{:class => "tourWrapper", :style => "height:480px"}
+        = image_tag "guides/new/trigger_action.png", :style => "border:0px solid #CCC;"
+
+        %div{:class=>"tourInfo", :style => "left:120px; top:89px; font-size:2em"}
+          IF
+
+        %div{:class=>"tourInfo", :style => "left:80px; top:390px; font-size:2em "}
+          THEN
+
+      %p      
+        You will be guided with a step by step question-and-answer solution through all the triggers and actions, so that it becomes pretty easy to build your game!
+
+
+    
+      %h3{:style => "margin-top:4em"}
+        3. Play and share
+
+      %p
+        After publishing your micro game - everybody can play it!
+        Share it on social networks, embed it on your page or see how people like and comment it.
+        Play on your iPad
+
+      %div{:class => "tourWrapper", :style => "height:354px"}
+        = image_tag "guides/new/play600.jpg", :style => "border:1px solid #CCC;"
+
+  .row{:id => "tourFooter"}
+
+    .span4{:style => "text-align: left;"}
+      = link_to 'Try it', build_path      
+
+    .span4{:style => "text-align: center;"}
+      = link_to 'Sign up', new_user_registration_path      
+
+    .span4{:style => "text-align: right;"}
+      = link_to 'Play games', gallery_path      
