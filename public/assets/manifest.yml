@@ -16,10 +16,14 @@
 !binary "Z2FtZS92aWV3cy5wbmc=": game/views-c5ba9b39583dce0b6fa1a83200b495fe.png
 !binary "Z2FtZS92aWV3c19nYWxsZXJ5LnBuZw==": game/views_gallery-a63b4a6ecfa334346678fda46d984e03.png
 !binary "Z3VpZGVzL25ldy9hY3Rpb24uanBn": guides/new/action-a07f6efd20e949fd156a74c3fae6d79e.jpg
+!binary "Z3VpZGVzL25ldy9hcnJvd3MucG5n": guides/new/arrows-bcd7c28716d334fc72511e866dc3e104.png
+!binary "Z3VpZGVzL25ldy9hcnJvd3Nfc21hbGwucG5n": guides/new/arrows_small-9e3dc6cf85e1483a67c6b53e726fa58e.png
 !binary "Z3VpZGVzL25ldy9iZWhhdmlvci5qcGc=": guides/new/behavior-bf06ef7b8570925735134a739ee7500f.jpg
+!binary "Z3VpZGVzL25ldy9jaXJjbGUucG5n": guides/new/circle-855140a3bcfed9fa186806ac9093a515.png
 !binary "Z3VpZGVzL25ldy9lZGl0b3I2MDAuanBn": guides/new/editor600-6599061b4793eece7d1fdf9f820fd46d.jpg
 !binary "Z3VpZGVzL25ldy9wbGF5NjAwLmpwZw==": guides/new/play600-29ac5906e8f942a4b1429ec25f73fac4.jpg
 !binary "Z3VpZGVzL25ldy9wdWJsaXNoX2dyYXBoaWMucG5n": guides/new/publish_graphic-08671d9c7e64f302525aa97fe3a63e9f.png
+!binary "Z3VpZGVzL25ldy9zaGFyZS5qcGc=": guides/new/share-9d3fcb6158c162f338d4fbe57a6b5b1d.jpg
 !binary "Z3VpZGVzL25ldy90cmlnZ2VyLmpwZw==": guides/new/trigger-bf1cb5c4c8a323f9da1dda47ad19277a.jpg
 !binary "Z3VpZGVzL25ldy90cmlnZ2VyX2FjdGlvbi5qcGc=": guides/new/trigger_action-eec36b15869dd982cf2e964d1dc34778.jpg
 !binary "Z3VpZGVzL25ldy90cmlnZ2VyX2FjdGlvbi5wbmc=": guides/new/trigger_action-909291a090049d24a6fdaf9f9b1344a1.png
@@ -61,7 +65,7 @@
 !binary "dGVhbS96ZXVzcmVhbC5qcGc=": team/zeusreal-e7165912b3822056f6b81ac128757ad4.jpg
 !binary "dHdpdHRlcl9wbGF5dGluLnBuZw==": twitter_playtin-06ae45cde69251c48faefc7c9efac8f3.png
 !binary "YXBwbGljYXRpb24uanM=": application-19164fda08786b058f50bf6a15c3de02.js
-!binary "YXBwbGljYXRpb24uY3Nz": application-ea05041d6fb952eeadd332f94d4b88ae.css
+!binary "YXBwbGljYXRpb24uY3Nz": application-7f04ad470bb98ea329ad6783b9faacf9.css
 !binary "Ym9vdHN0cmFwL2ltZy9nbHlwaGljb25zLWhhbGZsaW5ncy13aGl0ZS5wbmc=": bootstrap/img/glyphicons-halflings-white-13553a5bf21ae3cc374006592488ec64.png
 !binary "Ym9vdHN0cmFwL2ltZy9nbHlwaGljb25zLWhhbGZsaW5ncy5wbmc=": bootstrap/img/glyphicons-halflings-ab3144065a860d198f1d7d9a4882640c.png
 !binary "cGxheWVyLmNzcw==": player-ea44d27056545f7f5154dffbd132e09e.css
