@@ -906,7 +906,7 @@ canvas {
   font-family: 'Gloria Hallelujah', cursive;
 }
 
-.tourWrapper {position:relative;text-align:center; width:100%; margin:4em 0 4em 0; height:400px;}
+.tourWrapper {position:relative;text-align:center; width:100%; margin:4em 0 4em 0; height:460px;}
 
 .tourInfo {
   position:absolute;
@@ -923,4 +923,60 @@ canvas {
 #tourFooter a {  
   font-family: 'Gloria Hallelujah', cursive;
   font-size:2.5em;
+}
+
+.arrow {
+  position:absolute;
+  background:url(guides/new/arrows_small.png) no-repeat;
+}
+
+.arrDown {
+  background-position:0 0;
+  width: 41px; height:69px;
+}
+
+.arrUp {
+  background-position:-67px 0;
+  width: 60px; height:100px;
+}
+
+.arrRight {
+  background-position:-92px 0;
+  width: 68px; height:44px; 
+}
+
+.arrRight2 {
+  background-position:-262px -103px;
+  width: 70px; height:43px; 
+}
+
+.arrLeft {
+  background-position:-163px 0;
+  width: 68px; height:50px; 
+}
+
+.arrStraightDown {
+  background-position:0px -80px;
+  width: 42px; height:75px;
+}
+
+.arrStraightUp {
+  background-position:-48px -81px;
+  width: 42px; height:75px;
+}
+
+.arrStraightLeft {
+  background-position:-173px -114px;
+  width: 81px; height:29px;
+}
+
+.arrStraightRight {
+  background-position:-173px -112px;
+  width: 80px; height:31px;
+}
+
+.circle {
+  position:absolute;
+  width:81px; height:46px;
+  background:url(guides/new/circle.png) no-repeat;
 }

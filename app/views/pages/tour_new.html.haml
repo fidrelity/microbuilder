@@ -14,13 +14,16 @@
       %div{:class => "tourWrapper"}
         = image_tag "guides/paint_overview.png"
 
-        %div{:class=>"tourInfo", :style => "left:100px; top:-30px"}
+        %div{:class=>"tourInfo", :style => "left:50px; top:-30px"}
           Use the pencil-, fill- or one of the shape-tools  
+          %div{:class => "arrow arrRight", :style => "left:70px; top:25px" }
 
         %div{:class=>"tourInfo", :style => "left:750px; top:120px"}
           Use frames for different states of your game object
+          %div{:class => "arrow arrLeft", :style => "left:30px; top:-50px" }
 
-        %div{:class=>"tourInfo", :style => "left:100px; top:310px"}
+        %div{:class=>"tourInfo", :style => "left:0px; top:310px"}
+          %div{:class => "arrow arrRight2", :style => "left:120px; top:-50px" }
           you can zoom in/out
           %br
           for a better drawing experience
@@ -36,13 +39,15 @@
         =image_tag "guides/new/editor600.jpg", :style => "position:absolute; right:30px; top:0px"
         =image_tag "guides/new/behavior.jpg", :style => "position:absolute; left:0px; top:100px"
 
-        %div{:class=>"tourInfo", :style => "left:150px; top:-30px"}
+        %div{:class=>"tourInfo", :style => "left:220px; top:-110px"}
+          %div{:class => "arrow arrStraightDown", :style => "left:135px; top:25px" }
           Add game objects or set the background
 
         %div{:class=>"tourInfo", :style => "left:50px; top:70px"}
           Set game mechanics in the behavior editor
 
-        %div{:class=>"tourInfo", :style => "left:850px; top:380px"}
+        %div{:class=>"tourInfo", :style => "left:820px; top:380px"}
+          %div{:class => "circle", :style => "left:18px; top:-55px" }
           Enable the detail view
           %br
           to see more
@@ -88,7 +93,7 @@
         After publishing your microgame - everybody can play it!
         Share it on social networks, embed it on your page or see how people like and comment it.        
 
-      %div{:class => "tourWrapper", :style => "height:354px"}
+      %div{:class => "tourWrapper", :style => "height:400px"}
         = image_tag "guides/new/play600.jpg", :style => "border:1px solid #CCC;"
 
         %div{:class=>"tourInfo", :style => "left:790px; top:80px;"}
@@ -102,7 +107,8 @@
           comments
 
         %div{:class=>"tourInfo", :style => "left:0px; top:380px; text-align:left;"}
-          = image_tag "guides/new/share.jpg", :style => "border-radius:10px;border:1px solid #CCC;float:left;margin:0 10px 10px 0"        
+          = image_tag "guides/new/share.jpg", :style => "border-radius:10px;border:1px solid #CCC;float:left;margin:0 100px 10px 0"     
+          %div{:class => "arrow arrStraightLeft", :style => "left:290px; top:8px" }   
           share your game
           %br
           with others!
