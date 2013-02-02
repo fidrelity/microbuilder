@@ -1,8 +1,4 @@
-.row{:style => "margin-top:1em;"}
-  
-  .span12
-    = section_line "related", "games"
-    %ul{:id => 'gamesList', :class => "thumbnails"}
-      - games.each do |game|             
-
+= section_line "other", "games"
+%ul{:id => 'gamesList', :class => "thumbnails"}
+    - games.each do |game|
         = render :partial => 'games/single_game', :locals => {:game => game}

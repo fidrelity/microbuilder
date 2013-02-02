@@ -36,10 +36,12 @@
       %div{:id => "ratingWrapper"}
         = render :partial => "rating", :locals => {:game => @game}
 
-    .row
-      .span4
-        %div{:style => "margin-top:2em", :id => "commentsWrapper"}
-          = render :partial => 'comments', :locals => {:comments => @comments, :game => @game}  
+
+    %div{:class => "mouseInstruction"}
+      = image_tag "mouse_click.png"
+      Play with click / touch
+
+    %div
 
 
 .row{:style => "margin-top:1em;"}
@@ -64,4 +66,13 @@
     = render :partial => "games/layers/share_layer", :locals => {:game => @game}
     = render :partial => "games/layers/embed_layer", :locals => {:game => @game}
     = render :partial => "games/layers/report_layer", :locals => {:game => @game}
+
+
+.row{:style => "margin-top:1em;"}
+
+  .span8{:style => "margin-right:20px;"}
+    %div{:id => "commentsWrapper"}
+      = render :partial => 'comments', :locals => {:comments => @comments, :game => @game}  
+
+  .span4{:style => "width:280px;"}
     = render :partial => "related", :locals => {:games => @game.related(4, @game.id)}

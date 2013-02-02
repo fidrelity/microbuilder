@@ -108,13 +108,16 @@
   @include bg;
   height: 90px;
   z-index: 1;
+  background-image: url("/assets/mouse_click.png");
+  background-repeat: no-repeat;
+  background-position: left center;
   
   @include transition(top, 0.2s, linear);
   top: 390px;
   &.active {
     top: 300px; 
   }
-  
+
   .content {
     padding: 14px 16px;
     h2 {

@@ -762,10 +762,6 @@ canvas {
 }
 
 #commentsWrapper .comments {
-  max-width:280px;
-  overflow-y:auto;
-  height:153px;
-  max-height:153px;
 }
 
 #commentsWrapper .comments .comment {
@@ -790,6 +786,17 @@ canvas {
   position:relative;
   top:-14px;
   left:8px;
+}
+
+.mouseInstruction { 
+  margin-top:0.5em;
+  background:#666;
+  padding:4px;
+  color:#FFF;
+}
+
+#formComment {
+  width:auto;
 }
 
 /* Guides */

@@ -1,18 +1,42 @@
 %h4
   comments (#{comments.size})
 
-%div{:class=>"comments scroll-pane"}  
+.row{:class => "commentForm"}
+
+  .span8
+
+    =form_for GameComment.new, :url => comment_game_path, :html => {:class => "well"}, :remote => true do |t|
+
+      .row
+
+        .span1
+          -if user_signed_in?
+            %img{:src => current_user.display_image, :style => "height:25px;width:25px;"}
+          -else
+            %img
+
+        .span6
+          =t.hidden_field :game_id, :value => game.id
+          =t.text_area :comment, :rows => 4, :cols => 74, :disabled => !user_signed_in?, :id => "formComment"
+      
+      .row
+        .span1
+          &nbsp;
+        .span6
+          =t.submit "add comment", :disabled => !user_signed_in?, :class => "btn btn-success"
+
+%div{:class=>"comments"}  
   
   -comments.each do |comment|
 
     .row{:class => "comment"}
 
-      .span1{:style => "width:25px"}
+      .span1
         .avatar
           = link_to user_path(comment.user) do
             %img{:src => comment.user.display_image, :alt => "#{comment.user.display_name}"}
 
-      .span3{:style => "width:210px"}
+      .span6
         =comment.comment
 
         %span{:class => "commentData"}
@@ -20,17 +44,4 @@
           -
           = "#{distance_of_time_in_words(comment.created_at, Time.now)} ago"
 
-.row{:class => "commentForm"}
 
-  .span4
-
-    =form_for GameComment.new, :url => comment_game_path, :html => {:class => "form-inline"}, :remote => true do |t|
-
-      -if user_signed_in?
-        %img{:src => current_user.display_image, :style => "height:25px;width:25px"}
-      -else
-        %img
-
-      =t.hidden_field :game_id, :value => game.id
-      =t.text_field :comment, :disabled => !user_signed_in?, :id => "formComment", :class => "span3", :style => "width: 170px"
-      =t.submit "add", :disabled => !user_signed_in?, :class => "btn btn-success"
