@@ -3,6 +3,31 @@
 
 == Instructions
 
+=== localhost ready (02.2013)
+
+==== Postgresql
+Download and install: http://www.postgresql.org/download/
+
+Create database 'microbuilder'
+
+(In Windows you MUST set a password and set it in config/database.yml)
+
+==== Execute rake command
+  >> rake db:migrate
+
+Wenn Fehler mit game.visible -> kommentiere alles mit 'visible' aus in app/models/game.rb
+
+==== Redis:
+Download Windows: https://github.com/kcherenkov/redis-windows-service
+
+Create file: config/redis_credentials.yml
+  username: your-OS-username
+  password: your-OS-password
+In redis.conf: 
+  requirepass your-OS-password
+Oder in redis-cli: 
+  >> CONFIG SET requirepass your-os-password
+
 === setup heroku
 
   gem install heroku
@@ -183,7 +208,5 @@ version 2
 * removed trigger : 'gameIsWon'
 * removed trigger : 'gameIsLost'
 
-* removed action : 'gameEnd'
-
-
+* removed action : 'gameEnd' 
 
