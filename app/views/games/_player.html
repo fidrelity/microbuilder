@@ -1,4 +1,5 @@
 <div id="player">
+
   <canvas id="playerCanvas" width="640" height="390"></canvas>
 
   <div class="playerUI">
@@ -41,7 +42,13 @@
     </div>
     <%= link_to raw('<div class="playerLogo"></div>'), play_path(game) %>
   </div>
+
+  <div id="mouseInstruction">
+    <%= image_tag "mouse_click.png" %>
+    Play with click / touch
+  </div>
 </div>
+
 
 <script>
   $(document).ready( function() {

@@ -54,6 +54,7 @@ var Player = function() {
   
   this.hasLoaded = false;
   this.terminate = false;
+  this.isRunning = false;
   
 };
 
@@ -117,7 +118,20 @@ Player.prototype = {
       this.timelineCtx = timeline.getContext( '2d' );
       
     }
+
+    $(document).bind('keypress', $.proxy(this.onKeyEvent, this));
     
+  },
+
+  onKeyEvent : function (e) {
+
+    var mouseInstructionLayer = $('#mouseInstruction');
+
+    // Show info message, when user tries to use keyboard
+    if (this.isRunning && !mouseInstructionLayer.is(':visible') ) {
+      mouseInstructionLayer.show().delay(1000).fadeOut(2500);
+    }
+
   },
   
   startRunloop : function() {
@@ -165,7 +179,7 @@ Player.prototype = {
     
     this.timePlayed = 0;
     this.restTime = 0;
-    
+
     this.mouse.clicked = false;
     
   },
@@ -324,6 +338,8 @@ Player.prototype = {
     
     this.game.reset();
     this.game.start();
+
+    this.isRunning = true;
     
   },
   
@@ -362,6 +378,8 @@ Player.prototype = {
       this.onLose();
       
     }
+
+    this.isRunning = false;
     
     $( '.endText', this.node ).hide();
     $( msg, this.node ).show();

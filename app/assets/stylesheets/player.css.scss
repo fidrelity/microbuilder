@@ -225,3 +225,20 @@
   margin: 6px 0 0 10px;
   cursor: pointer;
 }
+
+/* --- Info --- */
+
+#mouseInstruction { 
+  display: none;
+  position:absolute;
+  top:10px;
+  left:240px;
+  margin-top:0.5em;
+  background:#666;
+  padding:4px 20px 4px 0;
+  color:#FFF;
+  font-size: 0.8em;
+  border-radius: 4px;
+  text-align: center;
+  width:160px;
+}
