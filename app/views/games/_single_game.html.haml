@@ -1,7 +1,7 @@
 %li{:id => game.id, :class => "span3"}
           
   .thumbnail{:style => "position:relative"}
-    = link_to image_tag(game.preview_image), play_path(game)
+    = link_to image_tag(game.preview_image), play_path(game), :title => game.title
               
     %a{ :href => user_path(game.author), :title => "#{game.author.display_name}"}
       %div{ :class => "gameAuthor", :style => "background-image:url(#{game.author.display_image})"}
