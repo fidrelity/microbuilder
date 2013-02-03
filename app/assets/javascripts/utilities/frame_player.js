@@ -13,11 +13,11 @@ var FramePlayer = {
     
     var self = this;
     
-    $('.frame_graphic').live('mouseover', function() {
+    $('.frame_graphic').bind('mouseover', function() {
       
       self.initPlay($(this).find('.frame_graphic_element'), $(this).parent().parent().find('.graphicDetails').find('.frame_display').find('.frame_number'));
       
-    }).live('mouseout', function() { 
+    }).bind('mouseout', function() { 
       
       self.stop();
       

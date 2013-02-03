@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require handlebars
 //= require ember
 //= require_tree ./editor/templates
 //= require_tree ./paint/templates
@@ -159,7 +160,7 @@ $(document).ready(function() {
   };
 
   // 
-  $("#profilewrap").find(".edit").live("click", function(e) {
+  $("#profilewrap").find(".edit").bind("click", function(e) {
     toggleProfileEdit( $(this) );    
   });
   
