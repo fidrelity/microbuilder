@@ -13,22 +13,23 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require handlebars
 //= require ember
 //= require_tree ./editor/templates
 //= require_tree ./paint/templates
 //= require_tree .
 
+
+//./lib/jquery-1.8.3.min.js
 $(document).ready(function() {
 
   // Init Autocomplete for games
-  $( ".searchbox" ).autocomplete({
+/*  $( ".searchbox" ).autocomplete({
 
       source: "/games/auto_search",
 
       minLength: 2
 
-  });
+  });*/
 
   //
   

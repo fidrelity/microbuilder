@@ -21,7 +21,7 @@ var Notifier = {
     Notifier.templateLi = Notifier.list.find("#flash-template");
 
     // Set close event
-    Notifier.wrapper.find(".closeFlash").bind("click", function() {
+    Notifier.wrapper.find(".closeFlash").live("click", function() {
       $(this).parent().hide();
     });
 
