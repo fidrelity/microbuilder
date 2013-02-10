@@ -23,13 +23,13 @@
 $(document).ready(function() {
 
   // Init Autocomplete for games
-/*  $( ".searchbox" ).autocomplete({
+  $( ".searchbox" ).autocomplete({
 
       source: "/games/auto_search",
 
       minLength: 2
 
-  });*/
+  });
 
   //
   
