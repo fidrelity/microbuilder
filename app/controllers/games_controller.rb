@@ -26,10 +26,12 @@
   end
 
   def new
+    @game = Game.unscoped.find(params[:id])
     @game_data = "null"
     
     if params[:id]
-      @game_data = Game.unscoped.find(params[:id]).data
+      @game_data = @game.data
+      flash[:info] = "You can now create a new version of #{@game.author.display_name}'s #{@game.title}"
     end       
   end
   
