@@ -37,7 +37,9 @@
         = render :partial => "rating", :locals => {:game => @game}
 
     %div{:style => "margin-top:1em;"}
-      = link_to "Load game into editor", fork_path(@game.id), { :class => "btn" }
+      = link_to (fork_path(@game.id)), :class => "btn" do
+        %i{:class => "icon-random"}
+        Load game into editor
 
     %div{:style => "margin-top:1em;"}
       - if @graphic_co_authors.size > 0
