@@ -2,14 +2,14 @@
 # Url: https://github.com/playtin/Support/issues
 class SupportController < ApplicationController
   
-  respond_to :js, :only => [:feedback, :report, :ticket]
+  respond_to :js, :only => [:feedback, :report, :report_graphic, :ticket]
 
   def feedback
     issue_state = create_issue "Feedback: #{params[:subject]}", params[:body], "Feedback"
     @message_type = issue_state ? "success" : "error"
   end
 
-  def report
+  def report_game
     @game = Game.find(params[:gid])
     body = params[:body]
 
@@ -23,6 +23,27 @@ class SupportController < ApplicationController
       issue_state = create_issue "Report: #{params[:type]} [#{@game.id}]", append_game_to_body( body, @game.id ), "Report"
       @message_type = issue_state ? "success" : "error"
     end
+  end
+
+  def report_graphic
+    
+    @graphic = Graphic.find(params[:gid])
+
+    unless cookies["reported_graphic_#{@graphic.id}"]
+      
+      Graphic.transaction do
+        @graphic.reports += 1
+        @graphic.visible = false if @graphic.reports > 4
+        @graphic.save
+      end
+      
+      support = SupportController.new
+      cookies["reported_graphic_#{@graphic.id}"] = true
+      issue_state = create_issue "Report: Graphic [#{@graphic.id}]", "Graphic has been reported" , "Report"
+      
+      return @message_type = issue_state ? "success" : "error"
+    end
+
   end
   
   def ticket

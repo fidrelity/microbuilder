@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115172849) do
+ActiveRecord::Schema.define(:version => 20130216123653) do
 
   create_table "game_comments", :force => true do |t|
     t.string   "comment"
@@ -64,6 +64,8 @@ ActiveRecord::Schema.define(:version => 20121115172849) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.string   "name"
+    t.boolean  "visible",            :default => true
+    t.integer  "reports",            :default => 0
   end
 
   create_table "pg_search_documents", :force => true do |t|

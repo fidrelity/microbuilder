@@ -84,10 +84,6 @@ class GraphicsController < ApplicationController
     render :text => img_data
   end
 
-  def report
-
-  end
-
   protected
 
     # Retuns all graphics with name like %term%

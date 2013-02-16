@@ -40,7 +40,8 @@ Playtin::Application.routes.draw do
   end
 
   post 'support/report', :to => 'support#report'
-  post 'support/feedback', :to => 'support#feedback'    
+  post 'support/report_graphic', :to => 'support#report_graphic'
+  post 'support/feedback', :to => 'support#feedback'
   post 'support/ticket', :to => 'support#ticket'
     
   get '/imprint', :to => 'pages#imprint'

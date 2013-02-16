@@ -41,11 +41,17 @@
                     = link_to ( games_graphic_path(graphic) ) do
                       = pluralize(graphic.games.count, "game")
                   - else
-                    0 games         
+                    0 games    
+
+              .row{:class => "graphicGameDetails"}
+                .span2
+                  =link_to(support_report_graphic_path(graphic), :method => :post, :remote => true, :confirm => "Report this graphic?") do
+                    %i{:class => "icon-flag"}
+                    report
 
               -if current_user == graphic.user
 
-                %div{ :class => "settings" }
+                %div{:class => "settings"}
 
                   .row
                     .span1{:class => "wrapper"}
