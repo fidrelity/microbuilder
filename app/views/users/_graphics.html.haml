@@ -45,7 +45,7 @@
 
               .row{:class => "graphicGameDetails"}
                 .span2
-                  =link_to(support_report_graphic_path(graphic), :method => :post, :remote => true, :confirm => "Report this graphic?") do
+                  = link_to(support_report_graphic_path(graphic), :method => :post, :remote => true, :confirm => "Report this graphic?") do
                     %i{:class => "icon-flag"}
                     report
 

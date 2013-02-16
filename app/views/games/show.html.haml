@@ -36,6 +36,16 @@
       %div{:id => "ratingWrapper"}
         = render :partial => "rating", :locals => {:game => @game}
 
+    %div{:style => "margin-top:1em;"}
+      - if @graphic_co_authors.size > 0
+        %h4
+          Uses graphics made by:
+        
+        - @graphic_co_authors.each do |coauthor|
+          = link_to(user_path(coauthor.user)) do
+            .avatar
+              %img{:src => coauthor.user.display_image, :title => coauthor.user.display_name}
+
 .row{:style => "margin-top:1em;"}
 
   .span12

@@ -91,7 +91,12 @@ class Game < ActiveRecord::Base
     return index > -1 ? in_words[ index ] : "none"
 
   end
-  
+
+  # Get all graphic co-authors of the game
+  def graphics_co_authors
+    g = self.graphics.where("user_id != ?", self.user.id)
+  end
+
   # Friendly URL
   # https://gist.github.com/1209730
   def to_param
