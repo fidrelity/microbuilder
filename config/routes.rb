@@ -40,7 +40,7 @@ Playtin::Application.routes.draw do
   end
 
   post 'support/report', :to => 'support#report'
-  post 'support/report_graphic', :to => 'support#report_graphic'
+  post 'support/report_graphic/:id', :to => 'support#report_graphic'
   post 'support/feedback', :to => 'support#feedback'
   post 'support/ticket', :to => 'support#ticket'
     
@@ -51,5 +51,6 @@ Playtin::Application.routes.draw do
   get '/play/:id', :to => 'games#show', :as => 'play'
   get '/play/:id/embed', :to => 'games#embed'
   get '/build', :to => 'games#new'
+  get '/fork/:id', :to => 'games#new', :as => 'fork'
   get '/s3', :to => 'graphics#tunnel'
 end

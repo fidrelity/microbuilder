@@ -92,7 +92,7 @@ class Game < ActiveRecord::Base
 
   end
 
-  # Get all graphic co-authors of the game
+  # Get all graphics used in the game, expect graphcis from the game author
   def graphics_co_authors
     g = self.graphics.where("user_id != ?", self.user.id)
   end

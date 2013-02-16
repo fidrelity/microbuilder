@@ -37,6 +37,9 @@
         = render :partial => "rating", :locals => {:game => @game}
 
     %div{:style => "margin-top:1em;"}
+      = link_to "Load game into editor", fork_path(@game.id), { :class => "btn" }
+
+    %div{:style => "margin-top:1em;"}
       - if @graphic_co_authors.size > 0
         %h4
           Uses graphics made by:
@@ -45,7 +48,7 @@
           = link_to(user_path(coauthor.user)) do
             .avatar
               %img{:src => coauthor.user.display_image, :title => coauthor.user.display_name}
-
+         
 .row{:style => "margin-top:1em;"}
 
   .span12
