@@ -1,7 +1,7 @@
-%li
+%li{:class => "create-activity"}
   .avatar_stream
     = link_to( image_tag(user.display_image, :class => "stream-image"), user_path(user) )
-  = link_to( display_name, user_path(user) )
+  = link_to( display_name, user_path(user), :class => "stream-user" )
   created
   %a{ :class => "stream-popup", :href => "/play/#{game.id}", "data-content" => "<img src=#{game.preview_image}>", :title => "#{strip_tags game.title}" }
     = "#{game.title}"

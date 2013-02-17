@@ -1,0 +1,35 @@
+<li class="game-action-activity">
+
+  {{#if isAnonymous}}
+
+    Anonymous
+
+  {{else}}
+    
+    <div class="avatar_stream">
+      
+      <a {{bindAttr href="userPath"}}>
+
+        <img class="stream-image" {{bindAttr src="userImage"}}>
+
+      </a>
+
+    </div>
+
+    <a {{bindAttr href="userPath"}}>{{userName}}</a>
+
+  {{/if}}  
+  
+  {{actionType}}
+
+  {{#if userIsAuthor }}
+    your game
+  {{else}}
+    <a {{bindAttr href="authorPath"}}>{{authorName}}'s</a>
+  {{/if}}
+
+  <a class="stream-popup" {{bindAttr href="gamePath"}} {{bindAttr data-content="popUpThumb"}} {{bindAttr data-original-title="gameTitle"}}>
+    {{gameTitle}}
+  </a>
+
+</li>

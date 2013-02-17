@@ -23,6 +23,12 @@ Playtin::Application.routes.draw do
     end
   end
 
+  resources :stream, :only => [] do
+    collection do
+      get 'public_stream'
+    end
+  end
+
   resources :games, :only => [:create, :destroy] do
     member do
       put 'played'
