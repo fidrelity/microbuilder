@@ -26,11 +26,11 @@
   end
 
   def new
-    @game = Game.unscoped.find(params[:id])
     @game_data = "null"
     
     # Forking the game
     if params[:id]
+      @game = Game.unscoped.find(params[:id])
       @game_data = @game.data
       
       if current_user
