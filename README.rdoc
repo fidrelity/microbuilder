@@ -28,6 +28,9 @@ In redis.conf:
 Oder in redis-cli: 
   >> CONFIG SET requirepass your-os-password
 
+Falls redis.conf nicht gefunden wird, dann starte redis-server mit:
+  >> redis-server path/to/redis.conf
+
 === setup heroku
 
   gem install heroku
