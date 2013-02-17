@@ -1,6 +1,9 @@
 .span8
   #messages-public
-    = render :partial => 'shared/stream', :locals => {:messages => @messages}
+    %div{:class => "activity-list scroll-pane"}
+
+    :javascript
+        pusher_main();
 
 .span4
 

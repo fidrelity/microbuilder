@@ -207,7 +207,7 @@ function getURLParameter(name) {
 
 // Realtime events with pusher.com
 function pusher_main() {
-  
+
   if(!window.App)  {
     window.App = Ember.Application.create(); 
   }
