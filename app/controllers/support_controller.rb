@@ -2,7 +2,7 @@
 # Url: https://github.com/playtin/Support/issues
 class SupportController < ApplicationController
   
-  respond_to :js, :only => [:feedback, :report, :report_graphic, :ticket]
+  respond_to :js, :only => [:feedback, :report_game, :report_graphic, :ticket]
 
   def feedback
     issue_state = create_issue "Feedback: #{params[:subject]}", params[:body], "Feedback"
@@ -27,9 +27,9 @@ class SupportController < ApplicationController
 
   def report_graphic
     
-    @graphic = Graphic.find(params[:gid])
+    @graphic = Graphic.find(params[:id])
 
-    unless cookies["reported_graphic_#{@graphic.id}"]
+    unless cookies["reported_graphic_#{@graphic.id}"] && @graphic
       
       Graphic.transaction do
         @graphic.reports += 1
@@ -37,7 +37,6 @@ class SupportController < ApplicationController
         @graphic.save
       end
       
-      support = SupportController.new
       cookies["reported_graphic_#{@graphic.id}"] = true
       issue_state = create_issue "Report: Graphic [#{@graphic.id}]", "Graphic has been reported" , "Report"
       

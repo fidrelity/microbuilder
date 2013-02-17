@@ -45,9 +45,13 @@
 
               .row{:class => "graphicGameDetails"}
                 .span2
-                  = link_to(support_report_graphic_path(graphic), :method => :post, :remote => true, :confirm => "Report this graphic?") do
-                    %i{:class => "icon-flag"}
-                    report
+
+                  = form_tag("/support/reportgraphic", :method => "post", :remote => true) do        
+                    = hidden_field_tag(:id, "#{graphic.id}")
+                    %button{:class => "btn btn-small"}
+                      %i{:class => "icon-flag"}
+                      report
+
 
               -if current_user == graphic.user
 

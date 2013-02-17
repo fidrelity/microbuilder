@@ -8,7 +8,7 @@
   %p
     If you think this game doesn't work, is inappropiate or it hurts any rights, then tell us.
 
-  = form_tag("/support/report_game", :method => "post", :remote => true) do        
+  = form_tag("/support/reportgame", :method => "post", :remote => true) do        
 
     = hidden_field_tag(:gid, "#{game.id}", :class => "span6")
 

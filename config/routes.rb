@@ -39,8 +39,8 @@ Playtin::Application.routes.draw do
     end
   end
 
-  post 'support/report', :to => 'support#report'
-  post 'support/report_graphic', :to => 'support#report_graphic'
+  post 'support/reportgame', :to => 'support#report_game'
+  post 'support/reportgraphic', :to => 'support#report_graphic'
   post 'support/feedback', :to => 'support#feedback'
   post 'support/ticket', :to => 'support#ticket'
     
