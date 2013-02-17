@@ -4,3 +4,6 @@
 
   %ul{:class => "activity-list scroll-pane"}
   
+    - messages.each do |message|
+    
+      = render_message(message)
