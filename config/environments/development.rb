@@ -50,7 +50,7 @@ Playtin::Application.configure do
   Pusher.secret = 'fcc0e5f4c2220751968e'
 
   # https://github.com/webarbeit/feedhub
-  Feedhub::set_user(:name => "playtin", :password => "platin3")
+  Feedhub::set_user(:name => "playtinSupport", :password => "baumhaus8")
   Feedhub::set_repo(:account => "playtin", :name => "Support")
   
   # ember-rails
