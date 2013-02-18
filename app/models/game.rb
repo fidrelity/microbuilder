@@ -10,7 +10,7 @@ class Game < ActiveRecord::Base
   has_attached_file :preview_image, PAPERCLIP_THUMB_OPTIONS
   
   before_destroy :destroy_unreferenced_graphics
-  before_create :check_graphics
+  #before_create :check_graphics
   
   #validate :win_condition_in_data
   validates_presence_of :title, :instruction, :data
