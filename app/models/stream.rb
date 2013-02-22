@@ -29,7 +29,7 @@ class Stream
       delete_obsolete_messages(user_ids)
 
       # Push to real-time stream
-      to_pusher(type, user, obj) #if Rails.env.production?
+      to_pusher(type, user, obj)
     end
    
     def latest(max = 10, current_user = nil)
@@ -85,6 +85,8 @@ class Stream
 
     # Push game to pusher
     def to_pusher(type, user, obj)
+
+      return false if Rails.env.production?
 
       channel_name = "stream_channel"
 
