@@ -1,4 +1,5 @@
  class GamesController < ApplicationController
+
   respond_to :js, :only => [:create, :index, :update, :like, :dislike, :played]
   before_filter :authenticate_user!, :only => [:create, :destroy]
   before_filter :find_game, :only => [:embed, :destroy, :like, :dislike, :played]  
@@ -94,22 +95,14 @@
       @game.save
     end
   end
-      
 
   def like
-    unless cookies["voted_game_#{@game.id}"]
-      Game.transaction { @game.update_attribute(:likes, @game.likes + 1) }
-      cookies["voted_game_#{@game.id}"] = true
-      Stream.create_message("like", current_user, @game)
-    end
+    rate_game(:likes, @game.likes + 1, 'like')
+    render "like"
   end
 
   def dislike
-    unless cookies["voted_game_#{@game.id}"]
-      Game.transaction { @game.update_attribute(:dislikes, @game.dislikes + 1) }
-      cookies["voted_game_#{@game.id}"] = true
-      Stream.create_message("dislike", current_user, @game)
-    end
+    rate_game(:dislikes, @game.dislikes + 1, 'dislike')
     render "like"
   end
 
@@ -120,6 +113,14 @@
   end
 
   private
+
+  def rate_game(attribute, counter, message_type)
+    unless cookies["voted_game_#{@game.id}"]
+      Game.transaction { @game.update_attribute(attribute, counter) }
+      cookies["voted_game_#{@game.id}"] = true
+      Stream.create_message(message_type, current_user, @game)
+    end
+  end
 
   def find_game
     @game = Game.find_by_id(params[:id])
