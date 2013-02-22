@@ -1,6 +1,7 @@
 require 'statistics2'
 
 class Game < ActiveRecord::Base
+  
   include PgSearch
   include ::GraphicPreProcessor
   
@@ -50,6 +51,7 @@ class Game < ActiveRecord::Base
     end
   end
   
+  # Returns randomly related games
   def related(amount = 5, game_id)
     Game.order("RANDOM()").limit(amount).where("id != ?", game_id)
   end
@@ -73,6 +75,7 @@ class Game < ActiveRecord::Base
     (phat + z*z/(2*total) - z * Math.sqrt((phat*(1-phat)+z*z/(4*total))/total))/(1+z*z/total)
   end
   
+  # Calculates the difficulty of the game
   def difficulty
     ratio = (self.won.to_f / self.played.to_f) * 100
     case ratio
@@ -83,13 +86,12 @@ class Game < ActiveRecord::Base
     end
   end
   
+  # Returns the game difficulty as string
   def difficulty_in_words
-
     index = self.difficulty - 1
     in_words = ["easy", "moderate", "hard"]
 
     return index > -1 ? in_words[ index ] : "none"
-
   end
 
   # Get all graphics used in the game, expect graphcis from the game author
@@ -104,6 +106,7 @@ class Game < ActiveRecord::Base
   end
   
   private
+
     def destroy_unreferenced_graphics
       graphics.each do |graphic|
         graphic.games.delete(self)
@@ -113,6 +116,7 @@ class Game < ActiveRecord::Base
       end
     end
     
+    # Checks if there is a win_condition in the passed game data
     def win_condition_in_data
       win_regex = /\"type\":\"win\"/
       unless data.match(win_regex)
@@ -120,6 +124,8 @@ class Game < ActiveRecord::Base
       end
     end
     
+    # Checks if the included graphics of the game are from the author or 
+    # are public graphics
     def check_graphics
       graphics.each do |graphic|
         return false unless graphic.public || graphic.user == self.author
