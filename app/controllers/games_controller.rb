@@ -32,6 +32,7 @@
     if params[:id]
       @game = Game.unscoped.find(params[:id])
       @game_data = @game.data
+      @fork_id = @game.id
       
       if current_user
         flash[:info] = "You can now create a new version of #{@game.author.display_name}'s #{@game.title}"

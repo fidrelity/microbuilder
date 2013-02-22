@@ -8,6 +8,8 @@
 var GameController = Ember.Object.extend({
 
   gameBinding : 'App.game',
+
+  forkId : null,
   
   cancelView : null,
   
@@ -161,9 +163,15 @@ var GameController = Ember.Object.extend({
       game.version,
       JSON.stringify( game ),
       JSON.stringify( graphicIDs ),
-      $("#game-tags").tagit('assignedTags').join(",")
+      $("#game-tags").tagit('assignedTags').join(","),
+      this.forkId
       // thumb
     );
+
+    // Add fork id if this game is a fork
+    if(this.forkId) {
+      game.fork_id = this.forkId;
+    }
     
     Notifier.showLoader("Creating game! Please wait a few seconds ...");
     

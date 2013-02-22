@@ -1,13 +1,16 @@
 =# head_line( "game", "stage" )
 
+
 #editor
 
 :javascript
   $(document).ready( function() {
 
-    var data = #{@game_data} || null;
-    var name = "#{current_user ? current_user.display_name : ""}";
-    editor_main( data, name );
+    var data = #{@game_data} || null,
+        fork_id = #{@fork_id} || null,
+        name = "#{current_user ? current_user.display_name : ""}";
+
+    editor_main( data, name, fork_id );
 
   } );
 

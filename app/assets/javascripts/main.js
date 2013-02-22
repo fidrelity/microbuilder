@@ -1,4 +1,4 @@
-function editor_main( data, username ) {
+function editor_main( data, username, fork_id ) {
 
   window.App = Ember.Application.create();
 
@@ -6,7 +6,9 @@ function editor_main( data, username ) {
   App.isSignedIn = username !== '';
 
   App.game = GameModel.create();
-  App.gameController = GameController.create();
+  App.gameController = GameController.create({
+    forkId : fork_id
+  });
 
   App.libraryController = LibraryController.create({ showOwn : App.isSignedIn });
 
