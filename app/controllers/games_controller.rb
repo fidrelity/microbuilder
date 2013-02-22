@@ -27,6 +27,7 @@
 
   def new
     @game_data = "null"
+    @fork_id = "null"
     
     # Forking the game
     if params[:id]
