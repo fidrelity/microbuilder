@@ -39,7 +39,7 @@ function editor_main( data, username, fork_id ) {
     
     console.log( data );
     
-    if ( App.gameController.loadGame( data ) ) {
+    if ( App.gameController.loadGame( data ) && !fork_id) {
       
       Notifier.add( 'An unfinished game was found in your browser', 'info' ).notify();
       
@@ -154,6 +154,30 @@ function paint_main( data, username ) {
   // App.paintView.appendTo( '#content' );
   
 };
+
+function playsite_main(game_id) {
+
+  jQuery('#loadGameToEditor').on('click', function(e) {
+    
+    var hasGameInLocalStorage = JSON.parse( Storage.read( 'game' ) );
+
+    if (hasGameInLocalStorage) {
+      
+      e.preventDefault();
+
+      var overwriteGame = confirm('We saw that you have an unfinished game in the editor. Do you want to overwrite it?');
+
+      if (!overwriteGame) {
+        return false;
+      } else {
+        location.href = '/fork/' + game_id;
+      } 
+
+    }
+
+  });
+
+}
 
 function player_main( data, game_id ) {
   
