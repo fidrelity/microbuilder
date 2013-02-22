@@ -1,4 +1,5 @@
 class GraphicsController < ApplicationController
+  
   respond_to :js, :only => [:create, :show, :public, :destroy, :publish]
   before_filter :authenticate_user!, :only => [:create, :destroy]
   before_filter :get_id, :only => [:show, :destroy, :publish, :games, :report]
@@ -29,12 +30,11 @@ class GraphicsController < ApplicationController
   end
 
   def publish
-    if @graphic.user == current_user      
+    if @graphic.user == current_user
       if @graphic.update_attribute(:public, true)
         Stream.create_message("graphic_publish", @graphic.user, @graphic)
       end
     end
-
   end
 
   def games
@@ -62,7 +62,6 @@ class GraphicsController < ApplicationController
   end
 
   def search
-
     graphics = Graphic.search(params[:term])
     response = {}
     graphics.paginate(:page => params[:page], :per_page => 14)

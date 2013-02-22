@@ -1,5 +1,5 @@
-
 class Graphic < ActiveRecord::Base
+
   include PgSearch
   include ::GraphicPreProcessor
 
@@ -25,8 +25,8 @@ class Graphic < ActiveRecord::Base
       min, min, max, max
     )
   }
-  scope :with_authorization, lambda { |user| where("user_id = ? OR public = 't'", user.nil? ? -1 : user.id) 
-  }
+  scope :with_authorization, lambda { |user| where("user_id = ? OR public = 't'", user.nil? ? -1 : user.id) }
+
 
   def to_response_hash(current_user)
     user_name = user.display_name if user

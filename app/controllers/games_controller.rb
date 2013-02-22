@@ -114,10 +114,16 @@
 
   private
 
+  # Updates likes or dislikes of game if cookie for game not set
+  # @param Symbol attribute The attribute to update
+  # @param Integer counter The new counter value
+  # @param String The type for the create message
   def rate_game(attribute, counter, message_type)
     unless cookies["voted_game_#{@game.id}"]
+
       Game.transaction { @game.update_attribute(attribute, counter) }
       cookies["voted_game_#{@game.id}"] = true
+      
       Stream.create_message(message_type, current_user, @game)
     end
   end
