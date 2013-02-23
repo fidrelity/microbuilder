@@ -12,6 +12,8 @@ var GameModel = Ember.Object.extend({
   behaviourCounter : 1,
   
   duration : 15,
+
+  fork_id : null,
   
   setBackground : function( graphic ) {
     
@@ -32,6 +34,7 @@ var GameModel = Ember.Object.extend({
     game.title = this.title;
     game.instructions = this.instructions;
     game.duration = this.duration;
+    game.fork_id = this.fork_id;
     
     if ( this.background ) {
       

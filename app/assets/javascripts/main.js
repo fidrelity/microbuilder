@@ -6,9 +6,7 @@ function editor_main( data, username, fork_id ) {
   App.isSignedIn = username !== '';
 
   App.game = GameModel.create();
-  App.gameController = GameController.create({
-    forkId : fork_id
-  });
+  App.gameController = GameController.create();
 
   App.libraryController = LibraryController.create({ showOwn : App.isSignedIn });
 
@@ -36,12 +34,14 @@ function editor_main( data, username, fork_id ) {
   if ( data ) {
     
     Ember.run.end();
-    
+
     console.log( data );
     
-    if ( App.gameController.loadGame( data ) && !fork_id) {
-      
-      Notifier.add( 'An unfinished game was found in your browser', 'info' ).notify();
+    if ( App.gameController.loadGame( data, fork_id )) {
+
+      if (!fork_id) {
+        Notifier.add( 'An unfinished game was found in your browser', 'info' ).notify();
+      }
       
     }
     

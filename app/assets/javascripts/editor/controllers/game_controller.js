@@ -8,8 +8,6 @@
 var GameController = Ember.Object.extend({
 
   gameBinding : 'App.game',
-
-  forkId : null,
   
   cancelView : null,
   
@@ -164,15 +162,10 @@ var GameController = Ember.Object.extend({
       JSON.stringify( game ),
       JSON.stringify( graphicIDs ),
       $("#game-tags").tagit('assignedTags').join(","),
-      this.forkId
+      game.fork_id
       // thumb
     );
 
-    // Add fork id if this game is a fork
-    if(this.forkId) {
-      game.fork_id = this.forkId;
-    }
-    
     Notifier.showLoader("Creating game! Please wait a few seconds ...");
     
     $.ajax({
@@ -238,7 +231,7 @@ var GameController = Ember.Object.extend({
   
   },
   
-  loadGame : function( data ) {
+  loadGame : function( data, fork_id ) {
     
     var game = App.game, i, ret;
     
@@ -250,6 +243,14 @@ var GameController = Ember.Object.extend({
     
     game.set( 'title', data.title );
     game.set( 'instructions', data.instructions );
+
+    // Either set fork_id from already saved game or
+    // by param fork_id
+    if(data.fork_id) {
+      game.set( 'fork_id', data.fork_id);
+    } else if(fork_id) {
+      game.set( 'fork_id', fork_id);
+    }
     
     if ( data.duration ) {
     
@@ -319,9 +320,9 @@ var GameController = Ember.Object.extend({
      title : '',
      instructions : '',
      duration : 15,
-     background : null
+     background : null,
+     fork_id : null
     });
-    
   }
   
 });
