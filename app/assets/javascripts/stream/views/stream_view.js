@@ -101,6 +101,8 @@ var StreamContainerView = Ember.ContainerView.extend({
 
   addMessage : function(data) {
 
+    if (!data) return false;
+
     var type = data.type;    
 
     switch(type) {
