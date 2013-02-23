@@ -53,14 +53,14 @@
           Load game into editor
 
     %div{:style => "margin-top:1em;"}
-      - if @graphics_co_authors.size > 0
+      - if @graphics_co_authors.any?
         %h4
           Uses graphics made by:
         
         - @graphics_co_authors.each do |co_author|
-          = link_to(user_path(co_author.user)) do
+          = link_to(user_path(co_author)) do
             .avatar
-              %img{:src => co_author.user.display_image, :title => co_author.user.display_name}
+              %img{:src => co_author.display_image, :title => co_author.display_name}
          
 .row{:style => "margin-top:1em;"}
 

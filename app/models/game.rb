@@ -98,9 +98,11 @@ class Game < ActiveRecord::Base
     return index > -1 ? in_words[ index ] : "none"
   end
 
-  # Get all graphics used in the game, except graphcis from the game author
+  # Get all Users of referenced Graphics
+  # Note: This might somehow be possible with a single query
   def graphics_co_authors
-    self.graphics.where("user_id != ?", self.user.id)
+    graphics = self.graphics.where("user_id != ?", self.user.id)
+    User.find_all_by_id(graphics.collect {|g| g.user_id}.uniq)
   end
 
   # Friendly URL
