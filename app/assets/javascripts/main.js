@@ -40,8 +40,6 @@ function editor_main( data, username, fork_id ) {
     
     if ( App.gameController.loadGame( data, fork_id )) {
 
-      console.log('here', fork_id);
-
       if (!fork_id && help) {
         Notifier.add( 'An unfinished game was found in your browser.', 'info' ).notify();
       }
