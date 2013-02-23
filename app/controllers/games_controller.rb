@@ -1,9 +1,10 @@
  class GamesController < ApplicationController
 
-  respond_to :js, :only => [:create, :index, :update, :like, :dislike, :played]
+  respond_to :js, :only => [:create, :index, :update, :like, :dislike, :played, :get_json]
   before_filter :authenticate_user!, :only => [:create, :destroy]
-  before_filter :find_game, :only => [:embed, :destroy, :like, :dislike, :played]  
-  
+  before_filter :find_game, :only => [:embed, :destroy, :like, :dislike, :played, :get_json]  
+  before_filter :prohibit_forked_fork!, :only => [:new]
+
   def index
     params[:order] ||= "desc"
     @games = case params[:type]
@@ -31,8 +32,7 @@
     @fork_id = "null"
     
     # Forking the game
-    if params[:id]
-      @game = Game.unscoped.find(params[:id])
+    if @game
       @game_data = @game.data
       @fork_id = @game.id
       
@@ -48,8 +48,14 @@
   end
   
   def create
-    @games = Game.all_latest("desc").paginate(:page => params[:page], :per_page => 4)
-    @game = current_user.games.new(params[:game])
+   fork_id = params[:fork_id]
+
+    @game = if fork_id
+      Game.find(fork_id).forks.new(params[:game])
+    else
+      current_user.games.new(params[:game])
+    end
+
     @game.create_graphics_association(params[:graphic_ids])
     @game.author_token = session[:facebook_token]
 
@@ -59,8 +65,21 @@
     else
       response, status = [I18n.t(".games.create.error"), 400]
     end
-
+    
+    @games = Game.all_latest("desc").paginate(:page => params[:page], :per_page => 4)
+    
     render :json => response, :status => status
+  end
+
+  def get_json
+
+    if @game
+      response, status = [play_url(@game), 200]
+    else
+      response, status = [I18n.t(".games.create.error"), 400]
+    end
+
+    render :json => @game.data, :status => status
   end
   
   def search
@@ -113,6 +132,15 @@
   end
 
   private
+
+  def prohibit_forked_fork!
+    if params[:id]
+      @game = Game.unscoped.find(params[:id])
+      if @game.is_fork?
+        render :file => "public/404.html", :status => :unauthorized
+      end
+    end
+  end
 
   # Updates likes or dislikes of game if cookie for game not set
   # @param Symbol attribute The attribute to update
