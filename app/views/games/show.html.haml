@@ -36,7 +36,17 @@
       %div{:id => "ratingWrapper"}
         = render :partial => "rating", :locals => {:game => @game}
 
-    - unless  @game.is_fork?
+    - if  @game.is_fork?
+      - origin = @game.origin
+      %div{:style => "margin-top:1em;"}
+        %h4
+          Based on
+          = link_to origin.title, games_path(origin)
+          by
+          = link_to(user_path(origin.author)) do
+            .avatar
+              %img{:src => origin.user.display_image, :title => origin.author.display_name}
+    - else
       %div{:style => "margin-top:1em;"}
         = link_to (fork_game_path(@game.id)), :class => "btn", :id => "loadGameToEditor" do
           %i{:class => "icon-random"}
@@ -47,7 +57,7 @@
         %h4
           Uses graphics made by:
         
-        - @graphic_co_authors.each do |coauthor|
+        - @graphics_co_authors.each do |coauthor|
           = link_to(user_path(coauthor.user)) do
             .avatar
               %img{:src => coauthor.user.display_image, :title => coauthor.user.display_name}

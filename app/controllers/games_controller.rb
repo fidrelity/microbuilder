@@ -21,7 +21,7 @@
   
   def show
     @game = Game.unscoped.find(params[:id])
-    @graphic_co_authors = @game.graphics_co_authors
+    @graphics_co_authors = @game.graphics_co_authors
 
     render :reported unless @game.visible
     @comments = @game.game_comments

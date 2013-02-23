@@ -24,9 +24,10 @@ class Game < ActiveRecord::Base
   pg_search_scope :search, :against => [:title, :instruction, :tags]
   
   attr_accessor :preview_image_file_name, :preview_image_data, :author_token
-  attr_accessible :title, :instruction, :data, :preview_image, :tags, :version, :visible, :reports,
-                  :preview_image_data, :preview_image_file_name, :played, :won, :author_token,
-                  :origin, :forks
+  attr_accessible :title, :instruction, :data, :preview_image, :tags, :version,
+                  :visible, :reports, :fork_id, :preview_image_data, 
+                  :preview_image_file_name, :played, :won, :author_token
+
   alias_attribute :user, :author
                   
   class << self
@@ -97,9 +98,9 @@ class Game < ActiveRecord::Base
     return index > -1 ? in_words[ index ] : "none"
   end
 
-  # Get all graphics used in the game, expect graphcis from the game author
+  # Get all graphics used in the game, except graphcis from the game author
   def graphics_co_authors
-    g = self.graphics.where("user_id != ?", self.user.id)
+    self.graphics.where("user_id != ?", self.user.id)
   end
 
   # Friendly URL
