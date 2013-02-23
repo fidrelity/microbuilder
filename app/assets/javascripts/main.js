@@ -170,7 +170,7 @@ function playsite_main(game_id) {
       
       e.preventDefault();
 
-      var overwriteGame = confirm('We saw that you have an unfinished game in the editor. Do you want to overwrite it?');
+      var overwriteGame = confirm('There is an unfinished game in the editor. Do you want to overwrite it?');
 
       if (!overwriteGame) {
         return false;
