@@ -18,6 +18,8 @@ function editor_main( data, username, fork_id ) {
 
   App.mainView = MainView.create();
   App.mainView.appendTo('#editor');
+
+  var help = Storage.read('showhelp') === 'no' ? false : true;
   
   if ( !data ) {
     
@@ -27,10 +29,9 @@ function editor_main( data, username, fork_id ) {
   
   if ( !username ) {
     
-    Notifier.add( 'Your are not signed in. You can\'t publish your game.', 'error' ).notify();
-    
+    Notifier.add( 'Hey - you are not signed in. You can try out the editor, but you can\'t publish your game until you are <a href="/users/sign_in"><u>signed in</u></a>.', 'error' ).notify();
   }
-  
+
   if ( data ) {
     
     Ember.run.end();
@@ -39,16 +40,20 @@ function editor_main( data, username, fork_id ) {
     
     if ( App.gameController.loadGame( data, fork_id )) {
 
-      if (!fork_id) {
-        Notifier.add( 'An unfinished game was found in your browser', 'info' ).notify();
+      console.log('here', fork_id);
+
+      if (!fork_id && help) {
+        Notifier.add( 'An unfinished game was found in your browser.', 'info' ).notify();
       }
       
     }
     
   } else {
-    
-    Notifier.add( 'Your game will be stored in the browser until you publish it.', 'info' ).notify();
-    
+
+    if ( help ) {
+      Notifier.add( 'Playtin stores your game in the browser. So don\'t worry to leave an unfinished game here.', 'info' ).notify();
+    }
+
   }
   
   App.updateHelp = function() {
