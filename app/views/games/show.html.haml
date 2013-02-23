@@ -37,7 +37,7 @@
         = render :partial => "rating", :locals => {:game => @game}
 
     %div{:style => "margin-top:1em;"}
-      = link_to (fork_path(@game.id)), :class => "btn", :id => "loadGameToEditor" do
+      = link_to (fork_game_path(@game.id)), :class => "btn", :id => "loadGameToEditor" do
         %i{:class => "icon-random"}
         Load game into editor
 
