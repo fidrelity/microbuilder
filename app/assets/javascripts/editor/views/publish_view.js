@@ -145,7 +145,7 @@ var PublishView = Ember.View.extend({
 
   handleFork : function() {
 
-    var forkId = App.gameController.game.fork_id;
+    var forkId = App.gameController.game.getData().fork_id;
 
     if (forkId) {
 
