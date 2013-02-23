@@ -169,7 +169,7 @@ var GameController = Ember.Object.extend({
     Notifier.showLoader("Creating game! Please wait a few seconds ...");
     
     $.ajax({
-      url : 'games/',
+      url : '/games/',
       type : 'POST',
       data : {
         

@@ -107,17 +107,17 @@ var LibraryController = Ember.ArrayController.extend({
       
       if ( this.showOwn ) {
         
-        path = 'users/current/graphics/backgrounds?';
+        path = '/users/current/graphics/backgrounds?';
         
       } else {
         
-        path = 'graphics/public?backgrounds=true&';
+        path = '/graphics/public?backgrounds=true&';
         
       }
       
     } else {
       
-      path = this.showOwn ? 'users/current/graphics' : 'graphics/public';
+      path = this.showOwn ? '/users/current/graphics' : '/graphics/public';
       
       path += '?min_size=' + this.size.min + '&max_size=' + this.size.max + '&';
       
