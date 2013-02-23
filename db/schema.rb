@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130216123653) do
+ActiveRecord::Schema.define(:version => 20130223102140) do
 
   create_table "game_comments", :force => true do |t|
     t.string   "comment"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20130216123653) do
     t.integer  "version",                    :default => 2
     t.boolean  "visible",                    :default => true
     t.integer  "reports",                    :default => 0
+    t.integer  "fork_id"
   end
 
   create_table "games_graphics", :id => false, :force => true do |t|

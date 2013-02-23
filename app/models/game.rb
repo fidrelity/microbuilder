@@ -8,6 +8,8 @@ class Game < ActiveRecord::Base
   belongs_to :author, :class_name => 'User', :foreign_key => 'user_id'
   has_and_belongs_to_many :graphics
   has_many :game_comments, :dependent => :destroy
+  has_many :forks, :class_name => 'Game', :foreign_key => 'fork_id'
+  belongs_to :origin, :class_name => 'Game', :foreign_key => 'fork_id'
   has_attached_file :preview_image, PAPERCLIP_THUMB_OPTIONS
   
   before_destroy :destroy_unreferenced_graphics
@@ -23,7 +25,8 @@ class Game < ActiveRecord::Base
   
   attr_accessor :preview_image_file_name, :preview_image_data, :author_token
   attr_accessible :title, :instruction, :data, :preview_image, :tags, :version, :visible, :reports,
-                  :preview_image_data, :preview_image_file_name, :played, :won, :author_token
+                  :preview_image_data, :preview_image_file_name, :played, :won, :author_token,
+                  :origin, :forks
   alias_attribute :user, :author
                   
   class << self

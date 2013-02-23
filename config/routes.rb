@@ -31,6 +31,7 @@ Playtin::Application.routes.draw do
 
   resources :games, :only => [:create, :destroy] do
     member do
+      get 'fork', :to => 'games#new'
       put 'played'
       put 'like'
       put 'dislike'
