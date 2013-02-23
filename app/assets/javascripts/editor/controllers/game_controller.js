@@ -167,7 +167,6 @@ var GameController = Ember.Object.extend({
     );
 
     Notifier.showLoader("Playtin's server are saving your masterpiece! Please give them a few seconds ...");
-    return false;
     
     $.ajax({
       url : '/games/',
