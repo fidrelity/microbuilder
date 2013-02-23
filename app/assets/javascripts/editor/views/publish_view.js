@@ -8,6 +8,9 @@ var PublishView = Ember.View.extend({
   checklist : null,
   
   snapshot : null,
+
+  publish_game_caption : 'publish game',
+  fork_of : '',
   
   didInsertElement : function() {
 
@@ -138,6 +141,30 @@ var PublishView = Ember.View.extend({
     
     App.updateHelp();
     
+  },
+
+  handleFork : function() {
+
+    var forkId = App.gameController.game.fork_id;
+
+    if (forkId) {
+
+      var self = this;
+
+      App.gameController.loadGameById(forkId, function(fork) {
+
+        self.set('fork_of', ' new version of "' + fork.title + '"');
+        self.set('publish_game_caption', 'publish new version of "' + fork.title + '"');
+      
+      });
+
+    } else {
+
+      this.set('fork_of', '');
+      this.set('publish_game_caption', 'publish game');
+    
+    }
+
   },
   
   checkValue : function( name, status ) {

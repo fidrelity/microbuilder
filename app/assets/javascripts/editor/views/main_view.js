@@ -63,6 +63,12 @@ var MainView = Ember.View.extend({
       this.save();
       
     }
+
+    if ( name === 'publishView') {
+      
+      view.handleFork();
+      
+    }
     
     App.hideHelp();
     

@@ -13,7 +13,7 @@
 <div class="content">
   <div class="titlePanel left">
     <div class="pop" title="title" data-content="Provide a name for your game. This can be anything, really.">
-      <h4>title</h4>
+      <h4>title<small>{{ fork_of }}</small></h4>
       {{view Ember.TextField valueBinding="App.game.title" size="10" placeholder="game title" maxlength="42"}}
     </div>
 
@@ -50,7 +50,7 @@
   <button {{action "takeSnapshot"}} class="btn" style="margin-top:6px">
     <i class="icon-camera"></i> take snapshot (key s) </button>
   
-  <div {{action "publish"}} class="ptn-success right">publish game</div>
+  <div {{action "publish"}} class="ptn-success right">{{ publish_game_caption }}</div>
 </div>
 
 <ul id="snapshots" class="thumbnails"></ul>

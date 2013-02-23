@@ -311,6 +311,47 @@ var GameController = Ember.Object.extend({
     return true;
     
   },
+
+  loadGameById : function(id, callback) {
+
+    $.ajax({
+      url : '/games/' + id + '/get_json',
+      type : 'GET',
+      //data : { id : id },  
+      statusCode: {
+        
+        200: function( data ) {
+        
+          callback(data);
+        
+        },
+        
+        400: function( data ) {
+          
+          console.log(data);
+          Notifier.hideLoader();
+          
+        },
+
+        401: function( data ) {
+          
+          console.log(data);
+          Notifier.hideLoader();
+          
+        },
+        
+        500: function( data ) {
+          
+          console.log(data);
+          Notifier.hideLoader();
+          
+        }
+        
+      }
+      
+    });
+
+  },
   
   clear : function() {
     

@@ -1,8 +1,8 @@
  class GamesController < ApplicationController
 
-  respond_to :js, :only => [:create, :index, :update, :like, :dislike, :played]
+  respond_to :js, :only => [:create, :index, :update, :like, :dislike, :played, :get_json]
   before_filter :authenticate_user!, :only => [:create, :destroy]
-  before_filter :find_game, :only => [:embed, :destroy, :like, :dislike, :played]  
+  before_filter :find_game, :only => [:embed, :destroy, :like, :dislike, :played, :get_json]  
   
   def index
     params[:order] ||= "desc"
@@ -61,6 +61,17 @@
     end
 
     render :json => response, :status => status
+  end
+
+  def get_json
+
+    if @game
+      response, status = [play_url(@game), 200]
+    else
+      response, status = [I18n.t(".games.create.error"), 400]
+    end
+
+    render :json => @game.data, :status => status
   end
   
   def search

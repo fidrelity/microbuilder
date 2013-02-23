@@ -31,6 +31,7 @@ Playtin::Application.routes.draw do
 
   resources :games, :only => [:create, :destroy] do
     member do
+      get 'get_json'
       put 'played'
       put 'like'
       put 'dislike'
