@@ -151,6 +151,8 @@ var StreamContainerView = Ember.ContainerView.extend({
       imageType : data.imageType
     }) );
 
+    console.log(data.imageType);
+
     return this;
 
   },

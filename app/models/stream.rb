@@ -120,7 +120,7 @@ class Stream
 
         when "graphic"
           # authorName painted graphicTitle {type}
-          image_type = obj.background ? "graphic" : "background"
+          image_type = obj.background ? "background" : "graphic"
 
           {        
             :authorName => authorName,
@@ -128,7 +128,8 @@ class Stream
             :authorImage => obj.user.display_image,
             :graphicTitle => obj.name,
             :graphicPath => obj.image.to_s,
-            :imageType => image_type
+            :imageType => image_type,
+            :isBackground => obj.background
           }
 
         else           
