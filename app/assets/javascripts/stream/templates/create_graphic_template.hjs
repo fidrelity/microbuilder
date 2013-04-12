@@ -12,7 +12,7 @@
 
   <a {{bindAttr href="authorPath"}}>{{authorName}}</a>
   
-  painted
+  {{verb}}
 
   <a class="stream-popup" {{bindAttr href="graphicPath"}} {{bindAttr data-content="popUpThumb"}} {{bindAttr data-original-title="graphicTitle"}}>
     {{graphicTitle}} 

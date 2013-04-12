@@ -122,7 +122,7 @@ class Stream
           # authorName painted graphicTitle {type}
           image_type = obj.background ? "background" : "graphic"
 
-          {        
+          {
             :authorName => authorName,
             :authorPath => "/users/#{obj.user.id}",
             :authorImage => obj.user.display_image,
@@ -131,6 +131,21 @@ class Stream
             :imageType => image_type,
             :isBackground => obj.background
           }
+
+        when "graphic_publish"
+          # authorName painted graphicTitle {type}
+          image_type = obj.background ? "background" : "graphic"
+
+          {
+            :authorName => authorName,
+            :authorPath => "/users/#{obj.user.id}",
+            :authorImage => obj.user.display_image,
+            :graphicTitle => obj.name,
+            :graphicPath => obj.image.to_s,
+            :imageType => image_type,
+            :isBackground => obj.background
+          }
+
 
         else           
           # userName {verb} authorName's gameTitle

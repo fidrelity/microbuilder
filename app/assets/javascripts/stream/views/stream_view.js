@@ -63,8 +63,6 @@ var StreamContainerView = Ember.ContainerView.extend({
 
     stream_channel.bind('game_create', function(data) {
 
-      //console.log(data);
-
       self.addGameMessage(data);
 
     });
@@ -113,6 +111,9 @@ var StreamContainerView = Ember.ContainerView.extend({
       case("graphic") : this.addGraphicMessage(data); 
                         break;
 
+      case("graphic_publish") : this.addGraphicMessage(data, 'published');
+                                break;
+
       case("like") :  this.addGameActionMessage(data); 
                       break;
 
@@ -140,7 +141,9 @@ var StreamContainerView = Ember.ContainerView.extend({
 
   },
 
-  addGraphicMessage : function(data) {    
+  addGraphicMessage : function(data, publishedVerb) {
+
+    var verb = publishedVerb || 'painted';
 
     this.get('childViews').unshiftObject( GraphicActivityView.create({
       authorName : data.authorName,
@@ -148,10 +151,9 @@ var StreamContainerView = Ember.ContainerView.extend({
       authorImage : data.authorImage,
       graphicTitle : data.graphicTitle,
       graphicPath : data.graphicPath,
-      imageType : data.imageType
+      imageType : data.imageType,
+      verb : verb
     }) );
-
-    console.log(data.imageType);
 
     return this;
 
@@ -281,6 +283,8 @@ var GraphicActivityView = Ember.View.extend({
   graphicPath : null,
 
   imageType : null,
+
+  verb : 'painted',
 
   popUpThumb : function() {
 
