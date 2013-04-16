@@ -101,8 +101,8 @@ class Game < ActiveRecord::Base
   # Get all Users of referenced Graphics
   # Note: This might somehow be possible with a single query
   def graphics_co_authors
-    graphics = self.graphics.where("user_id != ?", self.user.id)
-    User.find_all_by_id(graphics.collect {|g| g.user_id}.uniq)
+    co_author_ids = self.graphics.where("user_id != ?", self.user.id).pluck(:user_id)
+    User.find_all_by_id(co_author_ids.uniq)
   end
 
   # Friendly URL
