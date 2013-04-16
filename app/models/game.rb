@@ -21,6 +21,8 @@ class Game < ActiveRecord::Base
   default_scope where(:visible => true)
   scope :all_by_played, lambda { |ordered| order("played #{ordered.upcase}") }
   scope :all_latest, lambda { |ordered| order("created_at #{ordered.upcase}") }
+  scope :quality_only, where("likes > 1 OR dislikes < 2")
+  
   pg_search_scope :search, :against => [:title, :instruction, :tags]
   
   attr_accessor :preview_image_file_name, :preview_image_data, :author_token
