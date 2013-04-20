@@ -38,8 +38,6 @@ GEM
       uuidtools (~> 2.1)
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
-    bot-away (2.0.1)
-      actionpack (>= 2.3.5)
     bourne (1.1.2)
       mocha (= 0.10.5)
     builder (3.0.4)
@@ -237,7 +235,6 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk
-  bot-away
   capybara
   devise
   ember-rails (= 0.6.0)
