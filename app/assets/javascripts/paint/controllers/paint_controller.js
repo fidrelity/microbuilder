@@ -164,7 +164,8 @@ var PaintController = Ember.ArrayController.extend({
     if ( !App.isSignedIn ) {
       
       Notifier.add( 'Your are not signed in. You can\'t save your image to your profile.', 'error' ).notify();
-      $('#saveGraphicButton').addClass("disabled");
+      //$('#saveGraphicButton').addClass("disabled"); Sign in to Save!
+      $('#saveGraphicButton').text("Sign in to Save!");
       
     }
 
